@@ -1,0 +1,28 @@
+{
+    "name": "focuscura/php-fhir-model",
+    "type": "library",
+    "license": "Apache-2.0",
+    "description": "FHIR Model, parser and serializer",
+    "keywords": [
+        "hl7",
+        "fhir",
+        "model",
+        "parser",
+        "serializer",
+        "json",
+        "xml"
+    ],
+    "require": {
+        "php": "^5.4 || ^7.0"
+    },
+    "require-dev": {
+        "php": "^7.0",
+        "phpunit/phpunit": "6.4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src",
+            "FHIR\\Tests\\": "tests"
+        }
+    }
+}

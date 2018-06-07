@@ -1,0 +1,9 @@
+# OS specific
+.DS_Store
+
+# IDE specific
+/.idea
+
+# Composer
+/vendor
+/composer.lock
