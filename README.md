@@ -25,10 +25,11 @@ $resource = $this->parser->parse($json);
 
 **No** for all code in `src/`, because this is the result of generating with
 dcarbone/php-fhir and will not be directly changed. Fixes and additions should
-be done there.
+be done there. **Exception**: you can submit a newly generated set of classes,
+see below for instructions.
 
 **Yes** for all code in `tests/` and the organizational files in the repository
-root, those all all handwritten.
+root, those are all handwritten.
 
 ## How can I use older FHIR versions?
 
@@ -55,4 +56,4 @@ For contributors/maintainers: to update the files in this repository, follow the
 
 This repository is currently primarily intended for our own use. We cannot
 commit yet to maintain it in the future, but feel free to fork if this becomes
-an issue. That being said, feel free to file issues, feedback or improvements.
+an issue. That being said, please file issues, feedback or improvements.
