@@ -25,7 +25,8 @@ $resource = $this->parser->parse($json);
 
 **No** for all code in `src/`, because this is the result of generating with
 dcarbone/php-fhir and will not be directly changed. Fixes and additions should
-be done there. **Exception**: you can submit a newly generated set of classes,
+be done in dcarbone/php-fhir and not here. 
+**Exception**: you can submit a newly generated set of classes,
 see below for instructions.
 
 **Yes** for all code in `tests/` and the organizational files in the repository
