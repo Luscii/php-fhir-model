@@ -21,7 +21,11 @@
     },
     "autoload": {
         "psr-4": {
-            "": "src",
+            "HL7\\FHIR\\": "src/HL7/FHIR"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "FHIR\\Tests\\": "tests"
         }
     }
