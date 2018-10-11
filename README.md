@@ -9,6 +9,12 @@ tests.
 - Homepage: [http://hl7.org/fhir/STU3/index.html](http://hl7.org/fhir/STU3/index.html)
 - Resource documentation: [http://hl7.org/fhir/STU3/resourcelist.html](http://hl7.org/fhir/STU3/resourcelist.html)
 
+## Installation
+
+```
+$ composer require luscii/php-fhir-model
+```
+
 ## Usage
 
 ```php

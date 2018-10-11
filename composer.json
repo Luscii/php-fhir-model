@@ -1,5 +1,5 @@
 {
-    "name": "focuscura/php-fhir-model",
+    "name": "luscii/php-fhir-model",
     "type": "library",
     "license": "Apache-2.0",
     "description": "FHIR Model, parser and serializer",
