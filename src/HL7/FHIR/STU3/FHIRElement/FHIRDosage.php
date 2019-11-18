@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,578 +63,1506 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
  * Indicates how the medication is/was taken or should be taken by the patient.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRDosage
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRDosage extends FHIRElement implements \JsonSerializable
+class FHIRDosage extends FHIRElement
 {
-    /**
-     * Indicates the order in which the dosage instructions should be applied or interpreted.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRInteger
-     */
-    public $sequence = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DOSAGE;
+    const FIELD_ADDITIONAL_INSTRUCTION = 'additionalInstruction';
+    const FIELD_AS_NEEDED_BOOLEAN = 'asNeededBoolean';
+    const FIELD_AS_NEEDED_BOOLEAN_EXT = '_asNeededBoolean';
+    const FIELD_AS_NEEDED_CODEABLE_CONCEPT = 'asNeededCodeableConcept';
+    const FIELD_DOSE_QUANTITY = 'doseQuantity';
+    const FIELD_DOSE_QUANTITY_EXT = '_doseQuantity';
+    const FIELD_DOSE_RANGE = 'doseRange';
+    const FIELD_MAX_DOSE_PER_ADMINISTRATION = 'maxDosePerAdministration';
+    const FIELD_MAX_DOSE_PER_ADMINISTRATION_EXT = '_maxDosePerAdministration';
+    const FIELD_MAX_DOSE_PER_LIFETIME = 'maxDosePerLifetime';
+    const FIELD_MAX_DOSE_PER_LIFETIME_EXT = '_maxDosePerLifetime';
+    const FIELD_MAX_DOSE_PER_PERIOD = 'maxDosePerPeriod';
+    const FIELD_METHOD = 'method';
+    const FIELD_PATIENT_INSTRUCTION = 'patientInstruction';
+    const FIELD_PATIENT_INSTRUCTION_EXT = '_patientInstruction';
+    const FIELD_RATE_QUANTITY = 'rateQuantity';
+    const FIELD_RATE_QUANTITY_EXT = '_rateQuantity';
+    const FIELD_RATE_RANGE = 'rateRange';
+    const FIELD_RATE_RATIO = 'rateRatio';
+    const FIELD_ROUTE = 'route';
+    const FIELD_SEQUENCE = 'sequence';
+    const FIELD_SEQUENCE_EXT = '_sequence';
+    const FIELD_SITE = 'site';
+    const FIELD_TEXT = 'text';
+    const FIELD_TEXT_EXT = '_text';
+    const FIELD_TIMING = 'timing';
 
     /**
-     * Free text dosage instructions e.g. SIG.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public $text = null;
-
-    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Supplemental instruction - e.g. "with meals".
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public $additionalInstruction = [];
+    protected $additionalInstruction = [];
 
     /**
-     * Instructions in terms that are understood by the patient or consumer.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates whether the Medication is only taken when needed within a specific
+     * dosing schedule (Boolean option), or it indicates the precondition for taking
+     * the Medication (CodeableConcept).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
-    public $patientInstruction = null;
+    protected $asNeededBoolean = null;
 
     /**
-     * When medication should be administered.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRTiming
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates whether the Medication is only taken when needed within a specific
+     * dosing schedule (Boolean option), or it indicates the precondition for taking
+     * the Medication (CodeableConcept).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public $timing = null;
+    protected $asNeededCodeableConcept = null;
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per dose.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public $asNeededBoolean = null;
+    protected $doseQuantity = null;
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * A set of ordered Quantities defined by a low and high limit.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per dose.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
-    public $asNeededCodeableConcept = null;
+    protected $doseRange = null;
 
     /**
-     * Body site to administer to.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public $site = null;
-
-    /**
-     * How drug should enter body.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public $route = null;
-
-    /**
-     * Technique for administering medication.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public $method = null;
-
-    /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRRange
-     */
-    public $doseRange = null;
-
-    /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
-     */
-    public $doseQuantity = null;
-
-    /**
-     * Upper limit on medication per unit of time.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRRatio
-     */
-    public $maxDosePerPeriod = null;
-
-    /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Upper limit on medication per administration.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public $maxDosePerAdministration = null;
+    protected $maxDosePerAdministration = null;
 
     /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Upper limit on medication per lifetime of the patient.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public $maxDosePerLifetime = null;
+    protected $maxDosePerLifetime = null;
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRRatio
+     * A relationship of two Quantity values - expressed as a numerator and a
+     * denominator.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Upper limit on medication per unit of time.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio
      */
-    public $rateRatio = null;
+    protected $maxDosePerPeriod = null;
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRRange
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Technique for administering medication.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public $rateRange = null;
+    protected $method = null;
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Instructions in terms that are understood by the patient or consumer.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public $rateQuantity = null;
+    protected $patientInstruction = null;
 
     /**
-     * @var string
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per unit of time.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    private $_fhirElementName = 'Dosage';
+    protected $rateQuantity = null;
 
     /**
-     * Indicates the order in which the dosage instructions should be applied or interpreted.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRInteger
+     * A set of ordered Quantities defined by a low and high limit.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per unit of time.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
-    public function getSequence() {
-        return $this->sequence;
-    }
+    protected $rateRange = null;
 
     /**
-     * Indicates the order in which the dosage instructions should be applied or interpreted.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRInteger $sequence
-     * @return $this
+     * A relationship of two Quantity values - expressed as a numerator and a
+     * denominator.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per unit of time.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio
      */
-    public function setSequence($sequence) {
-        $this->sequence = $sequence;
-        return $this;
-    }
+    protected $rateRatio = null;
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * How drug should enter body.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected $route = null;
+
+    /**
+     * A whole number
+     * 32 bit number; for values larger than this, use decimal
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates the order in which the dosage instructions should be applied or
+     * interpreted.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger
+     */
+    protected $sequence = null;
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Body site to administer to.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected $site = null;
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * Free text dosage instructions e.g. SIG.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getText() {
-        return $this->text;
+    protected $text = null;
+
+    /**
+     * Specifies an event that may occur multiple times. Timing schedules are used to
+     * record when things are planned, expected or requested to occur. The most common
+     * usage is in dosage instructions for medications. They are also used when
+     * planning care of various kinds, and may be used for reporting the schedule to
+     * which past regular activities were carried out.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * When medication should be administered.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming
+     */
+    protected $timing = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRDosage Constructor
+     * @param null|array $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRDosage::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_ADDITIONAL_INSTRUCTION])) {
+            if (is_array($data[self::FIELD_ADDITIONAL_INSTRUCTION])) {
+                foreach($data[self::FIELD_ADDITIONAL_INSTRUCTION] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRCodeableConcept) {
+                        $this->addAdditionalInstruction($v);
+                    } else {
+                        $this->addAdditionalInstruction(new FHIRCodeableConcept($v));
+                    }
+                }
+            } else if ($data[self::FIELD_ADDITIONAL_INSTRUCTION] instanceof FHIRCodeableConcept) {
+                $this->addAdditionalInstruction($data[self::FIELD_ADDITIONAL_INSTRUCTION]);
+            } else {
+                $this->addAdditionalInstruction(new FHIRCodeableConcept($data[self::FIELD_ADDITIONAL_INSTRUCTION]));
+            }
+        }
+        if (isset($data[self::FIELD_AS_NEEDED_BOOLEAN])) {
+            $ext = (isset($data[self::FIELD_AS_NEEDED_BOOLEAN_EXT]) && is_array($data[self::FIELD_AS_NEEDED_BOOLEAN_EXT]))
+                ? $data[self::FIELD_AS_NEEDED_BOOLEAN_EXT]
+                : null;
+            if ($data[self::FIELD_AS_NEEDED_BOOLEAN] instanceof FHIRBoolean) {
+                $this->setAsNeededBoolean($data[self::FIELD_AS_NEEDED_BOOLEAN]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_AS_NEEDED_BOOLEAN])) {
+                    $this->setAsNeededBoolean(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $data[self::FIELD_AS_NEEDED_BOOLEAN]] + $ext));
+                } else if (is_array($data[self::FIELD_AS_NEEDED_BOOLEAN])) {
+                    $this->setAsNeededBoolean(new FHIRBoolean(array_merge($ext, $data[self::FIELD_AS_NEEDED_BOOLEAN])));
+                }
+            } else {
+                $this->setAsNeededBoolean(new FHIRBoolean($data[self::FIELD_AS_NEEDED_BOOLEAN]));
+            }
+        }
+        if (isset($data[self::FIELD_AS_NEEDED_CODEABLE_CONCEPT])) {
+            if ($data[self::FIELD_AS_NEEDED_CODEABLE_CONCEPT] instanceof FHIRCodeableConcept) {
+                $this->setAsNeededCodeableConcept($data[self::FIELD_AS_NEEDED_CODEABLE_CONCEPT]);
+            } else {
+                $this->setAsNeededCodeableConcept(new FHIRCodeableConcept($data[self::FIELD_AS_NEEDED_CODEABLE_CONCEPT]));
+            }
+        }
+        if (isset($data[self::FIELD_DOSE_QUANTITY])) {
+            $ext = (isset($data[self::FIELD_DOSE_QUANTITY_EXT]) && is_array($data[self::FIELD_DOSE_QUANTITY_EXT]))
+                ? $data[self::FIELD_DOSE_QUANTITY_EXT]
+                : null;
+            if ($data[self::FIELD_DOSE_QUANTITY] instanceof FHIRQuantity) {
+                $this->setDoseQuantity($data[self::FIELD_DOSE_QUANTITY]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_DOSE_QUANTITY])) {
+                    $this->setDoseQuantity(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_DOSE_QUANTITY]] + $ext));
+                } else if (is_array($data[self::FIELD_DOSE_QUANTITY])) {
+                    $this->setDoseQuantity(new FHIRQuantity(array_merge($ext, $data[self::FIELD_DOSE_QUANTITY])));
+                }
+            } else {
+                $this->setDoseQuantity(new FHIRQuantity($data[self::FIELD_DOSE_QUANTITY]));
+            }
+        }
+        if (isset($data[self::FIELD_DOSE_RANGE])) {
+            if ($data[self::FIELD_DOSE_RANGE] instanceof FHIRRange) {
+                $this->setDoseRange($data[self::FIELD_DOSE_RANGE]);
+            } else {
+                $this->setDoseRange(new FHIRRange($data[self::FIELD_DOSE_RANGE]));
+            }
+        }
+        if (isset($data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION])) {
+            $ext = (isset($data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION_EXT]) && is_array($data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION_EXT]))
+                ? $data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION_EXT]
+                : null;
+            if ($data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION] instanceof FHIRQuantity) {
+                $this->setMaxDosePerAdministration($data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION])) {
+                    $this->setMaxDosePerAdministration(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION]] + $ext));
+                } else if (is_array($data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION])) {
+                    $this->setMaxDosePerAdministration(new FHIRQuantity(array_merge($ext, $data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION])));
+                }
+            } else {
+                $this->setMaxDosePerAdministration(new FHIRQuantity($data[self::FIELD_MAX_DOSE_PER_ADMINISTRATION]));
+            }
+        }
+        if (isset($data[self::FIELD_MAX_DOSE_PER_LIFETIME])) {
+            $ext = (isset($data[self::FIELD_MAX_DOSE_PER_LIFETIME_EXT]) && is_array($data[self::FIELD_MAX_DOSE_PER_LIFETIME_EXT]))
+                ? $data[self::FIELD_MAX_DOSE_PER_LIFETIME_EXT]
+                : null;
+            if ($data[self::FIELD_MAX_DOSE_PER_LIFETIME] instanceof FHIRQuantity) {
+                $this->setMaxDosePerLifetime($data[self::FIELD_MAX_DOSE_PER_LIFETIME]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_MAX_DOSE_PER_LIFETIME])) {
+                    $this->setMaxDosePerLifetime(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_MAX_DOSE_PER_LIFETIME]] + $ext));
+                } else if (is_array($data[self::FIELD_MAX_DOSE_PER_LIFETIME])) {
+                    $this->setMaxDosePerLifetime(new FHIRQuantity(array_merge($ext, $data[self::FIELD_MAX_DOSE_PER_LIFETIME])));
+                }
+            } else {
+                $this->setMaxDosePerLifetime(new FHIRQuantity($data[self::FIELD_MAX_DOSE_PER_LIFETIME]));
+            }
+        }
+        if (isset($data[self::FIELD_MAX_DOSE_PER_PERIOD])) {
+            if ($data[self::FIELD_MAX_DOSE_PER_PERIOD] instanceof FHIRRatio) {
+                $this->setMaxDosePerPeriod($data[self::FIELD_MAX_DOSE_PER_PERIOD]);
+            } else {
+                $this->setMaxDosePerPeriod(new FHIRRatio($data[self::FIELD_MAX_DOSE_PER_PERIOD]));
+            }
+        }
+        if (isset($data[self::FIELD_METHOD])) {
+            if ($data[self::FIELD_METHOD] instanceof FHIRCodeableConcept) {
+                $this->setMethod($data[self::FIELD_METHOD]);
+            } else {
+                $this->setMethod(new FHIRCodeableConcept($data[self::FIELD_METHOD]));
+            }
+        }
+        if (isset($data[self::FIELD_PATIENT_INSTRUCTION])) {
+            $ext = (isset($data[self::FIELD_PATIENT_INSTRUCTION_EXT]) && is_array($data[self::FIELD_PATIENT_INSTRUCTION_EXT]))
+                ? $data[self::FIELD_PATIENT_INSTRUCTION_EXT]
+                : null;
+            if ($data[self::FIELD_PATIENT_INSTRUCTION] instanceof FHIRString) {
+                $this->setPatientInstruction($data[self::FIELD_PATIENT_INSTRUCTION]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_PATIENT_INSTRUCTION])) {
+                    $this->setPatientInstruction(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_PATIENT_INSTRUCTION]] + $ext));
+                } else if (is_array($data[self::FIELD_PATIENT_INSTRUCTION])) {
+                    $this->setPatientInstruction(new FHIRString(array_merge($ext, $data[self::FIELD_PATIENT_INSTRUCTION])));
+                }
+            } else {
+                $this->setPatientInstruction(new FHIRString($data[self::FIELD_PATIENT_INSTRUCTION]));
+            }
+        }
+        if (isset($data[self::FIELD_RATE_QUANTITY])) {
+            $ext = (isset($data[self::FIELD_RATE_QUANTITY_EXT]) && is_array($data[self::FIELD_RATE_QUANTITY_EXT]))
+                ? $data[self::FIELD_RATE_QUANTITY_EXT]
+                : null;
+            if ($data[self::FIELD_RATE_QUANTITY] instanceof FHIRQuantity) {
+                $this->setRateQuantity($data[self::FIELD_RATE_QUANTITY]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_RATE_QUANTITY])) {
+                    $this->setRateQuantity(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_RATE_QUANTITY]] + $ext));
+                } else if (is_array($data[self::FIELD_RATE_QUANTITY])) {
+                    $this->setRateQuantity(new FHIRQuantity(array_merge($ext, $data[self::FIELD_RATE_QUANTITY])));
+                }
+            } else {
+                $this->setRateQuantity(new FHIRQuantity($data[self::FIELD_RATE_QUANTITY]));
+            }
+        }
+        if (isset($data[self::FIELD_RATE_RANGE])) {
+            if ($data[self::FIELD_RATE_RANGE] instanceof FHIRRange) {
+                $this->setRateRange($data[self::FIELD_RATE_RANGE]);
+            } else {
+                $this->setRateRange(new FHIRRange($data[self::FIELD_RATE_RANGE]));
+            }
+        }
+        if (isset($data[self::FIELD_RATE_RATIO])) {
+            if ($data[self::FIELD_RATE_RATIO] instanceof FHIRRatio) {
+                $this->setRateRatio($data[self::FIELD_RATE_RATIO]);
+            } else {
+                $this->setRateRatio(new FHIRRatio($data[self::FIELD_RATE_RATIO]));
+            }
+        }
+        if (isset($data[self::FIELD_ROUTE])) {
+            if ($data[self::FIELD_ROUTE] instanceof FHIRCodeableConcept) {
+                $this->setRoute($data[self::FIELD_ROUTE]);
+            } else {
+                $this->setRoute(new FHIRCodeableConcept($data[self::FIELD_ROUTE]));
+            }
+        }
+        if (isset($data[self::FIELD_SEQUENCE])) {
+            $ext = (isset($data[self::FIELD_SEQUENCE_EXT]) && is_array($data[self::FIELD_SEQUENCE_EXT]))
+                ? $data[self::FIELD_SEQUENCE_EXT]
+                : null;
+            if ($data[self::FIELD_SEQUENCE] instanceof FHIRInteger) {
+                $this->setSequence($data[self::FIELD_SEQUENCE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_SEQUENCE])) {
+                    $this->setSequence(new FHIRInteger([FHIRInteger::FIELD_VALUE => $data[self::FIELD_SEQUENCE]] + $ext));
+                } else if (is_array($data[self::FIELD_SEQUENCE])) {
+                    $this->setSequence(new FHIRInteger(array_merge($ext, $data[self::FIELD_SEQUENCE])));
+                }
+            } else {
+                $this->setSequence(new FHIRInteger($data[self::FIELD_SEQUENCE]));
+            }
+        }
+        if (isset($data[self::FIELD_SITE])) {
+            if ($data[self::FIELD_SITE] instanceof FHIRCodeableConcept) {
+                $this->setSite($data[self::FIELD_SITE]);
+            } else {
+                $this->setSite(new FHIRCodeableConcept($data[self::FIELD_SITE]));
+            }
+        }
+        if (isset($data[self::FIELD_TEXT])) {
+            $ext = (isset($data[self::FIELD_TEXT_EXT]) && is_array($data[self::FIELD_TEXT_EXT]))
+                ? $data[self::FIELD_TEXT_EXT]
+                : null;
+            if ($data[self::FIELD_TEXT] instanceof FHIRString) {
+                $this->setText($data[self::FIELD_TEXT]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_TEXT])) {
+                    $this->setText(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_TEXT]] + $ext));
+                } else if (is_array($data[self::FIELD_TEXT])) {
+                    $this->setText(new FHIRString(array_merge($ext, $data[self::FIELD_TEXT])));
+                }
+            } else {
+                $this->setText(new FHIRString($data[self::FIELD_TEXT]));
+            }
+        }
+        if (isset($data[self::FIELD_TIMING])) {
+            if ($data[self::FIELD_TIMING] instanceof FHIRTiming) {
+                $this->setTiming($data[self::FIELD_TIMING]);
+            } else {
+                $this->setTiming(new FHIRTiming($data[self::FIELD_TIMING]));
+            }
+        }
     }
 
     /**
-     * Free text dosage instructions e.g. SIG.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $text
-     * @return $this
+     * @return string
      */
-    public function setText($text) {
-        $this->text = $text;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
+     * @return string|null
+     */
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Dosage{$xmlns}></Dosage>";
+    }
+
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Supplemental instruction - e.g. "with meals".
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getAdditionalInstruction() {
+    public function getAdditionalInstruction()
+    {
         return $this->additionalInstruction;
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Supplemental instruction - e.g. "with meals".
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $additionalInstruction
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $additionalInstruction
+     * @return static
      */
-    public function addAdditionalInstruction($additionalInstruction) {
+    public function addAdditionalInstruction(FHIRCodeableConcept $additionalInstruction = null)
+    {
         $this->additionalInstruction[] = $additionalInstruction;
         return $this;
     }
 
     /**
-     * Instructions in terms that are understood by the patient or consumer.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Supplemental instruction - e.g. "with meals".
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $additionalInstruction
+     * @return static
      */
-    public function getPatientInstruction() {
-        return $this->patientInstruction;
-    }
-
-    /**
-     * Instructions in terms that are understood by the patient or consumer.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $patientInstruction
-     * @return $this
-     */
-    public function setPatientInstruction($patientInstruction) {
-        $this->patientInstruction = $patientInstruction;
+    public function setAdditionalInstruction(array $additionalInstruction = [])
+    {
+        $this->additionalInstruction = [];
+        if ([] === $additionalInstruction) {
+            return $this;
+        }
+        foreach($additionalInstruction as $v) {
+            if ($v instanceof FHIRCodeableConcept) {
+                $this->addAdditionalInstruction($v);
+            } else {
+                $this->addAdditionalInstruction(new FHIRCodeableConcept($v));
+            }
+        }
         return $this;
     }
 
     /**
-     * When medication should be administered.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRTiming
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates whether the Medication is only taken when needed within a specific
+     * dosing schedule (Boolean option), or it indicates the precondition for taking
+     * the Medication (CodeableConcept).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
-    public function getTiming() {
-        return $this->timing;
-    }
-
-    /**
-     * When medication should be administered.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRTiming $timing
-     * @return $this
-     */
-    public function setTiming($timing) {
-        $this->timing = $timing;
-        return $this;
-    }
-
-    /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRBoolean
-     */
-    public function getAsNeededBoolean() {
+    public function getAsNeededBoolean()
+    {
         return $this->asNeededBoolean;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBoolean $asNeededBoolean
-     * @return $this
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates whether the Medication is only taken when needed within a specific
+     * dosing schedule (Boolean option), or it indicates the precondition for taking
+     * the Medication (CodeableConcept).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $asNeededBoolean
+     * @return static
      */
-    public function setAsNeededBoolean($asNeededBoolean) {
-        $this->asNeededBoolean = $asNeededBoolean;
+    public function setAsNeededBoolean($asNeededBoolean = null)
+    {
+        if (null === $asNeededBoolean) {
+            $this->asNeededBoolean = null;
+            return $this;
+        }
+        if ($asNeededBoolean instanceof FHIRBoolean) {
+            $this->asNeededBoolean = $asNeededBoolean;
+            return $this;
+        }
+        $this->asNeededBoolean = new FHIRBoolean($asNeededBoolean);
         return $this;
     }
 
     /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates whether the Medication is only taken when needed within a specific
+     * dosing schedule (Boolean option), or it indicates the precondition for taking
+     * the Medication (CodeableConcept).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getAsNeededCodeableConcept() {
+    public function getAsNeededCodeableConcept()
+    {
         return $this->asNeededCodeableConcept;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $asNeededCodeableConcept
-     * @return $this
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates whether the Medication is only taken when needed within a specific
+     * dosing schedule (Boolean option), or it indicates the precondition for taking
+     * the Medication (CodeableConcept).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $asNeededCodeableConcept
+     * @return static
      */
-    public function setAsNeededCodeableConcept($asNeededCodeableConcept) {
+    public function setAsNeededCodeableConcept(FHIRCodeableConcept $asNeededCodeableConcept = null)
+    {
         $this->asNeededCodeableConcept = $asNeededCodeableConcept;
         return $this;
     }
 
     /**
-     * Body site to administer to.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per dose.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public function getSite() {
-        return $this->site;
-    }
-
-    /**
-     * Body site to administer to.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $site
-     * @return $this
-     */
-    public function setSite($site) {
-        $this->site = $site;
-        return $this;
-    }
-
-    /**
-     * How drug should enter body.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public function getRoute() {
-        return $this->route;
-    }
-
-    /**
-     * How drug should enter body.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $route
-     * @return $this
-     */
-    public function setRoute($route) {
-        $this->route = $route;
-        return $this;
-    }
-
-    /**
-     * Technique for administering medication.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public function getMethod() {
-        return $this->method;
-    }
-
-    /**
-     * Technique for administering medication.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $method
-     * @return $this
-     */
-    public function setMethod($method) {
-        $this->method = $method;
-        return $this;
-    }
-
-    /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRRange
-     */
-    public function getDoseRange() {
-        return $this->doseRange;
-    }
-
-    /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRRange $doseRange
-     * @return $this
-     */
-    public function setDoseRange($doseRange) {
-        $this->doseRange = $doseRange;
-        return $this;
-    }
-
-    /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
-     */
-    public function getDoseQuantity() {
+    public function getDoseQuantity()
+    {
         return $this->doseQuantity;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRQuantity $doseQuantity
-     * @return $this
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per dose.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity $doseQuantity
+     * @return static
      */
-    public function setDoseQuantity($doseQuantity) {
+    public function setDoseQuantity(FHIRQuantity $doseQuantity = null)
+    {
         $this->doseQuantity = $doseQuantity;
         return $this;
     }
 
     /**
-     * Upper limit on medication per unit of time.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRRatio
+     * A set of ordered Quantities defined by a low and high limit.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per dose.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
-    public function getMaxDosePerPeriod() {
-        return $this->maxDosePerPeriod;
+    public function getDoseRange()
+    {
+        return $this->doseRange;
     }
 
     /**
-     * Upper limit on medication per unit of time.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRRatio $maxDosePerPeriod
-     * @return $this
+     * A set of ordered Quantities defined by a low and high limit.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per dose.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRange $doseRange
+     * @return static
      */
-    public function setMaxDosePerPeriod($maxDosePerPeriod) {
-        $this->maxDosePerPeriod = $maxDosePerPeriod;
+    public function setDoseRange(FHIRRange $doseRange = null)
+    {
+        $this->doseRange = $doseRange;
         return $this;
     }
 
     /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Upper limit on medication per administration.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public function getMaxDosePerAdministration() {
+    public function getMaxDosePerAdministration()
+    {
         return $this->maxDosePerAdministration;
     }
 
     /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Upper limit on medication per administration.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRQuantity $maxDosePerAdministration
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity $maxDosePerAdministration
+     * @return static
      */
-    public function setMaxDosePerAdministration($maxDosePerAdministration) {
+    public function setMaxDosePerAdministration(FHIRQuantity $maxDosePerAdministration = null)
+    {
         $this->maxDosePerAdministration = $maxDosePerAdministration;
         return $this;
     }
 
     /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Upper limit on medication per lifetime of the patient.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public function getMaxDosePerLifetime() {
+    public function getMaxDosePerLifetime()
+    {
         return $this->maxDosePerLifetime;
     }
 
     /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Upper limit on medication per lifetime of the patient.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRQuantity $maxDosePerLifetime
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity $maxDosePerLifetime
+     * @return static
      */
-    public function setMaxDosePerLifetime($maxDosePerLifetime) {
+    public function setMaxDosePerLifetime(FHIRQuantity $maxDosePerLifetime = null)
+    {
         $this->maxDosePerLifetime = $maxDosePerLifetime;
         return $this;
     }
 
     /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRRatio
+     * A relationship of two Quantity values - expressed as a numerator and a
+     * denominator.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Upper limit on medication per unit of time.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio
      */
-    public function getRateRatio() {
-        return $this->rateRatio;
+    public function getMaxDosePerPeriod()
+    {
+        return $this->maxDosePerPeriod;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRRatio $rateRatio
-     * @return $this
+     * A relationship of two Quantity values - expressed as a numerator and a
+     * denominator.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Upper limit on medication per unit of time.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio $maxDosePerPeriod
+     * @return static
      */
-    public function setRateRatio($rateRatio) {
-        $this->rateRatio = $rateRatio;
+    public function setMaxDosePerPeriod(FHIRRatio $maxDosePerPeriod = null)
+    {
+        $this->maxDosePerPeriod = $maxDosePerPeriod;
         return $this;
     }
 
     /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRRange
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Technique for administering medication.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getRateRange() {
-        return $this->rateRange;
+    public function getMethod()
+    {
+        return $this->method;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRRange $rateRange
-     * @return $this
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Technique for administering medication.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $method
+     * @return static
      */
-    public function setRateRange($rateRange) {
-        $this->rateRange = $rateRange;
+    public function setMethod(FHIRCodeableConcept $method = null)
+    {
+        $this->method = $method;
         return $this;
     }
 
     /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Instructions in terms that are understood by the patient or consumer.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getRateQuantity() {
+    public function getPatientInstruction()
+    {
+        return $this->patientInstruction;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Instructions in terms that are understood by the patient or consumer.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $patientInstruction
+     * @return static
+     */
+    public function setPatientInstruction($patientInstruction = null)
+    {
+        if (null === $patientInstruction) {
+            $this->patientInstruction = null;
+            return $this;
+        }
+        if ($patientInstruction instanceof FHIRString) {
+            $this->patientInstruction = $patientInstruction;
+            return $this;
+        }
+        $this->patientInstruction = new FHIRString($patientInstruction);
+        return $this;
+    }
+
+    /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per unit of time.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     */
+    public function getRateQuantity()
+    {
         return $this->rateQuantity;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRQuantity $rateQuantity
-     * @return $this
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per unit of time.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity $rateQuantity
+     * @return static
      */
-    public function setRateQuantity($rateQuantity) {
+    public function setRateQuantity(FHIRQuantity $rateQuantity = null)
+    {
         $this->rateQuantity = $rateQuantity;
         return $this;
     }
 
     /**
-     * @return string
+     * A set of ordered Quantities defined by a low and high limit.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per unit of time.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
+    public function getRateRange()
+    {
+        return $this->rateRange;
     }
 
     /**
-     * @param mixed $data
+     * A set of ordered Quantities defined by a low and high limit.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per unit of time.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRange $rateRange
+     * @return static
      */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['sequence'])) {
-                $this->setSequence($data['sequence']);
-            }
-            if (isset($data['text'])) {
-                $this->setText($data['text']);
-            }
-            if (isset($data['additionalInstruction'])) {
-                if (is_array($data['additionalInstruction'])) {
-                    foreach($data['additionalInstruction'] as $d) {
-                        $this->addAdditionalInstruction($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"additionalInstruction" must be array of objects or null, '.gettype($data['additionalInstruction']).' seen.');
-                }
-            }
-            if (isset($data['patientInstruction'])) {
-                $this->setPatientInstruction($data['patientInstruction']);
-            }
-            if (isset($data['timing'])) {
-                $this->setTiming($data['timing']);
-            }
-            if (isset($data['asNeededBoolean'])) {
-                $this->setAsNeededBoolean($data['asNeededBoolean']);
-            }
-            if (isset($data['asNeededCodeableConcept'])) {
-                $this->setAsNeededCodeableConcept($data['asNeededCodeableConcept']);
-            }
-            if (isset($data['site'])) {
-                $this->setSite($data['site']);
-            }
-            if (isset($data['route'])) {
-                $this->setRoute($data['route']);
-            }
-            if (isset($data['method'])) {
-                $this->setMethod($data['method']);
-            }
-            if (isset($data['doseRange'])) {
-                $this->setDoseRange($data['doseRange']);
-            }
-            if (isset($data['doseQuantity'])) {
-                $this->setDoseQuantity($data['doseQuantity']);
-            }
-            if (isset($data['maxDosePerPeriod'])) {
-                $this->setMaxDosePerPeriod($data['maxDosePerPeriod']);
-            }
-            if (isset($data['maxDosePerAdministration'])) {
-                $this->setMaxDosePerAdministration($data['maxDosePerAdministration']);
-            }
-            if (isset($data['maxDosePerLifetime'])) {
-                $this->setMaxDosePerLifetime($data['maxDosePerLifetime']);
-            }
-            if (isset($data['rateRatio'])) {
-                $this->setRateRatio($data['rateRatio']);
-            }
-            if (isset($data['rateRange'])) {
-                $this->setRateRange($data['rateRange']);
-            }
-            if (isset($data['rateQuantity'])) {
-                $this->setRateQuantity($data['rateQuantity']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setRateRange(FHIRRange $rateRange = null)
+    {
+        $this->rateRange = $rateRange;
+        return $this;
+    }
+
+    /**
+     * A relationship of two Quantity values - expressed as a numerator and a
+     * denominator.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per unit of time.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio
+     */
+    public function getRateRatio()
+    {
+        return $this->rateRatio;
+    }
+
+    /**
+     * A relationship of two Quantity values - expressed as a numerator and a
+     * denominator.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Amount of medication per unit of time.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio $rateRatio
+     * @return static
+     */
+    public function setRateRatio(FHIRRatio $rateRatio = null)
+    {
+        $this->rateRatio = $rateRatio;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * How drug should enter body.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * How drug should enter body.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $route
+     * @return static
+     */
+    public function setRoute(FHIRCodeableConcept $route = null)
+    {
+        $this->route = $route;
+        return $this;
+    }
+
+    /**
+     * A whole number
+     * 32 bit number; for values larger than this, use decimal
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates the order in which the dosage instructions should be applied or
+     * interpreted.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger
+     */
+    public function getSequence()
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * A whole number
+     * 32 bit number; for values larger than this, use decimal
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates the order in which the dosage instructions should be applied or
+     * interpreted.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger $sequence
+     * @return static
+     */
+    public function setSequence($sequence = null)
+    {
+        if (null === $sequence) {
+            $this->sequence = null;
+            return $this;
         }
-        parent::__construct($data);
+        if ($sequence instanceof FHIRInteger) {
+            $this->sequence = $sequence;
+            return $this;
+        }
+        $this->sequence = new FHIRInteger($sequence);
+        return $this;
     }
 
     /**
-     * @return string
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Body site to administer to.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Body site to administer to.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $site
+     * @return static
+     */
+    public function setSite(FHIRCodeableConcept $site = null)
+    {
+        $this->site = $site;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Free text dosage instructions e.g. SIG.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Free text dosage instructions e.g. SIG.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $text
+     * @return static
+     */
+    public function setText($text = null)
+    {
+        if (null === $text) {
+            $this->text = null;
+            return $this;
+        }
+        if ($text instanceof FHIRString) {
+            $this->text = $text;
+            return $this;
+        }
+        $this->text = new FHIRString($text);
+        return $this;
+    }
+
+    /**
+     * Specifies an event that may occur multiple times. Timing schedules are used to
+     * record when things are planned, expected or requested to occur. The most common
+     * usage is in dosage instructions for medications. They are also used when
+     * planning care of various kinds, and may be used for reporting the schedule to
+     * which past regular activities were carried out.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * When medication should be administered.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming
+     */
+    public function getTiming()
+    {
+        return $this->timing;
+    }
+
+    /**
+     * Specifies an event that may occur multiple times. Timing schedules are used to
+     * record when things are planned, expected or requested to occur. The most common
+     * usage is in dosage instructions for medications. They are also used when
+     * planning care of various kinds, and may be used for reporting the schedule to
+     * which past regular activities were carried out.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * When medication should be administered.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming $timing
+     * @return static
+     */
+    public function setTiming(FHIRTiming $timing = null)
+    {
+        $this->timing = $timing;
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDosage $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDosage
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRDosage::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRDosage::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRDosage;
+        } elseif (!is_object($type) || !($type instanceof FHIRDosage)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRDosage::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRDosage or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($children->additionalInstruction)) {
+            foreach($children->additionalInstruction as $child) {
+                $type->addAdditionalInstruction(FHIRCodeableConcept::xmlUnserialize($child));
+            }
+        }
+        if (isset($attributes->asNeededBoolean)) {
+            $type->setAsNeededBoolean((string)$attributes->asNeededBoolean);
+        }
+        if (isset($children->asNeededBoolean)) {
+            $type->setAsNeededBoolean(FHIRBoolean::xmlUnserialize($children->asNeededBoolean));
+        }
+        if (isset($children->asNeededCodeableConcept)) {
+            $type->setAsNeededCodeableConcept(FHIRCodeableConcept::xmlUnserialize($children->asNeededCodeableConcept));
+        }
+        if (isset($children->doseQuantity)) {
+            $type->setDoseQuantity(FHIRQuantity::xmlUnserialize($children->doseQuantity));
+        }
+        if (isset($children->doseRange)) {
+            $type->setDoseRange(FHIRRange::xmlUnserialize($children->doseRange));
+        }
+        if (isset($children->maxDosePerAdministration)) {
+            $type->setMaxDosePerAdministration(FHIRQuantity::xmlUnserialize($children->maxDosePerAdministration));
+        }
+        if (isset($children->maxDosePerLifetime)) {
+            $type->setMaxDosePerLifetime(FHIRQuantity::xmlUnserialize($children->maxDosePerLifetime));
+        }
+        if (isset($children->maxDosePerPeriod)) {
+            $type->setMaxDosePerPeriod(FHIRRatio::xmlUnserialize($children->maxDosePerPeriod));
+        }
+        if (isset($children->method)) {
+            $type->setMethod(FHIRCodeableConcept::xmlUnserialize($children->method));
+        }
+        if (isset($attributes->patientInstruction)) {
+            $type->setPatientInstruction((string)$attributes->patientInstruction);
+        }
+        if (isset($children->patientInstruction)) {
+            $type->setPatientInstruction(FHIRString::xmlUnserialize($children->patientInstruction));
+        }
+        if (isset($children->rateQuantity)) {
+            $type->setRateQuantity(FHIRQuantity::xmlUnserialize($children->rateQuantity));
+        }
+        if (isset($children->rateRange)) {
+            $type->setRateRange(FHIRRange::xmlUnserialize($children->rateRange));
+        }
+        if (isset($children->rateRatio)) {
+            $type->setRateRatio(FHIRRatio::xmlUnserialize($children->rateRatio));
+        }
+        if (isset($children->route)) {
+            $type->setRoute(FHIRCodeableConcept::xmlUnserialize($children->route));
+        }
+        if (isset($attributes->sequence)) {
+            $type->setSequence((string)$attributes->sequence);
+        }
+        if (isset($children->sequence)) {
+            $type->setSequence(FHIRInteger::xmlUnserialize($children->sequence));
+        }
+        if (isset($children->site)) {
+            $type->setSite(FHIRCodeableConcept::xmlUnserialize($children->site));
+        }
+        if (isset($attributes->text)) {
+            $type->setText((string)$attributes->text);
+        }
+        if (isset($children->text)) {
+            $type->setText(FHIRString::xmlUnserialize($children->text));
+        }
+        if (isset($children->timing)) {
+            $type->setTiming(FHIRTiming::xmlUnserialize($children->timing));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if ([] !== ($vs = $this->getAdditionalInstruction())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_ADDITIONAL_INSTRUCTION, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if (null !== ($v = $this->getAsNeededBoolean())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_AS_NEEDED_BOOLEAN, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getAsNeededCodeableConcept())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_AS_NEEDED_CODEABLE_CONCEPT, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getDoseQuantity())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_DOSE_QUANTITY, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getDoseRange())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_DOSE_RANGE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getMaxDosePerAdministration())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_MAX_DOSE_PER_ADMINISTRATION, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getMaxDosePerLifetime())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_MAX_DOSE_PER_LIFETIME, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getMaxDosePerPeriod())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_MAX_DOSE_PER_PERIOD, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getMethod())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_METHOD, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getPatientInstruction())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_PATIENT_INSTRUCTION, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getRateQuantity())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_RATE_QUANTITY, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getRateRange())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_RATE_RANGE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getRateRatio())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_RATE_RATIO, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getRoute())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_ROUTE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getSequence())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_SEQUENCE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getSite())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_SITE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getText())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TEXT, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getTiming())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TIMING, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->sequence)) $json['sequence'] = $this->sequence;
-        if (isset($this->text)) $json['text'] = $this->text;
-        if (0 < count($this->additionalInstruction)) {
-            $json['additionalInstruction'] = [];
-            foreach($this->additionalInstruction as $additionalInstruction) {
-                if (null !== $additionalInstruction) $json['additionalInstruction'][] = $additionalInstruction;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if ([] !== ($vs = $this->getAdditionalInstruction())) {
+            $a[self::FIELD_ADDITIONAL_INSTRUCTION] = $vs;
+        }
+        if (null !== ($v = $this->getAsNeededBoolean())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_AS_NEEDED_BOOLEAN] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_AS_NEEDED_BOOLEAN_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_AS_NEEDED_BOOLEAN] = $v;
             }
         }
-        if (isset($this->patientInstruction)) $json['patientInstruction'] = $this->patientInstruction;
-        if (isset($this->timing)) $json['timing'] = $this->timing;
-        if (isset($this->asNeededBoolean)) $json['asNeededBoolean'] = $this->asNeededBoolean;
-        if (isset($this->asNeededCodeableConcept)) $json['asNeededCodeableConcept'] = $this->asNeededCodeableConcept;
-        if (isset($this->site)) $json['site'] = $this->site;
-        if (isset($this->route)) $json['route'] = $this->route;
-        if (isset($this->method)) $json['method'] = $this->method;
-        if (isset($this->doseRange)) $json['doseRange'] = $this->doseRange;
-        if (isset($this->doseQuantity)) $json['doseQuantity'] = $this->doseQuantity;
-        if (isset($this->maxDosePerPeriod)) $json['maxDosePerPeriod'] = $this->maxDosePerPeriod;
-        if (isset($this->maxDosePerAdministration)) $json['maxDosePerAdministration'] = $this->maxDosePerAdministration;
-        if (isset($this->maxDosePerLifetime)) $json['maxDosePerLifetime'] = $this->maxDosePerLifetime;
-        if (isset($this->rateRatio)) $json['rateRatio'] = $this->rateRatio;
-        if (isset($this->rateRange)) $json['rateRange'] = $this->rateRange;
-        if (isset($this->rateQuantity)) $json['rateQuantity'] = $this->rateQuantity;
-        return $json;
+        if (null !== ($v = $this->getAsNeededCodeableConcept())) {
+            $a[self::FIELD_AS_NEEDED_CODEABLE_CONCEPT] = $v;
+        }
+        if (null !== ($v = $this->getDoseQuantity())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_DOSE_QUANTITY] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_DOSE_QUANTITY_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_DOSE_QUANTITY] = $v;
+            }
+        }
+        if (null !== ($v = $this->getDoseRange())) {
+            $a[self::FIELD_DOSE_RANGE] = $v;
+        }
+        if (null !== ($v = $this->getMaxDosePerAdministration())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_MAX_DOSE_PER_ADMINISTRATION] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_MAX_DOSE_PER_ADMINISTRATION_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_MAX_DOSE_PER_ADMINISTRATION] = $v;
+            }
+        }
+        if (null !== ($v = $this->getMaxDosePerLifetime())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_MAX_DOSE_PER_LIFETIME] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_MAX_DOSE_PER_LIFETIME_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_MAX_DOSE_PER_LIFETIME] = $v;
+            }
+        }
+        if (null !== ($v = $this->getMaxDosePerPeriod())) {
+            $a[self::FIELD_MAX_DOSE_PER_PERIOD] = $v;
+        }
+        if (null !== ($v = $this->getMethod())) {
+            $a[self::FIELD_METHOD] = $v;
+        }
+        if (null !== ($v = $this->getPatientInstruction())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_PATIENT_INSTRUCTION] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_PATIENT_INSTRUCTION_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_PATIENT_INSTRUCTION] = $v;
+            }
+        }
+        if (null !== ($v = $this->getRateQuantity())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_RATE_QUANTITY] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_RATE_QUANTITY_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_RATE_QUANTITY] = $v;
+            }
+        }
+        if (null !== ($v = $this->getRateRange())) {
+            $a[self::FIELD_RATE_RANGE] = $v;
+        }
+        if (null !== ($v = $this->getRateRatio())) {
+            $a[self::FIELD_RATE_RATIO] = $v;
+        }
+        if (null !== ($v = $this->getRoute())) {
+            $a[self::FIELD_ROUTE] = $v;
+        }
+        if (null !== ($v = $this->getSequence())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_SEQUENCE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_SEQUENCE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_SEQUENCE] = $v;
+            }
+        }
+        if (null !== ($v = $this->getSite())) {
+            $a[self::FIELD_SITE] = $v;
+        }
+        if (null !== ($v = $this->getText())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_TEXT] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_TEXT_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_TEXT] = $v;
+            }
+        }
+        if (null !== ($v = $this->getTiming())) {
+            $a[self::FIELD_TIMING] = $v;
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Dosage xmlns="http://hl7.org/fhir"></Dosage>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->sequence)) $this->sequence->xmlSerialize(true, $sxe->addChild('sequence'));
-        if (isset($this->text)) $this->text->xmlSerialize(true, $sxe->addChild('text'));
-        if (0 < count($this->additionalInstruction)) {
-            foreach($this->additionalInstruction as $additionalInstruction) {
-                $additionalInstruction->xmlSerialize(true, $sxe->addChild('additionalInstruction'));
-            }
-        }
-        if (isset($this->patientInstruction)) $this->patientInstruction->xmlSerialize(true, $sxe->addChild('patientInstruction'));
-        if (isset($this->timing)) $this->timing->xmlSerialize(true, $sxe->addChild('timing'));
-        if (isset($this->asNeededBoolean)) $this->asNeededBoolean->xmlSerialize(true, $sxe->addChild('asNeededBoolean'));
-        if (isset($this->asNeededCodeableConcept)) $this->asNeededCodeableConcept->xmlSerialize(true, $sxe->addChild('asNeededCodeableConcept'));
-        if (isset($this->site)) $this->site->xmlSerialize(true, $sxe->addChild('site'));
-        if (isset($this->route)) $this->route->xmlSerialize(true, $sxe->addChild('route'));
-        if (isset($this->method)) $this->method->xmlSerialize(true, $sxe->addChild('method'));
-        if (isset($this->doseRange)) $this->doseRange->xmlSerialize(true, $sxe->addChild('doseRange'));
-        if (isset($this->doseQuantity)) $this->doseQuantity->xmlSerialize(true, $sxe->addChild('doseQuantity'));
-        if (isset($this->maxDosePerPeriod)) $this->maxDosePerPeriod->xmlSerialize(true, $sxe->addChild('maxDosePerPeriod'));
-        if (isset($this->maxDosePerAdministration)) $this->maxDosePerAdministration->xmlSerialize(true, $sxe->addChild('maxDosePerAdministration'));
-        if (isset($this->maxDosePerLifetime)) $this->maxDosePerLifetime->xmlSerialize(true, $sxe->addChild('maxDosePerLifetime'));
-        if (isset($this->rateRatio)) $this->rateRatio->xmlSerialize(true, $sxe->addChild('rateRatio'));
-        if (isset($this->rateRange)) $this->rateRange->xmlSerialize(true, $sxe->addChild('rateRange'));
-        if (isset($this->rateQuantity)) $this->rateQuantity->xmlSerialize(true, $sxe->addChild('rateQuantity'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

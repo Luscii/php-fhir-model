@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,120 +63,325 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
- * A relationship of two Quantity values - expressed as a numerator and a denominator.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * A relationship of two Quantity values - expressed as a numerator and a
+ * denominator.
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRRatio
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRRatio extends FHIRElement implements \JsonSerializable
+class FHIRRatio extends FHIRElement
 {
-    /**
-     * The value of the numerator.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
-     */
-    public $numerator = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_RATIO;
+    const FIELD_DENOMINATOR = 'denominator';
+    const FIELD_DENOMINATOR_EXT = '_denominator';
+    const FIELD_NUMERATOR = 'numerator';
+    const FIELD_NUMERATOR_EXT = '_numerator';
 
     /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * The value of the denominator.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public $denominator = null;
+    protected $denominator = null;
 
     /**
-     * @var string
-     */
-    private $_fhirElementName = 'Ratio';
-
-    /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * The value of the numerator.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public function getNumerator() {
-        return $this->numerator;
+    protected $numerator = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRRatio Constructor
+     * @param null|array $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRRatio::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_DENOMINATOR])) {
+            $ext = (isset($data[self::FIELD_DENOMINATOR_EXT]) && is_array($data[self::FIELD_DENOMINATOR_EXT]))
+                ? $data[self::FIELD_DENOMINATOR_EXT]
+                : null;
+            if ($data[self::FIELD_DENOMINATOR] instanceof FHIRQuantity) {
+                $this->setDenominator($data[self::FIELD_DENOMINATOR]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_DENOMINATOR])) {
+                    $this->setDenominator(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_DENOMINATOR]] + $ext));
+                } else if (is_array($data[self::FIELD_DENOMINATOR])) {
+                    $this->setDenominator(new FHIRQuantity(array_merge($ext, $data[self::FIELD_DENOMINATOR])));
+                }
+            } else {
+                $this->setDenominator(new FHIRQuantity($data[self::FIELD_DENOMINATOR]));
+            }
+        }
+        if (isset($data[self::FIELD_NUMERATOR])) {
+            $ext = (isset($data[self::FIELD_NUMERATOR_EXT]) && is_array($data[self::FIELD_NUMERATOR_EXT]))
+                ? $data[self::FIELD_NUMERATOR_EXT]
+                : null;
+            if ($data[self::FIELD_NUMERATOR] instanceof FHIRQuantity) {
+                $this->setNumerator($data[self::FIELD_NUMERATOR]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_NUMERATOR])) {
+                    $this->setNumerator(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_NUMERATOR]] + $ext));
+                } else if (is_array($data[self::FIELD_NUMERATOR])) {
+                    $this->setNumerator(new FHIRQuantity(array_merge($ext, $data[self::FIELD_NUMERATOR])));
+                }
+            } else {
+                $this->setNumerator(new FHIRQuantity($data[self::FIELD_NUMERATOR]));
+            }
+        }
     }
 
     /**
-     * The value of the numerator.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRQuantity $numerator
-     * @return $this
+     * @return string
      */
-    public function setNumerator($numerator) {
-        $this->numerator = $numerator;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * The value of the denominator.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     * @return string|null
      */
-    public function getDenominator() {
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Ratio{$xmlns}></Ratio>";
+    }
+
+
+    /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The value of the denominator.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     */
+    public function getDenominator()
+    {
         return $this->denominator;
     }
 
     /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * The value of the denominator.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRQuantity $denominator
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity $denominator
+     * @return static
      */
-    public function setDenominator($denominator) {
+    public function setDenominator(FHIRQuantity $denominator = null)
+    {
         $this->denominator = $denominator;
         return $this;
     }
 
     /**
-     * @return string
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The value of the numerator.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
+    public function getNumerator()
+    {
+        return $this->numerator;
     }
 
     /**
-     * @param mixed $data
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The value of the numerator.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity $numerator
+     * @return static
      */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['numerator'])) {
-                $this->setNumerator($data['numerator']);
-            }
-            if (isset($data['denominator'])) {
-                $this->setDenominator($data['denominator']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setNumerator(FHIRQuantity $numerator = null)
+    {
+        $this->numerator = $numerator;
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
         }
-        parent::__construct($data);
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRRatio::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRRatio::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRRatio;
+        } elseif (!is_object($type) || !($type instanceof FHIRRatio)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRRatio::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRRatio or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($children->denominator)) {
+            $type->setDenominator(FHIRQuantity::xmlUnserialize($children->denominator));
+        }
+        if (isset($children->numerator)) {
+            $type->setNumerator(FHIRQuantity::xmlUnserialize($children->numerator));
+        }
+        return $type;
     }
 
     /**
-     * @return string
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getDenominator())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_DENOMINATOR, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getNumerator())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_NUMERATOR, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->numerator)) $json['numerator'] = $this->numerator;
-        if (isset($this->denominator)) $json['denominator'] = $this->denominator;
-        return $json;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getDenominator())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_DENOMINATOR] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_DENOMINATOR_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_DENOMINATOR] = $v;
+            }
+        }
+        if (null !== ($v = $this->getNumerator())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_NUMERATOR] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_NUMERATOR_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_NUMERATOR] = $v;
+            }
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Ratio xmlns="http://hl7.org/fhir"></Ratio>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->numerator)) $this->numerator->xmlSerialize(true, $sxe->addChild('numerator'));
-        if (isset($this->denominator)) $this->denominator->xmlSerialize(true, $sxe->addChild('denominator'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

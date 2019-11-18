@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,120 +63,358 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
  * A time period defined by a start and end date and optionally time.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRPeriod
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRPeriod extends FHIRElement implements \JsonSerializable
+class FHIRPeriod extends FHIRElement
 {
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_PERIOD;
+    const FIELD_END = 'end';
+    const FIELD_END_EXT = '_end';
+    const FIELD_START = 'start';
+    const FIELD_START_EXT = '_start';
+
     /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The end of the period. If the end of the period is missing, it means that the
+     * period is ongoing. The start may be in the past, and the end date in the future,
+     * which means that period is expected/planned to end at that time.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
+     */
+    protected $end = null;
+
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * The start of the period. The boundary is inclusive.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRDateTime
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    public $start = null;
+    protected $start = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
 
     /**
-     * The end of the period. If the end of the period is missing, it means that the period is ongoing. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRDateTime
+     * FHIRPeriod Constructor
+     * @param null|array $data
      */
-    public $end = null;
-
-    /**
-     * @var string
-     */
-    private $_fhirElementName = 'Period';
-
-    /**
-     * The start of the period. The boundary is inclusive.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRDateTime
-     */
-    public function getStart() {
-        return $this->start;
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRPeriod::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_END])) {
+            $ext = (isset($data[self::FIELD_END_EXT]) && is_array($data[self::FIELD_END_EXT]))
+                ? $data[self::FIELD_END_EXT]
+                : null;
+            if ($data[self::FIELD_END] instanceof FHIRDateTime) {
+                $this->setEnd($data[self::FIELD_END]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_END])) {
+                    $this->setEnd(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_END]] + $ext));
+                } else if (is_array($data[self::FIELD_END])) {
+                    $this->setEnd(new FHIRDateTime(array_merge($ext, $data[self::FIELD_END])));
+                }
+            } else {
+                $this->setEnd(new FHIRDateTime($data[self::FIELD_END]));
+            }
+        }
+        if (isset($data[self::FIELD_START])) {
+            $ext = (isset($data[self::FIELD_START_EXT]) && is_array($data[self::FIELD_START_EXT]))
+                ? $data[self::FIELD_START_EXT]
+                : null;
+            if ($data[self::FIELD_START] instanceof FHIRDateTime) {
+                $this->setStart($data[self::FIELD_START]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_START])) {
+                    $this->setStart(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_START]] + $ext));
+                } else if (is_array($data[self::FIELD_START])) {
+                    $this->setStart(new FHIRDateTime(array_merge($ext, $data[self::FIELD_START])));
+                }
+            } else {
+                $this->setStart(new FHIRDateTime($data[self::FIELD_START]));
+            }
+        }
     }
 
     /**
-     * The start of the period. The boundary is inclusive.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDateTime $start
-     * @return $this
+     * @return string
      */
-    public function setStart($start) {
-        $this->start = $start;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * The end of the period. If the end of the period is missing, it means that the period is ongoing. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRDateTime
+     * @return string|null
      */
-    public function getEnd() {
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Period{$xmlns}></Period>";
+    }
+
+
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The end of the period. If the end of the period is missing, it means that the
+     * period is ongoing. The start may be in the past, and the end date in the future,
+     * which means that period is expected/planned to end at that time.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
+     */
+    public function getEnd()
+    {
         return $this->end;
     }
 
     /**
-     * The end of the period. If the end of the period is missing, it means that the period is ongoing. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDateTime $end
-     * @return $this
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The end of the period. If the end of the period is missing, it means that the
+     * period is ongoing. The start may be in the past, and the end date in the future,
+     * which means that period is expected/planned to end at that time.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $end
+     * @return static
      */
-    public function setEnd($end) {
-        $this->end = $end;
+    public function setEnd($end = null)
+    {
+        if (null === $end) {
+            $this->end = null;
+            return $this;
+        }
+        if ($end instanceof FHIRDateTime) {
+            $this->end = $end;
+            return $this;
+        }
+        $this->end = new FHIRDateTime($end);
         return $this;
     }
 
     /**
-     * @return string
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The start of the period. The boundary is inclusive.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
+    public function getStart()
+    {
+        return $this->start;
     }
 
     /**
-     * @param mixed $data
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The start of the period. The boundary is inclusive.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $start
+     * @return static
      */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['start'])) {
-                $this->setStart($data['start']);
-            }
-            if (isset($data['end'])) {
-                $this->setEnd($data['end']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setStart($start = null)
+    {
+        if (null === $start) {
+            $this->start = null;
+            return $this;
         }
-        parent::__construct($data);
+        if ($start instanceof FHIRDateTime) {
+            $this->start = $start;
+            return $this;
+        }
+        $this->start = new FHIRDateTime($start);
+        return $this;
     }
 
     /**
-     * @return string
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRPeriod::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRPeriod::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRPeriod;
+        } elseif (!is_object($type) || !($type instanceof FHIRPeriod)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRPeriod::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRPeriod or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($attributes->end)) {
+            $type->setEnd((string)$attributes->end);
+        }
+        if (isset($children->end)) {
+            $type->setEnd(FHIRDateTime::xmlUnserialize($children->end));
+        }
+        if (isset($attributes->start)) {
+            $type->setStart((string)$attributes->start);
+        }
+        if (isset($children->start)) {
+            $type->setStart(FHIRDateTime::xmlUnserialize($children->start));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getEnd())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_END, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getStart())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_START, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->start)) $json['start'] = $this->start;
-        if (isset($this->end)) $json['end'] = $this->end;
-        return $json;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getEnd())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_END] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_END_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_END] = $v;
+            }
+        }
+        if (null !== ($v = $this->getStart())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_START] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_START_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_START] = $v;
+            }
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Period xmlns="http://hl7.org/fhir"></Period>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->start)) $this->start->xmlSerialize(true, $sxe->addChild('start'));
-        if (isset($this->end)) $this->end->xmlSerialize(true, $sxe->addChild('end'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

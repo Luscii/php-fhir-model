@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRResource;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRResource;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,268 +62,676 @@
  * 
  */
 
+use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleEntry;
+use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleLink;
+use HL7\FHIR\STU3\FHIRElement\FHIRBundleType;
+use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
+use HL7\FHIR\STU3\FHIRElement\FHIRSignature;
+use HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt;
 use HL7\FHIR\STU3\FHIRResource;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
  * A container for a collection of resources.
- * If the element is present, it must have either a @value, an @id, or extensions
+ * If the element is present, it must have either a \@value, an \@id, or extensions
+ *
+ * Class FHIRBundle
+ * @package \HL7\FHIR\STU3\FHIRResource
  */
-class FHIRBundle extends FHIRResource implements \JsonSerializable
+class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
 {
-    /**
-     * A persistent identifier for the batch that won't change as a batch is copied from server to server.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
-     */
-    public $identifier = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_BUNDLE;
+    const FIELD_ENTRY = 'entry';
+    const FIELD_IDENTIFIER = 'identifier';
+    const FIELD_IDENTIFIER_EXT = '_identifier';
+    const FIELD_LINK = 'link';
+    const FIELD_SIGNATURE = 'signature';
+    const FIELD_TOTAL = 'total';
+    const FIELD_TOTAL_EXT = '_total';
+    const FIELD_TYPE = 'type';
+    const FIELD_TYPE_EXT = '_type';
 
     /**
-     * Indicates the purpose of this bundle - how it was intended to be used.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRBundleType
+     * A container for a collection of resources.
+     *
+     * An entry in a bundle resource - will either contain a resource, or information
+     * about a resource (transactions and history only).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleEntry[]
      */
-    public $type = null;
+    protected $entry = [];
 
     /**
-     * If a set of search matches, this is the total number of matches for the search (as opposed to the number of results in this bundle).
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A persistent identifier for the batch that won't change as a batch is copied
+     * from server to server.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
-    public $total = null;
+    protected $identifier = null;
 
     /**
+     * A container for a collection of resources.
+     *
      * A series of links that provide context to this bundle.
-     * @var \HL7\FHIR\STU3\FHIRResource\FHIRBundle\FHIRBundleLink[]
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleLink[]
      */
-    public $link = [];
+    protected $link = [];
 
     /**
-     * An entry in a bundle resource - will either contain a resource, or information about a resource (transactions and history only).
-     * @var \HL7\FHIR\STU3\FHIRResource\FHIRBundle\FHIRBundleEntry[]
-     */
-    public $entry = [];
-
-    /**
+     * A digital signature along with supporting context. The signature may be
+     * electronic/cryptographic in nature, or a graphical image representing a
+     * hand-written signature, or a signature process. Different signature approaches
+     * have different utilities.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Digital Signature - base64 encoded. XML-DSIg or a JWT.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRSignature
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature
      */
-    public $signature = null;
+    protected $signature = null;
 
     /**
-     * @var string
+     * An integer with a value that is not negative (e.g. >= 0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * If a set of search matches, this is the total number of matches for the search
+     * (as opposed to the number of results in this bundle).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
-    private $_fhirElementName = 'Bundle';
+    protected $total = null;
 
     /**
-     * A persistent identifier for the batch that won't change as a batch is copied from server to server.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
-     */
-    public function getIdentifier() {
-        return $this->identifier;
-    }
-
-    /**
-     * A persistent identifier for the batch that won't change as a batch is copied from server to server.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
-     * @return $this
-     */
-    public function setIdentifier($identifier) {
-        $this->identifier = $identifier;
-        return $this;
-    }
-
-    /**
+     * Indicates the purpose of a bundle - how it was intended to be used.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * Indicates the purpose of this bundle - how it was intended to be used.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRBundleType
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBundleType
      */
-    public function getType() {
-        return $this->type;
+    protected $type = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRBundle Constructor
+     * @param null|array $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRBundle::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_ENTRY])) {
+            if (is_array($data[self::FIELD_ENTRY])) {
+                foreach($data[self::FIELD_ENTRY] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRBundleEntry) {
+                        $this->addEntry($v);
+                    } else {
+                        $this->addEntry(new FHIRBundleEntry($v));
+                    }
+                }
+            } else if ($data[self::FIELD_ENTRY] instanceof FHIRBundleEntry) {
+                $this->addEntry($data[self::FIELD_ENTRY]);
+            } else {
+                $this->addEntry(new FHIRBundleEntry($data[self::FIELD_ENTRY]));
+            }
+        }
+        if (isset($data[self::FIELD_IDENTIFIER])) {
+            $ext = (isset($data[self::FIELD_IDENTIFIER_EXT]) && is_array($data[self::FIELD_IDENTIFIER_EXT]))
+                ? $data[self::FIELD_IDENTIFIER_EXT]
+                : null;
+            if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+                $this->setIdentifier($data[self::FIELD_IDENTIFIER]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_IDENTIFIER])) {
+                    $this->setIdentifier(new FHIRIdentifier([FHIRIdentifier::FIELD_VALUE => $data[self::FIELD_IDENTIFIER]] + $ext));
+                } else if (is_array($data[self::FIELD_IDENTIFIER])) {
+                    $this->setIdentifier(new FHIRIdentifier(array_merge($ext, $data[self::FIELD_IDENTIFIER])));
+                }
+            } else {
+                $this->setIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+            }
+        }
+        if (isset($data[self::FIELD_LINK])) {
+            if (is_array($data[self::FIELD_LINK])) {
+                foreach($data[self::FIELD_LINK] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRBundleLink) {
+                        $this->addLink($v);
+                    } else {
+                        $this->addLink(new FHIRBundleLink($v));
+                    }
+                }
+            } else if ($data[self::FIELD_LINK] instanceof FHIRBundleLink) {
+                $this->addLink($data[self::FIELD_LINK]);
+            } else {
+                $this->addLink(new FHIRBundleLink($data[self::FIELD_LINK]));
+            }
+        }
+        if (isset($data[self::FIELD_SIGNATURE])) {
+            if ($data[self::FIELD_SIGNATURE] instanceof FHIRSignature) {
+                $this->setSignature($data[self::FIELD_SIGNATURE]);
+            } else {
+                $this->setSignature(new FHIRSignature($data[self::FIELD_SIGNATURE]));
+            }
+        }
+        if (isset($data[self::FIELD_TOTAL])) {
+            $ext = (isset($data[self::FIELD_TOTAL_EXT]) && is_array($data[self::FIELD_TOTAL_EXT]))
+                ? $data[self::FIELD_TOTAL_EXT]
+                : null;
+            if ($data[self::FIELD_TOTAL] instanceof FHIRUnsignedInt) {
+                $this->setTotal($data[self::FIELD_TOTAL]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_TOTAL])) {
+                    $this->setTotal(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $data[self::FIELD_TOTAL]] + $ext));
+                } else if (is_array($data[self::FIELD_TOTAL])) {
+                    $this->setTotal(new FHIRUnsignedInt(array_merge($ext, $data[self::FIELD_TOTAL])));
+                }
+            } else {
+                $this->setTotal(new FHIRUnsignedInt($data[self::FIELD_TOTAL]));
+            }
+        }
+        if (isset($data[self::FIELD_TYPE])) {
+            $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT]))
+                ? $data[self::FIELD_TYPE_EXT]
+                : null;
+            if ($data[self::FIELD_TYPE] instanceof FHIRBundleType) {
+                $this->setType($data[self::FIELD_TYPE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRBundleType([FHIRBundleType::FIELD_VALUE => $data[self::FIELD_TYPE]] + $ext));
+                } else if (is_array($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRBundleType(array_merge($ext, $data[self::FIELD_TYPE])));
+                }
+            } else {
+                $this->setType(new FHIRBundleType($data[self::FIELD_TYPE]));
+            }
+        }
     }
 
     /**
-     * Indicates the purpose of this bundle - how it was intended to be used.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBundleType $type
-     * @return $this
+     * @return string
      */
-    public function setType($type) {
-        $this->type = $type;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * If a set of search matches, this is the total number of matches for the search (as opposed to the number of results in this bundle).
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
+     * @return string|null
      */
-    public function getTotal() {
-        return $this->total;
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
     }
 
     /**
-     * If a set of search matches, this is the total number of matches for the search (as opposed to the number of results in this bundle).
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt $total
-     * @return $this
+     * @param null|string $xmlNamespace
+     * @return static
      */
-    public function setTotal($total) {
-        $this->total = $total;
-        return $this;
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
     }
 
     /**
-     * A series of links that provide context to this bundle.
-     * @return \HL7\FHIR\STU3\FHIRResource\FHIRBundle\FHIRBundleLink[]
+     * @return string
      */
-    public function getLink() {
-        return $this->link;
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Bundle{$xmlns}></Bundle>";
     }
 
     /**
-     * A series of links that provide context to this bundle.
-     * @param \HL7\FHIR\STU3\FHIRResource\FHIRBundle\FHIRBundleLink $link
-     * @return $this
+     * @return string
      */
-    public function addLink($link) {
-        $this->link[] = $link;
-        return $this;
+    public function _getResourceType()
+    {
+        return static::FHIR_TYPE_NAME;
     }
 
+
     /**
-     * An entry in a bundle resource - will either contain a resource, or information about a resource (transactions and history only).
-     * @return \HL7\FHIR\STU3\FHIRResource\FHIRBundle\FHIRBundleEntry[]
+     * A container for a collection of resources.
+     *
+     * An entry in a bundle resource - will either contain a resource, or information
+     * about a resource (transactions and history only).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleEntry[]
      */
-    public function getEntry() {
+    public function getEntry()
+    {
         return $this->entry;
     }
 
     /**
-     * An entry in a bundle resource - will either contain a resource, or information about a resource (transactions and history only).
-     * @param \HL7\FHIR\STU3\FHIRResource\FHIRBundle\FHIRBundleEntry $entry
-     * @return $this
+     * A container for a collection of resources.
+     *
+     * An entry in a bundle resource - will either contain a resource, or information
+     * about a resource (transactions and history only).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleEntry $entry
+     * @return static
      */
-    public function addEntry($entry) {
+    public function addEntry(FHIRBundleEntry $entry = null)
+    {
         $this->entry[] = $entry;
         return $this;
     }
 
     /**
-     * Digital Signature - base64 encoded. XML-DSIg or a JWT.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRSignature
+     * A container for a collection of resources.
+     *
+     * An entry in a bundle resource - will either contain a resource, or information
+     * about a resource (transactions and history only).
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleEntry[] $entry
+     * @return static
      */
-    public function getSignature() {
+    public function setEntry(array $entry = [])
+    {
+        $this->entry = [];
+        if ([] === $entry) {
+            return $this;
+        }
+        foreach($entry as $v) {
+            if ($v instanceof FHIRBundleEntry) {
+                $this->addEntry($v);
+            } else {
+                $this->addEntry(new FHIRBundleEntry($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A persistent identifier for the batch that won't change as a batch is copied
+     * from server to server.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A persistent identifier for the batch that won't change as a batch is copied
+     * from server to server.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier $identifier = null)
+    {
+        $this->identifier = $identifier;
+        return $this;
+    }
+
+    /**
+     * A container for a collection of resources.
+     *
+     * A series of links that provide context to this bundle.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleLink[]
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * A container for a collection of resources.
+     *
+     * A series of links that provide context to this bundle.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleLink $link
+     * @return static
+     */
+    public function addLink(FHIRBundleLink $link = null)
+    {
+        $this->link[] = $link;
+        return $this;
+    }
+
+    /**
+     * A container for a collection of resources.
+     *
+     * A series of links that provide context to this bundle.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleLink[] $link
+     * @return static
+     */
+    public function setLink(array $link = [])
+    {
+        $this->link = [];
+        if ([] === $link) {
+            return $this;
+        }
+        foreach($link as $v) {
+            if ($v instanceof FHIRBundleLink) {
+                $this->addLink($v);
+            } else {
+                $this->addLink(new FHIRBundleLink($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A digital signature along with supporting context. The signature may be
+     * electronic/cryptographic in nature, or a graphical image representing a
+     * hand-written signature, or a signature process. Different signature approaches
+     * have different utilities.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Digital Signature - base64 encoded. XML-DSIg or a JWT.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature
+     */
+    public function getSignature()
+    {
         return $this->signature;
     }
 
     /**
+     * A digital signature along with supporting context. The signature may be
+     * electronic/cryptographic in nature, or a graphical image representing a
+     * hand-written signature, or a signature process. Different signature approaches
+     * have different utilities.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Digital Signature - base64 encoded. XML-DSIg or a JWT.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRSignature $signature
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature $signature
+     * @return static
      */
-    public function setSignature($signature) {
+    public function setSignature(FHIRSignature $signature = null)
+    {
         $this->signature = $signature;
         return $this;
     }
 
     /**
-     * @return string
+     * An integer with a value that is not negative (e.g. >= 0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * If a set of search matches, this is the total number of matches for the search
+     * (as opposed to the number of results in this bundle).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
+    public function getTotal()
+    {
+        return $this->total;
     }
 
     /**
-     * @param mixed $data
+     * An integer with a value that is not negative (e.g. >= 0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * If a set of search matches, this is the total number of matches for the search
+     * (as opposed to the number of results in this bundle).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt $total
+     * @return static
      */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['identifier'])) {
-                $this->setIdentifier($data['identifier']);
-            }
-            if (isset($data['type'])) {
-                $this->setType($data['type']);
-            }
-            if (isset($data['total'])) {
-                $this->setTotal($data['total']);
-            }
-            if (isset($data['link'])) {
-                if (is_array($data['link'])) {
-                    foreach($data['link'] as $d) {
-                        $this->addLink($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"link" must be array of objects or null, '.gettype($data['link']).' seen.');
-                }
-            }
-            if (isset($data['entry'])) {
-                if (is_array($data['entry'])) {
-                    foreach($data['entry'] as $d) {
-                        $this->addEntry($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"entry" must be array of objects or null, '.gettype($data['entry']).' seen.');
-                }
-            }
-            if (isset($data['signature'])) {
-                $this->setSignature($data['signature']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setTotal($total = null)
+    {
+        if (null === $total) {
+            $this->total = null;
+            return $this;
         }
-        parent::__construct($data);
+        if ($total instanceof FHIRUnsignedInt) {
+            $this->total = $total;
+            return $this;
+        }
+        $this->total = new FHIRUnsignedInt($total);
+        return $this;
     }
 
     /**
-     * @return string
+     * Indicates the purpose of a bundle - how it was intended to be used.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates the purpose of this bundle - how it was intended to be used.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBundleType
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Indicates the purpose of a bundle - how it was intended to be used.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates the purpose of this bundle - how it was intended to be used.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBundleType $type
+     * @return static
+     */
+    public function setType(FHIRBundleType $type = null)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRBundle $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRResource\FHIRBundle
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRBundle::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRBundle::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRBundle;
+        } elseif (!is_object($type) || !($type instanceof FHIRBundle)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRBundle::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource\FHIRBundle or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRResource::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($children->entry)) {
+            foreach($children->entry as $child) {
+                $type->addEntry(FHIRBundleEntry::xmlUnserialize($child));
+            }
+        }
+        if (isset($children->identifier)) {
+            $type->setIdentifier(FHIRIdentifier::xmlUnserialize($children->identifier));
+        }
+        if (isset($children->link)) {
+            foreach($children->link as $child) {
+                $type->addLink(FHIRBundleLink::xmlUnserialize($child));
+            }
+        }
+        if (isset($children->signature)) {
+            $type->setSignature(FHIRSignature::xmlUnserialize($children->signature));
+        }
+        if (isset($attributes->total)) {
+            $type->setTotal((string)$attributes->total);
+        }
+        if (isset($children->total)) {
+            $type->setTotal(FHIRUnsignedInt::xmlUnserialize($children->total));
+        }
+        if (isset($children->type)) {
+            $type->setType(FHIRBundleType::xmlUnserialize($children->type));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if ([] !== ($vs = $this->getEntry())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_ENTRY, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if (null !== ($v = $this->getIdentifier())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
+        }
+        if ([] !== ($vs = $this->getLink())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_LINK, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if (null !== ($v = $this->getSignature())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_SIGNATURE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getTotal())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TOTAL, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getType())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        $json['resourceType'] = $this->_fhirElementName;
-        if (isset($this->identifier)) $json['identifier'] = $this->identifier;
-        if (isset($this->type)) $json['type'] = $this->type;
-        if (isset($this->total)) $json['total'] = $this->total;
-        if (0 < count($this->link)) {
-            $json['link'] = [];
-            foreach($this->link as $link) {
-                if (null !== $link) $json['link'][] = $link;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if ([] !== ($vs = $this->getEntry())) {
+            $a[self::FIELD_ENTRY] = $vs;
+        }
+        if (null !== ($v = $this->getIdentifier())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_IDENTIFIER] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_IDENTIFIER_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_IDENTIFIER] = $v;
             }
         }
-        if (0 < count($this->entry)) {
-            $json['entry'] = [];
-            foreach($this->entry as $entry) {
-                if (null !== $entry) $json['entry'][] = $entry;
+        if ([] !== ($vs = $this->getLink())) {
+            $a[self::FIELD_LINK] = $vs;
+        }
+        if (null !== ($v = $this->getSignature())) {
+            $a[self::FIELD_SIGNATURE] = $v;
+        }
+        if (null !== ($v = $this->getTotal())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_TOTAL] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_TOTAL_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_TOTAL] = $v;
             }
         }
-        if (isset($this->signature)) $json['signature'] = $this->signature;
-        return $json;
+        if (null !== ($v = $this->getType())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_TYPE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_TYPE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_TYPE] = $v;
+            }
+        }
+        return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Bundle xmlns="http://hl7.org/fhir"></Bundle>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->identifier)) $this->identifier->xmlSerialize(true, $sxe->addChild('identifier'));
-        if (isset($this->type)) $this->type->xmlSerialize(true, $sxe->addChild('type'));
-        if (isset($this->total)) $this->total->xmlSerialize(true, $sxe->addChild('total'));
-        if (0 < count($this->link)) {
-            foreach($this->link as $link) {
-                $link->xmlSerialize(true, $sxe->addChild('link'));
-            }
-        }
-        if (0 < count($this->entry)) {
-            foreach($this->entry as $entry) {
-                $entry->xmlSerialize(true, $sxe->addChild('entry'));
-            }
-        }
-        if (isset($this->signature)) $this->signature->xmlSerialize(true, $sxe->addChild('signature'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,236 +63,598 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
  * A technical identifier - identifies some entity uniquely and unambiguously.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRIdentifier
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRIdentifier extends FHIRElement implements \JsonSerializable
+class FHIRIdentifier extends FHIRElement
 {
-    /**
-     * The purpose of this identifier.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRIdentifierUse
-     */
-    public $use = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_IDENTIFIER;
+    const FIELD_ASSIGNER = 'assigner';
+    const FIELD_PERIOD = 'period';
+    const FIELD_SYSTEM = 'system';
+    const FIELD_SYSTEM_EXT = '_system';
+    const FIELD_TYPE = 'type';
+    const FIELD_USE = 'use';
+    const FIELD_USE_EXT = '_use';
+    const FIELD_VALUE = 'value';
+    const FIELD_VALUE_EXT = '_value';
 
     /**
-     * A coded type for the identifier that can be used to determine which identifier to use for a specific purpose.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public $type = null;
-
-    /**
-     * Establishes the namespace for the value - that is, a URL that describes a set values that are unique.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRUri
-     */
-    public $system = null;
-
-    /**
-     * The portion of the identifier typically relevant to the user and which is unique within the context of the system.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public $value = null;
-
-    /**
-     * Time period during which identifier is/was valid for use.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRPeriod
-     */
-    public $period = null;
-
-    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Organization that issued/manages the identifier.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRReference
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public $assigner = null;
+    protected $assigner = null;
 
     /**
-     * @var string
-     */
-    private $_fhirElementName = 'Identifier';
-
-    /**
-     * The purpose of this identifier.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRIdentifierUse
-     */
-    public function getUse() {
-        return $this->use;
-    }
-
-    /**
-     * The purpose of this identifier.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifierUse $use
-     * @return $this
-     */
-    public function setUse($use) {
-        $this->use = $use;
-        return $this;
-    }
-
-    /**
-     * A coded type for the identifier that can be used to determine which identifier to use for a specific purpose.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public function getType() {
-        return $this->type;
-    }
-
-    /**
-     * A coded type for the identifier that can be used to determine which identifier to use for a specific purpose.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
-     * @return $this
-     */
-    public function setType($type) {
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
-     * Establishes the namespace for the value - that is, a URL that describes a set values that are unique.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRUri
-     */
-    public function getSystem() {
-        return $this->system;
-    }
-
-    /**
-     * Establishes the namespace for the value - that is, a URL that describes a set values that are unique.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUri $system
-     * @return $this
-     */
-    public function setSystem($system) {
-        $this->system = $system;
-        return $this;
-    }
-
-    /**
-     * The portion of the identifier typically relevant to the user and which is unique within the context of the system.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getValue() {
-        return $this->value;
-    }
-
-    /**
-     * The portion of the identifier typically relevant to the user and which is unique within the context of the system.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $value
-     * @return $this
-     */
-    public function setValue($value) {
-        $this->value = $value;
-        return $this;
-    }
-
-    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Time period during which identifier is/was valid for use.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function getPeriod() {
-        return $this->period;
+    protected $period = null;
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Establishes the namespace for the value - that is, a URL that describes a set
+     * values that are unique.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
+     */
+    protected $system = null;
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A coded type for the identifier that can be used to determine which identifier
+     * to use for a specific purpose.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected $type = null;
+
+    /**
+     * Identifies the purpose for this identifier, if known .
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The purpose of this identifier.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifierUse
+     */
+    protected $use = null;
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The portion of the identifier typically relevant to the user and which is unique
+     * within the context of the system.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected $value = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRIdentifier Constructor
+     * @param null|array $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (is_scalar($data)) {
+            $this->setValue(new FHIRString($data));
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRIdentifier::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_ASSIGNER])) {
+            if ($data[self::FIELD_ASSIGNER] instanceof FHIRReference) {
+                $this->setAssigner($data[self::FIELD_ASSIGNER]);
+            } else {
+                $this->setAssigner(new FHIRReference($data[self::FIELD_ASSIGNER]));
+            }
+        }
+        if (isset($data[self::FIELD_PERIOD])) {
+            if ($data[self::FIELD_PERIOD] instanceof FHIRPeriod) {
+                $this->setPeriod($data[self::FIELD_PERIOD]);
+            } else {
+                $this->setPeriod(new FHIRPeriod($data[self::FIELD_PERIOD]));
+            }
+        }
+        if (isset($data[self::FIELD_SYSTEM])) {
+            $ext = (isset($data[self::FIELD_SYSTEM_EXT]) && is_array($data[self::FIELD_SYSTEM_EXT]))
+                ? $data[self::FIELD_SYSTEM_EXT]
+                : null;
+            if ($data[self::FIELD_SYSTEM] instanceof FHIRUri) {
+                $this->setSystem($data[self::FIELD_SYSTEM]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_SYSTEM])) {
+                    $this->setSystem(new FHIRUri([FHIRUri::FIELD_VALUE => $data[self::FIELD_SYSTEM]] + $ext));
+                } else if (is_array($data[self::FIELD_SYSTEM])) {
+                    $this->setSystem(new FHIRUri(array_merge($ext, $data[self::FIELD_SYSTEM])));
+                }
+            } else {
+                $this->setSystem(new FHIRUri($data[self::FIELD_SYSTEM]));
+            }
+        }
+        if (isset($data[self::FIELD_TYPE])) {
+            if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
+                $this->setType($data[self::FIELD_TYPE]);
+            } else {
+                $this->setType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
+            }
+        }
+        if (isset($data[self::FIELD_USE])) {
+            $ext = (isset($data[self::FIELD_USE_EXT]) && is_array($data[self::FIELD_USE_EXT]))
+                ? $data[self::FIELD_USE_EXT]
+                : null;
+            if ($data[self::FIELD_USE] instanceof FHIRIdentifierUse) {
+                $this->setUse($data[self::FIELD_USE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_USE])) {
+                    $this->setUse(new FHIRIdentifierUse([FHIRIdentifierUse::FIELD_VALUE => $data[self::FIELD_USE]] + $ext));
+                } else if (is_array($data[self::FIELD_USE])) {
+                    $this->setUse(new FHIRIdentifierUse(array_merge($ext, $data[self::FIELD_USE])));
+                }
+            } else {
+                $this->setUse(new FHIRIdentifierUse($data[self::FIELD_USE]));
+            }
+        }
+        if (isset($data[self::FIELD_VALUE])) {
+            $ext = (isset($data[self::FIELD_VALUE_EXT]) && is_array($data[self::FIELD_VALUE_EXT]))
+                ? $data[self::FIELD_VALUE_EXT]
+                : null;
+            if ($data[self::FIELD_VALUE] instanceof FHIRString) {
+                $this->setValue($data[self::FIELD_VALUE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_VALUE])) {
+                    $this->setValue(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_VALUE]] + $ext));
+                } else if (is_array($data[self::FIELD_VALUE])) {
+                    $this->setValue(new FHIRString(array_merge($ext, $data[self::FIELD_VALUE])));
+                }
+            } else {
+                $this->setValue(new FHIRString($data[self::FIELD_VALUE]));
+            }
+        }
     }
 
     /**
-     * Time period during which identifier is/was valid for use.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
-     * @return $this
+     * @return string
      */
-    public function setPeriod($period) {
-        $this->period = $period;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
+     * @return string|null
+     */
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Identifier{$xmlns}></Identifier>";
+    }
+
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Organization that issued/manages the identifier.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRReference
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getAssigner() {
+    public function getAssigner()
+    {
         return $this->assigner;
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Organization that issued/manages the identifier.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference $assigner
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $assigner
+     * @return static
      */
-    public function setAssigner($assigner) {
+    public function setAssigner(FHIRReference $assigner = null)
+    {
         $this->assigner = $assigner;
         return $this;
     }
 
     /**
-     * @return string
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Time period during which identifier is/was valid for use.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
+    public function getPeriod()
+    {
+        return $this->period;
     }
 
     /**
-     * @param mixed $data
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Time period during which identifier is/was valid for use.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
+     * @return static
      */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['use'])) {
-                $this->setUse($data['use']);
-            }
-            if (isset($data['type'])) {
-                $this->setType($data['type']);
-            }
-            if (isset($data['system'])) {
-                $this->setSystem($data['system']);
-            }
-            if (isset($data['value'])) {
-                $this->setValue($data['value']);
-            }
-            if (isset($data['period'])) {
-                $this->setPeriod($data['period']);
-            }
-            if (isset($data['assigner'])) {
-                $this->setAssigner($data['assigner']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setPeriod(FHIRPeriod $period = null)
+    {
+        $this->period = $period;
+        return $this;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Establishes the namespace for the value - that is, a URL that describes a set
+     * values that are unique.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
+     */
+    public function getSystem()
+    {
+        return $this->system;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Establishes the namespace for the value - that is, a URL that describes a set
+     * values that are unique.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUri $system
+     * @return static
+     */
+    public function setSystem($system = null)
+    {
+        if (null === $system) {
+            $this->system = null;
+            return $this;
         }
-        parent::__construct($data);
+        if ($system instanceof FHIRUri) {
+            $this->system = $system;
+            return $this;
+        }
+        $this->system = new FHIRUri($system);
+        return $this;
     }
 
     /**
-     * @return string
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A coded type for the identifier that can be used to determine which identifier
+     * to use for a specific purpose.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function __toString() {
-        return (string)$this->getValue();
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A coded type for the identifier that can be used to determine which identifier
+     * to use for a specific purpose.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
+     * @return static
+     */
+    public function setType(FHIRCodeableConcept $type = null)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * Identifies the purpose for this identifier, if known .
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The purpose of this identifier.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifierUse
+     */
+    public function getUse()
+    {
+        return $this->use;
+    }
+
+    /**
+     * Identifies the purpose for this identifier, if known .
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The purpose of this identifier.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifierUse $use
+     * @return static
+     */
+    public function setUse(FHIRIdentifierUse $use = null)
+    {
+        $this->use = $use;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The portion of the identifier typically relevant to the user and which is unique
+     * within the context of the system.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The portion of the identifier typically relevant to the user and which is unique
+     * within the context of the system.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $value
+     * @return static
+     */
+    public function setValue($value = null)
+    {
+        if (null === $value) {
+            $this->value = null;
+            return $this;
+        }
+        if ($value instanceof FHIRString) {
+            $this->value = $value;
+            return $this;
+        }
+        $this->value = new FHIRString($value);
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRIdentifier::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRIdentifier::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRIdentifier;
+        } elseif (!is_object($type) || !($type instanceof FHIRIdentifier)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRIdentifier::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($children->assigner)) {
+            $type->setAssigner(FHIRReference::xmlUnserialize($children->assigner));
+        }
+        if (isset($children->period)) {
+            $type->setPeriod(FHIRPeriod::xmlUnserialize($children->period));
+        }
+        if (isset($attributes->system)) {
+            $type->setSystem((string)$attributes->system);
+        }
+        if (isset($children->system)) {
+            $type->setSystem(FHIRUri::xmlUnserialize($children->system));
+        }
+        if (isset($children->type)) {
+            $type->setType(FHIRCodeableConcept::xmlUnserialize($children->type));
+        }
+        if (isset($children->use)) {
+            $type->setUse(FHIRIdentifierUse::xmlUnserialize($children->use));
+        }
+        if (isset($attributes->value)) {
+            $type->setValue((string)$attributes->value);
+        }
+        if (isset($children->value)) {
+            $type->setValue(FHIRString::xmlUnserialize($children->value));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getAssigner())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_ASSIGNER, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_PERIOD, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getSystem())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_SYSTEM, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getType())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getUse())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_USE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getValue())) {
+            $sxe->addAttribute(self::FIELD_VALUE, (string)$v);
+            $v->xmlSerialize($sxe->addChild(self::FIELD_VALUE, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->use)) $json['use'] = $this->use;
-        if (isset($this->type)) $json['type'] = $this->type;
-        if (isset($this->system)) $json['system'] = $this->system;
-        if (isset($this->value)) $json['value'] = $this->value;
-        if (isset($this->period)) $json['period'] = $this->period;
-        if (isset($this->assigner)) $json['assigner'] = $this->assigner;
-        return $json;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getAssigner())) {
+            $a[self::FIELD_ASSIGNER] = $v;
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            $a[self::FIELD_PERIOD] = $v;
+        }
+        if (null !== ($v = $this->getSystem())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_SYSTEM] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_SYSTEM_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_SYSTEM] = $v;
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            $a[self::FIELD_TYPE] = $v;
+        }
+        if (null !== ($v = $this->getUse())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_USE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_USE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_USE] = $v;
+            }
+        }
+        if (null !== ($v = $this->getValue())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_VALUE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_VALUE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_VALUE] = $v;
+            }
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Identifier xmlns="http://hl7.org/fhir"></Identifier>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->use)) $this->use->xmlSerialize(true, $sxe->addChild('use'));
-        if (isset($this->type)) $this->type->xmlSerialize(true, $sxe->addChild('type'));
-        if (isset($this->system)) $this->system->xmlSerialize(true, $sxe->addChild('system'));
-        if (isset($this->value)) $this->value->xmlSerialize(true, $sxe->addChild('value'));
-        if (isset($this->period)) $this->period->xmlSerialize(true, $sxe->addChild('period'));
-        if (isset($this->assigner)) $this->assigner->xmlSerialize(true, $sxe->addChild('assigner'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

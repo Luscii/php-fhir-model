@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,297 +63,854 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
- * A digital signature along with supporting context. The signature may be electronic/cryptographic in nature, or a graphical image representing a hand-written signature, or a signature process. Different signature approaches have different utilities.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * A digital signature along with supporting context. The signature may be
+ * electronic/cryptographic in nature, or a graphical image representing a
+ * hand-written signature, or a signature process. Different signature approaches
+ * have different utilities.
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRSignature
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRSignature extends FHIRElement implements \JsonSerializable
+class FHIRSignature extends FHIRElement
 {
-    /**
-     * An indication of the reason that the entity signed this document. This may be explicitly included as part of the signature information and can be used when determining accountability for various actions concerning the document.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCoding[]
-     */
-    public $type = [];
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SIGNATURE;
+    const FIELD_BLOB = 'blob';
+    const FIELD_BLOB_EXT = '_blob';
+    const FIELD_CONTENT_TYPE = 'contentType';
+    const FIELD_CONTENT_TYPE_EXT = '_contentType';
+    const FIELD_ON_BEHALF_OF_REFERENCE = 'onBehalfOfReference';
+    const FIELD_ON_BEHALF_OF_URI = 'onBehalfOfUri';
+    const FIELD_ON_BEHALF_OF_URI_EXT = '_onBehalfOfUri';
+    const FIELD_TYPE = 'type';
+    const FIELD_WHEN = 'when';
+    const FIELD_WHEN_EXT = '_when';
+    const FIELD_WHO_REFERENCE = 'whoReference';
+    const FIELD_WHO_URI = 'whoUri';
+    const FIELD_WHO_URI_EXT = '_whoUri';
 
     /**
+     * A stream of bytes
+     * A stream of bytes, base64 encoded
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The base64 encoding of the Signature content. When signature is not recorded
+     * electronically this element would be empty.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBase64Binary
+     */
+    protected $blob = null;
+
+    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A mime type that indicates the technical format of the signature. Important mime
+     * types are application/signature+xml for X ML DigSig, application/jwt for JWT,
+     * and image/* for a graphical image of a signature, etc.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
+     */
+    protected $contentType = null;
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A reference to an application-usable description of the identity that is
+     * represented by the signature.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected $onBehalfOfReference = null;
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to an application-usable description of the identity that is
+     * represented by the signature.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
+     */
+    protected $onBehalfOfUri = null;
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An indication of the reason that the entity signed this document. This may be
+     * explicitly included as part of the signature information and can be used when
+     * determining accountability for various actions concerning the document.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding[]
+     */
+    protected $type = [];
+
+    /**
+     * An instant in time - known at least to the second
+     * Note: This is intended for precisely observed times, typically system logs etc.,
+     * and not human-reported times - for them, see date and dateTime below. Time zone
+     * is always required
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * When the digital signature was signed.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRInstant
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
      */
-    public $when = null;
+    protected $when = null;
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRUri
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A reference to an application-usable description of the identity that signed
+     * (e.g. the signature used their private key).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public $whoUri = null;
+    protected $whoReference = null;
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to an application-usable description of the identity that signed
+     * (e.g. the signature used their private key).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
-    public $whoReference = null;
+    protected $whoUri = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRUri
+     * FHIRSignature Constructor
+     * @param null|array $data
      */
-    public $onBehalfOfUri = null;
-
-    /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public $onBehalfOfReference = null;
-
-    /**
-     * A mime type that indicates the technical format of the signature. Important mime types are application/signature+xml for X ML DigSig, application/jwt for JWT, and image/* for a graphical image of a signature, etc.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCode
-     */
-    public $contentType = null;
-
-    /**
-     * The base64 encoding of the Signature content. When signature is not recorded electronically this element would be empty.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRBase64Binary
-     */
-    public $blob = null;
-
-    /**
-     * @var string
-     */
-    private $_fhirElementName = 'Signature';
-
-    /**
-     * An indication of the reason that the entity signed this document. This may be explicitly included as part of the signature information and can be used when determining accountability for various actions concerning the document.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCoding[]
-     */
-    public function getType() {
-        return $this->type;
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRSignature::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_BLOB])) {
+            $ext = (isset($data[self::FIELD_BLOB_EXT]) && is_array($data[self::FIELD_BLOB_EXT]))
+                ? $data[self::FIELD_BLOB_EXT]
+                : null;
+            if ($data[self::FIELD_BLOB] instanceof FHIRBase64Binary) {
+                $this->setBlob($data[self::FIELD_BLOB]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_BLOB])) {
+                    $this->setBlob(new FHIRBase64Binary([FHIRBase64Binary::FIELD_VALUE => $data[self::FIELD_BLOB]] + $ext));
+                } else if (is_array($data[self::FIELD_BLOB])) {
+                    $this->setBlob(new FHIRBase64Binary(array_merge($ext, $data[self::FIELD_BLOB])));
+                }
+            } else {
+                $this->setBlob(new FHIRBase64Binary($data[self::FIELD_BLOB]));
+            }
+        }
+        if (isset($data[self::FIELD_CONTENT_TYPE])) {
+            $ext = (isset($data[self::FIELD_CONTENT_TYPE_EXT]) && is_array($data[self::FIELD_CONTENT_TYPE_EXT]))
+                ? $data[self::FIELD_CONTENT_TYPE_EXT]
+                : null;
+            if ($data[self::FIELD_CONTENT_TYPE] instanceof FHIRCode) {
+                $this->setContentType($data[self::FIELD_CONTENT_TYPE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_CONTENT_TYPE])) {
+                    $this->setContentType(new FHIRCode([FHIRCode::FIELD_VALUE => $data[self::FIELD_CONTENT_TYPE]] + $ext));
+                } else if (is_array($data[self::FIELD_CONTENT_TYPE])) {
+                    $this->setContentType(new FHIRCode(array_merge($ext, $data[self::FIELD_CONTENT_TYPE])));
+                }
+            } else {
+                $this->setContentType(new FHIRCode($data[self::FIELD_CONTENT_TYPE]));
+            }
+        }
+        if (isset($data[self::FIELD_ON_BEHALF_OF_REFERENCE])) {
+            if ($data[self::FIELD_ON_BEHALF_OF_REFERENCE] instanceof FHIRReference) {
+                $this->setOnBehalfOfReference($data[self::FIELD_ON_BEHALF_OF_REFERENCE]);
+            } else {
+                $this->setOnBehalfOfReference(new FHIRReference($data[self::FIELD_ON_BEHALF_OF_REFERENCE]));
+            }
+        }
+        if (isset($data[self::FIELD_ON_BEHALF_OF_URI])) {
+            $ext = (isset($data[self::FIELD_ON_BEHALF_OF_URI_EXT]) && is_array($data[self::FIELD_ON_BEHALF_OF_URI_EXT]))
+                ? $data[self::FIELD_ON_BEHALF_OF_URI_EXT]
+                : null;
+            if ($data[self::FIELD_ON_BEHALF_OF_URI] instanceof FHIRUri) {
+                $this->setOnBehalfOfUri($data[self::FIELD_ON_BEHALF_OF_URI]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_ON_BEHALF_OF_URI])) {
+                    $this->setOnBehalfOfUri(new FHIRUri([FHIRUri::FIELD_VALUE => $data[self::FIELD_ON_BEHALF_OF_URI]] + $ext));
+                } else if (is_array($data[self::FIELD_ON_BEHALF_OF_URI])) {
+                    $this->setOnBehalfOfUri(new FHIRUri(array_merge($ext, $data[self::FIELD_ON_BEHALF_OF_URI])));
+                }
+            } else {
+                $this->setOnBehalfOfUri(new FHIRUri($data[self::FIELD_ON_BEHALF_OF_URI]));
+            }
+        }
+        if (isset($data[self::FIELD_TYPE])) {
+            if (is_array($data[self::FIELD_TYPE])) {
+                foreach($data[self::FIELD_TYPE] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRCoding) {
+                        $this->addType($v);
+                    } else {
+                        $this->addType(new FHIRCoding($v));
+                    }
+                }
+            } else if ($data[self::FIELD_TYPE] instanceof FHIRCoding) {
+                $this->addType($data[self::FIELD_TYPE]);
+            } else {
+                $this->addType(new FHIRCoding($data[self::FIELD_TYPE]));
+            }
+        }
+        if (isset($data[self::FIELD_WHEN])) {
+            $ext = (isset($data[self::FIELD_WHEN_EXT]) && is_array($data[self::FIELD_WHEN_EXT]))
+                ? $data[self::FIELD_WHEN_EXT]
+                : null;
+            if ($data[self::FIELD_WHEN] instanceof FHIRInstant) {
+                $this->setWhen($data[self::FIELD_WHEN]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_WHEN])) {
+                    $this->setWhen(new FHIRInstant([FHIRInstant::FIELD_VALUE => $data[self::FIELD_WHEN]] + $ext));
+                } else if (is_array($data[self::FIELD_WHEN])) {
+                    $this->setWhen(new FHIRInstant(array_merge($ext, $data[self::FIELD_WHEN])));
+                }
+            } else {
+                $this->setWhen(new FHIRInstant($data[self::FIELD_WHEN]));
+            }
+        }
+        if (isset($data[self::FIELD_WHO_REFERENCE])) {
+            if ($data[self::FIELD_WHO_REFERENCE] instanceof FHIRReference) {
+                $this->setWhoReference($data[self::FIELD_WHO_REFERENCE]);
+            } else {
+                $this->setWhoReference(new FHIRReference($data[self::FIELD_WHO_REFERENCE]));
+            }
+        }
+        if (isset($data[self::FIELD_WHO_URI])) {
+            $ext = (isset($data[self::FIELD_WHO_URI_EXT]) && is_array($data[self::FIELD_WHO_URI_EXT]))
+                ? $data[self::FIELD_WHO_URI_EXT]
+                : null;
+            if ($data[self::FIELD_WHO_URI] instanceof FHIRUri) {
+                $this->setWhoUri($data[self::FIELD_WHO_URI]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_WHO_URI])) {
+                    $this->setWhoUri(new FHIRUri([FHIRUri::FIELD_VALUE => $data[self::FIELD_WHO_URI]] + $ext));
+                } else if (is_array($data[self::FIELD_WHO_URI])) {
+                    $this->setWhoUri(new FHIRUri(array_merge($ext, $data[self::FIELD_WHO_URI])));
+                }
+            } else {
+                $this->setWhoUri(new FHIRUri($data[self::FIELD_WHO_URI]));
+            }
+        }
     }
 
     /**
-     * An indication of the reason that the entity signed this document. This may be explicitly included as part of the signature information and can be used when determining accountability for various actions concerning the document.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCoding $type
-     * @return $this
+     * @return string
      */
-    public function addType($type) {
-        $this->type[] = $type;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Signature{$xmlns}></Signature>";
+    }
+
+
+    /**
+     * A stream of bytes
+     * A stream of bytes, base64 encoded
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The base64 encoding of the Signature content. When signature is not recorded
+     * electronically this element would be empty.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBase64Binary
+     */
+    public function getBlob()
+    {
+        return $this->blob;
+    }
+
+    /**
+     * A stream of bytes
+     * A stream of bytes, base64 encoded
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The base64 encoding of the Signature content. When signature is not recorded
+     * electronically this element would be empty.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBase64Binary $blob
+     * @return static
+     */
+    public function setBlob($blob = null)
+    {
+        if (null === $blob) {
+            $this->blob = null;
+            return $this;
+        }
+        if ($blob instanceof FHIRBase64Binary) {
+            $this->blob = $blob;
+            return $this;
+        }
+        $this->blob = new FHIRBase64Binary($blob);
         return $this;
     }
 
     /**
-     * When the digital signature was signed.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRInstant
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A mime type that indicates the technical format of the signature. Important mime
+     * types are application/signature+xml for X ML DigSig, application/jwt for JWT,
+     * and image/* for a graphical image of a signature, etc.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
-    public function getWhen() {
-        return $this->when;
+    public function getContentType()
+    {
+        return $this->contentType;
     }
 
     /**
-     * When the digital signature was signed.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRInstant $when
-     * @return $this
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A mime type that indicates the technical format of the signature. Important mime
+     * types are application/signature+xml for X ML DigSig, application/jwt for JWT,
+     * and image/* for a graphical image of a signature, etc.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCode $contentType
+     * @return static
      */
-    public function setWhen($when) {
-        $this->when = $when;
+    public function setContentType($contentType = null)
+    {
+        if (null === $contentType) {
+            $this->contentType = null;
+            return $this;
+        }
+        if ($contentType instanceof FHIRCode) {
+            $this->contentType = $contentType;
+            return $this;
+        }
+        $this->contentType = new FHIRCode($contentType);
         return $this;
     }
 
     /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRUri
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A reference to an application-usable description of the identity that is
+     * represented by the signature.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getWhoUri() {
-        return $this->whoUri;
-    }
-
-    /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUri $whoUri
-     * @return $this
-     */
-    public function setWhoUri($whoUri) {
-        $this->whoUri = $whoUri;
-        return $this;
-    }
-
-    /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getWhoReference() {
-        return $this->whoReference;
-    }
-
-    /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference $whoReference
-     * @return $this
-     */
-    public function setWhoReference($whoReference) {
-        $this->whoReference = $whoReference;
-        return $this;
-    }
-
-    /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRUri
-     */
-    public function getOnBehalfOfUri() {
-        return $this->onBehalfOfUri;
-    }
-
-    /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUri $onBehalfOfUri
-     * @return $this
-     */
-    public function setOnBehalfOfUri($onBehalfOfUri) {
-        $this->onBehalfOfUri = $onBehalfOfUri;
-        return $this;
-    }
-
-    /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getOnBehalfOfReference() {
+    public function getOnBehalfOfReference()
+    {
         return $this->onBehalfOfReference;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference $onBehalfOfReference
-     * @return $this
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A reference to an application-usable description of the identity that is
+     * represented by the signature.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $onBehalfOfReference
+     * @return static
      */
-    public function setOnBehalfOfReference($onBehalfOfReference) {
+    public function setOnBehalfOfReference(FHIRReference $onBehalfOfReference = null)
+    {
         $this->onBehalfOfReference = $onBehalfOfReference;
         return $this;
     }
 
     /**
-     * A mime type that indicates the technical format of the signature. Important mime types are application/signature+xml for X ML DigSig, application/jwt for JWT, and image/* for a graphical image of a signature, etc.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCode
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to an application-usable description of the identity that is
+     * represented by the signature.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
-    public function getContentType() {
-        return $this->contentType;
+    public function getOnBehalfOfUri()
+    {
+        return $this->onBehalfOfUri;
     }
 
     /**
-     * A mime type that indicates the technical format of the signature. Important mime types are application/signature+xml for X ML DigSig, application/jwt for JWT, and image/* for a graphical image of a signature, etc.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCode $contentType
-     * @return $this
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to an application-usable description of the identity that is
+     * represented by the signature.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUri $onBehalfOfUri
+     * @return static
      */
-    public function setContentType($contentType) {
-        $this->contentType = $contentType;
-        return $this;
-    }
-
-    /**
-     * The base64 encoding of the Signature content. When signature is not recorded electronically this element would be empty.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRBase64Binary
-     */
-    public function getBlob() {
-        return $this->blob;
-    }
-
-    /**
-     * The base64 encoding of the Signature content. When signature is not recorded electronically this element would be empty.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBase64Binary $blob
-     * @return $this
-     */
-    public function setBlob($blob) {
-        $this->blob = $blob;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['type'])) {
-                if (is_array($data['type'])) {
-                    foreach($data['type'] as $d) {
-                        $this->addType($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"type" must be array of objects or null, '.gettype($data['type']).' seen.');
-                }
-            }
-            if (isset($data['when'])) {
-                $this->setWhen($data['when']);
-            }
-            if (isset($data['whoUri'])) {
-                $this->setWhoUri($data['whoUri']);
-            }
-            if (isset($data['whoReference'])) {
-                $this->setWhoReference($data['whoReference']);
-            }
-            if (isset($data['onBehalfOfUri'])) {
-                $this->setOnBehalfOfUri($data['onBehalfOfUri']);
-            }
-            if (isset($data['onBehalfOfReference'])) {
-                $this->setOnBehalfOfReference($data['onBehalfOfReference']);
-            }
-            if (isset($data['contentType'])) {
-                $this->setContentType($data['contentType']);
-            }
-            if (isset($data['blob'])) {
-                $this->setBlob($data['blob']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setOnBehalfOfUri($onBehalfOfUri = null)
+    {
+        if (null === $onBehalfOfUri) {
+            $this->onBehalfOfUri = null;
+            return $this;
         }
-        parent::__construct($data);
+        if ($onBehalfOfUri instanceof FHIRUri) {
+            $this->onBehalfOfUri = $onBehalfOfUri;
+            return $this;
+        }
+        $this->onBehalfOfUri = new FHIRUri($onBehalfOfUri);
+        return $this;
     }
 
     /**
-     * @return string
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An indication of the reason that the entity signed this document. This may be
+     * explicitly included as part of the signature information and can be used when
+     * determining accountability for various actions concerning the document.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding[]
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An indication of the reason that the entity signed this document. This may be
+     * explicitly included as part of the signature information and can be used when
+     * determining accountability for various actions concerning the document.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding $type
+     * @return static
+     */
+    public function addType(FHIRCoding $type = null)
+    {
+        $this->type[] = $type;
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An indication of the reason that the entity signed this document. This may be
+     * explicitly included as part of the signature information and can be used when
+     * determining accountability for various actions concerning the document.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCoding[] $type
+     * @return static
+     */
+    public function setType(array $type = [])
+    {
+        $this->type = [];
+        if ([] === $type) {
+            return $this;
+        }
+        foreach($type as $v) {
+            if ($v instanceof FHIRCoding) {
+                $this->addType($v);
+            } else {
+                $this->addType(new FHIRCoding($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * An instant in time - known at least to the second
+     * Note: This is intended for precisely observed times, typically system logs etc.,
+     * and not human-reported times - for them, see date and dateTime below. Time zone
+     * is always required
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * When the digital signature was signed.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
+     */
+    public function getWhen()
+    {
+        return $this->when;
+    }
+
+    /**
+     * An instant in time - known at least to the second
+     * Note: This is intended for precisely observed times, typically system logs etc.,
+     * and not human-reported times - for them, see date and dateTime below. Time zone
+     * is always required
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * When the digital signature was signed.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant $when
+     * @return static
+     */
+    public function setWhen($when = null)
+    {
+        if (null === $when) {
+            $this->when = null;
+            return $this;
+        }
+        if ($when instanceof FHIRInstant) {
+            $this->when = $when;
+            return $this;
+        }
+        $this->when = new FHIRInstant($when);
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A reference to an application-usable description of the identity that signed
+     * (e.g. the signature used their private key).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getWhoReference()
+    {
+        return $this->whoReference;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A reference to an application-usable description of the identity that signed
+     * (e.g. the signature used their private key).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $whoReference
+     * @return static
+     */
+    public function setWhoReference(FHIRReference $whoReference = null)
+    {
+        $this->whoReference = $whoReference;
+        return $this;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to an application-usable description of the identity that signed
+     * (e.g. the signature used their private key).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
+     */
+    public function getWhoUri()
+    {
+        return $this->whoUri;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to an application-usable description of the identity that signed
+     * (e.g. the signature used their private key).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUri $whoUri
+     * @return static
+     */
+    public function setWhoUri($whoUri = null)
+    {
+        if (null === $whoUri) {
+            $this->whoUri = null;
+            return $this;
+        }
+        if ($whoUri instanceof FHIRUri) {
+            $this->whoUri = $whoUri;
+            return $this;
+        }
+        $this->whoUri = new FHIRUri($whoUri);
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRSignature::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRSignature::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRSignature;
+        } elseif (!is_object($type) || !($type instanceof FHIRSignature)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRSignature::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRSignature or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($attributes->blob)) {
+            $type->setBlob((string)$attributes->blob);
+        }
+        if (isset($children->blob)) {
+            $type->setBlob(FHIRBase64Binary::xmlUnserialize($children->blob));
+        }
+        if (isset($attributes->contentType)) {
+            $type->setContentType((string)$attributes->contentType);
+        }
+        if (isset($children->contentType)) {
+            $type->setContentType(FHIRCode::xmlUnserialize($children->contentType));
+        }
+        if (isset($children->onBehalfOfReference)) {
+            $type->setOnBehalfOfReference(FHIRReference::xmlUnserialize($children->onBehalfOfReference));
+        }
+        if (isset($attributes->onBehalfOfUri)) {
+            $type->setOnBehalfOfUri((string)$attributes->onBehalfOfUri);
+        }
+        if (isset($children->onBehalfOfUri)) {
+            $type->setOnBehalfOfUri(FHIRUri::xmlUnserialize($children->onBehalfOfUri));
+        }
+        if (isset($children->type)) {
+            foreach($children->type as $child) {
+                $type->addType(FHIRCoding::xmlUnserialize($child));
+            }
+        }
+        if (isset($attributes->when)) {
+            $type->setWhen((string)$attributes->when);
+        }
+        if (isset($children->when)) {
+            $type->setWhen(FHIRInstant::xmlUnserialize($children->when));
+        }
+        if (isset($children->whoReference)) {
+            $type->setWhoReference(FHIRReference::xmlUnserialize($children->whoReference));
+        }
+        if (isset($attributes->whoUri)) {
+            $type->setWhoUri((string)$attributes->whoUri);
+        }
+        if (isset($children->whoUri)) {
+            $type->setWhoUri(FHIRUri::xmlUnserialize($children->whoUri));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getBlob())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_BLOB, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getContentType())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_CONTENT_TYPE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getOnBehalfOfReference())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_ON_BEHALF_OF_REFERENCE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getOnBehalfOfUri())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_ON_BEHALF_OF_URI, null, $v->_getFHIRXMLNamespace()));
+        }
+        if ([] !== ($vs = $this->getType())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if (null !== ($v = $this->getWhen())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_WHEN, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getWhoReference())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_WHO_REFERENCE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getWhoUri())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_WHO_URI, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (0 < count($this->type)) {
-            $json['type'] = [];
-            foreach($this->type as $type) {
-                if (null !== $type) $json['type'][] = $type;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getBlob())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_BLOB] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_BLOB_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_BLOB] = $v;
             }
         }
-        if (isset($this->when)) $json['when'] = $this->when;
-        if (isset($this->whoUri)) $json['whoUri'] = $this->whoUri;
-        if (isset($this->whoReference)) $json['whoReference'] = $this->whoReference;
-        if (isset($this->onBehalfOfUri)) $json['onBehalfOfUri'] = $this->onBehalfOfUri;
-        if (isset($this->onBehalfOfReference)) $json['onBehalfOfReference'] = $this->onBehalfOfReference;
-        if (isset($this->contentType)) $json['contentType'] = $this->contentType;
-        if (isset($this->blob)) $json['blob'] = $this->blob;
-        return $json;
+        if (null !== ($v = $this->getContentType())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_CONTENT_TYPE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_CONTENT_TYPE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_CONTENT_TYPE] = $v;
+            }
+        }
+        if (null !== ($v = $this->getOnBehalfOfReference())) {
+            $a[self::FIELD_ON_BEHALF_OF_REFERENCE] = $v;
+        }
+        if (null !== ($v = $this->getOnBehalfOfUri())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_ON_BEHALF_OF_URI] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_ON_BEHALF_OF_URI_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_ON_BEHALF_OF_URI] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getType())) {
+            $a[self::FIELD_TYPE] = $vs;
+        }
+        if (null !== ($v = $this->getWhen())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_WHEN] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_WHEN_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_WHEN] = $v;
+            }
+        }
+        if (null !== ($v = $this->getWhoReference())) {
+            $a[self::FIELD_WHO_REFERENCE] = $v;
+        }
+        if (null !== ($v = $this->getWhoUri())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_WHO_URI] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_WHO_URI_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_WHO_URI] = $v;
+            }
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Signature xmlns="http://hl7.org/fhir"></Signature>');
-        parent::xmlSerialize(true, $sxe);
-        if (0 < count($this->type)) {
-            foreach($this->type as $type) {
-                $type->xmlSerialize(true, $sxe->addChild('type'));
-            }
-        }
-        if (isset($this->when)) $this->when->xmlSerialize(true, $sxe->addChild('when'));
-        if (isset($this->whoUri)) $this->whoUri->xmlSerialize(true, $sxe->addChild('whoUri'));
-        if (isset($this->whoReference)) $this->whoReference->xmlSerialize(true, $sxe->addChild('whoReference'));
-        if (isset($this->onBehalfOfUri)) $this->onBehalfOfUri->xmlSerialize(true, $sxe->addChild('onBehalfOfUri'));
-        if (isset($this->onBehalfOfReference)) $this->onBehalfOfReference->xmlSerialize(true, $sxe->addChild('onBehalfOfReference'));
-        if (isset($this->contentType)) $this->contentType->xmlSerialize(true, $sxe->addChild('contentType'));
-        if (isset($this->blob)) $this->blob->xmlSerialize(true, $sxe->addChild('blob'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

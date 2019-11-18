@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,149 +63,449 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
  * A reference from one resource to another.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRReference
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRReference extends FHIRElement implements \JsonSerializable
+class FHIRReference extends FHIRElement
 {
-    /**
-     * A reference to a location at which the other resource is found. The reference may be a relative reference, in which case it is relative to the service base URL, or an absolute URL that resolves to the location where the resource is found. The reference may be version specific or not. If the reference is not to a FHIR RESTful server, then it should be assumed to be version specific. Internal fragment references (start with '#') refer to contained resources.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public $reference = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_REFERENCE;
+    const FIELD_DISPLAY = 'display';
+    const FIELD_DISPLAY_EXT = '_display';
+    const FIELD_IDENTIFIER = 'identifier';
+    const FIELD_IDENTIFIER_EXT = '_identifier';
+    const FIELD_REFERENCE = 'reference';
+    const FIELD_REFERENCE_EXT = '_reference';
 
     /**
-     * An identifier for the other resource. This is used when there is no way to reference the other resource directly, either because the entity is not available through a FHIR server, or because there is no way for the author of the resource to convert a known identifier to an actual location. There is no requirement that a Reference.identifier point to something that is actually exposed as a FHIR instance, but it SHALL point to a business concept that would be expected to be exposed as a FHIR instance, and that instance would need to be of a FHIR resource type allowed by the reference.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Plain text narrative that identifies the resource in addition to the resource
+     * reference.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public $identifier = null;
+    protected $display = null;
 
     /**
-     * Plain text narrative that identifies the resource in addition to the resource reference.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An identifier for the other resource. This is used when there is no way to
+     * reference the other resource directly, either because the entity is not
+     * available through a FHIR server, or because there is no way for the author of
+     * the resource to convert a known identifier to an actual location. There is no
+     * requirement that a Reference.identifier point to something that is actually
+     * exposed as a FHIR instance, but it SHALL point to a business concept that would
+     * be expected to be exposed as a FHIR instance, and that instance would need to be
+     * of a FHIR resource type allowed by the reference.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
-    public $display = null;
+    protected $identifier = null;
 
     /**
-     * @var string
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to a location at which the other resource is found. The reference
+     * may be a relative reference, in which case it is relative to the service base
+     * URL, or an absolute URL that resolves to the location where the resource is
+     * found. The reference may be version specific or not. If the reference is not to
+     * a FHIR RESTful server, then it should be assumed to be version specific.
+     * Internal fragment references (start with '#') refer to contained resources.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    private $_fhirElementName = 'Reference';
+    protected $reference = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
 
     /**
-     * A reference to a location at which the other resource is found. The reference may be a relative reference, in which case it is relative to the service base URL, or an absolute URL that resolves to the location where the resource is found. The reference may be version specific or not. If the reference is not to a FHIR RESTful server, then it should be assumed to be version specific. Internal fragment references (start with '#') refer to contained resources.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * FHIRReference Constructor
+     * @param null|array $data
      */
-    public function getReference() {
-        return $this->reference;
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRReference::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_DISPLAY])) {
+            $ext = (isset($data[self::FIELD_DISPLAY_EXT]) && is_array($data[self::FIELD_DISPLAY_EXT]))
+                ? $data[self::FIELD_DISPLAY_EXT]
+                : null;
+            if ($data[self::FIELD_DISPLAY] instanceof FHIRString) {
+                $this->setDisplay($data[self::FIELD_DISPLAY]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_DISPLAY])) {
+                    $this->setDisplay(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_DISPLAY]] + $ext));
+                } else if (is_array($data[self::FIELD_DISPLAY])) {
+                    $this->setDisplay(new FHIRString(array_merge($ext, $data[self::FIELD_DISPLAY])));
+                }
+            } else {
+                $this->setDisplay(new FHIRString($data[self::FIELD_DISPLAY]));
+            }
+        }
+        if (isset($data[self::FIELD_IDENTIFIER])) {
+            $ext = (isset($data[self::FIELD_IDENTIFIER_EXT]) && is_array($data[self::FIELD_IDENTIFIER_EXT]))
+                ? $data[self::FIELD_IDENTIFIER_EXT]
+                : null;
+            if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+                $this->setIdentifier($data[self::FIELD_IDENTIFIER]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_IDENTIFIER])) {
+                    $this->setIdentifier(new FHIRIdentifier([FHIRIdentifier::FIELD_VALUE => $data[self::FIELD_IDENTIFIER]] + $ext));
+                } else if (is_array($data[self::FIELD_IDENTIFIER])) {
+                    $this->setIdentifier(new FHIRIdentifier(array_merge($ext, $data[self::FIELD_IDENTIFIER])));
+                }
+            } else {
+                $this->setIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+            }
+        }
+        if (isset($data[self::FIELD_REFERENCE])) {
+            $ext = (isset($data[self::FIELD_REFERENCE_EXT]) && is_array($data[self::FIELD_REFERENCE_EXT]))
+                ? $data[self::FIELD_REFERENCE_EXT]
+                : null;
+            if ($data[self::FIELD_REFERENCE] instanceof FHIRString) {
+                $this->setReference($data[self::FIELD_REFERENCE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_REFERENCE])) {
+                    $this->setReference(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_REFERENCE]] + $ext));
+                } else if (is_array($data[self::FIELD_REFERENCE])) {
+                    $this->setReference(new FHIRString(array_merge($ext, $data[self::FIELD_REFERENCE])));
+                }
+            } else {
+                $this->setReference(new FHIRString($data[self::FIELD_REFERENCE]));
+            }
+        }
     }
 
     /**
-     * A reference to a location at which the other resource is found. The reference may be a relative reference, in which case it is relative to the service base URL, or an absolute URL that resolves to the location where the resource is found. The reference may be version specific or not. If the reference is not to a FHIR RESTful server, then it should be assumed to be version specific. Internal fragment references (start with '#') refer to contained resources.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $reference
-     * @return $this
+     * @return string
      */
-    public function setReference($reference) {
-        $this->reference = $reference;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Reference{$xmlns}></Reference>";
+    }
+
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Plain text narrative that identifies the resource in addition to the resource
+     * reference.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Plain text narrative that identifies the resource in addition to the resource
+     * reference.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $display
+     * @return static
+     */
+    public function setDisplay($display = null)
+    {
+        if (null === $display) {
+            $this->display = null;
+            return $this;
+        }
+        if ($display instanceof FHIRString) {
+            $this->display = $display;
+            return $this;
+        }
+        $this->display = new FHIRString($display);
         return $this;
     }
 
     /**
-     * An identifier for the other resource. This is used when there is no way to reference the other resource directly, either because the entity is not available through a FHIR server, or because there is no way for the author of the resource to convert a known identifier to an actual location. There is no requirement that a Reference.identifier point to something that is actually exposed as a FHIR instance, but it SHALL point to a business concept that would be expected to be exposed as a FHIR instance, and that instance would need to be of a FHIR resource type allowed by the reference.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An identifier for the other resource. This is used when there is no way to
+     * reference the other resource directly, either because the entity is not
+     * available through a FHIR server, or because there is no way for the author of
+     * the resource to convert a known identifier to an actual location. There is no
+     * requirement that a Reference.identifier point to something that is actually
+     * exposed as a FHIR instance, but it SHALL point to a business concept that would
+     * be expected to be exposed as a FHIR instance, and that instance would need to be
+     * of a FHIR resource type allowed by the reference.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
-    public function getIdentifier() {
+    public function getIdentifier()
+    {
         return $this->identifier;
     }
 
     /**
-     * An identifier for the other resource. This is used when there is no way to reference the other resource directly, either because the entity is not available through a FHIR server, or because there is no way for the author of the resource to convert a known identifier to an actual location. There is no requirement that a Reference.identifier point to something that is actually exposed as a FHIR instance, but it SHALL point to a business concept that would be expected to be exposed as a FHIR instance, and that instance would need to be of a FHIR resource type allowed by the reference.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
-     * @return $this
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An identifier for the other resource. This is used when there is no way to
+     * reference the other resource directly, either because the entity is not
+     * available through a FHIR server, or because there is no way for the author of
+     * the resource to convert a known identifier to an actual location. There is no
+     * requirement that a Reference.identifier point to something that is actually
+     * exposed as a FHIR instance, but it SHALL point to a business concept that would
+     * be expected to be exposed as a FHIR instance, and that instance would need to be
+     * of a FHIR resource type allowed by the reference.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
+     * @return static
      */
-    public function setIdentifier($identifier) {
+    public function setIdentifier(FHIRIdentifier $identifier = null)
+    {
         $this->identifier = $identifier;
         return $this;
     }
 
     /**
-     * Plain text narrative that identifies the resource in addition to the resource reference.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to a location at which the other resource is found. The reference
+     * may be a relative reference, in which case it is relative to the service base
+     * URL, or an absolute URL that resolves to the location where the resource is
+     * found. The reference may be version specific or not. If the reference is not to
+     * a FHIR RESTful server, then it should be assumed to be version specific.
+     * Internal fragment references (start with '#') refer to contained resources.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getDisplay() {
-        return $this->display;
+    public function getReference()
+    {
+        return $this->reference;
     }
 
     /**
-     * Plain text narrative that identifies the resource in addition to the resource reference.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $display
-     * @return $this
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to a location at which the other resource is found. The reference
+     * may be a relative reference, in which case it is relative to the service base
+     * URL, or an absolute URL that resolves to the location where the resource is
+     * found. The reference may be version specific or not. If the reference is not to
+     * a FHIR RESTful server, then it should be assumed to be version specific.
+     * Internal fragment references (start with '#') refer to contained resources.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $reference
+     * @return static
      */
-    public function setDisplay($display) {
-        $this->display = $display;
+    public function setReference($reference = null)
+    {
+        if (null === $reference) {
+            $this->reference = null;
+            return $this;
+        }
+        if ($reference instanceof FHIRString) {
+            $this->reference = $reference;
+            return $this;
+        }
+        $this->reference = new FHIRString($reference);
         return $this;
     }
 
     /**
-     * @return string
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['reference'])) {
-                $this->setReference($data['reference']);
-            }
-            if (isset($data['identifier'])) {
-                $this->setIdentifier($data['identifier']);
-            }
-            if (isset($data['display'])) {
-                $this->setDisplay($data['display']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
         }
-        parent::__construct($data);
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRReference::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRReference::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRReference;
+        } elseif (!is_object($type) || !($type instanceof FHIRReference)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRReference::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRReference or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($attributes->display)) {
+            $type->setDisplay((string)$attributes->display);
+        }
+        if (isset($children->display)) {
+            $type->setDisplay(FHIRString::xmlUnserialize($children->display));
+        }
+        if (isset($children->identifier)) {
+            $type->setIdentifier(FHIRIdentifier::xmlUnserialize($children->identifier));
+        }
+        if (isset($attributes->reference)) {
+            $type->setReference((string)$attributes->reference);
+        }
+        if (isset($children->reference)) {
+            $type->setReference(FHIRString::xmlUnserialize($children->reference));
+        }
+        return $type;
     }
 
     /**
-     * @return string
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getDisplay())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_DISPLAY, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getIdentifier())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getReference())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_REFERENCE, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->reference)) $json['reference'] = $this->reference;
-        if (isset($this->identifier)) $json['identifier'] = $this->identifier;
-        if (isset($this->display)) $json['display'] = $this->display;
-        return $json;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getDisplay())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_DISPLAY] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_DISPLAY_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_DISPLAY] = $v;
+            }
+        }
+        if (null !== ($v = $this->getIdentifier())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_IDENTIFIER] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_IDENTIFIER_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_IDENTIFIER] = $v;
+            }
+        }
+        if (null !== ($v = $this->getReference())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_REFERENCE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_REFERENCE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_REFERENCE] = $v;
+            }
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Reference xmlns="http://hl7.org/fhir"></Reference>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->reference)) $this->reference->xmlSerialize(true, $sxe->addChild('reference'));
-        if (isset($this->identifier)) $this->identifier->xmlSerialize(true, $sxe->addChild('identifier'));
-        if (isset($this->display)) $this->display->xmlSerialize(true, $sxe->addChild('display'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

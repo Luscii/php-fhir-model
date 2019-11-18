@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,207 +63,553 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
- * Details for all kinds of technology mediated contact points for a person or organization, including telephone, email, etc.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * Details for all kinds of technology mediated contact points for a person or
+ * organization, including telephone, email, etc.
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRContactPoint
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRContactPoint extends FHIRElement implements \JsonSerializable
+class FHIRContactPoint extends FHIRElement
 {
-    /**
-     * Telecommunications form for contact point - what communications system is required to make use of the contact.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRContactPointSystem
-     */
-    public $system = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CONTACT_POINT;
+    const FIELD_PERIOD = 'period';
+    const FIELD_RANK = 'rank';
+    const FIELD_RANK_EXT = '_rank';
+    const FIELD_SYSTEM = 'system';
+    const FIELD_SYSTEM_EXT = '_system';
+    const FIELD_USE = 'use';
+    const FIELD_USE_EXT = '_use';
+    const FIELD_VALUE = 'value';
+    const FIELD_VALUE_EXT = '_value';
 
     /**
-     * The actual contact point details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public $value = null;
-
-    /**
-     * Identifies the purpose for the contact point.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRContactPointUse
-     */
-    public $use = null;
-
-    /**
-     * Specifies a preferred order in which to use a set of contacts. Contacts are ranked with lower values coming before higher values.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
-     */
-    public $rank = null;
-
-    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Time period when the contact point was/is in use.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public $period = null;
+    protected $period = null;
 
     /**
-     * @var string
+     * An integer with a value that is positive (e.g. >0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * Specifies a preferred order in which to use a set of contacts. Contacts are
+     * ranked with lower values coming before higher values.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
      */
-    private $_fhirElementName = 'ContactPoint';
+    protected $rank = null;
 
     /**
-     * Telecommunications form for contact point - what communications system is required to make use of the contact.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRContactPointSystem
+     * Telecommunications form for contact point
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Telecommunications form for contact point - what communications system is
+     * required to make use of the contact.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPointSystem
      */
-    public function getSystem() {
-        return $this->system;
-    }
+    protected $system = null;
 
     /**
-     * Telecommunications form for contact point - what communications system is required to make use of the contact.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactPointSystem $system
-     * @return $this
-     */
-    public function setSystem($system) {
-        $this->system = $system;
-        return $this;
-    }
-
-    /**
-     * The actual contact point details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getValue() {
-        return $this->value;
-    }
-
-    /**
-     * The actual contact point details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $value
-     * @return $this
-     */
-    public function setValue($value) {
-        $this->value = $value;
-        return $this;
-    }
-
-    /**
+     * Use of contact point
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * Identifies the purpose for the contact point.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRContactPointUse
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPointUse
      */
-    public function getUse() {
-        return $this->use;
+    protected $use = null;
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The actual contact point details, in a form that is meaningful to the designated
+     * communication system (i.e. phone number or email address).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected $value = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRContactPoint Constructor
+     * @param null|array $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (is_scalar($data)) {
+            $this->setValue(new FHIRString($data));
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRContactPoint::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_PERIOD])) {
+            if ($data[self::FIELD_PERIOD] instanceof FHIRPeriod) {
+                $this->setPeriod($data[self::FIELD_PERIOD]);
+            } else {
+                $this->setPeriod(new FHIRPeriod($data[self::FIELD_PERIOD]));
+            }
+        }
+        if (isset($data[self::FIELD_RANK])) {
+            $ext = (isset($data[self::FIELD_RANK_EXT]) && is_array($data[self::FIELD_RANK_EXT]))
+                ? $data[self::FIELD_RANK_EXT]
+                : null;
+            if ($data[self::FIELD_RANK] instanceof FHIRPositiveInt) {
+                $this->setRank($data[self::FIELD_RANK]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_RANK])) {
+                    $this->setRank(new FHIRPositiveInt([FHIRPositiveInt::FIELD_VALUE => $data[self::FIELD_RANK]] + $ext));
+                } else if (is_array($data[self::FIELD_RANK])) {
+                    $this->setRank(new FHIRPositiveInt(array_merge($ext, $data[self::FIELD_RANK])));
+                }
+            } else {
+                $this->setRank(new FHIRPositiveInt($data[self::FIELD_RANK]));
+            }
+        }
+        if (isset($data[self::FIELD_SYSTEM])) {
+            $ext = (isset($data[self::FIELD_SYSTEM_EXT]) && is_array($data[self::FIELD_SYSTEM_EXT]))
+                ? $data[self::FIELD_SYSTEM_EXT]
+                : null;
+            if ($data[self::FIELD_SYSTEM] instanceof FHIRContactPointSystem) {
+                $this->setSystem($data[self::FIELD_SYSTEM]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_SYSTEM])) {
+                    $this->setSystem(new FHIRContactPointSystem([FHIRContactPointSystem::FIELD_VALUE => $data[self::FIELD_SYSTEM]] + $ext));
+                } else if (is_array($data[self::FIELD_SYSTEM])) {
+                    $this->setSystem(new FHIRContactPointSystem(array_merge($ext, $data[self::FIELD_SYSTEM])));
+                }
+            } else {
+                $this->setSystem(new FHIRContactPointSystem($data[self::FIELD_SYSTEM]));
+            }
+        }
+        if (isset($data[self::FIELD_USE])) {
+            $ext = (isset($data[self::FIELD_USE_EXT]) && is_array($data[self::FIELD_USE_EXT]))
+                ? $data[self::FIELD_USE_EXT]
+                : null;
+            if ($data[self::FIELD_USE] instanceof FHIRContactPointUse) {
+                $this->setUse($data[self::FIELD_USE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_USE])) {
+                    $this->setUse(new FHIRContactPointUse([FHIRContactPointUse::FIELD_VALUE => $data[self::FIELD_USE]] + $ext));
+                } else if (is_array($data[self::FIELD_USE])) {
+                    $this->setUse(new FHIRContactPointUse(array_merge($ext, $data[self::FIELD_USE])));
+                }
+            } else {
+                $this->setUse(new FHIRContactPointUse($data[self::FIELD_USE]));
+            }
+        }
+        if (isset($data[self::FIELD_VALUE])) {
+            $ext = (isset($data[self::FIELD_VALUE_EXT]) && is_array($data[self::FIELD_VALUE_EXT]))
+                ? $data[self::FIELD_VALUE_EXT]
+                : null;
+            if ($data[self::FIELD_VALUE] instanceof FHIRString) {
+                $this->setValue($data[self::FIELD_VALUE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_VALUE])) {
+                    $this->setValue(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_VALUE]] + $ext));
+                } else if (is_array($data[self::FIELD_VALUE])) {
+                    $this->setValue(new FHIRString(array_merge($ext, $data[self::FIELD_VALUE])));
+                }
+            } else {
+                $this->setValue(new FHIRString($data[self::FIELD_VALUE]));
+            }
+        }
     }
 
     /**
-     * Identifies the purpose for the contact point.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactPointUse $use
-     * @return $this
+     * @return string
      */
-    public function setUse($use) {
-        $this->use = $use;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * Specifies a preferred order in which to use a set of contacts. Contacts are ranked with lower values coming before higher values.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
+     * @return string|null
      */
-    public function getRank() {
-        return $this->rank;
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
     }
 
     /**
-     * Specifies a preferred order in which to use a set of contacts. Contacts are ranked with lower values coming before higher values.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt $rank
-     * @return $this
+     * @param null|string $xmlNamespace
+     * @return static
      */
-    public function setRank($rank) {
-        $this->rank = $rank;
-        return $this;
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
     }
 
     /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<ContactPoint{$xmlns}></ContactPoint>";
+    }
+
+
+    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Time period when the contact point was/is in use.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function getPeriod() {
+    public function getPeriod()
+    {
         return $this->period;
     }
 
     /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Time period when the contact point was/is in use.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
+     * @return static
      */
-    public function setPeriod($period) {
+    public function setPeriod(FHIRPeriod $period = null)
+    {
         $this->period = $period;
         return $this;
     }
 
     /**
-     * @return string
+     * An integer with a value that is positive (e.g. >0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * Specifies a preferred order in which to use a set of contacts. Contacts are
+     * ranked with lower values coming before higher values.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
+    public function getRank()
+    {
+        return $this->rank;
     }
 
     /**
-     * @param mixed $data
+     * An integer with a value that is positive (e.g. >0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * Specifies a preferred order in which to use a set of contacts. Contacts are
+     * ranked with lower values coming before higher values.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt $rank
+     * @return static
      */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['system'])) {
-                $this->setSystem($data['system']);
-            }
-            if (isset($data['value'])) {
-                $this->setValue($data['value']);
-            }
-            if (isset($data['use'])) {
-                $this->setUse($data['use']);
-            }
-            if (isset($data['rank'])) {
-                $this->setRank($data['rank']);
-            }
-            if (isset($data['period'])) {
-                $this->setPeriod($data['period']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setRank($rank = null)
+    {
+        if (null === $rank) {
+            $this->rank = null;
+            return $this;
         }
-        parent::__construct($data);
+        if ($rank instanceof FHIRPositiveInt) {
+            $this->rank = $rank;
+            return $this;
+        }
+        $this->rank = new FHIRPositiveInt($rank);
+        return $this;
     }
 
     /**
-     * @return string
+     * Telecommunications form for contact point
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Telecommunications form for contact point - what communications system is
+     * required to make use of the contact.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPointSystem
      */
-    public function __toString() {
-        return (string)$this->getValue();
+    public function getSystem()
+    {
+        return $this->system;
+    }
+
+    /**
+     * Telecommunications form for contact point
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Telecommunications form for contact point - what communications system is
+     * required to make use of the contact.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPointSystem $system
+     * @return static
+     */
+    public function setSystem(FHIRContactPointSystem $system = null)
+    {
+        $this->system = $system;
+        return $this;
+    }
+
+    /**
+     * Use of contact point
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies the purpose for the contact point.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPointUse
+     */
+    public function getUse()
+    {
+        return $this->use;
+    }
+
+    /**
+     * Use of contact point
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies the purpose for the contact point.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPointUse $use
+     * @return static
+     */
+    public function setUse(FHIRContactPointUse $use = null)
+    {
+        $this->use = $use;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The actual contact point details, in a form that is meaningful to the designated
+     * communication system (i.e. phone number or email address).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The actual contact point details, in a form that is meaningful to the designated
+     * communication system (i.e. phone number or email address).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $value
+     * @return static
+     */
+    public function setValue($value = null)
+    {
+        if (null === $value) {
+            $this->value = null;
+            return $this;
+        }
+        if ($value instanceof FHIRString) {
+            $this->value = $value;
+            return $this;
+        }
+        $this->value = new FHIRString($value);
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPoint $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPoint
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRContactPoint::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRContactPoint::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRContactPoint;
+        } elseif (!is_object($type) || !($type instanceof FHIRContactPoint)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRContactPoint::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRContactPoint or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($children->period)) {
+            $type->setPeriod(FHIRPeriod::xmlUnserialize($children->period));
+        }
+        if (isset($attributes->rank)) {
+            $type->setRank((string)$attributes->rank);
+        }
+        if (isset($children->rank)) {
+            $type->setRank(FHIRPositiveInt::xmlUnserialize($children->rank));
+        }
+        if (isset($children->system)) {
+            $type->setSystem(FHIRContactPointSystem::xmlUnserialize($children->system));
+        }
+        if (isset($children->use)) {
+            $type->setUse(FHIRContactPointUse::xmlUnserialize($children->use));
+        }
+        if (isset($attributes->value)) {
+            $type->setValue((string)$attributes->value);
+        }
+        if (isset($children->value)) {
+            $type->setValue(FHIRString::xmlUnserialize($children->value));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getPeriod())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_PERIOD, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getRank())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_RANK, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getSystem())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_SYSTEM, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getUse())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_USE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getValue())) {
+            $sxe->addAttribute(self::FIELD_VALUE, (string)$v);
+            $v->xmlSerialize($sxe->addChild(self::FIELD_VALUE, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->system)) $json['system'] = $this->system;
-        if (isset($this->value)) $json['value'] = $this->value;
-        if (isset($this->use)) $json['use'] = $this->use;
-        if (isset($this->rank)) $json['rank'] = $this->rank;
-        if (isset($this->period)) $json['period'] = $this->period;
-        return $json;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getPeriod())) {
+            $a[self::FIELD_PERIOD] = $v;
+        }
+        if (null !== ($v = $this->getRank())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_RANK] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_RANK_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_RANK] = $v;
+            }
+        }
+        if (null !== ($v = $this->getSystem())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_SYSTEM] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_SYSTEM_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_SYSTEM] = $v;
+            }
+        }
+        if (null !== ($v = $this->getUse())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_USE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_USE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_USE] = $v;
+            }
+        }
+        if (null !== ($v = $this->getValue())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_VALUE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_VALUE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_VALUE] = $v;
+            }
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<ContactPoint xmlns="http://hl7.org/fhir"></ContactPoint>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->system)) $this->system->xmlSerialize(true, $sxe->addChild('system'));
-        if (isset($this->value)) $this->value->xmlSerialize(true, $sxe->addChild('value'));
-        if (isset($this->use)) $this->use->xmlSerialize(true, $sxe->addChild('use'));
-        if (isset($this->rank)) $this->rank->xmlSerialize(true, $sxe->addChild('rank'));
-        if (isset($this->period)) $this->period->xmlSerialize(true, $sxe->addChild('period'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

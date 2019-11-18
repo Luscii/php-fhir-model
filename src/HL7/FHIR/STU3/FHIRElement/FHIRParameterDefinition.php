@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,265 +63,766 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
- * The parameters to the module. This collection specifies both the input and output parameters. Input parameters are provided by the caller as part of the $evaluate operation. Output parameters are included in the GuidanceResponse.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * The parameters to the module. This collection specifies both the input and
+ * output parameters. Input parameters are provided by the caller as part of the
+ * $evaluate operation. Output parameters are included in the GuidanceResponse.
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRParameterDefinition
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRParameterDefinition extends FHIRElement implements \JsonSerializable
+class FHIRParameterDefinition extends FHIRElement
 {
-    /**
-     * The name of the parameter used to allow access to the value of the parameter in evaluation contexts.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCode
-     */
-    public $name = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_PARAMETER_DEFINITION;
+    const FIELD_DOCUMENTATION = 'documentation';
+    const FIELD_DOCUMENTATION_EXT = '_documentation';
+    const FIELD_MAX = 'max';
+    const FIELD_MAX_EXT = '_max';
+    const FIELD_MIN = 'min';
+    const FIELD_MIN_EXT = '_min';
+    const FIELD_NAME = 'name';
+    const FIELD_NAME_EXT = '_name';
+    const FIELD_PROFILE = 'profile';
+    const FIELD_TYPE = 'type';
+    const FIELD_TYPE_EXT = '_type';
+    const FIELD_USE = 'use';
+    const FIELD_USE_EXT = '_use';
 
     /**
-     * Whether the parameter is input or output for the module.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCode
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A brief discussion of what the parameter is for and how it is used by the
+     * module.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public $use = null;
+    protected $documentation = null;
 
     /**
-     * The minimum number of times this parameter SHALL appear in the request or response.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRInteger
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The maximum number of times this element is permitted to appear in the request
+     * or response.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public $min = null;
+    protected $max = null;
 
     /**
-     * The maximum number of times this element is permitted to appear in the request or response.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * A whole number
+     * 32 bit number; for values larger than this, use decimal
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The minimum number of times this parameter SHALL appear in the request or
+     * response.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger
      */
-    public $max = null;
+    protected $min = null;
 
     /**
-     * A brief discussion of what the parameter is for and how it is used by the module.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The name of the parameter used to allow access to the value of the parameter in
+     * evaluation contexts.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
-    public $documentation = null;
+    protected $name = null;
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * If specified, this indicates a profile that the input data must conform to, or
+     * that the output data will conform to.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected $profile = null;
+
+    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
      * The type of the parameter.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCode
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
-    public $type = null;
+    protected $type = null;
 
     /**
-     * If specified, this indicates a profile that the input data must conform to, or that the output data will conform to.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public $profile = null;
-
-    /**
-     * @var string
-     */
-    private $_fhirElementName = 'ParameterDefinition';
-
-    /**
-     * The name of the parameter used to allow access to the value of the parameter in evaluation contexts.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCode
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
-     * The name of the parameter used to allow access to the value of the parameter in evaluation contexts.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCode $name
-     * @return $this
-     */
-    public function setName($name) {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
      * Whether the parameter is input or output for the module.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCode
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
-    public function getUse() {
-        return $this->use;
+    protected $use = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRParameterDefinition Constructor
+     * @param null|array $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRParameterDefinition::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_DOCUMENTATION])) {
+            $ext = (isset($data[self::FIELD_DOCUMENTATION_EXT]) && is_array($data[self::FIELD_DOCUMENTATION_EXT]))
+                ? $data[self::FIELD_DOCUMENTATION_EXT]
+                : null;
+            if ($data[self::FIELD_DOCUMENTATION] instanceof FHIRString) {
+                $this->setDocumentation($data[self::FIELD_DOCUMENTATION]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_DOCUMENTATION])) {
+                    $this->setDocumentation(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_DOCUMENTATION]] + $ext));
+                } else if (is_array($data[self::FIELD_DOCUMENTATION])) {
+                    $this->setDocumentation(new FHIRString(array_merge($ext, $data[self::FIELD_DOCUMENTATION])));
+                }
+            } else {
+                $this->setDocumentation(new FHIRString($data[self::FIELD_DOCUMENTATION]));
+            }
+        }
+        if (isset($data[self::FIELD_MAX])) {
+            $ext = (isset($data[self::FIELD_MAX_EXT]) && is_array($data[self::FIELD_MAX_EXT]))
+                ? $data[self::FIELD_MAX_EXT]
+                : null;
+            if ($data[self::FIELD_MAX] instanceof FHIRString) {
+                $this->setMax($data[self::FIELD_MAX]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_MAX])) {
+                    $this->setMax(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_MAX]] + $ext));
+                } else if (is_array($data[self::FIELD_MAX])) {
+                    $this->setMax(new FHIRString(array_merge($ext, $data[self::FIELD_MAX])));
+                }
+            } else {
+                $this->setMax(new FHIRString($data[self::FIELD_MAX]));
+            }
+        }
+        if (isset($data[self::FIELD_MIN])) {
+            $ext = (isset($data[self::FIELD_MIN_EXT]) && is_array($data[self::FIELD_MIN_EXT]))
+                ? $data[self::FIELD_MIN_EXT]
+                : null;
+            if ($data[self::FIELD_MIN] instanceof FHIRInteger) {
+                $this->setMin($data[self::FIELD_MIN]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_MIN])) {
+                    $this->setMin(new FHIRInteger([FHIRInteger::FIELD_VALUE => $data[self::FIELD_MIN]] + $ext));
+                } else if (is_array($data[self::FIELD_MIN])) {
+                    $this->setMin(new FHIRInteger(array_merge($ext, $data[self::FIELD_MIN])));
+                }
+            } else {
+                $this->setMin(new FHIRInteger($data[self::FIELD_MIN]));
+            }
+        }
+        if (isset($data[self::FIELD_NAME])) {
+            $ext = (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT]))
+                ? $data[self::FIELD_NAME_EXT]
+                : null;
+            if ($data[self::FIELD_NAME] instanceof FHIRCode) {
+                $this->setName($data[self::FIELD_NAME]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_NAME])) {
+                    $this->setName(new FHIRCode([FHIRCode::FIELD_VALUE => $data[self::FIELD_NAME]] + $ext));
+                } else if (is_array($data[self::FIELD_NAME])) {
+                    $this->setName(new FHIRCode(array_merge($ext, $data[self::FIELD_NAME])));
+                }
+            } else {
+                $this->setName(new FHIRCode($data[self::FIELD_NAME]));
+            }
+        }
+        if (isset($data[self::FIELD_PROFILE])) {
+            if ($data[self::FIELD_PROFILE] instanceof FHIRReference) {
+                $this->setProfile($data[self::FIELD_PROFILE]);
+            } else {
+                $this->setProfile(new FHIRReference($data[self::FIELD_PROFILE]));
+            }
+        }
+        if (isset($data[self::FIELD_TYPE])) {
+            $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT]))
+                ? $data[self::FIELD_TYPE_EXT]
+                : null;
+            if ($data[self::FIELD_TYPE] instanceof FHIRCode) {
+                $this->setType($data[self::FIELD_TYPE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRCode([FHIRCode::FIELD_VALUE => $data[self::FIELD_TYPE]] + $ext));
+                } else if (is_array($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRCode(array_merge($ext, $data[self::FIELD_TYPE])));
+                }
+            } else {
+                $this->setType(new FHIRCode($data[self::FIELD_TYPE]));
+            }
+        }
+        if (isset($data[self::FIELD_USE])) {
+            $ext = (isset($data[self::FIELD_USE_EXT]) && is_array($data[self::FIELD_USE_EXT]))
+                ? $data[self::FIELD_USE_EXT]
+                : null;
+            if ($data[self::FIELD_USE] instanceof FHIRCode) {
+                $this->setUse($data[self::FIELD_USE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_USE])) {
+                    $this->setUse(new FHIRCode([FHIRCode::FIELD_VALUE => $data[self::FIELD_USE]] + $ext));
+                } else if (is_array($data[self::FIELD_USE])) {
+                    $this->setUse(new FHIRCode(array_merge($ext, $data[self::FIELD_USE])));
+                }
+            } else {
+                $this->setUse(new FHIRCode($data[self::FIELD_USE]));
+            }
+        }
     }
 
     /**
-     * Whether the parameter is input or output for the module.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCode $use
-     * @return $this
+     * @return string
      */
-    public function setUse($use) {
-        $this->use = $use;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * The minimum number of times this parameter SHALL appear in the request or response.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRInteger
+     * @return string|null
      */
-    public function getMin() {
-        return $this->min;
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
     }
 
     /**
-     * The minimum number of times this parameter SHALL appear in the request or response.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRInteger $min
-     * @return $this
+     * @param null|string $xmlNamespace
+     * @return static
      */
-    public function setMin($min) {
-        $this->min = $min;
-        return $this;
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
     }
 
     /**
-     * The maximum number of times this element is permitted to appear in the request or response.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * @return string
      */
-    public function getMax() {
-        return $this->max;
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<ParameterDefinition{$xmlns}></ParameterDefinition>";
     }
 
-    /**
-     * The maximum number of times this element is permitted to appear in the request or response.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $max
-     * @return $this
-     */
-    public function setMax($max) {
-        $this->max = $max;
-        return $this;
-    }
 
     /**
-     * A brief discussion of what the parameter is for and how it is used by the module.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A brief discussion of what the parameter is for and how it is used by the
+     * module.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getDocumentation() {
+    public function getDocumentation()
+    {
         return $this->documentation;
     }
 
     /**
-     * A brief discussion of what the parameter is for and how it is used by the module.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $documentation
-     * @return $this
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A brief discussion of what the parameter is for and how it is used by the
+     * module.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $documentation
+     * @return static
      */
-    public function setDocumentation($documentation) {
-        $this->documentation = $documentation;
+    public function setDocumentation($documentation = null)
+    {
+        if (null === $documentation) {
+            $this->documentation = null;
+            return $this;
+        }
+        if ($documentation instanceof FHIRString) {
+            $this->documentation = $documentation;
+            return $this;
+        }
+        $this->documentation = new FHIRString($documentation);
         return $this;
     }
 
     /**
-     * The type of the parameter.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCode
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The maximum number of times this element is permitted to appear in the request
+     * or response.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getType() {
-        return $this->type;
+    public function getMax()
+    {
+        return $this->max;
     }
 
     /**
-     * The type of the parameter.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCode $type
-     * @return $this
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The maximum number of times this element is permitted to appear in the request
+     * or response.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $max
+     * @return static
      */
-    public function setType($type) {
-        $this->type = $type;
+    public function setMax($max = null)
+    {
+        if (null === $max) {
+            $this->max = null;
+            return $this;
+        }
+        if ($max instanceof FHIRString) {
+            $this->max = $max;
+            return $this;
+        }
+        $this->max = new FHIRString($max);
         return $this;
     }
 
     /**
-     * If specified, this indicates a profile that the input data must conform to, or that the output data will conform to.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * A whole number
+     * 32 bit number; for values larger than this, use decimal
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The minimum number of times this parameter SHALL appear in the request or
+     * response.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger
      */
-    public function getProfile() {
+    public function getMin()
+    {
+        return $this->min;
+    }
+
+    /**
+     * A whole number
+     * 32 bit number; for values larger than this, use decimal
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The minimum number of times this parameter SHALL appear in the request or
+     * response.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger $min
+     * @return static
+     */
+    public function setMin($min = null)
+    {
+        if (null === $min) {
+            $this->min = null;
+            return $this;
+        }
+        if ($min instanceof FHIRInteger) {
+            $this->min = $min;
+            return $this;
+        }
+        $this->min = new FHIRInteger($min);
+        return $this;
+    }
+
+    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The name of the parameter used to allow access to the value of the parameter in
+     * evaluation contexts.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The name of the parameter used to allow access to the value of the parameter in
+     * evaluation contexts.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCode $name
+     * @return static
+     */
+    public function setName($name = null)
+    {
+        if (null === $name) {
+            $this->name = null;
+            return $this;
+        }
+        if ($name instanceof FHIRCode) {
+            $this->name = $name;
+            return $this;
+        }
+        $this->name = new FHIRCode($name);
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * If specified, this indicates a profile that the input data must conform to, or
+     * that the output data will conform to.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getProfile()
+    {
         return $this->profile;
     }
 
     /**
-     * If specified, this indicates a profile that the input data must conform to, or that the output data will conform to.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference $profile
-     * @return $this
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * If specified, this indicates a profile that the input data must conform to, or
+     * that the output data will conform to.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $profile
+     * @return static
      */
-    public function setProfile($profile) {
+    public function setProfile(FHIRReference $profile = null)
+    {
         $this->profile = $profile;
         return $this;
     }
 
     /**
-     * @return string
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The type of the parameter.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
-     * @param mixed $data
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The type of the parameter.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCode $type
+     * @return static
      */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['name'])) {
-                $this->setName($data['name']);
-            }
-            if (isset($data['use'])) {
-                $this->setUse($data['use']);
-            }
-            if (isset($data['min'])) {
-                $this->setMin($data['min']);
-            }
-            if (isset($data['max'])) {
-                $this->setMax($data['max']);
-            }
-            if (isset($data['documentation'])) {
-                $this->setDocumentation($data['documentation']);
-            }
-            if (isset($data['type'])) {
-                $this->setType($data['type']);
-            }
-            if (isset($data['profile'])) {
-                $this->setProfile($data['profile']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setType($type = null)
+    {
+        if (null === $type) {
+            $this->type = null;
+            return $this;
         }
-        parent::__construct($data);
+        if ($type instanceof FHIRCode) {
+            $this->type = $type;
+            return $this;
+        }
+        $this->type = new FHIRCode($type);
+        return $this;
     }
 
     /**
-     * @return string
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * Whether the parameter is input or output for the module.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function getUse()
+    {
+        return $this->use;
+    }
+
+    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * Whether the parameter is input or output for the module.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCode $use
+     * @return static
+     */
+    public function setUse($use = null)
+    {
+        if (null === $use) {
+            $this->use = null;
+            return $this;
+        }
+        if ($use instanceof FHIRCode) {
+            $this->use = $use;
+            return $this;
+        }
+        $this->use = new FHIRCode($use);
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRParameterDefinition $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRParameterDefinition
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRParameterDefinition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRParameterDefinition::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRParameterDefinition;
+        } elseif (!is_object($type) || !($type instanceof FHIRParameterDefinition)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRParameterDefinition::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRParameterDefinition or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($attributes->documentation)) {
+            $type->setDocumentation((string)$attributes->documentation);
+        }
+        if (isset($children->documentation)) {
+            $type->setDocumentation(FHIRString::xmlUnserialize($children->documentation));
+        }
+        if (isset($attributes->max)) {
+            $type->setMax((string)$attributes->max);
+        }
+        if (isset($children->max)) {
+            $type->setMax(FHIRString::xmlUnserialize($children->max));
+        }
+        if (isset($attributes->min)) {
+            $type->setMin((string)$attributes->min);
+        }
+        if (isset($children->min)) {
+            $type->setMin(FHIRInteger::xmlUnserialize($children->min));
+        }
+        if (isset($attributes->name)) {
+            $type->setName((string)$attributes->name);
+        }
+        if (isset($children->name)) {
+            $type->setName(FHIRCode::xmlUnserialize($children->name));
+        }
+        if (isset($children->profile)) {
+            $type->setProfile(FHIRReference::xmlUnserialize($children->profile));
+        }
+        if (isset($attributes->type)) {
+            $type->setType((string)$attributes->type);
+        }
+        if (isset($children->type)) {
+            $type->setType(FHIRCode::xmlUnserialize($children->type));
+        }
+        if (isset($attributes->use)) {
+            $type->setUse((string)$attributes->use);
+        }
+        if (isset($children->use)) {
+            $type->setUse(FHIRCode::xmlUnserialize($children->use));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getDocumentation())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_DOCUMENTATION, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getMax())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_MAX, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getMin())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_MIN, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getName())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_NAME, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getProfile())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_PROFILE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getType())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getUse())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_USE, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->name)) $json['name'] = $this->name;
-        if (isset($this->use)) $json['use'] = $this->use;
-        if (isset($this->min)) $json['min'] = $this->min;
-        if (isset($this->max)) $json['max'] = $this->max;
-        if (isset($this->documentation)) $json['documentation'] = $this->documentation;
-        if (isset($this->type)) $json['type'] = $this->type;
-        if (isset($this->profile)) $json['profile'] = $this->profile;
-        return $json;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getDocumentation())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_DOCUMENTATION] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_DOCUMENTATION_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_DOCUMENTATION] = $v;
+            }
+        }
+        if (null !== ($v = $this->getMax())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_MAX] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_MAX_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_MAX] = $v;
+            }
+        }
+        if (null !== ($v = $this->getMin())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_MIN] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_MIN_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_MIN] = $v;
+            }
+        }
+        if (null !== ($v = $this->getName())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_NAME] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_NAME_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_NAME] = $v;
+            }
+        }
+        if (null !== ($v = $this->getProfile())) {
+            $a[self::FIELD_PROFILE] = $v;
+        }
+        if (null !== ($v = $this->getType())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_TYPE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_TYPE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_TYPE] = $v;
+            }
+        }
+        if (null !== ($v = $this->getUse())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_USE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_USE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_USE] = $v;
+            }
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<ParameterDefinition xmlns="http://hl7.org/fhir"></ParameterDefinition>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->name)) $this->name->xmlSerialize(true, $sxe->addChild('name'));
-        if (isset($this->use)) $this->use->xmlSerialize(true, $sxe->addChild('use'));
-        if (isset($this->min)) $this->min->xmlSerialize(true, $sxe->addChild('min'));
-        if (isset($this->max)) $this->max->xmlSerialize(true, $sxe->addChild('max'));
-        if (isset($this->documentation)) $this->documentation->xmlSerialize(true, $sxe->addChild('documentation'));
-        if (isset($this->type)) $this->type->xmlSerialize(true, $sxe->addChild('type'));
-        if (isset($this->profile)) $this->profile->xmlSerialize(true, $sxe->addChild('profile'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

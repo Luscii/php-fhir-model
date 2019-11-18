@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,267 +63,786 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementCodeFilter;
+use HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementDateFilter;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
- * Describes a required data item for evaluation in terms of the type of data, and optional code or date-based filters of the data.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * Describes a required data item for evaluation in terms of the type of data, and
+ * optional code or date-based filters of the data.
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRDataRequirement
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRDataRequirement extends FHIRElement implements \JsonSerializable
+class FHIRDataRequirement extends FHIRElement
 {
-    /**
-     * The type of the required data, specified as the type name of a resource. For profiles, this value is set to the type of the base resource of the profile.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCode
-     */
-    public $type = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DATA_REQUIREMENT;
+    const FIELD_CODE_FILTER = 'codeFilter';
+    const FIELD_DATE_FILTER = 'dateFilter';
+    const FIELD_MUST_SUPPORT = 'mustSupport';
+    const FIELD_MUST_SUPPORT_EXT = '_mustSupport';
+    const FIELD_PROFILE = 'profile';
+    const FIELD_PROFILE_EXT = '_profile';
+    const FIELD_TYPE = 'type';
+    const FIELD_TYPE_EXT = '_type';
 
     /**
-     * The profile of the required data, specified as the uri of the profile definition.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRUri[]
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Code filters specify additional constraints on the data, specifying the value
+     * set of interest for a particular element of the data.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementCodeFilter[]
      */
-    public $profile = [];
+    protected $codeFilter = [];
 
     /**
-     * Indicates that specific elements of the type are referenced by the knowledge module and must be supported by the consumer in order to obtain an effective evaluation. This does not mean that a value is required for this element, only that the consuming system must understand the element and be able to provide values for it if they are available. Note that the value for this element can be a path to allow references to nested elements. In that case, all the elements along the path must be supported.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString[]
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Date filters specify additional constraints on the data in terms of the
+     * applicable date range for specific elements.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementDateFilter[]
      */
-    public $mustSupport = [];
+    protected $dateFilter = [];
 
     /**
-     * Code filters specify additional constraints on the data, specifying the value set of interest for a particular element of the data.
-     * @var \HL7\FHIR\STU3\FHIRResource\FHIRDataRequirement\FHIRDataRequirementCodeFilter[]
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates that specific elements of the type are referenced by the knowledge
+     * module and must be supported by the consumer in order to obtain an effective
+     * evaluation. This does not mean that a value is required for this element, only
+     * that the consuming system must understand the element and be able to provide
+     * values for it if they are available. Note that the value for this element can be
+     * a path to allow references to nested elements. In that case, all the elements
+     * along the path must be supported.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    public $codeFilter = [];
+    protected $mustSupport = [];
 
     /**
-     * Date filters specify additional constraints on the data in terms of the applicable date range for specific elements.
-     * @var \HL7\FHIR\STU3\FHIRResource\FHIRDataRequirement\FHIRDataRequirementDateFilter[]
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The profile of the required data, specified as the uri of the profile
+     * definition.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri[]
      */
-    public $dateFilter = [];
+    protected $profile = [];
 
     /**
-     * @var string
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The type of the required data, specified as the type name of a resource. For
+     * profiles, this value is set to the type of the base resource of the profile.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
-    private $_fhirElementName = 'DataRequirement';
+    protected $type = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
 
     /**
-     * The type of the required data, specified as the type name of a resource. For profiles, this value is set to the type of the base resource of the profile.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCode
+     * FHIRDataRequirement Constructor
+     * @param null|array $data
      */
-    public function getType() {
-        return $this->type;
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRDataRequirement::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_CODE_FILTER])) {
+            if (is_array($data[self::FIELD_CODE_FILTER])) {
+                foreach($data[self::FIELD_CODE_FILTER] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRDataRequirementCodeFilter) {
+                        $this->addCodeFilter($v);
+                    } else {
+                        $this->addCodeFilter(new FHIRDataRequirementCodeFilter($v));
+                    }
+                }
+            } else if ($data[self::FIELD_CODE_FILTER] instanceof FHIRDataRequirementCodeFilter) {
+                $this->addCodeFilter($data[self::FIELD_CODE_FILTER]);
+            } else {
+                $this->addCodeFilter(new FHIRDataRequirementCodeFilter($data[self::FIELD_CODE_FILTER]));
+            }
+        }
+        if (isset($data[self::FIELD_DATE_FILTER])) {
+            if (is_array($data[self::FIELD_DATE_FILTER])) {
+                foreach($data[self::FIELD_DATE_FILTER] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRDataRequirementDateFilter) {
+                        $this->addDateFilter($v);
+                    } else {
+                        $this->addDateFilter(new FHIRDataRequirementDateFilter($v));
+                    }
+                }
+            } else if ($data[self::FIELD_DATE_FILTER] instanceof FHIRDataRequirementDateFilter) {
+                $this->addDateFilter($data[self::FIELD_DATE_FILTER]);
+            } else {
+                $this->addDateFilter(new FHIRDataRequirementDateFilter($data[self::FIELD_DATE_FILTER]));
+            }
+        }
+        if (isset($data[self::FIELD_MUST_SUPPORT])) {
+            $ext = (isset($data[self::FIELD_MUST_SUPPORT_EXT]) && is_array($data[self::FIELD_MUST_SUPPORT_EXT]))
+                ? $data[self::FIELD_MUST_SUPPORT_EXT]
+                : null;
+            if (is_array($data[self::FIELD_MUST_SUPPORT])) {
+                foreach($data[self::FIELD_MUST_SUPPORT] as $i => $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRString) {
+                        $this->addMustSupport($v);
+                    } elseif (null !== $ext && isset($ext[$i]) && is_array($ext[$i])) {
+                        if (is_scalar($v)) {
+                            $this->addMustSupport(new FHIRString([FHIRString::FIELD_VALUE => $v] + $ext[$i]));
+                        } elseif (is_array($v)) {
+                            $this->addMustSupport(new FHIRString(array_merge($v, $ext[$i])));
+                        }
+                    } else {
+                        $this->addMustSupport(new FHIRString($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_MUST_SUPPORT] instanceof FHIRString) {
+                $this->addMustSupport($data[self::FIELD_MUST_SUPPORT]);
+            } elseif (null !== $ext && is_scalar($data[self::FIELD_MUST_SUPPORT])) {
+                $this->addMustSupport(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_MUST_SUPPORT]] + $ext));
+            } else {
+                $this->addMustSupport(new FHIRString($data[self::FIELD_MUST_SUPPORT]));
+            }
+        }
+        if (isset($data[self::FIELD_PROFILE])) {
+            $ext = (isset($data[self::FIELD_PROFILE_EXT]) && is_array($data[self::FIELD_PROFILE_EXT]))
+                ? $data[self::FIELD_PROFILE_EXT]
+                : null;
+            if (is_array($data[self::FIELD_PROFILE])) {
+                foreach($data[self::FIELD_PROFILE] as $i => $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRUri) {
+                        $this->addProfile($v);
+                    } elseif (null !== $ext && isset($ext[$i]) && is_array($ext[$i])) {
+                        if (is_scalar($v)) {
+                            $this->addProfile(new FHIRUri([FHIRUri::FIELD_VALUE => $v] + $ext[$i]));
+                        } elseif (is_array($v)) {
+                            $this->addProfile(new FHIRUri(array_merge($v, $ext[$i])));
+                        }
+                    } else {
+                        $this->addProfile(new FHIRUri($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_PROFILE] instanceof FHIRUri) {
+                $this->addProfile($data[self::FIELD_PROFILE]);
+            } elseif (null !== $ext && is_scalar($data[self::FIELD_PROFILE])) {
+                $this->addProfile(new FHIRUri([FHIRUri::FIELD_VALUE => $data[self::FIELD_PROFILE]] + $ext));
+            } else {
+                $this->addProfile(new FHIRUri($data[self::FIELD_PROFILE]));
+            }
+        }
+        if (isset($data[self::FIELD_TYPE])) {
+            $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT]))
+                ? $data[self::FIELD_TYPE_EXT]
+                : null;
+            if ($data[self::FIELD_TYPE] instanceof FHIRCode) {
+                $this->setType($data[self::FIELD_TYPE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRCode([FHIRCode::FIELD_VALUE => $data[self::FIELD_TYPE]] + $ext));
+                } else if (is_array($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRCode(array_merge($ext, $data[self::FIELD_TYPE])));
+                }
+            } else {
+                $this->setType(new FHIRCode($data[self::FIELD_TYPE]));
+            }
+        }
     }
 
     /**
-     * The type of the required data, specified as the type name of a resource. For profiles, this value is set to the type of the base resource of the profile.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCode $type
-     * @return $this
+     * @return string
      */
-    public function setType($type) {
-        $this->type = $type;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * The profile of the required data, specified as the uri of the profile definition.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRUri[]
+     * @return string|null
      */
-    public function getProfile() {
-        return $this->profile;
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
     }
 
     /**
-     * The profile of the required data, specified as the uri of the profile definition.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUri $profile
-     * @return $this
+     * @param null|string $xmlNamespace
+     * @return static
      */
-    public function addProfile($profile) {
-        $this->profile[] = $profile;
-        return $this;
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
     }
 
     /**
-     * Indicates that specific elements of the type are referenced by the knowledge module and must be supported by the consumer in order to obtain an effective evaluation. This does not mean that a value is required for this element, only that the consuming system must understand the element and be able to provide values for it if they are available. Note that the value for this element can be a path to allow references to nested elements. In that case, all the elements along the path must be supported.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString[]
+     * @return string
      */
-    public function getMustSupport() {
-        return $this->mustSupport;
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<DataRequirement{$xmlns}></DataRequirement>";
     }
 
-    /**
-     * Indicates that specific elements of the type are referenced by the knowledge module and must be supported by the consumer in order to obtain an effective evaluation. This does not mean that a value is required for this element, only that the consuming system must understand the element and be able to provide values for it if they are available. Note that the value for this element can be a path to allow references to nested elements. In that case, all the elements along the path must be supported.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $mustSupport
-     * @return $this
-     */
-    public function addMustSupport($mustSupport) {
-        $this->mustSupport[] = $mustSupport;
-        return $this;
-    }
 
     /**
-     * Code filters specify additional constraints on the data, specifying the value set of interest for a particular element of the data.
-     * @return \HL7\FHIR\STU3\FHIRResource\FHIRDataRequirement\FHIRDataRequirementCodeFilter[]
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Code filters specify additional constraints on the data, specifying the value
+     * set of interest for a particular element of the data.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementCodeFilter[]
      */
-    public function getCodeFilter() {
+    public function getCodeFilter()
+    {
         return $this->codeFilter;
     }
 
     /**
-     * Code filters specify additional constraints on the data, specifying the value set of interest for a particular element of the data.
-     * @param \HL7\FHIR\STU3\FHIRResource\FHIRDataRequirement\FHIRDataRequirementCodeFilter $codeFilter
-     * @return $this
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Code filters specify additional constraints on the data, specifying the value
+     * set of interest for a particular element of the data.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementCodeFilter $codeFilter
+     * @return static
      */
-    public function addCodeFilter($codeFilter) {
+    public function addCodeFilter(FHIRDataRequirementCodeFilter $codeFilter = null)
+    {
         $this->codeFilter[] = $codeFilter;
         return $this;
     }
 
     /**
-     * Date filters specify additional constraints on the data in terms of the applicable date range for specific elements.
-     * @return \HL7\FHIR\STU3\FHIRResource\FHIRDataRequirement\FHIRDataRequirementDateFilter[]
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Code filters specify additional constraints on the data, specifying the value
+     * set of interest for a particular element of the data.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementCodeFilter[] $codeFilter
+     * @return static
      */
-    public function getDateFilter() {
+    public function setCodeFilter(array $codeFilter = [])
+    {
+        $this->codeFilter = [];
+        if ([] === $codeFilter) {
+            return $this;
+        }
+        foreach($codeFilter as $v) {
+            if ($v instanceof FHIRDataRequirementCodeFilter) {
+                $this->addCodeFilter($v);
+            } else {
+                $this->addCodeFilter(new FHIRDataRequirementCodeFilter($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Date filters specify additional constraints on the data in terms of the
+     * applicable date range for specific elements.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementDateFilter[]
+     */
+    public function getDateFilter()
+    {
         return $this->dateFilter;
     }
 
     /**
-     * Date filters specify additional constraints on the data in terms of the applicable date range for specific elements.
-     * @param \HL7\FHIR\STU3\FHIRResource\FHIRDataRequirement\FHIRDataRequirementDateFilter $dateFilter
-     * @return $this
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Date filters specify additional constraints on the data in terms of the
+     * applicable date range for specific elements.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementDateFilter $dateFilter
+     * @return static
      */
-    public function addDateFilter($dateFilter) {
+    public function addDateFilter(FHIRDataRequirementDateFilter $dateFilter = null)
+    {
         $this->dateFilter[] = $dateFilter;
         return $this;
     }
 
     /**
-     * @return string
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Date filters specify additional constraints on the data in terms of the
+     * applicable date range for specific elements.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement\FHIRDataRequirementDateFilter[] $dateFilter
+     * @return static
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['type'])) {
-                $this->setType($data['type']);
-            }
-            if (isset($data['profile'])) {
-                if (is_array($data['profile'])) {
-                    foreach($data['profile'] as $d) {
-                        $this->addProfile($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"profile" must be array of objects or null, '.gettype($data['profile']).' seen.');
-                }
-            }
-            if (isset($data['mustSupport'])) {
-                if (is_array($data['mustSupport'])) {
-                    foreach($data['mustSupport'] as $d) {
-                        $this->addMustSupport($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"mustSupport" must be array of objects or null, '.gettype($data['mustSupport']).' seen.');
-                }
-            }
-            if (isset($data['codeFilter'])) {
-                if (is_array($data['codeFilter'])) {
-                    foreach($data['codeFilter'] as $d) {
-                        $this->addCodeFilter($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"codeFilter" must be array of objects or null, '.gettype($data['codeFilter']).' seen.');
-                }
-            }
-            if (isset($data['dateFilter'])) {
-                if (is_array($data['dateFilter'])) {
-                    foreach($data['dateFilter'] as $d) {
-                        $this->addDateFilter($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"dateFilter" must be array of objects or null, '.gettype($data['dateFilter']).' seen.');
-                }
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setDateFilter(array $dateFilter = [])
+    {
+        $this->dateFilter = [];
+        if ([] === $dateFilter) {
+            return $this;
         }
-        parent::__construct($data);
+        foreach($dateFilter as $v) {
+            if ($v instanceof FHIRDataRequirementDateFilter) {
+                $this->addDateFilter($v);
+            } else {
+                $this->addDateFilter(new FHIRDataRequirementDateFilter($v));
+            }
+        }
+        return $this;
     }
 
     /**
-     * @return string
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates that specific elements of the type are referenced by the knowledge
+     * module and must be supported by the consumer in order to obtain an effective
+     * evaluation. This does not mean that a value is required for this element, only
+     * that the consuming system must understand the element and be able to provide
+     * values for it if they are available. Note that the value for this element can be
+     * a path to allow references to nested elements. In that case, all the elements
+     * along the path must be supported.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function getMustSupport()
+    {
+        return $this->mustSupport;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates that specific elements of the type are referenced by the knowledge
+     * module and must be supported by the consumer in order to obtain an effective
+     * evaluation. This does not mean that a value is required for this element, only
+     * that the consuming system must understand the element and be able to provide
+     * values for it if they are available. Note that the value for this element can be
+     * a path to allow references to nested elements. In that case, all the elements
+     * along the path must be supported.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $mustSupport
+     * @return static
+     */
+    public function addMustSupport($mustSupport = null)
+    {
+        if (null === $mustSupport) {
+            $this->mustSupport = [];
+            return $this;
+        }
+        if ($mustSupport instanceof FHIRString) {
+            $this->mustSupport[] = $mustSupport;
+            return $this;
+        }
+        $this->mustSupport[] = new FHIRString($mustSupport);
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates that specific elements of the type are referenced by the knowledge
+     * module and must be supported by the consumer in order to obtain an effective
+     * evaluation. This does not mean that a value is required for this element, only
+     * that the consuming system must understand the element and be able to provide
+     * values for it if they are available. Note that the value for this element can be
+     * a path to allow references to nested elements. In that case, all the elements
+     * along the path must be supported.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $mustSupport
+     * @return static
+     */
+    public function setMustSupport(array $mustSupport = [])
+    {
+        $this->mustSupport = [];
+        if ([] === $mustSupport) {
+            return $this;
+        }
+        foreach($mustSupport as $v) {
+            if ($v instanceof FHIRString) {
+                $this->addMustSupport($v);
+            } else {
+                $this->addMustSupport(new FHIRString($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The profile of the required data, specified as the uri of the profile
+     * definition.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri[]
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The profile of the required data, specified as the uri of the profile
+     * definition.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUri $profile
+     * @return static
+     */
+    public function addProfile($profile = null)
+    {
+        if (null === $profile) {
+            $this->profile = [];
+            return $this;
+        }
+        if ($profile instanceof FHIRUri) {
+            $this->profile[] = $profile;
+            return $this;
+        }
+        $this->profile[] = new FHIRUri($profile);
+        return $this;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The profile of the required data, specified as the uri of the profile
+     * definition.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUri[] $profile
+     * @return static
+     */
+    public function setProfile(array $profile = [])
+    {
+        $this->profile = [];
+        if ([] === $profile) {
+            return $this;
+        }
+        foreach($profile as $v) {
+            if ($v instanceof FHIRUri) {
+                $this->addProfile($v);
+            } else {
+                $this->addProfile(new FHIRUri($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The type of the required data, specified as the type name of a resource. For
+     * profiles, this value is set to the type of the base resource of the profile.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The type of the required data, specified as the type name of a resource. For
+     * profiles, this value is set to the type of the base resource of the profile.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCode $type
+     * @return static
+     */
+    public function setType($type = null)
+    {
+        if (null === $type) {
+            $this->type = null;
+            return $this;
+        }
+        if ($type instanceof FHIRCode) {
+            $this->type = $type;
+            return $this;
+        }
+        $this->type = new FHIRCode($type);
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRDataRequirement::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRDataRequirement::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRDataRequirement;
+        } elseif (!is_object($type) || !($type instanceof FHIRDataRequirement)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRDataRequirement::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($children->codeFilter)) {
+            foreach($children->codeFilter as $child) {
+                $type->addCodeFilter(FHIRDataRequirementCodeFilter::xmlUnserialize($child));
+            }
+        }
+        if (isset($children->dateFilter)) {
+            foreach($children->dateFilter as $child) {
+                $type->addDateFilter(FHIRDataRequirementDateFilter::xmlUnserialize($child));
+            }
+        }
+        if (isset($attributes->mustSupport)) {
+            $type->addMustSupport((string)$attributes->mustSupport);
+        }
+        if (isset($children->mustSupport)) {
+            foreach($children->mustSupport as $child) {
+                $type->addMustSupport(FHIRString::xmlUnserialize($child));
+            }
+        }
+        if (isset($attributes->profile)) {
+            $type->addProfile((string)$attributes->profile);
+        }
+        if (isset($children->profile)) {
+            foreach($children->profile as $child) {
+                $type->addProfile(FHIRUri::xmlUnserialize($child));
+            }
+        }
+        if (isset($attributes->type)) {
+            $type->setType((string)$attributes->type);
+        }
+        if (isset($children->type)) {
+            $type->setType(FHIRCode::xmlUnserialize($children->type));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if ([] !== ($vs = $this->getCodeFilter())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_CODE_FILTER, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if ([] !== ($vs = $this->getDateFilter())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_DATE_FILTER, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if ([] !== ($vs = $this->getMustSupport())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_MUST_SUPPORT, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if ([] !== ($vs = $this->getProfile())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_PROFILE, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->type)) $json['type'] = $this->type;
-        if (0 < count($this->profile)) {
-            $json['profile'] = [];
-            foreach($this->profile as $profile) {
-                if (null !== $profile) $json['profile'][] = $profile;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if ([] !== ($vs = $this->getCodeFilter())) {
+            $a[self::FIELD_CODE_FILTER] = $vs;
+        }
+        if ([] !== ($vs = $this->getDateFilter())) {
+            $a[self::FIELD_DATE_FILTER] = $vs;
+        }
+        if ([] !== ($vs = $this->getMustSupport())) {
+            $a[self::FIELD_MUST_SUPPORT] = [];
+            foreach ($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                if (null !== ($val = $v->getValue())) {
+                    $a[self::FIELD_MUST_SUPPORT][] = $val;
+                    if (1 < count($enc = $v->jsonSerialize())) {
+                        unset($enc[$v::FIELD_VALUE]);
+                        $a[self::FIELD_MUST_SUPPORT_EXT][] = $enc;
+                    } else {
+                        $a[self::FIELD_MUST_SUPPORT_EXT][] = null;
+                    }
+                } else {
+                    $a[self::FIELD_MUST_SUPPORT][] = $v;
+                }
             }
         }
-        if (0 < count($this->mustSupport)) {
-            $json['mustSupport'] = [];
-            foreach($this->mustSupport as $mustSupport) {
-                if (null !== $mustSupport) $json['mustSupport'][] = $mustSupport;
+        if ([] !== ($vs = $this->getProfile())) {
+            $a[self::FIELD_PROFILE] = [];
+            foreach ($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                if (null !== ($val = $v->getValue())) {
+                    $a[self::FIELD_PROFILE][] = $val;
+                    if (1 < count($enc = $v->jsonSerialize())) {
+                        unset($enc[$v::FIELD_VALUE]);
+                        $a[self::FIELD_PROFILE_EXT][] = $enc;
+                    } else {
+                        $a[self::FIELD_PROFILE_EXT][] = null;
+                    }
+                } else {
+                    $a[self::FIELD_PROFILE][] = $v;
+                }
             }
         }
-        if (0 < count($this->codeFilter)) {
-            $json['codeFilter'] = [];
-            foreach($this->codeFilter as $codeFilter) {
-                if (null !== $codeFilter) $json['codeFilter'][] = $codeFilter;
+        if (null !== ($v = $this->getType())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_TYPE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_TYPE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_TYPE] = $v;
             }
         }
-        if (0 < count($this->dateFilter)) {
-            $json['dateFilter'] = [];
-            foreach($this->dateFilter as $dateFilter) {
-                if (null !== $dateFilter) $json['dateFilter'][] = $dateFilter;
-            }
-        }
-        return $json;
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<DataRequirement xmlns="http://hl7.org/fhir"></DataRequirement>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->type)) $this->type->xmlSerialize(true, $sxe->addChild('type'));
-        if (0 < count($this->profile)) {
-            foreach($this->profile as $profile) {
-                $profile->xmlSerialize(true, $sxe->addChild('profile'));
-            }
-        }
-        if (0 < count($this->mustSupport)) {
-            foreach($this->mustSupport as $mustSupport) {
-                $mustSupport->xmlSerialize(true, $sxe->addChild('mustSupport'));
-            }
-        }
-        if (0 < count($this->codeFilter)) {
-            foreach($this->codeFilter as $codeFilter) {
-                $codeFilter->xmlSerialize(true, $sxe->addChild('codeFilter'));
-            }
-        }
-        if (0 < count($this->dateFilter)) {
-            foreach($this->dateFilter as $dateFilter) {
-                $dateFilter->xmlSerialize(true, $sxe->addChild('dateFilter'));
-            }
-        }
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

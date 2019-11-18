@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,169 +63,434 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
- * Specifies clinical/business/etc metadata that can be used to retrieve, index and/or categorize an artifact. This metadata can either be specific to the applicable population (e.g., age category, DRG) or the specific context of care (e.g., venue, care setting, provider of care).
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * Specifies clinical/business/etc metadata that can be used to retrieve, index
+ * and/or categorize an artifact. This metadata can either be specific to the
+ * applicable population (e.g., age category, DRG) or the specific context of care
+ * (e.g., venue, care setting, provider of care).
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRUsageContext
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRUsageContext extends FHIRElement implements \JsonSerializable
+class FHIRUsageContext extends FHIRElement
 {
-    /**
-     * A code that identifies the type of context being specified by this usage context.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCoding
-     */
-    public $code = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_USAGE_CONTEXT;
+    const FIELD_CODE = 'code';
+    const FIELD_VALUE_CODEABLE_CONCEPT = 'valueCodeableConcept';
+    const FIELD_VALUE_QUANTITY = 'valueQuantity';
+    const FIELD_VALUE_QUANTITY_EXT = '_valueQuantity';
+    const FIELD_VALUE_RANGE = 'valueRange';
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A code that identifies the type of context being specified by this usage
+     * context.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
      */
-    public $valueCodeableConcept = null;
+    protected $code = null;
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A value that defines the context specified in this context of use. The
+     * interpretation of the value is defined by the code.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public $valueQuantity = null;
+    protected $valueCodeableConcept = null;
 
     /**
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRRange
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A value that defines the context specified in this context of use. The
+     * interpretation of the value is defined by the code.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public $valueRange = null;
+    protected $valueQuantity = null;
 
     /**
-     * @var string
+     * A set of ordered Quantities defined by a low and high limit.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A value that defines the context specified in this context of use. The
+     * interpretation of the value is defined by the code.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
-    private $_fhirElementName = 'UsageContext';
+    protected $valueRange = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
 
     /**
-     * A code that identifies the type of context being specified by this usage context.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCoding
+     * FHIRUsageContext Constructor
+     * @param null|array $data
      */
-    public function getCode() {
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRUsageContext::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_CODE])) {
+            if ($data[self::FIELD_CODE] instanceof FHIRCoding) {
+                $this->setCode($data[self::FIELD_CODE]);
+            } else {
+                $this->setCode(new FHIRCoding($data[self::FIELD_CODE]));
+            }
+        }
+        if (isset($data[self::FIELD_VALUE_CODEABLE_CONCEPT])) {
+            if ($data[self::FIELD_VALUE_CODEABLE_CONCEPT] instanceof FHIRCodeableConcept) {
+                $this->setValueCodeableConcept($data[self::FIELD_VALUE_CODEABLE_CONCEPT]);
+            } else {
+                $this->setValueCodeableConcept(new FHIRCodeableConcept($data[self::FIELD_VALUE_CODEABLE_CONCEPT]));
+            }
+        }
+        if (isset($data[self::FIELD_VALUE_QUANTITY])) {
+            $ext = (isset($data[self::FIELD_VALUE_QUANTITY_EXT]) && is_array($data[self::FIELD_VALUE_QUANTITY_EXT]))
+                ? $data[self::FIELD_VALUE_QUANTITY_EXT]
+                : null;
+            if ($data[self::FIELD_VALUE_QUANTITY] instanceof FHIRQuantity) {
+                $this->setValueQuantity($data[self::FIELD_VALUE_QUANTITY]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_VALUE_QUANTITY])) {
+                    $this->setValueQuantity(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_VALUE_QUANTITY]] + $ext));
+                } else if (is_array($data[self::FIELD_VALUE_QUANTITY])) {
+                    $this->setValueQuantity(new FHIRQuantity(array_merge($ext, $data[self::FIELD_VALUE_QUANTITY])));
+                }
+            } else {
+                $this->setValueQuantity(new FHIRQuantity($data[self::FIELD_VALUE_QUANTITY]));
+            }
+        }
+        if (isset($data[self::FIELD_VALUE_RANGE])) {
+            if ($data[self::FIELD_VALUE_RANGE] instanceof FHIRRange) {
+                $this->setValueRange($data[self::FIELD_VALUE_RANGE]);
+            } else {
+                $this->setValueRange(new FHIRRange($data[self::FIELD_VALUE_RANGE]));
+            }
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<UsageContext{$xmlns}></UsageContext>";
+    }
+
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A code that identifies the type of context being specified by this usage
+     * context.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
+     */
+    public function getCode()
+    {
         return $this->code;
     }
 
     /**
-     * A code that identifies the type of context being specified by this usage context.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCoding $code
-     * @return $this
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A code that identifies the type of context being specified by this usage
+     * context.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding $code
+     * @return static
      */
-    public function setCode($code) {
+    public function setCode(FHIRCoding $code = null)
+    {
         $this->code = $code;
         return $this;
     }
 
     /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A value that defines the context specified in this context of use. The
+     * interpretation of the value is defined by the code.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getValueCodeableConcept() {
+    public function getValueCodeableConcept()
+    {
         return $this->valueCodeableConcept;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $valueCodeableConcept
-     * @return $this
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A value that defines the context specified in this context of use. The
+     * interpretation of the value is defined by the code.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $valueCodeableConcept
+     * @return static
      */
-    public function setValueCodeableConcept($valueCodeableConcept) {
+    public function setValueCodeableConcept(FHIRCodeableConcept $valueCodeableConcept = null)
+    {
         $this->valueCodeableConcept = $valueCodeableConcept;
         return $this;
     }
 
     /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRQuantity
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A value that defines the context specified in this context of use. The
+     * interpretation of the value is defined by the code.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
-    public function getValueQuantity() {
+    public function getValueQuantity()
+    {
         return $this->valueQuantity;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRQuantity $valueQuantity
-     * @return $this
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A value that defines the context specified in this context of use. The
+     * interpretation of the value is defined by the code.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity $valueQuantity
+     * @return static
      */
-    public function setValueQuantity($valueQuantity) {
+    public function setValueQuantity(FHIRQuantity $valueQuantity = null)
+    {
         $this->valueQuantity = $valueQuantity;
         return $this;
     }
 
     /**
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRRange
+     * A set of ordered Quantities defined by a low and high limit.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A value that defines the context specified in this context of use. The
+     * interpretation of the value is defined by the code.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
-    public function getValueRange() {
+    public function getValueRange()
+    {
         return $this->valueRange;
     }
 
     /**
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRRange $valueRange
-     * @return $this
+     * A set of ordered Quantities defined by a low and high limit.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A value that defines the context specified in this context of use. The
+     * interpretation of the value is defined by the code.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRange $valueRange
+     * @return static
      */
-    public function setValueRange($valueRange) {
+    public function setValueRange(FHIRRange $valueRange = null)
+    {
         $this->valueRange = $valueRange;
         return $this;
     }
 
     /**
-     * @return string
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUsageContext $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUsageContext
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['code'])) {
-                $this->setCode($data['code']);
-            }
-            if (isset($data['valueCodeableConcept'])) {
-                $this->setValueCodeableConcept($data['valueCodeableConcept']);
-            }
-            if (isset($data['valueQuantity'])) {
-                $this->setValueQuantity($data['valueQuantity']);
-            }
-            if (isset($data['valueRange'])) {
-                $this->setValueRange($data['valueRange']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
         }
-        parent::__construct($data);
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRUsageContext::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRUsageContext::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRUsageContext;
+        } elseif (!is_object($type) || !($type instanceof FHIRUsageContext)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRUsageContext::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRUsageContext or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($children->code)) {
+            $type->setCode(FHIRCoding::xmlUnserialize($children->code));
+        }
+        if (isset($children->valueCodeableConcept)) {
+            $type->setValueCodeableConcept(FHIRCodeableConcept::xmlUnserialize($children->valueCodeableConcept));
+        }
+        if (isset($children->valueQuantity)) {
+            $type->setValueQuantity(FHIRQuantity::xmlUnserialize($children->valueQuantity));
+        }
+        if (isset($children->valueRange)) {
+            $type->setValueRange(FHIRRange::xmlUnserialize($children->valueRange));
+        }
+        return $type;
     }
 
     /**
-     * @return string
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getCode())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_CODE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getValueCodeableConcept())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_VALUE_CODEABLE_CONCEPT, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getValueQuantity())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_VALUE_QUANTITY, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getValueRange())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_VALUE_RANGE, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->code)) $json['code'] = $this->code;
-        if (isset($this->valueCodeableConcept)) $json['valueCodeableConcept'] = $this->valueCodeableConcept;
-        if (isset($this->valueQuantity)) $json['valueQuantity'] = $this->valueQuantity;
-        if (isset($this->valueRange)) $json['valueRange'] = $this->valueRange;
-        return $json;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getCode())) {
+            $a[self::FIELD_CODE] = $v;
+        }
+        if (null !== ($v = $this->getValueCodeableConcept())) {
+            $a[self::FIELD_VALUE_CODEABLE_CONCEPT] = $v;
+        }
+        if (null !== ($v = $this->getValueQuantity())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_VALUE_QUANTITY] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_VALUE_QUANTITY_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_VALUE_QUANTITY] = $v;
+            }
+        }
+        if (null !== ($v = $this->getValueRange())) {
+            $a[self::FIELD_VALUE_RANGE] = $v;
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<UsageContext xmlns="http://hl7.org/fhir"></UsageContext>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->code)) $this->code->xmlSerialize(true, $sxe->addChild('code'));
-        if (isset($this->valueCodeableConcept)) $this->valueCodeableConcept->xmlSerialize(true, $sxe->addChild('valueCodeableConcept'));
-        if (isset($this->valueQuantity)) $this->valueQuantity->xmlSerialize(true, $sxe->addChild('valueQuantity'));
-        if (isset($this->valueRange)) $this->valueRange->xmlSerialize(true, $sxe->addChild('valueRange'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

@@ -1,0 +1,377 @@
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest;
+
+/*!
+ * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
+ * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
+ * 
+ * Class creation date: November 18th, 2019 08:27+0000
+ * 
+ * PHPFHIR Copyright:
+ * 
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ *
+ * FHIR Copyright Notice:
+ *
+ *   Copyright (c) 2011+, HL7, Inc.
+ *   All rights reserved.
+ * 
+ *   Redistribution and use in source and binary forms, with or without modification,
+ *   are permitted provided that the following conditions are met:
+ * 
+ *    * Redistributions of source code must retain the above copyright notice, this
+ *      list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright notice,
+ *      this list of conditions and the following disclaimer in the documentation
+ *      and/or other materials provided with the distribution.
+ *    * Neither the name of HL7 nor the names of its contributors may be used to
+ *      endorse or promote products derived from this software without specific
+ *      prior written permission.
+ * 
+ *   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ *   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ *   IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ *   INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ *   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ *   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ *   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ *   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *   POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * 
+ *   Generated on Wed, Apr 19, 2017 07:44+1000 for FHIR v3.0.1
+ * 
+ *   Note: the schemas & schematrons do not contain all of the rules about what makes resources
+ *   valid. Implementers will still need to be familiar with the content of the specification and with
+ *   any profiles that apply to the resources in order to make a conformant implementation.
+ * 
+ */
+
+use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRBoolean;
+use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+
+/**
+ * An order or request for both supply of the medication and the instructions for
+ * administration of the medication to a patient. The resource is called
+ * "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to
+ * generalize the use across inpatient and outpatient settings, including care
+ * plans, etc., and to harmonize with workflow patterns.
+ *
+ * Class FHIRMedicationRequestSubstitution
+ * @package \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest
+ */
+class FHIRMedicationRequestSubstitution extends FHIRBackboneElement
+{
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MEDICATION_REQUEST_DOT_SUBSTITUTION;
+    const FIELD_ALLOWED = 'allowed';
+    const FIELD_ALLOWED_EXT = '_allowed';
+    const FIELD_REASON = 'reason';
+
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * True if the prescriber allows a different drug to be dispensed from what was
+     * prescribed.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     */
+    protected $allowed = null;
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates the reason for the substitution, or why substitution must or must not
+     * be performed.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected $reason = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRMedicationRequestSubstitution Constructor
+     * @param null|array $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRMedicationRequestSubstitution::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_ALLOWED])) {
+            $ext = (isset($data[self::FIELD_ALLOWED_EXT]) && is_array($data[self::FIELD_ALLOWED_EXT]))
+                ? $data[self::FIELD_ALLOWED_EXT]
+                : null;
+            if ($data[self::FIELD_ALLOWED] instanceof FHIRBoolean) {
+                $this->setAllowed($data[self::FIELD_ALLOWED]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_ALLOWED])) {
+                    $this->setAllowed(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $data[self::FIELD_ALLOWED]] + $ext));
+                } else if (is_array($data[self::FIELD_ALLOWED])) {
+                    $this->setAllowed(new FHIRBoolean(array_merge($ext, $data[self::FIELD_ALLOWED])));
+                }
+            } else {
+                $this->setAllowed(new FHIRBoolean($data[self::FIELD_ALLOWED]));
+            }
+        }
+        if (isset($data[self::FIELD_REASON])) {
+            if ($data[self::FIELD_REASON] instanceof FHIRCodeableConcept) {
+                $this->setReason($data[self::FIELD_REASON]);
+            } else {
+                $this->setReason(new FHIRCodeableConcept($data[self::FIELD_REASON]));
+            }
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<MedicationRequestSubstitution{$xmlns}></MedicationRequestSubstitution>";
+    }
+
+
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * True if the prescriber allows a different drug to be dispensed from what was
+     * prescribed.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     */
+    public function getAllowed()
+    {
+        return $this->allowed;
+    }
+
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * True if the prescriber allows a different drug to be dispensed from what was
+     * prescribed.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $allowed
+     * @return static
+     */
+    public function setAllowed($allowed = null)
+    {
+        if (null === $allowed) {
+            $this->allowed = null;
+            return $this;
+        }
+        if ($allowed instanceof FHIRBoolean) {
+            $this->allowed = $allowed;
+            return $this;
+        }
+        $this->allowed = new FHIRBoolean($allowed);
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates the reason for the substitution, or why substitution must or must not
+     * be performed.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    public function getReason()
+    {
+        return $this->reason;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates the reason for the substitution, or why substitution must or must not
+     * be performed.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $reason
+     * @return static
+     */
+    public function setReason(FHIRCodeableConcept $reason = null)
+    {
+        $this->reason = $reason;
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest\FHIRMedicationRequestSubstitution $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest\FHIRMedicationRequestSubstitution
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRMedicationRequestSubstitution::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRMedicationRequestSubstitution::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRMedicationRequestSubstitution;
+        } elseif (!is_object($type) || !($type instanceof FHIRMedicationRequestSubstitution)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRMedicationRequestSubstitution::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest\FHIRMedicationRequestSubstitution or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRBackboneElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($attributes->allowed)) {
+            $type->setAllowed((string)$attributes->allowed);
+        }
+        if (isset($children->allowed)) {
+            $type->setAllowed(FHIRBoolean::xmlUnserialize($children->allowed));
+        }
+        if (isset($children->reason)) {
+            $type->setReason(FHIRCodeableConcept::xmlUnserialize($children->reason));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getAllowed())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_ALLOWED, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getReason())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_REASON, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getAllowed())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_ALLOWED] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_ALLOWED_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_ALLOWED] = $v;
+            }
+        }
+        if (null !== ($v = $this->getReason())) {
+            $a[self::FIELD_REASON] = $v;
+        }
+        return $a;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+}

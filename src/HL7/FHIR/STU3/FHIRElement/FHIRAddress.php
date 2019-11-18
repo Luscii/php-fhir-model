@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,367 +63,1041 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
- * An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * An address expressed using postal conventions (as opposed to GPS or other
+ * location definition formats). This data type may be used to convey addresses for
+ * use in delivering mail as well as for visiting locations which might not be
+ * valid for mail delivery. There are a variety of postal address formats defined
+ * around the world.
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRAddress
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRAddress extends FHIRElement implements \JsonSerializable
+class FHIRAddress extends FHIRElement
 {
-    /**
-     * The purpose of this address.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRAddressUse
-     */
-    public $use = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ADDRESS;
+    const FIELD_CITY = 'city';
+    const FIELD_CITY_EXT = '_city';
+    const FIELD_COUNTRY = 'country';
+    const FIELD_COUNTRY_EXT = '_country';
+    const FIELD_DISTRICT = 'district';
+    const FIELD_DISTRICT_EXT = '_district';
+    const FIELD_LINE = 'line';
+    const FIELD_LINE_EXT = '_line';
+    const FIELD_PERIOD = 'period';
+    const FIELD_POSTAL_CODE = 'postalCode';
+    const FIELD_POSTAL_CODE_EXT = '_postalCode';
+    const FIELD_STATE = 'state';
+    const FIELD_STATE_EXT = '_state';
+    const FIELD_TEXT = 'text';
+    const FIELD_TEXT_EXT = '_text';
+    const FIELD_TYPE = 'type';
+    const FIELD_TYPE_EXT = '_type';
+    const FIELD_USE = 'use';
+    const FIELD_USE_EXT = '_use';
 
     /**
-     * Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRAddressType
-     */
-    public $type = null;
-
-    /**
-     * A full text representation of the address.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public $text = null;
-
-    /**
-     * This component contains the house number, apartment number, street name, street direction,  P.O. Box number, delivery hints, and similar address information.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString[]
-     */
-    public $line = [];
-
-    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * The name of the city, town, village or other community or delivery center.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public $city = null;
+    protected $city = null;
 
     /**
-     * The name of the administrative area (county).
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public $district = null;
-
-    /**
-     * Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public $state = null;
-
-    /**
-     * A postal code designating a region defined by the postal service.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public $postalCode = null;
-
-    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * Country - a nation as commonly understood or generally accepted.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public $country = null;
+    protected $country = null;
 
     /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The name of the administrative area (county).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected $district = null;
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * This component contains the house number, apartment number, street name, street
+     * direction, P.O. Box number, delivery hints, and similar address information.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
+     */
+    protected $line = [];
+
+    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Time period when address was/is in use.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public $period = null;
+    protected $period = null;
 
     /**
-     * @var string
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A postal code designating a region defined by the postal service.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    private $_fhirElementName = 'Address';
+    protected $postalCode = null;
 
     /**
-     * The purpose of this address.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRAddressUse
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Sub-unit of a country with limited sovereignty in a federally organized country.
+     * A code may be used if codes are in common use (i.e. US 2 letter state codes).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getUse() {
-        return $this->use;
-    }
+    protected $state = null;
 
     /**
-     * The purpose of this address.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAddressUse $use
-     * @return $this
-     */
-    public function setUse($use) {
-        $this->use = $use;
-        return $this;
-    }
-
-    /**
-     * Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRAddressType
-     */
-    public function getType() {
-        return $this->type;
-    }
-
-    /**
-     * Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAddressType $type
-     * @return $this
-     */
-    public function setType($type) {
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * A full text representation of the address.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getText() {
-        return $this->text;
+    protected $text = null;
+
+    /**
+     * The type of an address (physical / postal)
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Distinguishes between physical addresses (those you can visit) and mailing
+     * addresses (e.g. PO Boxes and care-of addresses). Most addresses are both.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAddressType
+     */
+    protected $type = null;
+
+    /**
+     * The use of an address
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The purpose of this address.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAddressUse
+     */
+    protected $use = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRAddress Constructor
+     * @param null|array $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRAddress::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_CITY])) {
+            $ext = (isset($data[self::FIELD_CITY_EXT]) && is_array($data[self::FIELD_CITY_EXT]))
+                ? $data[self::FIELD_CITY_EXT]
+                : null;
+            if ($data[self::FIELD_CITY] instanceof FHIRString) {
+                $this->setCity($data[self::FIELD_CITY]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_CITY])) {
+                    $this->setCity(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_CITY]] + $ext));
+                } else if (is_array($data[self::FIELD_CITY])) {
+                    $this->setCity(new FHIRString(array_merge($ext, $data[self::FIELD_CITY])));
+                }
+            } else {
+                $this->setCity(new FHIRString($data[self::FIELD_CITY]));
+            }
+        }
+        if (isset($data[self::FIELD_COUNTRY])) {
+            $ext = (isset($data[self::FIELD_COUNTRY_EXT]) && is_array($data[self::FIELD_COUNTRY_EXT]))
+                ? $data[self::FIELD_COUNTRY_EXT]
+                : null;
+            if ($data[self::FIELD_COUNTRY] instanceof FHIRString) {
+                $this->setCountry($data[self::FIELD_COUNTRY]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_COUNTRY])) {
+                    $this->setCountry(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_COUNTRY]] + $ext));
+                } else if (is_array($data[self::FIELD_COUNTRY])) {
+                    $this->setCountry(new FHIRString(array_merge($ext, $data[self::FIELD_COUNTRY])));
+                }
+            } else {
+                $this->setCountry(new FHIRString($data[self::FIELD_COUNTRY]));
+            }
+        }
+        if (isset($data[self::FIELD_DISTRICT])) {
+            $ext = (isset($data[self::FIELD_DISTRICT_EXT]) && is_array($data[self::FIELD_DISTRICT_EXT]))
+                ? $data[self::FIELD_DISTRICT_EXT]
+                : null;
+            if ($data[self::FIELD_DISTRICT] instanceof FHIRString) {
+                $this->setDistrict($data[self::FIELD_DISTRICT]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_DISTRICT])) {
+                    $this->setDistrict(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_DISTRICT]] + $ext));
+                } else if (is_array($data[self::FIELD_DISTRICT])) {
+                    $this->setDistrict(new FHIRString(array_merge($ext, $data[self::FIELD_DISTRICT])));
+                }
+            } else {
+                $this->setDistrict(new FHIRString($data[self::FIELD_DISTRICT]));
+            }
+        }
+        if (isset($data[self::FIELD_LINE])) {
+            $ext = (isset($data[self::FIELD_LINE_EXT]) && is_array($data[self::FIELD_LINE_EXT]))
+                ? $data[self::FIELD_LINE_EXT]
+                : null;
+            if (is_array($data[self::FIELD_LINE])) {
+                foreach($data[self::FIELD_LINE] as $i => $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRString) {
+                        $this->addLine($v);
+                    } elseif (null !== $ext && isset($ext[$i]) && is_array($ext[$i])) {
+                        if (is_scalar($v)) {
+                            $this->addLine(new FHIRString([FHIRString::FIELD_VALUE => $v] + $ext[$i]));
+                        } elseif (is_array($v)) {
+                            $this->addLine(new FHIRString(array_merge($v, $ext[$i])));
+                        }
+                    } else {
+                        $this->addLine(new FHIRString($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_LINE] instanceof FHIRString) {
+                $this->addLine($data[self::FIELD_LINE]);
+            } elseif (null !== $ext && is_scalar($data[self::FIELD_LINE])) {
+                $this->addLine(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_LINE]] + $ext));
+            } else {
+                $this->addLine(new FHIRString($data[self::FIELD_LINE]));
+            }
+        }
+        if (isset($data[self::FIELD_PERIOD])) {
+            if ($data[self::FIELD_PERIOD] instanceof FHIRPeriod) {
+                $this->setPeriod($data[self::FIELD_PERIOD]);
+            } else {
+                $this->setPeriod(new FHIRPeriod($data[self::FIELD_PERIOD]));
+            }
+        }
+        if (isset($data[self::FIELD_POSTAL_CODE])) {
+            $ext = (isset($data[self::FIELD_POSTAL_CODE_EXT]) && is_array($data[self::FIELD_POSTAL_CODE_EXT]))
+                ? $data[self::FIELD_POSTAL_CODE_EXT]
+                : null;
+            if ($data[self::FIELD_POSTAL_CODE] instanceof FHIRString) {
+                $this->setPostalCode($data[self::FIELD_POSTAL_CODE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_POSTAL_CODE])) {
+                    $this->setPostalCode(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_POSTAL_CODE]] + $ext));
+                } else if (is_array($data[self::FIELD_POSTAL_CODE])) {
+                    $this->setPostalCode(new FHIRString(array_merge($ext, $data[self::FIELD_POSTAL_CODE])));
+                }
+            } else {
+                $this->setPostalCode(new FHIRString($data[self::FIELD_POSTAL_CODE]));
+            }
+        }
+        if (isset($data[self::FIELD_STATE])) {
+            $ext = (isset($data[self::FIELD_STATE_EXT]) && is_array($data[self::FIELD_STATE_EXT]))
+                ? $data[self::FIELD_STATE_EXT]
+                : null;
+            if ($data[self::FIELD_STATE] instanceof FHIRString) {
+                $this->setState($data[self::FIELD_STATE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_STATE])) {
+                    $this->setState(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_STATE]] + $ext));
+                } else if (is_array($data[self::FIELD_STATE])) {
+                    $this->setState(new FHIRString(array_merge($ext, $data[self::FIELD_STATE])));
+                }
+            } else {
+                $this->setState(new FHIRString($data[self::FIELD_STATE]));
+            }
+        }
+        if (isset($data[self::FIELD_TEXT])) {
+            $ext = (isset($data[self::FIELD_TEXT_EXT]) && is_array($data[self::FIELD_TEXT_EXT]))
+                ? $data[self::FIELD_TEXT_EXT]
+                : null;
+            if ($data[self::FIELD_TEXT] instanceof FHIRString) {
+                $this->setText($data[self::FIELD_TEXT]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_TEXT])) {
+                    $this->setText(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_TEXT]] + $ext));
+                } else if (is_array($data[self::FIELD_TEXT])) {
+                    $this->setText(new FHIRString(array_merge($ext, $data[self::FIELD_TEXT])));
+                }
+            } else {
+                $this->setText(new FHIRString($data[self::FIELD_TEXT]));
+            }
+        }
+        if (isset($data[self::FIELD_TYPE])) {
+            $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT]))
+                ? $data[self::FIELD_TYPE_EXT]
+                : null;
+            if ($data[self::FIELD_TYPE] instanceof FHIRAddressType) {
+                $this->setType($data[self::FIELD_TYPE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRAddressType([FHIRAddressType::FIELD_VALUE => $data[self::FIELD_TYPE]] + $ext));
+                } else if (is_array($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRAddressType(array_merge($ext, $data[self::FIELD_TYPE])));
+                }
+            } else {
+                $this->setType(new FHIRAddressType($data[self::FIELD_TYPE]));
+            }
+        }
+        if (isset($data[self::FIELD_USE])) {
+            $ext = (isset($data[self::FIELD_USE_EXT]) && is_array($data[self::FIELD_USE_EXT]))
+                ? $data[self::FIELD_USE_EXT]
+                : null;
+            if ($data[self::FIELD_USE] instanceof FHIRAddressUse) {
+                $this->setUse($data[self::FIELD_USE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_USE])) {
+                    $this->setUse(new FHIRAddressUse([FHIRAddressUse::FIELD_VALUE => $data[self::FIELD_USE]] + $ext));
+                } else if (is_array($data[self::FIELD_USE])) {
+                    $this->setUse(new FHIRAddressUse(array_merge($ext, $data[self::FIELD_USE])));
+                }
+            } else {
+                $this->setUse(new FHIRAddressUse($data[self::FIELD_USE]));
+            }
+        }
     }
 
     /**
-     * A full text representation of the address.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $text
-     * @return $this
+     * @return string
      */
-    public function setText($text) {
-        $this->text = $text;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * This component contains the house number, apartment number, street name, street direction,  P.O. Box number, delivery hints, and similar address information.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString[]
+     * @return string|null
      */
-    public function getLine() {
-        return $this->line;
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
     }
 
     /**
-     * This component contains the house number, apartment number, street name, street direction,  P.O. Box number, delivery hints, and similar address information.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $line
-     * @return $this
+     * @param null|string $xmlNamespace
+     * @return static
      */
-    public function addLine($line) {
-        $this->line[] = $line;
-        return $this;
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
     }
 
     /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Address{$xmlns}></Address>";
+    }
+
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * The name of the city, town, village or other community or delivery center.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getCity() {
+    public function getCity()
+    {
         return $this->city;
     }
 
     /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * The name of the city, town, village or other community or delivery center.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $city
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $city
+     * @return static
      */
-    public function setCity($city) {
-        $this->city = $city;
+    public function setCity($city = null)
+    {
+        if (null === $city) {
+            $this->city = null;
+            return $this;
+        }
+        if ($city instanceof FHIRString) {
+            $this->city = $city;
+            return $this;
+        }
+        $this->city = new FHIRString($city);
         return $this;
     }
 
     /**
-     * The name of the administrative area (county).
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getDistrict() {
-        return $this->district;
-    }
-
-    /**
-     * The name of the administrative area (county).
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $district
-     * @return $this
-     */
-    public function setDistrict($district) {
-        $this->district = $district;
-        return $this;
-    }
-
-    /**
-     * Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getState() {
-        return $this->state;
-    }
-
-    /**
-     * Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $state
-     * @return $this
-     */
-    public function setState($state) {
-        $this->state = $state;
-        return $this;
-    }
-
-    /**
-     * A postal code designating a region defined by the postal service.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getPostalCode() {
-        return $this->postalCode;
-    }
-
-    /**
-     * A postal code designating a region defined by the postal service.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $postalCode
-     * @return $this
-     */
-    public function setPostalCode($postalCode) {
-        $this->postalCode = $postalCode;
-        return $this;
-    }
-
-    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * Country - a nation as commonly understood or generally accepted.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getCountry() {
+    public function getCountry()
+    {
         return $this->country;
     }
 
     /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * Country - a nation as commonly understood or generally accepted.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $country
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $country
+     * @return static
      */
-    public function setCountry($country) {
-        $this->country = $country;
+    public function setCountry($country = null)
+    {
+        if (null === $country) {
+            $this->country = null;
+            return $this;
+        }
+        if ($country instanceof FHIRString) {
+            $this->country = $country;
+            return $this;
+        }
+        $this->country = new FHIRString($country);
         return $this;
     }
 
     /**
-     * Time period when address was/is in use.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The name of the administrative area (county).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getPeriod() {
+    public function getDistrict()
+    {
+        return $this->district;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The name of the administrative area (county).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $district
+     * @return static
+     */
+    public function setDistrict($district = null)
+    {
+        if (null === $district) {
+            $this->district = null;
+            return $this;
+        }
+        if ($district instanceof FHIRString) {
+            $this->district = $district;
+            return $this;
+        }
+        $this->district = new FHIRString($district);
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * This component contains the house number, apartment number, street name, street
+     * direction, P.O. Box number, delivery hints, and similar address information.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
+     */
+    public function getLine()
+    {
+        return $this->line;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * This component contains the house number, apartment number, street name, street
+     * direction, P.O. Box number, delivery hints, and similar address information.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $line
+     * @return static
+     */
+    public function addLine($line = null)
+    {
+        if (null === $line) {
+            $this->line = [];
+            return $this;
+        }
+        if ($line instanceof FHIRString) {
+            $this->line[] = $line;
+            return $this;
+        }
+        $this->line[] = new FHIRString($line);
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * This component contains the house number, apartment number, street name, street
+     * direction, P.O. Box number, delivery hints, and similar address information.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $line
+     * @return static
+     */
+    public function setLine(array $line = [])
+    {
+        $this->line = [];
+        if ([] === $line) {
+            return $this;
+        }
+        foreach($line as $v) {
+            if ($v instanceof FHIRString) {
+                $this->addLine($v);
+            } else {
+                $this->addLine(new FHIRString($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Time period when address was/is in use.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     */
+    public function getPeriod()
+    {
         return $this->period;
     }
 
     /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Time period when address was/is in use.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
-     * @return $this
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
+     * @return static
      */
-    public function setPeriod($period) {
+    public function setPeriod(FHIRPeriod $period = null)
+    {
         $this->period = $period;
         return $this;
     }
 
     /**
-     * @return string
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A postal code designating a region defined by the postal service.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
+    public function getPostalCode()
+    {
+        return $this->postalCode;
     }
 
     /**
-     * @param mixed $data
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A postal code designating a region defined by the postal service.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $postalCode
+     * @return static
      */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['use'])) {
-                $this->setUse($data['use']);
-            }
-            if (isset($data['type'])) {
-                $this->setType($data['type']);
-            }
-            if (isset($data['text'])) {
-                $this->setText($data['text']);
-            }
-            if (isset($data['line'])) {
-                if (is_array($data['line'])) {
-                    foreach($data['line'] as $d) {
-                        $this->addLine($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"line" must be array of objects or null, '.gettype($data['line']).' seen.');
-                }
-            }
-            if (isset($data['city'])) {
-                $this->setCity($data['city']);
-            }
-            if (isset($data['district'])) {
-                $this->setDistrict($data['district']);
-            }
-            if (isset($data['state'])) {
-                $this->setState($data['state']);
-            }
-            if (isset($data['postalCode'])) {
-                $this->setPostalCode($data['postalCode']);
-            }
-            if (isset($data['country'])) {
-                $this->setCountry($data['country']);
-            }
-            if (isset($data['period'])) {
-                $this->setPeriod($data['period']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setPostalCode($postalCode = null)
+    {
+        if (null === $postalCode) {
+            $this->postalCode = null;
+            return $this;
         }
-        parent::__construct($data);
+        if ($postalCode instanceof FHIRString) {
+            $this->postalCode = $postalCode;
+            return $this;
+        }
+        $this->postalCode = new FHIRString($postalCode);
+        return $this;
     }
 
     /**
-     * @return string
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Sub-unit of a country with limited sovereignty in a federally organized country.
+     * A code may be used if codes are in common use (i.e. US 2 letter state codes).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Sub-unit of a country with limited sovereignty in a federally organized country.
+     * A code may be used if codes are in common use (i.e. US 2 letter state codes).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $state
+     * @return static
+     */
+    public function setState($state = null)
+    {
+        if (null === $state) {
+            $this->state = null;
+            return $this;
+        }
+        if ($state instanceof FHIRString) {
+            $this->state = $state;
+            return $this;
+        }
+        $this->state = new FHIRString($state);
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A full text representation of the address.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A full text representation of the address.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $text
+     * @return static
+     */
+    public function setText($text = null)
+    {
+        if (null === $text) {
+            $this->text = null;
+            return $this;
+        }
+        if ($text instanceof FHIRString) {
+            $this->text = $text;
+            return $this;
+        }
+        $this->text = new FHIRString($text);
+        return $this;
+    }
+
+    /**
+     * The type of an address (physical / postal)
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Distinguishes between physical addresses (those you can visit) and mailing
+     * addresses (e.g. PO Boxes and care-of addresses). Most addresses are both.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAddressType
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * The type of an address (physical / postal)
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Distinguishes between physical addresses (those you can visit) and mailing
+     * addresses (e.g. PO Boxes and care-of addresses). Most addresses are both.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAddressType $type
+     * @return static
+     */
+    public function setType(FHIRAddressType $type = null)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * The use of an address
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The purpose of this address.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAddressUse
+     */
+    public function getUse()
+    {
+        return $this->use;
+    }
+
+    /**
+     * The use of an address
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The purpose of this address.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAddressUse $use
+     * @return static
+     */
+    public function setUse(FHIRAddressUse $use = null)
+    {
+        $this->use = $use;
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAddress $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAddress
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRAddress::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRAddress::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRAddress;
+        } elseif (!is_object($type) || !($type instanceof FHIRAddress)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRAddress::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRAddress or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($attributes->city)) {
+            $type->setCity((string)$attributes->city);
+        }
+        if (isset($children->city)) {
+            $type->setCity(FHIRString::xmlUnserialize($children->city));
+        }
+        if (isset($attributes->country)) {
+            $type->setCountry((string)$attributes->country);
+        }
+        if (isset($children->country)) {
+            $type->setCountry(FHIRString::xmlUnserialize($children->country));
+        }
+        if (isset($attributes->district)) {
+            $type->setDistrict((string)$attributes->district);
+        }
+        if (isset($children->district)) {
+            $type->setDistrict(FHIRString::xmlUnserialize($children->district));
+        }
+        if (isset($attributes->line)) {
+            $type->addLine((string)$attributes->line);
+        }
+        if (isset($children->line)) {
+            foreach($children->line as $child) {
+                $type->addLine(FHIRString::xmlUnserialize($child));
+            }
+        }
+        if (isset($children->period)) {
+            $type->setPeriod(FHIRPeriod::xmlUnserialize($children->period));
+        }
+        if (isset($attributes->postalCode)) {
+            $type->setPostalCode((string)$attributes->postalCode);
+        }
+        if (isset($children->postalCode)) {
+            $type->setPostalCode(FHIRString::xmlUnserialize($children->postalCode));
+        }
+        if (isset($attributes->state)) {
+            $type->setState((string)$attributes->state);
+        }
+        if (isset($children->state)) {
+            $type->setState(FHIRString::xmlUnserialize($children->state));
+        }
+        if (isset($attributes->text)) {
+            $type->setText((string)$attributes->text);
+        }
+        if (isset($children->text)) {
+            $type->setText(FHIRString::xmlUnserialize($children->text));
+        }
+        if (isset($children->type)) {
+            $type->setType(FHIRAddressType::xmlUnserialize($children->type));
+        }
+        if (isset($children->use)) {
+            $type->setUse(FHIRAddressUse::xmlUnserialize($children->use));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getCity())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_CITY, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getCountry())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_COUNTRY, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getDistrict())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_DISTRICT, null, $v->_getFHIRXMLNamespace()));
+        }
+        if ([] !== ($vs = $this->getLine())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_LINE, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_PERIOD, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getPostalCode())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_POSTAL_CODE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getState())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_STATE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getText())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TEXT, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getType())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getUse())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_USE, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->use)) $json['use'] = $this->use;
-        if (isset($this->type)) $json['type'] = $this->type;
-        if (isset($this->text)) $json['text'] = $this->text;
-        if (0 < count($this->line)) {
-            $json['line'] = [];
-            foreach($this->line as $line) {
-                if (null !== $line) $json['line'][] = $line;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getCity())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_CITY] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_CITY_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_CITY] = $v;
             }
         }
-        if (isset($this->city)) $json['city'] = $this->city;
-        if (isset($this->district)) $json['district'] = $this->district;
-        if (isset($this->state)) $json['state'] = $this->state;
-        if (isset($this->postalCode)) $json['postalCode'] = $this->postalCode;
-        if (isset($this->country)) $json['country'] = $this->country;
-        if (isset($this->period)) $json['period'] = $this->period;
-        return $json;
+        if (null !== ($v = $this->getCountry())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_COUNTRY] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_COUNTRY_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_COUNTRY] = $v;
+            }
+        }
+        if (null !== ($v = $this->getDistrict())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_DISTRICT] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_DISTRICT_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_DISTRICT] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getLine())) {
+            $a[self::FIELD_LINE] = [];
+            foreach ($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                if (null !== ($val = $v->getValue())) {
+                    $a[self::FIELD_LINE][] = $val;
+                    if (1 < count($enc = $v->jsonSerialize())) {
+                        unset($enc[$v::FIELD_VALUE]);
+                        $a[self::FIELD_LINE_EXT][] = $enc;
+                    } else {
+                        $a[self::FIELD_LINE_EXT][] = null;
+                    }
+                } else {
+                    $a[self::FIELD_LINE][] = $v;
+                }
+            }
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            $a[self::FIELD_PERIOD] = $v;
+        }
+        if (null !== ($v = $this->getPostalCode())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_POSTAL_CODE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_POSTAL_CODE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_POSTAL_CODE] = $v;
+            }
+        }
+        if (null !== ($v = $this->getState())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_STATE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_STATE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_STATE] = $v;
+            }
+        }
+        if (null !== ($v = $this->getText())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_TEXT] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_TEXT_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_TEXT] = $v;
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_TYPE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_TYPE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_TYPE] = $v;
+            }
+        }
+        if (null !== ($v = $this->getUse())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_USE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_USE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_USE] = $v;
+            }
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Address xmlns="http://hl7.org/fhir"></Address>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->use)) $this->use->xmlSerialize(true, $sxe->addChild('use'));
-        if (isset($this->type)) $this->type->xmlSerialize(true, $sxe->addChild('type'));
-        if (isset($this->text)) $this->text->xmlSerialize(true, $sxe->addChild('text'));
-        if (0 < count($this->line)) {
-            foreach($this->line as $line) {
-                $line->xmlSerialize(true, $sxe->addChild('line'));
-            }
-        }
-        if (isset($this->city)) $this->city->xmlSerialize(true, $sxe->addChild('city'));
-        if (isset($this->district)) $this->district->xmlSerialize(true, $sxe->addChild('district'));
-        if (isset($this->state)) $this->state->xmlSerialize(true, $sxe->addChild('state'));
-        if (isset($this->postalCode)) $this->postalCode->xmlSerialize(true, $sxe->addChild('postalCode'));
-        if (isset($this->country)) $this->country->xmlSerialize(true, $sxe->addChild('country'));
-        if (isset($this->period)) $this->period->xmlSerialize(true, $sxe->addChild('period'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

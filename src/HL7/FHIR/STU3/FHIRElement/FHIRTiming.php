@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,164 +63,464 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRTiming\FHIRTimingRepeat;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
- * Specifies an event that may occur multiple times. Timing schedules are used to record when things are planned, expected or requested to occur. The most common usage is in dosage instructions for medications. They are also used when planning care of various kinds, and may be used for reporting the schedule to which past regular activities were carried out.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * Specifies an event that may occur multiple times. Timing schedules are used to
+ * record when things are planned, expected or requested to occur. The most common
+ * usage is in dosage instructions for medications. They are also used when
+ * planning care of various kinds, and may be used for reporting the schedule to
+ * which past regular activities were carried out.
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRTiming
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRTiming extends FHIRElement implements \JsonSerializable
+class FHIRTiming extends FHIRElement
 {
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_TIMING;
+    const FIELD_CODE = 'code';
+    const FIELD_EVENT = 'event';
+    const FIELD_EVENT_EXT = '_event';
+    const FIELD_REPEAT = 'repeat';
+
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A code for the timing schedule. Some codes such as BID are ubiquitous, but many
+     * institutions define their own additional codes. If a code is provided, the code
+     * is understood to be a complete statement of whatever is specified in the
+     * structured timing data, and either the code or the data may be used to interpret
+     * the Timing, with the exception that .repeat.bounds still applies over the code
+     * (and is not contained in the code).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected $code = null;
+
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * Identifies specific times when the event occurs.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRDateTime[]
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime[]
      */
-    public $event = [];
+    protected $event = [];
 
     /**
+     * Specifies an event that may occur multiple times. Timing schedules are used to
+     * record when things are planned, expected or requested to occur. The most common
+     * usage is in dosage instructions for medications. They are also used when
+     * planning care of various kinds, and may be used for reporting the schedule to
+     * which past regular activities were carried out.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * A set of rules that describe when the event is scheduled.
-     * @var \HL7\FHIR\STU3\FHIRResource\FHIRTiming\FHIRTimingRepeat
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming\FHIRTimingRepeat
      */
-    public $repeat = null;
+    protected $repeat = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
 
     /**
-     * A code for the timing schedule. Some codes such as BID are ubiquitous, but many institutions define their own additional codes. If a code is provided, the code is understood to be a complete statement of whatever is specified in the structured timing data, and either the code or the data may be used to interpret the Timing, with the exception that .repeat.bounds still applies over the code (and is not contained in the code).
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * FHIRTiming Constructor
+     * @param null|array $data
      */
-    public $code = null;
-
-    /**
-     * @var string
-     */
-    private $_fhirElementName = 'Timing';
-
-    /**
-     * Identifies specific times when the event occurs.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRDateTime[]
-     */
-    public function getEvent() {
-        return $this->event;
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRTiming::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_CODE])) {
+            if ($data[self::FIELD_CODE] instanceof FHIRCodeableConcept) {
+                $this->setCode($data[self::FIELD_CODE]);
+            } else {
+                $this->setCode(new FHIRCodeableConcept($data[self::FIELD_CODE]));
+            }
+        }
+        if (isset($data[self::FIELD_EVENT])) {
+            $ext = (isset($data[self::FIELD_EVENT_EXT]) && is_array($data[self::FIELD_EVENT_EXT]))
+                ? $data[self::FIELD_EVENT_EXT]
+                : null;
+            if (is_array($data[self::FIELD_EVENT])) {
+                foreach($data[self::FIELD_EVENT] as $i => $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRDateTime) {
+                        $this->addEvent($v);
+                    } elseif (null !== $ext && isset($ext[$i]) && is_array($ext[$i])) {
+                        if (is_scalar($v)) {
+                            $this->addEvent(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $v] + $ext[$i]));
+                        } elseif (is_array($v)) {
+                            $this->addEvent(new FHIRDateTime(array_merge($v, $ext[$i])));
+                        }
+                    } else {
+                        $this->addEvent(new FHIRDateTime($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_EVENT] instanceof FHIRDateTime) {
+                $this->addEvent($data[self::FIELD_EVENT]);
+            } elseif (null !== $ext && is_scalar($data[self::FIELD_EVENT])) {
+                $this->addEvent(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_EVENT]] + $ext));
+            } else {
+                $this->addEvent(new FHIRDateTime($data[self::FIELD_EVENT]));
+            }
+        }
+        if (isset($data[self::FIELD_REPEAT])) {
+            if ($data[self::FIELD_REPEAT] instanceof FHIRTimingRepeat) {
+                $this->setRepeat($data[self::FIELD_REPEAT]);
+            } else {
+                $this->setRepeat(new FHIRTimingRepeat($data[self::FIELD_REPEAT]));
+            }
+        }
     }
 
     /**
-     * Identifies specific times when the event occurs.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDateTime $event
-     * @return $this
+     * @return string
      */
-    public function addEvent($event) {
-        $this->event[] = $event;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * A set of rules that describe when the event is scheduled.
-     * @return \HL7\FHIR\STU3\FHIRResource\FHIRTiming\FHIRTimingRepeat
+     * @return string|null
      */
-    public function getRepeat() {
-        return $this->repeat;
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
     }
 
     /**
-     * A set of rules that describe when the event is scheduled.
-     * @param \HL7\FHIR\STU3\FHIRResource\FHIRTiming\FHIRTimingRepeat $repeat
-     * @return $this
+     * @param null|string $xmlNamespace
+     * @return static
      */
-    public function setRepeat($repeat) {
-        $this->repeat = $repeat;
-        return $this;
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
     }
 
     /**
-     * A code for the timing schedule. Some codes such as BID are ubiquitous, but many institutions define their own additional codes. If a code is provided, the code is understood to be a complete statement of whatever is specified in the structured timing data, and either the code or the data may be used to interpret the Timing, with the exception that .repeat.bounds still applies over the code (and is not contained in the code).
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * @return string
      */
-    public function getCode() {
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Timing{$xmlns}></Timing>";
+    }
+
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A code for the timing schedule. Some codes such as BID are ubiquitous, but many
+     * institutions define their own additional codes. If a code is provided, the code
+     * is understood to be a complete statement of whatever is specified in the
+     * structured timing data, and either the code or the data may be used to interpret
+     * the Timing, with the exception that .repeat.bounds still applies over the code
+     * (and is not contained in the code).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    public function getCode()
+    {
         return $this->code;
     }
 
     /**
-     * A code for the timing schedule. Some codes such as BID are ubiquitous, but many institutions define their own additional codes. If a code is provided, the code is understood to be a complete statement of whatever is specified in the structured timing data, and either the code or the data may be used to interpret the Timing, with the exception that .repeat.bounds still applies over the code (and is not contained in the code).
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $code
-     * @return $this
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A code for the timing schedule. Some codes such as BID are ubiquitous, but many
+     * institutions define their own additional codes. If a code is provided, the code
+     * is understood to be a complete statement of whatever is specified in the
+     * structured timing data, and either the code or the data may be used to interpret
+     * the Timing, with the exception that .repeat.bounds still applies over the code
+     * (and is not contained in the code).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $code
+     * @return static
      */
-    public function setCode($code) {
+    public function setCode(FHIRCodeableConcept $code = null)
+    {
         $this->code = $code;
         return $this;
     }
 
     /**
-     * @return string
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies specific times when the event occurs.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime[]
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
+    public function getEvent()
+    {
+        return $this->event;
     }
 
     /**
-     * @param mixed $data
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies specific times when the event occurs.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $event
+     * @return static
      */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['event'])) {
-                if (is_array($data['event'])) {
-                    foreach($data['event'] as $d) {
-                        $this->addEvent($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"event" must be array of objects or null, '.gettype($data['event']).' seen.');
-                }
-            }
-            if (isset($data['repeat'])) {
-                $this->setRepeat($data['repeat']);
-            }
-            if (isset($data['code'])) {
-                $this->setCode($data['code']);
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function addEvent($event = null)
+    {
+        if (null === $event) {
+            $this->event = [];
+            return $this;
         }
-        parent::__construct($data);
+        if ($event instanceof FHIRDateTime) {
+            $this->event[] = $event;
+            return $this;
+        }
+        $this->event[] = new FHIRDateTime($event);
+        return $this;
     }
 
     /**
-     * @return string
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies specific times when the event occurs.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDateTime[] $event
+     * @return static
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function setEvent(array $event = [])
+    {
+        $this->event = [];
+        if ([] === $event) {
+            return $this;
+        }
+        foreach($event as $v) {
+            if ($v instanceof FHIRDateTime) {
+                $this->addEvent($v);
+            } else {
+                $this->addEvent(new FHIRDateTime($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Specifies an event that may occur multiple times. Timing schedules are used to
+     * record when things are planned, expected or requested to occur. The most common
+     * usage is in dosage instructions for medications. They are also used when
+     * planning care of various kinds, and may be used for reporting the schedule to
+     * which past regular activities were carried out.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A set of rules that describe when the event is scheduled.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming\FHIRTimingRepeat
+     */
+    public function getRepeat()
+    {
+        return $this->repeat;
+    }
+
+    /**
+     * Specifies an event that may occur multiple times. Timing schedules are used to
+     * record when things are planned, expected or requested to occur. The most common
+     * usage is in dosage instructions for medications. They are also used when
+     * planning care of various kinds, and may be used for reporting the schedule to
+     * which past regular activities were carried out.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A set of rules that describe when the event is scheduled.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming\FHIRTimingRepeat $repeat
+     * @return static
+     */
+    public function setRepeat(FHIRTimingRepeat $repeat = null)
+    {
+        $this->repeat = $repeat;
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRTiming::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRTiming::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRTiming;
+        } elseif (!is_object($type) || !($type instanceof FHIRTiming)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRTiming::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRTiming or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($children->code)) {
+            $type->setCode(FHIRCodeableConcept::xmlUnserialize($children->code));
+        }
+        if (isset($attributes->event)) {
+            $type->addEvent((string)$attributes->event);
+        }
+        if (isset($children->event)) {
+            foreach($children->event as $child) {
+                $type->addEvent(FHIRDateTime::xmlUnserialize($child));
+            }
+        }
+        if (isset($children->repeat)) {
+            $type->setRepeat(FHIRTimingRepeat::xmlUnserialize($children->repeat));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if (null !== ($v = $this->getCode())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_CODE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if ([] !== ($vs = $this->getEvent())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_EVENT, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if (null !== ($v = $this->getRepeat())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_REPEAT, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (0 < count($this->event)) {
-            $json['event'] = [];
-            foreach($this->event as $event) {
-                if (null !== $event) $json['event'][] = $event;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getCode())) {
+            $a[self::FIELD_CODE] = $v;
+        }
+        if ([] !== ($vs = $this->getEvent())) {
+            $a[self::FIELD_EVENT] = [];
+            foreach ($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                if (null !== ($val = $v->getValue())) {
+                    $a[self::FIELD_EVENT][] = $val;
+                    if (1 < count($enc = $v->jsonSerialize())) {
+                        unset($enc[$v::FIELD_VALUE]);
+                        $a[self::FIELD_EVENT_EXT][] = $enc;
+                    } else {
+                        $a[self::FIELD_EVENT_EXT][] = null;
+                    }
+                } else {
+                    $a[self::FIELD_EVENT][] = $v;
+                }
             }
         }
-        if (isset($this->repeat)) $json['repeat'] = $this->repeat;
-        if (isset($this->code)) $json['code'] = $this->code;
-        return $json;
+        if (null !== ($v = $this->getRepeat())) {
+            $a[self::FIELD_REPEAT] = $v;
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Timing xmlns="http://hl7.org/fhir"></Timing>');
-        parent::xmlSerialize(true, $sxe);
-        if (0 < count($this->event)) {
-            foreach($this->event as $event) {
-                $event->xmlSerialize(true, $sxe->addChild('event'));
-            }
-        }
-        if (isset($this->repeat)) $this->repeat->xmlSerialize(true, $sxe->addChild('repeat'));
-        if (isset($this->code)) $this->code->xmlSerialize(true, $sxe->addChild('code'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

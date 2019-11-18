@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3;
+<?php
+
+namespace HL7\FHIR\STU3;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,174 +62,520 @@
  * 
  */
 
+use HL7\FHIR\STU3\FHIRElement\FHIRCode;
+use HL7\FHIR\STU3\FHIRElement\FHIRId;
+use HL7\FHIR\STU3\FHIRElement\FHIRMeta;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+
 /**
  * This is the base resource type for everything.
+ *
+ * Class FHIRResource
+ * @package \HL7\FHIR\STU3
  */
-class FHIRResource implements \JsonSerializable
+class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterface
 {
-    /**
-     * The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRId
-     */
-    public $id = null;
+    use PHPFHIRCommentContainerTrait;
+
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_RESOURCE;
+    const FIELD_FHIR_COMMENTS = 'fhir_comments';
+
+    const FIELD_ID = 'id';
+    const FIELD_ID_EXT = '_id';
+    const FIELD_IMPLICIT_RULES = 'implicitRules';
+    const FIELD_IMPLICIT_RULES_EXT = '_implicitRules';
+    const FIELD_LANGUAGE = 'language';
+    const FIELD_LANGUAGE_EXT = '_language';
+    const FIELD_META = 'meta';
 
     /**
-     * The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRMeta
+     * Any combination of letters, numerals, "-" and ".", with a length limit of 64
+     * characters. (This might be an integer, an unprefixed OID, UUID or any other
+     * identifier pattern that meets these constraints.) Ids are case-insensitive.
+     * RFC 4122
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The logical id of the resource, as used in the URL for the resource. Once
+     * assigned, this value never changes.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRId
      */
-    public $meta = null;
+    protected $id = null;
 
     /**
-     * A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRUri
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to a set of rules that were followed when the resource was
+     * constructed, and which must be understood when processing the content.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
-    public $implicitRules = null;
+    protected $implicitRules = null;
 
     /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
      * The base language in which the resource is written.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRCode
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
-    public $language = null;
+    protected $language = null;
 
     /**
-     * @var string
+     * The metadata about a resource. This is content in the resource that is
+     * maintained by the infrastructure. Changes to the content may not always be
+     * associated with version changes to the resource.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The metadata about the resource. This is content that is maintained by the
+     * infrastructure. Changes to the content may not always be associated with version
+     * changes to the resource.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMeta
      */
-    private $_fhirElementName = 'Resource';
+    protected $meta = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
 
     /**
-     * The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRId
+     * FHIRResource Constructor
+     * @param null|array $data
      */
-    public function getId() {
-        return $this->id;
-    }
-
-    /**
-     * The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRId $id
-     * @return $this
-     */
-    public function setId($id) {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRMeta
-     */
-    public function getMeta() {
-        return $this->meta;
-    }
-
-    /**
-     * The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRMeta $meta
-     * @return $this
-     */
-    public function setMeta($meta) {
-        $this->meta = $meta;
-        return $this;
-    }
-
-    /**
-     * A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRUri
-     */
-    public function getImplicitRules() {
-        return $this->implicitRules;
-    }
-
-    /**
-     * A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUri $implicitRules
-     * @return $this
-     */
-    public function setImplicitRules($implicitRules) {
-        $this->implicitRules = $implicitRules;
-        return $this;
-    }
-
-    /**
-     * The base language in which the resource is written.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRCode
-     */
-    public function getLanguage() {
-        return $this->language;
-    }
-
-    /**
-     * The base language in which the resource is written.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCode $language
-     * @return $this
-     */
-    public function setLanguage($language) {
-        $this->language = $language;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['id'])) {
-                $this->setId($data['id']);
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRResource::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        if (isset($data[self::FIELD_FHIR_COMMENTS])) {
+            if (is_array($data[self::FIELD_FHIR_COMMENTS])) {
+                $this->_setFHIRComments($data[self::FIELD_FHIR_COMMENTS]);
+            } else if (is_string($data[self::FIELD_FHIR_COMMENTS])) {
+                $this->_addFHIRComment($data[self::FIELD_FHIR_COMMENTS]);
             }
-            if (isset($data['meta'])) {
-                $this->setMeta($data['meta']);
+        }
+        if (isset($data[self::FIELD_ID])) {
+            $ext = (isset($data[self::FIELD_ID_EXT]) && is_array($data[self::FIELD_ID_EXT]))
+                ? $data[self::FIELD_ID_EXT]
+                : null;
+            if ($data[self::FIELD_ID] instanceof FHIRId) {
+                $this->setId($data[self::FIELD_ID]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_ID])) {
+                    $this->setId(new FHIRId([FHIRId::FIELD_VALUE => $data[self::FIELD_ID]] + $ext));
+                } else if (is_array($data[self::FIELD_ID])) {
+                    $this->setId(new FHIRId(array_merge($ext, $data[self::FIELD_ID])));
+                }
+            } else {
+                $this->setId(new FHIRId($data[self::FIELD_ID]));
             }
-            if (isset($data['implicitRules'])) {
-                $this->setImplicitRules($data['implicitRules']);
+        }
+        if (isset($data[self::FIELD_IMPLICIT_RULES])) {
+            $ext = (isset($data[self::FIELD_IMPLICIT_RULES_EXT]) && is_array($data[self::FIELD_IMPLICIT_RULES_EXT]))
+                ? $data[self::FIELD_IMPLICIT_RULES_EXT]
+                : null;
+            if ($data[self::FIELD_IMPLICIT_RULES] instanceof FHIRUri) {
+                $this->setImplicitRules($data[self::FIELD_IMPLICIT_RULES]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_IMPLICIT_RULES])) {
+                    $this->setImplicitRules(new FHIRUri([FHIRUri::FIELD_VALUE => $data[self::FIELD_IMPLICIT_RULES]] + $ext));
+                } else if (is_array($data[self::FIELD_IMPLICIT_RULES])) {
+                    $this->setImplicitRules(new FHIRUri(array_merge($ext, $data[self::FIELD_IMPLICIT_RULES])));
+                }
+            } else {
+                $this->setImplicitRules(new FHIRUri($data[self::FIELD_IMPLICIT_RULES]));
             }
-            if (isset($data['language'])) {
-                $this->setLanguage($data['language']);
+        }
+        if (isset($data[self::FIELD_LANGUAGE])) {
+            $ext = (isset($data[self::FIELD_LANGUAGE_EXT]) && is_array($data[self::FIELD_LANGUAGE_EXT]))
+                ? $data[self::FIELD_LANGUAGE_EXT]
+                : null;
+            if ($data[self::FIELD_LANGUAGE] instanceof FHIRCode) {
+                $this->setLanguage($data[self::FIELD_LANGUAGE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_LANGUAGE])) {
+                    $this->setLanguage(new FHIRCode([FHIRCode::FIELD_VALUE => $data[self::FIELD_LANGUAGE]] + $ext));
+                } else if (is_array($data[self::FIELD_LANGUAGE])) {
+                    $this->setLanguage(new FHIRCode(array_merge($ext, $data[self::FIELD_LANGUAGE])));
+                }
+            } else {
+                $this->setLanguage(new FHIRCode($data[self::FIELD_LANGUAGE]));
             }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+        }
+        if (isset($data[self::FIELD_META])) {
+            if ($data[self::FIELD_META] instanceof FHIRMeta) {
+                $this->setMeta($data[self::FIELD_META]);
+            } else {
+                $this->setMeta(new FHIRMeta($data[self::FIELD_META]));
+            }
         }
     }
 
     /**
      * @return string
      */
-    public function __toString() {
-        return (string)$this->getId();
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Resource{$xmlns}></Resource>";
+    }
+
+
+    /**
+     * Any combination of letters, numerals, "-" and ".", with a length limit of 64
+     * characters. (This might be an integer, an unprefixed OID, UUID or any other
+     * identifier pattern that meets these constraints.) Ids are case-insensitive.
+     * RFC 4122
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The logical id of the resource, as used in the URL for the resource. Once
+     * assigned, this value never changes.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRId
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Any combination of letters, numerals, "-" and ".", with a length limit of 64
+     * characters. (This might be an integer, an unprefixed OID, UUID or any other
+     * identifier pattern that meets these constraints.) Ids are case-insensitive.
+     * RFC 4122
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The logical id of the resource, as used in the URL for the resource. Once
+     * assigned, this value never changes.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRId $id
+     * @return static
+     */
+    public function setId($id = null)
+    {
+        if (null === $id) {
+            $this->id = null;
+            return $this;
+        }
+        if ($id instanceof FHIRId) {
+            $this->id = $id;
+            return $this;
+        }
+        $this->id = new FHIRId($id);
+        return $this;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to a set of rules that were followed when the resource was
+     * constructed, and which must be understood when processing the content.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
+     */
+    public function getImplicitRules()
+    {
+        return $this->implicitRules;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A reference to a set of rules that were followed when the resource was
+     * constructed, and which must be understood when processing the content.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUri $implicitRules
+     * @return static
+     */
+    public function setImplicitRules($implicitRules = null)
+    {
+        if (null === $implicitRules) {
+            $this->implicitRules = null;
+            return $this;
+        }
+        if ($implicitRules instanceof FHIRUri) {
+            $this->implicitRules = $implicitRules;
+            return $this;
+        }
+        $this->implicitRules = new FHIRUri($implicitRules);
+        return $this;
+    }
+
+    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The base language in which the resource is written.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * A string which has at least one character and no leading or trailing whitespace
+     * and where there is no whitespace other than single spaces in the contents
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The base language in which the resource is written.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCode $language
+     * @return static
+     */
+    public function setLanguage($language = null)
+    {
+        if (null === $language) {
+            $this->language = null;
+            return $this;
+        }
+        if ($language instanceof FHIRCode) {
+            $this->language = $language;
+            return $this;
+        }
+        $this->language = new FHIRCode($language);
+        return $this;
+    }
+
+    /**
+     * The metadata about a resource. This is content in the resource that is
+     * maintained by the infrastructure. Changes to the content may not always be
+     * associated with version changes to the resource.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The metadata about the resource. This is content that is maintained by the
+     * infrastructure. Changes to the content may not always be associated with version
+     * changes to the resource.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRMeta
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * The metadata about a resource. This is content in the resource that is
+     * maintained by the infrastructure. Changes to the content may not always be
+     * associated with version changes to the resource.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The metadata about the resource. This is content that is maintained by the
+     * infrastructure. Changes to the content may not always be associated with version
+     * changes to the resource.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRMeta $meta
+     * @return static
+     */
+    public function setMeta(FHIRMeta $meta = null)
+    {
+        $this->meta = $meta;
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRResource $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRResource
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRResource::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRResource::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRResource;
+        } elseif (!is_object($type) || !($type instanceof FHIRResource)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRResource::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($attributes->id)) {
+            $type->setId((string)$attributes->id);
+        }
+        if (isset($children->id)) {
+            $type->setId(FHIRId::xmlUnserialize($children->id));
+        }
+        if (isset($attributes->implicitRules)) {
+            $type->setImplicitRules((string)$attributes->implicitRules);
+        }
+        if (isset($children->implicitRules)) {
+            $type->setImplicitRules(FHIRUri::xmlUnserialize($children->implicitRules));
+        }
+        if (isset($attributes->language)) {
+            $type->setLanguage((string)$attributes->language);
+        }
+        if (isset($children->language)) {
+            $type->setLanguage(FHIRCode::xmlUnserialize($children->language));
+        }
+        if (isset($children->meta)) {
+            $type->setMeta(FHIRMeta::xmlUnserialize($children->meta));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+
+        if (null !== ($v = $this->getId())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_ID, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getImplicitRules())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_IMPLICIT_RULES, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getLanguage())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_LANGUAGE, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getMeta())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_META, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = [];
-        if (isset($this->id)) $json['id'] = $this->id;
-        if (isset($this->meta)) $json['meta'] = $this->meta;
-        if (isset($this->implicitRules)) $json['implicitRules'] = $this->implicitRules;
-        if (isset($this->language)) $json['language'] = $this->language;
-        return $json;
+    public function jsonSerialize()
+    {
+        $a = [];
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[self::FIELD_FHIR_COMMENTS] = $vs;
+        }
+        if (null !== ($v = $this->getId())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_ID] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_ID_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_ID] = $v;
+            }
+        }
+        if (null !== ($v = $this->getImplicitRules())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_IMPLICIT_RULES] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_IMPLICIT_RULES_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_IMPLICIT_RULES] = $v;
+            }
+        }
+        if (null !== ($v = $this->getLanguage())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_LANGUAGE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_LANGUAGE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_LANGUAGE] = $v;
+            }
+        }
+        if (null !== ($v = $this->getMeta())) {
+            $a[self::FIELD_META] = $v;
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Resource xmlns="http://hl7.org/fhir"></Resource>');
-        if (isset($this->id)) $this->id->xmlSerialize(true, $sxe->addChild('id'));
-        if (isset($this->meta)) $this->meta->xmlSerialize(true, $sxe->addChild('meta'));
-        if (isset($this->implicitRules)) $this->implicitRules->xmlSerialize(true, $sxe->addChild('implicitRules'));
-        if (isset($this->language)) $this->language->xmlSerialize(true, $sxe->addChild('language'));
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

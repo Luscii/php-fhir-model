@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,164 +63,427 @@
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
- * A contributor to the content of a knowledge asset, including authors, editors, reviewers, and endorsers.
- * If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions
+ * A contributor to the content of a knowledge asset, including authors, editors,
+ * reviewers, and endorsers.
+ * If the element is present, it must have a value for at least one of the defined
+ * elements, an \@id referenced from the Narrative, or extensions
+ *
+ * Class FHIRContributor
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRContributor extends FHIRElement implements \JsonSerializable
+class FHIRContributor extends FHIRElement
 {
-    /**
-     * The type of contributor.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRContributorType
-     */
-    public $type = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CONTRIBUTOR;
+    const FIELD_CONTACT = 'contact';
+    const FIELD_NAME = 'name';
+    const FIELD_NAME_EXT = '_name';
+    const FIELD_TYPE = 'type';
+    const FIELD_TYPE_EXT = '_type';
 
     /**
+     * Specifies contact information for a person or organization.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Contact details to assist a user in finding and communicating with the
+     * contributor.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContactDetail[]
+     */
+    protected $contact = [];
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * The name of the individual or organization responsible for the contribution.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRString
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public $name = null;
+    protected $name = null;
 
     /**
-     * Contact details to assist a user in finding and communicating with the contributor.
-     * @var \HL7\FHIR\STU3\FHIRElement\FHIRContactDetail[]
-     */
-    public $contact = [];
-
-    /**
-     * @var string
-     */
-    private $_fhirElementName = 'Contributor';
-
-    /**
+     * The type of contributor
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
      * The type of contributor.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRContributorType
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContributorType
      */
-    public function getType() {
-        return $this->type;
+    protected $type = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRContributor Constructor
+     * @param null|array $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                'FHIRContributor::_construct - $data expected to be null or array, %s seen',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_CONTACT])) {
+            if (is_array($data[self::FIELD_CONTACT])) {
+                foreach($data[self::FIELD_CONTACT] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRContactDetail) {
+                        $this->addContact($v);
+                    } else {
+                        $this->addContact(new FHIRContactDetail($v));
+                    }
+                }
+            } else if ($data[self::FIELD_CONTACT] instanceof FHIRContactDetail) {
+                $this->addContact($data[self::FIELD_CONTACT]);
+            } else {
+                $this->addContact(new FHIRContactDetail($data[self::FIELD_CONTACT]));
+            }
+        }
+        if (isset($data[self::FIELD_NAME])) {
+            $ext = (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT]))
+                ? $data[self::FIELD_NAME_EXT]
+                : null;
+            if ($data[self::FIELD_NAME] instanceof FHIRString) {
+                $this->setName($data[self::FIELD_NAME]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_NAME])) {
+                    $this->setName(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_NAME]] + $ext));
+                } else if (is_array($data[self::FIELD_NAME])) {
+                    $this->setName(new FHIRString(array_merge($ext, $data[self::FIELD_NAME])));
+                }
+            } else {
+                $this->setName(new FHIRString($data[self::FIELD_NAME]));
+            }
+        }
+        if (isset($data[self::FIELD_TYPE])) {
+            $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT]))
+                ? $data[self::FIELD_TYPE_EXT]
+                : null;
+            if ($data[self::FIELD_TYPE] instanceof FHIRContributorType) {
+                $this->setType($data[self::FIELD_TYPE]);
+            } elseif (null !== $ext) {
+                if (is_scalar($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRContributorType([FHIRContributorType::FIELD_VALUE => $data[self::FIELD_TYPE]] + $ext));
+                } else if (is_array($data[self::FIELD_TYPE])) {
+                    $this->setType(new FHIRContributorType(array_merge($ext, $data[self::FIELD_TYPE])));
+                }
+            } else {
+                $this->setType(new FHIRContributorType($data[self::FIELD_TYPE]));
+            }
+        }
     }
 
     /**
-     * The type of contributor.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContributorType $type
-     * @return $this
+     * @return string
      */
-    public function setType($type) {
-        $this->type = $type;
-        return $this;
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * The name of the individual or organization responsible for the contribution.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRString
+     * @return string|null
      */
-    public function getName() {
-        return $this->name;
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
     }
 
     /**
-     * The name of the individual or organization responsible for the contribution.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString $name
-     * @return $this
+     * @param null|string $xmlNamespace
+     * @return static
      */
-    public function setName($name) {
-        $this->name = $name;
-        return $this;
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
     }
 
     /**
-     * Contact details to assist a user in finding and communicating with the contributor.
-     * @return \HL7\FHIR\STU3\FHIRElement\FHIRContactDetail[]
+     * @return string
      */
-    public function getContact() {
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<Contributor{$xmlns}></Contributor>";
+    }
+
+
+    /**
+     * Specifies contact information for a person or organization.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Contact details to assist a user in finding and communicating with the
+     * contributor.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRContactDetail[]
+     */
+    public function getContact()
+    {
         return $this->contact;
     }
 
     /**
-     * Contact details to assist a user in finding and communicating with the contributor.
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactDetail $contact
-     * @return $this
+     * Specifies contact information for a person or organization.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Contact details to assist a user in finding and communicating with the
+     * contributor.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRContactDetail $contact
+     * @return static
      */
-    public function addContact($contact) {
+    public function addContact(FHIRContactDetail $contact = null)
+    {
         $this->contact[] = $contact;
         return $this;
     }
 
     /**
-     * @return string
+     * Specifies contact information for a person or organization.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Contact details to assist a user in finding and communicating with the
+     * contributor.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactDetail[] $contact
+     * @return static
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function __construct($data = []) {
-        if (is_array($data)) {
-            if (isset($data['type'])) {
-                $this->setType($data['type']);
-            }
-            if (isset($data['name'])) {
-                $this->setName($data['name']);
-            }
-            if (isset($data['contact'])) {
-                if (is_array($data['contact'])) {
-                    foreach($data['contact'] as $d) {
-                        $this->addContact($d);
-                    }
-                } else {
-                    throw new \InvalidArgumentException('"contact" must be array of objects or null, '.gettype($data['contact']).' seen.');
-                }
-            }
-        } else if (null !== $data) {
-            throw new \InvalidArgumentException('$data expected to be array of values, saw "'.gettype($data).'"');
+    public function setContact(array $contact = [])
+    {
+        $this->contact = [];
+        if ([] === $contact) {
+            return $this;
         }
-        parent::__construct($data);
+        foreach($contact as $v) {
+            if ($v instanceof FHIRContactDetail) {
+                $this->addContact($v);
+            } else {
+                $this->addContact(new FHIRContactDetail($v));
+            }
+        }
+        return $this;
     }
 
     /**
-     * @return string
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The name of the individual or organization responsible for the contribution.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function __toString() {
-        return $this->get_fhirElementName();
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The name of the individual or organization responsible for the contribution.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $name
+     * @return static
+     */
+    public function setName($name = null)
+    {
+        if (null === $name) {
+            $this->name = null;
+            return $this;
+        }
+        if ($name instanceof FHIRString) {
+            $this->name = $name;
+            return $this;
+        }
+        $this->name = new FHIRString($name);
+        return $this;
+    }
+
+    /**
+     * The type of contributor
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The type of contributor.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRContributorType
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * The type of contributor
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The type of contributor.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRContributorType $type
+     * @return static
+     */
+    public function setType(FHIRContributorType $type = null)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRContributor $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRContributor
+     */
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
+        }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRContributor::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRContributor::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRContributor;
+        } elseif (!is_object($type) || !($type instanceof FHIRContributor)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRContributor::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRContributor or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($children->contact)) {
+            foreach($children->contact as $child) {
+                $type->addContact(FHIRContactDetail::xmlUnserialize($child));
+            }
+        }
+        if (isset($attributes->name)) {
+            $type->setName((string)$attributes->name);
+        }
+        if (isset($children->name)) {
+            $type->setName(FHIRString::xmlUnserialize($children->name));
+        }
+        if (isset($children->type)) {
+            $type->setType(FHIRContributorType::xmlUnserialize($children->type));
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+
+        if ([] !== ($vs = $this->getContact())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $v->xmlSerialize($sxe->addChild(self::FIELD_CONTACT, null, $v->_getFHIRXMLNamespace()));
+            }
+        }
+        if (null !== ($v = $this->getName())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_NAME, null, $v->_getFHIRXMLNamespace()));
+        }
+        if (null !== ($v = $this->getType())) {
+            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
+        }
+        return $sxe;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize() {
-        $json = parent::jsonSerialize();
-        if (isset($this->type)) $json['type'] = $this->type;
-        if (isset($this->name)) $json['name'] = $this->name;
-        if (0 < count($this->contact)) {
-            $json['contact'] = [];
-            foreach($this->contact as $contact) {
-                if (null !== $contact) $json['contact'][] = $contact;
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if ([] !== ($vs = $this->getContact())) {
+            $a[self::FIELD_CONTACT] = $vs;
+        }
+        if (null !== ($v = $this->getName())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_NAME] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_NAME_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_NAME] = $v;
             }
         }
-        return $json;
+        if (null !== ($v = $this->getType())) {
+            if (null !== ($val = $v->getValue())) {
+                $a[self::FIELD_TYPE] = $val;
+                if (1 < count($enc = $v->jsonSerialize())) {
+                    unset($enc[$v::FIELD_VALUE]);
+                    $a[self::FIELD_TYPE_EXT] = $enc;
+                }
+            } else {
+                $a[self::FIELD_TYPE] = $v;
+            }
+        }
+        return $a;
     }
 
     /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
+     * @return string
      */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<Contributor xmlns="http://hl7.org/fhir"></Contributor>');
-        parent::xmlSerialize(true, $sxe);
-        if (isset($this->type)) $this->type->xmlSerialize(true, $sxe->addChild('type'));
-        if (isset($this->name)) $this->name->xmlSerialize(true, $sxe->addChild('name'));
-        if (0 < count($this->contact)) {
-            foreach($this->contact as $contact) {
-                $contact->xmlSerialize(true, $sxe->addChild('contact'));
-            }
-        }
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
+    public function __toString()
+    {
+        return self::FHIR_TYPE_NAME;
     }
-
-
 }

@@ -1,14 +1,16 @@
-<?php namespace HL7\FHIR\STU3\FHIRElement;
+<?php
+
+namespace HL7\FHIR\STU3\FHIRElement;
 
 /*!
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2018
+ * Class creation date: November 18th, 2019 08:27+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2018 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,84 +62,213 @@
  * 
  */
 
+use HL7\FHIR\STU3\FHIRBase64BinaryPrimitive;
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\PHPFHIRConstants;
+use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
 /**
  * A stream of bytes
  * A stream of bytes, base64 encoded
- * If the element is present, it must have either a @value, an @id, or extensions
+ * If the element is present, it must have either a \@value, an \@id, or extensions
+ *
+ * Class FHIRBase64Binary
+ * @package \HL7\FHIR\STU3\FHIRElement
  */
-class FHIRBase64Binary extends FHIRElement implements \JsonSerializable
+class FHIRBase64Binary extends FHIRElement
 {
-    /**
-     * @var string
-     */
-    public $value = null;
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_BASE_64BINARY;
+    const FIELD_VALUE = 'value';
 
     /**
-     * @var string
+     * @var null|\HL7\FHIR\STU3\FHIRBase64BinaryPrimitive
      */
-    private $_fhirElementName = 'base64Binary';
+    protected $value = null;
+
+    /** @var string */
+    protected $_xmlns = 'http://hl7.org/fhir';
+
+    /**
+     * FHIRBase64Binary Constructor
+     * @param null|array|string|\HL7\FHIR\STU3\FHIRBase64BinaryPrimitive $data
+     */
+    public function __construct($data = null)
+    {
+        if (null === $data) {
+            return;
+        }
+        if ($data instanceof FHIRBase64BinaryPrimitive) {
+            $this->setValue($data);
+            return;
+        }
+        if (is_scalar($data)) {
+            $this->setValue(new FHIRBase64BinaryPrimitive($data));
+            return;
+        }
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException(sprintf(
+                '$data must be null, string, instance of \HL7\FHIR\STU3\FHIRBase64BinaryPrimitive, or array.  %s seen.',
+                gettype($data)
+            ));
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_VALUE])) {
+            $this->setValue($data[self::FIELD_VALUE]);
+        }
+    }
+    /**
+     * @return string
+     */
+    public function _getFHIRTypeName()
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function _getFHIRXMLNamespace()
+    {
+        return '' === $this->_xmlns ? null : $this->_xmlns;
+    }
+
+    /**
+     * @param null|string $xmlNamespace
+     * @return static
+     */
+    public function _setFHIRXMLNamespace($xmlNamespace)
+    {
+        if (null === $xmlNamespace || is_string($xmlNamespace)) {
+            $this->_xmlns = (string)$xmlNamespace;
+            return $this;
+        }
+        throw new \InvalidArgumentException(sprintf(
+            '$xmlNamespace must be a null or string value, %s seen.',
+            gettype($xmlNamespace)
+        ));
+    }
 
     /**
      * @return string
      */
-    public function getValue() {
+    public function _getFHIRXMLElementDefinition()
+    {
+        $xmlns = $this->_getFHIRXMLNamespace();
+        if (null !== $xmlns) {
+            $xmlns = " xmlns=\"{$xmlns}\"";
+        }
+        return "<base64Binary{$xmlns}></base64Binary>";
+    }
+
+    /**
+     * @return null|\HL7\FHIR\STU3\FHIRBase64BinaryPrimitive
+     */
+    public function getValue()
+    {
         return $this->value;
     }
 
     /**
-     * @param string $value
-     * @return $this
+     * @param null|\HL7\FHIR\STU3\FHIRBase64BinaryPrimitive $value
+     * @return static
      */
-    public function setValue($value) {
-        $this->value = $value;
+    public function setValue($value = null)
+    {
+        if (null === $value) {
+            $this->value = null;
+            return $this;
+        }
+        if ($value instanceof FHIRBase64BinaryPrimitive) {
+            $this->value = $value;
+            return $this;
+        }
+        $this->value = new FHIRBase64BinaryPrimitive($value);
         return $this;
     }
 
     /**
-     * @return string
+     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBase64Binary $type
+     * @param null|int $libxmlOpts
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBase64Binary
      */
-    public function get_fhirElementName() {
-        return $this->_fhirElementName;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function __construct($data = []) {
-        if (is_scalar($data)) {
-            $this->setValue($data);
-        } else {
-            parent::__construct($data);
+    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            return null;
         }
+        if (is_string($sxe)) {
+            libxml_use_internal_errors(true);
+            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
+            if ($sxe === false) {
+                throw new \DomainException(sprintf('FHIRBase64Binary::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            }
+            libxml_use_internal_errors(false);
+        }
+        if (!($sxe instanceof \SimpleXMLElement)) {
+            throw new \InvalidArgumentException(sprintf('FHIRBase64Binary::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+        }
+        if (null === $type) {
+            $type = new FHIRBase64Binary;
+        } elseif (!is_object($type) || !($type instanceof FHIRBase64Binary)) {
+            throw new \RuntimeException(sprintf(
+                'FHIRBase64Binary::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBase64Binary or null, %s seen.',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+        FHIRElement::xmlUnserialize($sxe, $type);
+        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
+        if ([] !== $xmlNamespaces) {
+            $ns = reset($xmlNamespaces);
+            if (false !== $ns && '' !== $ns) {
+                $type->_xmlns = $ns;
+            }
+        }
+        $attributes = $sxe->attributes();
+        $children = $sxe->children();
+        if (isset($attributes->value)) {
+            $type->setValue((string)$attributes->value);
+        } elseif (isset($children->value)) {
+            $type->setValue((string)$children->value);
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\SimpleXMLElement $sxe
+     * @param null|int $libxmlOpts
+     * @return \SimpleXMLElement
+     */
+    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    {
+        if (null === $sxe) {
+            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        }
+        parent::xmlSerialize($sxe);
+        if (null !== ($v = $this->getValue())) {
+            $sxe->addAttribute(self::FIELD_VALUE, (string)$v);
+        }
+        return $sxe;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getValue())) {
+            $a[self::FIELD_VALUE] = $v;
+        }
+        return $a;
     }
 
     /**
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return (string)$this->getValue();
     }
-
-    /**
-     * @return mixed
-     */
-    public function jsonSerialize() {
-        return $this->value;
-    }
-
-    /**
-     * @param boolean $returnSXE
-     * @param \SimpleXMLElement $sxe
-     * @return string|\SimpleXMLElement
-     */
-    public function xmlSerialize($returnSXE = false, $sxe = null) {
-        if (null === $sxe) $sxe = new \SimpleXMLElement('<base64Binary xmlns="http://hl7.org/fhir"></base64Binary>');
-        $sxe->addAttribute('value', $this->value);
-        if ($returnSXE) return $sxe;
-        return $sxe->saveXML();
-    }
-
-
 }
