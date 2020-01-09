@@ -23,7 +23,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $parser = new \HL7\FHIR\STU3\PHPFHIRResponseParser(false);
 
 $json = '{"resourceType":"Patient", etc...}';
-$resource = $this->parser->parse($json);
+$resource = $parser->parse($json);
 // Use $resource as an object
 ```
 
@@ -31,7 +31,7 @@ $resource = $this->parser->parse($json);
 
 **No** for all code in `src/`, because this is the result of generating with
 dcarbone/php-fhir and will not be directly changed. Fixes and additions should
-be done in dcarbone/php-fhir and not here. 
+be done in dcarbone/php-fhir and not here.
 **Exception**: you can submit a newly generated set of classes,
 see below for instructions.
 
