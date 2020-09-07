@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,13 +95,15 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
     const FIELD_EXCLUDE_FOOD_MODIFIER = 'excludeFoodModifier';
     const FIELD_FOOD_PREFERENCE_MODIFIER = 'foodPreferenceModifier';
     const FIELD_IDENTIFIER = 'identifier';
-    const FIELD_IDENTIFIER_EXT = '_identifier';
     const FIELD_ORAL_DIET = 'oralDiet';
     const FIELD_ORDERER = 'orderer';
     const FIELD_PATIENT = 'patient';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
     const FIELD_SUPPLEMENT = 'supplement';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * A reference from one resource to another.
@@ -255,8 +257,11 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      */
     protected $supplement = [];
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type NutritionOrder
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRNutritionOrder Constructor
@@ -292,20 +297,27 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 $this->addAllergyIntolerance(new FHIRReference($data[self::FIELD_ALLERGY_INTOLERANCE]));
             }
         }
-        if (isset($data[self::FIELD_DATE_TIME])) {
-            $ext = (isset($data[self::FIELD_DATE_TIME_EXT]) && is_array($data[self::FIELD_DATE_TIME_EXT]))
-                ? $data[self::FIELD_DATE_TIME_EXT]
-                : null;
-            if ($data[self::FIELD_DATE_TIME] instanceof FHIRDateTime) {
-                $this->setDateTime($data[self::FIELD_DATE_TIME]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_DATE_TIME])) {
-                    $this->setDateTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_DATE_TIME]] + $ext));
-                } else if (is_array($data[self::FIELD_DATE_TIME])) {
-                    $this->setDateTime(new FHIRDateTime(array_merge($ext, $data[self::FIELD_DATE_TIME])));
-                }
+        if (isset($data[self::FIELD_DATE_TIME]) || isset($data[self::FIELD_DATE_TIME_EXT])) {
+            if (isset($data[self::FIELD_DATE_TIME])) {
+                $value = $data[self::FIELD_DATE_TIME];
             } else {
-                $this->setDateTime(new FHIRDateTime($data[self::FIELD_DATE_TIME]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_DATE_TIME_EXT]) && is_array($data[self::FIELD_DATE_TIME_EXT])) {
+                $ext = $data[self::FIELD_DATE_TIME_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setDateTime($value);
+                } else if (is_array($value)) {
+                    $this->setDateTime(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setDateTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setDateTime(new FHIRDateTime($ext));
             }
         }
         if (isset($data[self::FIELD_ENCOUNTER])) {
@@ -359,30 +371,19 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
             }
         }
         if (isset($data[self::FIELD_IDENTIFIER])) {
-            $ext = (isset($data[self::FIELD_IDENTIFIER_EXT]) && is_array($data[self::FIELD_IDENTIFIER_EXT]))
-                ? $data[self::FIELD_IDENTIFIER_EXT]
-                : null;
             if (is_array($data[self::FIELD_IDENTIFIER])) {
-                foreach($data[self::FIELD_IDENTIFIER] as $i => $v) {
+                foreach($data[self::FIELD_IDENTIFIER] as $v) {
                     if (null === $v) {
                         continue;
                     }
                     if ($v instanceof FHIRIdentifier) {
                         $this->addIdentifier($v);
-                    } elseif (null !== $ext && isset($ext[$i]) && is_array($ext[$i])) {
-                        if (is_scalar($v)) {
-                            $this->addIdentifier(new FHIRIdentifier([FHIRIdentifier::FIELD_VALUE => $v] + $ext[$i]));
-                        } elseif (is_array($v)) {
-                            $this->addIdentifier(new FHIRIdentifier(array_merge($v, $ext[$i])));
-                        }
                     } else {
                         $this->addIdentifier(new FHIRIdentifier($v));
                     }
                 }
-            } elseif ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+            } else if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
                 $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
-            } elseif (null !== $ext && is_scalar($data[self::FIELD_IDENTIFIER])) {
-                $this->addIdentifier(new FHIRIdentifier([FHIRIdentifier::FIELD_VALUE => $data[self::FIELD_IDENTIFIER]] + $ext));
             } else {
                 $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
@@ -408,20 +409,27 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 $this->setPatient(new FHIRReference($data[self::FIELD_PATIENT]));
             }
         }
-        if (isset($data[self::FIELD_STATUS])) {
-            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT]))
-                ? $data[self::FIELD_STATUS_EXT]
-                : null;
-            if ($data[self::FIELD_STATUS] instanceof FHIRNutritionOrderStatus) {
-                $this->setStatus($data[self::FIELD_STATUS]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_STATUS])) {
-                    $this->setStatus(new FHIRNutritionOrderStatus([FHIRNutritionOrderStatus::FIELD_VALUE => $data[self::FIELD_STATUS]] + $ext));
-                } else if (is_array($data[self::FIELD_STATUS])) {
-                    $this->setStatus(new FHIRNutritionOrderStatus(array_merge($ext, $data[self::FIELD_STATUS])));
-                }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            if (isset($data[self::FIELD_STATUS])) {
+                $value = $data[self::FIELD_STATUS];
             } else {
-                $this->setStatus(new FHIRNutritionOrderStatus($data[self::FIELD_STATUS]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) {
+                $ext = $data[self::FIELD_STATUS_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRNutritionOrderStatus) {
+                    $this->setStatus($value);
+                } else if (is_array($value)) {
+                    $this->setStatus(new FHIRNutritionOrderStatus(array_merge($ext, $value)));
+                } else {
+                    $this->setStatus(new FHIRNutritionOrderStatus([FHIRNutritionOrderStatus::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setStatus(new FHIRNutritionOrderStatus($ext));
             }
         }
         if (isset($data[self::FIELD_SUPPLEMENT])) {
@@ -453,30 +461,6 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -487,7 +471,6 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
         }
         return "<NutritionOrder{$xmlns}></NutritionOrder>";
     }
-
     /**
      * @return string
      */
@@ -1051,6 +1034,340 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getAllergyIntolerance())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_ALLERGY_INTOLERANCE, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getDateTime())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DATE_TIME] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEncounter())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ENCOUNTER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEnteralFormula())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ENTERAL_FORMULA] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getExcludeFoodModifier())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_EXCLUDE_FOOD_MODIFIER, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if ([] !== ($vs = $this->getFoodPreferenceModifier())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_FOOD_PREFERENCE_MODIFIER, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if ([] !== ($vs = $this->getIdentifier())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getOralDiet())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ORAL_DIET] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOrderer())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ORDERER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPatient())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PATIENT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getStatus())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_STATUS] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getSupplement())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_SUPPLEMENT, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ALLERGY_INTOLERANCE])) {
+            $v = $this->getAllergyIntolerance();
+            foreach($validationRules[self::FIELD_ALLERGY_INTOLERANCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ALLERGY_INTOLERANCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ALLERGY_INTOLERANCE])) {
+                        $errs[self::FIELD_ALLERGY_INTOLERANCE] = [];
+                    }
+                    $errs[self::FIELD_ALLERGY_INTOLERANCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DATE_TIME])) {
+            $v = $this->getDateTime();
+            foreach($validationRules[self::FIELD_DATE_TIME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_DATE_TIME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DATE_TIME])) {
+                        $errs[self::FIELD_DATE_TIME] = [];
+                    }
+                    $errs[self::FIELD_DATE_TIME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ENCOUNTER])) {
+            $v = $this->getEncounter();
+            foreach($validationRules[self::FIELD_ENCOUNTER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ENCOUNTER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ENCOUNTER])) {
+                        $errs[self::FIELD_ENCOUNTER] = [];
+                    }
+                    $errs[self::FIELD_ENCOUNTER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ENTERAL_FORMULA])) {
+            $v = $this->getEnteralFormula();
+            foreach($validationRules[self::FIELD_ENTERAL_FORMULA] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ENTERAL_FORMULA, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ENTERAL_FORMULA])) {
+                        $errs[self::FIELD_ENTERAL_FORMULA] = [];
+                    }
+                    $errs[self::FIELD_ENTERAL_FORMULA][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
+            $v = $this->getExcludeFoodModifier();
+            foreach($validationRules[self::FIELD_EXCLUDE_FOOD_MODIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_EXCLUDE_FOOD_MODIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
+                        $errs[self::FIELD_EXCLUDE_FOOD_MODIFIER] = [];
+                    }
+                    $errs[self::FIELD_EXCLUDE_FOOD_MODIFIER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_FOOD_PREFERENCE_MODIFIER])) {
+            $v = $this->getFoodPreferenceModifier();
+            foreach($validationRules[self::FIELD_FOOD_PREFERENCE_MODIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_FOOD_PREFERENCE_MODIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_FOOD_PREFERENCE_MODIFIER])) {
+                        $errs[self::FIELD_FOOD_PREFERENCE_MODIFIER] = [];
+                    }
+                    $errs[self::FIELD_FOOD_PREFERENCE_MODIFIER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IDENTIFIER])) {
+            $v = $this->getIdentifier();
+            foreach($validationRules[self::FIELD_IDENTIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_IDENTIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IDENTIFIER])) {
+                        $errs[self::FIELD_IDENTIFIER] = [];
+                    }
+                    $errs[self::FIELD_IDENTIFIER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ORAL_DIET])) {
+            $v = $this->getOralDiet();
+            foreach($validationRules[self::FIELD_ORAL_DIET] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ORAL_DIET, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ORAL_DIET])) {
+                        $errs[self::FIELD_ORAL_DIET] = [];
+                    }
+                    $errs[self::FIELD_ORAL_DIET][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ORDERER])) {
+            $v = $this->getOrderer();
+            foreach($validationRules[self::FIELD_ORDERER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ORDERER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ORDERER])) {
+                        $errs[self::FIELD_ORDERER] = [];
+                    }
+                    $errs[self::FIELD_ORDERER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PATIENT])) {
+            $v = $this->getPatient();
+            foreach($validationRules[self::FIELD_PATIENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_PATIENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PATIENT])) {
+                        $errs[self::FIELD_PATIENT] = [];
+                    }
+                    $errs[self::FIELD_PATIENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_STATUS])) {
+            $v = $this->getStatus();
+            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_STATUS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_STATUS])) {
+                        $errs[self::FIELD_STATUS] = [];
+                    }
+                    $errs[self::FIELD_STATUS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUPPLEMENT])) {
+            $v = $this->getSupplement();
+            foreach($validationRules[self::FIELD_SUPPLEMENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_SUPPLEMENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUPPLEMENT])) {
+                        $errs[self::FIELD_SUPPLEMENT] = [];
+                    }
+                    $errs[self::FIELD_SUPPLEMENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTAINED])) {
+            $v = $this->getContained();
+            foreach($validationRules[self::FIELD_CONTAINED] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_CONTAINED, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTAINED])) {
+                        $errs[self::FIELD_CONTAINED] = [];
+                    }
+                    $errs[self::FIELD_CONTAINED][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IMPLICIT_RULES])) {
+            $v = $this->getImplicitRules();
+            foreach($validationRules[self::FIELD_IMPLICIT_RULES] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_IMPLICIT_RULES, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IMPLICIT_RULES])) {
+                        $errs[self::FIELD_IMPLICIT_RULES] = [];
+                    }
+                    $errs[self::FIELD_IMPLICIT_RULES][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LANGUAGE])) {
+            $v = $this->getLanguage();
+            foreach($validationRules[self::FIELD_LANGUAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_LANGUAGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LANGUAGE])) {
+                        $errs[self::FIELD_LANGUAGE] = [];
+                    }
+                    $errs[self::FIELD_LANGUAGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRNutritionOrder $type
      * @param null|int $libxmlOpts
@@ -1095,11 +1412,16 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 $type->addAllergyIntolerance(FHIRReference::xmlUnserialize($child));
             }
         }
-        if (isset($attributes->dateTime)) {
-            $type->setDateTime((string)$attributes->dateTime);
-        }
         if (isset($children->dateTime)) {
             $type->setDateTime(FHIRDateTime::xmlUnserialize($children->dateTime));
+        }
+        if (isset($attributes->dateTime)) {
+            $pt = $type->getDateTime();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->dateTime);
+            } else {
+                $type->setDateTime((string)$attributes->dateTime);
+            }
         }
         if (isset($children->encounter)) {
             $type->setEncounter(FHIRReference::xmlUnserialize($children->encounter));
@@ -1153,7 +1475,6 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if ([] !== ($vs = $this->getAllergyIntolerance())) {
             foreach($vs as $v) {
                 if (null === $v) {
@@ -1225,17 +1546,21 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
     {
         $a = parent::jsonSerialize();
         if ([] !== ($vs = $this->getAllergyIntolerance())) {
-            $a[self::FIELD_ALLERGY_INTOLERANCE] = $vs;
+            $a[self::FIELD_ALLERGY_INTOLERANCE] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_ALLERGY_INTOLERANCE][] = $v;
+            }
         }
         if (null !== ($v = $this->getDateTime())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_DATE_TIME] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_DATE_TIME_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_DATE_TIME] = $v;
+            $a[self::FIELD_DATE_TIME] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDateTime::FIELD_VALUE]);
+                $a[self::FIELD_DATE_TIME_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getEncounter())) {
@@ -1245,28 +1570,30 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
             $a[self::FIELD_ENTERAL_FORMULA] = $v;
         }
         if ([] !== ($vs = $this->getExcludeFoodModifier())) {
-            $a[self::FIELD_EXCLUDE_FOOD_MODIFIER] = $vs;
-        }
-        if ([] !== ($vs = $this->getFoodPreferenceModifier())) {
-            $a[self::FIELD_FOOD_PREFERENCE_MODIFIER] = $vs;
-        }
-        if ([] !== ($vs = $this->getIdentifier())) {
-            $a[self::FIELD_IDENTIFIER] = [];
-            foreach ($vs as $v) {
+            $a[self::FIELD_EXCLUDE_FOOD_MODIFIER] = [];
+            foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                if (null !== ($val = $v->getValue())) {
-                    $a[self::FIELD_IDENTIFIER][] = $val;
-                    if (1 < count($enc = $v->jsonSerialize())) {
-                        unset($enc[$v::FIELD_VALUE]);
-                        $a[self::FIELD_IDENTIFIER_EXT][] = $enc;
-                    } else {
-                        $a[self::FIELD_IDENTIFIER_EXT][] = null;
-                    }
-                } else {
-                    $a[self::FIELD_IDENTIFIER][] = $v;
+                $a[self::FIELD_EXCLUDE_FOOD_MODIFIER][] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getFoodPreferenceModifier())) {
+            $a[self::FIELD_FOOD_PREFERENCE_MODIFIER] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
                 }
+                $a[self::FIELD_FOOD_PREFERENCE_MODIFIER][] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getIdentifier())) {
+            $a[self::FIELD_IDENTIFIER] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_IDENTIFIER][] = $v;
             }
         }
         if (null !== ($v = $this->getOralDiet())) {
@@ -1279,21 +1606,29 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
             $a[self::FIELD_PATIENT] = $v;
         }
         if (null !== ($v = $this->getStatus())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_STATUS] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_STATUS_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_STATUS] = $v;
+            $a[self::FIELD_STATUS] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRNutritionOrderStatus::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRNutritionOrderStatus::FIELD_VALUE]);
+                $a[self::FIELD_STATUS_EXT] = $enc;
             }
         }
         if ([] !== ($vs = $this->getSupplement())) {
-            $a[self::FIELD_SUPPLEMENT] = $vs;
+            $a[self::FIELD_SUPPLEMENT] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_SUPPLEMENT][] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
     }
+
 
     /**
      * @return string

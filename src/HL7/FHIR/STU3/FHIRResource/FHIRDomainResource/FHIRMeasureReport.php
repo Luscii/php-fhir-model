@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,6 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
     const FIELD_EVALUATED_RESOURCES = 'evaluatedResources';
     const FIELD_GROUP = 'group';
     const FIELD_IDENTIFIER = 'identifier';
-    const FIELD_IDENTIFIER_EXT = '_identifier';
     const FIELD_MEASURE = 'measure';
     const FIELD_PATIENT = 'patient';
     const FIELD_PERIOD = 'period';
@@ -99,6 +98,9 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
     const FIELD_STATUS_EXT = '_status';
     const FIELD_TYPE = 'type';
     const FIELD_TYPE_EXT = '_type';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
@@ -217,8 +219,11 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
      */
     protected $type = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type MeasureReport
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRMeasureReport Constructor
@@ -236,20 +241,27 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_DATE])) {
-            $ext = (isset($data[self::FIELD_DATE_EXT]) && is_array($data[self::FIELD_DATE_EXT]))
-                ? $data[self::FIELD_DATE_EXT]
-                : null;
-            if ($data[self::FIELD_DATE] instanceof FHIRDateTime) {
-                $this->setDate($data[self::FIELD_DATE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_DATE])) {
-                    $this->setDate(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_DATE]] + $ext));
-                } else if (is_array($data[self::FIELD_DATE])) {
-                    $this->setDate(new FHIRDateTime(array_merge($ext, $data[self::FIELD_DATE])));
-                }
+        if (isset($data[self::FIELD_DATE]) || isset($data[self::FIELD_DATE_EXT])) {
+            if (isset($data[self::FIELD_DATE])) {
+                $value = $data[self::FIELD_DATE];
             } else {
-                $this->setDate(new FHIRDateTime($data[self::FIELD_DATE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_DATE_EXT]) && is_array($data[self::FIELD_DATE_EXT])) {
+                $ext = $data[self::FIELD_DATE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setDate($value);
+                } else if (is_array($value)) {
+                    $this->setDate(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setDate(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setDate(new FHIRDateTime($ext));
             }
         }
         if (isset($data[self::FIELD_EVALUATED_RESOURCES])) {
@@ -278,17 +290,8 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
             }
         }
         if (isset($data[self::FIELD_IDENTIFIER])) {
-            $ext = (isset($data[self::FIELD_IDENTIFIER_EXT]) && is_array($data[self::FIELD_IDENTIFIER_EXT]))
-                ? $data[self::FIELD_IDENTIFIER_EXT]
-                : null;
             if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
                 $this->setIdentifier($data[self::FIELD_IDENTIFIER]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_IDENTIFIER])) {
-                    $this->setIdentifier(new FHIRIdentifier([FHIRIdentifier::FIELD_VALUE => $data[self::FIELD_IDENTIFIER]] + $ext));
-                } else if (is_array($data[self::FIELD_IDENTIFIER])) {
-                    $this->setIdentifier(new FHIRIdentifier(array_merge($ext, $data[self::FIELD_IDENTIFIER])));
-                }
             } else {
                 $this->setIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
@@ -321,36 +324,50 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
                 $this->setReportingOrganization(new FHIRReference($data[self::FIELD_REPORTING_ORGANIZATION]));
             }
         }
-        if (isset($data[self::FIELD_STATUS])) {
-            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT]))
-                ? $data[self::FIELD_STATUS_EXT]
-                : null;
-            if ($data[self::FIELD_STATUS] instanceof FHIRMeasureReportStatus) {
-                $this->setStatus($data[self::FIELD_STATUS]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_STATUS])) {
-                    $this->setStatus(new FHIRMeasureReportStatus([FHIRMeasureReportStatus::FIELD_VALUE => $data[self::FIELD_STATUS]] + $ext));
-                } else if (is_array($data[self::FIELD_STATUS])) {
-                    $this->setStatus(new FHIRMeasureReportStatus(array_merge($ext, $data[self::FIELD_STATUS])));
-                }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            if (isset($data[self::FIELD_STATUS])) {
+                $value = $data[self::FIELD_STATUS];
             } else {
-                $this->setStatus(new FHIRMeasureReportStatus($data[self::FIELD_STATUS]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) {
+                $ext = $data[self::FIELD_STATUS_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRMeasureReportStatus) {
+                    $this->setStatus($value);
+                } else if (is_array($value)) {
+                    $this->setStatus(new FHIRMeasureReportStatus(array_merge($ext, $value)));
+                } else {
+                    $this->setStatus(new FHIRMeasureReportStatus([FHIRMeasureReportStatus::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setStatus(new FHIRMeasureReportStatus($ext));
             }
         }
-        if (isset($data[self::FIELD_TYPE])) {
-            $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT]))
-                ? $data[self::FIELD_TYPE_EXT]
-                : null;
-            if ($data[self::FIELD_TYPE] instanceof FHIRMeasureReportType) {
-                $this->setType($data[self::FIELD_TYPE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_TYPE])) {
-                    $this->setType(new FHIRMeasureReportType([FHIRMeasureReportType::FIELD_VALUE => $data[self::FIELD_TYPE]] + $ext));
-                } else if (is_array($data[self::FIELD_TYPE])) {
-                    $this->setType(new FHIRMeasureReportType(array_merge($ext, $data[self::FIELD_TYPE])));
-                }
+        if (isset($data[self::FIELD_TYPE]) || isset($data[self::FIELD_TYPE_EXT])) {
+            if (isset($data[self::FIELD_TYPE])) {
+                $value = $data[self::FIELD_TYPE];
             } else {
-                $this->setType(new FHIRMeasureReportType($data[self::FIELD_TYPE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT])) {
+                $ext = $data[self::FIELD_TYPE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRMeasureReportType) {
+                    $this->setType($value);
+                } else if (is_array($value)) {
+                    $this->setType(new FHIRMeasureReportType(array_merge($ext, $value)));
+                } else {
+                    $this->setType(new FHIRMeasureReportType([FHIRMeasureReportType::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setType(new FHIRMeasureReportType($ext));
             }
         }
     }
@@ -364,30 +381,6 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -398,7 +391,6 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
         }
         return "<MeasureReport{$xmlns}></MeasureReport>";
     }
-
     /**
      * @return string
      */
@@ -755,6 +747,298 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getDate())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DATE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEvaluatedResources())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EVALUATED_RESOURCES] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getGroup())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_GROUP, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getIdentifier())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_IDENTIFIER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getMeasure())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_MEASURE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPatient())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PATIENT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PERIOD] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getReportingOrganization())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_REPORTING_ORGANIZATION] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getStatus())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_STATUS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_DATE])) {
+            $v = $this->getDate();
+            foreach($validationRules[self::FIELD_DATE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_DATE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DATE])) {
+                        $errs[self::FIELD_DATE] = [];
+                    }
+                    $errs[self::FIELD_DATE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EVALUATED_RESOURCES])) {
+            $v = $this->getEvaluatedResources();
+            foreach($validationRules[self::FIELD_EVALUATED_RESOURCES] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_EVALUATED_RESOURCES, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EVALUATED_RESOURCES])) {
+                        $errs[self::FIELD_EVALUATED_RESOURCES] = [];
+                    }
+                    $errs[self::FIELD_EVALUATED_RESOURCES][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_GROUP])) {
+            $v = $this->getGroup();
+            foreach($validationRules[self::FIELD_GROUP] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_GROUP, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_GROUP])) {
+                        $errs[self::FIELD_GROUP] = [];
+                    }
+                    $errs[self::FIELD_GROUP][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IDENTIFIER])) {
+            $v = $this->getIdentifier();
+            foreach($validationRules[self::FIELD_IDENTIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_IDENTIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IDENTIFIER])) {
+                        $errs[self::FIELD_IDENTIFIER] = [];
+                    }
+                    $errs[self::FIELD_IDENTIFIER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MEASURE])) {
+            $v = $this->getMeasure();
+            foreach($validationRules[self::FIELD_MEASURE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_MEASURE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MEASURE])) {
+                        $errs[self::FIELD_MEASURE] = [];
+                    }
+                    $errs[self::FIELD_MEASURE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PATIENT])) {
+            $v = $this->getPatient();
+            foreach($validationRules[self::FIELD_PATIENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_PATIENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PATIENT])) {
+                        $errs[self::FIELD_PATIENT] = [];
+                    }
+                    $errs[self::FIELD_PATIENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PERIOD])) {
+            $v = $this->getPeriod();
+            foreach($validationRules[self::FIELD_PERIOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_PERIOD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PERIOD])) {
+                        $errs[self::FIELD_PERIOD] = [];
+                    }
+                    $errs[self::FIELD_PERIOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REPORTING_ORGANIZATION])) {
+            $v = $this->getReportingOrganization();
+            foreach($validationRules[self::FIELD_REPORTING_ORGANIZATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_REPORTING_ORGANIZATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REPORTING_ORGANIZATION])) {
+                        $errs[self::FIELD_REPORTING_ORGANIZATION] = [];
+                    }
+                    $errs[self::FIELD_REPORTING_ORGANIZATION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_STATUS])) {
+            $v = $this->getStatus();
+            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_STATUS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_STATUS])) {
+                        $errs[self::FIELD_STATUS] = [];
+                    }
+                    $errs[self::FIELD_STATUS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEASURE_REPORT, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTAINED])) {
+            $v = $this->getContained();
+            foreach($validationRules[self::FIELD_CONTAINED] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_CONTAINED, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTAINED])) {
+                        $errs[self::FIELD_CONTAINED] = [];
+                    }
+                    $errs[self::FIELD_CONTAINED][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IMPLICIT_RULES])) {
+            $v = $this->getImplicitRules();
+            foreach($validationRules[self::FIELD_IMPLICIT_RULES] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_IMPLICIT_RULES, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IMPLICIT_RULES])) {
+                        $errs[self::FIELD_IMPLICIT_RULES] = [];
+                    }
+                    $errs[self::FIELD_IMPLICIT_RULES][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LANGUAGE])) {
+            $v = $this->getLanguage();
+            foreach($validationRules[self::FIELD_LANGUAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_LANGUAGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LANGUAGE])) {
+                        $errs[self::FIELD_LANGUAGE] = [];
+                    }
+                    $errs[self::FIELD_LANGUAGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRMeasureReport $type
      * @param null|int $libxmlOpts
@@ -794,11 +1078,16 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->date)) {
-            $type->setDate((string)$attributes->date);
-        }
         if (isset($children->date)) {
             $type->setDate(FHIRDateTime::xmlUnserialize($children->date));
+        }
+        if (isset($attributes->date)) {
+            $pt = $type->getDate();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->date);
+            } else {
+                $type->setDate((string)$attributes->date);
+            }
         }
         if (isset($children->evaluatedResources)) {
             $type->setEvaluatedResources(FHIRReference::xmlUnserialize($children->evaluatedResources));
@@ -843,7 +1132,6 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getDate())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_DATE, null, $v->_getFHIRXMLNamespace()));
         }
@@ -889,32 +1177,28 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getDate())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_DATE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_DATE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_DATE] = $v;
+            $a[self::FIELD_DATE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDateTime::FIELD_VALUE]);
+                $a[self::FIELD_DATE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getEvaluatedResources())) {
             $a[self::FIELD_EVALUATED_RESOURCES] = $v;
         }
         if ([] !== ($vs = $this->getGroup())) {
-            $a[self::FIELD_GROUP] = $vs;
+            $a[self::FIELD_GROUP] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_GROUP][] = $v;
+            }
         }
         if (null !== ($v = $this->getIdentifier())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_IDENTIFIER] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_IDENTIFIER_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_IDENTIFIER] = $v;
-            }
+            $a[self::FIELD_IDENTIFIER] = $v;
         }
         if (null !== ($v = $this->getMeasure())) {
             $a[self::FIELD_MEASURE] = $v;
@@ -929,29 +1213,29 @@ class FHIRMeasureReport extends FHIRDomainResource implements PHPFHIRContainedTy
             $a[self::FIELD_REPORTING_ORGANIZATION] = $v;
         }
         if (null !== ($v = $this->getStatus())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_STATUS] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_STATUS_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_STATUS] = $v;
+            $a[self::FIELD_STATUS] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRMeasureReportStatus::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRMeasureReportStatus::FIELD_VALUE]);
+                $a[self::FIELD_STATUS_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getType())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_TYPE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_TYPE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_TYPE] = $v;
+            $a[self::FIELD_TYPE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRMeasureReportType::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRMeasureReportType::FIELD_VALUE]);
+                $a[self::FIELD_TYPE_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
     }
+
 
     /**
      * @return string

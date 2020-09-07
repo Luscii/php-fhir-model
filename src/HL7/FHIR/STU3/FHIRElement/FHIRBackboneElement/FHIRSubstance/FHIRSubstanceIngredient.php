@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSubstance;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,6 +83,9 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
     const FIELD_SUBSTANCE_CODEABLE_CONCEPT = 'substanceCodeableConcept';
     const FIELD_SUBSTANCE_REFERENCE = 'substanceReference';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A relationship of two Quantity values - expressed as a numerator and a
      * denominator.
@@ -118,8 +121,11 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
      */
     protected $substanceReference = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Substance.Ingredient
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRSubstanceIngredient Constructor
@@ -169,30 +175,6 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -203,7 +185,6 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
         }
         return "<SubstanceIngredient{$xmlns}></SubstanceIngredient>";
     }
-
 
     /**
      * A relationship of two Quantity values - expressed as a numerator and a
@@ -300,6 +281,117 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getQuantity())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_QUANTITY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubstanceCodeableConcept())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUBSTANCE_CODEABLE_CONCEPT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubstanceReference())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUBSTANCE_REFERENCE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_QUANTITY])) {
+            $v = $this->getQuantity();
+            foreach($validationRules[self::FIELD_QUANTITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_SUBSTANCE_DOT_INGREDIENT, self::FIELD_QUANTITY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_QUANTITY])) {
+                        $errs[self::FIELD_QUANTITY] = [];
+                    }
+                    $errs[self::FIELD_QUANTITY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUBSTANCE_CODEABLE_CONCEPT])) {
+            $v = $this->getSubstanceCodeableConcept();
+            foreach($validationRules[self::FIELD_SUBSTANCE_CODEABLE_CONCEPT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_SUBSTANCE_DOT_INGREDIENT, self::FIELD_SUBSTANCE_CODEABLE_CONCEPT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUBSTANCE_CODEABLE_CONCEPT])) {
+                        $errs[self::FIELD_SUBSTANCE_CODEABLE_CONCEPT] = [];
+                    }
+                    $errs[self::FIELD_SUBSTANCE_CODEABLE_CONCEPT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUBSTANCE_REFERENCE])) {
+            $v = $this->getSubstanceReference();
+            foreach($validationRules[self::FIELD_SUBSTANCE_REFERENCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_SUBSTANCE_DOT_INGREDIENT, self::FIELD_SUBSTANCE_REFERENCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUBSTANCE_REFERENCE])) {
+                        $errs[self::FIELD_SUBSTANCE_REFERENCE] = [];
+                    }
+                    $errs[self::FIELD_SUBSTANCE_REFERENCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceIngredient $type
      * @param null|int $libxmlOpts
@@ -362,7 +454,6 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getQuantity())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_QUANTITY, null, $v->_getFHIRXMLNamespace()));
         }
@@ -390,8 +481,12 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
         if (null !== ($v = $this->getSubstanceReference())) {
             $a[self::FIELD_SUBSTANCE_REFERENCE] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return $a;
     }
+
 
     /**
      * @return string

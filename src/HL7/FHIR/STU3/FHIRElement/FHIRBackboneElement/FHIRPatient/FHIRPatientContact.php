@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPatient;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,7 +92,9 @@ class FHIRPatientContact extends FHIRBackboneElement
     const FIELD_PERIOD = 'period';
     const FIELD_RELATIONSHIP = 'relationship';
     const FIELD_TELECOM = 'telecom';
-    const FIELD_TELECOM_EXT = '_telecom';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * An address expressed using postal conventions (as opposed to GPS or other
@@ -178,8 +180,11 @@ class FHIRPatientContact extends FHIRBackboneElement
      */
     protected $telecom = [];
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Patient.Contact
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRPatientContact Constructor
@@ -204,20 +209,27 @@ class FHIRPatientContact extends FHIRBackboneElement
                 $this->setAddress(new FHIRAddress($data[self::FIELD_ADDRESS]));
             }
         }
-        if (isset($data[self::FIELD_GENDER])) {
-            $ext = (isset($data[self::FIELD_GENDER_EXT]) && is_array($data[self::FIELD_GENDER_EXT]))
-                ? $data[self::FIELD_GENDER_EXT]
-                : null;
-            if ($data[self::FIELD_GENDER] instanceof FHIRAdministrativeGender) {
-                $this->setGender($data[self::FIELD_GENDER]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_GENDER])) {
-                    $this->setGender(new FHIRAdministrativeGender([FHIRAdministrativeGender::FIELD_VALUE => $data[self::FIELD_GENDER]] + $ext));
-                } else if (is_array($data[self::FIELD_GENDER])) {
-                    $this->setGender(new FHIRAdministrativeGender(array_merge($ext, $data[self::FIELD_GENDER])));
-                }
+        if (isset($data[self::FIELD_GENDER]) || isset($data[self::FIELD_GENDER_EXT])) {
+            if (isset($data[self::FIELD_GENDER])) {
+                $value = $data[self::FIELD_GENDER];
             } else {
-                $this->setGender(new FHIRAdministrativeGender($data[self::FIELD_GENDER]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_GENDER_EXT]) && is_array($data[self::FIELD_GENDER_EXT])) {
+                $ext = $data[self::FIELD_GENDER_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRAdministrativeGender) {
+                    $this->setGender($value);
+                } else if (is_array($value)) {
+                    $this->setGender(new FHIRAdministrativeGender(array_merge($ext, $value)));
+                } else {
+                    $this->setGender(new FHIRAdministrativeGender([FHIRAdministrativeGender::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setGender(new FHIRAdministrativeGender($ext));
             }
         }
         if (isset($data[self::FIELD_NAME])) {
@@ -260,30 +272,19 @@ class FHIRPatientContact extends FHIRBackboneElement
             }
         }
         if (isset($data[self::FIELD_TELECOM])) {
-            $ext = (isset($data[self::FIELD_TELECOM_EXT]) && is_array($data[self::FIELD_TELECOM_EXT]))
-                ? $data[self::FIELD_TELECOM_EXT]
-                : null;
             if (is_array($data[self::FIELD_TELECOM])) {
-                foreach($data[self::FIELD_TELECOM] as $i => $v) {
+                foreach($data[self::FIELD_TELECOM] as $v) {
                     if (null === $v) {
                         continue;
                     }
                     if ($v instanceof FHIRContactPoint) {
                         $this->addTelecom($v);
-                    } elseif (null !== $ext && isset($ext[$i]) && is_array($ext[$i])) {
-                        if (is_scalar($v)) {
-                            $this->addTelecom(new FHIRContactPoint([FHIRContactPoint::FIELD_VALUE => $v] + $ext[$i]));
-                        } elseif (is_array($v)) {
-                            $this->addTelecom(new FHIRContactPoint(array_merge($v, $ext[$i])));
-                        }
                     } else {
                         $this->addTelecom(new FHIRContactPoint($v));
                     }
                 }
-            } elseif ($data[self::FIELD_TELECOM] instanceof FHIRContactPoint) {
+            } else if ($data[self::FIELD_TELECOM] instanceof FHIRContactPoint) {
                 $this->addTelecom($data[self::FIELD_TELECOM]);
-            } elseif (null !== $ext && is_scalar($data[self::FIELD_TELECOM])) {
-                $this->addTelecom(new FHIRContactPoint([FHIRContactPoint::FIELD_VALUE => $data[self::FIELD_TELECOM]] + $ext));
             } else {
                 $this->addTelecom(new FHIRContactPoint($data[self::FIELD_TELECOM]));
             }
@@ -299,30 +300,6 @@ class FHIRPatientContact extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -333,7 +310,6 @@ class FHIRPatientContact extends FHIRBackboneElement
         }
         return "<PatientContact{$xmlns}></PatientContact>";
     }
-
 
     /**
      * An address expressed using postal conventions (as opposed to GPS or other
@@ -614,6 +590,189 @@ class FHIRPatientContact extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getAddress())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ADDRESS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getGender())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_GENDER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getName())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_NAME] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOrganization())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ORGANIZATION] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PERIOD] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getRelationship())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_RELATIONSHIP, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if ([] !== ($vs = $this->getTelecom())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_TELECOM, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ADDRESS])) {
+            $v = $this->getAddress();
+            foreach($validationRules[self::FIELD_ADDRESS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PATIENT_DOT_CONTACT, self::FIELD_ADDRESS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ADDRESS])) {
+                        $errs[self::FIELD_ADDRESS] = [];
+                    }
+                    $errs[self::FIELD_ADDRESS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_GENDER])) {
+            $v = $this->getGender();
+            foreach($validationRules[self::FIELD_GENDER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PATIENT_DOT_CONTACT, self::FIELD_GENDER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_GENDER])) {
+                        $errs[self::FIELD_GENDER] = [];
+                    }
+                    $errs[self::FIELD_GENDER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NAME])) {
+            $v = $this->getName();
+            foreach($validationRules[self::FIELD_NAME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PATIENT_DOT_CONTACT, self::FIELD_NAME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NAME])) {
+                        $errs[self::FIELD_NAME] = [];
+                    }
+                    $errs[self::FIELD_NAME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ORGANIZATION])) {
+            $v = $this->getOrganization();
+            foreach($validationRules[self::FIELD_ORGANIZATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PATIENT_DOT_CONTACT, self::FIELD_ORGANIZATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ORGANIZATION])) {
+                        $errs[self::FIELD_ORGANIZATION] = [];
+                    }
+                    $errs[self::FIELD_ORGANIZATION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PERIOD])) {
+            $v = $this->getPeriod();
+            foreach($validationRules[self::FIELD_PERIOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PATIENT_DOT_CONTACT, self::FIELD_PERIOD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PERIOD])) {
+                        $errs[self::FIELD_PERIOD] = [];
+                    }
+                    $errs[self::FIELD_PERIOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RELATIONSHIP])) {
+            $v = $this->getRelationship();
+            foreach($validationRules[self::FIELD_RELATIONSHIP] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PATIENT_DOT_CONTACT, self::FIELD_RELATIONSHIP, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RELATIONSHIP])) {
+                        $errs[self::FIELD_RELATIONSHIP] = [];
+                    }
+                    $errs[self::FIELD_RELATIONSHIP][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TELECOM])) {
+            $v = $this->getTelecom();
+            foreach($validationRules[self::FIELD_TELECOM] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PATIENT_DOT_CONTACT, self::FIELD_TELECOM, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TELECOM])) {
+                        $errs[self::FIELD_TELECOM] = [];
+                    }
+                    $errs[self::FIELD_TELECOM][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPatient\FHIRPatientContact $type
      * @param null|int $libxmlOpts
@@ -692,7 +851,6 @@ class FHIRPatientContact extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getAddress())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_ADDRESS, null, $v->_getFHIRXMLNamespace()));
         }
@@ -737,14 +895,12 @@ class FHIRPatientContact extends FHIRBackboneElement
             $a[self::FIELD_ADDRESS] = $v;
         }
         if (null !== ($v = $this->getGender())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_GENDER] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_GENDER_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_GENDER] = $v;
+            $a[self::FIELD_GENDER] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRAdministrativeGender::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRAdministrativeGender::FIELD_VALUE]);
+                $a[self::FIELD_GENDER_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getName())) {
@@ -757,29 +913,29 @@ class FHIRPatientContact extends FHIRBackboneElement
             $a[self::FIELD_PERIOD] = $v;
         }
         if ([] !== ($vs = $this->getRelationship())) {
-            $a[self::FIELD_RELATIONSHIP] = $vs;
-        }
-        if ([] !== ($vs = $this->getTelecom())) {
-            $a[self::FIELD_TELECOM] = [];
-            foreach ($vs as $v) {
+            $a[self::FIELD_RELATIONSHIP] = [];
+            foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                if (null !== ($val = $v->getValue())) {
-                    $a[self::FIELD_TELECOM][] = $val;
-                    if (1 < count($enc = $v->jsonSerialize())) {
-                        unset($enc[$v::FIELD_VALUE]);
-                        $a[self::FIELD_TELECOM_EXT][] = $enc;
-                    } else {
-                        $a[self::FIELD_TELECOM_EXT][] = null;
-                    }
-                } else {
-                    $a[self::FIELD_TELECOM][] = $v;
-                }
+                $a[self::FIELD_RELATIONSHIP][] = $v;
             }
+        }
+        if ([] !== ($vs = $this->getTelecom())) {
+            $a[self::FIELD_TELECOM] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_TELECOM][] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

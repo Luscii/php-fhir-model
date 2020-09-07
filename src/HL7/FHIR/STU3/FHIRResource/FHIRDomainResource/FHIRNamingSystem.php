@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,10 +109,12 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
     const FIELD_STATUS_EXT = '_status';
     const FIELD_TYPE = 'type';
     const FIELD_UNIQUE_ID = 'uniqueId';
-    const FIELD_UNIQUE_ID_EXT = '_uniqueId';
     const FIELD_USAGE = 'usage';
     const FIELD_USAGE_EXT = '_usage';
     const FIELD_USE_CONTEXT = 'useContext';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * Specifies contact information for a person or organization.
@@ -296,8 +298,15 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
      */
     protected $useContext = [];
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type NamingSystem
+     * @var array
+     */
+    private static $_validationRules = [
+        self::FIELD_UNIQUE_ID => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /**
      * FHIRNamingSystem Constructor
@@ -333,36 +342,50 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
                 $this->addContact(new FHIRContactDetail($data[self::FIELD_CONTACT]));
             }
         }
-        if (isset($data[self::FIELD_DATE])) {
-            $ext = (isset($data[self::FIELD_DATE_EXT]) && is_array($data[self::FIELD_DATE_EXT]))
-                ? $data[self::FIELD_DATE_EXT]
-                : null;
-            if ($data[self::FIELD_DATE] instanceof FHIRDateTime) {
-                $this->setDate($data[self::FIELD_DATE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_DATE])) {
-                    $this->setDate(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_DATE]] + $ext));
-                } else if (is_array($data[self::FIELD_DATE])) {
-                    $this->setDate(new FHIRDateTime(array_merge($ext, $data[self::FIELD_DATE])));
-                }
+        if (isset($data[self::FIELD_DATE]) || isset($data[self::FIELD_DATE_EXT])) {
+            if (isset($data[self::FIELD_DATE])) {
+                $value = $data[self::FIELD_DATE];
             } else {
-                $this->setDate(new FHIRDateTime($data[self::FIELD_DATE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_DATE_EXT]) && is_array($data[self::FIELD_DATE_EXT])) {
+                $ext = $data[self::FIELD_DATE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setDate($value);
+                } else if (is_array($value)) {
+                    $this->setDate(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setDate(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setDate(new FHIRDateTime($ext));
             }
         }
-        if (isset($data[self::FIELD_DESCRIPTION])) {
-            $ext = (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT]))
-                ? $data[self::FIELD_DESCRIPTION_EXT]
-                : null;
-            if ($data[self::FIELD_DESCRIPTION] instanceof FHIRMarkdown) {
-                $this->setDescription($data[self::FIELD_DESCRIPTION]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_DESCRIPTION])) {
-                    $this->setDescription(new FHIRMarkdown([FHIRMarkdown::FIELD_VALUE => $data[self::FIELD_DESCRIPTION]] + $ext));
-                } else if (is_array($data[self::FIELD_DESCRIPTION])) {
-                    $this->setDescription(new FHIRMarkdown(array_merge($ext, $data[self::FIELD_DESCRIPTION])));
-                }
+        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
+            if (isset($data[self::FIELD_DESCRIPTION])) {
+                $value = $data[self::FIELD_DESCRIPTION];
             } else {
-                $this->setDescription(new FHIRMarkdown($data[self::FIELD_DESCRIPTION]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) {
+                $ext = $data[self::FIELD_DESCRIPTION_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRMarkdown) {
+                    $this->setDescription($value);
+                } else if (is_array($value)) {
+                    $this->setDescription(new FHIRMarkdown(array_merge($ext, $value)));
+                } else {
+                    $this->setDescription(new FHIRMarkdown([FHIRMarkdown::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setDescription(new FHIRMarkdown($ext));
             }
         }
         if (isset($data[self::FIELD_JURISDICTION])) {
@@ -383,52 +406,73 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
                 $this->addJurisdiction(new FHIRCodeableConcept($data[self::FIELD_JURISDICTION]));
             }
         }
-        if (isset($data[self::FIELD_KIND])) {
-            $ext = (isset($data[self::FIELD_KIND_EXT]) && is_array($data[self::FIELD_KIND_EXT]))
-                ? $data[self::FIELD_KIND_EXT]
-                : null;
-            if ($data[self::FIELD_KIND] instanceof FHIRNamingSystemType) {
-                $this->setKind($data[self::FIELD_KIND]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_KIND])) {
-                    $this->setKind(new FHIRNamingSystemType([FHIRNamingSystemType::FIELD_VALUE => $data[self::FIELD_KIND]] + $ext));
-                } else if (is_array($data[self::FIELD_KIND])) {
-                    $this->setKind(new FHIRNamingSystemType(array_merge($ext, $data[self::FIELD_KIND])));
-                }
+        if (isset($data[self::FIELD_KIND]) || isset($data[self::FIELD_KIND_EXT])) {
+            if (isset($data[self::FIELD_KIND])) {
+                $value = $data[self::FIELD_KIND];
             } else {
-                $this->setKind(new FHIRNamingSystemType($data[self::FIELD_KIND]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_KIND_EXT]) && is_array($data[self::FIELD_KIND_EXT])) {
+                $ext = $data[self::FIELD_KIND_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRNamingSystemType) {
+                    $this->setKind($value);
+                } else if (is_array($value)) {
+                    $this->setKind(new FHIRNamingSystemType(array_merge($ext, $value)));
+                } else {
+                    $this->setKind(new FHIRNamingSystemType([FHIRNamingSystemType::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setKind(new FHIRNamingSystemType($ext));
             }
         }
-        if (isset($data[self::FIELD_NAME])) {
-            $ext = (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT]))
-                ? $data[self::FIELD_NAME_EXT]
-                : null;
-            if ($data[self::FIELD_NAME] instanceof FHIRString) {
-                $this->setName($data[self::FIELD_NAME]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_NAME])) {
-                    $this->setName(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_NAME]] + $ext));
-                } else if (is_array($data[self::FIELD_NAME])) {
-                    $this->setName(new FHIRString(array_merge($ext, $data[self::FIELD_NAME])));
-                }
+        if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
+            if (isset($data[self::FIELD_NAME])) {
+                $value = $data[self::FIELD_NAME];
             } else {
-                $this->setName(new FHIRString($data[self::FIELD_NAME]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) {
+                $ext = $data[self::FIELD_NAME_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setName($value);
+                } else if (is_array($value)) {
+                    $this->setName(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setName(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_PUBLISHER])) {
-            $ext = (isset($data[self::FIELD_PUBLISHER_EXT]) && is_array($data[self::FIELD_PUBLISHER_EXT]))
-                ? $data[self::FIELD_PUBLISHER_EXT]
-                : null;
-            if ($data[self::FIELD_PUBLISHER] instanceof FHIRString) {
-                $this->setPublisher($data[self::FIELD_PUBLISHER]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_PUBLISHER])) {
-                    $this->setPublisher(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_PUBLISHER]] + $ext));
-                } else if (is_array($data[self::FIELD_PUBLISHER])) {
-                    $this->setPublisher(new FHIRString(array_merge($ext, $data[self::FIELD_PUBLISHER])));
-                }
+        if (isset($data[self::FIELD_PUBLISHER]) || isset($data[self::FIELD_PUBLISHER_EXT])) {
+            if (isset($data[self::FIELD_PUBLISHER])) {
+                $value = $data[self::FIELD_PUBLISHER];
             } else {
-                $this->setPublisher(new FHIRString($data[self::FIELD_PUBLISHER]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_PUBLISHER_EXT]) && is_array($data[self::FIELD_PUBLISHER_EXT])) {
+                $ext = $data[self::FIELD_PUBLISHER_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setPublisher($value);
+                } else if (is_array($value)) {
+                    $this->setPublisher(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setPublisher(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setPublisher(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_REPLACED_BY])) {
@@ -438,36 +482,50 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
                 $this->setReplacedBy(new FHIRReference($data[self::FIELD_REPLACED_BY]));
             }
         }
-        if (isset($data[self::FIELD_RESPONSIBLE])) {
-            $ext = (isset($data[self::FIELD_RESPONSIBLE_EXT]) && is_array($data[self::FIELD_RESPONSIBLE_EXT]))
-                ? $data[self::FIELD_RESPONSIBLE_EXT]
-                : null;
-            if ($data[self::FIELD_RESPONSIBLE] instanceof FHIRString) {
-                $this->setResponsible($data[self::FIELD_RESPONSIBLE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_RESPONSIBLE])) {
-                    $this->setResponsible(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_RESPONSIBLE]] + $ext));
-                } else if (is_array($data[self::FIELD_RESPONSIBLE])) {
-                    $this->setResponsible(new FHIRString(array_merge($ext, $data[self::FIELD_RESPONSIBLE])));
-                }
+        if (isset($data[self::FIELD_RESPONSIBLE]) || isset($data[self::FIELD_RESPONSIBLE_EXT])) {
+            if (isset($data[self::FIELD_RESPONSIBLE])) {
+                $value = $data[self::FIELD_RESPONSIBLE];
             } else {
-                $this->setResponsible(new FHIRString($data[self::FIELD_RESPONSIBLE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_RESPONSIBLE_EXT]) && is_array($data[self::FIELD_RESPONSIBLE_EXT])) {
+                $ext = $data[self::FIELD_RESPONSIBLE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setResponsible($value);
+                } else if (is_array($value)) {
+                    $this->setResponsible(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setResponsible(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setResponsible(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_STATUS])) {
-            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT]))
-                ? $data[self::FIELD_STATUS_EXT]
-                : null;
-            if ($data[self::FIELD_STATUS] instanceof FHIRPublicationStatus) {
-                $this->setStatus($data[self::FIELD_STATUS]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_STATUS])) {
-                    $this->setStatus(new FHIRPublicationStatus([FHIRPublicationStatus::FIELD_VALUE => $data[self::FIELD_STATUS]] + $ext));
-                } else if (is_array($data[self::FIELD_STATUS])) {
-                    $this->setStatus(new FHIRPublicationStatus(array_merge($ext, $data[self::FIELD_STATUS])));
-                }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            if (isset($data[self::FIELD_STATUS])) {
+                $value = $data[self::FIELD_STATUS];
             } else {
-                $this->setStatus(new FHIRPublicationStatus($data[self::FIELD_STATUS]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) {
+                $ext = $data[self::FIELD_STATUS_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRPublicationStatus) {
+                    $this->setStatus($value);
+                } else if (is_array($value)) {
+                    $this->setStatus(new FHIRPublicationStatus(array_merge($ext, $value)));
+                } else {
+                    $this->setStatus(new FHIRPublicationStatus([FHIRPublicationStatus::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setStatus(new FHIRPublicationStatus($ext));
             }
         }
         if (isset($data[self::FIELD_TYPE])) {
@@ -478,48 +536,44 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
             }
         }
         if (isset($data[self::FIELD_UNIQUE_ID])) {
-            $ext = (isset($data[self::FIELD_UNIQUE_ID_EXT]) && is_array($data[self::FIELD_UNIQUE_ID_EXT]))
-                ? $data[self::FIELD_UNIQUE_ID_EXT]
-                : null;
             if (is_array($data[self::FIELD_UNIQUE_ID])) {
-                foreach($data[self::FIELD_UNIQUE_ID] as $i => $v) {
+                foreach($data[self::FIELD_UNIQUE_ID] as $v) {
                     if (null === $v) {
                         continue;
                     }
                     if ($v instanceof FHIRNamingSystemUniqueId) {
                         $this->addUniqueId($v);
-                    } elseif (null !== $ext && isset($ext[$i]) && is_array($ext[$i])) {
-                        if (is_scalar($v)) {
-                            $this->addUniqueId(new FHIRNamingSystemUniqueId([FHIRNamingSystemUniqueId::FIELD_VALUE => $v] + $ext[$i]));
-                        } elseif (is_array($v)) {
-                            $this->addUniqueId(new FHIRNamingSystemUniqueId(array_merge($v, $ext[$i])));
-                        }
                     } else {
                         $this->addUniqueId(new FHIRNamingSystemUniqueId($v));
                     }
                 }
-            } elseif ($data[self::FIELD_UNIQUE_ID] instanceof FHIRNamingSystemUniqueId) {
+            } else if ($data[self::FIELD_UNIQUE_ID] instanceof FHIRNamingSystemUniqueId) {
                 $this->addUniqueId($data[self::FIELD_UNIQUE_ID]);
-            } elseif (null !== $ext && is_scalar($data[self::FIELD_UNIQUE_ID])) {
-                $this->addUniqueId(new FHIRNamingSystemUniqueId([FHIRNamingSystemUniqueId::FIELD_VALUE => $data[self::FIELD_UNIQUE_ID]] + $ext));
             } else {
                 $this->addUniqueId(new FHIRNamingSystemUniqueId($data[self::FIELD_UNIQUE_ID]));
             }
         }
-        if (isset($data[self::FIELD_USAGE])) {
-            $ext = (isset($data[self::FIELD_USAGE_EXT]) && is_array($data[self::FIELD_USAGE_EXT]))
-                ? $data[self::FIELD_USAGE_EXT]
-                : null;
-            if ($data[self::FIELD_USAGE] instanceof FHIRString) {
-                $this->setUsage($data[self::FIELD_USAGE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_USAGE])) {
-                    $this->setUsage(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_USAGE]] + $ext));
-                } else if (is_array($data[self::FIELD_USAGE])) {
-                    $this->setUsage(new FHIRString(array_merge($ext, $data[self::FIELD_USAGE])));
-                }
+        if (isset($data[self::FIELD_USAGE]) || isset($data[self::FIELD_USAGE_EXT])) {
+            if (isset($data[self::FIELD_USAGE])) {
+                $value = $data[self::FIELD_USAGE];
             } else {
-                $this->setUsage(new FHIRString($data[self::FIELD_USAGE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_USAGE_EXT]) && is_array($data[self::FIELD_USAGE_EXT])) {
+                $ext = $data[self::FIELD_USAGE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setUsage($value);
+                } else if (is_array($value)) {
+                    $this->setUsage(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setUsage(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setUsage(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_USE_CONTEXT])) {
@@ -551,30 +605,6 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -585,7 +615,6 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         return "<NamingSystem{$xmlns}></NamingSystem>";
     }
-
     /**
      * @return string
      */
@@ -1232,6 +1261,372 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getContact())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_CONTACT, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getDate())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DATE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getDescription())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DESCRIPTION] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getJurisdiction())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_JURISDICTION, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getKind())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_KIND] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getName())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_NAME] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPublisher())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PUBLISHER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getReplacedBy())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_REPLACED_BY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getResponsible())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RESPONSIBLE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getStatus())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_STATUS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getUniqueId())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_UNIQUE_ID, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getUsage())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_USAGE] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getUseContext())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_USE_CONTEXT, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTACT])) {
+            $v = $this->getContact();
+            foreach($validationRules[self::FIELD_CONTACT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_CONTACT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTACT])) {
+                        $errs[self::FIELD_CONTACT] = [];
+                    }
+                    $errs[self::FIELD_CONTACT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DATE])) {
+            $v = $this->getDate();
+            foreach($validationRules[self::FIELD_DATE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_DATE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DATE])) {
+                        $errs[self::FIELD_DATE] = [];
+                    }
+                    $errs[self::FIELD_DATE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DESCRIPTION])) {
+            $v = $this->getDescription();
+            foreach($validationRules[self::FIELD_DESCRIPTION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_DESCRIPTION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DESCRIPTION])) {
+                        $errs[self::FIELD_DESCRIPTION] = [];
+                    }
+                    $errs[self::FIELD_DESCRIPTION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_JURISDICTION])) {
+            $v = $this->getJurisdiction();
+            foreach($validationRules[self::FIELD_JURISDICTION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_JURISDICTION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_JURISDICTION])) {
+                        $errs[self::FIELD_JURISDICTION] = [];
+                    }
+                    $errs[self::FIELD_JURISDICTION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_KIND])) {
+            $v = $this->getKind();
+            foreach($validationRules[self::FIELD_KIND] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_KIND, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_KIND])) {
+                        $errs[self::FIELD_KIND] = [];
+                    }
+                    $errs[self::FIELD_KIND][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NAME])) {
+            $v = $this->getName();
+            foreach($validationRules[self::FIELD_NAME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_NAME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NAME])) {
+                        $errs[self::FIELD_NAME] = [];
+                    }
+                    $errs[self::FIELD_NAME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PUBLISHER])) {
+            $v = $this->getPublisher();
+            foreach($validationRules[self::FIELD_PUBLISHER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_PUBLISHER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PUBLISHER])) {
+                        $errs[self::FIELD_PUBLISHER] = [];
+                    }
+                    $errs[self::FIELD_PUBLISHER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REPLACED_BY])) {
+            $v = $this->getReplacedBy();
+            foreach($validationRules[self::FIELD_REPLACED_BY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_REPLACED_BY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REPLACED_BY])) {
+                        $errs[self::FIELD_REPLACED_BY] = [];
+                    }
+                    $errs[self::FIELD_REPLACED_BY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RESPONSIBLE])) {
+            $v = $this->getResponsible();
+            foreach($validationRules[self::FIELD_RESPONSIBLE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_RESPONSIBLE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RESPONSIBLE])) {
+                        $errs[self::FIELD_RESPONSIBLE] = [];
+                    }
+                    $errs[self::FIELD_RESPONSIBLE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_STATUS])) {
+            $v = $this->getStatus();
+            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_STATUS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_STATUS])) {
+                        $errs[self::FIELD_STATUS] = [];
+                    }
+                    $errs[self::FIELD_STATUS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_UNIQUE_ID])) {
+            $v = $this->getUniqueId();
+            foreach($validationRules[self::FIELD_UNIQUE_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_UNIQUE_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_UNIQUE_ID])) {
+                        $errs[self::FIELD_UNIQUE_ID] = [];
+                    }
+                    $errs[self::FIELD_UNIQUE_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_USAGE])) {
+            $v = $this->getUsage();
+            foreach($validationRules[self::FIELD_USAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_USAGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_USAGE])) {
+                        $errs[self::FIELD_USAGE] = [];
+                    }
+                    $errs[self::FIELD_USAGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_USE_CONTEXT])) {
+            $v = $this->getUseContext();
+            foreach($validationRules[self::FIELD_USE_CONTEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NAMING_SYSTEM, self::FIELD_USE_CONTEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_USE_CONTEXT])) {
+                        $errs[self::FIELD_USE_CONTEXT] = [];
+                    }
+                    $errs[self::FIELD_USE_CONTEXT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTAINED])) {
+            $v = $this->getContained();
+            foreach($validationRules[self::FIELD_CONTAINED] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_CONTAINED, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTAINED])) {
+                        $errs[self::FIELD_CONTAINED] = [];
+                    }
+                    $errs[self::FIELD_CONTAINED][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IMPLICIT_RULES])) {
+            $v = $this->getImplicitRules();
+            foreach($validationRules[self::FIELD_IMPLICIT_RULES] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_IMPLICIT_RULES, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IMPLICIT_RULES])) {
+                        $errs[self::FIELD_IMPLICIT_RULES] = [];
+                    }
+                    $errs[self::FIELD_IMPLICIT_RULES][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LANGUAGE])) {
+            $v = $this->getLanguage();
+            foreach($validationRules[self::FIELD_LANGUAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_LANGUAGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LANGUAGE])) {
+                        $errs[self::FIELD_LANGUAGE] = [];
+                    }
+                    $errs[self::FIELD_LANGUAGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRNamingSystem $type
      * @param null|int $libxmlOpts
@@ -1276,17 +1671,27 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
                 $type->addContact(FHIRContactDetail::xmlUnserialize($child));
             }
         }
-        if (isset($attributes->date)) {
-            $type->setDate((string)$attributes->date);
-        }
         if (isset($children->date)) {
             $type->setDate(FHIRDateTime::xmlUnserialize($children->date));
         }
-        if (isset($attributes->description)) {
-            $type->setDescription((string)$attributes->description);
+        if (isset($attributes->date)) {
+            $pt = $type->getDate();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->date);
+            } else {
+                $type->setDate((string)$attributes->date);
+            }
         }
         if (isset($children->description)) {
             $type->setDescription(FHIRMarkdown::xmlUnserialize($children->description));
+        }
+        if (isset($attributes->description)) {
+            $pt = $type->getDescription();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->description);
+            } else {
+                $type->setDescription((string)$attributes->description);
+            }
         }
         if (isset($children->jurisdiction)) {
             foreach($children->jurisdiction as $child) {
@@ -1296,26 +1701,41 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
         if (isset($children->kind)) {
             $type->setKind(FHIRNamingSystemType::xmlUnserialize($children->kind));
         }
-        if (isset($attributes->name)) {
-            $type->setName((string)$attributes->name);
-        }
         if (isset($children->name)) {
             $type->setName(FHIRString::xmlUnserialize($children->name));
         }
-        if (isset($attributes->publisher)) {
-            $type->setPublisher((string)$attributes->publisher);
+        if (isset($attributes->name)) {
+            $pt = $type->getName();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->name);
+            } else {
+                $type->setName((string)$attributes->name);
+            }
         }
         if (isset($children->publisher)) {
             $type->setPublisher(FHIRString::xmlUnserialize($children->publisher));
         }
+        if (isset($attributes->publisher)) {
+            $pt = $type->getPublisher();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->publisher);
+            } else {
+                $type->setPublisher((string)$attributes->publisher);
+            }
+        }
         if (isset($children->replacedBy)) {
             $type->setReplacedBy(FHIRReference::xmlUnserialize($children->replacedBy));
         }
-        if (isset($attributes->responsible)) {
-            $type->setResponsible((string)$attributes->responsible);
-        }
         if (isset($children->responsible)) {
             $type->setResponsible(FHIRString::xmlUnserialize($children->responsible));
+        }
+        if (isset($attributes->responsible)) {
+            $pt = $type->getResponsible();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->responsible);
+            } else {
+                $type->setResponsible((string)$attributes->responsible);
+            }
         }
         if (isset($children->status)) {
             $type->setStatus(FHIRPublicationStatus::xmlUnserialize($children->status));
@@ -1328,11 +1748,16 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
                 $type->addUniqueId(FHIRNamingSystemUniqueId::xmlUnserialize($child));
             }
         }
-        if (isset($attributes->usage)) {
-            $type->setUsage((string)$attributes->usage);
-        }
         if (isset($children->usage)) {
             $type->setUsage(FHIRString::xmlUnserialize($children->usage));
+        }
+        if (isset($attributes->usage)) {
+            $pt = $type->getUsage();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->usage);
+            } else {
+                $type->setUsage((string)$attributes->usage);
+            }
         }
         if (isset($children->useContext)) {
             foreach($children->useContext as $child) {
@@ -1353,7 +1778,6 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if ([] !== ($vs = $this->getContact())) {
             foreach($vs as $v) {
                 if (null === $v) {
@@ -1426,89 +1850,87 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
     {
         $a = parent::jsonSerialize();
         if ([] !== ($vs = $this->getContact())) {
-            $a[self::FIELD_CONTACT] = $vs;
+            $a[self::FIELD_CONTACT] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_CONTACT][] = $v;
+            }
         }
         if (null !== ($v = $this->getDate())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_DATE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_DATE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_DATE] = $v;
+            $a[self::FIELD_DATE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDateTime::FIELD_VALUE]);
+                $a[self::FIELD_DATE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getDescription())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_DESCRIPTION] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_DESCRIPTION_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_DESCRIPTION] = $v;
+            $a[self::FIELD_DESCRIPTION] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRMarkdown::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRMarkdown::FIELD_VALUE]);
+                $a[self::FIELD_DESCRIPTION_EXT] = $enc;
             }
         }
         if ([] !== ($vs = $this->getJurisdiction())) {
-            $a[self::FIELD_JURISDICTION] = $vs;
+            $a[self::FIELD_JURISDICTION] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_JURISDICTION][] = $v;
+            }
         }
         if (null !== ($v = $this->getKind())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_KIND] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_KIND_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_KIND] = $v;
+            $a[self::FIELD_KIND] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRNamingSystemType::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRNamingSystemType::FIELD_VALUE]);
+                $a[self::FIELD_KIND_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getName())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_NAME] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_NAME_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_NAME] = $v;
+            $a[self::FIELD_NAME] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_NAME_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getPublisher())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_PUBLISHER] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_PUBLISHER_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_PUBLISHER] = $v;
+            $a[self::FIELD_PUBLISHER] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_PUBLISHER_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getReplacedBy())) {
             $a[self::FIELD_REPLACED_BY] = $v;
         }
         if (null !== ($v = $this->getResponsible())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_RESPONSIBLE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_RESPONSIBLE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_RESPONSIBLE] = $v;
+            $a[self::FIELD_RESPONSIBLE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_RESPONSIBLE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getStatus())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_STATUS] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_STATUS_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_STATUS] = $v;
+            $a[self::FIELD_STATUS] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRPublicationStatus::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRPublicationStatus::FIELD_VALUE]);
+                $a[self::FIELD_STATUS_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getType())) {
@@ -1516,39 +1938,37 @@ class FHIRNamingSystem extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         if ([] !== ($vs = $this->getUniqueId())) {
             $a[self::FIELD_UNIQUE_ID] = [];
-            foreach ($vs as $v) {
+            foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                if (null !== ($val = $v->getValue())) {
-                    $a[self::FIELD_UNIQUE_ID][] = $val;
-                    if (1 < count($enc = $v->jsonSerialize())) {
-                        unset($enc[$v::FIELD_VALUE]);
-                        $a[self::FIELD_UNIQUE_ID_EXT][] = $enc;
-                    } else {
-                        $a[self::FIELD_UNIQUE_ID_EXT][] = null;
-                    }
-                } else {
-                    $a[self::FIELD_UNIQUE_ID][] = $v;
-                }
+                $a[self::FIELD_UNIQUE_ID][] = $v;
             }
         }
         if (null !== ($v = $this->getUsage())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_USAGE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_USAGE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_USAGE] = $v;
+            $a[self::FIELD_USAGE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_USAGE_EXT] = $enc;
             }
         }
         if ([] !== ($vs = $this->getUseContext())) {
-            $a[self::FIELD_USE_CONTEXT] = $vs;
+            $a[self::FIELD_USE_CONTEXT] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_USE_CONTEXT][] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
     }
+
 
     /**
      * @return string

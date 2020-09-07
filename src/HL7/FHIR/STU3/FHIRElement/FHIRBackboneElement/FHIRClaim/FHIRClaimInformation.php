@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRClaim;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,10 +95,12 @@ class FHIRClaimInformation extends FHIRBackboneElement
     const FIELD_TIMING_PERIOD = 'timingPeriod';
     const FIELD_VALUE_ATTACHMENT = 'valueAttachment';
     const FIELD_VALUE_QUANTITY = 'valueQuantity';
-    const FIELD_VALUE_QUANTITY_EXT = '_valueQuantity';
     const FIELD_VALUE_REFERENCE = 'valueReference';
     const FIELD_VALUE_STRING = 'valueString';
     const FIELD_VALUE_STRING_EXT = '_valueString';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -224,8 +226,11 @@ class FHIRClaimInformation extends FHIRBackboneElement
      */
     protected $valueString = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Claim.Information
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRClaimInformation Constructor
@@ -264,36 +269,50 @@ class FHIRClaimInformation extends FHIRBackboneElement
                 $this->setReason(new FHIRCodeableConcept($data[self::FIELD_REASON]));
             }
         }
-        if (isset($data[self::FIELD_SEQUENCE])) {
-            $ext = (isset($data[self::FIELD_SEQUENCE_EXT]) && is_array($data[self::FIELD_SEQUENCE_EXT]))
-                ? $data[self::FIELD_SEQUENCE_EXT]
-                : null;
-            if ($data[self::FIELD_SEQUENCE] instanceof FHIRPositiveInt) {
-                $this->setSequence($data[self::FIELD_SEQUENCE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SEQUENCE])) {
-                    $this->setSequence(new FHIRPositiveInt([FHIRPositiveInt::FIELD_VALUE => $data[self::FIELD_SEQUENCE]] + $ext));
-                } else if (is_array($data[self::FIELD_SEQUENCE])) {
-                    $this->setSequence(new FHIRPositiveInt(array_merge($ext, $data[self::FIELD_SEQUENCE])));
-                }
+        if (isset($data[self::FIELD_SEQUENCE]) || isset($data[self::FIELD_SEQUENCE_EXT])) {
+            if (isset($data[self::FIELD_SEQUENCE])) {
+                $value = $data[self::FIELD_SEQUENCE];
             } else {
-                $this->setSequence(new FHIRPositiveInt($data[self::FIELD_SEQUENCE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SEQUENCE_EXT]) && is_array($data[self::FIELD_SEQUENCE_EXT])) {
+                $ext = $data[self::FIELD_SEQUENCE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRPositiveInt) {
+                    $this->setSequence($value);
+                } else if (is_array($value)) {
+                    $this->setSequence(new FHIRPositiveInt(array_merge($ext, $value)));
+                } else {
+                    $this->setSequence(new FHIRPositiveInt([FHIRPositiveInt::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSequence(new FHIRPositiveInt($ext));
             }
         }
-        if (isset($data[self::FIELD_TIMING_DATE])) {
-            $ext = (isset($data[self::FIELD_TIMING_DATE_EXT]) && is_array($data[self::FIELD_TIMING_DATE_EXT]))
-                ? $data[self::FIELD_TIMING_DATE_EXT]
-                : null;
-            if ($data[self::FIELD_TIMING_DATE] instanceof FHIRDate) {
-                $this->setTimingDate($data[self::FIELD_TIMING_DATE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_TIMING_DATE])) {
-                    $this->setTimingDate(new FHIRDate([FHIRDate::FIELD_VALUE => $data[self::FIELD_TIMING_DATE]] + $ext));
-                } else if (is_array($data[self::FIELD_TIMING_DATE])) {
-                    $this->setTimingDate(new FHIRDate(array_merge($ext, $data[self::FIELD_TIMING_DATE])));
-                }
+        if (isset($data[self::FIELD_TIMING_DATE]) || isset($data[self::FIELD_TIMING_DATE_EXT])) {
+            if (isset($data[self::FIELD_TIMING_DATE])) {
+                $value = $data[self::FIELD_TIMING_DATE];
             } else {
-                $this->setTimingDate(new FHIRDate($data[self::FIELD_TIMING_DATE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_TIMING_DATE_EXT]) && is_array($data[self::FIELD_TIMING_DATE_EXT])) {
+                $ext = $data[self::FIELD_TIMING_DATE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDate) {
+                    $this->setTimingDate($value);
+                } else if (is_array($value)) {
+                    $this->setTimingDate(new FHIRDate(array_merge($ext, $value)));
+                } else {
+                    $this->setTimingDate(new FHIRDate([FHIRDate::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setTimingDate(new FHIRDate($ext));
             }
         }
         if (isset($data[self::FIELD_TIMING_PERIOD])) {
@@ -311,17 +330,8 @@ class FHIRClaimInformation extends FHIRBackboneElement
             }
         }
         if (isset($data[self::FIELD_VALUE_QUANTITY])) {
-            $ext = (isset($data[self::FIELD_VALUE_QUANTITY_EXT]) && is_array($data[self::FIELD_VALUE_QUANTITY_EXT]))
-                ? $data[self::FIELD_VALUE_QUANTITY_EXT]
-                : null;
             if ($data[self::FIELD_VALUE_QUANTITY] instanceof FHIRQuantity) {
                 $this->setValueQuantity($data[self::FIELD_VALUE_QUANTITY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_VALUE_QUANTITY])) {
-                    $this->setValueQuantity(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_VALUE_QUANTITY]] + $ext));
-                } else if (is_array($data[self::FIELD_VALUE_QUANTITY])) {
-                    $this->setValueQuantity(new FHIRQuantity(array_merge($ext, $data[self::FIELD_VALUE_QUANTITY])));
-                }
             } else {
                 $this->setValueQuantity(new FHIRQuantity($data[self::FIELD_VALUE_QUANTITY]));
             }
@@ -333,20 +343,27 @@ class FHIRClaimInformation extends FHIRBackboneElement
                 $this->setValueReference(new FHIRReference($data[self::FIELD_VALUE_REFERENCE]));
             }
         }
-        if (isset($data[self::FIELD_VALUE_STRING])) {
-            $ext = (isset($data[self::FIELD_VALUE_STRING_EXT]) && is_array($data[self::FIELD_VALUE_STRING_EXT]))
-                ? $data[self::FIELD_VALUE_STRING_EXT]
-                : null;
-            if ($data[self::FIELD_VALUE_STRING] instanceof FHIRString) {
-                $this->setValueString($data[self::FIELD_VALUE_STRING]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_VALUE_STRING])) {
-                    $this->setValueString(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_VALUE_STRING]] + $ext));
-                } else if (is_array($data[self::FIELD_VALUE_STRING])) {
-                    $this->setValueString(new FHIRString(array_merge($ext, $data[self::FIELD_VALUE_STRING])));
-                }
+        if (isset($data[self::FIELD_VALUE_STRING]) || isset($data[self::FIELD_VALUE_STRING_EXT])) {
+            if (isset($data[self::FIELD_VALUE_STRING])) {
+                $value = $data[self::FIELD_VALUE_STRING];
             } else {
-                $this->setValueString(new FHIRString($data[self::FIELD_VALUE_STRING]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_VALUE_STRING_EXT]) && is_array($data[self::FIELD_VALUE_STRING_EXT])) {
+                $ext = $data[self::FIELD_VALUE_STRING_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setValueString($value);
+                } else if (is_array($value)) {
+                    $this->setValueString(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setValueString(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setValueString(new FHIRString($ext));
             }
         }
     }
@@ -360,30 +377,6 @@ class FHIRClaimInformation extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -394,7 +387,6 @@ class FHIRClaimInformation extends FHIRBackboneElement
         }
         return "<ClaimInformation{$xmlns}></ClaimInformation>";
     }
-
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -749,6 +741,236 @@ class FHIRClaimInformation extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getCategory())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CATEGORY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getCode())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CODE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getReason())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_REASON] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSequence())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SEQUENCE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getTimingDate())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TIMING_DATE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getTimingPeriod())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TIMING_PERIOD] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getValueAttachment())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_VALUE_ATTACHMENT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getValueQuantity())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_VALUE_QUANTITY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getValueReference())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_VALUE_REFERENCE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getValueString())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_VALUE_STRING] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_CATEGORY])) {
+            $v = $this->getCategory();
+            foreach($validationRules[self::FIELD_CATEGORY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_CATEGORY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CATEGORY])) {
+                        $errs[self::FIELD_CATEGORY] = [];
+                    }
+                    $errs[self::FIELD_CATEGORY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CODE])) {
+            $v = $this->getCode();
+            foreach($validationRules[self::FIELD_CODE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_CODE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CODE])) {
+                        $errs[self::FIELD_CODE] = [];
+                    }
+                    $errs[self::FIELD_CODE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REASON])) {
+            $v = $this->getReason();
+            foreach($validationRules[self::FIELD_REASON] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_REASON, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REASON])) {
+                        $errs[self::FIELD_REASON] = [];
+                    }
+                    $errs[self::FIELD_REASON][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SEQUENCE])) {
+            $v = $this->getSequence();
+            foreach($validationRules[self::FIELD_SEQUENCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_SEQUENCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SEQUENCE])) {
+                        $errs[self::FIELD_SEQUENCE] = [];
+                    }
+                    $errs[self::FIELD_SEQUENCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TIMING_DATE])) {
+            $v = $this->getTimingDate();
+            foreach($validationRules[self::FIELD_TIMING_DATE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_TIMING_DATE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TIMING_DATE])) {
+                        $errs[self::FIELD_TIMING_DATE] = [];
+                    }
+                    $errs[self::FIELD_TIMING_DATE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TIMING_PERIOD])) {
+            $v = $this->getTimingPeriod();
+            foreach($validationRules[self::FIELD_TIMING_PERIOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_TIMING_PERIOD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TIMING_PERIOD])) {
+                        $errs[self::FIELD_TIMING_PERIOD] = [];
+                    }
+                    $errs[self::FIELD_TIMING_PERIOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_VALUE_ATTACHMENT])) {
+            $v = $this->getValueAttachment();
+            foreach($validationRules[self::FIELD_VALUE_ATTACHMENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_VALUE_ATTACHMENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_VALUE_ATTACHMENT])) {
+                        $errs[self::FIELD_VALUE_ATTACHMENT] = [];
+                    }
+                    $errs[self::FIELD_VALUE_ATTACHMENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_VALUE_QUANTITY])) {
+            $v = $this->getValueQuantity();
+            foreach($validationRules[self::FIELD_VALUE_QUANTITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_VALUE_QUANTITY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_VALUE_QUANTITY])) {
+                        $errs[self::FIELD_VALUE_QUANTITY] = [];
+                    }
+                    $errs[self::FIELD_VALUE_QUANTITY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_VALUE_REFERENCE])) {
+            $v = $this->getValueReference();
+            foreach($validationRules[self::FIELD_VALUE_REFERENCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_VALUE_REFERENCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_VALUE_REFERENCE])) {
+                        $errs[self::FIELD_VALUE_REFERENCE] = [];
+                    }
+                    $errs[self::FIELD_VALUE_REFERENCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_VALUE_STRING])) {
+            $v = $this->getValueString();
+            foreach($validationRules[self::FIELD_VALUE_STRING] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INFORMATION, self::FIELD_VALUE_STRING, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_VALUE_STRING])) {
+                        $errs[self::FIELD_VALUE_STRING] = [];
+                    }
+                    $errs[self::FIELD_VALUE_STRING][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimInformation $type
      * @param null|int $libxmlOpts
@@ -797,17 +1019,27 @@ class FHIRClaimInformation extends FHIRBackboneElement
         if (isset($children->reason)) {
             $type->setReason(FHIRCodeableConcept::xmlUnserialize($children->reason));
         }
-        if (isset($attributes->sequence)) {
-            $type->setSequence((string)$attributes->sequence);
-        }
         if (isset($children->sequence)) {
             $type->setSequence(FHIRPositiveInt::xmlUnserialize($children->sequence));
         }
-        if (isset($attributes->timingDate)) {
-            $type->setTimingDate((string)$attributes->timingDate);
+        if (isset($attributes->sequence)) {
+            $pt = $type->getSequence();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->sequence);
+            } else {
+                $type->setSequence((string)$attributes->sequence);
+            }
         }
         if (isset($children->timingDate)) {
             $type->setTimingDate(FHIRDate::xmlUnserialize($children->timingDate));
+        }
+        if (isset($attributes->timingDate)) {
+            $pt = $type->getTimingDate();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->timingDate);
+            } else {
+                $type->setTimingDate((string)$attributes->timingDate);
+            }
         }
         if (isset($children->timingPeriod)) {
             $type->setTimingPeriod(FHIRPeriod::xmlUnserialize($children->timingPeriod));
@@ -821,11 +1053,16 @@ class FHIRClaimInformation extends FHIRBackboneElement
         if (isset($children->valueReference)) {
             $type->setValueReference(FHIRReference::xmlUnserialize($children->valueReference));
         }
-        if (isset($attributes->valueString)) {
-            $type->setValueString((string)$attributes->valueString);
-        }
         if (isset($children->valueString)) {
             $type->setValueString(FHIRString::xmlUnserialize($children->valueString));
+        }
+        if (isset($attributes->valueString)) {
+            $pt = $type->getValueString();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->valueString);
+            } else {
+                $type->setValueString((string)$attributes->valueString);
+            }
         }
         return $type;
     }
@@ -841,7 +1078,6 @@ class FHIRClaimInformation extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getCategory())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_CATEGORY, null, $v->_getFHIRXMLNamespace()));
         }
@@ -891,25 +1127,21 @@ class FHIRClaimInformation extends FHIRBackboneElement
             $a[self::FIELD_REASON] = $v;
         }
         if (null !== ($v = $this->getSequence())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SEQUENCE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SEQUENCE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SEQUENCE] = $v;
+            $a[self::FIELD_SEQUENCE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRPositiveInt::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRPositiveInt::FIELD_VALUE]);
+                $a[self::FIELD_SEQUENCE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getTimingDate())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_TIMING_DATE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_TIMING_DATE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_TIMING_DATE] = $v;
+            $a[self::FIELD_TIMING_DATE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDate::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDate::FIELD_VALUE]);
+                $a[self::FIELD_TIMING_DATE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getTimingPeriod())) {
@@ -919,32 +1151,26 @@ class FHIRClaimInformation extends FHIRBackboneElement
             $a[self::FIELD_VALUE_ATTACHMENT] = $v;
         }
         if (null !== ($v = $this->getValueQuantity())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_VALUE_QUANTITY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_VALUE_QUANTITY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_VALUE_QUANTITY] = $v;
-            }
+            $a[self::FIELD_VALUE_QUANTITY] = $v;
         }
         if (null !== ($v = $this->getValueReference())) {
             $a[self::FIELD_VALUE_REFERENCE] = $v;
         }
         if (null !== ($v = $this->getValueString())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_VALUE_STRING] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_VALUE_STRING_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_VALUE_STRING] = $v;
+            $a[self::FIELD_VALUE_STRING] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_VALUE_STRING_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,6 +86,9 @@ class FHIRGroupMember extends FHIRBackboneElement
     const FIELD_INACTIVE_EXT = '_inactive';
     const FIELD_PERIOD = 'period';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -120,8 +123,11 @@ class FHIRGroupMember extends FHIRBackboneElement
      */
     protected $period = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Group.Member
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRGroupMember Constructor
@@ -146,20 +152,27 @@ class FHIRGroupMember extends FHIRBackboneElement
                 $this->setEntity(new FHIRReference($data[self::FIELD_ENTITY]));
             }
         }
-        if (isset($data[self::FIELD_INACTIVE])) {
-            $ext = (isset($data[self::FIELD_INACTIVE_EXT]) && is_array($data[self::FIELD_INACTIVE_EXT]))
-                ? $data[self::FIELD_INACTIVE_EXT]
-                : null;
-            if ($data[self::FIELD_INACTIVE] instanceof FHIRBoolean) {
-                $this->setInactive($data[self::FIELD_INACTIVE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_INACTIVE])) {
-                    $this->setInactive(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $data[self::FIELD_INACTIVE]] + $ext));
-                } else if (is_array($data[self::FIELD_INACTIVE])) {
-                    $this->setInactive(new FHIRBoolean(array_merge($ext, $data[self::FIELD_INACTIVE])));
-                }
+        if (isset($data[self::FIELD_INACTIVE]) || isset($data[self::FIELD_INACTIVE_EXT])) {
+            if (isset($data[self::FIELD_INACTIVE])) {
+                $value = $data[self::FIELD_INACTIVE];
             } else {
-                $this->setInactive(new FHIRBoolean($data[self::FIELD_INACTIVE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_INACTIVE_EXT]) && is_array($data[self::FIELD_INACTIVE_EXT])) {
+                $ext = $data[self::FIELD_INACTIVE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRBoolean) {
+                    $this->setInactive($value);
+                } else if (is_array($value)) {
+                    $this->setInactive(new FHIRBoolean(array_merge($ext, $value)));
+                } else {
+                    $this->setInactive(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setInactive(new FHIRBoolean($ext));
             }
         }
         if (isset($data[self::FIELD_PERIOD])) {
@@ -180,30 +193,6 @@ class FHIRGroupMember extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -214,7 +203,6 @@ class FHIRGroupMember extends FHIRBackboneElement
         }
         return "<GroupMember{$xmlns}></GroupMember>";
     }
-
 
     /**
      * A reference from one resource to another.
@@ -317,6 +305,117 @@ class FHIRGroupMember extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getEntity())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ENTITY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getInactive())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_INACTIVE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PERIOD] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_ENTITY])) {
+            $v = $this->getEntity();
+            foreach($validationRules[self::FIELD_ENTITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP_DOT_MEMBER, self::FIELD_ENTITY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ENTITY])) {
+                        $errs[self::FIELD_ENTITY] = [];
+                    }
+                    $errs[self::FIELD_ENTITY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_INACTIVE])) {
+            $v = $this->getInactive();
+            foreach($validationRules[self::FIELD_INACTIVE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP_DOT_MEMBER, self::FIELD_INACTIVE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_INACTIVE])) {
+                        $errs[self::FIELD_INACTIVE] = [];
+                    }
+                    $errs[self::FIELD_INACTIVE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PERIOD])) {
+            $v = $this->getPeriod();
+            foreach($validationRules[self::FIELD_PERIOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP_DOT_MEMBER, self::FIELD_PERIOD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PERIOD])) {
+                        $errs[self::FIELD_PERIOD] = [];
+                    }
+                    $errs[self::FIELD_PERIOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupMember $type
      * @param null|int $libxmlOpts
@@ -359,11 +458,16 @@ class FHIRGroupMember extends FHIRBackboneElement
         if (isset($children->entity)) {
             $type->setEntity(FHIRReference::xmlUnserialize($children->entity));
         }
-        if (isset($attributes->inactive)) {
-            $type->setInactive((string)$attributes->inactive);
-        }
         if (isset($children->inactive)) {
             $type->setInactive(FHIRBoolean::xmlUnserialize($children->inactive));
+        }
+        if (isset($attributes->inactive)) {
+            $pt = $type->getInactive();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->inactive);
+            } else {
+                $type->setInactive((string)$attributes->inactive);
+            }
         }
         if (isset($children->period)) {
             $type->setPeriod(FHIRPeriod::xmlUnserialize($children->period));
@@ -382,7 +486,6 @@ class FHIRGroupMember extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getEntity())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_ENTITY, null, $v->_getFHIRXMLNamespace()));
         }
@@ -405,21 +508,23 @@ class FHIRGroupMember extends FHIRBackboneElement
             $a[self::FIELD_ENTITY] = $v;
         }
         if (null !== ($v = $this->getInactive())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_INACTIVE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_INACTIVE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_INACTIVE] = $v;
+            $a[self::FIELD_INACTIVE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRBoolean::FIELD_VALUE]);
+                $a[self::FIELD_INACTIVE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getPeriod())) {
             $a[self::FIELD_PERIOD] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return $a;
     }
+
 
     /**
      * @return string

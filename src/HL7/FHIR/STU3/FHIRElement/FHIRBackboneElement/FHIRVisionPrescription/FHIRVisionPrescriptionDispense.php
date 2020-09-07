@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,6 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
     const FIELD_DIAMETER = 'diameter';
     const FIELD_DIAMETER_EXT = '_diameter';
     const FIELD_DURATION = 'duration';
-    const FIELD_DURATION_EXT = '_duration';
     const FIELD_EYE = 'eye';
     const FIELD_EYE_EXT = '_eye';
     const FIELD_NOTE = 'note';
@@ -112,6 +111,9 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
     const FIELD_PRODUCT = 'product';
     const FIELD_SPHERE = 'sphere';
     const FIELD_SPHERE_EXT = '_sphere';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * A rational number with implicit precision
@@ -288,8 +290,11 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
      */
     protected $sphere = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type VisionPrescription.Dispense
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRVisionPrescriptionDispense Constructor
@@ -307,164 +312,218 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_ADD])) {
-            $ext = (isset($data[self::FIELD_ADD_EXT]) && is_array($data[self::FIELD_ADD_EXT]))
-                ? $data[self::FIELD_ADD_EXT]
-                : null;
-            if ($data[self::FIELD_ADD] instanceof FHIRDecimal) {
-                $this->setAdd($data[self::FIELD_ADD]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_ADD])) {
-                    $this->setAdd(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $data[self::FIELD_ADD]] + $ext));
-                } else if (is_array($data[self::FIELD_ADD])) {
-                    $this->setAdd(new FHIRDecimal(array_merge($ext, $data[self::FIELD_ADD])));
-                }
+        if (isset($data[self::FIELD_ADD]) || isset($data[self::FIELD_ADD_EXT])) {
+            if (isset($data[self::FIELD_ADD])) {
+                $value = $data[self::FIELD_ADD];
             } else {
-                $this->setAdd(new FHIRDecimal($data[self::FIELD_ADD]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_ADD_EXT]) && is_array($data[self::FIELD_ADD_EXT])) {
+                $ext = $data[self::FIELD_ADD_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDecimal) {
+                    $this->setAdd($value);
+                } else if (is_array($value)) {
+                    $this->setAdd(new FHIRDecimal(array_merge($ext, $value)));
+                } else {
+                    $this->setAdd(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setAdd(new FHIRDecimal($ext));
             }
         }
-        if (isset($data[self::FIELD_AXIS])) {
-            $ext = (isset($data[self::FIELD_AXIS_EXT]) && is_array($data[self::FIELD_AXIS_EXT]))
-                ? $data[self::FIELD_AXIS_EXT]
-                : null;
-            if ($data[self::FIELD_AXIS] instanceof FHIRInteger) {
-                $this->setAxis($data[self::FIELD_AXIS]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_AXIS])) {
-                    $this->setAxis(new FHIRInteger([FHIRInteger::FIELD_VALUE => $data[self::FIELD_AXIS]] + $ext));
-                } else if (is_array($data[self::FIELD_AXIS])) {
-                    $this->setAxis(new FHIRInteger(array_merge($ext, $data[self::FIELD_AXIS])));
-                }
+        if (isset($data[self::FIELD_AXIS]) || isset($data[self::FIELD_AXIS_EXT])) {
+            if (isset($data[self::FIELD_AXIS])) {
+                $value = $data[self::FIELD_AXIS];
             } else {
-                $this->setAxis(new FHIRInteger($data[self::FIELD_AXIS]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_AXIS_EXT]) && is_array($data[self::FIELD_AXIS_EXT])) {
+                $ext = $data[self::FIELD_AXIS_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRInteger) {
+                    $this->setAxis($value);
+                } else if (is_array($value)) {
+                    $this->setAxis(new FHIRInteger(array_merge($ext, $value)));
+                } else {
+                    $this->setAxis(new FHIRInteger([FHIRInteger::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setAxis(new FHIRInteger($ext));
             }
         }
-        if (isset($data[self::FIELD_BACK_CURVE])) {
-            $ext = (isset($data[self::FIELD_BACK_CURVE_EXT]) && is_array($data[self::FIELD_BACK_CURVE_EXT]))
-                ? $data[self::FIELD_BACK_CURVE_EXT]
-                : null;
-            if ($data[self::FIELD_BACK_CURVE] instanceof FHIRDecimal) {
-                $this->setBackCurve($data[self::FIELD_BACK_CURVE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_BACK_CURVE])) {
-                    $this->setBackCurve(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $data[self::FIELD_BACK_CURVE]] + $ext));
-                } else if (is_array($data[self::FIELD_BACK_CURVE])) {
-                    $this->setBackCurve(new FHIRDecimal(array_merge($ext, $data[self::FIELD_BACK_CURVE])));
-                }
+        if (isset($data[self::FIELD_BACK_CURVE]) || isset($data[self::FIELD_BACK_CURVE_EXT])) {
+            if (isset($data[self::FIELD_BACK_CURVE])) {
+                $value = $data[self::FIELD_BACK_CURVE];
             } else {
-                $this->setBackCurve(new FHIRDecimal($data[self::FIELD_BACK_CURVE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_BACK_CURVE_EXT]) && is_array($data[self::FIELD_BACK_CURVE_EXT])) {
+                $ext = $data[self::FIELD_BACK_CURVE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDecimal) {
+                    $this->setBackCurve($value);
+                } else if (is_array($value)) {
+                    $this->setBackCurve(new FHIRDecimal(array_merge($ext, $value)));
+                } else {
+                    $this->setBackCurve(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setBackCurve(new FHIRDecimal($ext));
             }
         }
-        if (isset($data[self::FIELD_BASE])) {
-            $ext = (isset($data[self::FIELD_BASE_EXT]) && is_array($data[self::FIELD_BASE_EXT]))
-                ? $data[self::FIELD_BASE_EXT]
-                : null;
-            if ($data[self::FIELD_BASE] instanceof FHIRVisionBase) {
-                $this->setBase($data[self::FIELD_BASE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_BASE])) {
-                    $this->setBase(new FHIRVisionBase([FHIRVisionBase::FIELD_VALUE => $data[self::FIELD_BASE]] + $ext));
-                } else if (is_array($data[self::FIELD_BASE])) {
-                    $this->setBase(new FHIRVisionBase(array_merge($ext, $data[self::FIELD_BASE])));
-                }
+        if (isset($data[self::FIELD_BASE]) || isset($data[self::FIELD_BASE_EXT])) {
+            if (isset($data[self::FIELD_BASE])) {
+                $value = $data[self::FIELD_BASE];
             } else {
-                $this->setBase(new FHIRVisionBase($data[self::FIELD_BASE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_BASE_EXT]) && is_array($data[self::FIELD_BASE_EXT])) {
+                $ext = $data[self::FIELD_BASE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRVisionBase) {
+                    $this->setBase($value);
+                } else if (is_array($value)) {
+                    $this->setBase(new FHIRVisionBase(array_merge($ext, $value)));
+                } else {
+                    $this->setBase(new FHIRVisionBase([FHIRVisionBase::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setBase(new FHIRVisionBase($ext));
             }
         }
-        if (isset($data[self::FIELD_BRAND])) {
-            $ext = (isset($data[self::FIELD_BRAND_EXT]) && is_array($data[self::FIELD_BRAND_EXT]))
-                ? $data[self::FIELD_BRAND_EXT]
-                : null;
-            if ($data[self::FIELD_BRAND] instanceof FHIRString) {
-                $this->setBrand($data[self::FIELD_BRAND]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_BRAND])) {
-                    $this->setBrand(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_BRAND]] + $ext));
-                } else if (is_array($data[self::FIELD_BRAND])) {
-                    $this->setBrand(new FHIRString(array_merge($ext, $data[self::FIELD_BRAND])));
-                }
+        if (isset($data[self::FIELD_BRAND]) || isset($data[self::FIELD_BRAND_EXT])) {
+            if (isset($data[self::FIELD_BRAND])) {
+                $value = $data[self::FIELD_BRAND];
             } else {
-                $this->setBrand(new FHIRString($data[self::FIELD_BRAND]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_BRAND_EXT]) && is_array($data[self::FIELD_BRAND_EXT])) {
+                $ext = $data[self::FIELD_BRAND_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setBrand($value);
+                } else if (is_array($value)) {
+                    $this->setBrand(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setBrand(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setBrand(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_COLOR])) {
-            $ext = (isset($data[self::FIELD_COLOR_EXT]) && is_array($data[self::FIELD_COLOR_EXT]))
-                ? $data[self::FIELD_COLOR_EXT]
-                : null;
-            if ($data[self::FIELD_COLOR] instanceof FHIRString) {
-                $this->setColor($data[self::FIELD_COLOR]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_COLOR])) {
-                    $this->setColor(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_COLOR]] + $ext));
-                } else if (is_array($data[self::FIELD_COLOR])) {
-                    $this->setColor(new FHIRString(array_merge($ext, $data[self::FIELD_COLOR])));
-                }
+        if (isset($data[self::FIELD_COLOR]) || isset($data[self::FIELD_COLOR_EXT])) {
+            if (isset($data[self::FIELD_COLOR])) {
+                $value = $data[self::FIELD_COLOR];
             } else {
-                $this->setColor(new FHIRString($data[self::FIELD_COLOR]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_COLOR_EXT]) && is_array($data[self::FIELD_COLOR_EXT])) {
+                $ext = $data[self::FIELD_COLOR_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setColor($value);
+                } else if (is_array($value)) {
+                    $this->setColor(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setColor(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setColor(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_CYLINDER])) {
-            $ext = (isset($data[self::FIELD_CYLINDER_EXT]) && is_array($data[self::FIELD_CYLINDER_EXT]))
-                ? $data[self::FIELD_CYLINDER_EXT]
-                : null;
-            if ($data[self::FIELD_CYLINDER] instanceof FHIRDecimal) {
-                $this->setCylinder($data[self::FIELD_CYLINDER]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_CYLINDER])) {
-                    $this->setCylinder(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $data[self::FIELD_CYLINDER]] + $ext));
-                } else if (is_array($data[self::FIELD_CYLINDER])) {
-                    $this->setCylinder(new FHIRDecimal(array_merge($ext, $data[self::FIELD_CYLINDER])));
-                }
+        if (isset($data[self::FIELD_CYLINDER]) || isset($data[self::FIELD_CYLINDER_EXT])) {
+            if (isset($data[self::FIELD_CYLINDER])) {
+                $value = $data[self::FIELD_CYLINDER];
             } else {
-                $this->setCylinder(new FHIRDecimal($data[self::FIELD_CYLINDER]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_CYLINDER_EXT]) && is_array($data[self::FIELD_CYLINDER_EXT])) {
+                $ext = $data[self::FIELD_CYLINDER_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDecimal) {
+                    $this->setCylinder($value);
+                } else if (is_array($value)) {
+                    $this->setCylinder(new FHIRDecimal(array_merge($ext, $value)));
+                } else {
+                    $this->setCylinder(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setCylinder(new FHIRDecimal($ext));
             }
         }
-        if (isset($data[self::FIELD_DIAMETER])) {
-            $ext = (isset($data[self::FIELD_DIAMETER_EXT]) && is_array($data[self::FIELD_DIAMETER_EXT]))
-                ? $data[self::FIELD_DIAMETER_EXT]
-                : null;
-            if ($data[self::FIELD_DIAMETER] instanceof FHIRDecimal) {
-                $this->setDiameter($data[self::FIELD_DIAMETER]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_DIAMETER])) {
-                    $this->setDiameter(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $data[self::FIELD_DIAMETER]] + $ext));
-                } else if (is_array($data[self::FIELD_DIAMETER])) {
-                    $this->setDiameter(new FHIRDecimal(array_merge($ext, $data[self::FIELD_DIAMETER])));
-                }
+        if (isset($data[self::FIELD_DIAMETER]) || isset($data[self::FIELD_DIAMETER_EXT])) {
+            if (isset($data[self::FIELD_DIAMETER])) {
+                $value = $data[self::FIELD_DIAMETER];
             } else {
-                $this->setDiameter(new FHIRDecimal($data[self::FIELD_DIAMETER]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_DIAMETER_EXT]) && is_array($data[self::FIELD_DIAMETER_EXT])) {
+                $ext = $data[self::FIELD_DIAMETER_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDecimal) {
+                    $this->setDiameter($value);
+                } else if (is_array($value)) {
+                    $this->setDiameter(new FHIRDecimal(array_merge($ext, $value)));
+                } else {
+                    $this->setDiameter(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setDiameter(new FHIRDecimal($ext));
             }
         }
         if (isset($data[self::FIELD_DURATION])) {
-            $ext = (isset($data[self::FIELD_DURATION_EXT]) && is_array($data[self::FIELD_DURATION_EXT]))
-                ? $data[self::FIELD_DURATION_EXT]
-                : null;
             if ($data[self::FIELD_DURATION] instanceof FHIRQuantity) {
                 $this->setDuration($data[self::FIELD_DURATION]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_DURATION])) {
-                    $this->setDuration(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_DURATION]] + $ext));
-                } else if (is_array($data[self::FIELD_DURATION])) {
-                    $this->setDuration(new FHIRQuantity(array_merge($ext, $data[self::FIELD_DURATION])));
-                }
             } else {
                 $this->setDuration(new FHIRQuantity($data[self::FIELD_DURATION]));
             }
         }
-        if (isset($data[self::FIELD_EYE])) {
-            $ext = (isset($data[self::FIELD_EYE_EXT]) && is_array($data[self::FIELD_EYE_EXT]))
-                ? $data[self::FIELD_EYE_EXT]
-                : null;
-            if ($data[self::FIELD_EYE] instanceof FHIRVisionEyes) {
-                $this->setEye($data[self::FIELD_EYE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_EYE])) {
-                    $this->setEye(new FHIRVisionEyes([FHIRVisionEyes::FIELD_VALUE => $data[self::FIELD_EYE]] + $ext));
-                } else if (is_array($data[self::FIELD_EYE])) {
-                    $this->setEye(new FHIRVisionEyes(array_merge($ext, $data[self::FIELD_EYE])));
-                }
+        if (isset($data[self::FIELD_EYE]) || isset($data[self::FIELD_EYE_EXT])) {
+            if (isset($data[self::FIELD_EYE])) {
+                $value = $data[self::FIELD_EYE];
             } else {
-                $this->setEye(new FHIRVisionEyes($data[self::FIELD_EYE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_EYE_EXT]) && is_array($data[self::FIELD_EYE_EXT])) {
+                $ext = $data[self::FIELD_EYE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRVisionEyes) {
+                    $this->setEye($value);
+                } else if (is_array($value)) {
+                    $this->setEye(new FHIRVisionEyes(array_merge($ext, $value)));
+                } else {
+                    $this->setEye(new FHIRVisionEyes([FHIRVisionEyes::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setEye(new FHIRVisionEyes($ext));
             }
         }
         if (isset($data[self::FIELD_NOTE])) {
@@ -485,36 +544,50 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
                 $this->addNote(new FHIRAnnotation($data[self::FIELD_NOTE]));
             }
         }
-        if (isset($data[self::FIELD_POWER])) {
-            $ext = (isset($data[self::FIELD_POWER_EXT]) && is_array($data[self::FIELD_POWER_EXT]))
-                ? $data[self::FIELD_POWER_EXT]
-                : null;
-            if ($data[self::FIELD_POWER] instanceof FHIRDecimal) {
-                $this->setPower($data[self::FIELD_POWER]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_POWER])) {
-                    $this->setPower(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $data[self::FIELD_POWER]] + $ext));
-                } else if (is_array($data[self::FIELD_POWER])) {
-                    $this->setPower(new FHIRDecimal(array_merge($ext, $data[self::FIELD_POWER])));
-                }
+        if (isset($data[self::FIELD_POWER]) || isset($data[self::FIELD_POWER_EXT])) {
+            if (isset($data[self::FIELD_POWER])) {
+                $value = $data[self::FIELD_POWER];
             } else {
-                $this->setPower(new FHIRDecimal($data[self::FIELD_POWER]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_POWER_EXT]) && is_array($data[self::FIELD_POWER_EXT])) {
+                $ext = $data[self::FIELD_POWER_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDecimal) {
+                    $this->setPower($value);
+                } else if (is_array($value)) {
+                    $this->setPower(new FHIRDecimal(array_merge($ext, $value)));
+                } else {
+                    $this->setPower(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setPower(new FHIRDecimal($ext));
             }
         }
-        if (isset($data[self::FIELD_PRISM])) {
-            $ext = (isset($data[self::FIELD_PRISM_EXT]) && is_array($data[self::FIELD_PRISM_EXT]))
-                ? $data[self::FIELD_PRISM_EXT]
-                : null;
-            if ($data[self::FIELD_PRISM] instanceof FHIRDecimal) {
-                $this->setPrism($data[self::FIELD_PRISM]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_PRISM])) {
-                    $this->setPrism(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $data[self::FIELD_PRISM]] + $ext));
-                } else if (is_array($data[self::FIELD_PRISM])) {
-                    $this->setPrism(new FHIRDecimal(array_merge($ext, $data[self::FIELD_PRISM])));
-                }
+        if (isset($data[self::FIELD_PRISM]) || isset($data[self::FIELD_PRISM_EXT])) {
+            if (isset($data[self::FIELD_PRISM])) {
+                $value = $data[self::FIELD_PRISM];
             } else {
-                $this->setPrism(new FHIRDecimal($data[self::FIELD_PRISM]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_PRISM_EXT]) && is_array($data[self::FIELD_PRISM_EXT])) {
+                $ext = $data[self::FIELD_PRISM_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDecimal) {
+                    $this->setPrism($value);
+                } else if (is_array($value)) {
+                    $this->setPrism(new FHIRDecimal(array_merge($ext, $value)));
+                } else {
+                    $this->setPrism(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setPrism(new FHIRDecimal($ext));
             }
         }
         if (isset($data[self::FIELD_PRODUCT])) {
@@ -524,20 +597,27 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
                 $this->setProduct(new FHIRCodeableConcept($data[self::FIELD_PRODUCT]));
             }
         }
-        if (isset($data[self::FIELD_SPHERE])) {
-            $ext = (isset($data[self::FIELD_SPHERE_EXT]) && is_array($data[self::FIELD_SPHERE_EXT]))
-                ? $data[self::FIELD_SPHERE_EXT]
-                : null;
-            if ($data[self::FIELD_SPHERE] instanceof FHIRDecimal) {
-                $this->setSphere($data[self::FIELD_SPHERE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SPHERE])) {
-                    $this->setSphere(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $data[self::FIELD_SPHERE]] + $ext));
-                } else if (is_array($data[self::FIELD_SPHERE])) {
-                    $this->setSphere(new FHIRDecimal(array_merge($ext, $data[self::FIELD_SPHERE])));
-                }
+        if (isset($data[self::FIELD_SPHERE]) || isset($data[self::FIELD_SPHERE_EXT])) {
+            if (isset($data[self::FIELD_SPHERE])) {
+                $value = $data[self::FIELD_SPHERE];
             } else {
-                $this->setSphere(new FHIRDecimal($data[self::FIELD_SPHERE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SPHERE_EXT]) && is_array($data[self::FIELD_SPHERE_EXT])) {
+                $ext = $data[self::FIELD_SPHERE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDecimal) {
+                    $this->setSphere($value);
+                } else if (is_array($value)) {
+                    $this->setSphere(new FHIRDecimal(array_merge($ext, $value)));
+                } else {
+                    $this->setSphere(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSphere(new FHIRDecimal($ext));
             }
         }
     }
@@ -551,30 +631,6 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -585,7 +641,6 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
         }
         return "<VisionPrescriptionDispense{$xmlns}></VisionPrescriptionDispense>";
     }
-
 
     /**
      * A rational number with implicit precision
@@ -1165,6 +1220,323 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getAdd())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ADD] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getAxis())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_AXIS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getBackCurve())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_BACK_CURVE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getBase())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_BASE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getBrand())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_BRAND] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getColor())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_COLOR] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getCylinder())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CYLINDER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getDiameter())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DIAMETER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getDuration())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DURATION] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEye())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EYE] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getNote())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_NOTE, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getPower())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_POWER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPrism())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PRISM] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getProduct())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PRODUCT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSphere())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SPHERE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_ADD])) {
+            $v = $this->getAdd();
+            foreach($validationRules[self::FIELD_ADD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_ADD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ADD])) {
+                        $errs[self::FIELD_ADD] = [];
+                    }
+                    $errs[self::FIELD_ADD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_AXIS])) {
+            $v = $this->getAxis();
+            foreach($validationRules[self::FIELD_AXIS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_AXIS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_AXIS])) {
+                        $errs[self::FIELD_AXIS] = [];
+                    }
+                    $errs[self::FIELD_AXIS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_BACK_CURVE])) {
+            $v = $this->getBackCurve();
+            foreach($validationRules[self::FIELD_BACK_CURVE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_BACK_CURVE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_BACK_CURVE])) {
+                        $errs[self::FIELD_BACK_CURVE] = [];
+                    }
+                    $errs[self::FIELD_BACK_CURVE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_BASE])) {
+            $v = $this->getBase();
+            foreach($validationRules[self::FIELD_BASE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_BASE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_BASE])) {
+                        $errs[self::FIELD_BASE] = [];
+                    }
+                    $errs[self::FIELD_BASE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_BRAND])) {
+            $v = $this->getBrand();
+            foreach($validationRules[self::FIELD_BRAND] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_BRAND, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_BRAND])) {
+                        $errs[self::FIELD_BRAND] = [];
+                    }
+                    $errs[self::FIELD_BRAND][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_COLOR])) {
+            $v = $this->getColor();
+            foreach($validationRules[self::FIELD_COLOR] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_COLOR, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_COLOR])) {
+                        $errs[self::FIELD_COLOR] = [];
+                    }
+                    $errs[self::FIELD_COLOR][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CYLINDER])) {
+            $v = $this->getCylinder();
+            foreach($validationRules[self::FIELD_CYLINDER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_CYLINDER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CYLINDER])) {
+                        $errs[self::FIELD_CYLINDER] = [];
+                    }
+                    $errs[self::FIELD_CYLINDER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DIAMETER])) {
+            $v = $this->getDiameter();
+            foreach($validationRules[self::FIELD_DIAMETER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_DIAMETER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DIAMETER])) {
+                        $errs[self::FIELD_DIAMETER] = [];
+                    }
+                    $errs[self::FIELD_DIAMETER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DURATION])) {
+            $v = $this->getDuration();
+            foreach($validationRules[self::FIELD_DURATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_DURATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DURATION])) {
+                        $errs[self::FIELD_DURATION] = [];
+                    }
+                    $errs[self::FIELD_DURATION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EYE])) {
+            $v = $this->getEye();
+            foreach($validationRules[self::FIELD_EYE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_EYE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EYE])) {
+                        $errs[self::FIELD_EYE] = [];
+                    }
+                    $errs[self::FIELD_EYE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NOTE])) {
+            $v = $this->getNote();
+            foreach($validationRules[self::FIELD_NOTE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_NOTE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NOTE])) {
+                        $errs[self::FIELD_NOTE] = [];
+                    }
+                    $errs[self::FIELD_NOTE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_POWER])) {
+            $v = $this->getPower();
+            foreach($validationRules[self::FIELD_POWER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_POWER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_POWER])) {
+                        $errs[self::FIELD_POWER] = [];
+                    }
+                    $errs[self::FIELD_POWER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PRISM])) {
+            $v = $this->getPrism();
+            foreach($validationRules[self::FIELD_PRISM] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_PRISM, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PRISM])) {
+                        $errs[self::FIELD_PRISM] = [];
+                    }
+                    $errs[self::FIELD_PRISM][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PRODUCT])) {
+            $v = $this->getProduct();
+            foreach($validationRules[self::FIELD_PRODUCT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_PRODUCT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PRODUCT])) {
+                        $errs[self::FIELD_PRODUCT] = [];
+                    }
+                    $errs[self::FIELD_PRODUCT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SPHERE])) {
+            $v = $this->getSphere();
+            foreach($validationRules[self::FIELD_SPHERE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_DISPENSE, self::FIELD_SPHERE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SPHERE])) {
+                        $errs[self::FIELD_SPHERE] = [];
+                    }
+                    $errs[self::FIELD_SPHERE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionDispense $type
      * @param null|int $libxmlOpts
@@ -1204,50 +1576,85 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->add)) {
-            $type->setAdd((string)$attributes->add);
-        }
         if (isset($children->add)) {
             $type->setAdd(FHIRDecimal::xmlUnserialize($children->add));
         }
-        if (isset($attributes->axis)) {
-            $type->setAxis((string)$attributes->axis);
+        if (isset($attributes->add)) {
+            $pt = $type->getAdd();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->add);
+            } else {
+                $type->setAdd((string)$attributes->add);
+            }
         }
         if (isset($children->axis)) {
             $type->setAxis(FHIRInteger::xmlUnserialize($children->axis));
         }
-        if (isset($attributes->backCurve)) {
-            $type->setBackCurve((string)$attributes->backCurve);
+        if (isset($attributes->axis)) {
+            $pt = $type->getAxis();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->axis);
+            } else {
+                $type->setAxis((string)$attributes->axis);
+            }
         }
         if (isset($children->backCurve)) {
             $type->setBackCurve(FHIRDecimal::xmlUnserialize($children->backCurve));
         }
+        if (isset($attributes->backCurve)) {
+            $pt = $type->getBackCurve();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->backCurve);
+            } else {
+                $type->setBackCurve((string)$attributes->backCurve);
+            }
+        }
         if (isset($children->base)) {
             $type->setBase(FHIRVisionBase::xmlUnserialize($children->base));
-        }
-        if (isset($attributes->brand)) {
-            $type->setBrand((string)$attributes->brand);
         }
         if (isset($children->brand)) {
             $type->setBrand(FHIRString::xmlUnserialize($children->brand));
         }
-        if (isset($attributes->color)) {
-            $type->setColor((string)$attributes->color);
+        if (isset($attributes->brand)) {
+            $pt = $type->getBrand();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->brand);
+            } else {
+                $type->setBrand((string)$attributes->brand);
+            }
         }
         if (isset($children->color)) {
             $type->setColor(FHIRString::xmlUnserialize($children->color));
         }
-        if (isset($attributes->cylinder)) {
-            $type->setCylinder((string)$attributes->cylinder);
+        if (isset($attributes->color)) {
+            $pt = $type->getColor();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->color);
+            } else {
+                $type->setColor((string)$attributes->color);
+            }
         }
         if (isset($children->cylinder)) {
             $type->setCylinder(FHIRDecimal::xmlUnserialize($children->cylinder));
         }
-        if (isset($attributes->diameter)) {
-            $type->setDiameter((string)$attributes->diameter);
+        if (isset($attributes->cylinder)) {
+            $pt = $type->getCylinder();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->cylinder);
+            } else {
+                $type->setCylinder((string)$attributes->cylinder);
+            }
         }
         if (isset($children->diameter)) {
             $type->setDiameter(FHIRDecimal::xmlUnserialize($children->diameter));
+        }
+        if (isset($attributes->diameter)) {
+            $pt = $type->getDiameter();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->diameter);
+            } else {
+                $type->setDiameter((string)$attributes->diameter);
+            }
         }
         if (isset($children->duration)) {
             $type->setDuration(FHIRQuantity::xmlUnserialize($children->duration));
@@ -1260,26 +1667,41 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
                 $type->addNote(FHIRAnnotation::xmlUnserialize($child));
             }
         }
-        if (isset($attributes->power)) {
-            $type->setPower((string)$attributes->power);
-        }
         if (isset($children->power)) {
             $type->setPower(FHIRDecimal::xmlUnserialize($children->power));
         }
-        if (isset($attributes->prism)) {
-            $type->setPrism((string)$attributes->prism);
+        if (isset($attributes->power)) {
+            $pt = $type->getPower();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->power);
+            } else {
+                $type->setPower((string)$attributes->power);
+            }
         }
         if (isset($children->prism)) {
             $type->setPrism(FHIRDecimal::xmlUnserialize($children->prism));
         }
+        if (isset($attributes->prism)) {
+            $pt = $type->getPrism();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->prism);
+            } else {
+                $type->setPrism((string)$attributes->prism);
+            }
+        }
         if (isset($children->product)) {
             $type->setProduct(FHIRCodeableConcept::xmlUnserialize($children->product));
         }
-        if (isset($attributes->sphere)) {
-            $type->setSphere((string)$attributes->sphere);
-        }
         if (isset($children->sphere)) {
             $type->setSphere(FHIRDecimal::xmlUnserialize($children->sphere));
+        }
+        if (isset($attributes->sphere)) {
+            $pt = $type->getSphere();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->sphere);
+            } else {
+                $type->setSphere((string)$attributes->sphere);
+            }
         }
         return $type;
     }
@@ -1295,7 +1717,6 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getAdd())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_ADD, null, $v->_getFHIRXMLNamespace()));
         }
@@ -1356,156 +1777,134 @@ class FHIRVisionPrescriptionDispense extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getAdd())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_ADD] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_ADD_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_ADD] = $v;
+            $a[self::FIELD_ADD] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDecimal::FIELD_VALUE]);
+                $a[self::FIELD_ADD_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getAxis())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_AXIS] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_AXIS_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_AXIS] = $v;
+            $a[self::FIELD_AXIS] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRInteger::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRInteger::FIELD_VALUE]);
+                $a[self::FIELD_AXIS_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getBackCurve())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_BACK_CURVE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_BACK_CURVE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_BACK_CURVE] = $v;
+            $a[self::FIELD_BACK_CURVE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDecimal::FIELD_VALUE]);
+                $a[self::FIELD_BACK_CURVE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getBase())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_BASE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_BASE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_BASE] = $v;
+            $a[self::FIELD_BASE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRVisionBase::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRVisionBase::FIELD_VALUE]);
+                $a[self::FIELD_BASE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getBrand())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_BRAND] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_BRAND_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_BRAND] = $v;
+            $a[self::FIELD_BRAND] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_BRAND_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getColor())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_COLOR] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_COLOR_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_COLOR] = $v;
+            $a[self::FIELD_COLOR] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_COLOR_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getCylinder())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_CYLINDER] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_CYLINDER_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_CYLINDER] = $v;
+            $a[self::FIELD_CYLINDER] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDecimal::FIELD_VALUE]);
+                $a[self::FIELD_CYLINDER_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getDiameter())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_DIAMETER] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_DIAMETER_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_DIAMETER] = $v;
+            $a[self::FIELD_DIAMETER] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDecimal::FIELD_VALUE]);
+                $a[self::FIELD_DIAMETER_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getDuration())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_DURATION] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_DURATION_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_DURATION] = $v;
-            }
+            $a[self::FIELD_DURATION] = $v;
         }
         if (null !== ($v = $this->getEye())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_EYE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_EYE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_EYE] = $v;
+            $a[self::FIELD_EYE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRVisionEyes::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRVisionEyes::FIELD_VALUE]);
+                $a[self::FIELD_EYE_EXT] = $enc;
             }
         }
         if ([] !== ($vs = $this->getNote())) {
-            $a[self::FIELD_NOTE] = $vs;
+            $a[self::FIELD_NOTE] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_NOTE][] = $v;
+            }
         }
         if (null !== ($v = $this->getPower())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_POWER] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_POWER_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_POWER] = $v;
+            $a[self::FIELD_POWER] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDecimal::FIELD_VALUE]);
+                $a[self::FIELD_POWER_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getPrism())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_PRISM] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_PRISM_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_PRISM] = $v;
+            $a[self::FIELD_PRISM] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDecimal::FIELD_VALUE]);
+                $a[self::FIELD_PRISM_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getProduct())) {
             $a[self::FIELD_PRODUCT] = $v;
         }
         if (null !== ($v = $this->getSphere())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SPHERE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SPHERE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SPHERE] = $v;
+            $a[self::FIELD_SPHERE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDecimal::FIELD_VALUE]);
+                $a[self::FIELD_SPHERE_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

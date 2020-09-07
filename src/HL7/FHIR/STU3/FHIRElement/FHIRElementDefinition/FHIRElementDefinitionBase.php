@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -87,6 +87,9 @@ class FHIRElementDefinitionBase extends FHIRElement
     const FIELD_PATH = 'path';
     const FIELD_PATH_EXT = '_path';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -123,8 +126,11 @@ class FHIRElementDefinitionBase extends FHIRElement
      */
     protected $path = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type ElementDefinition.Base
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRElementDefinitionBase Constructor
@@ -142,52 +148,73 @@ class FHIRElementDefinitionBase extends FHIRElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_MAX])) {
-            $ext = (isset($data[self::FIELD_MAX_EXT]) && is_array($data[self::FIELD_MAX_EXT]))
-                ? $data[self::FIELD_MAX_EXT]
-                : null;
-            if ($data[self::FIELD_MAX] instanceof FHIRString) {
-                $this->setMax($data[self::FIELD_MAX]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_MAX])) {
-                    $this->setMax(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_MAX]] + $ext));
-                } else if (is_array($data[self::FIELD_MAX])) {
-                    $this->setMax(new FHIRString(array_merge($ext, $data[self::FIELD_MAX])));
-                }
+        if (isset($data[self::FIELD_MAX]) || isset($data[self::FIELD_MAX_EXT])) {
+            if (isset($data[self::FIELD_MAX])) {
+                $value = $data[self::FIELD_MAX];
             } else {
-                $this->setMax(new FHIRString($data[self::FIELD_MAX]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_MAX_EXT]) && is_array($data[self::FIELD_MAX_EXT])) {
+                $ext = $data[self::FIELD_MAX_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setMax($value);
+                } else if (is_array($value)) {
+                    $this->setMax(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setMax(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setMax(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_MIN])) {
-            $ext = (isset($data[self::FIELD_MIN_EXT]) && is_array($data[self::FIELD_MIN_EXT]))
-                ? $data[self::FIELD_MIN_EXT]
-                : null;
-            if ($data[self::FIELD_MIN] instanceof FHIRUnsignedInt) {
-                $this->setMin($data[self::FIELD_MIN]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_MIN])) {
-                    $this->setMin(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $data[self::FIELD_MIN]] + $ext));
-                } else if (is_array($data[self::FIELD_MIN])) {
-                    $this->setMin(new FHIRUnsignedInt(array_merge($ext, $data[self::FIELD_MIN])));
-                }
+        if (isset($data[self::FIELD_MIN]) || isset($data[self::FIELD_MIN_EXT])) {
+            if (isset($data[self::FIELD_MIN])) {
+                $value = $data[self::FIELD_MIN];
             } else {
-                $this->setMin(new FHIRUnsignedInt($data[self::FIELD_MIN]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_MIN_EXT]) && is_array($data[self::FIELD_MIN_EXT])) {
+                $ext = $data[self::FIELD_MIN_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRUnsignedInt) {
+                    $this->setMin($value);
+                } else if (is_array($value)) {
+                    $this->setMin(new FHIRUnsignedInt(array_merge($ext, $value)));
+                } else {
+                    $this->setMin(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setMin(new FHIRUnsignedInt($ext));
             }
         }
-        if (isset($data[self::FIELD_PATH])) {
-            $ext = (isset($data[self::FIELD_PATH_EXT]) && is_array($data[self::FIELD_PATH_EXT]))
-                ? $data[self::FIELD_PATH_EXT]
-                : null;
-            if ($data[self::FIELD_PATH] instanceof FHIRString) {
-                $this->setPath($data[self::FIELD_PATH]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_PATH])) {
-                    $this->setPath(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_PATH]] + $ext));
-                } else if (is_array($data[self::FIELD_PATH])) {
-                    $this->setPath(new FHIRString(array_merge($ext, $data[self::FIELD_PATH])));
-                }
+        if (isset($data[self::FIELD_PATH]) || isset($data[self::FIELD_PATH_EXT])) {
+            if (isset($data[self::FIELD_PATH])) {
+                $value = $data[self::FIELD_PATH];
             } else {
-                $this->setPath(new FHIRString($data[self::FIELD_PATH]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_PATH_EXT]) && is_array($data[self::FIELD_PATH_EXT])) {
+                $ext = $data[self::FIELD_PATH_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setPath($value);
+                } else if (is_array($value)) {
+                    $this->setPath(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setPath(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setPath(new FHIRString($ext));
             }
         }
     }
@@ -201,30 +228,6 @@ class FHIRElementDefinitionBase extends FHIRElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -235,7 +238,6 @@ class FHIRElementDefinitionBase extends FHIRElement
         }
         return "<ElementDefinitionBase{$xmlns}></ElementDefinitionBase>";
     }
-
 
     /**
      * A sequence of Unicode characters
@@ -358,6 +360,105 @@ class FHIRElementDefinitionBase extends FHIRElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getMax())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_MAX] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getMin())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_MIN] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPath())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PATH] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_MAX])) {
+            $v = $this->getMax();
+            foreach($validationRules[self::FIELD_MAX] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT_DEFINITION_DOT_BASE, self::FIELD_MAX, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MAX])) {
+                        $errs[self::FIELD_MAX] = [];
+                    }
+                    $errs[self::FIELD_MAX][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MIN])) {
+            $v = $this->getMin();
+            foreach($validationRules[self::FIELD_MIN] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT_DEFINITION_DOT_BASE, self::FIELD_MIN, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MIN])) {
+                        $errs[self::FIELD_MIN] = [];
+                    }
+                    $errs[self::FIELD_MIN][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PATH])) {
+            $v = $this->getPath();
+            foreach($validationRules[self::FIELD_PATH] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT_DEFINITION_DOT_BASE, self::FIELD_PATH, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PATH])) {
+                        $errs[self::FIELD_PATH] = [];
+                    }
+                    $errs[self::FIELD_PATH][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition\FHIRElementDefinitionBase $type
      * @param null|int $libxmlOpts
@@ -397,23 +498,38 @@ class FHIRElementDefinitionBase extends FHIRElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->max)) {
-            $type->setMax((string)$attributes->max);
-        }
         if (isset($children->max)) {
             $type->setMax(FHIRString::xmlUnserialize($children->max));
         }
-        if (isset($attributes->min)) {
-            $type->setMin((string)$attributes->min);
+        if (isset($attributes->max)) {
+            $pt = $type->getMax();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->max);
+            } else {
+                $type->setMax((string)$attributes->max);
+            }
         }
         if (isset($children->min)) {
             $type->setMin(FHIRUnsignedInt::xmlUnserialize($children->min));
         }
-        if (isset($attributes->path)) {
-            $type->setPath((string)$attributes->path);
+        if (isset($attributes->min)) {
+            $pt = $type->getMin();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->min);
+            } else {
+                $type->setMin((string)$attributes->min);
+            }
         }
         if (isset($children->path)) {
             $type->setPath(FHIRString::xmlUnserialize($children->path));
+        }
+        if (isset($attributes->path)) {
+            $pt = $type->getPath();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->path);
+            } else {
+                $type->setPath((string)$attributes->path);
+            }
         }
         return $type;
     }
@@ -429,7 +545,6 @@ class FHIRElementDefinitionBase extends FHIRElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getMax())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_MAX, null, $v->_getFHIRXMLNamespace()));
         }
@@ -449,40 +564,38 @@ class FHIRElementDefinitionBase extends FHIRElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getMax())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_MAX] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_MAX_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_MAX] = $v;
+            $a[self::FIELD_MAX] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_MAX_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getMin())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_MIN] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_MIN_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_MIN] = $v;
+            $a[self::FIELD_MIN] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUnsignedInt::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRUnsignedInt::FIELD_VALUE]);
+                $a[self::FIELD_MIN_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getPath())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_PATH] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_PATH_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_PATH] = $v;
+            $a[self::FIELD_PATH] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_PATH_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

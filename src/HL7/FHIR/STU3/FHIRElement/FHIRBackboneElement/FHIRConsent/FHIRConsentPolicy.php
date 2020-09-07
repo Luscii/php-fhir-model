@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRConsent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,6 +84,9 @@ class FHIRConsentPolicy extends FHIRBackboneElement
     const FIELD_URI = 'uri';
     const FIELD_URI_EXT = '_uri';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -108,8 +111,11 @@ class FHIRConsentPolicy extends FHIRBackboneElement
      */
     protected $uri = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Consent.Policy
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRConsentPolicy Constructor
@@ -127,36 +133,50 @@ class FHIRConsentPolicy extends FHIRBackboneElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_AUTHORITY])) {
-            $ext = (isset($data[self::FIELD_AUTHORITY_EXT]) && is_array($data[self::FIELD_AUTHORITY_EXT]))
-                ? $data[self::FIELD_AUTHORITY_EXT]
-                : null;
-            if ($data[self::FIELD_AUTHORITY] instanceof FHIRUri) {
-                $this->setAuthority($data[self::FIELD_AUTHORITY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_AUTHORITY])) {
-                    $this->setAuthority(new FHIRUri([FHIRUri::FIELD_VALUE => $data[self::FIELD_AUTHORITY]] + $ext));
-                } else if (is_array($data[self::FIELD_AUTHORITY])) {
-                    $this->setAuthority(new FHIRUri(array_merge($ext, $data[self::FIELD_AUTHORITY])));
-                }
+        if (isset($data[self::FIELD_AUTHORITY]) || isset($data[self::FIELD_AUTHORITY_EXT])) {
+            if (isset($data[self::FIELD_AUTHORITY])) {
+                $value = $data[self::FIELD_AUTHORITY];
             } else {
-                $this->setAuthority(new FHIRUri($data[self::FIELD_AUTHORITY]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_AUTHORITY_EXT]) && is_array($data[self::FIELD_AUTHORITY_EXT])) {
+                $ext = $data[self::FIELD_AUTHORITY_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRUri) {
+                    $this->setAuthority($value);
+                } else if (is_array($value)) {
+                    $this->setAuthority(new FHIRUri(array_merge($ext, $value)));
+                } else {
+                    $this->setAuthority(new FHIRUri([FHIRUri::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setAuthority(new FHIRUri($ext));
             }
         }
-        if (isset($data[self::FIELD_URI])) {
-            $ext = (isset($data[self::FIELD_URI_EXT]) && is_array($data[self::FIELD_URI_EXT]))
-                ? $data[self::FIELD_URI_EXT]
-                : null;
-            if ($data[self::FIELD_URI] instanceof FHIRUri) {
-                $this->setUri($data[self::FIELD_URI]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_URI])) {
-                    $this->setUri(new FHIRUri([FHIRUri::FIELD_VALUE => $data[self::FIELD_URI]] + $ext));
-                } else if (is_array($data[self::FIELD_URI])) {
-                    $this->setUri(new FHIRUri(array_merge($ext, $data[self::FIELD_URI])));
-                }
+        if (isset($data[self::FIELD_URI]) || isset($data[self::FIELD_URI_EXT])) {
+            if (isset($data[self::FIELD_URI])) {
+                $value = $data[self::FIELD_URI];
             } else {
-                $this->setUri(new FHIRUri($data[self::FIELD_URI]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_URI_EXT]) && is_array($data[self::FIELD_URI_EXT])) {
+                $ext = $data[self::FIELD_URI_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRUri) {
+                    $this->setUri($value);
+                } else if (is_array($value)) {
+                    $this->setUri(new FHIRUri(array_merge($ext, $value)));
+                } else {
+                    $this->setUri(new FHIRUri([FHIRUri::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setUri(new FHIRUri($ext));
             }
         }
     }
@@ -170,30 +190,6 @@ class FHIRConsentPolicy extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -204,7 +200,6 @@ class FHIRConsentPolicy extends FHIRBackboneElement
         }
         return "<ConsentPolicy{$xmlns}></ConsentPolicy>";
     }
-
 
     /**
      * String of characters used to identify a name or a resource
@@ -287,6 +282,100 @@ class FHIRConsentPolicy extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getAuthority())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_AUTHORITY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getUri())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_URI] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_AUTHORITY])) {
+            $v = $this->getAuthority();
+            foreach($validationRules[self::FIELD_AUTHORITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CONSENT_DOT_POLICY, self::FIELD_AUTHORITY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_AUTHORITY])) {
+                        $errs[self::FIELD_AUTHORITY] = [];
+                    }
+                    $errs[self::FIELD_AUTHORITY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_URI])) {
+            $v = $this->getUri();
+            foreach($validationRules[self::FIELD_URI] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CONSENT_DOT_POLICY, self::FIELD_URI, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_URI])) {
+                        $errs[self::FIELD_URI] = [];
+                    }
+                    $errs[self::FIELD_URI][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentPolicy $type
      * @param null|int $libxmlOpts
@@ -326,17 +415,27 @@ class FHIRConsentPolicy extends FHIRBackboneElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->authority)) {
-            $type->setAuthority((string)$attributes->authority);
-        }
         if (isset($children->authority)) {
             $type->setAuthority(FHIRUri::xmlUnserialize($children->authority));
         }
-        if (isset($attributes->uri)) {
-            $type->setUri((string)$attributes->uri);
+        if (isset($attributes->authority)) {
+            $pt = $type->getAuthority();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->authority);
+            } else {
+                $type->setAuthority((string)$attributes->authority);
+            }
         }
         if (isset($children->uri)) {
             $type->setUri(FHIRUri::xmlUnserialize($children->uri));
+        }
+        if (isset($attributes->uri)) {
+            $pt = $type->getUri();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->uri);
+            } else {
+                $type->setUri((string)$attributes->uri);
+            }
         }
         return $type;
     }
@@ -352,7 +451,6 @@ class FHIRConsentPolicy extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getAuthority())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_AUTHORITY, null, $v->_getFHIRXMLNamespace()));
         }
@@ -369,29 +467,29 @@ class FHIRConsentPolicy extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getAuthority())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_AUTHORITY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_AUTHORITY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_AUTHORITY] = $v;
+            $a[self::FIELD_AUTHORITY] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUri::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRUri::FIELD_VALUE]);
+                $a[self::FIELD_AUTHORITY_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getUri())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_URI] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_URI_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_URI] = $v;
+            $a[self::FIELD_URI] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUri::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRUri::FIELD_VALUE]);
+                $a[self::FIELD_URI_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

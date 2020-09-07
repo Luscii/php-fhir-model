@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRClaim;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,6 +89,9 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
     const FIELD_SEQUENCE = 'sequence';
     const FIELD_SEQUENCE_EXT = '_sequence';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -147,8 +150,11 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
      */
     protected $sequence = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Claim.CareTeam
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRClaimCareTeam Constructor
@@ -180,20 +186,27 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
                 $this->setQualification(new FHIRCodeableConcept($data[self::FIELD_QUALIFICATION]));
             }
         }
-        if (isset($data[self::FIELD_RESPONSIBLE])) {
-            $ext = (isset($data[self::FIELD_RESPONSIBLE_EXT]) && is_array($data[self::FIELD_RESPONSIBLE_EXT]))
-                ? $data[self::FIELD_RESPONSIBLE_EXT]
-                : null;
-            if ($data[self::FIELD_RESPONSIBLE] instanceof FHIRBoolean) {
-                $this->setResponsible($data[self::FIELD_RESPONSIBLE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_RESPONSIBLE])) {
-                    $this->setResponsible(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $data[self::FIELD_RESPONSIBLE]] + $ext));
-                } else if (is_array($data[self::FIELD_RESPONSIBLE])) {
-                    $this->setResponsible(new FHIRBoolean(array_merge($ext, $data[self::FIELD_RESPONSIBLE])));
-                }
+        if (isset($data[self::FIELD_RESPONSIBLE]) || isset($data[self::FIELD_RESPONSIBLE_EXT])) {
+            if (isset($data[self::FIELD_RESPONSIBLE])) {
+                $value = $data[self::FIELD_RESPONSIBLE];
             } else {
-                $this->setResponsible(new FHIRBoolean($data[self::FIELD_RESPONSIBLE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_RESPONSIBLE_EXT]) && is_array($data[self::FIELD_RESPONSIBLE_EXT])) {
+                $ext = $data[self::FIELD_RESPONSIBLE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRBoolean) {
+                    $this->setResponsible($value);
+                } else if (is_array($value)) {
+                    $this->setResponsible(new FHIRBoolean(array_merge($ext, $value)));
+                } else {
+                    $this->setResponsible(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setResponsible(new FHIRBoolean($ext));
             }
         }
         if (isset($data[self::FIELD_ROLE])) {
@@ -203,20 +216,27 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
                 $this->setRole(new FHIRCodeableConcept($data[self::FIELD_ROLE]));
             }
         }
-        if (isset($data[self::FIELD_SEQUENCE])) {
-            $ext = (isset($data[self::FIELD_SEQUENCE_EXT]) && is_array($data[self::FIELD_SEQUENCE_EXT]))
-                ? $data[self::FIELD_SEQUENCE_EXT]
-                : null;
-            if ($data[self::FIELD_SEQUENCE] instanceof FHIRPositiveInt) {
-                $this->setSequence($data[self::FIELD_SEQUENCE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SEQUENCE])) {
-                    $this->setSequence(new FHIRPositiveInt([FHIRPositiveInt::FIELD_VALUE => $data[self::FIELD_SEQUENCE]] + $ext));
-                } else if (is_array($data[self::FIELD_SEQUENCE])) {
-                    $this->setSequence(new FHIRPositiveInt(array_merge($ext, $data[self::FIELD_SEQUENCE])));
-                }
+        if (isset($data[self::FIELD_SEQUENCE]) || isset($data[self::FIELD_SEQUENCE_EXT])) {
+            if (isset($data[self::FIELD_SEQUENCE])) {
+                $value = $data[self::FIELD_SEQUENCE];
             } else {
-                $this->setSequence(new FHIRPositiveInt($data[self::FIELD_SEQUENCE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SEQUENCE_EXT]) && is_array($data[self::FIELD_SEQUENCE_EXT])) {
+                $ext = $data[self::FIELD_SEQUENCE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRPositiveInt) {
+                    $this->setSequence($value);
+                } else if (is_array($value)) {
+                    $this->setSequence(new FHIRPositiveInt(array_merge($ext, $value)));
+                } else {
+                    $this->setSequence(new FHIRPositiveInt([FHIRPositiveInt::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSequence(new FHIRPositiveInt($ext));
             }
         }
     }
@@ -230,30 +250,6 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -264,7 +260,6 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
         }
         return "<ClaimCareTeam{$xmlns}></ClaimCareTeam>";
     }
-
 
     /**
      * A reference from one resource to another.
@@ -439,6 +434,151 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getProvider())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PROVIDER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getQualification())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_QUALIFICATION] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getResponsible())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RESPONSIBLE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getRole())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ROLE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSequence())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SEQUENCE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_PROVIDER])) {
+            $v = $this->getProvider();
+            foreach($validationRules[self::FIELD_PROVIDER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_CARE_TEAM, self::FIELD_PROVIDER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PROVIDER])) {
+                        $errs[self::FIELD_PROVIDER] = [];
+                    }
+                    $errs[self::FIELD_PROVIDER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_QUALIFICATION])) {
+            $v = $this->getQualification();
+            foreach($validationRules[self::FIELD_QUALIFICATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_CARE_TEAM, self::FIELD_QUALIFICATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_QUALIFICATION])) {
+                        $errs[self::FIELD_QUALIFICATION] = [];
+                    }
+                    $errs[self::FIELD_QUALIFICATION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RESPONSIBLE])) {
+            $v = $this->getResponsible();
+            foreach($validationRules[self::FIELD_RESPONSIBLE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_CARE_TEAM, self::FIELD_RESPONSIBLE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RESPONSIBLE])) {
+                        $errs[self::FIELD_RESPONSIBLE] = [];
+                    }
+                    $errs[self::FIELD_RESPONSIBLE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ROLE])) {
+            $v = $this->getRole();
+            foreach($validationRules[self::FIELD_ROLE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_CARE_TEAM, self::FIELD_ROLE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ROLE])) {
+                        $errs[self::FIELD_ROLE] = [];
+                    }
+                    $errs[self::FIELD_ROLE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SEQUENCE])) {
+            $v = $this->getSequence();
+            foreach($validationRules[self::FIELD_SEQUENCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_CARE_TEAM, self::FIELD_SEQUENCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SEQUENCE])) {
+                        $errs[self::FIELD_SEQUENCE] = [];
+                    }
+                    $errs[self::FIELD_SEQUENCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimCareTeam $type
      * @param null|int $libxmlOpts
@@ -484,20 +624,30 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
         if (isset($children->qualification)) {
             $type->setQualification(FHIRCodeableConcept::xmlUnserialize($children->qualification));
         }
-        if (isset($attributes->responsible)) {
-            $type->setResponsible((string)$attributes->responsible);
-        }
         if (isset($children->responsible)) {
             $type->setResponsible(FHIRBoolean::xmlUnserialize($children->responsible));
+        }
+        if (isset($attributes->responsible)) {
+            $pt = $type->getResponsible();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->responsible);
+            } else {
+                $type->setResponsible((string)$attributes->responsible);
+            }
         }
         if (isset($children->role)) {
             $type->setRole(FHIRCodeableConcept::xmlUnserialize($children->role));
         }
-        if (isset($attributes->sequence)) {
-            $type->setSequence((string)$attributes->sequence);
-        }
         if (isset($children->sequence)) {
             $type->setSequence(FHIRPositiveInt::xmlUnserialize($children->sequence));
+        }
+        if (isset($attributes->sequence)) {
+            $pt = $type->getSequence();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->sequence);
+            } else {
+                $type->setSequence((string)$attributes->sequence);
+            }
         }
         return $type;
     }
@@ -513,7 +663,6 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getProvider())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_PROVIDER, null, $v->_getFHIRXMLNamespace()));
         }
@@ -545,32 +694,32 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
             $a[self::FIELD_QUALIFICATION] = $v;
         }
         if (null !== ($v = $this->getResponsible())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_RESPONSIBLE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_RESPONSIBLE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_RESPONSIBLE] = $v;
+            $a[self::FIELD_RESPONSIBLE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRBoolean::FIELD_VALUE]);
+                $a[self::FIELD_RESPONSIBLE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getRole())) {
             $a[self::FIELD_ROLE] = $v;
         }
         if (null !== ($v = $this->getSequence())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SEQUENCE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SEQUENCE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SEQUENCE] = $v;
+            $a[self::FIELD_SEQUENCE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRPositiveInt::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRPositiveInt::FIELD_VALUE]);
+                $a[self::FIELD_SEQUENCE_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

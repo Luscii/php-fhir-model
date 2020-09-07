@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,10 +86,12 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
     const FIELD_ACTION_ID = 'actionId';
     const FIELD_ACTION_ID_EXT = '_actionId';
     const FIELD_OFFSET_DURATION = 'offsetDuration';
-    const FIELD_OFFSET_DURATION_EXT = '_offsetDuration';
     const FIELD_OFFSET_RANGE = 'offsetRange';
     const FIELD_RELATIONSHIP = 'relationship';
     const FIELD_RELATIONSHIP_EXT = '_relationship';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
@@ -139,8 +141,11 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
      */
     protected $relationship = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type PlanDefinition.RelatedAction
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRPlanDefinitionRelatedAction Constructor
@@ -158,34 +163,32 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_ACTION_ID])) {
-            $ext = (isset($data[self::FIELD_ACTION_ID_EXT]) && is_array($data[self::FIELD_ACTION_ID_EXT]))
-                ? $data[self::FIELD_ACTION_ID_EXT]
-                : null;
-            if ($data[self::FIELD_ACTION_ID] instanceof FHIRId) {
-                $this->setActionId($data[self::FIELD_ACTION_ID]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_ACTION_ID])) {
-                    $this->setActionId(new FHIRId([FHIRId::FIELD_VALUE => $data[self::FIELD_ACTION_ID]] + $ext));
-                } else if (is_array($data[self::FIELD_ACTION_ID])) {
-                    $this->setActionId(new FHIRId(array_merge($ext, $data[self::FIELD_ACTION_ID])));
-                }
+        if (isset($data[self::FIELD_ACTION_ID]) || isset($data[self::FIELD_ACTION_ID_EXT])) {
+            if (isset($data[self::FIELD_ACTION_ID])) {
+                $value = $data[self::FIELD_ACTION_ID];
             } else {
-                $this->setActionId(new FHIRId($data[self::FIELD_ACTION_ID]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_ACTION_ID_EXT]) && is_array($data[self::FIELD_ACTION_ID_EXT])) {
+                $ext = $data[self::FIELD_ACTION_ID_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRId) {
+                    $this->setActionId($value);
+                } else if (is_array($value)) {
+                    $this->setActionId(new FHIRId(array_merge($ext, $value)));
+                } else {
+                    $this->setActionId(new FHIRId([FHIRId::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setActionId(new FHIRId($ext));
             }
         }
         if (isset($data[self::FIELD_OFFSET_DURATION])) {
-            $ext = (isset($data[self::FIELD_OFFSET_DURATION_EXT]) && is_array($data[self::FIELD_OFFSET_DURATION_EXT]))
-                ? $data[self::FIELD_OFFSET_DURATION_EXT]
-                : null;
             if ($data[self::FIELD_OFFSET_DURATION] instanceof FHIRDuration) {
                 $this->setOffsetDuration($data[self::FIELD_OFFSET_DURATION]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_OFFSET_DURATION])) {
-                    $this->setOffsetDuration(new FHIRDuration([FHIRDuration::FIELD_VALUE => $data[self::FIELD_OFFSET_DURATION]] + $ext));
-                } else if (is_array($data[self::FIELD_OFFSET_DURATION])) {
-                    $this->setOffsetDuration(new FHIRDuration(array_merge($ext, $data[self::FIELD_OFFSET_DURATION])));
-                }
             } else {
                 $this->setOffsetDuration(new FHIRDuration($data[self::FIELD_OFFSET_DURATION]));
             }
@@ -197,20 +200,27 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
                 $this->setOffsetRange(new FHIRRange($data[self::FIELD_OFFSET_RANGE]));
             }
         }
-        if (isset($data[self::FIELD_RELATIONSHIP])) {
-            $ext = (isset($data[self::FIELD_RELATIONSHIP_EXT]) && is_array($data[self::FIELD_RELATIONSHIP_EXT]))
-                ? $data[self::FIELD_RELATIONSHIP_EXT]
-                : null;
-            if ($data[self::FIELD_RELATIONSHIP] instanceof FHIRActionRelationshipType) {
-                $this->setRelationship($data[self::FIELD_RELATIONSHIP]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_RELATIONSHIP])) {
-                    $this->setRelationship(new FHIRActionRelationshipType([FHIRActionRelationshipType::FIELD_VALUE => $data[self::FIELD_RELATIONSHIP]] + $ext));
-                } else if (is_array($data[self::FIELD_RELATIONSHIP])) {
-                    $this->setRelationship(new FHIRActionRelationshipType(array_merge($ext, $data[self::FIELD_RELATIONSHIP])));
-                }
+        if (isset($data[self::FIELD_RELATIONSHIP]) || isset($data[self::FIELD_RELATIONSHIP_EXT])) {
+            if (isset($data[self::FIELD_RELATIONSHIP])) {
+                $value = $data[self::FIELD_RELATIONSHIP];
             } else {
-                $this->setRelationship(new FHIRActionRelationshipType($data[self::FIELD_RELATIONSHIP]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_RELATIONSHIP_EXT]) && is_array($data[self::FIELD_RELATIONSHIP_EXT])) {
+                $ext = $data[self::FIELD_RELATIONSHIP_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRActionRelationshipType) {
+                    $this->setRelationship($value);
+                } else if (is_array($value)) {
+                    $this->setRelationship(new FHIRActionRelationshipType(array_merge($ext, $value)));
+                } else {
+                    $this->setRelationship(new FHIRActionRelationshipType([FHIRActionRelationshipType::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setRelationship(new FHIRActionRelationshipType($ext));
             }
         }
     }
@@ -224,30 +234,6 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -258,7 +244,6 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
         }
         return "<PlanDefinitionRelatedAction{$xmlns}></PlanDefinitionRelatedAction>";
     }
-
 
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
@@ -397,6 +382,134 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getActionId())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ACTION_ID] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOffsetDuration())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_OFFSET_DURATION] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOffsetRange())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_OFFSET_RANGE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getRelationship())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RELATIONSHIP] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_ACTION_ID])) {
+            $v = $this->getActionId();
+            foreach($validationRules[self::FIELD_ACTION_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PLAN_DEFINITION_DOT_RELATED_ACTION, self::FIELD_ACTION_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ACTION_ID])) {
+                        $errs[self::FIELD_ACTION_ID] = [];
+                    }
+                    $errs[self::FIELD_ACTION_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_OFFSET_DURATION])) {
+            $v = $this->getOffsetDuration();
+            foreach($validationRules[self::FIELD_OFFSET_DURATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PLAN_DEFINITION_DOT_RELATED_ACTION, self::FIELD_OFFSET_DURATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_OFFSET_DURATION])) {
+                        $errs[self::FIELD_OFFSET_DURATION] = [];
+                    }
+                    $errs[self::FIELD_OFFSET_DURATION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_OFFSET_RANGE])) {
+            $v = $this->getOffsetRange();
+            foreach($validationRules[self::FIELD_OFFSET_RANGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PLAN_DEFINITION_DOT_RELATED_ACTION, self::FIELD_OFFSET_RANGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_OFFSET_RANGE])) {
+                        $errs[self::FIELD_OFFSET_RANGE] = [];
+                    }
+                    $errs[self::FIELD_OFFSET_RANGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RELATIONSHIP])) {
+            $v = $this->getRelationship();
+            foreach($validationRules[self::FIELD_RELATIONSHIP] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PLAN_DEFINITION_DOT_RELATED_ACTION, self::FIELD_RELATIONSHIP, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RELATIONSHIP])) {
+                        $errs[self::FIELD_RELATIONSHIP] = [];
+                    }
+                    $errs[self::FIELD_RELATIONSHIP][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionRelatedAction $type
      * @param null|int $libxmlOpts
@@ -436,11 +549,16 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->actionId)) {
-            $type->setActionId((string)$attributes->actionId);
-        }
         if (isset($children->actionId)) {
             $type->setActionId(FHIRId::xmlUnserialize($children->actionId));
+        }
+        if (isset($attributes->actionId)) {
+            $pt = $type->getActionId();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->actionId);
+            } else {
+                $type->setActionId((string)$attributes->actionId);
+            }
         }
         if (isset($children->offsetDuration)) {
             $type->setOffsetDuration(FHIRDuration::xmlUnserialize($children->offsetDuration));
@@ -465,7 +583,6 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getActionId())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_ACTION_ID, null, $v->_getFHIRXMLNamespace()));
         }
@@ -488,43 +605,35 @@ class FHIRPlanDefinitionRelatedAction extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getActionId())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_ACTION_ID] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_ACTION_ID_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_ACTION_ID] = $v;
+            $a[self::FIELD_ACTION_ID] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRId::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRId::FIELD_VALUE]);
+                $a[self::FIELD_ACTION_ID_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getOffsetDuration())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_OFFSET_DURATION] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_OFFSET_DURATION_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_OFFSET_DURATION] = $v;
-            }
+            $a[self::FIELD_OFFSET_DURATION] = $v;
         }
         if (null !== ($v = $this->getOffsetRange())) {
             $a[self::FIELD_OFFSET_RANGE] = $v;
         }
         if (null !== ($v = $this->getRelationship())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_RELATIONSHIP] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_RELATIONSHIP_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_RELATIONSHIP] = $v;
+            $a[self::FIELD_RELATIONSHIP] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRActionRelationshipType::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRActionRelationshipType::FIELD_VALUE]);
+                $a[self::FIELD_RELATIONSHIP_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

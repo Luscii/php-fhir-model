@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRComposition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,6 +90,9 @@ class FHIRCompositionAttester extends FHIRBackboneElement
     const FIELD_TIME = 'time';
     const FIELD_TIME_EXT = '_time';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * The way in which a person authenticated a composition.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -125,8 +128,15 @@ class FHIRCompositionAttester extends FHIRBackboneElement
      */
     protected $time = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Composition.Attester
+     * @var array
+     */
+    private static $_validationRules = [
+        self::FIELD_MODE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /**
      * FHIRCompositionAttester Constructor
@@ -144,33 +154,42 @@ class FHIRCompositionAttester extends FHIRBackboneElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_MODE])) {
-            $ext = (isset($data[self::FIELD_MODE_EXT]) && is_array($data[self::FIELD_MODE_EXT]))
-                ? $data[self::FIELD_MODE_EXT]
-                : null;
-            if (is_array($data[self::FIELD_MODE])) {
-                foreach($data[self::FIELD_MODE] as $i => $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRCompositionAttestationMode) {
-                        $this->addMode($v);
-                    } elseif (null !== $ext && isset($ext[$i]) && is_array($ext[$i])) {
-                        if (is_scalar($v)) {
-                            $this->addMode(new FHIRCompositionAttestationMode([FHIRCompositionAttestationMode::FIELD_VALUE => $v] + $ext[$i]));
-                        } elseif (is_array($v)) {
-                            $this->addMode(new FHIRCompositionAttestationMode(array_merge($v, $ext[$i])));
-                        }
-                    } else {
-                        $this->addMode(new FHIRCompositionAttestationMode($v));
-                    }
-                }
-            } elseif ($data[self::FIELD_MODE] instanceof FHIRCompositionAttestationMode) {
-                $this->addMode($data[self::FIELD_MODE]);
-            } elseif (null !== $ext && is_scalar($data[self::FIELD_MODE])) {
-                $this->addMode(new FHIRCompositionAttestationMode([FHIRCompositionAttestationMode::FIELD_VALUE => $data[self::FIELD_MODE]] + $ext));
+        if (isset($data[self::FIELD_MODE]) || isset($data[self::FIELD_MODE_EXT])) {
+            if (isset($data[self::FIELD_MODE])) {
+                $value = $data[self::FIELD_MODE];
             } else {
-                $this->addMode(new FHIRCompositionAttestationMode($data[self::FIELD_MODE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_MODE_EXT]) && is_array($data[self::FIELD_MODE_EXT])) {
+                $ext = $data[self::FIELD_MODE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRCompositionAttestationMode) {
+                    $this->addMode($value);
+                } else if (is_array($value)) {
+                    foreach($value as $i => $v) {
+                        if ($v instanceof FHIRCompositionAttestationMode) {
+                            $this->addMode($v);
+                        } else {
+                            $iext = (isset($ext[$i]) && is_array($ext[$i])) ? $ext[$i] : [];
+                            if (is_array($v)) {
+                                $this->addMode(new FHIRCompositionAttestationMode(array_merge($v, $iext)));
+                            } else {
+                                $this->addMode(new FHIRCompositionAttestationMode([FHIRCompositionAttestationMode::FIELD_VALUE => $v] + $iext));
+                            }
+                        }
+                    }
+                } elseif (is_array($value)) {
+                    $this->addMode(new FHIRCompositionAttestationMode(array_merge($ext, $value)));
+                } else {
+                    $this->addMode(new FHIRCompositionAttestationMode([FHIRCompositionAttestationMode::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                foreach($ext as $iext) {
+                    $this->addMode(new FHIRCompositionAttestationMode($iext));
+                }
             }
         }
         if (isset($data[self::FIELD_PARTY])) {
@@ -180,20 +199,27 @@ class FHIRCompositionAttester extends FHIRBackboneElement
                 $this->setParty(new FHIRReference($data[self::FIELD_PARTY]));
             }
         }
-        if (isset($data[self::FIELD_TIME])) {
-            $ext = (isset($data[self::FIELD_TIME_EXT]) && is_array($data[self::FIELD_TIME_EXT]))
-                ? $data[self::FIELD_TIME_EXT]
-                : null;
-            if ($data[self::FIELD_TIME] instanceof FHIRDateTime) {
-                $this->setTime($data[self::FIELD_TIME]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_TIME])) {
-                    $this->setTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_TIME]] + $ext));
-                } else if (is_array($data[self::FIELD_TIME])) {
-                    $this->setTime(new FHIRDateTime(array_merge($ext, $data[self::FIELD_TIME])));
-                }
+        if (isset($data[self::FIELD_TIME]) || isset($data[self::FIELD_TIME_EXT])) {
+            if (isset($data[self::FIELD_TIME])) {
+                $value = $data[self::FIELD_TIME];
             } else {
-                $this->setTime(new FHIRDateTime($data[self::FIELD_TIME]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_TIME_EXT]) && is_array($data[self::FIELD_TIME_EXT])) {
+                $ext = $data[self::FIELD_TIME_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setTime($value);
+                } else if (is_array($value)) {
+                    $this->setTime(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setTime(new FHIRDateTime($ext));
             }
         }
     }
@@ -207,30 +233,6 @@ class FHIRCompositionAttester extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -241,7 +243,6 @@ class FHIRCompositionAttester extends FHIRBackboneElement
         }
         return "<CompositionAttester{$xmlns}></CompositionAttester>";
     }
-
 
     /**
      * The way in which a person authenticated a composition.
@@ -371,6 +372,119 @@ class FHIRCompositionAttester extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getMode())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_MODE, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getParty())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PARTY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getTime())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TIME] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODE])) {
+            $v = $this->getMode();
+            foreach($validationRules[self::FIELD_MODE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COMPOSITION_DOT_ATTESTER, self::FIELD_MODE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODE])) {
+                        $errs[self::FIELD_MODE] = [];
+                    }
+                    $errs[self::FIELD_MODE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PARTY])) {
+            $v = $this->getParty();
+            foreach($validationRules[self::FIELD_PARTY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COMPOSITION_DOT_ATTESTER, self::FIELD_PARTY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PARTY])) {
+                        $errs[self::FIELD_PARTY] = [];
+                    }
+                    $errs[self::FIELD_PARTY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TIME])) {
+            $v = $this->getTime();
+            foreach($validationRules[self::FIELD_TIME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COMPOSITION_DOT_ATTESTER, self::FIELD_TIME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TIME])) {
+                        $errs[self::FIELD_TIME] = [];
+                    }
+                    $errs[self::FIELD_TIME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionAttester $type
      * @param null|int $libxmlOpts
@@ -418,11 +532,16 @@ class FHIRCompositionAttester extends FHIRBackboneElement
         if (isset($children->party)) {
             $type->setParty(FHIRReference::xmlUnserialize($children->party));
         }
-        if (isset($attributes->time)) {
-            $type->setTime((string)$attributes->time);
-        }
         if (isset($children->time)) {
             $type->setTime(FHIRDateTime::xmlUnserialize($children->time));
+        }
+        if (isset($attributes->time)) {
+            $pt = $type->getTime();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->time);
+            } else {
+                $type->setTime((string)$attributes->time);
+            }
         }
         return $type;
     }
@@ -438,7 +557,6 @@ class FHIRCompositionAttester extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if ([] !== ($vs = $this->getMode())) {
             foreach($vs as $v) {
                 if (null === $v) {
@@ -464,39 +582,45 @@ class FHIRCompositionAttester extends FHIRBackboneElement
         $a = parent::jsonSerialize();
         if ([] !== ($vs = $this->getMode())) {
             $a[self::FIELD_MODE] = [];
+            $encs = [];
+            $encValued = false;
             foreach ($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                if (null !== ($val = $v->getValue())) {
-                    $a[self::FIELD_MODE][] = $val;
-                    if (1 < count($enc = $v->jsonSerialize())) {
-                        unset($enc[$v::FIELD_VALUE]);
-                        $a[self::FIELD_MODE_EXT][] = $enc;
-                    } else {
-                        $a[self::FIELD_MODE_EXT][] = null;
-                    }
+                $a[self::FIELD_MODE][] = $v->getValue();
+                $enc = $v->jsonSerialize();
+                $cnt = count($enc);
+                if (0 === $cnt || (1 === $cnt && (isset($enc[FHIRCompositionAttestationMode::FIELD_VALUE]) || array_key_exists(FHIRCompositionAttestationMode::FIELD_VALUE, $enc)))) {
+                    $encs[] = null;
                 } else {
-                    $a[self::FIELD_MODE][] = $v;
+                    unset($enc[FHIRCompositionAttestationMode::FIELD_VALUE]);
+                    $encs[] = $enc;
+                    $encValued = true;
                 }
+            }
+            if ($encValued) {
+                $a[self::FIELD_MODE_EXT] = $encs;
             }
         }
         if (null !== ($v = $this->getParty())) {
             $a[self::FIELD_PARTY] = $v;
         }
         if (null !== ($v = $this->getTime())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_TIME] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_TIME_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_TIME] = $v;
+            $a[self::FIELD_TIME] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDateTime::FIELD_VALUE]);
+                $a[self::FIELD_TIME_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

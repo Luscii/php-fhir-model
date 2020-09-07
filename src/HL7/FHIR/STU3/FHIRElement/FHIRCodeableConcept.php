@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,6 +83,9 @@ class FHIRCodeableConcept extends FHIRElement
     const FIELD_TEXT = 'text';
     const FIELD_TEXT_EXT = '_text';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -107,8 +110,11 @@ class FHIRCodeableConcept extends FHIRElement
      */
     protected $text = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type CodeableConcept
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRCodeableConcept Constructor
@@ -144,20 +150,27 @@ class FHIRCodeableConcept extends FHIRElement
                 $this->addCoding(new FHIRCoding($data[self::FIELD_CODING]));
             }
         }
-        if (isset($data[self::FIELD_TEXT])) {
-            $ext = (isset($data[self::FIELD_TEXT_EXT]) && is_array($data[self::FIELD_TEXT_EXT]))
-                ? $data[self::FIELD_TEXT_EXT]
-                : null;
-            if ($data[self::FIELD_TEXT] instanceof FHIRString) {
-                $this->setText($data[self::FIELD_TEXT]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_TEXT])) {
-                    $this->setText(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_TEXT]] + $ext));
-                } else if (is_array($data[self::FIELD_TEXT])) {
-                    $this->setText(new FHIRString(array_merge($ext, $data[self::FIELD_TEXT])));
-                }
+        if (isset($data[self::FIELD_TEXT]) || isset($data[self::FIELD_TEXT_EXT])) {
+            if (isset($data[self::FIELD_TEXT])) {
+                $value = $data[self::FIELD_TEXT];
             } else {
-                $this->setText(new FHIRString($data[self::FIELD_TEXT]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_TEXT_EXT]) && is_array($data[self::FIELD_TEXT_EXT])) {
+                $ext = $data[self::FIELD_TEXT_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setText($value);
+                } else if (is_array($value)) {
+                    $this->setText(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setText(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setText(new FHIRString($ext));
             }
         }
     }
@@ -171,30 +184,6 @@ class FHIRCodeableConcept extends FHIRElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -205,7 +194,6 @@ class FHIRCodeableConcept extends FHIRElement
         }
         return "<CodeableConcept{$xmlns}></CodeableConcept>";
     }
-
 
     /**
      * A reference to a code defined by a terminology system.
@@ -306,6 +294,90 @@ class FHIRCodeableConcept extends FHIRElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getCoding())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_CODING, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getText())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TEXT] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_CODING])) {
+            $v = $this->getCoding();
+            foreach($validationRules[self::FIELD_CODING] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CODEABLE_CONCEPT, self::FIELD_CODING, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CODING])) {
+                        $errs[self::FIELD_CODING] = [];
+                    }
+                    $errs[self::FIELD_CODING][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CODEABLE_CONCEPT, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
      * @param null|int $libxmlOpts
@@ -350,11 +422,16 @@ class FHIRCodeableConcept extends FHIRElement
                 $type->addCoding(FHIRCoding::xmlUnserialize($child));
             }
         }
-        if (isset($attributes->text)) {
-            $type->setText((string)$attributes->text);
-        }
         if (isset($children->text)) {
             $type->setText(FHIRString::xmlUnserialize($children->text));
+        }
+        if (isset($attributes->text)) {
+            $pt = $type->getText();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->text);
+            } else {
+                $type->setText((string)$attributes->text);
+            }
         }
         return $type;
     }
@@ -370,7 +447,6 @@ class FHIRCodeableConcept extends FHIRElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if ([] !== ($vs = $this->getCoding())) {
             foreach($vs as $v) {
                 if (null === $v) {
@@ -392,21 +468,29 @@ class FHIRCodeableConcept extends FHIRElement
     {
         $a = parent::jsonSerialize();
         if ([] !== ($vs = $this->getCoding())) {
-            $a[self::FIELD_CODING] = $vs;
+            $a[self::FIELD_CODING] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_CODING][] = $v;
+            }
         }
         if (null !== ($v = $this->getText())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_TEXT] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_TEXT_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_TEXT] = $v;
+            $a[self::FIELD_TEXT] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_TEXT_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

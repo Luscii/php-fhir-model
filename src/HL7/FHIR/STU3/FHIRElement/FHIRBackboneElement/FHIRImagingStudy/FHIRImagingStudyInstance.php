@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingStudy;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,6 +92,9 @@ class FHIRImagingStudyInstance extends FHIRBackboneElement
     const FIELD_UID = 'uid';
     const FIELD_UID_EXT = '_uid';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -138,8 +141,11 @@ class FHIRImagingStudyInstance extends FHIRBackboneElement
      */
     protected $uid = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type ImagingStudy.Instance
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRImagingStudyInstance Constructor
@@ -157,68 +163,96 @@ class FHIRImagingStudyInstance extends FHIRBackboneElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_NUMBER])) {
-            $ext = (isset($data[self::FIELD_NUMBER_EXT]) && is_array($data[self::FIELD_NUMBER_EXT]))
-                ? $data[self::FIELD_NUMBER_EXT]
-                : null;
-            if ($data[self::FIELD_NUMBER] instanceof FHIRUnsignedInt) {
-                $this->setNumber($data[self::FIELD_NUMBER]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_NUMBER])) {
-                    $this->setNumber(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $data[self::FIELD_NUMBER]] + $ext));
-                } else if (is_array($data[self::FIELD_NUMBER])) {
-                    $this->setNumber(new FHIRUnsignedInt(array_merge($ext, $data[self::FIELD_NUMBER])));
-                }
+        if (isset($data[self::FIELD_NUMBER]) || isset($data[self::FIELD_NUMBER_EXT])) {
+            if (isset($data[self::FIELD_NUMBER])) {
+                $value = $data[self::FIELD_NUMBER];
             } else {
-                $this->setNumber(new FHIRUnsignedInt($data[self::FIELD_NUMBER]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_NUMBER_EXT]) && is_array($data[self::FIELD_NUMBER_EXT])) {
+                $ext = $data[self::FIELD_NUMBER_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRUnsignedInt) {
+                    $this->setNumber($value);
+                } else if (is_array($value)) {
+                    $this->setNumber(new FHIRUnsignedInt(array_merge($ext, $value)));
+                } else {
+                    $this->setNumber(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setNumber(new FHIRUnsignedInt($ext));
             }
         }
-        if (isset($data[self::FIELD_SOP_CLASS])) {
-            $ext = (isset($data[self::FIELD_SOP_CLASS_EXT]) && is_array($data[self::FIELD_SOP_CLASS_EXT]))
-                ? $data[self::FIELD_SOP_CLASS_EXT]
-                : null;
-            if ($data[self::FIELD_SOP_CLASS] instanceof FHIROid) {
-                $this->setSopClass($data[self::FIELD_SOP_CLASS]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SOP_CLASS])) {
-                    $this->setSopClass(new FHIROid([FHIROid::FIELD_VALUE => $data[self::FIELD_SOP_CLASS]] + $ext));
-                } else if (is_array($data[self::FIELD_SOP_CLASS])) {
-                    $this->setSopClass(new FHIROid(array_merge($ext, $data[self::FIELD_SOP_CLASS])));
-                }
+        if (isset($data[self::FIELD_SOP_CLASS]) || isset($data[self::FIELD_SOP_CLASS_EXT])) {
+            if (isset($data[self::FIELD_SOP_CLASS])) {
+                $value = $data[self::FIELD_SOP_CLASS];
             } else {
-                $this->setSopClass(new FHIROid($data[self::FIELD_SOP_CLASS]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SOP_CLASS_EXT]) && is_array($data[self::FIELD_SOP_CLASS_EXT])) {
+                $ext = $data[self::FIELD_SOP_CLASS_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIROid) {
+                    $this->setSopClass($value);
+                } else if (is_array($value)) {
+                    $this->setSopClass(new FHIROid(array_merge($ext, $value)));
+                } else {
+                    $this->setSopClass(new FHIROid([FHIROid::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSopClass(new FHIROid($ext));
             }
         }
-        if (isset($data[self::FIELD_TITLE])) {
-            $ext = (isset($data[self::FIELD_TITLE_EXT]) && is_array($data[self::FIELD_TITLE_EXT]))
-                ? $data[self::FIELD_TITLE_EXT]
-                : null;
-            if ($data[self::FIELD_TITLE] instanceof FHIRString) {
-                $this->setTitle($data[self::FIELD_TITLE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_TITLE])) {
-                    $this->setTitle(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_TITLE]] + $ext));
-                } else if (is_array($data[self::FIELD_TITLE])) {
-                    $this->setTitle(new FHIRString(array_merge($ext, $data[self::FIELD_TITLE])));
-                }
+        if (isset($data[self::FIELD_TITLE]) || isset($data[self::FIELD_TITLE_EXT])) {
+            if (isset($data[self::FIELD_TITLE])) {
+                $value = $data[self::FIELD_TITLE];
             } else {
-                $this->setTitle(new FHIRString($data[self::FIELD_TITLE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_TITLE_EXT]) && is_array($data[self::FIELD_TITLE_EXT])) {
+                $ext = $data[self::FIELD_TITLE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setTitle($value);
+                } else if (is_array($value)) {
+                    $this->setTitle(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setTitle(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setTitle(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_UID])) {
-            $ext = (isset($data[self::FIELD_UID_EXT]) && is_array($data[self::FIELD_UID_EXT]))
-                ? $data[self::FIELD_UID_EXT]
-                : null;
-            if ($data[self::FIELD_UID] instanceof FHIROid) {
-                $this->setUid($data[self::FIELD_UID]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_UID])) {
-                    $this->setUid(new FHIROid([FHIROid::FIELD_VALUE => $data[self::FIELD_UID]] + $ext));
-                } else if (is_array($data[self::FIELD_UID])) {
-                    $this->setUid(new FHIROid(array_merge($ext, $data[self::FIELD_UID])));
-                }
+        if (isset($data[self::FIELD_UID]) || isset($data[self::FIELD_UID_EXT])) {
+            if (isset($data[self::FIELD_UID])) {
+                $value = $data[self::FIELD_UID];
             } else {
-                $this->setUid(new FHIROid($data[self::FIELD_UID]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_UID_EXT]) && is_array($data[self::FIELD_UID_EXT])) {
+                $ext = $data[self::FIELD_UID_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIROid) {
+                    $this->setUid($value);
+                } else if (is_array($value)) {
+                    $this->setUid(new FHIROid(array_merge($ext, $value)));
+                } else {
+                    $this->setUid(new FHIROid([FHIROid::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setUid(new FHIROid($ext));
             }
         }
     }
@@ -232,30 +266,6 @@ class FHIRImagingStudyInstance extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -266,7 +276,6 @@ class FHIRImagingStudyInstance extends FHIRBackboneElement
         }
         return "<ImagingStudyInstance{$xmlns}></ImagingStudyInstance>";
     }
-
 
     /**
      * An integer with a value that is not negative (e.g. >= 0)
@@ -425,6 +434,134 @@ class FHIRImagingStudyInstance extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getNumber())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_NUMBER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSopClass())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SOP_CLASS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getTitle())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TITLE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getUid())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_UID] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_NUMBER])) {
+            $v = $this->getNumber();
+            foreach($validationRules[self::FIELD_NUMBER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_STUDY_DOT_INSTANCE, self::FIELD_NUMBER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NUMBER])) {
+                        $errs[self::FIELD_NUMBER] = [];
+                    }
+                    $errs[self::FIELD_NUMBER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SOP_CLASS])) {
+            $v = $this->getSopClass();
+            foreach($validationRules[self::FIELD_SOP_CLASS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_STUDY_DOT_INSTANCE, self::FIELD_SOP_CLASS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SOP_CLASS])) {
+                        $errs[self::FIELD_SOP_CLASS] = [];
+                    }
+                    $errs[self::FIELD_SOP_CLASS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TITLE])) {
+            $v = $this->getTitle();
+            foreach($validationRules[self::FIELD_TITLE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_STUDY_DOT_INSTANCE, self::FIELD_TITLE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TITLE])) {
+                        $errs[self::FIELD_TITLE] = [];
+                    }
+                    $errs[self::FIELD_TITLE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_UID])) {
+            $v = $this->getUid();
+            foreach($validationRules[self::FIELD_UID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_STUDY_DOT_INSTANCE, self::FIELD_UID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_UID])) {
+                        $errs[self::FIELD_UID] = [];
+                    }
+                    $errs[self::FIELD_UID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingStudy\FHIRImagingStudyInstance $type
      * @param null|int $libxmlOpts
@@ -464,29 +601,49 @@ class FHIRImagingStudyInstance extends FHIRBackboneElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->number)) {
-            $type->setNumber((string)$attributes->number);
-        }
         if (isset($children->number)) {
             $type->setNumber(FHIRUnsignedInt::xmlUnserialize($children->number));
         }
-        if (isset($attributes->sopClass)) {
-            $type->setSopClass((string)$attributes->sopClass);
+        if (isset($attributes->number)) {
+            $pt = $type->getNumber();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->number);
+            } else {
+                $type->setNumber((string)$attributes->number);
+            }
         }
         if (isset($children->sopClass)) {
             $type->setSopClass(FHIROid::xmlUnserialize($children->sopClass));
         }
-        if (isset($attributes->title)) {
-            $type->setTitle((string)$attributes->title);
+        if (isset($attributes->sopClass)) {
+            $pt = $type->getSopClass();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->sopClass);
+            } else {
+                $type->setSopClass((string)$attributes->sopClass);
+            }
         }
         if (isset($children->title)) {
             $type->setTitle(FHIRString::xmlUnserialize($children->title));
         }
-        if (isset($attributes->uid)) {
-            $type->setUid((string)$attributes->uid);
+        if (isset($attributes->title)) {
+            $pt = $type->getTitle();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->title);
+            } else {
+                $type->setTitle((string)$attributes->title);
+            }
         }
         if (isset($children->uid)) {
             $type->setUid(FHIROid::xmlUnserialize($children->uid));
+        }
+        if (isset($attributes->uid)) {
+            $pt = $type->getUid();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->uid);
+            } else {
+                $type->setUid((string)$attributes->uid);
+            }
         }
         return $type;
     }
@@ -502,7 +659,6 @@ class FHIRImagingStudyInstance extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getNumber())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_NUMBER, null, $v->_getFHIRXMLNamespace()));
         }
@@ -525,51 +681,47 @@ class FHIRImagingStudyInstance extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getNumber())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_NUMBER] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_NUMBER_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_NUMBER] = $v;
+            $a[self::FIELD_NUMBER] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUnsignedInt::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRUnsignedInt::FIELD_VALUE]);
+                $a[self::FIELD_NUMBER_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSopClass())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SOP_CLASS] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SOP_CLASS_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SOP_CLASS] = $v;
+            $a[self::FIELD_SOP_CLASS] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIROid::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIROid::FIELD_VALUE]);
+                $a[self::FIELD_SOP_CLASS_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getTitle())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_TITLE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_TITLE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_TITLE] = $v;
+            $a[self::FIELD_TITLE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_TITLE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getUid())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_UID] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_UID_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_UID] = $v;
+            $a[self::FIELD_UID] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIROid::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIROid::FIELD_VALUE]);
+                $a[self::FIELD_UID_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

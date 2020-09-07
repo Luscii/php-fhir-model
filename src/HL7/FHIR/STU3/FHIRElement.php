@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,13 +75,16 @@ use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterface
 {
     use PHPFHIRCommentContainerTrait;
+    use PHPFHIRValidationAssertionsTrait;
 
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ELEMENT;
-    const FIELD_FHIR_COMMENTS = 'fhir_comments';
 
     const FIELD_EXTENSION = 'extension';
     const FIELD_ID = 'id';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * Optional Extension Element - found in all resources.
@@ -104,8 +107,11 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
      */
     protected $id = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Element
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRElement Constructor
@@ -122,11 +128,11 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
                 gettype($data)
             ));
         }
-        if (isset($data[self::FIELD_FHIR_COMMENTS])) {
-            if (is_array($data[self::FIELD_FHIR_COMMENTS])) {
-                $this->_setFHIRComments($data[self::FIELD_FHIR_COMMENTS]);
-            } else if (is_string($data[self::FIELD_FHIR_COMMENTS])) {
-                $this->_addFHIRComment($data[self::FIELD_FHIR_COMMENTS]);
+        if (isset($data[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS])) {
+            if (is_array($data[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS])) {
+                $this->_setFHIRComments($data[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS]);
+            } else if (is_string($data[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS])) {
+                $this->_addFHIRComment($data[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS]);
             }
         }
         if (isset($data[self::FIELD_EXTENSION])) {
@@ -195,7 +201,6 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
         }
         return "<Element{$xmlns}></Element>";
     }
-
 
     /**
      * Optional Extension Element - found in all resources.
@@ -295,6 +300,42 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = [];
+        $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getExtension())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_EXTENSION, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getId())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ID] = $fieldErrs;
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement $type
      * @param null|int $libxmlOpts
@@ -338,11 +379,16 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
                 $type->addExtension(FHIRExtension::xmlUnserialize($child));
             }
         }
-        if (isset($attributes->id)) {
-            $type->setId((string)$attributes->id);
-        }
         if (isset($children->id)) {
             $type->setId(FHIRStringPrimitive::xmlUnserialize($children->id));
+        }
+        if (isset($attributes->id)) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->id);
+            } else {
+                $type->setId((string)$attributes->id);
+            }
         }
         return $type;
     }
@@ -357,7 +403,6 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
         if (null === $sxe) {
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
-
         if ([] !== ($vs = $this->getExtension())) {
             foreach($vs as $v) {
                 if (null === $v) {
@@ -365,7 +410,8 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
                 }
                 $v->xmlSerialize($sxe->addChild(self::FIELD_EXTENSION, null, $v->_getFHIRXMLNamespace()));
             }
-        }        if (null !== ($v = $this->getId())) {
+        }
+        if (null !== ($v = $this->getId())) {
             $sxe->addAttribute(self::FIELD_ID, (string)$v);
         }
         return $sxe;
@@ -378,16 +424,24 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
     {
         $a = [];
         if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[self::FIELD_FHIR_COMMENTS] = $vs;
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         if ([] !== ($vs = $this->getExtension())) {
-            $a[self::FIELD_EXTENSION] = $vs;
+            $a[self::FIELD_EXTENSION] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_EXTENSION][] = $v;
+            }
         }
         if (null !== ($v = $this->getId())) {
             $a[self::FIELD_ID] = $v;
         }
+
         return $a;
     }
+
 
     /**
      * @return string

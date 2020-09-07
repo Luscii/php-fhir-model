@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,11 +81,12 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER_DOT_ADMINISTRATION;
     const FIELD_QUANTITY = 'quantity';
-    const FIELD_QUANTITY_EXT = '_quantity';
     const FIELD_RATE_QUANTITY = 'rateQuantity';
-    const FIELD_RATE_QUANTITY_EXT = '_rateQuantity';
     const FIELD_RATE_RATIO = 'rateRatio';
     const FIELD_SCHEDULE = 'schedule';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
@@ -144,8 +145,11 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
      */
     protected $schedule = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type NutritionOrder.Administration
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRNutritionOrderAdministration Constructor
@@ -164,33 +168,15 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_QUANTITY])) {
-            $ext = (isset($data[self::FIELD_QUANTITY_EXT]) && is_array($data[self::FIELD_QUANTITY_EXT]))
-                ? $data[self::FIELD_QUANTITY_EXT]
-                : null;
             if ($data[self::FIELD_QUANTITY] instanceof FHIRQuantity) {
                 $this->setQuantity($data[self::FIELD_QUANTITY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_QUANTITY])) {
-                    $this->setQuantity(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_QUANTITY]] + $ext));
-                } else if (is_array($data[self::FIELD_QUANTITY])) {
-                    $this->setQuantity(new FHIRQuantity(array_merge($ext, $data[self::FIELD_QUANTITY])));
-                }
             } else {
                 $this->setQuantity(new FHIRQuantity($data[self::FIELD_QUANTITY]));
             }
         }
         if (isset($data[self::FIELD_RATE_QUANTITY])) {
-            $ext = (isset($data[self::FIELD_RATE_QUANTITY_EXT]) && is_array($data[self::FIELD_RATE_QUANTITY_EXT]))
-                ? $data[self::FIELD_RATE_QUANTITY_EXT]
-                : null;
             if ($data[self::FIELD_RATE_QUANTITY] instanceof FHIRQuantity) {
                 $this->setRateQuantity($data[self::FIELD_RATE_QUANTITY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_RATE_QUANTITY])) {
-                    $this->setRateQuantity(new FHIRQuantity([FHIRQuantity::FIELD_VALUE => $data[self::FIELD_RATE_QUANTITY]] + $ext));
-                } else if (is_array($data[self::FIELD_RATE_QUANTITY])) {
-                    $this->setRateQuantity(new FHIRQuantity(array_merge($ext, $data[self::FIELD_RATE_QUANTITY])));
-                }
             } else {
                 $this->setRateQuantity(new FHIRQuantity($data[self::FIELD_RATE_QUANTITY]));
             }
@@ -220,30 +206,6 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -254,7 +216,6 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
         }
         return "<NutritionOrderAdministration{$xmlns}></NutritionOrderAdministration>";
     }
-
 
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
@@ -403,6 +364,134 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getQuantity())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_QUANTITY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getRateQuantity())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RATE_QUANTITY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getRateRatio())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RATE_RATIO] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSchedule())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SCHEDULE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_QUANTITY])) {
+            $v = $this->getQuantity();
+            foreach($validationRules[self::FIELD_QUANTITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER_DOT_ADMINISTRATION, self::FIELD_QUANTITY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_QUANTITY])) {
+                        $errs[self::FIELD_QUANTITY] = [];
+                    }
+                    $errs[self::FIELD_QUANTITY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RATE_QUANTITY])) {
+            $v = $this->getRateQuantity();
+            foreach($validationRules[self::FIELD_RATE_QUANTITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER_DOT_ADMINISTRATION, self::FIELD_RATE_QUANTITY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RATE_QUANTITY])) {
+                        $errs[self::FIELD_RATE_QUANTITY] = [];
+                    }
+                    $errs[self::FIELD_RATE_QUANTITY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RATE_RATIO])) {
+            $v = $this->getRateRatio();
+            foreach($validationRules[self::FIELD_RATE_RATIO] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER_DOT_ADMINISTRATION, self::FIELD_RATE_RATIO, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RATE_RATIO])) {
+                        $errs[self::FIELD_RATE_RATIO] = [];
+                    }
+                    $errs[self::FIELD_RATE_RATIO][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SCHEDULE])) {
+            $v = $this->getSchedule();
+            foreach($validationRules[self::FIELD_SCHEDULE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER_DOT_ADMINISTRATION, self::FIELD_SCHEDULE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SCHEDULE])) {
+                        $errs[self::FIELD_SCHEDULE] = [];
+                    }
+                    $errs[self::FIELD_SCHEDULE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderAdministration $type
      * @param null|int $libxmlOpts
@@ -468,7 +557,6 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getQuantity())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_QUANTITY, null, $v->_getFHIRXMLNamespace()));
         }
@@ -491,26 +579,10 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getQuantity())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_QUANTITY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_QUANTITY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_QUANTITY] = $v;
-            }
+            $a[self::FIELD_QUANTITY] = $v;
         }
         if (null !== ($v = $this->getRateQuantity())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_RATE_QUANTITY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_RATE_QUANTITY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_RATE_QUANTITY] = $v;
-            }
+            $a[self::FIELD_RATE_QUANTITY] = $v;
         }
         if (null !== ($v = $this->getRateRatio())) {
             $a[self::FIELD_RATE_RATIO] = $v;
@@ -518,8 +590,12 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
         if (null !== ($v = $this->getSchedule())) {
             $a[self::FIELD_SCHEDULE] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return $a;
     }
+
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,6 +90,9 @@ class FHIRElementDefinitionMapping extends FHIRElement
     const FIELD_MAP = 'map';
     const FIELD_MAP_EXT = '_map';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -138,8 +141,11 @@ class FHIRElementDefinitionMapping extends FHIRElement
      */
     protected $map = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type ElementDefinition.Mapping
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRElementDefinitionMapping Constructor
@@ -157,68 +163,96 @@ class FHIRElementDefinitionMapping extends FHIRElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_COMMENT])) {
-            $ext = (isset($data[self::FIELD_COMMENT_EXT]) && is_array($data[self::FIELD_COMMENT_EXT]))
-                ? $data[self::FIELD_COMMENT_EXT]
-                : null;
-            if ($data[self::FIELD_COMMENT] instanceof FHIRString) {
-                $this->setComment($data[self::FIELD_COMMENT]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_COMMENT])) {
-                    $this->setComment(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_COMMENT]] + $ext));
-                } else if (is_array($data[self::FIELD_COMMENT])) {
-                    $this->setComment(new FHIRString(array_merge($ext, $data[self::FIELD_COMMENT])));
-                }
+        if (isset($data[self::FIELD_COMMENT]) || isset($data[self::FIELD_COMMENT_EXT])) {
+            if (isset($data[self::FIELD_COMMENT])) {
+                $value = $data[self::FIELD_COMMENT];
             } else {
-                $this->setComment(new FHIRString($data[self::FIELD_COMMENT]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_COMMENT_EXT]) && is_array($data[self::FIELD_COMMENT_EXT])) {
+                $ext = $data[self::FIELD_COMMENT_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setComment($value);
+                } else if (is_array($value)) {
+                    $this->setComment(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setComment(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setComment(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_IDENTITY])) {
-            $ext = (isset($data[self::FIELD_IDENTITY_EXT]) && is_array($data[self::FIELD_IDENTITY_EXT]))
-                ? $data[self::FIELD_IDENTITY_EXT]
-                : null;
-            if ($data[self::FIELD_IDENTITY] instanceof FHIRId) {
-                $this->setIdentity($data[self::FIELD_IDENTITY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_IDENTITY])) {
-                    $this->setIdentity(new FHIRId([FHIRId::FIELD_VALUE => $data[self::FIELD_IDENTITY]] + $ext));
-                } else if (is_array($data[self::FIELD_IDENTITY])) {
-                    $this->setIdentity(new FHIRId(array_merge($ext, $data[self::FIELD_IDENTITY])));
-                }
+        if (isset($data[self::FIELD_IDENTITY]) || isset($data[self::FIELD_IDENTITY_EXT])) {
+            if (isset($data[self::FIELD_IDENTITY])) {
+                $value = $data[self::FIELD_IDENTITY];
             } else {
-                $this->setIdentity(new FHIRId($data[self::FIELD_IDENTITY]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_IDENTITY_EXT]) && is_array($data[self::FIELD_IDENTITY_EXT])) {
+                $ext = $data[self::FIELD_IDENTITY_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRId) {
+                    $this->setIdentity($value);
+                } else if (is_array($value)) {
+                    $this->setIdentity(new FHIRId(array_merge($ext, $value)));
+                } else {
+                    $this->setIdentity(new FHIRId([FHIRId::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setIdentity(new FHIRId($ext));
             }
         }
-        if (isset($data[self::FIELD_LANGUAGE])) {
-            $ext = (isset($data[self::FIELD_LANGUAGE_EXT]) && is_array($data[self::FIELD_LANGUAGE_EXT]))
-                ? $data[self::FIELD_LANGUAGE_EXT]
-                : null;
-            if ($data[self::FIELD_LANGUAGE] instanceof FHIRCode) {
-                $this->setLanguage($data[self::FIELD_LANGUAGE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_LANGUAGE])) {
-                    $this->setLanguage(new FHIRCode([FHIRCode::FIELD_VALUE => $data[self::FIELD_LANGUAGE]] + $ext));
-                } else if (is_array($data[self::FIELD_LANGUAGE])) {
-                    $this->setLanguage(new FHIRCode(array_merge($ext, $data[self::FIELD_LANGUAGE])));
-                }
+        if (isset($data[self::FIELD_LANGUAGE]) || isset($data[self::FIELD_LANGUAGE_EXT])) {
+            if (isset($data[self::FIELD_LANGUAGE])) {
+                $value = $data[self::FIELD_LANGUAGE];
             } else {
-                $this->setLanguage(new FHIRCode($data[self::FIELD_LANGUAGE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_LANGUAGE_EXT]) && is_array($data[self::FIELD_LANGUAGE_EXT])) {
+                $ext = $data[self::FIELD_LANGUAGE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRCode) {
+                    $this->setLanguage($value);
+                } else if (is_array($value)) {
+                    $this->setLanguage(new FHIRCode(array_merge($ext, $value)));
+                } else {
+                    $this->setLanguage(new FHIRCode([FHIRCode::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setLanguage(new FHIRCode($ext));
             }
         }
-        if (isset($data[self::FIELD_MAP])) {
-            $ext = (isset($data[self::FIELD_MAP_EXT]) && is_array($data[self::FIELD_MAP_EXT]))
-                ? $data[self::FIELD_MAP_EXT]
-                : null;
-            if ($data[self::FIELD_MAP] instanceof FHIRString) {
-                $this->setMap($data[self::FIELD_MAP]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_MAP])) {
-                    $this->setMap(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_MAP]] + $ext));
-                } else if (is_array($data[self::FIELD_MAP])) {
-                    $this->setMap(new FHIRString(array_merge($ext, $data[self::FIELD_MAP])));
-                }
+        if (isset($data[self::FIELD_MAP]) || isset($data[self::FIELD_MAP_EXT])) {
+            if (isset($data[self::FIELD_MAP])) {
+                $value = $data[self::FIELD_MAP];
             } else {
-                $this->setMap(new FHIRString($data[self::FIELD_MAP]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_MAP_EXT]) && is_array($data[self::FIELD_MAP_EXT])) {
+                $ext = $data[self::FIELD_MAP_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setMap($value);
+                } else if (is_array($value)) {
+                    $this->setMap(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setMap(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setMap(new FHIRString($ext));
             }
         }
     }
@@ -232,30 +266,6 @@ class FHIRElementDefinitionMapping extends FHIRElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -266,7 +276,6 @@ class FHIRElementDefinitionMapping extends FHIRElement
         }
         return "<ElementDefinitionMapping{$xmlns}></ElementDefinitionMapping>";
     }
-
 
     /**
      * A sequence of Unicode characters
@@ -429,6 +438,122 @@ class FHIRElementDefinitionMapping extends FHIRElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getComment())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_COMMENT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getIdentity())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_IDENTITY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getLanguage())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_LANGUAGE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getMap())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_MAP] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_COMMENT])) {
+            $v = $this->getComment();
+            foreach($validationRules[self::FIELD_COMMENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT_DEFINITION_DOT_MAPPING, self::FIELD_COMMENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_COMMENT])) {
+                        $errs[self::FIELD_COMMENT] = [];
+                    }
+                    $errs[self::FIELD_COMMENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IDENTITY])) {
+            $v = $this->getIdentity();
+            foreach($validationRules[self::FIELD_IDENTITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT_DEFINITION_DOT_MAPPING, self::FIELD_IDENTITY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IDENTITY])) {
+                        $errs[self::FIELD_IDENTITY] = [];
+                    }
+                    $errs[self::FIELD_IDENTITY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LANGUAGE])) {
+            $v = $this->getLanguage();
+            foreach($validationRules[self::FIELD_LANGUAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT_DEFINITION_DOT_MAPPING, self::FIELD_LANGUAGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LANGUAGE])) {
+                        $errs[self::FIELD_LANGUAGE] = [];
+                    }
+                    $errs[self::FIELD_LANGUAGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MAP])) {
+            $v = $this->getMap();
+            foreach($validationRules[self::FIELD_MAP] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT_DEFINITION_DOT_MAPPING, self::FIELD_MAP, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MAP])) {
+                        $errs[self::FIELD_MAP] = [];
+                    }
+                    $errs[self::FIELD_MAP][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition\FHIRElementDefinitionMapping $type
      * @param null|int $libxmlOpts
@@ -468,29 +593,49 @@ class FHIRElementDefinitionMapping extends FHIRElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->comment)) {
-            $type->setComment((string)$attributes->comment);
-        }
         if (isset($children->comment)) {
             $type->setComment(FHIRString::xmlUnserialize($children->comment));
         }
-        if (isset($attributes->identity)) {
-            $type->setIdentity((string)$attributes->identity);
+        if (isset($attributes->comment)) {
+            $pt = $type->getComment();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->comment);
+            } else {
+                $type->setComment((string)$attributes->comment);
+            }
         }
         if (isset($children->identity)) {
             $type->setIdentity(FHIRId::xmlUnserialize($children->identity));
         }
-        if (isset($attributes->language)) {
-            $type->setLanguage((string)$attributes->language);
+        if (isset($attributes->identity)) {
+            $pt = $type->getIdentity();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->identity);
+            } else {
+                $type->setIdentity((string)$attributes->identity);
+            }
         }
         if (isset($children->language)) {
             $type->setLanguage(FHIRCode::xmlUnserialize($children->language));
         }
-        if (isset($attributes->map)) {
-            $type->setMap((string)$attributes->map);
+        if (isset($attributes->language)) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->language);
+            } else {
+                $type->setLanguage((string)$attributes->language);
+            }
         }
         if (isset($children->map)) {
             $type->setMap(FHIRString::xmlUnserialize($children->map));
+        }
+        if (isset($attributes->map)) {
+            $pt = $type->getMap();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->map);
+            } else {
+                $type->setMap((string)$attributes->map);
+            }
         }
         return $type;
     }
@@ -506,7 +651,6 @@ class FHIRElementDefinitionMapping extends FHIRElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getComment())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_COMMENT, null, $v->_getFHIRXMLNamespace()));
         }
@@ -529,51 +673,47 @@ class FHIRElementDefinitionMapping extends FHIRElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getComment())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_COMMENT] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_COMMENT_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_COMMENT] = $v;
+            $a[self::FIELD_COMMENT] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_COMMENT_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getIdentity())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_IDENTITY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_IDENTITY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_IDENTITY] = $v;
+            $a[self::FIELD_IDENTITY] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRId::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRId::FIELD_VALUE]);
+                $a[self::FIELD_IDENTITY_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getLanguage())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_LANGUAGE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_LANGUAGE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_LANGUAGE] = $v;
+            $a[self::FIELD_LANGUAGE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRCode::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRCode::FIELD_VALUE]);
+                $a[self::FIELD_LANGUAGE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getMap())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_MAP] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_MAP_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_MAP] = $v;
+            $a[self::FIELD_MAP] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_MAP_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

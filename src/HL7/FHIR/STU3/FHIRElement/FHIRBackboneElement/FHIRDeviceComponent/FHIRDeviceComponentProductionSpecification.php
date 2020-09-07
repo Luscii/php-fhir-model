@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceComponent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,10 +81,12 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DEVICE_COMPONENT_DOT_PRODUCTION_SPECIFICATION;
     const FIELD_COMPONENT_ID = 'componentId';
-    const FIELD_COMPONENT_ID_EXT = '_componentId';
     const FIELD_PRODUCTION_SPEC = 'productionSpec';
     const FIELD_PRODUCTION_SPEC_EXT = '_productionSpec';
     const FIELD_SPEC_TYPE = 'specType';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
@@ -123,8 +125,11 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
      */
     protected $specType = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type DeviceComponent.ProductionSpecification
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRDeviceComponentProductionSpecification Constructor
@@ -143,35 +148,33 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_COMPONENT_ID])) {
-            $ext = (isset($data[self::FIELD_COMPONENT_ID_EXT]) && is_array($data[self::FIELD_COMPONENT_ID_EXT]))
-                ? $data[self::FIELD_COMPONENT_ID_EXT]
-                : null;
             if ($data[self::FIELD_COMPONENT_ID] instanceof FHIRIdentifier) {
                 $this->setComponentId($data[self::FIELD_COMPONENT_ID]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_COMPONENT_ID])) {
-                    $this->setComponentId(new FHIRIdentifier([FHIRIdentifier::FIELD_VALUE => $data[self::FIELD_COMPONENT_ID]] + $ext));
-                } else if (is_array($data[self::FIELD_COMPONENT_ID])) {
-                    $this->setComponentId(new FHIRIdentifier(array_merge($ext, $data[self::FIELD_COMPONENT_ID])));
-                }
             } else {
                 $this->setComponentId(new FHIRIdentifier($data[self::FIELD_COMPONENT_ID]));
             }
         }
-        if (isset($data[self::FIELD_PRODUCTION_SPEC])) {
-            $ext = (isset($data[self::FIELD_PRODUCTION_SPEC_EXT]) && is_array($data[self::FIELD_PRODUCTION_SPEC_EXT]))
-                ? $data[self::FIELD_PRODUCTION_SPEC_EXT]
-                : null;
-            if ($data[self::FIELD_PRODUCTION_SPEC] instanceof FHIRString) {
-                $this->setProductionSpec($data[self::FIELD_PRODUCTION_SPEC]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_PRODUCTION_SPEC])) {
-                    $this->setProductionSpec(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_PRODUCTION_SPEC]] + $ext));
-                } else if (is_array($data[self::FIELD_PRODUCTION_SPEC])) {
-                    $this->setProductionSpec(new FHIRString(array_merge($ext, $data[self::FIELD_PRODUCTION_SPEC])));
-                }
+        if (isset($data[self::FIELD_PRODUCTION_SPEC]) || isset($data[self::FIELD_PRODUCTION_SPEC_EXT])) {
+            if (isset($data[self::FIELD_PRODUCTION_SPEC])) {
+                $value = $data[self::FIELD_PRODUCTION_SPEC];
             } else {
-                $this->setProductionSpec(new FHIRString($data[self::FIELD_PRODUCTION_SPEC]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_PRODUCTION_SPEC_EXT]) && is_array($data[self::FIELD_PRODUCTION_SPEC_EXT])) {
+                $ext = $data[self::FIELD_PRODUCTION_SPEC_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setProductionSpec($value);
+                } else if (is_array($value)) {
+                    $this->setProductionSpec(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setProductionSpec(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setProductionSpec(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_SPEC_TYPE])) {
@@ -192,30 +195,6 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -226,7 +205,6 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
         }
         return "<DeviceComponentProductionSpecification{$xmlns}></DeviceComponentProductionSpecification>";
     }
-
 
     /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
@@ -335,6 +313,117 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getComponentId())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_COMPONENT_ID] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getProductionSpec())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PRODUCTION_SPEC] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSpecType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SPEC_TYPE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_COMPONENT_ID])) {
+            $v = $this->getComponentId();
+            foreach($validationRules[self::FIELD_COMPONENT_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_COMPONENT_DOT_PRODUCTION_SPECIFICATION, self::FIELD_COMPONENT_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_COMPONENT_ID])) {
+                        $errs[self::FIELD_COMPONENT_ID] = [];
+                    }
+                    $errs[self::FIELD_COMPONENT_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PRODUCTION_SPEC])) {
+            $v = $this->getProductionSpec();
+            foreach($validationRules[self::FIELD_PRODUCTION_SPEC] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_COMPONENT_DOT_PRODUCTION_SPECIFICATION, self::FIELD_PRODUCTION_SPEC, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PRODUCTION_SPEC])) {
+                        $errs[self::FIELD_PRODUCTION_SPEC] = [];
+                    }
+                    $errs[self::FIELD_PRODUCTION_SPEC][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SPEC_TYPE])) {
+            $v = $this->getSpecType();
+            foreach($validationRules[self::FIELD_SPEC_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_COMPONENT_DOT_PRODUCTION_SPECIFICATION, self::FIELD_SPEC_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SPEC_TYPE])) {
+                        $errs[self::FIELD_SPEC_TYPE] = [];
+                    }
+                    $errs[self::FIELD_SPEC_TYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceComponent\FHIRDeviceComponentProductionSpecification $type
      * @param null|int $libxmlOpts
@@ -377,11 +466,16 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
         if (isset($children->componentId)) {
             $type->setComponentId(FHIRIdentifier::xmlUnserialize($children->componentId));
         }
-        if (isset($attributes->productionSpec)) {
-            $type->setProductionSpec((string)$attributes->productionSpec);
-        }
         if (isset($children->productionSpec)) {
             $type->setProductionSpec(FHIRString::xmlUnserialize($children->productionSpec));
+        }
+        if (isset($attributes->productionSpec)) {
+            $pt = $type->getProductionSpec();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->productionSpec);
+            } else {
+                $type->setProductionSpec((string)$attributes->productionSpec);
+            }
         }
         if (isset($children->specType)) {
             $type->setSpecType(FHIRCodeableConcept::xmlUnserialize($children->specType));
@@ -400,7 +494,6 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getComponentId())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_COMPONENT_ID, null, $v->_getFHIRXMLNamespace()));
         }
@@ -420,32 +513,26 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getComponentId())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_COMPONENT_ID] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_COMPONENT_ID_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_COMPONENT_ID] = $v;
-            }
+            $a[self::FIELD_COMPONENT_ID] = $v;
         }
         if (null !== ($v = $this->getProductionSpec())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_PRODUCTION_SPEC] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_PRODUCTION_SPEC_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_PRODUCTION_SPEC] = $v;
+            $a[self::FIELD_PRODUCTION_SPEC] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_PRODUCTION_SPEC_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSpecType())) {
             $a[self::FIELD_SPEC_TYPE] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return $a;
     }
+
 
     /**
      * @return string

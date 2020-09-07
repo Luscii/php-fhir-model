@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,6 +89,9 @@ class FHIRTriggerDefinition extends FHIRElement
     const FIELD_EVENT_TIMING_TIMING = 'eventTimingTiming';
     const FIELD_TYPE = 'type';
     const FIELD_TYPE_EXT = '_type';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * Describes a required data item for evaluation in terms of the type of data, and
@@ -175,8 +178,11 @@ class FHIRTriggerDefinition extends FHIRElement
      */
     protected $type = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type TriggerDefinition
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRTriggerDefinition Constructor
@@ -201,52 +207,73 @@ class FHIRTriggerDefinition extends FHIRElement
                 $this->setEventData(new FHIRDataRequirement($data[self::FIELD_EVENT_DATA]));
             }
         }
-        if (isset($data[self::FIELD_EVENT_NAME])) {
-            $ext = (isset($data[self::FIELD_EVENT_NAME_EXT]) && is_array($data[self::FIELD_EVENT_NAME_EXT]))
-                ? $data[self::FIELD_EVENT_NAME_EXT]
-                : null;
-            if ($data[self::FIELD_EVENT_NAME] instanceof FHIRString) {
-                $this->setEventName($data[self::FIELD_EVENT_NAME]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_EVENT_NAME])) {
-                    $this->setEventName(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_EVENT_NAME]] + $ext));
-                } else if (is_array($data[self::FIELD_EVENT_NAME])) {
-                    $this->setEventName(new FHIRString(array_merge($ext, $data[self::FIELD_EVENT_NAME])));
-                }
+        if (isset($data[self::FIELD_EVENT_NAME]) || isset($data[self::FIELD_EVENT_NAME_EXT])) {
+            if (isset($data[self::FIELD_EVENT_NAME])) {
+                $value = $data[self::FIELD_EVENT_NAME];
             } else {
-                $this->setEventName(new FHIRString($data[self::FIELD_EVENT_NAME]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_EVENT_NAME_EXT]) && is_array($data[self::FIELD_EVENT_NAME_EXT])) {
+                $ext = $data[self::FIELD_EVENT_NAME_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setEventName($value);
+                } else if (is_array($value)) {
+                    $this->setEventName(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setEventName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setEventName(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_EVENT_TIMING_DATE])) {
-            $ext = (isset($data[self::FIELD_EVENT_TIMING_DATE_EXT]) && is_array($data[self::FIELD_EVENT_TIMING_DATE_EXT]))
-                ? $data[self::FIELD_EVENT_TIMING_DATE_EXT]
-                : null;
-            if ($data[self::FIELD_EVENT_TIMING_DATE] instanceof FHIRDate) {
-                $this->setEventTimingDate($data[self::FIELD_EVENT_TIMING_DATE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_EVENT_TIMING_DATE])) {
-                    $this->setEventTimingDate(new FHIRDate([FHIRDate::FIELD_VALUE => $data[self::FIELD_EVENT_TIMING_DATE]] + $ext));
-                } else if (is_array($data[self::FIELD_EVENT_TIMING_DATE])) {
-                    $this->setEventTimingDate(new FHIRDate(array_merge($ext, $data[self::FIELD_EVENT_TIMING_DATE])));
-                }
+        if (isset($data[self::FIELD_EVENT_TIMING_DATE]) || isset($data[self::FIELD_EVENT_TIMING_DATE_EXT])) {
+            if (isset($data[self::FIELD_EVENT_TIMING_DATE])) {
+                $value = $data[self::FIELD_EVENT_TIMING_DATE];
             } else {
-                $this->setEventTimingDate(new FHIRDate($data[self::FIELD_EVENT_TIMING_DATE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_EVENT_TIMING_DATE_EXT]) && is_array($data[self::FIELD_EVENT_TIMING_DATE_EXT])) {
+                $ext = $data[self::FIELD_EVENT_TIMING_DATE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDate) {
+                    $this->setEventTimingDate($value);
+                } else if (is_array($value)) {
+                    $this->setEventTimingDate(new FHIRDate(array_merge($ext, $value)));
+                } else {
+                    $this->setEventTimingDate(new FHIRDate([FHIRDate::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setEventTimingDate(new FHIRDate($ext));
             }
         }
-        if (isset($data[self::FIELD_EVENT_TIMING_DATE_TIME])) {
-            $ext = (isset($data[self::FIELD_EVENT_TIMING_DATE_TIME_EXT]) && is_array($data[self::FIELD_EVENT_TIMING_DATE_TIME_EXT]))
-                ? $data[self::FIELD_EVENT_TIMING_DATE_TIME_EXT]
-                : null;
-            if ($data[self::FIELD_EVENT_TIMING_DATE_TIME] instanceof FHIRDateTime) {
-                $this->setEventTimingDateTime($data[self::FIELD_EVENT_TIMING_DATE_TIME]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_EVENT_TIMING_DATE_TIME])) {
-                    $this->setEventTimingDateTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_EVENT_TIMING_DATE_TIME]] + $ext));
-                } else if (is_array($data[self::FIELD_EVENT_TIMING_DATE_TIME])) {
-                    $this->setEventTimingDateTime(new FHIRDateTime(array_merge($ext, $data[self::FIELD_EVENT_TIMING_DATE_TIME])));
-                }
+        if (isset($data[self::FIELD_EVENT_TIMING_DATE_TIME]) || isset($data[self::FIELD_EVENT_TIMING_DATE_TIME_EXT])) {
+            if (isset($data[self::FIELD_EVENT_TIMING_DATE_TIME])) {
+                $value = $data[self::FIELD_EVENT_TIMING_DATE_TIME];
             } else {
-                $this->setEventTimingDateTime(new FHIRDateTime($data[self::FIELD_EVENT_TIMING_DATE_TIME]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_EVENT_TIMING_DATE_TIME_EXT]) && is_array($data[self::FIELD_EVENT_TIMING_DATE_TIME_EXT])) {
+                $ext = $data[self::FIELD_EVENT_TIMING_DATE_TIME_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setEventTimingDateTime($value);
+                } else if (is_array($value)) {
+                    $this->setEventTimingDateTime(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setEventTimingDateTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setEventTimingDateTime(new FHIRDateTime($ext));
             }
         }
         if (isset($data[self::FIELD_EVENT_TIMING_REFERENCE])) {
@@ -263,20 +290,27 @@ class FHIRTriggerDefinition extends FHIRElement
                 $this->setEventTimingTiming(new FHIRTiming($data[self::FIELD_EVENT_TIMING_TIMING]));
             }
         }
-        if (isset($data[self::FIELD_TYPE])) {
-            $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT]))
-                ? $data[self::FIELD_TYPE_EXT]
-                : null;
-            if ($data[self::FIELD_TYPE] instanceof FHIRTriggerType) {
-                $this->setType($data[self::FIELD_TYPE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_TYPE])) {
-                    $this->setType(new FHIRTriggerType([FHIRTriggerType::FIELD_VALUE => $data[self::FIELD_TYPE]] + $ext));
-                } else if (is_array($data[self::FIELD_TYPE])) {
-                    $this->setType(new FHIRTriggerType(array_merge($ext, $data[self::FIELD_TYPE])));
-                }
+        if (isset($data[self::FIELD_TYPE]) || isset($data[self::FIELD_TYPE_EXT])) {
+            if (isset($data[self::FIELD_TYPE])) {
+                $value = $data[self::FIELD_TYPE];
             } else {
-                $this->setType(new FHIRTriggerType($data[self::FIELD_TYPE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT])) {
+                $ext = $data[self::FIELD_TYPE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRTriggerType) {
+                    $this->setType($value);
+                } else if (is_array($value)) {
+                    $this->setType(new FHIRTriggerType(array_merge($ext, $value)));
+                } else {
+                    $this->setType(new FHIRTriggerType([FHIRTriggerType::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setType(new FHIRTriggerType($ext));
             }
         }
     }
@@ -290,30 +324,6 @@ class FHIRTriggerDefinition extends FHIRElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -324,7 +334,6 @@ class FHIRTriggerDefinition extends FHIRElement
         }
         return "<TriggerDefinition{$xmlns}></TriggerDefinition>";
     }
-
 
     /**
      * Describes a required data item for evaluation in terms of the type of data, and
@@ -577,6 +586,173 @@ class FHIRTriggerDefinition extends FHIRElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getEventData())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EVENT_DATA] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEventName())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EVENT_NAME] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEventTimingDate())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EVENT_TIMING_DATE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEventTimingDateTime())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EVENT_TIMING_DATE_TIME] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEventTimingReference())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EVENT_TIMING_REFERENCE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEventTimingTiming())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EVENT_TIMING_TIMING] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_EVENT_DATA])) {
+            $v = $this->getEventData();
+            foreach($validationRules[self::FIELD_EVENT_DATA] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_TRIGGER_DEFINITION, self::FIELD_EVENT_DATA, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EVENT_DATA])) {
+                        $errs[self::FIELD_EVENT_DATA] = [];
+                    }
+                    $errs[self::FIELD_EVENT_DATA][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EVENT_NAME])) {
+            $v = $this->getEventName();
+            foreach($validationRules[self::FIELD_EVENT_NAME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_TRIGGER_DEFINITION, self::FIELD_EVENT_NAME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EVENT_NAME])) {
+                        $errs[self::FIELD_EVENT_NAME] = [];
+                    }
+                    $errs[self::FIELD_EVENT_NAME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EVENT_TIMING_DATE])) {
+            $v = $this->getEventTimingDate();
+            foreach($validationRules[self::FIELD_EVENT_TIMING_DATE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_TRIGGER_DEFINITION, self::FIELD_EVENT_TIMING_DATE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EVENT_TIMING_DATE])) {
+                        $errs[self::FIELD_EVENT_TIMING_DATE] = [];
+                    }
+                    $errs[self::FIELD_EVENT_TIMING_DATE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EVENT_TIMING_DATE_TIME])) {
+            $v = $this->getEventTimingDateTime();
+            foreach($validationRules[self::FIELD_EVENT_TIMING_DATE_TIME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_TRIGGER_DEFINITION, self::FIELD_EVENT_TIMING_DATE_TIME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EVENT_TIMING_DATE_TIME])) {
+                        $errs[self::FIELD_EVENT_TIMING_DATE_TIME] = [];
+                    }
+                    $errs[self::FIELD_EVENT_TIMING_DATE_TIME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EVENT_TIMING_REFERENCE])) {
+            $v = $this->getEventTimingReference();
+            foreach($validationRules[self::FIELD_EVENT_TIMING_REFERENCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_TRIGGER_DEFINITION, self::FIELD_EVENT_TIMING_REFERENCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EVENT_TIMING_REFERENCE])) {
+                        $errs[self::FIELD_EVENT_TIMING_REFERENCE] = [];
+                    }
+                    $errs[self::FIELD_EVENT_TIMING_REFERENCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EVENT_TIMING_TIMING])) {
+            $v = $this->getEventTimingTiming();
+            foreach($validationRules[self::FIELD_EVENT_TIMING_TIMING] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_TRIGGER_DEFINITION, self::FIELD_EVENT_TIMING_TIMING, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EVENT_TIMING_TIMING])) {
+                        $errs[self::FIELD_EVENT_TIMING_TIMING] = [];
+                    }
+                    $errs[self::FIELD_EVENT_TIMING_TIMING][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_TRIGGER_DEFINITION, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRTriggerDefinition $type
      * @param null|int $libxmlOpts
@@ -619,23 +795,38 @@ class FHIRTriggerDefinition extends FHIRElement
         if (isset($children->eventData)) {
             $type->setEventData(FHIRDataRequirement::xmlUnserialize($children->eventData));
         }
-        if (isset($attributes->eventName)) {
-            $type->setEventName((string)$attributes->eventName);
-        }
         if (isset($children->eventName)) {
             $type->setEventName(FHIRString::xmlUnserialize($children->eventName));
         }
-        if (isset($attributes->eventTimingDate)) {
-            $type->setEventTimingDate((string)$attributes->eventTimingDate);
+        if (isset($attributes->eventName)) {
+            $pt = $type->getEventName();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->eventName);
+            } else {
+                $type->setEventName((string)$attributes->eventName);
+            }
         }
         if (isset($children->eventTimingDate)) {
             $type->setEventTimingDate(FHIRDate::xmlUnserialize($children->eventTimingDate));
         }
-        if (isset($attributes->eventTimingDateTime)) {
-            $type->setEventTimingDateTime((string)$attributes->eventTimingDateTime);
+        if (isset($attributes->eventTimingDate)) {
+            $pt = $type->getEventTimingDate();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->eventTimingDate);
+            } else {
+                $type->setEventTimingDate((string)$attributes->eventTimingDate);
+            }
         }
         if (isset($children->eventTimingDateTime)) {
             $type->setEventTimingDateTime(FHIRDateTime::xmlUnserialize($children->eventTimingDateTime));
+        }
+        if (isset($attributes->eventTimingDateTime)) {
+            $pt = $type->getEventTimingDateTime();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->eventTimingDateTime);
+            } else {
+                $type->setEventTimingDateTime((string)$attributes->eventTimingDateTime);
+            }
         }
         if (isset($children->eventTimingReference)) {
             $type->setEventTimingReference(FHIRReference::xmlUnserialize($children->eventTimingReference));
@@ -660,7 +851,6 @@ class FHIRTriggerDefinition extends FHIRElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getEventData())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_EVENT_DATA, null, $v->_getFHIRXMLNamespace()));
         }
@@ -695,36 +885,30 @@ class FHIRTriggerDefinition extends FHIRElement
             $a[self::FIELD_EVENT_DATA] = $v;
         }
         if (null !== ($v = $this->getEventName())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_EVENT_NAME] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_EVENT_NAME_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_EVENT_NAME] = $v;
+            $a[self::FIELD_EVENT_NAME] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_EVENT_NAME_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getEventTimingDate())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_EVENT_TIMING_DATE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_EVENT_TIMING_DATE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_EVENT_TIMING_DATE] = $v;
+            $a[self::FIELD_EVENT_TIMING_DATE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDate::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDate::FIELD_VALUE]);
+                $a[self::FIELD_EVENT_TIMING_DATE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getEventTimingDateTime())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_EVENT_TIMING_DATE_TIME] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_EVENT_TIMING_DATE_TIME_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_EVENT_TIMING_DATE_TIME] = $v;
+            $a[self::FIELD_EVENT_TIMING_DATE_TIME] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDateTime::FIELD_VALUE]);
+                $a[self::FIELD_EVENT_TIMING_DATE_TIME_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getEventTimingReference())) {
@@ -734,18 +918,20 @@ class FHIRTriggerDefinition extends FHIRElement
             $a[self::FIELD_EVENT_TIMING_TIMING] = $v;
         }
         if (null !== ($v = $this->getType())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_TYPE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_TYPE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_TYPE] = $v;
+            $a[self::FIELD_TYPE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRTriggerType::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRTriggerType::FIELD_VALUE]);
+                $a[self::FIELD_TYPE_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

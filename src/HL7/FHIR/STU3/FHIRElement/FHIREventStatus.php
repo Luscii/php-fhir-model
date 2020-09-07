@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,8 +62,8 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRCodePrimitive\FHIREventStatusList;
 use HL7\FHIR\STU3\FHIRElement;
-use HL7\FHIR\STU3\FHIREventStatusList;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 
@@ -80,13 +80,19 @@ class FHIREventStatus extends FHIRElement
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_EVENT_STATUS;
     const FIELD_VALUE = 'value';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
-     * @var null|\HL7\FHIR\STU3\FHIREventStatusList
+     * @var null|\HL7\FHIR\STU3\FHIRCodePrimitive\FHIREventStatusList
      */
     protected $value = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type EventStatus
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIREventStatus Constructor
@@ -122,30 +128,6 @@ class FHIREventStatus extends FHIRElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -157,9 +139,8 @@ class FHIREventStatus extends FHIRElement
         return "<EventStatus{$xmlns}></EventStatus>";
     }
 
-
     /**
-     * @return null|\HL7\FHIR\STU3\FHIREventStatusList
+     * @return null|\HL7\FHIR\STU3\FHIRCodePrimitive\FHIREventStatusList
      */
     public function getValue()
     {
@@ -167,7 +148,7 @@ class FHIREventStatus extends FHIRElement
     }
 
     /**
-     * @param null|\HL7\FHIR\STU3\FHIREventStatusList $value
+     * @param null|\HL7\FHIR\STU3\FHIRCodePrimitive\FHIREventStatusList $value
      * @return static
      */
     public function setValue($value = null)
@@ -182,6 +163,71 @@ class FHIREventStatus extends FHIRElement
         }
         $this->value = new FHIREventStatusList($value);
         return $this;
+    }
+
+    /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getValue())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_VALUE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_VALUE])) {
+            $v = $this->getValue();
+            foreach($validationRules[self::FIELD_VALUE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_EVENT_STATUS, self::FIELD_VALUE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_VALUE])) {
+                        $errs[self::FIELD_VALUE] = [];
+                    }
+                    $errs[self::FIELD_VALUE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
     }
 
     /**
@@ -224,11 +270,16 @@ class FHIREventStatus extends FHIRElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->value)) {
-            $type->setValue((string)$attributes->value);
-        }
         if (isset($children->value)) {
             $type->setValue(FHIREventStatusList::xmlUnserialize($children->value));
+        }
+        if (isset($attributes->value)) {
+            $pt = $type->getValue();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->value);
+            } else {
+                $type->setValue((string)$attributes->value);
+            }
         }
         return $type;
     }
@@ -259,8 +310,10 @@ class FHIREventStatus extends FHIRElement
         if (null !== ($v = $this->getValue())) {
             $a[self::FIELD_VALUE] = $v;
         }
+
         return $a;
     }
+
 
     /**
      * @return string

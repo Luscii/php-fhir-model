@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -87,6 +87,9 @@ class FHIRBundleEntry extends FHIRBackboneElement
     const FIELD_RESPONSE = 'response';
     const FIELD_SEARCH = 'search';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -148,8 +151,11 @@ class FHIRBundleEntry extends FHIRBackboneElement
      */
     protected $search = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Bundle.Entry
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRBundleEntry Constructor
@@ -167,20 +173,27 @@ class FHIRBundleEntry extends FHIRBackboneElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_FULL_URL])) {
-            $ext = (isset($data[self::FIELD_FULL_URL_EXT]) && is_array($data[self::FIELD_FULL_URL_EXT]))
-                ? $data[self::FIELD_FULL_URL_EXT]
-                : null;
-            if ($data[self::FIELD_FULL_URL] instanceof FHIRUri) {
-                $this->setFullUrl($data[self::FIELD_FULL_URL]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_FULL_URL])) {
-                    $this->setFullUrl(new FHIRUri([FHIRUri::FIELD_VALUE => $data[self::FIELD_FULL_URL]] + $ext));
-                } else if (is_array($data[self::FIELD_FULL_URL])) {
-                    $this->setFullUrl(new FHIRUri(array_merge($ext, $data[self::FIELD_FULL_URL])));
-                }
+        if (isset($data[self::FIELD_FULL_URL]) || isset($data[self::FIELD_FULL_URL_EXT])) {
+            if (isset($data[self::FIELD_FULL_URL])) {
+                $value = $data[self::FIELD_FULL_URL];
             } else {
-                $this->setFullUrl(new FHIRUri($data[self::FIELD_FULL_URL]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_FULL_URL_EXT]) && is_array($data[self::FIELD_FULL_URL_EXT])) {
+                $ext = $data[self::FIELD_FULL_URL_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRUri) {
+                    $this->setFullUrl($value);
+                } else if (is_array($value)) {
+                    $this->setFullUrl(new FHIRUri(array_merge($ext, $value)));
+                } else {
+                    $this->setFullUrl(new FHIRUri([FHIRUri::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setFullUrl(new FHIRUri($ext));
             }
         }
         if (isset($data[self::FIELD_LINK])) {
@@ -259,30 +272,6 @@ class FHIRBundleEntry extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -293,7 +282,6 @@ class FHIRBundleEntry extends FHIRBackboneElement
         }
         return "<BundleEntry{$xmlns}></BundleEntry>";
     }
-
 
     /**
      * String of characters used to identify a name or a resource
@@ -498,6 +486,170 @@ class FHIRBundleEntry extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getFullUrl())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_FULL_URL] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getLink())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_LINK, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getRequest())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_REQUEST] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getResource())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RESOURCE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getResponse())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RESPONSE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSearch())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SEARCH] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_FULL_URL])) {
+            $v = $this->getFullUrl();
+            foreach($validationRules[self::FIELD_FULL_URL] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_ENTRY, self::FIELD_FULL_URL, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_FULL_URL])) {
+                        $errs[self::FIELD_FULL_URL] = [];
+                    }
+                    $errs[self::FIELD_FULL_URL][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LINK])) {
+            $v = $this->getLink();
+            foreach($validationRules[self::FIELD_LINK] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_ENTRY, self::FIELD_LINK, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LINK])) {
+                        $errs[self::FIELD_LINK] = [];
+                    }
+                    $errs[self::FIELD_LINK][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REQUEST])) {
+            $v = $this->getRequest();
+            foreach($validationRules[self::FIELD_REQUEST] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_ENTRY, self::FIELD_REQUEST, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REQUEST])) {
+                        $errs[self::FIELD_REQUEST] = [];
+                    }
+                    $errs[self::FIELD_REQUEST][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RESOURCE])) {
+            $v = $this->getResource();
+            foreach($validationRules[self::FIELD_RESOURCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_ENTRY, self::FIELD_RESOURCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RESOURCE])) {
+                        $errs[self::FIELD_RESOURCE] = [];
+                    }
+                    $errs[self::FIELD_RESOURCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RESPONSE])) {
+            $v = $this->getResponse();
+            foreach($validationRules[self::FIELD_RESPONSE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_ENTRY, self::FIELD_RESPONSE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RESPONSE])) {
+                        $errs[self::FIELD_RESPONSE] = [];
+                    }
+                    $errs[self::FIELD_RESPONSE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SEARCH])) {
+            $v = $this->getSearch();
+            foreach($validationRules[self::FIELD_SEARCH] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_ENTRY, self::FIELD_SEARCH, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SEARCH])) {
+                        $errs[self::FIELD_SEARCH] = [];
+                    }
+                    $errs[self::FIELD_SEARCH][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleEntry $type
      * @param null|int $libxmlOpts
@@ -537,11 +689,16 @@ class FHIRBundleEntry extends FHIRBackboneElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->fullUrl)) {
-            $type->setFullUrl((string)$attributes->fullUrl);
-        }
         if (isset($children->fullUrl)) {
             $type->setFullUrl(FHIRUri::xmlUnserialize($children->fullUrl));
+        }
+        if (isset($attributes->fullUrl)) {
+            $pt = $type->getFullUrl();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->fullUrl);
+            } else {
+                $type->setFullUrl((string)$attributes->fullUrl);
+            }
         }
         if (isset($children->link)) {
             foreach($children->link as $child) {
@@ -579,7 +736,6 @@ class FHIRBundleEntry extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getFullUrl())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_FULL_URL, null, $v->_getFHIRXMLNamespace()));
         }
@@ -614,18 +770,22 @@ class FHIRBundleEntry extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getFullUrl())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_FULL_URL] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_FULL_URL_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_FULL_URL] = $v;
+            $a[self::FIELD_FULL_URL] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUri::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRUri::FIELD_VALUE]);
+                $a[self::FIELD_FULL_URL_EXT] = $enc;
             }
         }
         if ([] !== ($vs = $this->getLink())) {
-            $a[self::FIELD_LINK] = $vs;
+            $a[self::FIELD_LINK] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_LINK][] = $v;
+            }
         }
         if (null !== ($v = $this->getRequest())) {
             $a[self::FIELD_REQUEST] = $v;
@@ -639,8 +799,12 @@ class FHIRBundleEntry extends FHIRBackboneElement
         if (null !== ($v = $this->getSearch())) {
             $a[self::FIELD_SEARCH] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return $a;
     }
+
 
     /**
      * @return string

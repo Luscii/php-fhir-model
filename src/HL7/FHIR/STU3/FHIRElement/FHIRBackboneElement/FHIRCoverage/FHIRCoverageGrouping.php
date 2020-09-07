@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,6 +102,9 @@ class FHIRCoverageGrouping extends FHIRBackboneElement
     const FIELD_SUB_PLAN_EXT = '_subPlan';
     const FIELD_SUB_PLAN_DISPLAY = 'subPlanDisplay';
     const FIELD_SUB_PLAN_DISPLAY_EXT = '_subPlanDisplay';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * A sequence of Unicode characters
@@ -246,8 +249,11 @@ class FHIRCoverageGrouping extends FHIRBackboneElement
      */
     protected $subPlanDisplay = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Coverage.Grouping
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRCoverageGrouping Constructor
@@ -265,196 +271,280 @@ class FHIRCoverageGrouping extends FHIRBackboneElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_CLASS])) {
-            $ext = (isset($data[self::FIELD_CLASS_EXT]) && is_array($data[self::FIELD_CLASS_EXT]))
-                ? $data[self::FIELD_CLASS_EXT]
-                : null;
-            if ($data[self::FIELD_CLASS] instanceof FHIRString) {
-                $this->setClass($data[self::FIELD_CLASS]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_CLASS])) {
-                    $this->setClass(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_CLASS]] + $ext));
-                } else if (is_array($data[self::FIELD_CLASS])) {
-                    $this->setClass(new FHIRString(array_merge($ext, $data[self::FIELD_CLASS])));
-                }
+        if (isset($data[self::FIELD_CLASS]) || isset($data[self::FIELD_CLASS_EXT])) {
+            if (isset($data[self::FIELD_CLASS])) {
+                $value = $data[self::FIELD_CLASS];
             } else {
-                $this->setClass(new FHIRString($data[self::FIELD_CLASS]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_CLASS_EXT]) && is_array($data[self::FIELD_CLASS_EXT])) {
+                $ext = $data[self::FIELD_CLASS_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setClass($value);
+                } else if (is_array($value)) {
+                    $this->setClass(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setClass(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setClass(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_CLASS_DISPLAY])) {
-            $ext = (isset($data[self::FIELD_CLASS_DISPLAY_EXT]) && is_array($data[self::FIELD_CLASS_DISPLAY_EXT]))
-                ? $data[self::FIELD_CLASS_DISPLAY_EXT]
-                : null;
-            if ($data[self::FIELD_CLASS_DISPLAY] instanceof FHIRString) {
-                $this->setClassDisplay($data[self::FIELD_CLASS_DISPLAY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_CLASS_DISPLAY])) {
-                    $this->setClassDisplay(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_CLASS_DISPLAY]] + $ext));
-                } else if (is_array($data[self::FIELD_CLASS_DISPLAY])) {
-                    $this->setClassDisplay(new FHIRString(array_merge($ext, $data[self::FIELD_CLASS_DISPLAY])));
-                }
+        if (isset($data[self::FIELD_CLASS_DISPLAY]) || isset($data[self::FIELD_CLASS_DISPLAY_EXT])) {
+            if (isset($data[self::FIELD_CLASS_DISPLAY])) {
+                $value = $data[self::FIELD_CLASS_DISPLAY];
             } else {
-                $this->setClassDisplay(new FHIRString($data[self::FIELD_CLASS_DISPLAY]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_CLASS_DISPLAY_EXT]) && is_array($data[self::FIELD_CLASS_DISPLAY_EXT])) {
+                $ext = $data[self::FIELD_CLASS_DISPLAY_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setClassDisplay($value);
+                } else if (is_array($value)) {
+                    $this->setClassDisplay(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setClassDisplay(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setClassDisplay(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_GROUP])) {
-            $ext = (isset($data[self::FIELD_GROUP_EXT]) && is_array($data[self::FIELD_GROUP_EXT]))
-                ? $data[self::FIELD_GROUP_EXT]
-                : null;
-            if ($data[self::FIELD_GROUP] instanceof FHIRString) {
-                $this->setGroup($data[self::FIELD_GROUP]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_GROUP])) {
-                    $this->setGroup(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_GROUP]] + $ext));
-                } else if (is_array($data[self::FIELD_GROUP])) {
-                    $this->setGroup(new FHIRString(array_merge($ext, $data[self::FIELD_GROUP])));
-                }
+        if (isset($data[self::FIELD_GROUP]) || isset($data[self::FIELD_GROUP_EXT])) {
+            if (isset($data[self::FIELD_GROUP])) {
+                $value = $data[self::FIELD_GROUP];
             } else {
-                $this->setGroup(new FHIRString($data[self::FIELD_GROUP]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_GROUP_EXT]) && is_array($data[self::FIELD_GROUP_EXT])) {
+                $ext = $data[self::FIELD_GROUP_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setGroup($value);
+                } else if (is_array($value)) {
+                    $this->setGroup(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setGroup(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setGroup(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_GROUP_DISPLAY])) {
-            $ext = (isset($data[self::FIELD_GROUP_DISPLAY_EXT]) && is_array($data[self::FIELD_GROUP_DISPLAY_EXT]))
-                ? $data[self::FIELD_GROUP_DISPLAY_EXT]
-                : null;
-            if ($data[self::FIELD_GROUP_DISPLAY] instanceof FHIRString) {
-                $this->setGroupDisplay($data[self::FIELD_GROUP_DISPLAY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_GROUP_DISPLAY])) {
-                    $this->setGroupDisplay(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_GROUP_DISPLAY]] + $ext));
-                } else if (is_array($data[self::FIELD_GROUP_DISPLAY])) {
-                    $this->setGroupDisplay(new FHIRString(array_merge($ext, $data[self::FIELD_GROUP_DISPLAY])));
-                }
+        if (isset($data[self::FIELD_GROUP_DISPLAY]) || isset($data[self::FIELD_GROUP_DISPLAY_EXT])) {
+            if (isset($data[self::FIELD_GROUP_DISPLAY])) {
+                $value = $data[self::FIELD_GROUP_DISPLAY];
             } else {
-                $this->setGroupDisplay(new FHIRString($data[self::FIELD_GROUP_DISPLAY]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_GROUP_DISPLAY_EXT]) && is_array($data[self::FIELD_GROUP_DISPLAY_EXT])) {
+                $ext = $data[self::FIELD_GROUP_DISPLAY_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setGroupDisplay($value);
+                } else if (is_array($value)) {
+                    $this->setGroupDisplay(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setGroupDisplay(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setGroupDisplay(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_PLAN])) {
-            $ext = (isset($data[self::FIELD_PLAN_EXT]) && is_array($data[self::FIELD_PLAN_EXT]))
-                ? $data[self::FIELD_PLAN_EXT]
-                : null;
-            if ($data[self::FIELD_PLAN] instanceof FHIRString) {
-                $this->setPlan($data[self::FIELD_PLAN]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_PLAN])) {
-                    $this->setPlan(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_PLAN]] + $ext));
-                } else if (is_array($data[self::FIELD_PLAN])) {
-                    $this->setPlan(new FHIRString(array_merge($ext, $data[self::FIELD_PLAN])));
-                }
+        if (isset($data[self::FIELD_PLAN]) || isset($data[self::FIELD_PLAN_EXT])) {
+            if (isset($data[self::FIELD_PLAN])) {
+                $value = $data[self::FIELD_PLAN];
             } else {
-                $this->setPlan(new FHIRString($data[self::FIELD_PLAN]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_PLAN_EXT]) && is_array($data[self::FIELD_PLAN_EXT])) {
+                $ext = $data[self::FIELD_PLAN_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setPlan($value);
+                } else if (is_array($value)) {
+                    $this->setPlan(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setPlan(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setPlan(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_PLAN_DISPLAY])) {
-            $ext = (isset($data[self::FIELD_PLAN_DISPLAY_EXT]) && is_array($data[self::FIELD_PLAN_DISPLAY_EXT]))
-                ? $data[self::FIELD_PLAN_DISPLAY_EXT]
-                : null;
-            if ($data[self::FIELD_PLAN_DISPLAY] instanceof FHIRString) {
-                $this->setPlanDisplay($data[self::FIELD_PLAN_DISPLAY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_PLAN_DISPLAY])) {
-                    $this->setPlanDisplay(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_PLAN_DISPLAY]] + $ext));
-                } else if (is_array($data[self::FIELD_PLAN_DISPLAY])) {
-                    $this->setPlanDisplay(new FHIRString(array_merge($ext, $data[self::FIELD_PLAN_DISPLAY])));
-                }
+        if (isset($data[self::FIELD_PLAN_DISPLAY]) || isset($data[self::FIELD_PLAN_DISPLAY_EXT])) {
+            if (isset($data[self::FIELD_PLAN_DISPLAY])) {
+                $value = $data[self::FIELD_PLAN_DISPLAY];
             } else {
-                $this->setPlanDisplay(new FHIRString($data[self::FIELD_PLAN_DISPLAY]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_PLAN_DISPLAY_EXT]) && is_array($data[self::FIELD_PLAN_DISPLAY_EXT])) {
+                $ext = $data[self::FIELD_PLAN_DISPLAY_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setPlanDisplay($value);
+                } else if (is_array($value)) {
+                    $this->setPlanDisplay(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setPlanDisplay(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setPlanDisplay(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_SUB_CLASS])) {
-            $ext = (isset($data[self::FIELD_SUB_CLASS_EXT]) && is_array($data[self::FIELD_SUB_CLASS_EXT]))
-                ? $data[self::FIELD_SUB_CLASS_EXT]
-                : null;
-            if ($data[self::FIELD_SUB_CLASS] instanceof FHIRString) {
-                $this->setSubClass($data[self::FIELD_SUB_CLASS]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SUB_CLASS])) {
-                    $this->setSubClass(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_SUB_CLASS]] + $ext));
-                } else if (is_array($data[self::FIELD_SUB_CLASS])) {
-                    $this->setSubClass(new FHIRString(array_merge($ext, $data[self::FIELD_SUB_CLASS])));
-                }
+        if (isset($data[self::FIELD_SUB_CLASS]) || isset($data[self::FIELD_SUB_CLASS_EXT])) {
+            if (isset($data[self::FIELD_SUB_CLASS])) {
+                $value = $data[self::FIELD_SUB_CLASS];
             } else {
-                $this->setSubClass(new FHIRString($data[self::FIELD_SUB_CLASS]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SUB_CLASS_EXT]) && is_array($data[self::FIELD_SUB_CLASS_EXT])) {
+                $ext = $data[self::FIELD_SUB_CLASS_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setSubClass($value);
+                } else if (is_array($value)) {
+                    $this->setSubClass(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setSubClass(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSubClass(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_SUB_CLASS_DISPLAY])) {
-            $ext = (isset($data[self::FIELD_SUB_CLASS_DISPLAY_EXT]) && is_array($data[self::FIELD_SUB_CLASS_DISPLAY_EXT]))
-                ? $data[self::FIELD_SUB_CLASS_DISPLAY_EXT]
-                : null;
-            if ($data[self::FIELD_SUB_CLASS_DISPLAY] instanceof FHIRString) {
-                $this->setSubClassDisplay($data[self::FIELD_SUB_CLASS_DISPLAY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SUB_CLASS_DISPLAY])) {
-                    $this->setSubClassDisplay(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_SUB_CLASS_DISPLAY]] + $ext));
-                } else if (is_array($data[self::FIELD_SUB_CLASS_DISPLAY])) {
-                    $this->setSubClassDisplay(new FHIRString(array_merge($ext, $data[self::FIELD_SUB_CLASS_DISPLAY])));
-                }
+        if (isset($data[self::FIELD_SUB_CLASS_DISPLAY]) || isset($data[self::FIELD_SUB_CLASS_DISPLAY_EXT])) {
+            if (isset($data[self::FIELD_SUB_CLASS_DISPLAY])) {
+                $value = $data[self::FIELD_SUB_CLASS_DISPLAY];
             } else {
-                $this->setSubClassDisplay(new FHIRString($data[self::FIELD_SUB_CLASS_DISPLAY]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SUB_CLASS_DISPLAY_EXT]) && is_array($data[self::FIELD_SUB_CLASS_DISPLAY_EXT])) {
+                $ext = $data[self::FIELD_SUB_CLASS_DISPLAY_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setSubClassDisplay($value);
+                } else if (is_array($value)) {
+                    $this->setSubClassDisplay(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setSubClassDisplay(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSubClassDisplay(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_SUB_GROUP])) {
-            $ext = (isset($data[self::FIELD_SUB_GROUP_EXT]) && is_array($data[self::FIELD_SUB_GROUP_EXT]))
-                ? $data[self::FIELD_SUB_GROUP_EXT]
-                : null;
-            if ($data[self::FIELD_SUB_GROUP] instanceof FHIRString) {
-                $this->setSubGroup($data[self::FIELD_SUB_GROUP]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SUB_GROUP])) {
-                    $this->setSubGroup(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_SUB_GROUP]] + $ext));
-                } else if (is_array($data[self::FIELD_SUB_GROUP])) {
-                    $this->setSubGroup(new FHIRString(array_merge($ext, $data[self::FIELD_SUB_GROUP])));
-                }
+        if (isset($data[self::FIELD_SUB_GROUP]) || isset($data[self::FIELD_SUB_GROUP_EXT])) {
+            if (isset($data[self::FIELD_SUB_GROUP])) {
+                $value = $data[self::FIELD_SUB_GROUP];
             } else {
-                $this->setSubGroup(new FHIRString($data[self::FIELD_SUB_GROUP]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SUB_GROUP_EXT]) && is_array($data[self::FIELD_SUB_GROUP_EXT])) {
+                $ext = $data[self::FIELD_SUB_GROUP_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setSubGroup($value);
+                } else if (is_array($value)) {
+                    $this->setSubGroup(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setSubGroup(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSubGroup(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_SUB_GROUP_DISPLAY])) {
-            $ext = (isset($data[self::FIELD_SUB_GROUP_DISPLAY_EXT]) && is_array($data[self::FIELD_SUB_GROUP_DISPLAY_EXT]))
-                ? $data[self::FIELD_SUB_GROUP_DISPLAY_EXT]
-                : null;
-            if ($data[self::FIELD_SUB_GROUP_DISPLAY] instanceof FHIRString) {
-                $this->setSubGroupDisplay($data[self::FIELD_SUB_GROUP_DISPLAY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SUB_GROUP_DISPLAY])) {
-                    $this->setSubGroupDisplay(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_SUB_GROUP_DISPLAY]] + $ext));
-                } else if (is_array($data[self::FIELD_SUB_GROUP_DISPLAY])) {
-                    $this->setSubGroupDisplay(new FHIRString(array_merge($ext, $data[self::FIELD_SUB_GROUP_DISPLAY])));
-                }
+        if (isset($data[self::FIELD_SUB_GROUP_DISPLAY]) || isset($data[self::FIELD_SUB_GROUP_DISPLAY_EXT])) {
+            if (isset($data[self::FIELD_SUB_GROUP_DISPLAY])) {
+                $value = $data[self::FIELD_SUB_GROUP_DISPLAY];
             } else {
-                $this->setSubGroupDisplay(new FHIRString($data[self::FIELD_SUB_GROUP_DISPLAY]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SUB_GROUP_DISPLAY_EXT]) && is_array($data[self::FIELD_SUB_GROUP_DISPLAY_EXT])) {
+                $ext = $data[self::FIELD_SUB_GROUP_DISPLAY_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setSubGroupDisplay($value);
+                } else if (is_array($value)) {
+                    $this->setSubGroupDisplay(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setSubGroupDisplay(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSubGroupDisplay(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_SUB_PLAN])) {
-            $ext = (isset($data[self::FIELD_SUB_PLAN_EXT]) && is_array($data[self::FIELD_SUB_PLAN_EXT]))
-                ? $data[self::FIELD_SUB_PLAN_EXT]
-                : null;
-            if ($data[self::FIELD_SUB_PLAN] instanceof FHIRString) {
-                $this->setSubPlan($data[self::FIELD_SUB_PLAN]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SUB_PLAN])) {
-                    $this->setSubPlan(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_SUB_PLAN]] + $ext));
-                } else if (is_array($data[self::FIELD_SUB_PLAN])) {
-                    $this->setSubPlan(new FHIRString(array_merge($ext, $data[self::FIELD_SUB_PLAN])));
-                }
+        if (isset($data[self::FIELD_SUB_PLAN]) || isset($data[self::FIELD_SUB_PLAN_EXT])) {
+            if (isset($data[self::FIELD_SUB_PLAN])) {
+                $value = $data[self::FIELD_SUB_PLAN];
             } else {
-                $this->setSubPlan(new FHIRString($data[self::FIELD_SUB_PLAN]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SUB_PLAN_EXT]) && is_array($data[self::FIELD_SUB_PLAN_EXT])) {
+                $ext = $data[self::FIELD_SUB_PLAN_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setSubPlan($value);
+                } else if (is_array($value)) {
+                    $this->setSubPlan(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setSubPlan(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSubPlan(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_SUB_PLAN_DISPLAY])) {
-            $ext = (isset($data[self::FIELD_SUB_PLAN_DISPLAY_EXT]) && is_array($data[self::FIELD_SUB_PLAN_DISPLAY_EXT]))
-                ? $data[self::FIELD_SUB_PLAN_DISPLAY_EXT]
-                : null;
-            if ($data[self::FIELD_SUB_PLAN_DISPLAY] instanceof FHIRString) {
-                $this->setSubPlanDisplay($data[self::FIELD_SUB_PLAN_DISPLAY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SUB_PLAN_DISPLAY])) {
-                    $this->setSubPlanDisplay(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_SUB_PLAN_DISPLAY]] + $ext));
-                } else if (is_array($data[self::FIELD_SUB_PLAN_DISPLAY])) {
-                    $this->setSubPlanDisplay(new FHIRString(array_merge($ext, $data[self::FIELD_SUB_PLAN_DISPLAY])));
-                }
+        if (isset($data[self::FIELD_SUB_PLAN_DISPLAY]) || isset($data[self::FIELD_SUB_PLAN_DISPLAY_EXT])) {
+            if (isset($data[self::FIELD_SUB_PLAN_DISPLAY])) {
+                $value = $data[self::FIELD_SUB_PLAN_DISPLAY];
             } else {
-                $this->setSubPlanDisplay(new FHIRString($data[self::FIELD_SUB_PLAN_DISPLAY]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SUB_PLAN_DISPLAY_EXT]) && is_array($data[self::FIELD_SUB_PLAN_DISPLAY_EXT])) {
+                $ext = $data[self::FIELD_SUB_PLAN_DISPLAY_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setSubPlanDisplay($value);
+                } else if (is_array($value)) {
+                    $this->setSubPlanDisplay(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setSubPlanDisplay(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSubPlanDisplay(new FHIRString($ext));
             }
         }
     }
@@ -468,30 +558,6 @@ class FHIRCoverageGrouping extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -502,7 +568,6 @@ class FHIRCoverageGrouping extends FHIRBackboneElement
         }
         return "<CoverageGrouping{$xmlns}></CoverageGrouping>";
     }
-
 
     /**
      * A sequence of Unicode characters
@@ -983,6 +1048,270 @@ class FHIRCoverageGrouping extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getClass())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CLASS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getClassDisplay())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CLASS_DISPLAY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getGroup())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_GROUP] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getGroupDisplay())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_GROUP_DISPLAY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPlan())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PLAN] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPlanDisplay())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PLAN_DISPLAY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubClass())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUB_CLASS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubClassDisplay())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUB_CLASS_DISPLAY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubGroup())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUB_GROUP] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubGroupDisplay())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUB_GROUP_DISPLAY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubPlan())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUB_PLAN] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubPlanDisplay())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUB_PLAN_DISPLAY] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_CLASS])) {
+            $v = $this->getClass();
+            foreach($validationRules[self::FIELD_CLASS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_CLASS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CLASS])) {
+                        $errs[self::FIELD_CLASS] = [];
+                    }
+                    $errs[self::FIELD_CLASS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CLASS_DISPLAY])) {
+            $v = $this->getClassDisplay();
+            foreach($validationRules[self::FIELD_CLASS_DISPLAY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_CLASS_DISPLAY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CLASS_DISPLAY])) {
+                        $errs[self::FIELD_CLASS_DISPLAY] = [];
+                    }
+                    $errs[self::FIELD_CLASS_DISPLAY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_GROUP])) {
+            $v = $this->getGroup();
+            foreach($validationRules[self::FIELD_GROUP] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_GROUP, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_GROUP])) {
+                        $errs[self::FIELD_GROUP] = [];
+                    }
+                    $errs[self::FIELD_GROUP][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_GROUP_DISPLAY])) {
+            $v = $this->getGroupDisplay();
+            foreach($validationRules[self::FIELD_GROUP_DISPLAY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_GROUP_DISPLAY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_GROUP_DISPLAY])) {
+                        $errs[self::FIELD_GROUP_DISPLAY] = [];
+                    }
+                    $errs[self::FIELD_GROUP_DISPLAY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PLAN])) {
+            $v = $this->getPlan();
+            foreach($validationRules[self::FIELD_PLAN] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_PLAN, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PLAN])) {
+                        $errs[self::FIELD_PLAN] = [];
+                    }
+                    $errs[self::FIELD_PLAN][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PLAN_DISPLAY])) {
+            $v = $this->getPlanDisplay();
+            foreach($validationRules[self::FIELD_PLAN_DISPLAY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_PLAN_DISPLAY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PLAN_DISPLAY])) {
+                        $errs[self::FIELD_PLAN_DISPLAY] = [];
+                    }
+                    $errs[self::FIELD_PLAN_DISPLAY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUB_CLASS])) {
+            $v = $this->getSubClass();
+            foreach($validationRules[self::FIELD_SUB_CLASS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_SUB_CLASS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUB_CLASS])) {
+                        $errs[self::FIELD_SUB_CLASS] = [];
+                    }
+                    $errs[self::FIELD_SUB_CLASS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUB_CLASS_DISPLAY])) {
+            $v = $this->getSubClassDisplay();
+            foreach($validationRules[self::FIELD_SUB_CLASS_DISPLAY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_SUB_CLASS_DISPLAY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUB_CLASS_DISPLAY])) {
+                        $errs[self::FIELD_SUB_CLASS_DISPLAY] = [];
+                    }
+                    $errs[self::FIELD_SUB_CLASS_DISPLAY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUB_GROUP])) {
+            $v = $this->getSubGroup();
+            foreach($validationRules[self::FIELD_SUB_GROUP] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_SUB_GROUP, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUB_GROUP])) {
+                        $errs[self::FIELD_SUB_GROUP] = [];
+                    }
+                    $errs[self::FIELD_SUB_GROUP][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUB_GROUP_DISPLAY])) {
+            $v = $this->getSubGroupDisplay();
+            foreach($validationRules[self::FIELD_SUB_GROUP_DISPLAY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_SUB_GROUP_DISPLAY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUB_GROUP_DISPLAY])) {
+                        $errs[self::FIELD_SUB_GROUP_DISPLAY] = [];
+                    }
+                    $errs[self::FIELD_SUB_GROUP_DISPLAY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUB_PLAN])) {
+            $v = $this->getSubPlan();
+            foreach($validationRules[self::FIELD_SUB_PLAN] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_SUB_PLAN, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUB_PLAN])) {
+                        $errs[self::FIELD_SUB_PLAN] = [];
+                    }
+                    $errs[self::FIELD_SUB_PLAN][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUB_PLAN_DISPLAY])) {
+            $v = $this->getSubPlanDisplay();
+            foreach($validationRules[self::FIELD_SUB_PLAN_DISPLAY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE_DOT_GROUPING, self::FIELD_SUB_PLAN_DISPLAY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUB_PLAN_DISPLAY])) {
+                        $errs[self::FIELD_SUB_PLAN_DISPLAY] = [];
+                    }
+                    $errs[self::FIELD_SUB_PLAN_DISPLAY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage\FHIRCoverageGrouping $type
      * @param null|int $libxmlOpts
@@ -1022,77 +1351,137 @@ class FHIRCoverageGrouping extends FHIRBackboneElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->class)) {
-            $type->setClass((string)$attributes->class);
-        }
         if (isset($children->class)) {
             $type->setClass(FHIRString::xmlUnserialize($children->class));
         }
-        if (isset($attributes->classDisplay)) {
-            $type->setClassDisplay((string)$attributes->classDisplay);
+        if (isset($attributes->class)) {
+            $pt = $type->getClass();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->class);
+            } else {
+                $type->setClass((string)$attributes->class);
+            }
         }
         if (isset($children->classDisplay)) {
             $type->setClassDisplay(FHIRString::xmlUnserialize($children->classDisplay));
         }
-        if (isset($attributes->group)) {
-            $type->setGroup((string)$attributes->group);
+        if (isset($attributes->classDisplay)) {
+            $pt = $type->getClassDisplay();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->classDisplay);
+            } else {
+                $type->setClassDisplay((string)$attributes->classDisplay);
+            }
         }
         if (isset($children->group)) {
             $type->setGroup(FHIRString::xmlUnserialize($children->group));
         }
-        if (isset($attributes->groupDisplay)) {
-            $type->setGroupDisplay((string)$attributes->groupDisplay);
+        if (isset($attributes->group)) {
+            $pt = $type->getGroup();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->group);
+            } else {
+                $type->setGroup((string)$attributes->group);
+            }
         }
         if (isset($children->groupDisplay)) {
             $type->setGroupDisplay(FHIRString::xmlUnserialize($children->groupDisplay));
         }
-        if (isset($attributes->plan)) {
-            $type->setPlan((string)$attributes->plan);
+        if (isset($attributes->groupDisplay)) {
+            $pt = $type->getGroupDisplay();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->groupDisplay);
+            } else {
+                $type->setGroupDisplay((string)$attributes->groupDisplay);
+            }
         }
         if (isset($children->plan)) {
             $type->setPlan(FHIRString::xmlUnserialize($children->plan));
         }
-        if (isset($attributes->planDisplay)) {
-            $type->setPlanDisplay((string)$attributes->planDisplay);
+        if (isset($attributes->plan)) {
+            $pt = $type->getPlan();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->plan);
+            } else {
+                $type->setPlan((string)$attributes->plan);
+            }
         }
         if (isset($children->planDisplay)) {
             $type->setPlanDisplay(FHIRString::xmlUnserialize($children->planDisplay));
         }
-        if (isset($attributes->subClass)) {
-            $type->setSubClass((string)$attributes->subClass);
+        if (isset($attributes->planDisplay)) {
+            $pt = $type->getPlanDisplay();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->planDisplay);
+            } else {
+                $type->setPlanDisplay((string)$attributes->planDisplay);
+            }
         }
         if (isset($children->subClass)) {
             $type->setSubClass(FHIRString::xmlUnserialize($children->subClass));
         }
-        if (isset($attributes->subClassDisplay)) {
-            $type->setSubClassDisplay((string)$attributes->subClassDisplay);
+        if (isset($attributes->subClass)) {
+            $pt = $type->getSubClass();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->subClass);
+            } else {
+                $type->setSubClass((string)$attributes->subClass);
+            }
         }
         if (isset($children->subClassDisplay)) {
             $type->setSubClassDisplay(FHIRString::xmlUnserialize($children->subClassDisplay));
         }
-        if (isset($attributes->subGroup)) {
-            $type->setSubGroup((string)$attributes->subGroup);
+        if (isset($attributes->subClassDisplay)) {
+            $pt = $type->getSubClassDisplay();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->subClassDisplay);
+            } else {
+                $type->setSubClassDisplay((string)$attributes->subClassDisplay);
+            }
         }
         if (isset($children->subGroup)) {
             $type->setSubGroup(FHIRString::xmlUnserialize($children->subGroup));
         }
-        if (isset($attributes->subGroupDisplay)) {
-            $type->setSubGroupDisplay((string)$attributes->subGroupDisplay);
+        if (isset($attributes->subGroup)) {
+            $pt = $type->getSubGroup();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->subGroup);
+            } else {
+                $type->setSubGroup((string)$attributes->subGroup);
+            }
         }
         if (isset($children->subGroupDisplay)) {
             $type->setSubGroupDisplay(FHIRString::xmlUnserialize($children->subGroupDisplay));
         }
-        if (isset($attributes->subPlan)) {
-            $type->setSubPlan((string)$attributes->subPlan);
+        if (isset($attributes->subGroupDisplay)) {
+            $pt = $type->getSubGroupDisplay();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->subGroupDisplay);
+            } else {
+                $type->setSubGroupDisplay((string)$attributes->subGroupDisplay);
+            }
         }
         if (isset($children->subPlan)) {
             $type->setSubPlan(FHIRString::xmlUnserialize($children->subPlan));
         }
-        if (isset($attributes->subPlanDisplay)) {
-            $type->setSubPlanDisplay((string)$attributes->subPlanDisplay);
+        if (isset($attributes->subPlan)) {
+            $pt = $type->getSubPlan();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->subPlan);
+            } else {
+                $type->setSubPlan((string)$attributes->subPlan);
+            }
         }
         if (isset($children->subPlanDisplay)) {
             $type->setSubPlanDisplay(FHIRString::xmlUnserialize($children->subPlanDisplay));
+        }
+        if (isset($attributes->subPlanDisplay)) {
+            $pt = $type->getSubPlanDisplay();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->subPlanDisplay);
+            } else {
+                $type->setSubPlanDisplay((string)$attributes->subPlanDisplay);
+            }
         }
         return $type;
     }
@@ -1108,7 +1497,6 @@ class FHIRCoverageGrouping extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getClass())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_CLASS, null, $v->_getFHIRXMLNamespace()));
         }
@@ -1155,139 +1543,119 @@ class FHIRCoverageGrouping extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getClass())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_CLASS] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_CLASS_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_CLASS] = $v;
+            $a[self::FIELD_CLASS] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_CLASS_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getClassDisplay())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_CLASS_DISPLAY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_CLASS_DISPLAY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_CLASS_DISPLAY] = $v;
+            $a[self::FIELD_CLASS_DISPLAY] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_CLASS_DISPLAY_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getGroup())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_GROUP] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_GROUP_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_GROUP] = $v;
+            $a[self::FIELD_GROUP] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_GROUP_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getGroupDisplay())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_GROUP_DISPLAY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_GROUP_DISPLAY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_GROUP_DISPLAY] = $v;
+            $a[self::FIELD_GROUP_DISPLAY] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_GROUP_DISPLAY_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getPlan())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_PLAN] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_PLAN_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_PLAN] = $v;
+            $a[self::FIELD_PLAN] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_PLAN_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getPlanDisplay())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_PLAN_DISPLAY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_PLAN_DISPLAY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_PLAN_DISPLAY] = $v;
+            $a[self::FIELD_PLAN_DISPLAY] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_PLAN_DISPLAY_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSubClass())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SUB_CLASS] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SUB_CLASS_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SUB_CLASS] = $v;
+            $a[self::FIELD_SUB_CLASS] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_SUB_CLASS_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSubClassDisplay())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SUB_CLASS_DISPLAY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SUB_CLASS_DISPLAY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SUB_CLASS_DISPLAY] = $v;
+            $a[self::FIELD_SUB_CLASS_DISPLAY] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_SUB_CLASS_DISPLAY_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSubGroup())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SUB_GROUP] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SUB_GROUP_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SUB_GROUP] = $v;
+            $a[self::FIELD_SUB_GROUP] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_SUB_GROUP_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSubGroupDisplay())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SUB_GROUP_DISPLAY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SUB_GROUP_DISPLAY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SUB_GROUP_DISPLAY] = $v;
+            $a[self::FIELD_SUB_GROUP_DISPLAY] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_SUB_GROUP_DISPLAY_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSubPlan())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SUB_PLAN] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SUB_PLAN_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SUB_PLAN] = $v;
+            $a[self::FIELD_SUB_PLAN] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_SUB_PLAN_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSubPlanDisplay())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SUB_PLAN_DISPLAY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SUB_PLAN_DISPLAY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SUB_PLAN_DISPLAY] = $v;
+            $a[self::FIELD_SUB_PLAN_DISPLAY] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_SUB_PLAN_DISPLAY_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

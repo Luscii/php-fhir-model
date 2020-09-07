@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,6 +84,9 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
     const FIELD_SITUATION = 'situation';
     const FIELD_SITUATION_EXT = '_situation';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -114,8 +117,11 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
      */
     protected $situation = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type MessageDefinition.AllowedResponse
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRMessageDefinitionAllowedResponse Constructor
@@ -140,20 +146,27 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
                 $this->setMessage(new FHIRReference($data[self::FIELD_MESSAGE]));
             }
         }
-        if (isset($data[self::FIELD_SITUATION])) {
-            $ext = (isset($data[self::FIELD_SITUATION_EXT]) && is_array($data[self::FIELD_SITUATION_EXT]))
-                ? $data[self::FIELD_SITUATION_EXT]
-                : null;
-            if ($data[self::FIELD_SITUATION] instanceof FHIRMarkdown) {
-                $this->setSituation($data[self::FIELD_SITUATION]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_SITUATION])) {
-                    $this->setSituation(new FHIRMarkdown([FHIRMarkdown::FIELD_VALUE => $data[self::FIELD_SITUATION]] + $ext));
-                } else if (is_array($data[self::FIELD_SITUATION])) {
-                    $this->setSituation(new FHIRMarkdown(array_merge($ext, $data[self::FIELD_SITUATION])));
-                }
+        if (isset($data[self::FIELD_SITUATION]) || isset($data[self::FIELD_SITUATION_EXT])) {
+            if (isset($data[self::FIELD_SITUATION])) {
+                $value = $data[self::FIELD_SITUATION];
             } else {
-                $this->setSituation(new FHIRMarkdown($data[self::FIELD_SITUATION]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_SITUATION_EXT]) && is_array($data[self::FIELD_SITUATION_EXT])) {
+                $ext = $data[self::FIELD_SITUATION_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRMarkdown) {
+                    $this->setSituation($value);
+                } else if (is_array($value)) {
+                    $this->setSituation(new FHIRMarkdown(array_merge($ext, $value)));
+                } else {
+                    $this->setSituation(new FHIRMarkdown([FHIRMarkdown::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setSituation(new FHIRMarkdown($ext));
             }
         }
     }
@@ -167,30 +180,6 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -201,7 +190,6 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
         }
         return "<MessageDefinitionAllowedResponse{$xmlns}></MessageDefinitionAllowedResponse>";
     }
-
 
     /**
      * A reference from one resource to another.
@@ -288,6 +276,100 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getMessage())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_MESSAGE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSituation())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SITUATION] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_MESSAGE])) {
+            $v = $this->getMessage();
+            foreach($validationRules[self::FIELD_MESSAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MESSAGE_DEFINITION_DOT_ALLOWED_RESPONSE, self::FIELD_MESSAGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MESSAGE])) {
+                        $errs[self::FIELD_MESSAGE] = [];
+                    }
+                    $errs[self::FIELD_MESSAGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SITUATION])) {
+            $v = $this->getSituation();
+            foreach($validationRules[self::FIELD_SITUATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MESSAGE_DEFINITION_DOT_ALLOWED_RESPONSE, self::FIELD_SITUATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SITUATION])) {
+                        $errs[self::FIELD_SITUATION] = [];
+                    }
+                    $errs[self::FIELD_SITUATION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse $type
      * @param null|int $libxmlOpts
@@ -330,11 +412,16 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
         if (isset($children->message)) {
             $type->setMessage(FHIRReference::xmlUnserialize($children->message));
         }
-        if (isset($attributes->situation)) {
-            $type->setSituation((string)$attributes->situation);
-        }
         if (isset($children->situation)) {
             $type->setSituation(FHIRMarkdown::xmlUnserialize($children->situation));
+        }
+        if (isset($attributes->situation)) {
+            $pt = $type->getSituation();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->situation);
+            } else {
+                $type->setSituation((string)$attributes->situation);
+            }
         }
         return $type;
     }
@@ -350,7 +437,6 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getMessage())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_MESSAGE, null, $v->_getFHIRXMLNamespace()));
         }
@@ -370,18 +456,20 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
             $a[self::FIELD_MESSAGE] = $v;
         }
         if (null !== ($v = $this->getSituation())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_SITUATION] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_SITUATION_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_SITUATION] = $v;
+            $a[self::FIELD_SITUATION] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRMarkdown::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRMarkdown::FIELD_VALUE]);
+                $a[self::FIELD_SITUATION_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

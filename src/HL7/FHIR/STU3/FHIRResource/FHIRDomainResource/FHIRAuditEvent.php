@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,6 +103,9 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
     const FIELD_SOURCE = 'source';
     const FIELD_SUBTYPE = 'subtype';
     const FIELD_TYPE = 'type';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * Indicator for type of action performed during the event that generated the event
@@ -218,8 +221,15 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
      */
     protected $type = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type AuditEvent
+     * @var array
+     */
+    private static $_validationRules = [
+        self::FIELD_AGENT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /**
      * FHIRAuditEvent Constructor
@@ -237,20 +247,27 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_ACTION])) {
-            $ext = (isset($data[self::FIELD_ACTION_EXT]) && is_array($data[self::FIELD_ACTION_EXT]))
-                ? $data[self::FIELD_ACTION_EXT]
-                : null;
-            if ($data[self::FIELD_ACTION] instanceof FHIRAuditEventAction) {
-                $this->setAction($data[self::FIELD_ACTION]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_ACTION])) {
-                    $this->setAction(new FHIRAuditEventAction([FHIRAuditEventAction::FIELD_VALUE => $data[self::FIELD_ACTION]] + $ext));
-                } else if (is_array($data[self::FIELD_ACTION])) {
-                    $this->setAction(new FHIRAuditEventAction(array_merge($ext, $data[self::FIELD_ACTION])));
-                }
+        if (isset($data[self::FIELD_ACTION]) || isset($data[self::FIELD_ACTION_EXT])) {
+            if (isset($data[self::FIELD_ACTION])) {
+                $value = $data[self::FIELD_ACTION];
             } else {
-                $this->setAction(new FHIRAuditEventAction($data[self::FIELD_ACTION]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_ACTION_EXT]) && is_array($data[self::FIELD_ACTION_EXT])) {
+                $ext = $data[self::FIELD_ACTION_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRAuditEventAction) {
+                    $this->setAction($value);
+                } else if (is_array($value)) {
+                    $this->setAction(new FHIRAuditEventAction(array_merge($ext, $value)));
+                } else {
+                    $this->setAction(new FHIRAuditEventAction([FHIRAuditEventAction::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setAction(new FHIRAuditEventAction($ext));
             }
         }
         if (isset($data[self::FIELD_AGENT])) {
@@ -289,36 +306,50 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
                 $this->addEntity(new FHIRAuditEventEntity($data[self::FIELD_ENTITY]));
             }
         }
-        if (isset($data[self::FIELD_OUTCOME])) {
-            $ext = (isset($data[self::FIELD_OUTCOME_EXT]) && is_array($data[self::FIELD_OUTCOME_EXT]))
-                ? $data[self::FIELD_OUTCOME_EXT]
-                : null;
-            if ($data[self::FIELD_OUTCOME] instanceof FHIRAuditEventOutcome) {
-                $this->setOutcome($data[self::FIELD_OUTCOME]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_OUTCOME])) {
-                    $this->setOutcome(new FHIRAuditEventOutcome([FHIRAuditEventOutcome::FIELD_VALUE => $data[self::FIELD_OUTCOME]] + $ext));
-                } else if (is_array($data[self::FIELD_OUTCOME])) {
-                    $this->setOutcome(new FHIRAuditEventOutcome(array_merge($ext, $data[self::FIELD_OUTCOME])));
-                }
+        if (isset($data[self::FIELD_OUTCOME]) || isset($data[self::FIELD_OUTCOME_EXT])) {
+            if (isset($data[self::FIELD_OUTCOME])) {
+                $value = $data[self::FIELD_OUTCOME];
             } else {
-                $this->setOutcome(new FHIRAuditEventOutcome($data[self::FIELD_OUTCOME]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_OUTCOME_EXT]) && is_array($data[self::FIELD_OUTCOME_EXT])) {
+                $ext = $data[self::FIELD_OUTCOME_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRAuditEventOutcome) {
+                    $this->setOutcome($value);
+                } else if (is_array($value)) {
+                    $this->setOutcome(new FHIRAuditEventOutcome(array_merge($ext, $value)));
+                } else {
+                    $this->setOutcome(new FHIRAuditEventOutcome([FHIRAuditEventOutcome::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setOutcome(new FHIRAuditEventOutcome($ext));
             }
         }
-        if (isset($data[self::FIELD_OUTCOME_DESC])) {
-            $ext = (isset($data[self::FIELD_OUTCOME_DESC_EXT]) && is_array($data[self::FIELD_OUTCOME_DESC_EXT]))
-                ? $data[self::FIELD_OUTCOME_DESC_EXT]
-                : null;
-            if ($data[self::FIELD_OUTCOME_DESC] instanceof FHIRString) {
-                $this->setOutcomeDesc($data[self::FIELD_OUTCOME_DESC]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_OUTCOME_DESC])) {
-                    $this->setOutcomeDesc(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_OUTCOME_DESC]] + $ext));
-                } else if (is_array($data[self::FIELD_OUTCOME_DESC])) {
-                    $this->setOutcomeDesc(new FHIRString(array_merge($ext, $data[self::FIELD_OUTCOME_DESC])));
-                }
+        if (isset($data[self::FIELD_OUTCOME_DESC]) || isset($data[self::FIELD_OUTCOME_DESC_EXT])) {
+            if (isset($data[self::FIELD_OUTCOME_DESC])) {
+                $value = $data[self::FIELD_OUTCOME_DESC];
             } else {
-                $this->setOutcomeDesc(new FHIRString($data[self::FIELD_OUTCOME_DESC]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_OUTCOME_DESC_EXT]) && is_array($data[self::FIELD_OUTCOME_DESC_EXT])) {
+                $ext = $data[self::FIELD_OUTCOME_DESC_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setOutcomeDesc($value);
+                } else if (is_array($value)) {
+                    $this->setOutcomeDesc(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setOutcomeDesc(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setOutcomeDesc(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_PURPOSE_OF_EVENT])) {
@@ -339,20 +370,27 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
                 $this->addPurposeOfEvent(new FHIRCodeableConcept($data[self::FIELD_PURPOSE_OF_EVENT]));
             }
         }
-        if (isset($data[self::FIELD_RECORDED])) {
-            $ext = (isset($data[self::FIELD_RECORDED_EXT]) && is_array($data[self::FIELD_RECORDED_EXT]))
-                ? $data[self::FIELD_RECORDED_EXT]
-                : null;
-            if ($data[self::FIELD_RECORDED] instanceof FHIRInstant) {
-                $this->setRecorded($data[self::FIELD_RECORDED]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_RECORDED])) {
-                    $this->setRecorded(new FHIRInstant([FHIRInstant::FIELD_VALUE => $data[self::FIELD_RECORDED]] + $ext));
-                } else if (is_array($data[self::FIELD_RECORDED])) {
-                    $this->setRecorded(new FHIRInstant(array_merge($ext, $data[self::FIELD_RECORDED])));
-                }
+        if (isset($data[self::FIELD_RECORDED]) || isset($data[self::FIELD_RECORDED_EXT])) {
+            if (isset($data[self::FIELD_RECORDED])) {
+                $value = $data[self::FIELD_RECORDED];
             } else {
-                $this->setRecorded(new FHIRInstant($data[self::FIELD_RECORDED]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_RECORDED_EXT]) && is_array($data[self::FIELD_RECORDED_EXT])) {
+                $ext = $data[self::FIELD_RECORDED_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRInstant) {
+                    $this->setRecorded($value);
+                } else if (is_array($value)) {
+                    $this->setRecorded(new FHIRInstant(array_merge($ext, $value)));
+                } else {
+                    $this->setRecorded(new FHIRInstant([FHIRInstant::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setRecorded(new FHIRInstant($ext));
             }
         }
         if (isset($data[self::FIELD_SOURCE])) {
@@ -398,30 +436,6 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -432,7 +446,6 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
         }
         return "<AuditEvent{$xmlns}></AuditEvent>";
     }
-
     /**
      * @return string
      */
@@ -872,6 +885,304 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getAction())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ACTION] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getAgent())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_AGENT, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if ([] !== ($vs = $this->getEntity())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_ENTITY, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getOutcome())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_OUTCOME] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOutcomeDesc())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_OUTCOME_DESC] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getPurposeOfEvent())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_PURPOSE_OF_EVENT, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getRecorded())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RECORDED] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSource())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SOURCE] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getSubtype())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_SUBTYPE, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_ACTION])) {
+            $v = $this->getAction();
+            foreach($validationRules[self::FIELD_ACTION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_ACTION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ACTION])) {
+                        $errs[self::FIELD_ACTION] = [];
+                    }
+                    $errs[self::FIELD_ACTION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_AGENT])) {
+            $v = $this->getAgent();
+            foreach($validationRules[self::FIELD_AGENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_AGENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_AGENT])) {
+                        $errs[self::FIELD_AGENT] = [];
+                    }
+                    $errs[self::FIELD_AGENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ENTITY])) {
+            $v = $this->getEntity();
+            foreach($validationRules[self::FIELD_ENTITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_ENTITY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ENTITY])) {
+                        $errs[self::FIELD_ENTITY] = [];
+                    }
+                    $errs[self::FIELD_ENTITY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_OUTCOME])) {
+            $v = $this->getOutcome();
+            foreach($validationRules[self::FIELD_OUTCOME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_OUTCOME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_OUTCOME])) {
+                        $errs[self::FIELD_OUTCOME] = [];
+                    }
+                    $errs[self::FIELD_OUTCOME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_OUTCOME_DESC])) {
+            $v = $this->getOutcomeDesc();
+            foreach($validationRules[self::FIELD_OUTCOME_DESC] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_OUTCOME_DESC, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_OUTCOME_DESC])) {
+                        $errs[self::FIELD_OUTCOME_DESC] = [];
+                    }
+                    $errs[self::FIELD_OUTCOME_DESC][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PURPOSE_OF_EVENT])) {
+            $v = $this->getPurposeOfEvent();
+            foreach($validationRules[self::FIELD_PURPOSE_OF_EVENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_PURPOSE_OF_EVENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PURPOSE_OF_EVENT])) {
+                        $errs[self::FIELD_PURPOSE_OF_EVENT] = [];
+                    }
+                    $errs[self::FIELD_PURPOSE_OF_EVENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RECORDED])) {
+            $v = $this->getRecorded();
+            foreach($validationRules[self::FIELD_RECORDED] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_RECORDED, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RECORDED])) {
+                        $errs[self::FIELD_RECORDED] = [];
+                    }
+                    $errs[self::FIELD_RECORDED][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SOURCE])) {
+            $v = $this->getSource();
+            foreach($validationRules[self::FIELD_SOURCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_SOURCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SOURCE])) {
+                        $errs[self::FIELD_SOURCE] = [];
+                    }
+                    $errs[self::FIELD_SOURCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUBTYPE])) {
+            $v = $this->getSubtype();
+            foreach($validationRules[self::FIELD_SUBTYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_SUBTYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUBTYPE])) {
+                        $errs[self::FIELD_SUBTYPE] = [];
+                    }
+                    $errs[self::FIELD_SUBTYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTAINED])) {
+            $v = $this->getContained();
+            foreach($validationRules[self::FIELD_CONTAINED] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_CONTAINED, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTAINED])) {
+                        $errs[self::FIELD_CONTAINED] = [];
+                    }
+                    $errs[self::FIELD_CONTAINED][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IMPLICIT_RULES])) {
+            $v = $this->getImplicitRules();
+            foreach($validationRules[self::FIELD_IMPLICIT_RULES] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_IMPLICIT_RULES, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IMPLICIT_RULES])) {
+                        $errs[self::FIELD_IMPLICIT_RULES] = [];
+                    }
+                    $errs[self::FIELD_IMPLICIT_RULES][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LANGUAGE])) {
+            $v = $this->getLanguage();
+            foreach($validationRules[self::FIELD_LANGUAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_LANGUAGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LANGUAGE])) {
+                        $errs[self::FIELD_LANGUAGE] = [];
+                    }
+                    $errs[self::FIELD_LANGUAGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRAuditEvent $type
      * @param null|int $libxmlOpts
@@ -927,22 +1238,32 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
         if (isset($children->outcome)) {
             $type->setOutcome(FHIRAuditEventOutcome::xmlUnserialize($children->outcome));
         }
-        if (isset($attributes->outcomeDesc)) {
-            $type->setOutcomeDesc((string)$attributes->outcomeDesc);
-        }
         if (isset($children->outcomeDesc)) {
             $type->setOutcomeDesc(FHIRString::xmlUnserialize($children->outcomeDesc));
+        }
+        if (isset($attributes->outcomeDesc)) {
+            $pt = $type->getOutcomeDesc();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->outcomeDesc);
+            } else {
+                $type->setOutcomeDesc((string)$attributes->outcomeDesc);
+            }
         }
         if (isset($children->purposeOfEvent)) {
             foreach($children->purposeOfEvent as $child) {
                 $type->addPurposeOfEvent(FHIRCodeableConcept::xmlUnserialize($child));
             }
         }
-        if (isset($attributes->recorded)) {
-            $type->setRecorded((string)$attributes->recorded);
-        }
         if (isset($children->recorded)) {
             $type->setRecorded(FHIRInstant::xmlUnserialize($children->recorded));
+        }
+        if (isset($attributes->recorded)) {
+            $pt = $type->getRecorded();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->recorded);
+            } else {
+                $type->setRecorded((string)$attributes->recorded);
+            }
         }
         if (isset($children->source)) {
             $type->setSource(FHIRAuditEventSource::xmlUnserialize($children->source));
@@ -969,7 +1290,6 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getAction())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_ACTION, null, $v->_getFHIRXMLNamespace()));
         }
@@ -1030,69 +1350,89 @@ class FHIRAuditEvent extends FHIRDomainResource implements PHPFHIRContainedTypeI
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getAction())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_ACTION] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_ACTION_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_ACTION] = $v;
+            $a[self::FIELD_ACTION] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRAuditEventAction::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRAuditEventAction::FIELD_VALUE]);
+                $a[self::FIELD_ACTION_EXT] = $enc;
             }
         }
         if ([] !== ($vs = $this->getAgent())) {
-            $a[self::FIELD_AGENT] = $vs;
+            $a[self::FIELD_AGENT] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_AGENT][] = $v;
+            }
         }
         if ([] !== ($vs = $this->getEntity())) {
-            $a[self::FIELD_ENTITY] = $vs;
+            $a[self::FIELD_ENTITY] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_ENTITY][] = $v;
+            }
         }
         if (null !== ($v = $this->getOutcome())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_OUTCOME] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_OUTCOME_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_OUTCOME] = $v;
+            $a[self::FIELD_OUTCOME] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRAuditEventOutcome::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRAuditEventOutcome::FIELD_VALUE]);
+                $a[self::FIELD_OUTCOME_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getOutcomeDesc())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_OUTCOME_DESC] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_OUTCOME_DESC_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_OUTCOME_DESC] = $v;
+            $a[self::FIELD_OUTCOME_DESC] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_OUTCOME_DESC_EXT] = $enc;
             }
         }
         if ([] !== ($vs = $this->getPurposeOfEvent())) {
-            $a[self::FIELD_PURPOSE_OF_EVENT] = $vs;
+            $a[self::FIELD_PURPOSE_OF_EVENT] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_PURPOSE_OF_EVENT][] = $v;
+            }
         }
         if (null !== ($v = $this->getRecorded())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_RECORDED] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_RECORDED_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_RECORDED] = $v;
+            $a[self::FIELD_RECORDED] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRInstant::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRInstant::FIELD_VALUE]);
+                $a[self::FIELD_RECORDED_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSource())) {
             $a[self::FIELD_SOURCE] = $v;
         }
         if ([] !== ($vs = $this->getSubtype())) {
-            $a[self::FIELD_SUBTYPE] = $vs;
+            $a[self::FIELD_SUBTYPE] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_SUBTYPE][] = $v;
+            }
         }
         if (null !== ($v = $this->getType())) {
             $a[self::FIELD_TYPE] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
     }
+
 
     /**
      * @return string

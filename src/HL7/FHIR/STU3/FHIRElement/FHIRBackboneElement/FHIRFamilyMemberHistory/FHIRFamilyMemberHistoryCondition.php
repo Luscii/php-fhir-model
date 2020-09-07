@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRFamilyMemberHistory;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,12 +86,14 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
     const FIELD_CODE = 'code';
     const FIELD_NOTE = 'note';
     const FIELD_ONSET_AGE = 'onsetAge';
-    const FIELD_ONSET_AGE_EXT = '_onsetAge';
     const FIELD_ONSET_PERIOD = 'onsetPeriod';
     const FIELD_ONSET_RANGE = 'onsetRange';
     const FIELD_ONSET_STRING = 'onsetString';
     const FIELD_ONSET_STRING_EXT = '_onsetString';
     const FIELD_OUTCOME = 'outcome';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -184,8 +186,11 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      */
     protected $outcome = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type FamilyMemberHistory.Condition
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRFamilyMemberHistoryCondition Constructor
@@ -229,17 +234,8 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
             }
         }
         if (isset($data[self::FIELD_ONSET_AGE])) {
-            $ext = (isset($data[self::FIELD_ONSET_AGE_EXT]) && is_array($data[self::FIELD_ONSET_AGE_EXT]))
-                ? $data[self::FIELD_ONSET_AGE_EXT]
-                : null;
             if ($data[self::FIELD_ONSET_AGE] instanceof FHIRAge) {
                 $this->setOnsetAge($data[self::FIELD_ONSET_AGE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_ONSET_AGE])) {
-                    $this->setOnsetAge(new FHIRAge([FHIRAge::FIELD_VALUE => $data[self::FIELD_ONSET_AGE]] + $ext));
-                } else if (is_array($data[self::FIELD_ONSET_AGE])) {
-                    $this->setOnsetAge(new FHIRAge(array_merge($ext, $data[self::FIELD_ONSET_AGE])));
-                }
             } else {
                 $this->setOnsetAge(new FHIRAge($data[self::FIELD_ONSET_AGE]));
             }
@@ -258,20 +254,27 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
                 $this->setOnsetRange(new FHIRRange($data[self::FIELD_ONSET_RANGE]));
             }
         }
-        if (isset($data[self::FIELD_ONSET_STRING])) {
-            $ext = (isset($data[self::FIELD_ONSET_STRING_EXT]) && is_array($data[self::FIELD_ONSET_STRING_EXT]))
-                ? $data[self::FIELD_ONSET_STRING_EXT]
-                : null;
-            if ($data[self::FIELD_ONSET_STRING] instanceof FHIRString) {
-                $this->setOnsetString($data[self::FIELD_ONSET_STRING]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_ONSET_STRING])) {
-                    $this->setOnsetString(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_ONSET_STRING]] + $ext));
-                } else if (is_array($data[self::FIELD_ONSET_STRING])) {
-                    $this->setOnsetString(new FHIRString(array_merge($ext, $data[self::FIELD_ONSET_STRING])));
-                }
+        if (isset($data[self::FIELD_ONSET_STRING]) || isset($data[self::FIELD_ONSET_STRING_EXT])) {
+            if (isset($data[self::FIELD_ONSET_STRING])) {
+                $value = $data[self::FIELD_ONSET_STRING];
             } else {
-                $this->setOnsetString(new FHIRString($data[self::FIELD_ONSET_STRING]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_ONSET_STRING_EXT]) && is_array($data[self::FIELD_ONSET_STRING_EXT])) {
+                $ext = $data[self::FIELD_ONSET_STRING_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setOnsetString($value);
+                } else if (is_array($value)) {
+                    $this->setOnsetString(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setOnsetString(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setOnsetString(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_OUTCOME])) {
@@ -292,30 +295,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -326,7 +305,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
         }
         return "<FamilyMemberHistoryCondition{$xmlns}></FamilyMemberHistoryCondition>";
     }
-
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -602,6 +580,187 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getCode())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CODE] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getNote())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_NOTE, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getOnsetAge())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ONSET_AGE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOnsetPeriod())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ONSET_PERIOD] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOnsetRange())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ONSET_RANGE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOnsetString())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ONSET_STRING] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOutcome())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_OUTCOME] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_CODE])) {
+            $v = $this->getCode();
+            foreach($validationRules[self::FIELD_CODE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_FAMILY_MEMBER_HISTORY_DOT_CONDITION, self::FIELD_CODE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CODE])) {
+                        $errs[self::FIELD_CODE] = [];
+                    }
+                    $errs[self::FIELD_CODE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NOTE])) {
+            $v = $this->getNote();
+            foreach($validationRules[self::FIELD_NOTE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_FAMILY_MEMBER_HISTORY_DOT_CONDITION, self::FIELD_NOTE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NOTE])) {
+                        $errs[self::FIELD_NOTE] = [];
+                    }
+                    $errs[self::FIELD_NOTE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ONSET_AGE])) {
+            $v = $this->getOnsetAge();
+            foreach($validationRules[self::FIELD_ONSET_AGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_FAMILY_MEMBER_HISTORY_DOT_CONDITION, self::FIELD_ONSET_AGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ONSET_AGE])) {
+                        $errs[self::FIELD_ONSET_AGE] = [];
+                    }
+                    $errs[self::FIELD_ONSET_AGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ONSET_PERIOD])) {
+            $v = $this->getOnsetPeriod();
+            foreach($validationRules[self::FIELD_ONSET_PERIOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_FAMILY_MEMBER_HISTORY_DOT_CONDITION, self::FIELD_ONSET_PERIOD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ONSET_PERIOD])) {
+                        $errs[self::FIELD_ONSET_PERIOD] = [];
+                    }
+                    $errs[self::FIELD_ONSET_PERIOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ONSET_RANGE])) {
+            $v = $this->getOnsetRange();
+            foreach($validationRules[self::FIELD_ONSET_RANGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_FAMILY_MEMBER_HISTORY_DOT_CONDITION, self::FIELD_ONSET_RANGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ONSET_RANGE])) {
+                        $errs[self::FIELD_ONSET_RANGE] = [];
+                    }
+                    $errs[self::FIELD_ONSET_RANGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ONSET_STRING])) {
+            $v = $this->getOnsetString();
+            foreach($validationRules[self::FIELD_ONSET_STRING] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_FAMILY_MEMBER_HISTORY_DOT_CONDITION, self::FIELD_ONSET_STRING, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ONSET_STRING])) {
+                        $errs[self::FIELD_ONSET_STRING] = [];
+                    }
+                    $errs[self::FIELD_ONSET_STRING][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_OUTCOME])) {
+            $v = $this->getOutcome();
+            foreach($validationRules[self::FIELD_OUTCOME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_FAMILY_MEMBER_HISTORY_DOT_CONDITION, self::FIELD_OUTCOME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_OUTCOME])) {
+                        $errs[self::FIELD_OUTCOME] = [];
+                    }
+                    $errs[self::FIELD_OUTCOME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRFamilyMemberHistory\FHIRFamilyMemberHistoryCondition $type
      * @param null|int $libxmlOpts
@@ -658,11 +817,16 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
         if (isset($children->onsetRange)) {
             $type->setOnsetRange(FHIRRange::xmlUnserialize($children->onsetRange));
         }
-        if (isset($attributes->onsetString)) {
-            $type->setOnsetString((string)$attributes->onsetString);
-        }
         if (isset($children->onsetString)) {
             $type->setOnsetString(FHIRString::xmlUnserialize($children->onsetString));
+        }
+        if (isset($attributes->onsetString)) {
+            $pt = $type->getOnsetString();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->onsetString);
+            } else {
+                $type->setOnsetString((string)$attributes->onsetString);
+            }
         }
         if (isset($children->outcome)) {
             $type->setOutcome(FHIRCodeableConcept::xmlUnserialize($children->outcome));
@@ -681,7 +845,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getCode())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_CODE, null, $v->_getFHIRXMLNamespace()));
         }
@@ -721,18 +884,16 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
             $a[self::FIELD_CODE] = $v;
         }
         if ([] !== ($vs = $this->getNote())) {
-            $a[self::FIELD_NOTE] = $vs;
+            $a[self::FIELD_NOTE] = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $a[self::FIELD_NOTE][] = $v;
+            }
         }
         if (null !== ($v = $this->getOnsetAge())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_ONSET_AGE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_ONSET_AGE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_ONSET_AGE] = $v;
-            }
+            $a[self::FIELD_ONSET_AGE] = $v;
         }
         if (null !== ($v = $this->getOnsetPeriod())) {
             $a[self::FIELD_ONSET_PERIOD] = $v;
@@ -741,21 +902,23 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
             $a[self::FIELD_ONSET_RANGE] = $v;
         }
         if (null !== ($v = $this->getOnsetString())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_ONSET_STRING] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_ONSET_STRING_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_ONSET_STRING] = $v;
+            $a[self::FIELD_ONSET_STRING] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_ONSET_STRING_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getOutcome())) {
             $a[self::FIELD_OUTCOME] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return $a;
     }
+
 
     /**
      * @return string

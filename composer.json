@@ -17,6 +17,7 @@
     },
     "require-dev": {
         "php": "^7.1",
+        "ext-json": "*",
         "phpunit/phpunit": "6.4.*"
     },
     "autoload": {

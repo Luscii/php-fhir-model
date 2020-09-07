@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,6 +83,9 @@ class FHIRPeriod extends FHIRElement
     const FIELD_START = 'start';
     const FIELD_START_EXT = '_start';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -113,8 +116,11 @@ class FHIRPeriod extends FHIRElement
      */
     protected $start = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Period
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRPeriod Constructor
@@ -132,36 +138,50 @@ class FHIRPeriod extends FHIRElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_END])) {
-            $ext = (isset($data[self::FIELD_END_EXT]) && is_array($data[self::FIELD_END_EXT]))
-                ? $data[self::FIELD_END_EXT]
-                : null;
-            if ($data[self::FIELD_END] instanceof FHIRDateTime) {
-                $this->setEnd($data[self::FIELD_END]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_END])) {
-                    $this->setEnd(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_END]] + $ext));
-                } else if (is_array($data[self::FIELD_END])) {
-                    $this->setEnd(new FHIRDateTime(array_merge($ext, $data[self::FIELD_END])));
-                }
+        if (isset($data[self::FIELD_END]) || isset($data[self::FIELD_END_EXT])) {
+            if (isset($data[self::FIELD_END])) {
+                $value = $data[self::FIELD_END];
             } else {
-                $this->setEnd(new FHIRDateTime($data[self::FIELD_END]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_END_EXT]) && is_array($data[self::FIELD_END_EXT])) {
+                $ext = $data[self::FIELD_END_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setEnd($value);
+                } else if (is_array($value)) {
+                    $this->setEnd(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setEnd(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setEnd(new FHIRDateTime($ext));
             }
         }
-        if (isset($data[self::FIELD_START])) {
-            $ext = (isset($data[self::FIELD_START_EXT]) && is_array($data[self::FIELD_START_EXT]))
-                ? $data[self::FIELD_START_EXT]
-                : null;
-            if ($data[self::FIELD_START] instanceof FHIRDateTime) {
-                $this->setStart($data[self::FIELD_START]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_START])) {
-                    $this->setStart(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $data[self::FIELD_START]] + $ext));
-                } else if (is_array($data[self::FIELD_START])) {
-                    $this->setStart(new FHIRDateTime(array_merge($ext, $data[self::FIELD_START])));
-                }
+        if (isset($data[self::FIELD_START]) || isset($data[self::FIELD_START_EXT])) {
+            if (isset($data[self::FIELD_START])) {
+                $value = $data[self::FIELD_START];
             } else {
-                $this->setStart(new FHIRDateTime($data[self::FIELD_START]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_START_EXT]) && is_array($data[self::FIELD_START_EXT])) {
+                $ext = $data[self::FIELD_START_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setStart($value);
+                } else if (is_array($value)) {
+                    $this->setStart(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setStart(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setStart(new FHIRDateTime($ext));
             }
         }
     }
@@ -175,30 +195,6 @@ class FHIRPeriod extends FHIRElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -209,7 +205,6 @@ class FHIRPeriod extends FHIRElement
         }
         return "<Period{$xmlns}></Period>";
     }
-
 
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
@@ -304,6 +299,88 @@ class FHIRPeriod extends FHIRElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getEnd())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_END] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getStart())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_START] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_END])) {
+            $v = $this->getEnd();
+            foreach($validationRules[self::FIELD_END] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PERIOD, self::FIELD_END, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_END])) {
+                        $errs[self::FIELD_END] = [];
+                    }
+                    $errs[self::FIELD_END][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_START])) {
+            $v = $this->getStart();
+            foreach($validationRules[self::FIELD_START] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_PERIOD, self::FIELD_START, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_START])) {
+                        $errs[self::FIELD_START] = [];
+                    }
+                    $errs[self::FIELD_START][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $type
      * @param null|int $libxmlOpts
@@ -343,17 +420,27 @@ class FHIRPeriod extends FHIRElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->end)) {
-            $type->setEnd((string)$attributes->end);
-        }
         if (isset($children->end)) {
             $type->setEnd(FHIRDateTime::xmlUnserialize($children->end));
         }
-        if (isset($attributes->start)) {
-            $type->setStart((string)$attributes->start);
+        if (isset($attributes->end)) {
+            $pt = $type->getEnd();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->end);
+            } else {
+                $type->setEnd((string)$attributes->end);
+            }
         }
         if (isset($children->start)) {
             $type->setStart(FHIRDateTime::xmlUnserialize($children->start));
+        }
+        if (isset($attributes->start)) {
+            $pt = $type->getStart();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->start);
+            } else {
+                $type->setStart((string)$attributes->start);
+            }
         }
         return $type;
     }
@@ -369,7 +456,6 @@ class FHIRPeriod extends FHIRElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getEnd())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_END, null, $v->_getFHIRXMLNamespace()));
         }
@@ -386,29 +472,29 @@ class FHIRPeriod extends FHIRElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getEnd())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_END] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_END_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_END] = $v;
+            $a[self::FIELD_END] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDateTime::FIELD_VALUE]);
+                $a[self::FIELD_END_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getStart())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_START] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_START_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_START] = $v;
+            $a[self::FIELD_START] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRDateTime::FIELD_VALUE]);
+                $a[self::FIELD_START_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

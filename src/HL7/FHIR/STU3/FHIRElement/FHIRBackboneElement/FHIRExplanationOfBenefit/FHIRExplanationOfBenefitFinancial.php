@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,16 +83,17 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_EXPLANATION_OF_BENEFIT_DOT_FINANCIAL;
     const FIELD_ALLOWED_MONEY = 'allowedMoney';
-    const FIELD_ALLOWED_MONEY_EXT = '_allowedMoney';
     const FIELD_ALLOWED_STRING = 'allowedString';
     const FIELD_ALLOWED_STRING_EXT = '_allowedString';
     const FIELD_ALLOWED_UNSIGNED_INT = 'allowedUnsignedInt';
     const FIELD_ALLOWED_UNSIGNED_INT_EXT = '_allowedUnsignedInt';
     const FIELD_TYPE = 'type';
     const FIELD_USED_MONEY = 'usedMoney';
-    const FIELD_USED_MONEY_EXT = '_usedMoney';
     const FIELD_USED_UNSIGNED_INT = 'usedUnsignedInt';
     const FIELD_USED_UNSIGNED_INT_EXT = '_usedUnsignedInt';
+
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
 
     /**
      * An amount of economic utility in some recognized currency.
@@ -161,8 +162,11 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      */
     protected $usedUnsignedInt = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type ExplanationOfBenefit.Financial
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRExplanationOfBenefitFinancial Constructor
@@ -181,51 +185,56 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_ALLOWED_MONEY])) {
-            $ext = (isset($data[self::FIELD_ALLOWED_MONEY_EXT]) && is_array($data[self::FIELD_ALLOWED_MONEY_EXT]))
-                ? $data[self::FIELD_ALLOWED_MONEY_EXT]
-                : null;
             if ($data[self::FIELD_ALLOWED_MONEY] instanceof FHIRMoney) {
                 $this->setAllowedMoney($data[self::FIELD_ALLOWED_MONEY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_ALLOWED_MONEY])) {
-                    $this->setAllowedMoney(new FHIRMoney([FHIRMoney::FIELD_VALUE => $data[self::FIELD_ALLOWED_MONEY]] + $ext));
-                } else if (is_array($data[self::FIELD_ALLOWED_MONEY])) {
-                    $this->setAllowedMoney(new FHIRMoney(array_merge($ext, $data[self::FIELD_ALLOWED_MONEY])));
-                }
             } else {
                 $this->setAllowedMoney(new FHIRMoney($data[self::FIELD_ALLOWED_MONEY]));
             }
         }
-        if (isset($data[self::FIELD_ALLOWED_STRING])) {
-            $ext = (isset($data[self::FIELD_ALLOWED_STRING_EXT]) && is_array($data[self::FIELD_ALLOWED_STRING_EXT]))
-                ? $data[self::FIELD_ALLOWED_STRING_EXT]
-                : null;
-            if ($data[self::FIELD_ALLOWED_STRING] instanceof FHIRString) {
-                $this->setAllowedString($data[self::FIELD_ALLOWED_STRING]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_ALLOWED_STRING])) {
-                    $this->setAllowedString(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_ALLOWED_STRING]] + $ext));
-                } else if (is_array($data[self::FIELD_ALLOWED_STRING])) {
-                    $this->setAllowedString(new FHIRString(array_merge($ext, $data[self::FIELD_ALLOWED_STRING])));
-                }
+        if (isset($data[self::FIELD_ALLOWED_STRING]) || isset($data[self::FIELD_ALLOWED_STRING_EXT])) {
+            if (isset($data[self::FIELD_ALLOWED_STRING])) {
+                $value = $data[self::FIELD_ALLOWED_STRING];
             } else {
-                $this->setAllowedString(new FHIRString($data[self::FIELD_ALLOWED_STRING]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_ALLOWED_STRING_EXT]) && is_array($data[self::FIELD_ALLOWED_STRING_EXT])) {
+                $ext = $data[self::FIELD_ALLOWED_STRING_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setAllowedString($value);
+                } else if (is_array($value)) {
+                    $this->setAllowedString(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setAllowedString(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setAllowedString(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_ALLOWED_UNSIGNED_INT])) {
-            $ext = (isset($data[self::FIELD_ALLOWED_UNSIGNED_INT_EXT]) && is_array($data[self::FIELD_ALLOWED_UNSIGNED_INT_EXT]))
-                ? $data[self::FIELD_ALLOWED_UNSIGNED_INT_EXT]
-                : null;
-            if ($data[self::FIELD_ALLOWED_UNSIGNED_INT] instanceof FHIRUnsignedInt) {
-                $this->setAllowedUnsignedInt($data[self::FIELD_ALLOWED_UNSIGNED_INT]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_ALLOWED_UNSIGNED_INT])) {
-                    $this->setAllowedUnsignedInt(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $data[self::FIELD_ALLOWED_UNSIGNED_INT]] + $ext));
-                } else if (is_array($data[self::FIELD_ALLOWED_UNSIGNED_INT])) {
-                    $this->setAllowedUnsignedInt(new FHIRUnsignedInt(array_merge($ext, $data[self::FIELD_ALLOWED_UNSIGNED_INT])));
-                }
+        if (isset($data[self::FIELD_ALLOWED_UNSIGNED_INT]) || isset($data[self::FIELD_ALLOWED_UNSIGNED_INT_EXT])) {
+            if (isset($data[self::FIELD_ALLOWED_UNSIGNED_INT])) {
+                $value = $data[self::FIELD_ALLOWED_UNSIGNED_INT];
             } else {
-                $this->setAllowedUnsignedInt(new FHIRUnsignedInt($data[self::FIELD_ALLOWED_UNSIGNED_INT]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_ALLOWED_UNSIGNED_INT_EXT]) && is_array($data[self::FIELD_ALLOWED_UNSIGNED_INT_EXT])) {
+                $ext = $data[self::FIELD_ALLOWED_UNSIGNED_INT_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRUnsignedInt) {
+                    $this->setAllowedUnsignedInt($value);
+                } else if (is_array($value)) {
+                    $this->setAllowedUnsignedInt(new FHIRUnsignedInt(array_merge($ext, $value)));
+                } else {
+                    $this->setAllowedUnsignedInt(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setAllowedUnsignedInt(new FHIRUnsignedInt($ext));
             }
         }
         if (isset($data[self::FIELD_TYPE])) {
@@ -236,35 +245,33 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
             }
         }
         if (isset($data[self::FIELD_USED_MONEY])) {
-            $ext = (isset($data[self::FIELD_USED_MONEY_EXT]) && is_array($data[self::FIELD_USED_MONEY_EXT]))
-                ? $data[self::FIELD_USED_MONEY_EXT]
-                : null;
             if ($data[self::FIELD_USED_MONEY] instanceof FHIRMoney) {
                 $this->setUsedMoney($data[self::FIELD_USED_MONEY]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_USED_MONEY])) {
-                    $this->setUsedMoney(new FHIRMoney([FHIRMoney::FIELD_VALUE => $data[self::FIELD_USED_MONEY]] + $ext));
-                } else if (is_array($data[self::FIELD_USED_MONEY])) {
-                    $this->setUsedMoney(new FHIRMoney(array_merge($ext, $data[self::FIELD_USED_MONEY])));
-                }
             } else {
                 $this->setUsedMoney(new FHIRMoney($data[self::FIELD_USED_MONEY]));
             }
         }
-        if (isset($data[self::FIELD_USED_UNSIGNED_INT])) {
-            $ext = (isset($data[self::FIELD_USED_UNSIGNED_INT_EXT]) && is_array($data[self::FIELD_USED_UNSIGNED_INT_EXT]))
-                ? $data[self::FIELD_USED_UNSIGNED_INT_EXT]
-                : null;
-            if ($data[self::FIELD_USED_UNSIGNED_INT] instanceof FHIRUnsignedInt) {
-                $this->setUsedUnsignedInt($data[self::FIELD_USED_UNSIGNED_INT]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_USED_UNSIGNED_INT])) {
-                    $this->setUsedUnsignedInt(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $data[self::FIELD_USED_UNSIGNED_INT]] + $ext));
-                } else if (is_array($data[self::FIELD_USED_UNSIGNED_INT])) {
-                    $this->setUsedUnsignedInt(new FHIRUnsignedInt(array_merge($ext, $data[self::FIELD_USED_UNSIGNED_INT])));
-                }
+        if (isset($data[self::FIELD_USED_UNSIGNED_INT]) || isset($data[self::FIELD_USED_UNSIGNED_INT_EXT])) {
+            if (isset($data[self::FIELD_USED_UNSIGNED_INT])) {
+                $value = $data[self::FIELD_USED_UNSIGNED_INT];
             } else {
-                $this->setUsedUnsignedInt(new FHIRUnsignedInt($data[self::FIELD_USED_UNSIGNED_INT]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_USED_UNSIGNED_INT_EXT]) && is_array($data[self::FIELD_USED_UNSIGNED_INT_EXT])) {
+                $ext = $data[self::FIELD_USED_UNSIGNED_INT_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRUnsignedInt) {
+                    $this->setUsedUnsignedInt($value);
+                } else if (is_array($value)) {
+                    $this->setUsedUnsignedInt(new FHIRUnsignedInt(array_merge($ext, $value)));
+                } else {
+                    $this->setUsedUnsignedInt(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setUsedUnsignedInt(new FHIRUnsignedInt($ext));
             }
         }
     }
@@ -278,30 +285,6 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -312,7 +295,6 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
         }
         return "<ExplanationOfBenefitFinancial{$xmlns}></ExplanationOfBenefitFinancial>";
     }
-
 
     /**
      * An amount of economic utility in some recognized currency.
@@ -521,6 +503,168 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getAllowedMoney())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ALLOWED_MONEY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getAllowedString())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ALLOWED_STRING] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getAllowedUnsignedInt())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ALLOWED_UNSIGNED_INT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getUsedMoney())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_USED_MONEY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getUsedUnsignedInt())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_USED_UNSIGNED_INT] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_ALLOWED_MONEY])) {
+            $v = $this->getAllowedMoney();
+            foreach($validationRules[self::FIELD_ALLOWED_MONEY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_EXPLANATION_OF_BENEFIT_DOT_FINANCIAL, self::FIELD_ALLOWED_MONEY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ALLOWED_MONEY])) {
+                        $errs[self::FIELD_ALLOWED_MONEY] = [];
+                    }
+                    $errs[self::FIELD_ALLOWED_MONEY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ALLOWED_STRING])) {
+            $v = $this->getAllowedString();
+            foreach($validationRules[self::FIELD_ALLOWED_STRING] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_EXPLANATION_OF_BENEFIT_DOT_FINANCIAL, self::FIELD_ALLOWED_STRING, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ALLOWED_STRING])) {
+                        $errs[self::FIELD_ALLOWED_STRING] = [];
+                    }
+                    $errs[self::FIELD_ALLOWED_STRING][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ALLOWED_UNSIGNED_INT])) {
+            $v = $this->getAllowedUnsignedInt();
+            foreach($validationRules[self::FIELD_ALLOWED_UNSIGNED_INT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_EXPLANATION_OF_BENEFIT_DOT_FINANCIAL, self::FIELD_ALLOWED_UNSIGNED_INT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ALLOWED_UNSIGNED_INT])) {
+                        $errs[self::FIELD_ALLOWED_UNSIGNED_INT] = [];
+                    }
+                    $errs[self::FIELD_ALLOWED_UNSIGNED_INT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_EXPLANATION_OF_BENEFIT_DOT_FINANCIAL, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_USED_MONEY])) {
+            $v = $this->getUsedMoney();
+            foreach($validationRules[self::FIELD_USED_MONEY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_EXPLANATION_OF_BENEFIT_DOT_FINANCIAL, self::FIELD_USED_MONEY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_USED_MONEY])) {
+                        $errs[self::FIELD_USED_MONEY] = [];
+                    }
+                    $errs[self::FIELD_USED_MONEY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_USED_UNSIGNED_INT])) {
+            $v = $this->getUsedUnsignedInt();
+            foreach($validationRules[self::FIELD_USED_UNSIGNED_INT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_EXPLANATION_OF_BENEFIT_DOT_FINANCIAL, self::FIELD_USED_UNSIGNED_INT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_USED_UNSIGNED_INT])) {
+                        $errs[self::FIELD_USED_UNSIGNED_INT] = [];
+                    }
+                    $errs[self::FIELD_USED_UNSIGNED_INT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitFinancial $type
      * @param null|int $libxmlOpts
@@ -563,17 +707,27 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
         if (isset($children->allowedMoney)) {
             $type->setAllowedMoney(FHIRMoney::xmlUnserialize($children->allowedMoney));
         }
-        if (isset($attributes->allowedString)) {
-            $type->setAllowedString((string)$attributes->allowedString);
-        }
         if (isset($children->allowedString)) {
             $type->setAllowedString(FHIRString::xmlUnserialize($children->allowedString));
         }
-        if (isset($attributes->allowedUnsignedInt)) {
-            $type->setAllowedUnsignedInt((string)$attributes->allowedUnsignedInt);
+        if (isset($attributes->allowedString)) {
+            $pt = $type->getAllowedString();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->allowedString);
+            } else {
+                $type->setAllowedString((string)$attributes->allowedString);
+            }
         }
         if (isset($children->allowedUnsignedInt)) {
             $type->setAllowedUnsignedInt(FHIRUnsignedInt::xmlUnserialize($children->allowedUnsignedInt));
+        }
+        if (isset($attributes->allowedUnsignedInt)) {
+            $pt = $type->getAllowedUnsignedInt();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->allowedUnsignedInt);
+            } else {
+                $type->setAllowedUnsignedInt((string)$attributes->allowedUnsignedInt);
+            }
         }
         if (isset($children->type)) {
             $type->setType(FHIRCodeableConcept::xmlUnserialize($children->type));
@@ -581,11 +735,16 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
         if (isset($children->usedMoney)) {
             $type->setUsedMoney(FHIRMoney::xmlUnserialize($children->usedMoney));
         }
-        if (isset($attributes->usedUnsignedInt)) {
-            $type->setUsedUnsignedInt((string)$attributes->usedUnsignedInt);
-        }
         if (isset($children->usedUnsignedInt)) {
             $type->setUsedUnsignedInt(FHIRUnsignedInt::xmlUnserialize($children->usedUnsignedInt));
+        }
+        if (isset($attributes->usedUnsignedInt)) {
+            $pt = $type->getUsedUnsignedInt();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->usedUnsignedInt);
+            } else {
+                $type->setUsedUnsignedInt((string)$attributes->usedUnsignedInt);
+            }
         }
         return $type;
     }
@@ -601,7 +760,6 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getAllowedMoney())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_ALLOWED_MONEY, null, $v->_getFHIRXMLNamespace()));
         }
@@ -630,65 +788,47 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getAllowedMoney())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_ALLOWED_MONEY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_ALLOWED_MONEY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_ALLOWED_MONEY] = $v;
-            }
+            $a[self::FIELD_ALLOWED_MONEY] = $v;
         }
         if (null !== ($v = $this->getAllowedString())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_ALLOWED_STRING] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_ALLOWED_STRING_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_ALLOWED_STRING] = $v;
+            $a[self::FIELD_ALLOWED_STRING] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_ALLOWED_STRING_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getAllowedUnsignedInt())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_ALLOWED_UNSIGNED_INT] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_ALLOWED_UNSIGNED_INT_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_ALLOWED_UNSIGNED_INT] = $v;
+            $a[self::FIELD_ALLOWED_UNSIGNED_INT] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUnsignedInt::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRUnsignedInt::FIELD_VALUE]);
+                $a[self::FIELD_ALLOWED_UNSIGNED_INT_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getType())) {
             $a[self::FIELD_TYPE] = $v;
         }
         if (null !== ($v = $this->getUsedMoney())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_USED_MONEY] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_USED_MONEY_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_USED_MONEY] = $v;
-            }
+            $a[self::FIELD_USED_MONEY] = $v;
         }
         if (null !== ($v = $this->getUsedUnsignedInt())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_USED_UNSIGNED_INT] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_USED_UNSIGNED_INT_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_USED_UNSIGNED_INT] = $v;
+            $a[self::FIELD_USED_UNSIGNED_INT] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUnsignedInt::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRUnsignedInt::FIELD_VALUE]);
+                $a[self::FIELD_USED_UNSIGNED_INT_EXT] = $enc;
             }
+        }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
         }
         return $a;
     }
+
 
     /**
      * @return string

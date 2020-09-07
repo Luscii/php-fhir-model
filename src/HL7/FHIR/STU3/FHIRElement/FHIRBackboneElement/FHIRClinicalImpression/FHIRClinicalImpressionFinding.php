@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRClinicalImpression;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,6 +90,9 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
     const FIELD_ITEM_CODEABLE_CONCEPT = 'itemCodeableConcept';
     const FIELD_ITEM_REFERENCE = 'itemReference';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -126,8 +129,11 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
      */
     protected $itemReference = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type ClinicalImpression.Finding
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRClinicalImpressionFinding Constructor
@@ -145,20 +151,27 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_BASIS])) {
-            $ext = (isset($data[self::FIELD_BASIS_EXT]) && is_array($data[self::FIELD_BASIS_EXT]))
-                ? $data[self::FIELD_BASIS_EXT]
-                : null;
-            if ($data[self::FIELD_BASIS] instanceof FHIRString) {
-                $this->setBasis($data[self::FIELD_BASIS]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_BASIS])) {
-                    $this->setBasis(new FHIRString([FHIRString::FIELD_VALUE => $data[self::FIELD_BASIS]] + $ext));
-                } else if (is_array($data[self::FIELD_BASIS])) {
-                    $this->setBasis(new FHIRString(array_merge($ext, $data[self::FIELD_BASIS])));
-                }
+        if (isset($data[self::FIELD_BASIS]) || isset($data[self::FIELD_BASIS_EXT])) {
+            if (isset($data[self::FIELD_BASIS])) {
+                $value = $data[self::FIELD_BASIS];
             } else {
-                $this->setBasis(new FHIRString($data[self::FIELD_BASIS]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_BASIS_EXT]) && is_array($data[self::FIELD_BASIS_EXT])) {
+                $ext = $data[self::FIELD_BASIS_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setBasis($value);
+                } else if (is_array($value)) {
+                    $this->setBasis(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setBasis(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setBasis(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_ITEM_CODEABLE_CONCEPT])) {
@@ -186,30 +199,6 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -220,7 +209,6 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
         }
         return "<ClinicalImpressionFinding{$xmlns}></ClinicalImpressionFinding>";
     }
-
 
     /**
      * A sequence of Unicode characters
@@ -327,6 +315,117 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getBasis())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_BASIS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getItemCodeableConcept())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ITEM_CODEABLE_CONCEPT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getItemReference())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ITEM_REFERENCE] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_BASIS])) {
+            $v = $this->getBasis();
+            foreach($validationRules[self::FIELD_BASIS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLINICAL_IMPRESSION_DOT_FINDING, self::FIELD_BASIS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_BASIS])) {
+                        $errs[self::FIELD_BASIS] = [];
+                    }
+                    $errs[self::FIELD_BASIS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ITEM_CODEABLE_CONCEPT])) {
+            $v = $this->getItemCodeableConcept();
+            foreach($validationRules[self::FIELD_ITEM_CODEABLE_CONCEPT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLINICAL_IMPRESSION_DOT_FINDING, self::FIELD_ITEM_CODEABLE_CONCEPT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ITEM_CODEABLE_CONCEPT])) {
+                        $errs[self::FIELD_ITEM_CODEABLE_CONCEPT] = [];
+                    }
+                    $errs[self::FIELD_ITEM_CODEABLE_CONCEPT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ITEM_REFERENCE])) {
+            $v = $this->getItemReference();
+            foreach($validationRules[self::FIELD_ITEM_REFERENCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CLINICAL_IMPRESSION_DOT_FINDING, self::FIELD_ITEM_REFERENCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ITEM_REFERENCE])) {
+                        $errs[self::FIELD_ITEM_REFERENCE] = [];
+                    }
+                    $errs[self::FIELD_ITEM_REFERENCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRClinicalImpression\FHIRClinicalImpressionFinding $type
      * @param null|int $libxmlOpts
@@ -366,11 +465,16 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->basis)) {
-            $type->setBasis((string)$attributes->basis);
-        }
         if (isset($children->basis)) {
             $type->setBasis(FHIRString::xmlUnserialize($children->basis));
+        }
+        if (isset($attributes->basis)) {
+            $pt = $type->getBasis();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->basis);
+            } else {
+                $type->setBasis((string)$attributes->basis);
+            }
         }
         if (isset($children->itemCodeableConcept)) {
             $type->setItemCodeableConcept(FHIRCodeableConcept::xmlUnserialize($children->itemCodeableConcept));
@@ -392,7 +496,6 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getBasis())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_BASIS, null, $v->_getFHIRXMLNamespace()));
         }
@@ -412,14 +515,12 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getBasis())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_BASIS] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_BASIS_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_BASIS] = $v;
+            $a[self::FIELD_BASIS] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRString::FIELD_VALUE]);
+                $a[self::FIELD_BASIS_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getItemCodeableConcept())) {
@@ -428,8 +529,12 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
         if (null !== ($v = $this->getItemReference())) {
             $a[self::FIELD_ITEM_REFERENCE] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return $a;
     }
+
 
     /**
      * @return string

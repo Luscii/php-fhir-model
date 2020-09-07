@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAccount;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,6 +85,9 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
     const FIELD_PARTY = 'party';
     const FIELD_PERIOD = 'period';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -118,8 +121,11 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      */
     protected $period = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Account.Guarantor
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRAccountGuarantor Constructor
@@ -137,20 +143,27 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_ON_HOLD])) {
-            $ext = (isset($data[self::FIELD_ON_HOLD_EXT]) && is_array($data[self::FIELD_ON_HOLD_EXT]))
-                ? $data[self::FIELD_ON_HOLD_EXT]
-                : null;
-            if ($data[self::FIELD_ON_HOLD] instanceof FHIRBoolean) {
-                $this->setOnHold($data[self::FIELD_ON_HOLD]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_ON_HOLD])) {
-                    $this->setOnHold(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $data[self::FIELD_ON_HOLD]] + $ext));
-                } else if (is_array($data[self::FIELD_ON_HOLD])) {
-                    $this->setOnHold(new FHIRBoolean(array_merge($ext, $data[self::FIELD_ON_HOLD])));
-                }
+        if (isset($data[self::FIELD_ON_HOLD]) || isset($data[self::FIELD_ON_HOLD_EXT])) {
+            if (isset($data[self::FIELD_ON_HOLD])) {
+                $value = $data[self::FIELD_ON_HOLD];
             } else {
-                $this->setOnHold(new FHIRBoolean($data[self::FIELD_ON_HOLD]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_ON_HOLD_EXT]) && is_array($data[self::FIELD_ON_HOLD_EXT])) {
+                $ext = $data[self::FIELD_ON_HOLD_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRBoolean) {
+                    $this->setOnHold($value);
+                } else if (is_array($value)) {
+                    $this->setOnHold(new FHIRBoolean(array_merge($ext, $value)));
+                } else {
+                    $this->setOnHold(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setOnHold(new FHIRBoolean($ext));
             }
         }
         if (isset($data[self::FIELD_PARTY])) {
@@ -178,30 +191,6 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -212,7 +201,6 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
         }
         return "<AccountGuarantor{$xmlns}></AccountGuarantor>";
     }
-
 
     /**
      * Value of "true" or "false"
@@ -313,6 +301,117 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getOnHold())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ON_HOLD] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getParty())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PARTY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PERIOD] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_ON_HOLD])) {
+            $v = $this->getOnHold();
+            foreach($validationRules[self::FIELD_ON_HOLD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ACCOUNT_DOT_GUARANTOR, self::FIELD_ON_HOLD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ON_HOLD])) {
+                        $errs[self::FIELD_ON_HOLD] = [];
+                    }
+                    $errs[self::FIELD_ON_HOLD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PARTY])) {
+            $v = $this->getParty();
+            foreach($validationRules[self::FIELD_PARTY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ACCOUNT_DOT_GUARANTOR, self::FIELD_PARTY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PARTY])) {
+                        $errs[self::FIELD_PARTY] = [];
+                    }
+                    $errs[self::FIELD_PARTY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PERIOD])) {
+            $v = $this->getPeriod();
+            foreach($validationRules[self::FIELD_PERIOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ACCOUNT_DOT_GUARANTOR, self::FIELD_PERIOD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PERIOD])) {
+                        $errs[self::FIELD_PERIOD] = [];
+                    }
+                    $errs[self::FIELD_PERIOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAccount\FHIRAccountGuarantor $type
      * @param null|int $libxmlOpts
@@ -352,11 +451,16 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->onHold)) {
-            $type->setOnHold((string)$attributes->onHold);
-        }
         if (isset($children->onHold)) {
             $type->setOnHold(FHIRBoolean::xmlUnserialize($children->onHold));
+        }
+        if (isset($attributes->onHold)) {
+            $pt = $type->getOnHold();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->onHold);
+            } else {
+                $type->setOnHold((string)$attributes->onHold);
+            }
         }
         if (isset($children->party)) {
             $type->setParty(FHIRReference::xmlUnserialize($children->party));
@@ -378,7 +482,6 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getOnHold())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_ON_HOLD, null, $v->_getFHIRXMLNamespace()));
         }
@@ -398,14 +501,12 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getOnHold())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_ON_HOLD] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_ON_HOLD_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_ON_HOLD] = $v;
+            $a[self::FIELD_ON_HOLD] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRBoolean::FIELD_VALUE]);
+                $a[self::FIELD_ON_HOLD_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getParty())) {
@@ -414,8 +515,12 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
         if (null !== ($v = $this->getPeriod())) {
             $a[self::FIELD_PERIOD] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return $a;
     }
+
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,6 +88,9 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
     const FIELD_CONTENT_TYPE_EXT = '_contentType';
     const FIELD_SECURITY_CONTEXT = 'securityContext';
 
+    /** @var string */
+    private $_xmlns = 'http://hl7.org/fhir';
+
     /**
      * A stream of bytes
      * A stream of bytes, base64 encoded
@@ -122,8 +125,11 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      */
     protected $securityContext = null;
 
-    /** @var string */
-    protected $_xmlns = 'http://hl7.org/fhir';
+    /**
+     * Validation map for fields in type Binary
+     * @var array
+     */
+    private static $_validationRules = [    ];
 
     /**
      * FHIRBinary Constructor
@@ -141,36 +147,50 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
             ));
         }
         parent::__construct($data);
-        if (isset($data[self::FIELD_CONTENT])) {
-            $ext = (isset($data[self::FIELD_CONTENT_EXT]) && is_array($data[self::FIELD_CONTENT_EXT]))
-                ? $data[self::FIELD_CONTENT_EXT]
-                : null;
-            if ($data[self::FIELD_CONTENT] instanceof FHIRBase64Binary) {
-                $this->setContent($data[self::FIELD_CONTENT]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_CONTENT])) {
-                    $this->setContent(new FHIRBase64Binary([FHIRBase64Binary::FIELD_VALUE => $data[self::FIELD_CONTENT]] + $ext));
-                } else if (is_array($data[self::FIELD_CONTENT])) {
-                    $this->setContent(new FHIRBase64Binary(array_merge($ext, $data[self::FIELD_CONTENT])));
-                }
+        if (isset($data[self::FIELD_CONTENT]) || isset($data[self::FIELD_CONTENT_EXT])) {
+            if (isset($data[self::FIELD_CONTENT])) {
+                $value = $data[self::FIELD_CONTENT];
             } else {
-                $this->setContent(new FHIRBase64Binary($data[self::FIELD_CONTENT]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_CONTENT_EXT]) && is_array($data[self::FIELD_CONTENT_EXT])) {
+                $ext = $data[self::FIELD_CONTENT_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRBase64Binary) {
+                    $this->setContent($value);
+                } else if (is_array($value)) {
+                    $this->setContent(new FHIRBase64Binary(array_merge($ext, $value)));
+                } else {
+                    $this->setContent(new FHIRBase64Binary([FHIRBase64Binary::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setContent(new FHIRBase64Binary($ext));
             }
         }
-        if (isset($data[self::FIELD_CONTENT_TYPE])) {
-            $ext = (isset($data[self::FIELD_CONTENT_TYPE_EXT]) && is_array($data[self::FIELD_CONTENT_TYPE_EXT]))
-                ? $data[self::FIELD_CONTENT_TYPE_EXT]
-                : null;
-            if ($data[self::FIELD_CONTENT_TYPE] instanceof FHIRCode) {
-                $this->setContentType($data[self::FIELD_CONTENT_TYPE]);
-            } elseif (null !== $ext) {
-                if (is_scalar($data[self::FIELD_CONTENT_TYPE])) {
-                    $this->setContentType(new FHIRCode([FHIRCode::FIELD_VALUE => $data[self::FIELD_CONTENT_TYPE]] + $ext));
-                } else if (is_array($data[self::FIELD_CONTENT_TYPE])) {
-                    $this->setContentType(new FHIRCode(array_merge($ext, $data[self::FIELD_CONTENT_TYPE])));
-                }
+        if (isset($data[self::FIELD_CONTENT_TYPE]) || isset($data[self::FIELD_CONTENT_TYPE_EXT])) {
+            if (isset($data[self::FIELD_CONTENT_TYPE])) {
+                $value = $data[self::FIELD_CONTENT_TYPE];
             } else {
-                $this->setContentType(new FHIRCode($data[self::FIELD_CONTENT_TYPE]));
+                $value = null;
+            }
+            if (isset($data[self::FIELD_CONTENT_TYPE_EXT]) && is_array($data[self::FIELD_CONTENT_TYPE_EXT])) {
+                $ext = $data[self::FIELD_CONTENT_TYPE_EXT];
+            } else {
+                $ext = [];
+            }
+            if (null !== $value) {
+                if ($value instanceof FHIRCode) {
+                    $this->setContentType($value);
+                } else if (is_array($value)) {
+                    $this->setContentType(new FHIRCode(array_merge($ext, $value)));
+                } else {
+                    $this->setContentType(new FHIRCode([FHIRCode::FIELD_VALUE => $value] + $ext));
+                }
+            } else if ([] !== $ext) {
+                $this->setContentType(new FHIRCode($ext));
             }
         }
         if (isset($data[self::FIELD_SECURITY_CONTEXT])) {
@@ -191,30 +211,6 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
     }
 
     /**
-     * @return string|null
-     */
-    public function _getFHIRXMLNamespace()
-    {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace)
-    {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
-    }
-
-    /**
      * @return string
      */
     public function _getFHIRXMLElementDefinition()
@@ -225,7 +221,6 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
         }
         return "<Binary{$xmlns}></Binary>";
     }
-
     /**
      * @return string
      */
@@ -344,6 +339,129 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
     }
 
     /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getContent())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CONTENT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getContentType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CONTENT_TYPE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSecurityContext())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SECURITY_CONTEXT] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTENT])) {
+            $v = $this->getContent();
+            foreach($validationRules[self::FIELD_CONTENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BINARY, self::FIELD_CONTENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTENT])) {
+                        $errs[self::FIELD_CONTENT] = [];
+                    }
+                    $errs[self::FIELD_CONTENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTENT_TYPE])) {
+            $v = $this->getContentType();
+            foreach($validationRules[self::FIELD_CONTENT_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BINARY, self::FIELD_CONTENT_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTENT_TYPE])) {
+                        $errs[self::FIELD_CONTENT_TYPE] = [];
+                    }
+                    $errs[self::FIELD_CONTENT_TYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SECURITY_CONTEXT])) {
+            $v = $this->getSecurityContext();
+            foreach($validationRules[self::FIELD_SECURITY_CONTEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BINARY, self::FIELD_SECURITY_CONTEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SECURITY_CONTEXT])) {
+                        $errs[self::FIELD_SECURITY_CONTEXT] = [];
+                    }
+                    $errs[self::FIELD_SECURITY_CONTEXT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IMPLICIT_RULES])) {
+            $v = $this->getImplicitRules();
+            foreach($validationRules[self::FIELD_IMPLICIT_RULES] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_IMPLICIT_RULES, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IMPLICIT_RULES])) {
+                        $errs[self::FIELD_IMPLICIT_RULES] = [];
+                    }
+                    $errs[self::FIELD_IMPLICIT_RULES][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LANGUAGE])) {
+            $v = $this->getLanguage();
+            foreach($validationRules[self::FIELD_LANGUAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_LANGUAGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LANGUAGE])) {
+                        $errs[self::FIELD_LANGUAGE] = [];
+                    }
+                    $errs[self::FIELD_LANGUAGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
      * @param \SimpleXMLElement|string|null $sxe
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRBinary $type
      * @param null|int $libxmlOpts
@@ -383,17 +501,27 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
         }
         $attributes = $sxe->attributes();
         $children = $sxe->children();
-        if (isset($attributes->content)) {
-            $type->setContent((string)$attributes->content);
-        }
         if (isset($children->content)) {
             $type->setContent(FHIRBase64Binary::xmlUnserialize($children->content));
         }
-        if (isset($attributes->contentType)) {
-            $type->setContentType((string)$attributes->contentType);
+        if (isset($attributes->content)) {
+            $pt = $type->getContent();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->content);
+            } else {
+                $type->setContent((string)$attributes->content);
+            }
         }
         if (isset($children->contentType)) {
             $type->setContentType(FHIRCode::xmlUnserialize($children->contentType));
+        }
+        if (isset($attributes->contentType)) {
+            $pt = $type->getContentType();
+            if (null !== $pt) {
+                $pt->setValue((string)$attributes->contentType);
+            } else {
+                $type->setContentType((string)$attributes->contentType);
+            }
         }
         if (isset($children->securityContext)) {
             $type->setSecurityContext(FHIRReference::xmlUnserialize($children->securityContext));
@@ -412,7 +540,6 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
             $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
         }
         parent::xmlSerialize($sxe);
-
         if (null !== ($v = $this->getContent())) {
             $v->xmlSerialize($sxe->addChild(self::FIELD_CONTENT, null, $v->_getFHIRXMLNamespace()));
         }
@@ -432,32 +559,32 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
     {
         $a = parent::jsonSerialize();
         if (null !== ($v = $this->getContent())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_CONTENT] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_CONTENT_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_CONTENT] = $v;
+            $a[self::FIELD_CONTENT] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBase64Binary::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRBase64Binary::FIELD_VALUE]);
+                $a[self::FIELD_CONTENT_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getContentType())) {
-            if (null !== ($val = $v->getValue())) {
-                $a[self::FIELD_CONTENT_TYPE] = $val;
-                if (1 < count($enc = $v->jsonSerialize())) {
-                    unset($enc[$v::FIELD_VALUE]);
-                    $a[self::FIELD_CONTENT_TYPE_EXT] = $enc;
-                }
-            } else {
-                $a[self::FIELD_CONTENT_TYPE] = $v;
+            $a[self::FIELD_CONTENT_TYPE] = $v->getValue();
+            $enc = $v->jsonSerialize();
+            $cnt = count($enc);
+            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRCode::FIELD_VALUE, $enc)))) {
+                unset($enc[FHIRCode::FIELD_VALUE]);
+                $a[self::FIELD_CONTENT_TYPE_EXT] = $enc;
             }
         }
         if (null !== ($v = $this->getSecurityContext())) {
             $a[self::FIELD_SECURITY_CONTEXT] = $v;
         }
+        if ([] !== ($vs = $this->_getFHIRComments())) {
+            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        }
         return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
     }
+
 
     /**
      * @return string

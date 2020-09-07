@@ -5,11 +5,11 @@ namespace HL7\FHIR\STU3\PHPFHIRTests\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,18 +78,22 @@ class FHIRConceptMapTest extends TestCase
         $this->assertInstanceOf('\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRConceptMap', $type);
     }
 
+    private $_fetchedResources = [];
+
     /**
      * @param string $format Either xml or json
      * @return string
      */
     protected function fetchResource($format)
     {
-        $url = sprintf('http://hapi.fhir.org/baseDstu3/ConceptMap/?_count=1&_format=%s&_pretty=true', $format);
+        if (isset($this->_fetchedResources[$format])) {
+            return $this->_fetchedResources[$format];
+        }
+        $url = sprintf('http://hapi.fhir.org/baseDstu3/ConceptMap/?_count=1&_format=%s', $format);
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_TIMEOUT        => 10, // set low timeout to move things along...
         ]);
         $res = curl_exec($ch);
         $err = curl_error($ch);
@@ -100,6 +104,7 @@ class FHIRConceptMapTest extends TestCase
         } else {
             $this->assertInternalType('string', $res);
         }
+        $this->_fetchedResources[$format] = $res;
         return $res;
     }
 
@@ -190,23 +195,70 @@ class FHIRConceptMapTest extends TestCase
             ));
             return;
         }
-        $this->assertCount(1, $bundle->getEntry());
-        $entry = $bundle->getEntry()[0]->getResource();
-        $json2 = json_encode($entry, JSON_PRETTY_PRINT);
-        $decoded2 = $this->decodeJSON($json2, true);
+
+        $reEncoded = json_encode($bundle);
         try {
-            $type = new FHIRConceptMap($decoded2);
+            $this->assertEquals($decoded, $this->decodeJSON($reEncoded, true));
         } catch (\Exception $e) {
             throw new AssertionFailedError(
                 sprintf(
-                    'Error building type "ConceptMap" from JSON: %s; JSON: %s',
+                    "json_encode output of \"FHIRConceptMap\" does not match input: %s\nSource:\n%s\nRe-encoded:\n%s\n",
                     $e->getMessage(),
-                    $json2
+                    $json,
+                    $reEncoded
                 ),
                 $e->getCode(),
                 $e
             );
         }
-        $this->assertEquals(json_encode($entry, JSON_PRETTY_PRINT), json_encode($type, JSON_PRETTY_PRINT));
+    }
+
+    public function testValidationXML()
+    {
+        $xml = $this->fetchResource('xml');
+        try {
+            $bundle = FHIRBundle::xmlUnserialize($xml);
+        } catch(\Exception $e) {
+            throw new AssertionFailedError(
+                sprintf(
+                    'Error building type "Bundle" from XML: %s; Returned XML: %s',
+                    $e->getMessage(),
+                    $xml
+                ),
+                $e->getCode(),
+                $e
+            );
+        }
+        $errs = $bundle->_getValidationErrors();
+        try {
+            $this->assertCount(0, $errs);
+        } catch (\Exception $e) {
+            $this->markTestSkipped(sprintf('Validation errors seen: %s', json_encode($errs, JSON_PRETTY_PRINT)));
+        }
+    }
+
+    public function testValidationJSON()
+    {
+        $json = $this->fetchResource('json');
+        $decoded = $this->decodeJSON($json, true);
+        try {
+            $bundle = new FHIRBundle($decoded);
+        } catch(\Exception $e) {
+            throw new AssertionFailedError(
+                sprintf(
+                    'Error building type "Bundle" from JSON: %s; Returned JSON: %s',
+                    $e->getMessage(),
+                    $json
+                ),
+                $e->getCode(),
+                $e
+            );
+        }
+        $errs = $bundle->_getValidationErrors();
+        try {
+            $this->assertCount(0, $errs);
+        } catch (\Exception $e) {
+            $this->markTestSkipped(sprintf('Validation errors seen: %s', json_encode($errs, JSON_PRETTY_PRINT)));
+        }
     }
 }

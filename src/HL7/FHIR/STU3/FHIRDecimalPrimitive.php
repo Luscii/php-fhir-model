@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: November 18th, 2019 08:27+0000
+ * Class creation date: September 7th, 2020 11:57+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2019 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,56 +68,37 @@ namespace HL7\FHIR\STU3;
  */
 class FHIRDecimalPrimitive implements PHPFHIRTypeInterface
 {
+    use PHPFHIRValidationAssertionsTrait;
+
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DECIMAL_HYPHEN_PRIMITIVE;
-
     const FIELD_VALUE = 'value';
 
     /** @var string */
-    protected $_xmlns = '';
+    private $_xmlns = 'http://hl7.org/fhir';
 
-    /** @var null|float */
+    /**
+     * @var null|double
+     */
     protected $value = null;
 
     /**
+     * Validation map for fields in type decimal-primitive
+     * @var array
+     */
+    private static $_validationRules = [
+        self::FIELD_VALUE => [
+            PHPFHIRConstants::VALIDATE_PATTERN => '/^-?([0]|([1-9][0-9]*))(\\.[0-9]+)?$/',
+        ],
+    ];
+
+    /**
      * FHIRDecimalPrimitive Constructor
-     * @param null| $value
+     * @param null|double $value
      */
     public function __construct($value = null)
     {
         $this->setValue($value);
-    }
-    /**
-     * @param null|float|string $value
-     * @return static
-     */
-    public function setValue($value)
-    {
-        if (null === $value) {
-            $this->value = null;
-        } elseif (is_scalar($value)) {
-            $this->value = floatval($value);
-        } else {
-            throw new \InvalidArgumentException(sprintf('decimal-primitive value must be null, float, or numeric string, %s seen.', gettype($value)));
-        }
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function _isValid()
-    {
-        return is_float($this->getValue());
-    }
-
-
-    /**
-     * @return null|
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 
     /**
@@ -162,6 +143,65 @@ class FHIRDecimalPrimitive implements PHPFHIRTypeInterface
             $xmlns = " xmlns=\"{$xmlns}\"";
         }
         return "<decimal_primitive{$xmlns}></decimal_primitive>";
+    }
+
+    /**
+     * @return null|double
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param null|float|string $value
+     * @return static
+     */
+    public function setValue($value)
+    {
+        if (null === $value) {
+            $this->value = null;
+        } elseif (is_scalar($value)) {
+            $this->value = floatval($value);
+        } else {
+            throw new \InvalidArgumentException(sprintf('decimal-primitive value must be null, float, or numeric string, %s seen.', gettype($value)));
+        }
+        return $this;
+    }
+
+    /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules()
+    {
+        return self::$_validationRules;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors()
+    {
+        $errs = [];
+        $validationRules = $this->_getValidationRules();
+        if (isset($validationRules[self::FIELD_VALUE]) && null !== ($v = $this->getValue())) {
+            foreach($validationRules[self::FIELD_VALUE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DECIMAL_HYPHEN_PRIMITIVE, self::FIELD_VALUE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_VALUE])) {
+                        $errs[self::FIELD_VALUE] = [];
+                    }
+                    $errs[self::FIELD_VALUE][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
     }
 
     /**
@@ -228,12 +268,13 @@ class FHIRDecimalPrimitive implements PHPFHIRTypeInterface
     }
 
     /**
-     * @return null|float
+     * @return null|double
      */
     public function jsonSerialize()
     {
         return $this->getValue();
     }
+
 
     /**
      * @return string

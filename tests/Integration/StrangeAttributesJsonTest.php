@@ -1,0 +1,33 @@
+<?php
+
+namespace FHIR\Tests\Integration;
+
+use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
+use HL7\FHIR\STU3\FHIRElement\FHIRReference;
+use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRFlag;
+use PHPUnit\Framework\TestCase;
+
+class StrangeAttributesJsonTest extends TestCase
+{
+    public function testThatItProducesWellFormattedJsonUrls(): void
+    {
+        // Regression test for a bug where the identifier.system was actually put in _identifier.system.
+        // Bug is similar to https://github.com/dcarbone/php-fhir/issues/28
+
+        $subject = new FHIRReference();
+        $subjectIdentifier = new FHIRIdentifier();
+        $subjectIdentifier->setSystem(new FHIRUri('https://www.example.com'));
+        $subjectIdentifier->setValue(new FHIRString('Sample subject identifier value'));
+        $subject->setIdentifier($subjectIdentifier);
+
+        $flag = new FHIRFlag();
+        $flag->setSubject($subject);
+
+        $expected = '{"resourceType":"Flag","subject":{"identifier":{"system":"https:\/\/www.example.com","value":"Sample subject identifier value"}}}';
+        $actual = json_encode($flag);
+
+        $this->assertEquals($expected, $actual);
+    }
+}
