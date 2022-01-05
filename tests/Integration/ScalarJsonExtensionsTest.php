@@ -13,7 +13,7 @@ class ScalarJsonExtensionsTest extends TestCase
      */
     private $parser;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->parser = new PHPFHIRResponseParser();
