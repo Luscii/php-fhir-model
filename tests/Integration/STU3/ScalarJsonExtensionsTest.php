@@ -1,6 +1,6 @@
 <?php
 
-namespace FHIR\Tests\Integration;
+namespace FHIR\Tests\Integration\STU3;
 
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRPatient;
 use HL7\FHIR\STU3\PHPFHIRResponseParser;

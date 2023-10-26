@@ -2,21 +2,18 @@
 
 namespace FHIR\Tests\Integration;
 
-use HL7\FHIR\STU3\FHIRElement\FHIRId;
-use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRTask;
-use HL7\FHIR\STU3\PHPFHIRResponseParser;
+use HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRTask;
+use HL7\FHIR\R4\PHPFHIRResponseParser;
 use PHPUnit\Framework\TestCase;
 
 class FHIRTaskTest extends TestCase
 {
-    /**
-     * @var PHPFHIRResponseParser
-     */
-    private $parser;
+    private PHPFHIRResponseParser $parser;
 
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->parser = new PHPFHIRResponseParser();
     }
 
