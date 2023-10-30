@@ -29,7 +29,6 @@ jobs:
       - uses: php-actions/phpunit@v3
         with:
           configuration: './phpunit.xml'
-          php_extensions: 'xdebug'
           log_junit: "test-results/phpunit.xml"
           memory_limit: "-1"
         env:
