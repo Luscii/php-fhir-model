@@ -25,7 +25,7 @@ class StrangeAttributesJsonTest extends TestCase
         $flag = new FHIRFlag();
         $flag->setSubject($subject);
 
-        $expected = '{"resourceType":"Flag","subject":{"identifier":{"system":"https:\/\/www.example.com","value":"Sample subject identifier value"}}}';
+        $expected = '{"subject":{"identifier":{"system":"https:\/\/www.example.com","value":"Sample subject identifier value"}},"resourceType":"Flag"}';
         $actual = json_encode($flag);
 
         $this->assertEquals($expected, $actual);
