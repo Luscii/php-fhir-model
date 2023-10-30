@@ -31,7 +31,7 @@ jobs:
           configuration: './phpunit.xml'
           php_extensions: 'xdebug'
           log_junit: "test-results/phpunit.xml"
-          memory_limit: "256M"
+          memory_limit: "-1"
           coverage_clover: "test-results/clover.xml"
           coverage_text: true
         env:
