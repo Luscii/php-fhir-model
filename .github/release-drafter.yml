@@ -1,0 +1,38 @@
+name-template: "v$RESOLVED_VERSION"
+tag-template: "$RESOLVED_VERSION"
+change-template: |
+  - $TITLE (#$NUMBER)
+
+template: |
+  ## Changes
+
+  $CHANGES
+
+prerelease: false
+latest: "true"
+
+version-resolver:
+  major:
+    labels:
+      - "major"
+  minor:
+    labels:
+      - "enhancement"
+  patch:
+    labels:
+      - "fix"
+      - "maintenance"
+  default: patch
+
+categories:
+  - title: "🚀 Features"
+    labels:
+      - major
+      - enhancement
+  - title: "🧷 Fixes"
+    labels:
+      - bug
+      - fix
+      - maintenance
+# include-labels:
+#   - inform-customer
