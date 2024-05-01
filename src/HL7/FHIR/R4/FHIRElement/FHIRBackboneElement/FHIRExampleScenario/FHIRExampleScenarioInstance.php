@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,9 +67,13 @@ use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRMarkdown;
 use HL7\FHIR\R4\FHIRElement\FHIRResourceType;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Example of workflow instance.
@@ -81,6 +85,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_EXAMPLE_SCENARIO_DOT_INSTANCE;
+
     const FIELD_RESOURCE_ID = 'resourceId';
     const FIELD_RESOURCE_ID_EXT = '_resourceId';
     const FIELD_RESOURCE_TYPE = 'resourceType';
@@ -91,9 +96,6 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
     const FIELD_VERSION = 'version';
     const FIELD_CONTAINED_INSTANCE = 'containedInstance';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -101,10 +103,9 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * The id of the resource for referencing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $resourceId = null;
-
+    protected null|FHIRString $resourceId = null;
     /**
      * The type of resource.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -113,8 +114,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRResourceType
      */
-    protected ?FHIRResourceType $resourceType = null;
-
+    protected null|FHIRResourceType $resourceType = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -122,10 +122,9 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * A short name for the resource instance.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -137,10 +136,9 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * Human-friendly description of the resource instance.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $description = null;
-
+    protected null|FHIRMarkdown $description = null;
     /**
      * Example of workflow instance.
      *
@@ -148,8 +146,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioVersion[]
      */
-    protected ?array $version = [];
-
+    protected null|array $version = [];
     /**
      * Example of workflow instance.
      *
@@ -158,28 +155,23 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioContainedInstance[]
      */
-    protected ?array $containedInstance = [];
+    protected null|array $containedInstance = [];
 
     /**
      * Validation map for fields in type ExampleScenario.Instance
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRExampleScenarioInstance Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRExampleScenarioInstance::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_RESOURCE_ID]) || isset($data[self::FIELD_RESOURCE_ID_EXT])) {
@@ -268,6 +260,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
@@ -277,27 +270,15 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
     }
 
     /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ExampleScenarioInstance{$xmlns}></ExampleScenarioInstance>";
-    }
-
-    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The id of the resource for referencing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getResourceId(): ?FHIRString
+    public function getResourceId(): null|FHIRString
     {
         return $this->resourceId;
     }
@@ -309,10 +290,10 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * The id of the resource for referencing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $resourceId
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $resourceId
      * @return static
      */
-    public function setResourceId($resourceId = null): object
+    public function setResourceId(null|string|FHIRStringPrimitive|FHIRString $resourceId = null): self
     {
         if (null !== $resourceId && !($resourceId instanceof FHIRString)) {
             $resourceId = new FHIRString($resourceId);
@@ -330,7 +311,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRResourceType
      */
-    public function getResourceType(): ?FHIRResourceType
+    public function getResourceType(): null|FHIRResourceType
     {
         return $this->resourceType;
     }
@@ -341,10 +322,10 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * The type of the resource.
      *
-     * @param null|\HL7\FHIR\R4\FHIRElement\FHIRResourceType $resourceType
+     * @param null|string|\HL7\FHIR\R4\FHIRElement\FHIRResourceType $resourceType
      * @return static
      */
-    public function setResourceType($resourceType = null): object
+    public function setResourceType(null|string|FHIRResourceType $resourceType = null): self
     {
         if (null !== $resourceType && !($resourceType instanceof FHIRResourceType)) {
             $resourceType = new FHIRResourceType($resourceType);
@@ -361,9 +342,9 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * A short name for the resource instance.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -375,10 +356,10 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * A short name for the resource instance.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -399,9 +380,9 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * Human-friendly description of the resource instance.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDescription(): ?FHIRMarkdown
+    public function getDescription(): null|FHIRMarkdown
     {
         return $this->description;
     }
@@ -417,10 +398,10 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * Human-friendly description of the resource instance.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
@@ -437,7 +418,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioVersion[]
      */
-    public function getVersion(): ?array
+    public function getVersion(): null|array
     {
         return $this->version;
     }
@@ -450,8 +431,11 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioVersion $version
      * @return static
      */
-    public function addVersion(?FHIRExampleScenarioVersion $version = null): object
+    public function addVersion(null|FHIRExampleScenarioVersion $version = null): self
     {
+        if (null === $version) {
+            $version = new FHIRExampleScenarioVersion();
+        }
         $this->_trackValueAdded();
         $this->version[] = $version;
         return $this;
@@ -465,7 +449,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioVersion[] $version
      * @return static
      */
-    public function setVersion(array $version = []): object
+    public function setVersion(array $version = []): self
     {
         if ([] !== $this->version) {
             $this->_trackValuesRemoved(count($this->version));
@@ -492,7 +476,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioContainedInstance[]
      */
-    public function getContainedInstance(): ?array
+    public function getContainedInstance(): null|array
     {
         return $this->containedInstance;
     }
@@ -506,8 +490,11 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioContainedInstance $containedInstance
      * @return static
      */
-    public function addContainedInstance(?FHIRExampleScenarioContainedInstance $containedInstance = null): object
+    public function addContainedInstance(null|FHIRExampleScenarioContainedInstance $containedInstance = null): self
     {
+        if (null === $containedInstance) {
+            $containedInstance = new FHIRExampleScenarioContainedInstance();
+        }
         $this->_trackValueAdded();
         $this->containedInstance[] = $containedInstance;
         return $this;
@@ -522,7 +509,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioContainedInstance[] $containedInstance
      * @return static
      */
-    public function setContainedInstance(array $containedInstance = []): object
+    public function setContainedInstance(array $containedInstance = []): self
     {
         if ([] !== $this->containedInstance) {
             $this->_trackValuesRemoved(count($this->containedInstance));
@@ -549,7 +536,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -710,36 +697,48 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioInstance $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioInstance
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRExampleScenarioInstance::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRExampleScenarioInstance::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRExampleScenarioInstance(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRExampleScenarioInstance)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRExampleScenarioInstance)) {
             throw new \RuntimeException(sprintf(
-                'FHIRExampleScenarioInstance::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioInstance or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -816,17 +815,25 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ExampleScenarioInstance'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getResourceId())) {
@@ -873,7 +880,7 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getResourceId())) {
@@ -930,7 +937,6 @@ class FHIRExampleScenarioInstance extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

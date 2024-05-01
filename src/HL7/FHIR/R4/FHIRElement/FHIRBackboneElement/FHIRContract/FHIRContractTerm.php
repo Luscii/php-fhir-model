@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract;
  * 
  */
 
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\R4\FHIRElement\FHIRDateTime;
@@ -71,8 +72,11 @@ use HL7\FHIR\R4\FHIRElement\FHIRPeriod;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Legally enforceable, formally recorded unilateral or bilateral directive i.e., a
@@ -85,6 +89,7 @@ class FHIRContractTerm extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CONTRACT_DOT_TERM;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_ISSUED = 'issued';
     const FIELD_ISSUED_EXT = '_issued';
@@ -101,9 +106,6 @@ class FHIRContractTerm extends FHIRBackboneElement
     const FIELD_ACTION = 'action';
     const FIELD_GROUP = 'group';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -114,8 +116,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $identifier = null;
-
+    protected null|FHIRIdentifier $identifier = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -126,10 +127,9 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * When this Contract Provision was issued.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $issued = null;
-
+    protected null|FHIRDateTime $issued = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -139,8 +139,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $applies = null;
-
+    protected null|FHIRPeriod $applies = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -151,8 +150,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $topicCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $topicCodeableConcept = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -162,8 +160,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $topicReference = null;
-
+    protected null|FHIRReference $topicReference = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -177,8 +174,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -189,8 +185,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $subType = null;
-
+    protected null|FHIRCodeableConcept $subType = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -198,10 +193,9 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * Statement of a provision in a policy or a contract.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $text = null;
-
+    protected null|FHIRString $text = null;
     /**
      * Legally enforceable, formally recorded unilateral or bilateral directive i.e., a
      * policy or agreement.
@@ -211,8 +205,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractSecurityLabel[]
      */
-    protected ?array $securityLabel = [];
-
+    protected null|array $securityLabel = [];
     /**
      * Legally enforceable, formally recorded unilateral or bilateral directive i.e., a
      * policy or agreement.
@@ -221,8 +214,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractOffer
      */
-    protected ?FHIRContractOffer $offer = null;
-
+    protected null|FHIRContractOffer $offer = null;
     /**
      * Legally enforceable, formally recorded unilateral or bilateral directive i.e., a
      * policy or agreement.
@@ -231,8 +223,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractAsset[]
      */
-    protected ?array $asset = [];
-
+    protected null|array $asset = [];
     /**
      * Legally enforceable, formally recorded unilateral or bilateral directive i.e., a
      * policy or agreement.
@@ -242,8 +233,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractAction[]
      */
-    protected ?array $action = [];
-
+    protected null|array $action = [];
     /**
      * Legally enforceable, formally recorded unilateral or bilateral directive i.e., a
      * policy or agreement.
@@ -252,28 +242,23 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractTerm[]
      */
-    protected ?array $group = [];
+    protected null|array $group = [];
 
     /**
      * Validation map for fields in type Contract.Term
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRContractTerm Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRContractTerm::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -429,24 +414,13 @@ class FHIRContractTerm extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ContractTerm{$xmlns}></ContractTerm>";
     }
 
     /**
@@ -459,7 +433,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getIdentifier(): ?FHIRIdentifier
+    public function getIdentifier(): null|FHIRIdentifier
     {
         return $this->identifier;
     }
@@ -475,8 +449,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function setIdentifier(?FHIRIdentifier $identifier = null): object
+    public function setIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->identifier, $identifier);
         $this->identifier = $identifier;
         return $this;
@@ -492,9 +469,9 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * When this Contract Provision was issued.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getIssued(): ?FHIRDateTime
+    public function getIssued(): null|FHIRDateTime
     {
         return $this->issued;
     }
@@ -509,10 +486,10 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * When this Contract Provision was issued.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $issued
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $issued
      * @return static
      */
-    public function setIssued($issued = null): object
+    public function setIssued(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $issued = null): self
     {
         if (null !== $issued && !($issued instanceof FHIRDateTime)) {
             $issued = new FHIRDateTime($issued);
@@ -531,7 +508,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getApplies(): ?FHIRPeriod
+    public function getApplies(): null|FHIRPeriod
     {
         return $this->applies;
     }
@@ -546,8 +523,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $applies
      * @return static
      */
-    public function setApplies(?FHIRPeriod $applies = null): object
+    public function setApplies(null|FHIRPeriod $applies = null): self
     {
+        if (null === $applies) {
+            $applies = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->applies, $applies);
         $this->applies = $applies;
         return $this;
@@ -563,7 +543,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getTopicCodeableConcept(): ?FHIRCodeableConcept
+    public function getTopicCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->topicCodeableConcept;
     }
@@ -579,8 +559,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $topicCodeableConcept
      * @return static
      */
-    public function setTopicCodeableConcept(?FHIRCodeableConcept $topicCodeableConcept = null): object
+    public function setTopicCodeableConcept(null|FHIRCodeableConcept $topicCodeableConcept = null): self
     {
+        if (null === $topicCodeableConcept) {
+            $topicCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->topicCodeableConcept, $topicCodeableConcept);
         $this->topicCodeableConcept = $topicCodeableConcept;
         return $this;
@@ -595,7 +578,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getTopicReference(): ?FHIRReference
+    public function getTopicReference(): null|FHIRReference
     {
         return $this->topicReference;
     }
@@ -610,8 +593,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $topicReference
      * @return static
      */
-    public function setTopicReference(?FHIRReference $topicReference = null): object
+    public function setTopicReference(null|FHIRReference $topicReference = null): self
     {
+        if (null === $topicReference) {
+            $topicReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->topicReference, $topicReference);
         $this->topicReference = $topicReference;
         return $this;
@@ -630,7 +616,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -649,8 +635,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -666,7 +655,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getSubType(): ?FHIRCodeableConcept
+    public function getSubType(): null|FHIRCodeableConcept
     {
         return $this->subType;
     }
@@ -682,8 +671,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $subType
      * @return static
      */
-    public function setSubType(?FHIRCodeableConcept $subType = null): object
+    public function setSubType(null|FHIRCodeableConcept $subType = null): self
     {
+        if (null === $subType) {
+            $subType = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->subType, $subType);
         $this->subType = $subType;
         return $this;
@@ -696,9 +688,9 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * Statement of a provision in a policy or a contract.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getText(): ?FHIRString
+    public function getText(): null|FHIRString
     {
         return $this->text;
     }
@@ -710,10 +702,10 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * Statement of a provision in a policy or a contract.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $text
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $text
      * @return static
      */
-    public function setText($text = null): object
+    public function setText(null|string|FHIRStringPrimitive|FHIRString $text = null): self
     {
         if (null !== $text && !($text instanceof FHIRString)) {
             $text = new FHIRString($text);
@@ -732,7 +724,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractSecurityLabel[]
      */
-    public function getSecurityLabel(): ?array
+    public function getSecurityLabel(): null|array
     {
         return $this->securityLabel;
     }
@@ -747,8 +739,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractSecurityLabel $securityLabel
      * @return static
      */
-    public function addSecurityLabel(?FHIRContractSecurityLabel $securityLabel = null): object
+    public function addSecurityLabel(null|FHIRContractSecurityLabel $securityLabel = null): self
     {
+        if (null === $securityLabel) {
+            $securityLabel = new FHIRContractSecurityLabel();
+        }
         $this->_trackValueAdded();
         $this->securityLabel[] = $securityLabel;
         return $this;
@@ -764,7 +759,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractSecurityLabel[] $securityLabel
      * @return static
      */
-    public function setSecurityLabel(array $securityLabel = []): object
+    public function setSecurityLabel(array $securityLabel = []): self
     {
         if ([] !== $this->securityLabel) {
             $this->_trackValuesRemoved(count($this->securityLabel));
@@ -791,7 +786,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractOffer
      */
-    public function getOffer(): ?FHIRContractOffer
+    public function getOffer(): null|FHIRContractOffer
     {
         return $this->offer;
     }
@@ -805,8 +800,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractOffer $offer
      * @return static
      */
-    public function setOffer(?FHIRContractOffer $offer = null): object
+    public function setOffer(null|FHIRContractOffer $offer = null): self
     {
+        if (null === $offer) {
+            $offer = new FHIRContractOffer();
+        }
         $this->_trackValueSet($this->offer, $offer);
         $this->offer = $offer;
         return $this;
@@ -820,7 +818,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractAsset[]
      */
-    public function getAsset(): ?array
+    public function getAsset(): null|array
     {
         return $this->asset;
     }
@@ -834,8 +832,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractAsset $asset
      * @return static
      */
-    public function addAsset(?FHIRContractAsset $asset = null): object
+    public function addAsset(null|FHIRContractAsset $asset = null): self
     {
+        if (null === $asset) {
+            $asset = new FHIRContractAsset();
+        }
         $this->_trackValueAdded();
         $this->asset[] = $asset;
         return $this;
@@ -850,7 +851,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractAsset[] $asset
      * @return static
      */
-    public function setAsset(array $asset = []): object
+    public function setAsset(array $asset = []): self
     {
         if ([] !== $this->asset) {
             $this->_trackValuesRemoved(count($this->asset));
@@ -878,7 +879,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractAction[]
      */
-    public function getAction(): ?array
+    public function getAction(): null|array
     {
         return $this->action;
     }
@@ -893,8 +894,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractAction $action
      * @return static
      */
-    public function addAction(?FHIRContractAction $action = null): object
+    public function addAction(null|FHIRContractAction $action = null): self
     {
+        if (null === $action) {
+            $action = new FHIRContractAction();
+        }
         $this->_trackValueAdded();
         $this->action[] = $action;
         return $this;
@@ -910,7 +914,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractAction[] $action
      * @return static
      */
-    public function setAction(array $action = []): object
+    public function setAction(array $action = []): self
     {
         if ([] !== $this->action) {
             $this->_trackValuesRemoved(count($this->action));
@@ -937,7 +941,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractTerm[]
      */
-    public function getGroup(): ?array
+    public function getGroup(): null|array
     {
         return $this->group;
     }
@@ -951,8 +955,11 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractTerm $group
      * @return static
      */
-    public function addGroup(?FHIRContractTerm $group = null): object
+    public function addGroup(null|FHIRContractTerm $group = null): self
     {
+        if (null === $group) {
+            $group = new FHIRContractTerm();
+        }
         $this->_trackValueAdded();
         $this->group[] = $group;
         return $this;
@@ -967,7 +974,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractTerm[] $group
      * @return static
      */
-    public function setGroup(array $group = []): object
+    public function setGroup(array $group = []): self
     {
         if ([] !== $this->group) {
             $this->_trackValuesRemoved(count($this->group));
@@ -994,7 +1001,7 @@ class FHIRContractTerm extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1278,36 +1285,48 @@ class FHIRContractTerm extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractTerm $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractTerm
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRContractTerm::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRContractTerm::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRContractTerm(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRContractTerm)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRContractTerm)) {
             throw new \RuntimeException(sprintf(
-                'FHIRContractTerm::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractTerm or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1380,17 +1399,25 @@ class FHIRContractTerm extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ContractTerm'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getIdentifier())) {
@@ -1484,7 +1511,7 @@ class FHIRContractTerm extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getIdentifier())) {
@@ -1567,7 +1594,6 @@ class FHIRContractTerm extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

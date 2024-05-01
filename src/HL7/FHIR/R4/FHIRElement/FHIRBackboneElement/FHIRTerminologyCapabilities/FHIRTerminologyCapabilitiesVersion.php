@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilitie
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,14 +62,19 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilitie
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
 use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A TerminologyCapabilities resource documents a set of capabilities (behaviors)
@@ -83,6 +88,7 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_TERMINOLOGY_CAPABILITIES_DOT_VERSION;
+
     const FIELD_CODE = 'code';
     const FIELD_CODE_EXT = '_code';
     const FIELD_IS_DEFAULT = 'isDefault';
@@ -95,9 +101,6 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
     const FIELD_PROPERTY = 'property';
     const FIELD_PROPERTY_EXT = '_property';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -106,30 +109,27 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      * For version-less code systems, there should be a single version with no
      * identifier.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $code = null;
-
+    protected null|FHIRString $code = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * If this is the default version for this code system.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $isDefault = null;
-
+    protected null|FHIRBoolean $isDefault = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * If the compositional grammar defined by the code system is supported.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $compositional = null;
-
+    protected null|FHIRBoolean $compositional = null;
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -138,10 +138,9 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * Language Displays supported.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
      */
-    protected ?array $language = [];
-
+    protected null|array $language = [];
     /**
      * A TerminologyCapabilities resource documents a set of capabilities (behaviors)
      * of a FHIR Terminology Server that may be used as a statement of actual server
@@ -151,8 +150,7 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilities\FHIRTerminologyCapabilitiesFilter[]
      */
-    protected ?array $filter = [];
-
+    protected null|array $filter = [];
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -161,30 +159,25 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * Properties supported for $lookup.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
      */
-    protected ?array $property = [];
+    protected null|array $property = [];
 
     /**
      * Validation map for fields in type TerminologyCapabilities.Version
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRTerminologyCapabilitiesVersion Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRTerminologyCapabilitiesVersion::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_CODE]) || isset($data[self::FIELD_CODE_EXT])) {
@@ -312,24 +305,13 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<TerminologyCapabilitiesVersion{$xmlns}></TerminologyCapabilitiesVersion>";
     }
 
     /**
@@ -340,9 +322,9 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      * For version-less code systems, there should be a single version with no
      * identifier.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getCode(): ?FHIRString
+    public function getCode(): null|FHIRString
     {
         return $this->code;
     }
@@ -355,10 +337,10 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      * For version-less code systems, there should be a single version with no
      * identifier.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $code
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $code
      * @return static
      */
-    public function setCode($code = null): object
+    public function setCode(null|string|FHIRStringPrimitive|FHIRString $code = null): self
     {
         if (null !== $code && !($code instanceof FHIRString)) {
             $code = new FHIRString($code);
@@ -374,9 +356,9 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * If this is the default version for this code system.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getIsDefault(): ?FHIRBoolean
+    public function getIsDefault(): null|FHIRBoolean
     {
         return $this->isDefault;
     }
@@ -387,10 +369,10 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * If this is the default version for this code system.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $isDefault
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $isDefault
      * @return static
      */
-    public function setIsDefault($isDefault = null): object
+    public function setIsDefault(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isDefault = null): self
     {
         if (null !== $isDefault && !($isDefault instanceof FHIRBoolean)) {
             $isDefault = new FHIRBoolean($isDefault);
@@ -406,9 +388,9 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * If the compositional grammar defined by the code system is supported.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getCompositional(): ?FHIRBoolean
+    public function getCompositional(): null|FHIRBoolean
     {
         return $this->compositional;
     }
@@ -419,10 +401,10 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * If the compositional grammar defined by the code system is supported.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $compositional
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $compositional
      * @return static
      */
-    public function setCompositional($compositional = null): object
+    public function setCompositional(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $compositional = null): self
     {
         if (null !== $compositional && !($compositional instanceof FHIRBoolean)) {
             $compositional = new FHIRBoolean($compositional);
@@ -440,9 +422,9 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * Language Displays supported.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
      */
-    public function getLanguage(): ?array
+    public function getLanguage(): null|array
     {
         return $this->language;
     }
@@ -455,10 +437,10 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * Language Displays supported.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[] $language
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $language
      * @return static
      */
-    public function addLanguage($language = null): object
+    public function addLanguage(null|string|FHIRCodePrimitive|FHIRCode $language = null): self
     {
         if (null !== $language && !($language instanceof FHIRCode)) {
             $language = new FHIRCode($language);
@@ -479,7 +461,7 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCode[] $language
      * @return static
      */
-    public function setLanguage(array $language = []): object
+    public function setLanguage(array $language = []): self
     {
         if ([] !== $this->language) {
             $this->_trackValuesRemoved(count($this->language));
@@ -507,7 +489,7 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilities\FHIRTerminologyCapabilitiesFilter[]
      */
-    public function getFilter(): ?array
+    public function getFilter(): null|array
     {
         return $this->filter;
     }
@@ -522,8 +504,11 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilities\FHIRTerminologyCapabilitiesFilter $filter
      * @return static
      */
-    public function addFilter(?FHIRTerminologyCapabilitiesFilter $filter = null): object
+    public function addFilter(null|FHIRTerminologyCapabilitiesFilter $filter = null): self
     {
+        if (null === $filter) {
+            $filter = new FHIRTerminologyCapabilitiesFilter();
+        }
         $this->_trackValueAdded();
         $this->filter[] = $filter;
         return $this;
@@ -539,7 +524,7 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilities\FHIRTerminologyCapabilitiesFilter[] $filter
      * @return static
      */
-    public function setFilter(array $filter = []): object
+    public function setFilter(array $filter = []): self
     {
         if ([] !== $this->filter) {
             $this->_trackValuesRemoved(count($this->filter));
@@ -566,9 +551,9 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * Properties supported for $lookup.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
      */
-    public function getProperty(): ?array
+    public function getProperty(): null|array
     {
         return $this->property;
     }
@@ -581,10 +566,10 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      *
      * Properties supported for $lookup.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[] $property
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $property
      * @return static
      */
-    public function addProperty($property = null): object
+    public function addProperty(null|string|FHIRCodePrimitive|FHIRCode $property = null): self
     {
         if (null !== $property && !($property instanceof FHIRCode)) {
             $property = new FHIRCode($property);
@@ -605,7 +590,7 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCode[] $property
      * @return static
      */
-    public function setProperty(array $property = []): object
+    public function setProperty(array $property = []): self
     {
         if ([] !== $this->property) {
             $this->_trackValuesRemoved(count($this->property));
@@ -632,7 +617,7 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -795,36 +780,48 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilities\FHIRTerminologyCapabilitiesVersion $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilities\FHIRTerminologyCapabilitiesVersion
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRTerminologyCapabilitiesVersion::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRTerminologyCapabilitiesVersion::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRTerminologyCapabilitiesVersion(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRTerminologyCapabilitiesVersion)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRTerminologyCapabilitiesVersion)) {
             throw new \RuntimeException(sprintf(
-                'FHIRTerminologyCapabilitiesVersion::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilities\FHIRTerminologyCapabilitiesVersion or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -880,21 +877,11 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
         if (null !== $n) {
-            $pt = $type->getLanguage();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addLanguage($n->nodeValue);
-            }
+            $type->addLanguage($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_PROPERTY);
         if (null !== $n) {
-            $pt = $type->getProperty();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addProperty($n->nodeValue);
-            }
+            $type->addProperty($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -910,17 +897,25 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('TerminologyCapabilitiesVersion'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getCode())) {
@@ -974,7 +969,7 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getCode())) {
@@ -1067,7 +1062,6 @@ class FHIRTerminologyCapabilitiesVersion extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

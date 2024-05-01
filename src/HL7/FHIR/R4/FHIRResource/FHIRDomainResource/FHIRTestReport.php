@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,9 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportParticipant;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportSetup;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportTeardown;
@@ -79,11 +82,17 @@ use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRTestReportResult;
 use HL7\FHIR\R4\FHIRElement\FHIRTestReportStatus;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A summary of information based on the results of executing a TestScript.
@@ -96,6 +105,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_TEST_REPORT;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_NAME = 'name';
     const FIELD_NAME_EXT = '_name';
@@ -115,9 +125,6 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
     const FIELD_TEST = 'test';
     const FIELD_TEARDOWN = 'teardown';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -129,8 +136,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $identifier = null;
-
+    protected null|FHIRIdentifier $identifier = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -138,10 +144,9 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * A free text natural language name identifying the executed TestScript.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * The current status of the test report.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -150,8 +155,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTestReportStatus
      */
-    protected ?FHIRTestReportStatus $status = null;
-
+    protected null|FHIRTestReportStatus $status = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -162,8 +166,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $testScript = null;
-
+    protected null|FHIRReference $testScript = null;
     /**
      * The reported execution result.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -172,8 +175,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTestReportResult
      */
-    protected ?FHIRTestReportResult $result = null;
-
+    protected null|FHIRTestReportResult $result = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -183,10 +185,9 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * The final score (percentage of tests passed) resulting from the execution of the
      * TestScript.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $score = null;
-
+    protected null|FHIRDecimal $score = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -194,10 +195,9 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * Name of the tester producing this report (Organization or individual).
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $tester = null;
-
+    protected null|FHIRString $tester = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -208,10 +208,9 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * When the TestScript was executed and this TestReport was generated.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $issued = null;
-
+    protected null|FHIRDateTime $issued = null;
     /**
      * A summary of information based on the results of executing a TestScript.
      *
@@ -220,8 +219,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportParticipant[]
      */
-    protected ?array $participant = [];
-
+    protected null|array $participant = [];
     /**
      * A summary of information based on the results of executing a TestScript.
      *
@@ -230,8 +228,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportSetup
      */
-    protected ?FHIRTestReportSetup $setup = null;
-
+    protected null|FHIRTestReportSetup $setup = null;
     /**
      * A summary of information based on the results of executing a TestScript.
      *
@@ -239,8 +236,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportTest[]
      */
-    protected ?array $test = [];
-
+    protected null|array $test = [];
     /**
      * A summary of information based on the results of executing a TestScript.
      *
@@ -249,28 +245,23 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportTeardown
      */
-    protected ?FHIRTestReportTeardown $teardown = null;
+    protected null|FHIRTestReportTeardown $teardown = null;
 
     /**
      * Validation map for fields in type TestReport
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRTestReport Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRTestReport::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -429,6 +420,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
         }
     }
 
+
     /**
      * @return string
      */
@@ -437,17 +429,6 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<TestReport{$xmlns}></TestReport>";
-    }
     /**
      * @return string
      */
@@ -468,7 +449,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getIdentifier(): ?FHIRIdentifier
+    public function getIdentifier(): null|FHIRIdentifier
     {
         return $this->identifier;
     }
@@ -485,8 +466,11 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function setIdentifier(?FHIRIdentifier $identifier = null): object
+    public function setIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->identifier, $identifier);
         $this->identifier = $identifier;
         return $this;
@@ -499,9 +483,9 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * A free text natural language name identifying the executed TestScript.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -513,10 +497,10 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * A free text natural language name identifying the executed TestScript.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -534,7 +518,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTestReportStatus
      */
-    public function getStatus(): ?FHIRTestReportStatus
+    public function getStatus(): null|FHIRTestReportStatus
     {
         return $this->status;
     }
@@ -548,8 +532,11 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRTestReportStatus $status
      * @return static
      */
-    public function setStatus(?FHIRTestReportStatus $status = null): object
+    public function setStatus(null|FHIRTestReportStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRTestReportStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -565,7 +552,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getTestScript(): ?FHIRReference
+    public function getTestScript(): null|FHIRReference
     {
         return $this->testScript;
     }
@@ -581,8 +568,11 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $testScript
      * @return static
      */
-    public function setTestScript(?FHIRReference $testScript = null): object
+    public function setTestScript(null|FHIRReference $testScript = null): self
     {
+        if (null === $testScript) {
+            $testScript = new FHIRReference();
+        }
         $this->_trackValueSet($this->testScript, $testScript);
         $this->testScript = $testScript;
         return $this;
@@ -596,7 +586,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTestReportResult
      */
-    public function getResult(): ?FHIRTestReportResult
+    public function getResult(): null|FHIRTestReportResult
     {
         return $this->result;
     }
@@ -610,8 +600,11 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRTestReportResult $result
      * @return static
      */
-    public function setResult(?FHIRTestReportResult $result = null): object
+    public function setResult(null|FHIRTestReportResult $result = null): self
     {
+        if (null === $result) {
+            $result = new FHIRTestReportResult();
+        }
         $this->_trackValueSet($this->result, $result);
         $this->result = $result;
         return $this;
@@ -626,9 +619,9 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * The final score (percentage of tests passed) resulting from the execution of the
      * TestScript.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getScore(): ?FHIRDecimal
+    public function getScore(): null|FHIRDecimal
     {
         return $this->score;
     }
@@ -642,10 +635,10 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * The final score (percentage of tests passed) resulting from the execution of the
      * TestScript.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $score
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $score
      * @return static
      */
-    public function setScore($score = null): object
+    public function setScore(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $score = null): self
     {
         if (null !== $score && !($score instanceof FHIRDecimal)) {
             $score = new FHIRDecimal($score);
@@ -662,9 +655,9 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * Name of the tester producing this report (Organization or individual).
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTester(): ?FHIRString
+    public function getTester(): null|FHIRString
     {
         return $this->tester;
     }
@@ -676,10 +669,10 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * Name of the tester producing this report (Organization or individual).
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $tester
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $tester
      * @return static
      */
-    public function setTester($tester = null): object
+    public function setTester(null|string|FHIRStringPrimitive|FHIRString $tester = null): self
     {
         if (null !== $tester && !($tester instanceof FHIRString)) {
             $tester = new FHIRString($tester);
@@ -699,9 +692,9 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * When the TestScript was executed and this TestReport was generated.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getIssued(): ?FHIRDateTime
+    public function getIssued(): null|FHIRDateTime
     {
         return $this->issued;
     }
@@ -716,10 +709,10 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * When the TestScript was executed and this TestReport was generated.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $issued
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $issued
      * @return static
      */
-    public function setIssued($issued = null): object
+    public function setIssued(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $issued = null): self
     {
         if (null !== $issued && !($issued instanceof FHIRDateTime)) {
             $issued = new FHIRDateTime($issued);
@@ -737,7 +730,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportParticipant[]
      */
-    public function getParticipant(): ?array
+    public function getParticipant(): null|array
     {
         return $this->participant;
     }
@@ -751,8 +744,11 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportParticipant $participant
      * @return static
      */
-    public function addParticipant(?FHIRTestReportParticipant $participant = null): object
+    public function addParticipant(null|FHIRTestReportParticipant $participant = null): self
     {
+        if (null === $participant) {
+            $participant = new FHIRTestReportParticipant();
+        }
         $this->_trackValueAdded();
         $this->participant[] = $participant;
         return $this;
@@ -767,7 +763,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportParticipant[] $participant
      * @return static
      */
-    public function setParticipant(array $participant = []): object
+    public function setParticipant(array $participant = []): self
     {
         if ([] !== $this->participant) {
             $this->_trackValuesRemoved(count($this->participant));
@@ -794,7 +790,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportSetup
      */
-    public function getSetup(): ?FHIRTestReportSetup
+    public function getSetup(): null|FHIRTestReportSetup
     {
         return $this->setup;
     }
@@ -808,8 +804,11 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportSetup $setup
      * @return static
      */
-    public function setSetup(?FHIRTestReportSetup $setup = null): object
+    public function setSetup(null|FHIRTestReportSetup $setup = null): self
     {
+        if (null === $setup) {
+            $setup = new FHIRTestReportSetup();
+        }
         $this->_trackValueSet($this->setup, $setup);
         $this->setup = $setup;
         return $this;
@@ -822,7 +821,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportTest[]
      */
-    public function getTest(): ?array
+    public function getTest(): null|array
     {
         return $this->test;
     }
@@ -835,8 +834,11 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportTest $test
      * @return static
      */
-    public function addTest(?FHIRTestReportTest $test = null): object
+    public function addTest(null|FHIRTestReportTest $test = null): self
     {
+        if (null === $test) {
+            $test = new FHIRTestReportTest();
+        }
         $this->_trackValueAdded();
         $this->test[] = $test;
         return $this;
@@ -850,7 +852,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportTest[] $test
      * @return static
      */
-    public function setTest(array $test = []): object
+    public function setTest(array $test = []): self
     {
         if ([] !== $this->test) {
             $this->_trackValuesRemoved(count($this->test));
@@ -877,7 +879,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportTeardown
      */
-    public function getTeardown(): ?FHIRTestReportTeardown
+    public function getTeardown(): null|FHIRTestReportTeardown
     {
         return $this->teardown;
     }
@@ -891,8 +893,11 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportTeardown $teardown
      * @return static
      */
-    public function setTeardown(?FHIRTestReportTeardown $teardown = null): object
+    public function setTeardown(null|FHIRTestReportTeardown $teardown = null): self
     {
+        if (null === $teardown) {
+            $teardown = new FHIRTestReportTeardown();
+        }
         $this->_trackValueSet($this->teardown, $teardown);
         $this->teardown = $teardown;
         return $this;
@@ -906,7 +911,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1229,36 +1234,48 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRTestReport $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRTestReport
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRTestReport::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRTestReport::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRTestReport(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRTestReport)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRTestReport)) {
             throw new \RuntimeException(sprintf(
-                'FHIRTestReport::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRTestReport or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1380,17 +1397,25 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('TestReport'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getIdentifier())) {
@@ -1469,7 +1494,7 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getIdentifier())) {
@@ -1567,7 +1592,6 @@ class FHIRTestReport extends FHIRDomainResource implements PHPFHIRContainedTypeI
 
         return $out;
     }
-
 
     /**
      * @return string

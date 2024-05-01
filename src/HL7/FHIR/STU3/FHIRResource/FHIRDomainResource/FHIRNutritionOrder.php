@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,18 +62,32 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRCodePrimitive;
+use HL7\FHIR\STU3\FHIRDateTimePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderEnteralFormula;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderOralDiet;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderSupplement;
+use HL7\FHIR\STU3\FHIRElement\FHIRCode;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\STU3\FHIRElement\FHIRDateTime;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
+use HL7\FHIR\STU3\FHIRElement\FHIRId;
 use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
+use HL7\FHIR\STU3\FHIRElement\FHIRMeta;
+use HL7\FHIR\STU3\FHIRElement\FHIRNarrative;
 use HL7\FHIR\STU3\FHIRElement\FHIRNutritionOrderStatus;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRIdPrimitive;
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRTypeMap;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A request to supply a diet, formula feeding (enteral) or oral nutritional
@@ -87,36 +101,64 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER;
-    const FIELD_ALLERGY_INTOLERANCE = 'allergyIntolerance';
-    const FIELD_DATE_TIME = 'dateTime';
-    const FIELD_DATE_TIME_EXT = '_dateTime';
-    const FIELD_ENCOUNTER = 'encounter';
-    const FIELD_ENTERAL_FORMULA = 'enteralFormula';
-    const FIELD_EXCLUDE_FOOD_MODIFIER = 'excludeFoodModifier';
-    const FIELD_FOOD_PREFERENCE_MODIFIER = 'foodPreferenceModifier';
+
     const FIELD_IDENTIFIER = 'identifier';
-    const FIELD_ORAL_DIET = 'oralDiet';
-    const FIELD_ORDERER = 'orderer';
-    const FIELD_PATIENT = 'patient';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
+    const FIELD_PATIENT = 'patient';
+    const FIELD_ENCOUNTER = 'encounter';
+    const FIELD_DATE_TIME = 'dateTime';
+    const FIELD_DATE_TIME_EXT = '_dateTime';
+    const FIELD_ORDERER = 'orderer';
+    const FIELD_ALLERGY_INTOLERANCE = 'allergyIntolerance';
+    const FIELD_FOOD_PREFERENCE_MODIFIER = 'foodPreferenceModifier';
+    const FIELD_EXCLUDE_FOOD_MODIFIER = 'excludeFoodModifier';
+    const FIELD_ORAL_DIET = 'oralDiet';
     const FIELD_SUPPLEMENT = 'supplement';
+    const FIELD_ENTERAL_FORMULA = 'enteralFormula';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifiers assigned to this order by the order sender or by the order receiver.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     */
+    protected null|array $identifier = [];
+    /**
+     * Codes specifying the state of the request. Describes the lifecycle of the
+     * nutrition order.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The workflow status of the nutrition order/request.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRNutritionOrderStatus
+     */
+    protected null|FHIRNutritionOrderStatus $status = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * A link to a record of allergies or intolerances which should be included in the
-     * nutrition order.
+     * The person (patient) who needs the nutrition order for an oral diet, nutritional
+     * supplement and/or enteral or formula feeding.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $allergyIntolerance = [];
-
+    protected null|FHIRReference $patient = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An encounter that provides additional information about the healthcare context
+     * in which this request is made.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $encounter = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -129,31 +171,44 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    protected $dateTime = null;
-
+    protected null|FHIRDateTime $dateTime = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * An encounter that provides additional information about the healthcare context
-     * in which this request is made.
+     * The practitioner that holds legal responsibility for ordering the diet,
+     * nutritional supplement, or formula feedings.
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $encounter = null;
-
+    protected null|FHIRReference $orderer = null;
     /**
-     * A request to supply a diet, formula feeding (enteral) or oral nutritional
-     * supplement to a patient/resident.
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Feeding provided through the gastrointestinal tract via a tube, catheter, or
-     * stoma that delivers nutrition distal to the oral cavity.
+     * A link to a record of allergies or intolerances which should be included in the
+     * nutrition order.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderEnteralFormula
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $enteralFormula = null;
-
+    protected null|array $allergyIntolerance = [];
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This modifier is used to convey order-specific modifiers about the type of food
+     * that should be given. These can be derived from patient allergies, intolerances,
+     * or preferences such as Halal, Vegan or Kosher. This modifier applies to the
+     * entire nutrition order inclusive of the oral diet, nutritional supplements and
+     * enteral formula feedings.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     */
+    protected null|array $foodPreferenceModifier = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -172,35 +227,7 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    protected $excludeFoodModifier = [];
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * This modifier is used to convey order-specific modifiers about the type of food
-     * that should be given. These can be derived from patient allergies, intolerances,
-     * or preferences such as Halal, Vegan or Kosher. This modifier applies to the
-     * entire nutrition order inclusive of the oral diet, nutritional supplements and
-     * enteral formula feedings.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
-     */
-    protected $foodPreferenceModifier = [];
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifiers assigned to this order by the order sender or by the order receiver.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
-     */
-    protected $identifier = [];
-
+    protected null|array $excludeFoodModifier = [];
     /**
      * A request to supply a diet, formula feeding (enteral) or oral nutritional
      * supplement to a patient/resident.
@@ -209,43 +236,7 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderOralDiet
      */
-    protected $oralDiet = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The practitioner that holds legal responsibility for ordering the diet,
-     * nutritional supplement, or formula feedings.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $orderer = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The person (patient) who needs the nutrition order for an oral diet, nutritional
-     * supplement and/or enteral or formula feeding.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $patient = null;
-
-    /**
-     * Codes specifying the state of the request. Describes the lifecycle of the
-     * nutrition order.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The workflow status of the nutrition order/request.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRNutritionOrderStatus
-     */
-    protected $status = null;
-
+    protected null|FHIRNutritionOrderOralDiet $oralDiet = null;
     /**
      * A request to supply a diet, formula feeding (enteral) or oral nutritional
      * supplement to a patient/resident.
@@ -255,30 +246,104 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderSupplement[]
      */
-    protected $supplement = [];
+    protected null|array $supplement = [];
+    /**
+     * A request to supply a diet, formula feeding (enteral) or oral nutritional
+     * supplement to a patient/resident.
+     *
+     * Feeding provided through the gastrointestinal tract via a tube, catheter, or
+     * stoma that delivers nutrition distal to the oral cavity.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderEnteralFormula
+     */
+    protected null|FHIRNutritionOrderEnteralFormula $enteralFormula = null;
 
     /**
      * Validation map for fields in type NutritionOrder
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRNutritionOrder Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRNutritionOrder::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_IDENTIFIER])) {
+            if (is_array($data[self::FIELD_IDENTIFIER])) {
+                foreach($data[self::FIELD_IDENTIFIER] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRIdentifier) {
+                        $this->addIdentifier($v);
+                    } else {
+                        $this->addIdentifier(new FHIRIdentifier($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+                $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
+            } else {
+                $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+            }
+        }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            $value = $data[self::FIELD_STATUS] ?? null;
+            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) ? $data[self::FIELD_STATUS_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRNutritionOrderStatus) {
+                    $this->setStatus($value);
+                } else if (is_array($value)) {
+                    $this->setStatus(new FHIRNutritionOrderStatus(array_merge($ext, $value)));
+                } else {
+                    $this->setStatus(new FHIRNutritionOrderStatus([FHIRNutritionOrderStatus::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setStatus(new FHIRNutritionOrderStatus($ext));
+            }
+        }
+        if (isset($data[self::FIELD_PATIENT])) {
+            if ($data[self::FIELD_PATIENT] instanceof FHIRReference) {
+                $this->setPatient($data[self::FIELD_PATIENT]);
+            } else {
+                $this->setPatient(new FHIRReference($data[self::FIELD_PATIENT]));
+            }
+        }
+        if (isset($data[self::FIELD_ENCOUNTER])) {
+            if ($data[self::FIELD_ENCOUNTER] instanceof FHIRReference) {
+                $this->setEncounter($data[self::FIELD_ENCOUNTER]);
+            } else {
+                $this->setEncounter(new FHIRReference($data[self::FIELD_ENCOUNTER]));
+            }
+        }
+        if (isset($data[self::FIELD_DATE_TIME]) || isset($data[self::FIELD_DATE_TIME_EXT])) {
+            $value = $data[self::FIELD_DATE_TIME] ?? null;
+            $ext = (isset($data[self::FIELD_DATE_TIME_EXT]) && is_array($data[self::FIELD_DATE_TIME_EXT])) ? $data[self::FIELD_DATE_TIME_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setDateTime($value);
+                } else if (is_array($value)) {
+                    $this->setDateTime(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setDateTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setDateTime(new FHIRDateTime($ext));
+            }
+        }
+        if (isset($data[self::FIELD_ORDERER])) {
+            if ($data[self::FIELD_ORDERER] instanceof FHIRReference) {
+                $this->setOrderer($data[self::FIELD_ORDERER]);
+            } else {
+                $this->setOrderer(new FHIRReference($data[self::FIELD_ORDERER]));
+            }
+        }
         if (isset($data[self::FIELD_ALLERGY_INTOLERANCE])) {
             if (is_array($data[self::FIELD_ALLERGY_INTOLERANCE])) {
                 foreach($data[self::FIELD_ALLERGY_INTOLERANCE] as $v) {
@@ -291,65 +356,10 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                         $this->addAllergyIntolerance(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_ALLERGY_INTOLERANCE] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_ALLERGY_INTOLERANCE] instanceof FHIRReference) {
                 $this->addAllergyIntolerance($data[self::FIELD_ALLERGY_INTOLERANCE]);
             } else {
                 $this->addAllergyIntolerance(new FHIRReference($data[self::FIELD_ALLERGY_INTOLERANCE]));
-            }
-        }
-        if (isset($data[self::FIELD_DATE_TIME]) || isset($data[self::FIELD_DATE_TIME_EXT])) {
-            if (isset($data[self::FIELD_DATE_TIME])) {
-                $value = $data[self::FIELD_DATE_TIME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_DATE_TIME_EXT]) && is_array($data[self::FIELD_DATE_TIME_EXT])) {
-                $ext = $data[self::FIELD_DATE_TIME_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRDateTime) {
-                    $this->setDateTime($value);
-                } else if (is_array($value)) {
-                    $this->setDateTime(new FHIRDateTime(array_merge($ext, $value)));
-                } else {
-                    $this->setDateTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setDateTime(new FHIRDateTime($ext));
-            }
-        }
-        if (isset($data[self::FIELD_ENCOUNTER])) {
-            if ($data[self::FIELD_ENCOUNTER] instanceof FHIRReference) {
-                $this->setEncounter($data[self::FIELD_ENCOUNTER]);
-            } else {
-                $this->setEncounter(new FHIRReference($data[self::FIELD_ENCOUNTER]));
-            }
-        }
-        if (isset($data[self::FIELD_ENTERAL_FORMULA])) {
-            if ($data[self::FIELD_ENTERAL_FORMULA] instanceof FHIRNutritionOrderEnteralFormula) {
-                $this->setEnteralFormula($data[self::FIELD_ENTERAL_FORMULA]);
-            } else {
-                $this->setEnteralFormula(new FHIRNutritionOrderEnteralFormula($data[self::FIELD_ENTERAL_FORMULA]));
-            }
-        }
-        if (isset($data[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
-            if (is_array($data[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
-                foreach($data[self::FIELD_EXCLUDE_FOOD_MODIFIER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRCodeableConcept) {
-                        $this->addExcludeFoodModifier($v);
-                    } else {
-                        $this->addExcludeFoodModifier(new FHIRCodeableConcept($v));
-                    }
-                }
-            } else if ($data[self::FIELD_EXCLUDE_FOOD_MODIFIER] instanceof FHIRCodeableConcept) {
-                $this->addExcludeFoodModifier($data[self::FIELD_EXCLUDE_FOOD_MODIFIER]);
-            } else {
-                $this->addExcludeFoodModifier(new FHIRCodeableConcept($data[self::FIELD_EXCLUDE_FOOD_MODIFIER]));
             }
         }
         if (isset($data[self::FIELD_FOOD_PREFERENCE_MODIFIER])) {
@@ -364,28 +374,28 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                         $this->addFoodPreferenceModifier(new FHIRCodeableConcept($v));
                     }
                 }
-            } else if ($data[self::FIELD_FOOD_PREFERENCE_MODIFIER] instanceof FHIRCodeableConcept) {
+            } elseif ($data[self::FIELD_FOOD_PREFERENCE_MODIFIER] instanceof FHIRCodeableConcept) {
                 $this->addFoodPreferenceModifier($data[self::FIELD_FOOD_PREFERENCE_MODIFIER]);
             } else {
                 $this->addFoodPreferenceModifier(new FHIRCodeableConcept($data[self::FIELD_FOOD_PREFERENCE_MODIFIER]));
             }
         }
-        if (isset($data[self::FIELD_IDENTIFIER])) {
-            if (is_array($data[self::FIELD_IDENTIFIER])) {
-                foreach($data[self::FIELD_IDENTIFIER] as $v) {
+        if (isset($data[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
+            if (is_array($data[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
+                foreach($data[self::FIELD_EXCLUDE_FOOD_MODIFIER] as $v) {
                     if (null === $v) {
                         continue;
                     }
-                    if ($v instanceof FHIRIdentifier) {
-                        $this->addIdentifier($v);
+                    if ($v instanceof FHIRCodeableConcept) {
+                        $this->addExcludeFoodModifier($v);
                     } else {
-                        $this->addIdentifier(new FHIRIdentifier($v));
+                        $this->addExcludeFoodModifier(new FHIRCodeableConcept($v));
                     }
                 }
-            } else if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
-                $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
+            } elseif ($data[self::FIELD_EXCLUDE_FOOD_MODIFIER] instanceof FHIRCodeableConcept) {
+                $this->addExcludeFoodModifier($data[self::FIELD_EXCLUDE_FOOD_MODIFIER]);
             } else {
-                $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+                $this->addExcludeFoodModifier(new FHIRCodeableConcept($data[self::FIELD_EXCLUDE_FOOD_MODIFIER]));
             }
         }
         if (isset($data[self::FIELD_ORAL_DIET])) {
@@ -393,43 +403,6 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 $this->setOralDiet($data[self::FIELD_ORAL_DIET]);
             } else {
                 $this->setOralDiet(new FHIRNutritionOrderOralDiet($data[self::FIELD_ORAL_DIET]));
-            }
-        }
-        if (isset($data[self::FIELD_ORDERER])) {
-            if ($data[self::FIELD_ORDERER] instanceof FHIRReference) {
-                $this->setOrderer($data[self::FIELD_ORDERER]);
-            } else {
-                $this->setOrderer(new FHIRReference($data[self::FIELD_ORDERER]));
-            }
-        }
-        if (isset($data[self::FIELD_PATIENT])) {
-            if ($data[self::FIELD_PATIENT] instanceof FHIRReference) {
-                $this->setPatient($data[self::FIELD_PATIENT]);
-            } else {
-                $this->setPatient(new FHIRReference($data[self::FIELD_PATIENT]));
-            }
-        }
-        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
-            if (isset($data[self::FIELD_STATUS])) {
-                $value = $data[self::FIELD_STATUS];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) {
-                $ext = $data[self::FIELD_STATUS_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRNutritionOrderStatus) {
-                    $this->setStatus($value);
-                } else if (is_array($value)) {
-                    $this->setStatus(new FHIRNutritionOrderStatus(array_merge($ext, $value)));
-                } else {
-                    $this->setStatus(new FHIRNutritionOrderStatus([FHIRNutritionOrderStatus::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setStatus(new FHIRNutritionOrderStatus($ext));
             }
         }
         if (isset($data[self::FIELD_SUPPLEMENT])) {
@@ -444,18 +417,26 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                         $this->addSupplement(new FHIRNutritionOrderSupplement($v));
                     }
                 }
-            } else if ($data[self::FIELD_SUPPLEMENT] instanceof FHIRNutritionOrderSupplement) {
+            } elseif ($data[self::FIELD_SUPPLEMENT] instanceof FHIRNutritionOrderSupplement) {
                 $this->addSupplement($data[self::FIELD_SUPPLEMENT]);
             } else {
                 $this->addSupplement(new FHIRNutritionOrderSupplement($data[self::FIELD_SUPPLEMENT]));
             }
         }
+        if (isset($data[self::FIELD_ENTERAL_FORMULA])) {
+            if ($data[self::FIELD_ENTERAL_FORMULA] instanceof FHIRNutritionOrderEnteralFormula) {
+                $this->setEnteralFormula($data[self::FIELD_ENTERAL_FORMULA]);
+            } else {
+                $this->setEnteralFormula(new FHIRNutritionOrderEnteralFormula($data[self::FIELD_ENTERAL_FORMULA]));
+            }
+        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -463,123 +444,142 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<NutritionOrder{$xmlns}></NutritionOrder>";
-    }
-    /**
-     * @return string
-     */
-    public function _getResourceType()
+    public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
 
 
     /**
-     * A reference from one resource to another.
+     * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * A link to a record of allergies or intolerances which should be included in the
-     * nutrition order.
+     * Identifiers assigned to this order by the order sender or by the order receiver.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
-    public function getAllergyIntolerance()
+    public function getIdentifier(): null|array
     {
-        return $this->allergyIntolerance;
+        return $this->identifier;
     }
 
     /**
-     * A reference from one resource to another.
+     * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * A link to a record of allergies or intolerances which should be included in the
-     * nutrition order.
+     * Identifiers assigned to this order by the order sender or by the order receiver.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $allergyIntolerance
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addAllergyIntolerance(FHIRReference $allergyIntolerance = null)
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
-        $this->allergyIntolerance[] = $allergyIntolerance;
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
+        $this->_trackValueAdded();
+        $this->identifier[] = $identifier;
         return $this;
     }
 
     /**
-     * A reference from one resource to another.
+     * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * A link to a record of allergies or intolerances which should be included in the
-     * nutrition order.
+     * Identifiers assigned to this order by the order sender or by the order receiver.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $allergyIntolerance
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setAllergyIntolerance(array $allergyIntolerance = [])
+    public function setIdentifier(array $identifier = []): self
     {
-        $this->allergyIntolerance = [];
-        if ([] === $allergyIntolerance) {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
             return $this;
         }
-        foreach($allergyIntolerance as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addAllergyIntolerance($v);
+        foreach($identifier as $v) {
+            if ($v instanceof FHIRIdentifier) {
+                $this->addIdentifier($v);
             } else {
-                $this->addAllergyIntolerance(new FHIRReference($v));
+                $this->addIdentifier(new FHIRIdentifier($v));
             }
         }
         return $this;
     }
 
     /**
-     * A date, date-time or partial date (e.g. just year or year + month). If hours and
-     * minutes are specified, a time zone SHALL be populated. The format is a union of
-     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
-     * due to schema type constraints but may be zero-filled and may be ignored. Dates
-     * SHALL be valid dates.
+     * Codes specifying the state of the request. Describes the lifecycle of the
+     * nutrition order.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The date and time that this nutrition order was requested.
+     * The workflow status of the nutrition order/request.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRNutritionOrderStatus
      */
-    public function getDateTime()
+    public function getStatus(): null|FHIRNutritionOrderStatus
     {
-        return $this->dateTime;
+        return $this->status;
     }
 
     /**
-     * A date, date-time or partial date (e.g. just year or year + month). If hours and
-     * minutes are specified, a time zone SHALL be populated. The format is a union of
-     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
-     * due to schema type constraints but may be zero-filled and may be ignored. Dates
-     * SHALL be valid dates.
+     * Codes specifying the state of the request. Describes the lifecycle of the
+     * nutrition order.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The date and time that this nutrition order was requested.
+     * The workflow status of the nutrition order/request.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $dateTime
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRNutritionOrderStatus $status
      * @return static
      */
-    public function setDateTime($dateTime = null)
+    public function setStatus(null|FHIRNutritionOrderStatus $status = null): self
     {
-        if (null === $dateTime) {
-            $this->dateTime = null;
-            return $this;
+        if (null === $status) {
+            $status = new FHIRNutritionOrderStatus();
         }
-        if ($dateTime instanceof FHIRDateTime) {
-            $this->dateTime = $dateTime;
-            return $this;
+        $this->_trackValueSet($this->status, $status);
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The person (patient) who needs the nutrition order for an oral diet, nutritional
+     * supplement and/or enteral or formula feeding.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getPatient(): null|FHIRReference
+    {
+        return $this->patient;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The person (patient) who needs the nutrition order for an oral diet, nutritional
+     * supplement and/or enteral or formula feeding.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $patient
+     * @return static
+     */
+    public function setPatient(null|FHIRReference $patient = null): self
+    {
+        if (null === $patient) {
+            $patient = new FHIRReference();
         }
-        $this->dateTime = new FHIRDateTime($dateTime);
+        $this->_trackValueSet($this->patient, $patient);
+        $this->patient = $patient;
         return $this;
     }
 
@@ -593,7 +593,7 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getEncounter()
+    public function getEncounter(): null|FHIRReference
     {
         return $this->encounter;
     }
@@ -609,39 +609,233 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $encounter
      * @return static
      */
-    public function setEncounter(FHIRReference $encounter = null)
+    public function setEncounter(null|FHIRReference $encounter = null): self
     {
+        if (null === $encounter) {
+            $encounter = new FHIRReference();
+        }
+        $this->_trackValueSet($this->encounter, $encounter);
         $this->encounter = $encounter;
         return $this;
     }
 
     /**
-     * A request to supply a diet, formula feeding (enteral) or oral nutritional
-     * supplement to a patient/resident.
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Feeding provided through the gastrointestinal tract via a tube, catheter, or
-     * stoma that delivers nutrition distal to the oral cavity.
+     * The date and time that this nutrition order was requested.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderEnteralFormula
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    public function getEnteralFormula()
+    public function getDateTime(): null|FHIRDateTime
     {
-        return $this->enteralFormula;
+        return $this->dateTime;
     }
 
     /**
-     * A request to supply a diet, formula feeding (enteral) or oral nutritional
-     * supplement to a patient/resident.
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Feeding provided through the gastrointestinal tract via a tube, catheter, or
-     * stoma that delivers nutrition distal to the oral cavity.
+     * The date and time that this nutrition order was requested.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderEnteralFormula $enteralFormula
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRDateTimePrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $dateTime
      * @return static
      */
-    public function setEnteralFormula(FHIRNutritionOrderEnteralFormula $enteralFormula = null)
+    public function setDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $dateTime = null): self
     {
-        $this->enteralFormula = $enteralFormula;
+        if (null !== $dateTime && !($dateTime instanceof FHIRDateTime)) {
+            $dateTime = new FHIRDateTime($dateTime);
+        }
+        $this->_trackValueSet($this->dateTime, $dateTime);
+        $this->dateTime = $dateTime;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The practitioner that holds legal responsibility for ordering the diet,
+     * nutritional supplement, or formula feedings.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getOrderer(): null|FHIRReference
+    {
+        return $this->orderer;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The practitioner that holds legal responsibility for ordering the diet,
+     * nutritional supplement, or formula feedings.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $orderer
+     * @return static
+     */
+    public function setOrderer(null|FHIRReference $orderer = null): self
+    {
+        if (null === $orderer) {
+            $orderer = new FHIRReference();
+        }
+        $this->_trackValueSet($this->orderer, $orderer);
+        $this->orderer = $orderer;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A link to a record of allergies or intolerances which should be included in the
+     * nutrition order.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    public function getAllergyIntolerance(): null|array
+    {
+        return $this->allergyIntolerance;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A link to a record of allergies or intolerances which should be included in the
+     * nutrition order.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $allergyIntolerance
+     * @return static
+     */
+    public function addAllergyIntolerance(null|FHIRReference $allergyIntolerance = null): self
+    {
+        if (null === $allergyIntolerance) {
+            $allergyIntolerance = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->allergyIntolerance[] = $allergyIntolerance;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A link to a record of allergies or intolerances which should be included in the
+     * nutrition order.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $allergyIntolerance
+     * @return static
+     */
+    public function setAllergyIntolerance(array $allergyIntolerance = []): self
+    {
+        if ([] !== $this->allergyIntolerance) {
+            $this->_trackValuesRemoved(count($this->allergyIntolerance));
+            $this->allergyIntolerance = [];
+        }
+        if ([] === $allergyIntolerance) {
+            return $this;
+        }
+        foreach($allergyIntolerance as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addAllergyIntolerance($v);
+            } else {
+                $this->addAllergyIntolerance(new FHIRReference($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This modifier is used to convey order-specific modifiers about the type of food
+     * that should be given. These can be derived from patient allergies, intolerances,
+     * or preferences such as Halal, Vegan or Kosher. This modifier applies to the
+     * entire nutrition order inclusive of the oral diet, nutritional supplements and
+     * enteral formula feedings.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     */
+    public function getFoodPreferenceModifier(): null|array
+    {
+        return $this->foodPreferenceModifier;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This modifier is used to convey order-specific modifiers about the type of food
+     * that should be given. These can be derived from patient allergies, intolerances,
+     * or preferences such as Halal, Vegan or Kosher. This modifier applies to the
+     * entire nutrition order inclusive of the oral diet, nutritional supplements and
+     * enteral formula feedings.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $foodPreferenceModifier
+     * @return static
+     */
+    public function addFoodPreferenceModifier(null|FHIRCodeableConcept $foodPreferenceModifier = null): self
+    {
+        if (null === $foodPreferenceModifier) {
+            $foodPreferenceModifier = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
+        $this->foodPreferenceModifier[] = $foodPreferenceModifier;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This modifier is used to convey order-specific modifiers about the type of food
+     * that should be given. These can be derived from patient allergies, intolerances,
+     * or preferences such as Halal, Vegan or Kosher. This modifier applies to the
+     * entire nutrition order inclusive of the oral diet, nutritional supplements and
+     * enteral formula feedings.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $foodPreferenceModifier
+     * @return static
+     */
+    public function setFoodPreferenceModifier(array $foodPreferenceModifier = []): self
+    {
+        if ([] !== $this->foodPreferenceModifier) {
+            $this->_trackValuesRemoved(count($this->foodPreferenceModifier));
+            $this->foodPreferenceModifier = [];
+        }
+        if ([] === $foodPreferenceModifier) {
+            return $this;
+        }
+        foreach($foodPreferenceModifier as $v) {
+            if ($v instanceof FHIRCodeableConcept) {
+                $this->addFoodPreferenceModifier($v);
+            } else {
+                $this->addFoodPreferenceModifier(new FHIRCodeableConcept($v));
+            }
+        }
         return $this;
     }
 
@@ -663,7 +857,7 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getExcludeFoodModifier()
+    public function getExcludeFoodModifier(): null|array
     {
         return $this->excludeFoodModifier;
     }
@@ -687,8 +881,12 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $excludeFoodModifier
      * @return static
      */
-    public function addExcludeFoodModifier(FHIRCodeableConcept $excludeFoodModifier = null)
+    public function addExcludeFoodModifier(null|FHIRCodeableConcept $excludeFoodModifier = null): self
     {
+        if (null === $excludeFoodModifier) {
+            $excludeFoodModifier = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
         $this->excludeFoodModifier[] = $excludeFoodModifier;
         return $this;
     }
@@ -712,9 +910,12 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $excludeFoodModifier
      * @return static
      */
-    public function setExcludeFoodModifier(array $excludeFoodModifier = [])
+    public function setExcludeFoodModifier(array $excludeFoodModifier = []): self
     {
-        $this->excludeFoodModifier = [];
+        if ([] !== $this->excludeFoodModifier) {
+            $this->_trackValuesRemoved(count($this->excludeFoodModifier));
+            $this->excludeFoodModifier = [];
+        }
         if ([] === $excludeFoodModifier) {
             return $this;
         }
@@ -729,133 +930,6 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * This modifier is used to convey order-specific modifiers about the type of food
-     * that should be given. These can be derived from patient allergies, intolerances,
-     * or preferences such as Halal, Vegan or Kosher. This modifier applies to the
-     * entire nutrition order inclusive of the oral diet, nutritional supplements and
-     * enteral formula feedings.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
-     */
-    public function getFoodPreferenceModifier()
-    {
-        return $this->foodPreferenceModifier;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * This modifier is used to convey order-specific modifiers about the type of food
-     * that should be given. These can be derived from patient allergies, intolerances,
-     * or preferences such as Halal, Vegan or Kosher. This modifier applies to the
-     * entire nutrition order inclusive of the oral diet, nutritional supplements and
-     * enteral formula feedings.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $foodPreferenceModifier
-     * @return static
-     */
-    public function addFoodPreferenceModifier(FHIRCodeableConcept $foodPreferenceModifier = null)
-    {
-        $this->foodPreferenceModifier[] = $foodPreferenceModifier;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * This modifier is used to convey order-specific modifiers about the type of food
-     * that should be given. These can be derived from patient allergies, intolerances,
-     * or preferences such as Halal, Vegan or Kosher. This modifier applies to the
-     * entire nutrition order inclusive of the oral diet, nutritional supplements and
-     * enteral formula feedings.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $foodPreferenceModifier
-     * @return static
-     */
-    public function setFoodPreferenceModifier(array $foodPreferenceModifier = [])
-    {
-        $this->foodPreferenceModifier = [];
-        if ([] === $foodPreferenceModifier) {
-            return $this;
-        }
-        foreach($foodPreferenceModifier as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addFoodPreferenceModifier($v);
-            } else {
-                $this->addFoodPreferenceModifier(new FHIRCodeableConcept($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifiers assigned to this order by the order sender or by the order receiver.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifiers assigned to this order by the order sender or by the order receiver.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
-     * @return static
-     */
-    public function addIdentifier(FHIRIdentifier $identifier = null)
-    {
-        $this->identifier[] = $identifier;
-        return $this;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifiers assigned to this order by the order sender or by the order receiver.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
-     * @return static
-     */
-    public function setIdentifier(array $identifier = [])
-    {
-        $this->identifier = [];
-        if ([] === $identifier) {
-            return $this;
-        }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
      * A request to supply a diet, formula feeding (enteral) or oral nutritional
      * supplement to a patient/resident.
      *
@@ -863,7 +937,7 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderOralDiet
      */
-    public function getOralDiet()
+    public function getOralDiet(): null|FHIRNutritionOrderOralDiet
     {
         return $this->oralDiet;
     }
@@ -877,103 +951,13 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderOralDiet $oralDiet
      * @return static
      */
-    public function setOralDiet(FHIRNutritionOrderOralDiet $oralDiet = null)
+    public function setOralDiet(null|FHIRNutritionOrderOralDiet $oralDiet = null): self
     {
+        if (null === $oralDiet) {
+            $oralDiet = new FHIRNutritionOrderOralDiet();
+        }
+        $this->_trackValueSet($this->oralDiet, $oralDiet);
         $this->oralDiet = $oralDiet;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The practitioner that holds legal responsibility for ordering the diet,
-     * nutritional supplement, or formula feedings.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getOrderer()
-    {
-        return $this->orderer;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The practitioner that holds legal responsibility for ordering the diet,
-     * nutritional supplement, or formula feedings.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $orderer
-     * @return static
-     */
-    public function setOrderer(FHIRReference $orderer = null)
-    {
-        $this->orderer = $orderer;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The person (patient) who needs the nutrition order for an oral diet, nutritional
-     * supplement and/or enteral or formula feeding.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getPatient()
-    {
-        return $this->patient;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The person (patient) who needs the nutrition order for an oral diet, nutritional
-     * supplement and/or enteral or formula feeding.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $patient
-     * @return static
-     */
-    public function setPatient(FHIRReference $patient = null)
-    {
-        $this->patient = $patient;
-        return $this;
-    }
-
-    /**
-     * Codes specifying the state of the request. Describes the lifecycle of the
-     * nutrition order.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The workflow status of the nutrition order/request.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRNutritionOrderStatus
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Codes specifying the state of the request. Describes the lifecycle of the
-     * nutrition order.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The workflow status of the nutrition order/request.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRNutritionOrderStatus $status
-     * @return static
-     */
-    public function setStatus(FHIRNutritionOrderStatus $status = null)
-    {
-        $this->status = $status;
         return $this;
     }
 
@@ -986,7 +970,7 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderSupplement[]
      */
-    public function getSupplement()
+    public function getSupplement(): null|array
     {
         return $this->supplement;
     }
@@ -1001,8 +985,12 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderSupplement $supplement
      * @return static
      */
-    public function addSupplement(FHIRNutritionOrderSupplement $supplement = null)
+    public function addSupplement(null|FHIRNutritionOrderSupplement $supplement = null): self
     {
+        if (null === $supplement) {
+            $supplement = new FHIRNutritionOrderSupplement();
+        }
+        $this->_trackValueAdded();
         $this->supplement[] = $supplement;
         return $this;
     }
@@ -1017,9 +1005,12 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderSupplement[] $supplement
      * @return static
      */
-    public function setSupplement(array $supplement = [])
+    public function setSupplement(array $supplement = []): self
     {
-        $this->supplement = [];
+        if ([] !== $this->supplement) {
+            $this->_trackValuesRemoved(count($this->supplement));
+            $this->supplement = [];
+        }
         if ([] === $supplement) {
             return $this;
         }
@@ -1034,14 +1025,48 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
     }
 
     /**
+     * A request to supply a diet, formula feeding (enteral) or oral nutritional
+     * supplement to a patient/resident.
+     *
+     * Feeding provided through the gastrointestinal tract via a tube, catheter, or
+     * stoma that delivers nutrition distal to the oral cavity.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderEnteralFormula
+     */
+    public function getEnteralFormula(): null|FHIRNutritionOrderEnteralFormula
+    {
+        return $this->enteralFormula;
+    }
+
+    /**
+     * A request to supply a diet, formula feeding (enteral) or oral nutritional
+     * supplement to a patient/resident.
+     *
+     * Feeding provided through the gastrointestinal tract via a tube, catheter, or
+     * stoma that delivers nutrition distal to the oral cavity.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderEnteralFormula $enteralFormula
+     * @return static
+     */
+    public function setEnteralFormula(null|FHIRNutritionOrderEnteralFormula $enteralFormula = null): self
+    {
+        if (null === $enteralFormula) {
+            $enteralFormula = new FHIRNutritionOrderEnteralFormula();
+        }
+        $this->_trackValueSet($this->enteralFormula, $enteralFormula);
+        $this->enteralFormula = $enteralFormula;
+        return $this;
+    }
+
+    /**
      * Returns the validation rules that this type's fields must comply with to be considered "valid"
      * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1050,20 +1075,25 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if ([] !== ($vs = $this->getAllergyIntolerance())) {
+        if ([] !== ($vs = $this->getIdentifier())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_ALLERGY_INTOLERANCE, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
                 }
             }
         }
-        if (null !== ($v = $this->getDateTime())) {
+        if (null !== ($v = $this->getStatus())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_DATE_TIME] = $fieldErrs;
+                $errs[self::FIELD_STATUS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPatient())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PATIENT] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getEncounter())) {
@@ -1071,15 +1101,20 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 $errs[self::FIELD_ENCOUNTER] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getEnteralFormula())) {
+        if (null !== ($v = $this->getDateTime())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_ENTERAL_FORMULA] = $fieldErrs;
+                $errs[self::FIELD_DATE_TIME] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getExcludeFoodModifier())) {
+        if (null !== ($v = $this->getOrderer())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ORDERER] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getAllergyIntolerance())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_EXCLUDE_FOOD_MODIFIER, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_ALLERGY_INTOLERANCE, $i)] = $fieldErrs;
                 }
             }
         }
@@ -1090,31 +1125,16 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 }
             }
         }
-        if ([] !== ($vs = $this->getIdentifier())) {
+        if ([] !== ($vs = $this->getExcludeFoodModifier())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_EXCLUDE_FOOD_MODIFIER, $i)] = $fieldErrs;
                 }
             }
         }
         if (null !== ($v = $this->getOralDiet())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_ORAL_DIET] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getOrderer())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_ORDERER] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getPatient())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_PATIENT] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getStatus())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_STATUS] = $fieldErrs;
             }
         }
         if ([] !== ($vs = $this->getSupplement())) {
@@ -1124,76 +1144,9 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_ALLERGY_INTOLERANCE])) {
-            $v = $this->getAllergyIntolerance();
-            foreach($validationRules[self::FIELD_ALLERGY_INTOLERANCE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ALLERGY_INTOLERANCE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ALLERGY_INTOLERANCE])) {
-                        $errs[self::FIELD_ALLERGY_INTOLERANCE] = [];
-                    }
-                    $errs[self::FIELD_ALLERGY_INTOLERANCE][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_DATE_TIME])) {
-            $v = $this->getDateTime();
-            foreach($validationRules[self::FIELD_DATE_TIME] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_DATE_TIME, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_DATE_TIME])) {
-                        $errs[self::FIELD_DATE_TIME] = [];
-                    }
-                    $errs[self::FIELD_DATE_TIME][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_ENCOUNTER])) {
-            $v = $this->getEncounter();
-            foreach($validationRules[self::FIELD_ENCOUNTER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ENCOUNTER, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ENCOUNTER])) {
-                        $errs[self::FIELD_ENCOUNTER] = [];
-                    }
-                    $errs[self::FIELD_ENCOUNTER][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_ENTERAL_FORMULA])) {
-            $v = $this->getEnteralFormula();
-            foreach($validationRules[self::FIELD_ENTERAL_FORMULA] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ENTERAL_FORMULA, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ENTERAL_FORMULA])) {
-                        $errs[self::FIELD_ENTERAL_FORMULA] = [];
-                    }
-                    $errs[self::FIELD_ENTERAL_FORMULA][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
-            $v = $this->getExcludeFoodModifier();
-            foreach($validationRules[self::FIELD_EXCLUDE_FOOD_MODIFIER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_EXCLUDE_FOOD_MODIFIER, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
-                        $errs[self::FIELD_EXCLUDE_FOOD_MODIFIER] = [];
-                    }
-                    $errs[self::FIELD_EXCLUDE_FOOD_MODIFIER][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_FOOD_PREFERENCE_MODIFIER])) {
-            $v = $this->getFoodPreferenceModifier();
-            foreach($validationRules[self::FIELD_FOOD_PREFERENCE_MODIFIER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_FOOD_PREFERENCE_MODIFIER, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_FOOD_PREFERENCE_MODIFIER])) {
-                        $errs[self::FIELD_FOOD_PREFERENCE_MODIFIER] = [];
-                    }
-                    $errs[self::FIELD_FOOD_PREFERENCE_MODIFIER][$rule] = $err;
-                }
+        if (null !== ($v = $this->getEnteralFormula())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ENTERAL_FORMULA] = $fieldErrs;
             }
         }
         if (isset($validationRules[self::FIELD_IDENTIFIER])) {
@@ -1205,42 +1158,6 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                         $errs[self::FIELD_IDENTIFIER] = [];
                     }
                     $errs[self::FIELD_IDENTIFIER][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_ORAL_DIET])) {
-            $v = $this->getOralDiet();
-            foreach($validationRules[self::FIELD_ORAL_DIET] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ORAL_DIET, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ORAL_DIET])) {
-                        $errs[self::FIELD_ORAL_DIET] = [];
-                    }
-                    $errs[self::FIELD_ORAL_DIET][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_ORDERER])) {
-            $v = $this->getOrderer();
-            foreach($validationRules[self::FIELD_ORDERER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ORDERER, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ORDERER])) {
-                        $errs[self::FIELD_ORDERER] = [];
-                    }
-                    $errs[self::FIELD_ORDERER][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_PATIENT])) {
-            $v = $this->getPatient();
-            foreach($validationRules[self::FIELD_PATIENT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_PATIENT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PATIENT])) {
-                        $errs[self::FIELD_PATIENT] = [];
-                    }
-                    $errs[self::FIELD_PATIENT][$rule] = $err;
                 }
             }
         }
@@ -1256,6 +1173,102 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 }
             }
         }
+        if (isset($validationRules[self::FIELD_PATIENT])) {
+            $v = $this->getPatient();
+            foreach($validationRules[self::FIELD_PATIENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_PATIENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PATIENT])) {
+                        $errs[self::FIELD_PATIENT] = [];
+                    }
+                    $errs[self::FIELD_PATIENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ENCOUNTER])) {
+            $v = $this->getEncounter();
+            foreach($validationRules[self::FIELD_ENCOUNTER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ENCOUNTER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ENCOUNTER])) {
+                        $errs[self::FIELD_ENCOUNTER] = [];
+                    }
+                    $errs[self::FIELD_ENCOUNTER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DATE_TIME])) {
+            $v = $this->getDateTime();
+            foreach($validationRules[self::FIELD_DATE_TIME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_DATE_TIME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DATE_TIME])) {
+                        $errs[self::FIELD_DATE_TIME] = [];
+                    }
+                    $errs[self::FIELD_DATE_TIME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ORDERER])) {
+            $v = $this->getOrderer();
+            foreach($validationRules[self::FIELD_ORDERER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ORDERER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ORDERER])) {
+                        $errs[self::FIELD_ORDERER] = [];
+                    }
+                    $errs[self::FIELD_ORDERER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ALLERGY_INTOLERANCE])) {
+            $v = $this->getAllergyIntolerance();
+            foreach($validationRules[self::FIELD_ALLERGY_INTOLERANCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ALLERGY_INTOLERANCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ALLERGY_INTOLERANCE])) {
+                        $errs[self::FIELD_ALLERGY_INTOLERANCE] = [];
+                    }
+                    $errs[self::FIELD_ALLERGY_INTOLERANCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_FOOD_PREFERENCE_MODIFIER])) {
+            $v = $this->getFoodPreferenceModifier();
+            foreach($validationRules[self::FIELD_FOOD_PREFERENCE_MODIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_FOOD_PREFERENCE_MODIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_FOOD_PREFERENCE_MODIFIER])) {
+                        $errs[self::FIELD_FOOD_PREFERENCE_MODIFIER] = [];
+                    }
+                    $errs[self::FIELD_FOOD_PREFERENCE_MODIFIER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
+            $v = $this->getExcludeFoodModifier();
+            foreach($validationRules[self::FIELD_EXCLUDE_FOOD_MODIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_EXCLUDE_FOOD_MODIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXCLUDE_FOOD_MODIFIER])) {
+                        $errs[self::FIELD_EXCLUDE_FOOD_MODIFIER] = [];
+                    }
+                    $errs[self::FIELD_EXCLUDE_FOOD_MODIFIER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ORAL_DIET])) {
+            $v = $this->getOralDiet();
+            foreach($validationRules[self::FIELD_ORAL_DIET] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ORAL_DIET, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ORAL_DIET])) {
+                        $errs[self::FIELD_ORAL_DIET] = [];
+                    }
+                    $errs[self::FIELD_ORAL_DIET][$rule] = $err;
+                }
+            }
+        }
         if (isset($validationRules[self::FIELD_SUPPLEMENT])) {
             $v = $this->getSupplement();
             foreach($validationRules[self::FIELD_SUPPLEMENT] as $rule => $constraint) {
@@ -1265,6 +1278,30 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                         $errs[self::FIELD_SUPPLEMENT] = [];
                     }
                     $errs[self::FIELD_SUPPLEMENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ENTERAL_FORMULA])) {
+            $v = $this->getEnteralFormula();
+            foreach($validationRules[self::FIELD_ENTERAL_FORMULA] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER, self::FIELD_ENTERAL_FORMULA, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ENTERAL_FORMULA])) {
+                        $errs[self::FIELD_ENTERAL_FORMULA] = [];
+                    }
+                    $errs[self::FIELD_ENTERAL_FORMULA][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
                 }
             }
         }
@@ -1304,18 +1341,6 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TEXT])) {
-            $v = $this->getText();
-            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TEXT])) {
-                        $errs[self::FIELD_TEXT] = [];
-                    }
-                    $errs[self::FIELD_TEXT][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_ID])) {
             $v = $this->getId();
             foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
@@ -1325,6 +1350,18 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                         $errs[self::FIELD_ID] = [];
                     }
                     $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
                 }
             }
         }
@@ -1352,152 +1389,212 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_META])) {
-            $v = $this->getMeta();
-            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_META])) {
-                        $errs[self::FIELD_META] = [];
-                    }
-                    $errs[self::FIELD_META][$rule] = $err;
-                }
-            }
-        }
         return $errs;
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRNutritionOrder $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRNutritionOrder
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRNutritionOrder::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRNutritionOrder::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRNutritionOrder;
-        } elseif (!is_object($type) || !($type instanceof FHIRNutritionOrder)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRNutritionOrder)) {
             throw new \RuntimeException(sprintf(
-                'FHIRNutritionOrder::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRNutritionOrder or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRDomainResource::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_IDENTIFIER === $n->nodeName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_STATUS === $n->nodeName) {
+                $type->setStatus(FHIRNutritionOrderStatus::xmlUnserialize($n));
+            } elseif (self::FIELD_PATIENT === $n->nodeName) {
+                $type->setPatient(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_ENCOUNTER === $n->nodeName) {
+                $type->setEncounter(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_DATE_TIME === $n->nodeName) {
+                $type->setDateTime(FHIRDateTime::xmlUnserialize($n));
+            } elseif (self::FIELD_ORDERER === $n->nodeName) {
+                $type->setOrderer(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_ALLERGY_INTOLERANCE === $n->nodeName) {
+                $type->addAllergyIntolerance(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_FOOD_PREFERENCE_MODIFIER === $n->nodeName) {
+                $type->addFoodPreferenceModifier(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_EXCLUDE_FOOD_MODIFIER === $n->nodeName) {
+                $type->addExcludeFoodModifier(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_ORAL_DIET === $n->nodeName) {
+                $type->setOralDiet(FHIRNutritionOrderOralDiet::xmlUnserialize($n));
+            } elseif (self::FIELD_SUPPLEMENT === $n->nodeName) {
+                $type->addSupplement(FHIRNutritionOrderSupplement::xmlUnserialize($n));
+            } elseif (self::FIELD_ENTERAL_FORMULA === $n->nodeName) {
+                $type->setEnteralFormula(FHIRNutritionOrderEnteralFormula::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_META === $n->nodeName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n));
+            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->allergyIntolerance)) {
-            foreach($children->allergyIntolerance as $child) {
-                $type->addAllergyIntolerance(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->dateTime)) {
-            $type->setDateTime(FHIRDateTime::xmlUnserialize($children->dateTime));
-        }
-        if (isset($attributes->dateTime)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_DATE_TIME);
+        if (null !== $n) {
             $pt = $type->getDateTime();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->dateTime);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setDateTime((string)$attributes->dateTime);
+                $type->setDateTime($n->nodeValue);
             }
         }
-        if (isset($children->encounter)) {
-            $type->setEncounter(FHIRReference::xmlUnserialize($children->encounter));
-        }
-        if (isset($children->enteralFormula)) {
-            $type->setEnteralFormula(FHIRNutritionOrderEnteralFormula::xmlUnserialize($children->enteralFormula));
-        }
-        if (isset($children->excludeFoodModifier)) {
-            foreach($children->excludeFoodModifier as $child) {
-                $type->addExcludeFoodModifier(FHIRCodeableConcept::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
-        if (isset($children->foodPreferenceModifier)) {
-            foreach($children->foodPreferenceModifier as $child) {
-                $type->addFoodPreferenceModifier(FHIRCodeableConcept::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
+        if (null !== $n) {
+            $pt = $type->getImplicitRules();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setImplicitRules($n->nodeValue);
             }
         }
-        if (isset($children->identifier)) {
-            foreach($children->identifier as $child) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->oralDiet)) {
-            $type->setOralDiet(FHIRNutritionOrderOralDiet::xmlUnserialize($children->oralDiet));
-        }
-        if (isset($children->orderer)) {
-            $type->setOrderer(FHIRReference::xmlUnserialize($children->orderer));
-        }
-        if (isset($children->patient)) {
-            $type->setPatient(FHIRReference::xmlUnserialize($children->patient));
-        }
-        if (isset($children->status)) {
-            $type->setStatus(FHIRNutritionOrderStatus::xmlUnserialize($children->status));
-        }
-        if (isset($children->supplement)) {
-            foreach($children->supplement as $child) {
-                $type->addSupplement(FHIRNutritionOrderSupplement::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
+        if (null !== $n) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLanguage($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('NutritionOrder'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if ([] !== ($vs = $this->getIdentifier())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if (null !== ($v = $this->getStatus())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPatient())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PATIENT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getEncounter())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ENCOUNTER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getDateTime())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_DATE_TIME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getOrderer())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ORDERER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if ([] !== ($vs = $this->getAllergyIntolerance())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_ALLERGY_INTOLERANCE, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getDateTime())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_DATE_TIME, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getEncounter())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ENCOUNTER, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getEnteralFormula())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ENTERAL_FORMULA, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getExcludeFoodModifier())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_EXCLUDE_FOOD_MODIFIER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_ALLERGY_INTOLERANCE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getFoodPreferenceModifier())) {
@@ -1505,135 +1602,140 @@ class FHIRNutritionOrder extends FHIRDomainResource implements PHPFHIRContainedT
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_FOOD_PREFERENCE_MODIFIER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_FOOD_PREFERENCE_MODIFIER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if ([] !== ($vs = $this->getIdentifier())) {
+        if ([] !== ($vs = $this->getExcludeFoodModifier())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_EXCLUDE_FOOD_MODIFIER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if (null !== ($v = $this->getOralDiet())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ORAL_DIET, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getOrderer())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ORDERER, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getPatient())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PATIENT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getStatus())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_STATUS, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_ORAL_DIET);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getSupplement())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SUPPLEMENT, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_SUPPLEMENT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        return $sxe;
+        if (null !== ($v = $this->getEnteralFormula())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ENTERAL_FORMULA);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if ([] !== ($vs = $this->getAllergyIntolerance())) {
-            $a[self::FIELD_ALLERGY_INTOLERANCE] = [];
+        $out = parent::jsonSerialize();
+        if ([] !== ($vs = $this->getIdentifier())) {
+            $out->{self::FIELD_IDENTIFIER} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_ALLERGY_INTOLERANCE][] = $v;
+                $out->{self::FIELD_IDENTIFIER}[] = $v;
             }
         }
-        if (null !== ($v = $this->getDateTime())) {
-            $a[self::FIELD_DATE_TIME] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDateTime::FIELD_VALUE]);
-                $a[self::FIELD_DATE_TIME_EXT] = $enc;
+        if (null !== ($v = $this->getStatus())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_STATUS} = $val;
             }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRNutritionOrderStatus::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_STATUS_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getPatient())) {
+            $out->{self::FIELD_PATIENT} = $v;
         }
         if (null !== ($v = $this->getEncounter())) {
-            $a[self::FIELD_ENCOUNTER] = $v;
+            $out->{self::FIELD_ENCOUNTER} = $v;
         }
-        if (null !== ($v = $this->getEnteralFormula())) {
-            $a[self::FIELD_ENTERAL_FORMULA] = $v;
+        if (null !== ($v = $this->getDateTime())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DATE_TIME} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDateTime::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DATE_TIME_EXT} = $ext;
+            }
         }
-        if ([] !== ($vs = $this->getExcludeFoodModifier())) {
-            $a[self::FIELD_EXCLUDE_FOOD_MODIFIER] = [];
+        if (null !== ($v = $this->getOrderer())) {
+            $out->{self::FIELD_ORDERER} = $v;
+        }
+        if ([] !== ($vs = $this->getAllergyIntolerance())) {
+            $out->{self::FIELD_ALLERGY_INTOLERANCE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_EXCLUDE_FOOD_MODIFIER][] = $v;
+                $out->{self::FIELD_ALLERGY_INTOLERANCE}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getFoodPreferenceModifier())) {
-            $a[self::FIELD_FOOD_PREFERENCE_MODIFIER] = [];
+            $out->{self::FIELD_FOOD_PREFERENCE_MODIFIER} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_FOOD_PREFERENCE_MODIFIER][] = $v;
+                $out->{self::FIELD_FOOD_PREFERENCE_MODIFIER}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->getIdentifier())) {
-            $a[self::FIELD_IDENTIFIER] = [];
+        if ([] !== ($vs = $this->getExcludeFoodModifier())) {
+            $out->{self::FIELD_EXCLUDE_FOOD_MODIFIER} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_IDENTIFIER][] = $v;
+                $out->{self::FIELD_EXCLUDE_FOOD_MODIFIER}[] = $v;
             }
         }
         if (null !== ($v = $this->getOralDiet())) {
-            $a[self::FIELD_ORAL_DIET] = $v;
-        }
-        if (null !== ($v = $this->getOrderer())) {
-            $a[self::FIELD_ORDERER] = $v;
-        }
-        if (null !== ($v = $this->getPatient())) {
-            $a[self::FIELD_PATIENT] = $v;
-        }
-        if (null !== ($v = $this->getStatus())) {
-            $a[self::FIELD_STATUS] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRNutritionOrderStatus::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRNutritionOrderStatus::FIELD_VALUE]);
-                $a[self::FIELD_STATUS_EXT] = $enc;
-            }
+            $out->{self::FIELD_ORAL_DIET} = $v;
         }
         if ([] !== ($vs = $this->getSupplement())) {
-            $a[self::FIELD_SUPPLEMENT] = [];
+            $out->{self::FIELD_SUPPLEMENT} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_SUPPLEMENT][] = $v;
+                $out->{self::FIELD_SUPPLEMENT}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if (null !== ($v = $this->getEnteralFormula())) {
+            $out->{self::FIELD_ENTERAL_FORMULA} = $v;
         }
-        return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
-    }
 
+        $out->{PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE} = $this->_getResourceType();
+
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

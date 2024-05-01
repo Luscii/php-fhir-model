@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,8 +68,11 @@ use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRIdentifier;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * An interaction between a patient and healthcare provider(s) for the purpose of
@@ -82,6 +85,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ENCOUNTER_DOT_HOSPITALIZATION;
+
     const FIELD_PRE_ADMISSION_IDENTIFIER = 'preAdmissionIdentifier';
     const FIELD_ORIGIN = 'origin';
     const FIELD_ADMIT_SOURCE = 'admitSource';
@@ -91,9 +95,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
     const FIELD_SPECIAL_ARRANGEMENT = 'specialArrangement';
     const FIELD_DESTINATION = 'destination';
     const FIELD_DISCHARGE_DISPOSITION = 'dischargeDisposition';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
@@ -105,8 +106,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $preAdmissionIdentifier = null;
-
+    protected null|FHIRIdentifier $preAdmissionIdentifier = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -116,8 +116,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $origin = null;
-
+    protected null|FHIRReference $origin = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -128,8 +127,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $admitSource = null;
-
+    protected null|FHIRCodeableConcept $admitSource = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -140,8 +138,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $reAdmission = null;
-
+    protected null|FHIRCodeableConcept $reAdmission = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -152,8 +149,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $dietPreference = [];
-
+    protected null|array $dietPreference = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -164,8 +160,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $specialCourtesy = [];
-
+    protected null|array $specialCourtesy = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -177,8 +172,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $specialArrangement = [];
-
+    protected null|array $specialArrangement = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -188,8 +182,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $destination = null;
-
+    protected null|FHIRReference $destination = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -200,28 +193,23 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $dischargeDisposition = null;
+    protected null|FHIRCodeableConcept $dischargeDisposition = null;
 
     /**
      * Validation map for fields in type Encounter.Hospitalization
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIREncounterHospitalization Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIREncounterHospitalization::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_PRE_ADMISSION_IDENTIFIER])) {
@@ -322,24 +310,13 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<EncounterHospitalization{$xmlns}></EncounterHospitalization>";
     }
 
     /**
@@ -352,7 +329,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getPreAdmissionIdentifier(): ?FHIRIdentifier
+    public function getPreAdmissionIdentifier(): null|FHIRIdentifier
     {
         return $this->preAdmissionIdentifier;
     }
@@ -368,8 +345,11 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $preAdmissionIdentifier
      * @return static
      */
-    public function setPreAdmissionIdentifier(?FHIRIdentifier $preAdmissionIdentifier = null): object
+    public function setPreAdmissionIdentifier(null|FHIRIdentifier $preAdmissionIdentifier = null): self
     {
+        if (null === $preAdmissionIdentifier) {
+            $preAdmissionIdentifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->preAdmissionIdentifier, $preAdmissionIdentifier);
         $this->preAdmissionIdentifier = $preAdmissionIdentifier;
         return $this;
@@ -384,7 +364,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getOrigin(): ?FHIRReference
+    public function getOrigin(): null|FHIRReference
     {
         return $this->origin;
     }
@@ -399,8 +379,11 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $origin
      * @return static
      */
-    public function setOrigin(?FHIRReference $origin = null): object
+    public function setOrigin(null|FHIRReference $origin = null): self
     {
+        if (null === $origin) {
+            $origin = new FHIRReference();
+        }
         $this->_trackValueSet($this->origin, $origin);
         $this->origin = $origin;
         return $this;
@@ -416,7 +399,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getAdmitSource(): ?FHIRCodeableConcept
+    public function getAdmitSource(): null|FHIRCodeableConcept
     {
         return $this->admitSource;
     }
@@ -432,8 +415,11 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $admitSource
      * @return static
      */
-    public function setAdmitSource(?FHIRCodeableConcept $admitSource = null): object
+    public function setAdmitSource(null|FHIRCodeableConcept $admitSource = null): self
     {
+        if (null === $admitSource) {
+            $admitSource = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->admitSource, $admitSource);
         $this->admitSource = $admitSource;
         return $this;
@@ -449,7 +435,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getReAdmission(): ?FHIRCodeableConcept
+    public function getReAdmission(): null|FHIRCodeableConcept
     {
         return $this->reAdmission;
     }
@@ -465,8 +451,11 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $reAdmission
      * @return static
      */
-    public function setReAdmission(?FHIRCodeableConcept $reAdmission = null): object
+    public function setReAdmission(null|FHIRCodeableConcept $reAdmission = null): self
     {
+        if (null === $reAdmission) {
+            $reAdmission = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->reAdmission, $reAdmission);
         $this->reAdmission = $reAdmission;
         return $this;
@@ -482,7 +471,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getDietPreference(): ?array
+    public function getDietPreference(): null|array
     {
         return $this->dietPreference;
     }
@@ -498,8 +487,11 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $dietPreference
      * @return static
      */
-    public function addDietPreference(?FHIRCodeableConcept $dietPreference = null): object
+    public function addDietPreference(null|FHIRCodeableConcept $dietPreference = null): self
     {
+        if (null === $dietPreference) {
+            $dietPreference = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->dietPreference[] = $dietPreference;
         return $this;
@@ -516,7 +508,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $dietPreference
      * @return static
      */
-    public function setDietPreference(array $dietPreference = []): object
+    public function setDietPreference(array $dietPreference = []): self
     {
         if ([] !== $this->dietPreference) {
             $this->_trackValuesRemoved(count($this->dietPreference));
@@ -545,7 +537,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getSpecialCourtesy(): ?array
+    public function getSpecialCourtesy(): null|array
     {
         return $this->specialCourtesy;
     }
@@ -561,8 +553,11 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $specialCourtesy
      * @return static
      */
-    public function addSpecialCourtesy(?FHIRCodeableConcept $specialCourtesy = null): object
+    public function addSpecialCourtesy(null|FHIRCodeableConcept $specialCourtesy = null): self
     {
+        if (null === $specialCourtesy) {
+            $specialCourtesy = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->specialCourtesy[] = $specialCourtesy;
         return $this;
@@ -579,7 +574,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $specialCourtesy
      * @return static
      */
-    public function setSpecialCourtesy(array $specialCourtesy = []): object
+    public function setSpecialCourtesy(array $specialCourtesy = []): self
     {
         if ([] !== $this->specialCourtesy) {
             $this->_trackValuesRemoved(count($this->specialCourtesy));
@@ -609,7 +604,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getSpecialArrangement(): ?array
+    public function getSpecialArrangement(): null|array
     {
         return $this->specialArrangement;
     }
@@ -626,8 +621,11 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $specialArrangement
      * @return static
      */
-    public function addSpecialArrangement(?FHIRCodeableConcept $specialArrangement = null): object
+    public function addSpecialArrangement(null|FHIRCodeableConcept $specialArrangement = null): self
     {
+        if (null === $specialArrangement) {
+            $specialArrangement = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->specialArrangement[] = $specialArrangement;
         return $this;
@@ -645,7 +643,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $specialArrangement
      * @return static
      */
-    public function setSpecialArrangement(array $specialArrangement = []): object
+    public function setSpecialArrangement(array $specialArrangement = []): self
     {
         if ([] !== $this->specialArrangement) {
             $this->_trackValuesRemoved(count($this->specialArrangement));
@@ -673,7 +671,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getDestination(): ?FHIRReference
+    public function getDestination(): null|FHIRReference
     {
         return $this->destination;
     }
@@ -688,8 +686,11 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $destination
      * @return static
      */
-    public function setDestination(?FHIRReference $destination = null): object
+    public function setDestination(null|FHIRReference $destination = null): self
     {
+        if (null === $destination) {
+            $destination = new FHIRReference();
+        }
         $this->_trackValueSet($this->destination, $destination);
         $this->destination = $destination;
         return $this;
@@ -705,7 +706,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getDischargeDisposition(): ?FHIRCodeableConcept
+    public function getDischargeDisposition(): null|FHIRCodeableConcept
     {
         return $this->dischargeDisposition;
     }
@@ -721,8 +722,11 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $dischargeDisposition
      * @return static
      */
-    public function setDischargeDisposition(?FHIRCodeableConcept $dischargeDisposition = null): object
+    public function setDischargeDisposition(null|FHIRCodeableConcept $dischargeDisposition = null): self
     {
+        if (null === $dischargeDisposition) {
+            $dischargeDisposition = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->dischargeDisposition, $dischargeDisposition);
         $this->dischargeDisposition = $dischargeDisposition;
         return $this;
@@ -736,7 +740,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -950,36 +954,48 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterHospitalization $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterHospitalization
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIREncounterHospitalization::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIREncounterHospitalization::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIREncounterHospitalization(null);
-        } elseif (!is_object($type) || !($type instanceof FHIREncounterHospitalization)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIREncounterHospitalization)) {
             throw new \RuntimeException(sprintf(
-                'FHIREncounterHospitalization::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterHospitalization or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1026,17 +1042,25 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('EncounterHospitalization'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getPreAdmissionIdentifier())) {
@@ -1105,7 +1129,7 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getPreAdmissionIdentifier())) {
@@ -1156,7 +1180,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

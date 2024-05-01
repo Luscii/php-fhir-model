@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceIngredient;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceInstance;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
@@ -74,11 +75,17 @@ use HL7\FHIR\R4\FHIRElement\FHIRMeta;
 use HL7\FHIR\R4\FHIRElement\FHIRNarrative;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A homogeneous material with a definite composition.
@@ -91,6 +98,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SUBSTANCE;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
@@ -100,9 +108,6 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     const FIELD_DESCRIPTION_EXT = '_description';
     const FIELD_INSTANCE = 'instance';
     const FIELD_INGREDIENT = 'ingredient';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
@@ -114,8 +119,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A code to indicate if the substance is actively used.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -124,8 +128,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRFHIRSubstanceStatus
      */
-    protected ?FHIRFHIRSubstanceStatus $status = null;
-
+    protected null|FHIRFHIRSubstanceStatus $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -137,8 +140,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $category = [];
-
+    protected null|array $category = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -149,8 +151,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $code = null;
-
+    protected null|FHIRCodeableConcept $code = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -159,10 +160,9 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * A description of the substance - its appearance, handling requirements, and
      * other usage notes.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $description = null;
-
+    protected null|FHIRString $description = null;
     /**
      * A homogeneous material with a definite composition.
      *
@@ -171,8 +171,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceInstance[]
      */
-    protected ?array $instance = [];
-
+    protected null|array $instance = [];
     /**
      * A homogeneous material with a definite composition.
      *
@@ -180,28 +179,23 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceIngredient[]
      */
-    protected ?array $ingredient = [];
+    protected null|array $ingredient = [];
 
     /**
      * Validation map for fields in type Substance
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRSubstance Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRSubstance::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -315,6 +309,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
         }
     }
 
+
     /**
      * @return string
      */
@@ -323,17 +318,6 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Substance{$xmlns}></Substance>";
-    }
     /**
      * @return string
      */
@@ -353,7 +337,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -369,8 +353,11 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -387,7 +374,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -414,7 +401,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRFHIRSubstanceStatus
      */
-    public function getStatus(): ?FHIRFHIRSubstanceStatus
+    public function getStatus(): null|FHIRFHIRSubstanceStatus
     {
         return $this->status;
     }
@@ -428,8 +415,11 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRFHIRSubstanceStatus $status
      * @return static
      */
-    public function setStatus(?FHIRFHIRSubstanceStatus $status = null): object
+    public function setStatus(null|FHIRFHIRSubstanceStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRFHIRSubstanceStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -446,7 +436,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getCategory(): ?array
+    public function getCategory(): null|array
     {
         return $this->category;
     }
@@ -463,8 +453,11 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $category
      * @return static
      */
-    public function addCategory(?FHIRCodeableConcept $category = null): object
+    public function addCategory(null|FHIRCodeableConcept $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->category[] = $category;
         return $this;
@@ -482,7 +475,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $category
      * @return static
      */
-    public function setCategory(array $category = []): object
+    public function setCategory(array $category = []): self
     {
         if ([] !== $this->category) {
             $this->_trackValuesRemoved(count($this->category));
@@ -511,7 +504,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getCode(): ?FHIRCodeableConcept
+    public function getCode(): null|FHIRCodeableConcept
     {
         return $this->code;
     }
@@ -527,8 +520,11 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $code
      * @return static
      */
-    public function setCode(?FHIRCodeableConcept $code = null): object
+    public function setCode(null|FHIRCodeableConcept $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->code, $code);
         $this->code = $code;
         return $this;
@@ -542,9 +538,9 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * A description of the substance - its appearance, handling requirements, and
      * other usage notes.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDescription(): ?FHIRString
+    public function getDescription(): null|FHIRString
     {
         return $this->description;
     }
@@ -557,10 +553,10 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * A description of the substance - its appearance, handling requirements, and
      * other usage notes.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $description
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
@@ -578,7 +574,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceInstance[]
      */
-    public function getInstance(): ?array
+    public function getInstance(): null|array
     {
         return $this->instance;
     }
@@ -592,8 +588,11 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceInstance $instance
      * @return static
      */
-    public function addInstance(?FHIRSubstanceInstance $instance = null): object
+    public function addInstance(null|FHIRSubstanceInstance $instance = null): self
     {
+        if (null === $instance) {
+            $instance = new FHIRSubstanceInstance();
+        }
         $this->_trackValueAdded();
         $this->instance[] = $instance;
         return $this;
@@ -608,7 +607,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceInstance[] $instance
      * @return static
      */
-    public function setInstance(array $instance = []): object
+    public function setInstance(array $instance = []): self
     {
         if ([] !== $this->instance) {
             $this->_trackValuesRemoved(count($this->instance));
@@ -634,7 +633,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceIngredient[]
      */
-    public function getIngredient(): ?array
+    public function getIngredient(): null|array
     {
         return $this->ingredient;
     }
@@ -647,8 +646,11 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceIngredient $ingredient
      * @return static
      */
-    public function addIngredient(?FHIRSubstanceIngredient $ingredient = null): object
+    public function addIngredient(null|FHIRSubstanceIngredient $ingredient = null): self
     {
+        if (null === $ingredient) {
+            $ingredient = new FHIRSubstanceIngredient();
+        }
         $this->_trackValueAdded();
         $this->ingredient[] = $ingredient;
         return $this;
@@ -662,7 +664,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance\FHIRSubstanceIngredient[] $ingredient
      * @return static
      */
-    public function setIngredient(array $ingredient = []): object
+    public function setIngredient(array $ingredient = []): self
     {
         if ([] !== $this->ingredient) {
             $this->_trackValuesRemoved(count($this->ingredient));
@@ -689,7 +691,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -931,36 +933,48 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSubstance $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSubstance
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRSubstance::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRSubstance::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRSubstance(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRSubstance)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRSubstance)) {
             throw new \RuntimeException(sprintf(
-                'FHIRSubstance::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSubstance or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1045,17 +1059,25 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Substance'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1119,7 +1141,7 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1186,7 +1208,6 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
 
         return $out;
     }
-
 
     /**
      * @return string

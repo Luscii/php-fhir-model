@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,12 +62,16 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Example of workflow instance.
@@ -79,14 +83,12 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_EXAMPLE_SCENARIO_DOT_STEP;
+
     const FIELD_PROCESS = 'process';
     const FIELD_PAUSE = 'pause';
     const FIELD_PAUSE_EXT = '_pause';
     const FIELD_OPERATION = 'operation';
     const FIELD_ALTERNATIVE = 'alternative';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * Example of workflow instance.
@@ -95,18 +97,16 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioProcess[]
      */
-    protected ?array $process = [];
-
+    protected null|array $process = [];
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * If there is a pause in the flow.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $pause = null;
-
+    protected null|FHIRBoolean $pause = null;
     /**
      * Example of workflow instance.
      *
@@ -114,8 +114,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioOperation
      */
-    protected ?FHIRExampleScenarioOperation $operation = null;
-
+    protected null|FHIRExampleScenarioOperation $operation = null;
     /**
      * Example of workflow instance.
      *
@@ -124,28 +123,23 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioAlternative[]
      */
-    protected ?array $alternative = [];
+    protected null|array $alternative = [];
 
     /**
      * Validation map for fields in type ExampleScenario.Step
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRExampleScenarioStep Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRExampleScenarioStep::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_PROCESS])) {
@@ -208,6 +202,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
@@ -217,25 +212,13 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
     }
 
     /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ExampleScenarioStep{$xmlns}></ExampleScenarioStep>";
-    }
-
-    /**
      * Example of workflow instance.
      *
      * Nested process.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioProcess[]
      */
-    public function getProcess(): ?array
+    public function getProcess(): null|array
     {
         return $this->process;
     }
@@ -248,8 +231,11 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioProcess $process
      * @return static
      */
-    public function addProcess(?FHIRExampleScenarioProcess $process = null): object
+    public function addProcess(null|FHIRExampleScenarioProcess $process = null): self
     {
+        if (null === $process) {
+            $process = new FHIRExampleScenarioProcess();
+        }
         $this->_trackValueAdded();
         $this->process[] = $process;
         return $this;
@@ -263,7 +249,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioProcess[] $process
      * @return static
      */
-    public function setProcess(array $process = []): object
+    public function setProcess(array $process = []): self
     {
         if ([] !== $this->process) {
             $this->_trackValuesRemoved(count($this->process));
@@ -288,9 +274,9 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      *
      * If there is a pause in the flow.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getPause(): ?FHIRBoolean
+    public function getPause(): null|FHIRBoolean
     {
         return $this->pause;
     }
@@ -301,10 +287,10 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      *
      * If there is a pause in the flow.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $pause
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $pause
      * @return static
      */
-    public function setPause($pause = null): object
+    public function setPause(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $pause = null): self
     {
         if (null !== $pause && !($pause instanceof FHIRBoolean)) {
             $pause = new FHIRBoolean($pause);
@@ -321,7 +307,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioOperation
      */
-    public function getOperation(): ?FHIRExampleScenarioOperation
+    public function getOperation(): null|FHIRExampleScenarioOperation
     {
         return $this->operation;
     }
@@ -334,8 +320,11 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioOperation $operation
      * @return static
      */
-    public function setOperation(?FHIRExampleScenarioOperation $operation = null): object
+    public function setOperation(null|FHIRExampleScenarioOperation $operation = null): self
     {
+        if (null === $operation) {
+            $operation = new FHIRExampleScenarioOperation();
+        }
         $this->_trackValueSet($this->operation, $operation);
         $this->operation = $operation;
         return $this;
@@ -349,7 +338,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioAlternative[]
      */
-    public function getAlternative(): ?array
+    public function getAlternative(): null|array
     {
         return $this->alternative;
     }
@@ -363,8 +352,11 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioAlternative $alternative
      * @return static
      */
-    public function addAlternative(?FHIRExampleScenarioAlternative $alternative = null): object
+    public function addAlternative(null|FHIRExampleScenarioAlternative $alternative = null): self
     {
+        if (null === $alternative) {
+            $alternative = new FHIRExampleScenarioAlternative();
+        }
         $this->_trackValueAdded();
         $this->alternative[] = $alternative;
         return $this;
@@ -379,7 +371,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioAlternative[] $alternative
      * @return static
      */
-    public function setAlternative(array $alternative = []): object
+    public function setAlternative(array $alternative = []): self
     {
         if ([] !== $this->alternative) {
             $this->_trackValuesRemoved(count($this->alternative));
@@ -406,7 +398,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -533,36 +525,48 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioStep $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioStep
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRExampleScenarioStep::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRExampleScenarioStep::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRExampleScenarioStep(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRExampleScenarioStep)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRExampleScenarioStep)) {
             throw new \RuntimeException(sprintf(
-                'FHIRExampleScenarioStep::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioStep or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -608,17 +612,25 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ExampleScenarioStep'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getProcess())) {
@@ -657,7 +669,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getProcess())) {
@@ -694,7 +706,6 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

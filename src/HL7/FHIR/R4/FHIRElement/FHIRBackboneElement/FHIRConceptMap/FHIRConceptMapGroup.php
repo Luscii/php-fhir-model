@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,8 +67,12 @@ use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A statement of relationships from one set of concepts to one or more other
@@ -82,6 +86,7 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CONCEPT_MAP_DOT_GROUP;
+
     const FIELD_SOURCE = 'source';
     const FIELD_SOURCE_EXT = '_source';
     const FIELD_SOURCE_VERSION = 'sourceVersion';
@@ -93,9 +98,6 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
     const FIELD_ELEMENT = 'element';
     const FIELD_UNMAPPED = 'unmapped';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -104,10 +106,9 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * An absolute URI that identifies the source system where the concepts to be
      * mapped are defined.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $source = null;
-
+    protected null|FHIRUri $source = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -116,10 +117,9 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * The specific version of the code system, as determined by the code system
      * authority.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $sourceVersion = null;
-
+    protected null|FHIRString $sourceVersion = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -128,10 +128,9 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * An absolute URI that identifies the target system that the concepts will be
      * mapped to.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $target = null;
-
+    protected null|FHIRUri $target = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -140,10 +139,9 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * The specific version of the code system, as determined by the code system
      * authority.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $targetVersion = null;
-
+    protected null|FHIRString $targetVersion = null;
     /**
      * A statement of relationships from one set of concepts to one or more other
      * concepts - either concepts in code systems, or data element/data element
@@ -154,8 +152,7 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapElement[]
      */
-    protected ?array $element = [];
-
+    protected null|array $element = [];
     /**
      * A statement of relationships from one set of concepts to one or more other
      * concepts - either concepts in code systems, or data element/data element
@@ -167,13 +164,13 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapUnmapped
      */
-    protected ?FHIRConceptMapUnmapped $unmapped = null;
+    protected null|FHIRConceptMapUnmapped $unmapped = null;
 
     /**
      * Validation map for fields in type ConceptMap.Group
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_ELEMENT => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -182,17 +179,12 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
     /**
      * FHIRConceptMapGroup Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRConceptMapGroup::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_SOURCE]) || isset($data[self::FIELD_SOURCE_EXT])) {
@@ -282,24 +274,13 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ConceptMapGroup{$xmlns}></ConceptMapGroup>";
     }
 
     /**
@@ -310,9 +291,9 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * An absolute URI that identifies the source system where the concepts to be
      * mapped are defined.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getSource(): ?FHIRUri
+    public function getSource(): null|FHIRUri
     {
         return $this->source;
     }
@@ -325,10 +306,10 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * An absolute URI that identifies the source system where the concepts to be
      * mapped are defined.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $source
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $source
      * @return static
      */
-    public function setSource($source = null): object
+    public function setSource(null|string|FHIRUriPrimitive|FHIRUri $source = null): self
     {
         if (null !== $source && !($source instanceof FHIRUri)) {
             $source = new FHIRUri($source);
@@ -346,9 +327,9 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * The specific version of the code system, as determined by the code system
      * authority.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getSourceVersion(): ?FHIRString
+    public function getSourceVersion(): null|FHIRString
     {
         return $this->sourceVersion;
     }
@@ -361,10 +342,10 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * The specific version of the code system, as determined by the code system
      * authority.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $sourceVersion
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $sourceVersion
      * @return static
      */
-    public function setSourceVersion($sourceVersion = null): object
+    public function setSourceVersion(null|string|FHIRStringPrimitive|FHIRString $sourceVersion = null): self
     {
         if (null !== $sourceVersion && !($sourceVersion instanceof FHIRString)) {
             $sourceVersion = new FHIRString($sourceVersion);
@@ -382,9 +363,9 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * An absolute URI that identifies the target system that the concepts will be
      * mapped to.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getTarget(): ?FHIRUri
+    public function getTarget(): null|FHIRUri
     {
         return $this->target;
     }
@@ -397,10 +378,10 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * An absolute URI that identifies the target system that the concepts will be
      * mapped to.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $target
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $target
      * @return static
      */
-    public function setTarget($target = null): object
+    public function setTarget(null|string|FHIRUriPrimitive|FHIRUri $target = null): self
     {
         if (null !== $target && !($target instanceof FHIRUri)) {
             $target = new FHIRUri($target);
@@ -418,9 +399,9 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * The specific version of the code system, as determined by the code system
      * authority.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTargetVersion(): ?FHIRString
+    public function getTargetVersion(): null|FHIRString
     {
         return $this->targetVersion;
     }
@@ -433,10 +414,10 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * The specific version of the code system, as determined by the code system
      * authority.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $targetVersion
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $targetVersion
      * @return static
      */
-    public function setTargetVersion($targetVersion = null): object
+    public function setTargetVersion(null|string|FHIRStringPrimitive|FHIRString $targetVersion = null): self
     {
         if (null !== $targetVersion && !($targetVersion instanceof FHIRString)) {
             $targetVersion = new FHIRString($targetVersion);
@@ -456,7 +437,7 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapElement[]
      */
-    public function getElement(): ?array
+    public function getElement(): null|array
     {
         return $this->element;
     }
@@ -472,8 +453,11 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapElement $element
      * @return static
      */
-    public function addElement(?FHIRConceptMapElement $element = null): object
+    public function addElement(null|FHIRConceptMapElement $element = null): self
     {
+        if (null === $element) {
+            $element = new FHIRConceptMapElement();
+        }
         $this->_trackValueAdded();
         $this->element[] = $element;
         return $this;
@@ -490,7 +474,7 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapElement[] $element
      * @return static
      */
-    public function setElement(array $element = []): object
+    public function setElement(array $element = []): self
     {
         if ([] !== $this->element) {
             $this->_trackValuesRemoved(count($this->element));
@@ -520,7 +504,7 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapUnmapped
      */
-    public function getUnmapped(): ?FHIRConceptMapUnmapped
+    public function getUnmapped(): null|FHIRConceptMapUnmapped
     {
         return $this->unmapped;
     }
@@ -537,8 +521,11 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapUnmapped $unmapped
      * @return static
      */
-    public function setUnmapped(?FHIRConceptMapUnmapped $unmapped = null): object
+    public function setUnmapped(null|FHIRConceptMapUnmapped $unmapped = null): self
     {
+        if (null === $unmapped) {
+            $unmapped = new FHIRConceptMapUnmapped();
+        }
         $this->_trackValueSet($this->unmapped, $unmapped);
         $this->unmapped = $unmapped;
         return $this;
@@ -552,7 +539,7 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -711,36 +698,48 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapGroup $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapGroup
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRConceptMapGroup::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRConceptMapGroup::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRConceptMapGroup(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRConceptMapGroup)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRConceptMapGroup)) {
             throw new \RuntimeException(sprintf(
-                'FHIRConceptMapGroup::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConceptMap\FHIRConceptMapGroup or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -817,17 +816,25 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ConceptMapGroup'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getSource())) {
@@ -871,7 +878,7 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getSource())) {
@@ -929,7 +936,6 @@ class FHIRConceptMapGroup extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

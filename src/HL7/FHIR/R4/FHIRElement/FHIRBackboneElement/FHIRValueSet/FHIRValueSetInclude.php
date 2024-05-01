@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,14 +62,19 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCanonical;
 use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A ValueSet resource instance specifies a set of codes drawn from one or more
@@ -84,6 +89,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_VALUE_SET_DOT_INCLUDE;
+
     const FIELD_SYSTEM = 'system';
     const FIELD_SYSTEM_EXT = '_system';
     const FIELD_VERSION = 'version';
@@ -93,9 +99,6 @@ class FHIRValueSetInclude extends FHIRBackboneElement
     const FIELD_VALUE_SET = 'valueSet';
     const FIELD_VALUE_SET_EXT = '_valueSet';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -104,10 +107,9 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * An absolute URI which is the code system from which the selected codes come
      * from.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $system = null;
-
+    protected null|FHIRUri $system = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -116,10 +118,9 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * The version of the code system that the codes are selected from, or the special
      * version '*' for all versions.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $version = null;
-
+    protected null|FHIRString $version = null;
     /**
      * A ValueSet resource instance specifies a set of codes drawn from one or more
      * code systems, intended for use in a particular context. Value sets link between
@@ -130,8 +131,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetConcept[]
      */
-    protected ?array $concept = [];
-
+    protected null|array $concept = [];
     /**
      * A ValueSet resource instance specifies a set of codes drawn from one or more
      * code systems, intended for use in a particular context. Value sets link between
@@ -144,8 +144,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetFilter[]
      */
-    protected ?array $filter = [];
-
+    protected null|array $filter = [];
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -157,30 +156,25 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * multiple value sets are specified this includes the union of the contents of all
      * of the referenced value sets.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $valueSet = [];
+    protected null|array $valueSet = [];
 
     /**
      * Validation map for fields in type ValueSet.Include
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRValueSetInclude Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRValueSetInclude::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_SYSTEM]) || isset($data[self::FIELD_SYSTEM_EXT])) {
@@ -281,24 +275,13 @@ class FHIRValueSetInclude extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ValueSetInclude{$xmlns}></ValueSetInclude>";
     }
 
     /**
@@ -309,9 +292,9 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * An absolute URI which is the code system from which the selected codes come
      * from.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getSystem(): ?FHIRUri
+    public function getSystem(): null|FHIRUri
     {
         return $this->system;
     }
@@ -324,10 +307,10 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * An absolute URI which is the code system from which the selected codes come
      * from.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $system
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $system
      * @return static
      */
-    public function setSystem($system = null): object
+    public function setSystem(null|string|FHIRUriPrimitive|FHIRUri $system = null): self
     {
         if (null !== $system && !($system instanceof FHIRUri)) {
             $system = new FHIRUri($system);
@@ -345,9 +328,9 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * The version of the code system that the codes are selected from, or the special
      * version '*' for all versions.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getVersion(): ?FHIRString
+    public function getVersion(): null|FHIRString
     {
         return $this->version;
     }
@@ -360,10 +343,10 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * The version of the code system that the codes are selected from, or the special
      * version '*' for all versions.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
      * @return static
      */
-    public function setVersion($version = null): object
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
@@ -383,7 +366,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetConcept[]
      */
-    public function getConcept(): ?array
+    public function getConcept(): null|array
     {
         return $this->concept;
     }
@@ -399,8 +382,11 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetConcept $concept
      * @return static
      */
-    public function addConcept(?FHIRValueSetConcept $concept = null): object
+    public function addConcept(null|FHIRValueSetConcept $concept = null): self
     {
+        if (null === $concept) {
+            $concept = new FHIRValueSetConcept();
+        }
         $this->_trackValueAdded();
         $this->concept[] = $concept;
         return $this;
@@ -417,7 +403,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetConcept[] $concept
      * @return static
      */
-    public function setConcept(array $concept = []): object
+    public function setConcept(array $concept = []): self
     {
         if ([] !== $this->concept) {
             $this->_trackValuesRemoved(count($this->concept));
@@ -448,7 +434,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetFilter[]
      */
-    public function getFilter(): ?array
+    public function getFilter(): null|array
     {
         return $this->filter;
     }
@@ -466,8 +452,11 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetFilter $filter
      * @return static
      */
-    public function addFilter(?FHIRValueSetFilter $filter = null): object
+    public function addFilter(null|FHIRValueSetFilter $filter = null): self
     {
+        if (null === $filter) {
+            $filter = new FHIRValueSetFilter();
+        }
         $this->_trackValueAdded();
         $this->filter[] = $filter;
         return $this;
@@ -486,7 +475,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetFilter[] $filter
      * @return static
      */
-    public function setFilter(array $filter = []): object
+    public function setFilter(array $filter = []): self
     {
         if ([] !== $this->filter) {
             $this->_trackValuesRemoved(count($this->filter));
@@ -516,9 +505,9 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * multiple value sets are specified this includes the union of the contents of all
      * of the referenced value sets.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getValueSet(): ?array
+    public function getValueSet(): null|array
     {
         return $this->valueSet;
     }
@@ -534,10 +523,10 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * multiple value sets are specified this includes the union of the contents of all
      * of the referenced value sets.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $valueSet
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $valueSet
      * @return static
      */
-    public function addValueSet($valueSet = null): object
+    public function addValueSet(null|string|FHIRCanonicalPrimitive|FHIRCanonical $valueSet = null): self
     {
         if (null !== $valueSet && !($valueSet instanceof FHIRCanonical)) {
             $valueSet = new FHIRCanonical($valueSet);
@@ -561,7 +550,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $valueSet
      * @return static
      */
-    public function setValueSet(array $valueSet = []): object
+    public function setValueSet(array $valueSet = []): self
     {
         if ([] !== $this->valueSet) {
             $this->_trackValuesRemoved(count($this->valueSet));
@@ -588,7 +577,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -734,36 +723,48 @@ class FHIRValueSetInclude extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRValueSetInclude::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRValueSetInclude::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRValueSetInclude(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRValueSetInclude)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRValueSetInclude)) {
             throw new \RuntimeException(sprintf(
-                'FHIRValueSetInclude::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -808,12 +809,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_VALUE_SET);
         if (null !== $n) {
-            $pt = $type->getValueSet();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addValueSet($n->nodeValue);
-            }
+            $type->addValueSet($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -829,17 +825,25 @@ class FHIRValueSetInclude extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ValueSetInclude'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getSystem())) {
@@ -888,7 +892,7 @@ class FHIRValueSetInclude extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getSystem())) {
@@ -956,7 +960,6 @@ class FHIRValueSetInclude extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

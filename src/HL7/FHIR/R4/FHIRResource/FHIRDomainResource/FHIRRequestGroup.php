@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,9 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAnnotation;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRequestGroup\FHIRRequestGroupAction;
 use HL7\FHIR\R4\FHIRElement\FHIRCanonical;
@@ -78,11 +81,16 @@ use HL7\FHIR\R4\FHIRElement\FHIRRequestIntent;
 use HL7\FHIR\R4\FHIRElement\FHIRRequestPriority;
 use HL7\FHIR\R4\FHIRElement\FHIRRequestStatus;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A group of related requests that can be used to capture intended activities that
@@ -96,6 +104,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_REQUEST_GROUP;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_INSTANTIATES_CANONICAL = 'instantiatesCanonical';
     const FIELD_INSTANTIATES_CANONICAL_EXT = '_instantiatesCanonical';
@@ -121,9 +130,6 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
     const FIELD_NOTE = 'note';
     const FIELD_ACTION = 'action';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -134,8 +140,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -145,10 +150,9 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * A canonical URL referencing a FHIR-defined protocol, guideline, orderset or
      * other definition that is adhered to in whole or in part by this request.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $instantiatesCanonical = [];
-
+    protected null|array $instantiatesCanonical = [];
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -157,10 +161,9 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * A URL referencing an externally defined protocol, guideline, orderset or other
      * definition that is adhered to in whole or in part by this request.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
      */
-    protected ?array $instantiatesUri = [];
-
+    protected null|array $instantiatesUri = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -170,8 +173,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $basedOn = [];
-
+    protected null|array $basedOn = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -181,8 +183,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $replaces = [];
-
+    protected null|array $replaces = [];
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -195,8 +196,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $groupIdentifier = null;
-
+    protected null|FHIRIdentifier $groupIdentifier = null;
     /**
      * Indicates whether the plan is currently being acted upon, represents future
      * intentions or is now a historical record.
@@ -207,8 +207,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRequestStatus
      */
-    protected ?FHIRRequestStatus $status = null;
-
+    protected null|FHIRRequestStatus $status = null;
     /**
      * Codes indicating the degree of authority/intentionality associated with a
      * request.
@@ -219,8 +218,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRequestIntent
      */
-    protected ?FHIRRequestIntent $intent = null;
-
+    protected null|FHIRRequestIntent $intent = null;
     /**
      * Identifies the level of importance to be assigned to actioning the request.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -230,8 +228,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRequestPriority
      */
-    protected ?FHIRRequestPriority $priority = null;
-
+    protected null|FHIRRequestPriority $priority = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -242,8 +239,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $code = null;
-
+    protected null|FHIRCodeableConcept $code = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -253,8 +249,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $subject = null;
-
+    protected null|FHIRReference $subject = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -264,8 +259,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $encounter = null;
-
+    protected null|FHIRReference $encounter = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -276,10 +270,9 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * Indicates when the request group was created.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $authoredOn = null;
-
+    protected null|FHIRDateTime $authoredOn = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -289,8 +282,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $author = null;
-
+    protected null|FHIRReference $author = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -301,8 +293,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $reasonCode = [];
-
+    protected null|array $reasonCode = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -312,8 +303,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $reasonReference = [];
-
+    protected null|array $reasonReference = [];
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -324,8 +314,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    protected ?array $note = [];
-
+    protected null|array $note = [];
     /**
      * A group of related requests that can be used to capture intended activities that
      * have inter-dependencies such as "give this medication after that one".
@@ -334,28 +323,23 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRequestGroup\FHIRRequestGroupAction[]
      */
-    protected ?array $action = [];
+    protected null|array $action = [];
 
     /**
      * Validation map for fields in type RequestGroup
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRRequestGroup Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRRequestGroup::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -641,6 +625,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
     }
 
+
     /**
      * @return string
      */
@@ -649,17 +634,6 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<RequestGroup{$xmlns}></RequestGroup>";
-    }
     /**
      * @return string
      */
@@ -679,7 +653,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -695,8 +669,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -713,7 +690,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -741,9 +718,9 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * A canonical URL referencing a FHIR-defined protocol, guideline, orderset or
      * other definition that is adhered to in whole or in part by this request.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getInstantiatesCanonical(): ?array
+    public function getInstantiatesCanonical(): null|array
     {
         return $this->instantiatesCanonical;
     }
@@ -757,10 +734,10 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * A canonical URL referencing a FHIR-defined protocol, guideline, orderset or
      * other definition that is adhered to in whole or in part by this request.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $instantiatesCanonical
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $instantiatesCanonical
      * @return static
      */
-    public function addInstantiatesCanonical($instantiatesCanonical = null): object
+    public function addInstantiatesCanonical(null|string|FHIRCanonicalPrimitive|FHIRCanonical $instantiatesCanonical = null): self
     {
         if (null !== $instantiatesCanonical && !($instantiatesCanonical instanceof FHIRCanonical)) {
             $instantiatesCanonical = new FHIRCanonical($instantiatesCanonical);
@@ -782,7 +759,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $instantiatesCanonical
      * @return static
      */
-    public function setInstantiatesCanonical(array $instantiatesCanonical = []): object
+    public function setInstantiatesCanonical(array $instantiatesCanonical = []): self
     {
         if ([] !== $this->instantiatesCanonical) {
             $this->_trackValuesRemoved(count($this->instantiatesCanonical));
@@ -809,9 +786,9 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * A URL referencing an externally defined protocol, guideline, orderset or other
      * definition that is adhered to in whole or in part by this request.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
      */
-    public function getInstantiatesUri(): ?array
+    public function getInstantiatesUri(): null|array
     {
         return $this->instantiatesUri;
     }
@@ -824,10 +801,10 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * A URL referencing an externally defined protocol, guideline, orderset or other
      * definition that is adhered to in whole or in part by this request.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[] $instantiatesUri
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $instantiatesUri
      * @return static
      */
-    public function addInstantiatesUri($instantiatesUri = null): object
+    public function addInstantiatesUri(null|string|FHIRUriPrimitive|FHIRUri $instantiatesUri = null): self
     {
         if (null !== $instantiatesUri && !($instantiatesUri instanceof FHIRUri)) {
             $instantiatesUri = new FHIRUri($instantiatesUri);
@@ -848,7 +825,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUri[] $instantiatesUri
      * @return static
      */
-    public function setInstantiatesUri(array $instantiatesUri = []): object
+    public function setInstantiatesUri(array $instantiatesUri = []): self
     {
         if ([] !== $this->instantiatesUri) {
             $this->_trackValuesRemoved(count($this->instantiatesUri));
@@ -876,7 +853,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getBasedOn(): ?array
+    public function getBasedOn(): null|array
     {
         return $this->basedOn;
     }
@@ -891,8 +868,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $basedOn
      * @return static
      */
-    public function addBasedOn(?FHIRReference $basedOn = null): object
+    public function addBasedOn(null|FHIRReference $basedOn = null): self
     {
+        if (null === $basedOn) {
+            $basedOn = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->basedOn[] = $basedOn;
         return $this;
@@ -908,7 +888,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $basedOn
      * @return static
      */
-    public function setBasedOn(array $basedOn = []): object
+    public function setBasedOn(array $basedOn = []): self
     {
         if ([] !== $this->basedOn) {
             $this->_trackValuesRemoved(count($this->basedOn));
@@ -936,7 +916,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getReplaces(): ?array
+    public function getReplaces(): null|array
     {
         return $this->replaces;
     }
@@ -951,8 +931,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $replaces
      * @return static
      */
-    public function addReplaces(?FHIRReference $replaces = null): object
+    public function addReplaces(null|FHIRReference $replaces = null): self
     {
+        if (null === $replaces) {
+            $replaces = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->replaces[] = $replaces;
         return $this;
@@ -968,7 +951,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $replaces
      * @return static
      */
-    public function setReplaces(array $replaces = []): object
+    public function setReplaces(array $replaces = []): self
     {
         if ([] !== $this->replaces) {
             $this->_trackValuesRemoved(count($this->replaces));
@@ -999,7 +982,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getGroupIdentifier(): ?FHIRIdentifier
+    public function getGroupIdentifier(): null|FHIRIdentifier
     {
         return $this->groupIdentifier;
     }
@@ -1017,8 +1000,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $groupIdentifier
      * @return static
      */
-    public function setGroupIdentifier(?FHIRIdentifier $groupIdentifier = null): object
+    public function setGroupIdentifier(null|FHIRIdentifier $groupIdentifier = null): self
     {
+        if (null === $groupIdentifier) {
+            $groupIdentifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->groupIdentifier, $groupIdentifier);
         $this->groupIdentifier = $groupIdentifier;
         return $this;
@@ -1034,7 +1020,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRequestStatus
      */
-    public function getStatus(): ?FHIRRequestStatus
+    public function getStatus(): null|FHIRRequestStatus
     {
         return $this->status;
     }
@@ -1050,8 +1036,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRequestStatus $status
      * @return static
      */
-    public function setStatus(?FHIRRequestStatus $status = null): object
+    public function setStatus(null|FHIRRequestStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRRequestStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -1067,7 +1056,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRequestIntent
      */
-    public function getIntent(): ?FHIRRequestIntent
+    public function getIntent(): null|FHIRRequestIntent
     {
         return $this->intent;
     }
@@ -1083,8 +1072,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRequestIntent $intent
      * @return static
      */
-    public function setIntent(?FHIRRequestIntent $intent = null): object
+    public function setIntent(null|FHIRRequestIntent $intent = null): self
     {
+        if (null === $intent) {
+            $intent = new FHIRRequestIntent();
+        }
         $this->_trackValueSet($this->intent, $intent);
         $this->intent = $intent;
         return $this;
@@ -1099,7 +1091,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRequestPriority
      */
-    public function getPriority(): ?FHIRRequestPriority
+    public function getPriority(): null|FHIRRequestPriority
     {
         return $this->priority;
     }
@@ -1114,8 +1106,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRequestPriority $priority
      * @return static
      */
-    public function setPriority(?FHIRRequestPriority $priority = null): object
+    public function setPriority(null|FHIRRequestPriority $priority = null): self
     {
+        if (null === $priority) {
+            $priority = new FHIRRequestPriority();
+        }
         $this->_trackValueSet($this->priority, $priority);
         $this->priority = $priority;
         return $this;
@@ -1131,7 +1126,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getCode(): ?FHIRCodeableConcept
+    public function getCode(): null|FHIRCodeableConcept
     {
         return $this->code;
     }
@@ -1147,8 +1142,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $code
      * @return static
      */
-    public function setCode(?FHIRCodeableConcept $code = null): object
+    public function setCode(null|FHIRCodeableConcept $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->code, $code);
         $this->code = $code;
         return $this;
@@ -1163,7 +1161,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubject(): ?FHIRReference
+    public function getSubject(): null|FHIRReference
     {
         return $this->subject;
     }
@@ -1178,8 +1176,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $subject
      * @return static
      */
-    public function setSubject(?FHIRReference $subject = null): object
+    public function setSubject(null|FHIRReference $subject = null): self
     {
+        if (null === $subject) {
+            $subject = new FHIRReference();
+        }
         $this->_trackValueSet($this->subject, $subject);
         $this->subject = $subject;
         return $this;
@@ -1194,7 +1195,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getEncounter(): ?FHIRReference
+    public function getEncounter(): null|FHIRReference
     {
         return $this->encounter;
     }
@@ -1209,8 +1210,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $encounter
      * @return static
      */
-    public function setEncounter(?FHIRReference $encounter = null): object
+    public function setEncounter(null|FHIRReference $encounter = null): self
     {
+        if (null === $encounter) {
+            $encounter = new FHIRReference();
+        }
         $this->_trackValueSet($this->encounter, $encounter);
         $this->encounter = $encounter;
         return $this;
@@ -1226,9 +1230,9 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * Indicates when the request group was created.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getAuthoredOn(): ?FHIRDateTime
+    public function getAuthoredOn(): null|FHIRDateTime
     {
         return $this->authoredOn;
     }
@@ -1243,10 +1247,10 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * Indicates when the request group was created.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $authoredOn
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $authoredOn
      * @return static
      */
-    public function setAuthoredOn($authoredOn = null): object
+    public function setAuthoredOn(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authoredOn = null): self
     {
         if (null !== $authoredOn && !($authoredOn instanceof FHIRDateTime)) {
             $authoredOn = new FHIRDateTime($authoredOn);
@@ -1265,7 +1269,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getAuthor(): ?FHIRReference
+    public function getAuthor(): null|FHIRReference
     {
         return $this->author;
     }
@@ -1280,8 +1284,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $author
      * @return static
      */
-    public function setAuthor(?FHIRReference $author = null): object
+    public function setAuthor(null|FHIRReference $author = null): self
     {
+        if (null === $author) {
+            $author = new FHIRReference();
+        }
         $this->_trackValueSet($this->author, $author);
         $this->author = $author;
         return $this;
@@ -1297,7 +1304,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getReasonCode(): ?array
+    public function getReasonCode(): null|array
     {
         return $this->reasonCode;
     }
@@ -1313,8 +1320,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $reasonCode
      * @return static
      */
-    public function addReasonCode(?FHIRCodeableConcept $reasonCode = null): object
+    public function addReasonCode(null|FHIRCodeableConcept $reasonCode = null): self
     {
+        if (null === $reasonCode) {
+            $reasonCode = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->reasonCode[] = $reasonCode;
         return $this;
@@ -1331,7 +1341,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $reasonCode
      * @return static
      */
-    public function setReasonCode(array $reasonCode = []): object
+    public function setReasonCode(array $reasonCode = []): self
     {
         if ([] !== $this->reasonCode) {
             $this->_trackValuesRemoved(count($this->reasonCode));
@@ -1359,7 +1369,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getReasonReference(): ?array
+    public function getReasonReference(): null|array
     {
         return $this->reasonReference;
     }
@@ -1374,8 +1384,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $reasonReference
      * @return static
      */
-    public function addReasonReference(?FHIRReference $reasonReference = null): object
+    public function addReasonReference(null|FHIRReference $reasonReference = null): self
     {
+        if (null === $reasonReference) {
+            $reasonReference = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->reasonReference[] = $reasonReference;
         return $this;
@@ -1391,7 +1404,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $reasonReference
      * @return static
      */
-    public function setReasonReference(array $reasonReference = []): object
+    public function setReasonReference(array $reasonReference = []): self
     {
         if ([] !== $this->reasonReference) {
             $this->_trackValuesRemoved(count($this->reasonReference));
@@ -1420,7 +1433,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    public function getNote(): ?array
+    public function getNote(): null|array
     {
         return $this->note;
     }
@@ -1436,8 +1449,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $note
      * @return static
      */
-    public function addNote(?FHIRAnnotation $note = null): object
+    public function addNote(null|FHIRAnnotation $note = null): self
     {
+        if (null === $note) {
+            $note = new FHIRAnnotation();
+        }
         $this->_trackValueAdded();
         $this->note[] = $note;
         return $this;
@@ -1454,7 +1470,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation[] $note
      * @return static
      */
-    public function setNote(array $note = []): object
+    public function setNote(array $note = []): self
     {
         if ([] !== $this->note) {
             $this->_trackValuesRemoved(count($this->note));
@@ -1481,7 +1497,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRequestGroup\FHIRRequestGroupAction[]
      */
-    public function getAction(): ?array
+    public function getAction(): null|array
     {
         return $this->action;
     }
@@ -1495,8 +1511,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRequestGroup\FHIRRequestGroupAction $action
      * @return static
      */
-    public function addAction(?FHIRRequestGroupAction $action = null): object
+    public function addAction(null|FHIRRequestGroupAction $action = null): self
     {
+        if (null === $action) {
+            $action = new FHIRRequestGroupAction();
+        }
         $this->_trackValueAdded();
         $this->action[] = $action;
         return $this;
@@ -1511,7 +1530,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRequestGroup\FHIRRequestGroupAction[] $action
      * @return static
      */
-    public function setAction(array $action = []): object
+    public function setAction(array $action = []): self
     {
         if ([] !== $this->action) {
             $this->_trackValuesRemoved(count($this->action));
@@ -1538,7 +1557,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1977,36 +1996,48 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRRequestGroup $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRRequestGroup
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRRequestGroup::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRRequestGroup::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRRequestGroup(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRRequestGroup)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRRequestGroup)) {
             throw new \RuntimeException(sprintf(
-                'FHIRRequestGroup::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRRequestGroup or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -2074,21 +2105,11 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         $n = $element->attributes->getNamedItem(self::FIELD_INSTANTIATES_CANONICAL);
         if (null !== $n) {
-            $pt = $type->getInstantiatesCanonical();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addInstantiatesCanonical($n->nodeValue);
-            }
+            $type->addInstantiatesCanonical($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_INSTANTIATES_URI);
         if (null !== $n) {
-            $pt = $type->getInstantiatesUri();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addInstantiatesUri($n->nodeValue);
-            }
+            $type->addInstantiatesUri($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_AUTHORED_ON);
         if (null !== $n) {
@@ -2131,17 +2152,25 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('RequestGroup'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2285,7 +2314,7 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2459,7 +2488,6 @@ class FHIRRequestGroup extends FHIRDomainResource implements PHPFHIRContainedTyp
 
         return $out;
     }
-
 
     /**
      * @return string

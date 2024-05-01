@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRiskEvidenceSynthesis;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,13 +62,17 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRiskEvidenceSynthesis;
  * 
  */
 
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\R4\FHIRElement\FHIRDecimal;
 use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The RiskEvidenceSynthesis resource describes the likelihood of an outcome in a
@@ -82,6 +86,7 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_RISK_EVIDENCE_SYNTHESIS_DOT_PRECISION_ESTIMATE;
+
     const FIELD_TYPE = 'type';
     const FIELD_LEVEL = 'level';
     const FIELD_LEVEL_EXT = '_level';
@@ -89,9 +94,6 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
     const FIELD_FROM_EXT = '_from';
     const FIELD_TO = 'to';
     const FIELD_TO_EXT = '_to';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -103,8 +105,7 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -113,10 +114,9 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * Use 95 for a 95% confidence interval.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $level = null;
-
+    protected null|FHIRDecimal $level = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -125,10 +125,9 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * Lower bound of confidence interval.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $from = null;
-
+    protected null|FHIRDecimal $from = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -137,30 +136,25 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * Upper bound of confidence interval.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $to = null;
+    protected null|FHIRDecimal $to = null;
 
     /**
      * Validation map for fields in type RiskEvidenceSynthesis.PrecisionEstimate
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRRiskEvidenceSynthesisPrecisionEstimate Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRRiskEvidenceSynthesisPrecisionEstimate::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_TYPE])) {
@@ -217,24 +211,13 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<RiskEvidenceSynthesisPrecisionEstimate{$xmlns}></RiskEvidenceSynthesisPrecisionEstimate>";
     }
 
     /**
@@ -247,7 +230,7 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -263,8 +246,11 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -278,9 +264,9 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * Use 95 for a 95% confidence interval.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getLevel(): ?FHIRDecimal
+    public function getLevel(): null|FHIRDecimal
     {
         return $this->level;
     }
@@ -293,10 +279,10 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * Use 95 for a 95% confidence interval.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $level
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $level
      * @return static
      */
-    public function setLevel($level = null): object
+    public function setLevel(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $level = null): self
     {
         if (null !== $level && !($level instanceof FHIRDecimal)) {
             $level = new FHIRDecimal($level);
@@ -314,9 +300,9 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * Lower bound of confidence interval.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getFrom(): ?FHIRDecimal
+    public function getFrom(): null|FHIRDecimal
     {
         return $this->from;
     }
@@ -329,10 +315,10 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * Lower bound of confidence interval.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $from
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $from
      * @return static
      */
-    public function setFrom($from = null): object
+    public function setFrom(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $from = null): self
     {
         if (null !== $from && !($from instanceof FHIRDecimal)) {
             $from = new FHIRDecimal($from);
@@ -350,9 +336,9 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * Upper bound of confidence interval.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getTo(): ?FHIRDecimal
+    public function getTo(): null|FHIRDecimal
     {
         return $this->to;
     }
@@ -365,10 +351,10 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      *
      * Upper bound of confidence interval.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $to
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $to
      * @return static
      */
-    public function setTo($to = null): object
+    public function setTo(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $to = null): self
     {
         if (null !== $to && !($to instanceof FHIRDecimal)) {
             $to = new FHIRDecimal($to);
@@ -386,7 +372,7 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -509,36 +495,48 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRiskEvidenceSynthesis\FHIRRiskEvidenceSynthesisPrecisionEstimate $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRiskEvidenceSynthesis\FHIRRiskEvidenceSynthesisPrecisionEstimate
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRRiskEvidenceSynthesisPrecisionEstimate::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRRiskEvidenceSynthesisPrecisionEstimate::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRRiskEvidenceSynthesisPrecisionEstimate(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRRiskEvidenceSynthesisPrecisionEstimate)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRRiskEvidenceSynthesisPrecisionEstimate)) {
             throw new \RuntimeException(sprintf(
-                'FHIRRiskEvidenceSynthesisPrecisionEstimate::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRiskEvidenceSynthesis\FHIRRiskEvidenceSynthesisPrecisionEstimate or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -602,17 +600,25 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('RiskEvidenceSynthesisPrecisionEstimate'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getType())) {
@@ -641,7 +647,7 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getType())) {
@@ -680,7 +686,6 @@ class FHIRRiskEvidenceSynthesisPrecisionEstimate extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,8 +70,11 @@ use HL7\FHIR\R4\FHIRElement\FHIRQuantity;
 use HL7\FHIR\R4\FHIRElement\FHIRRange;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Chemical substances are a single substance type whose primary defining element
@@ -90,6 +93,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SUBSTANCE_AMOUNT;
+
     const FIELD_AMOUNT_QUANTITY = 'amountQuantity';
     const FIELD_AMOUNT_RANGE = 'amountRange';
     const FIELD_AMOUNT_STRING = 'amountString';
@@ -98,9 +102,6 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
     const FIELD_AMOUNT_TEXT = 'amountText';
     const FIELD_AMOUNT_TEXT_EXT = '_amountText';
     const FIELD_REFERENCE_RANGE = 'referenceRange';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
@@ -115,8 +116,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $amountQuantity = null;
-
+    protected null|FHIRQuantity $amountQuantity = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -128,8 +128,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $amountRange = null;
-
+    protected null|FHIRRange $amountRange = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -139,10 +138,9 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * are given, the arithmetic mean would be the average. If only a single definite
      * value for a given element is given, it would be captured in this field.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $amountString = null;
-
+    protected null|FHIRString $amountString = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -159,8 +157,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $amountType = null;
-
+    protected null|FHIRCodeableConcept $amountType = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -168,10 +165,9 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * A textual comment on a numeric value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $amountText = null;
-
+    protected null|FHIRString $amountText = null;
     /**
      * Chemical substances are a single substance type whose primary defining element
      * is the molecular structure. Chemical substances shall be defined on the basis of
@@ -186,28 +182,23 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceAmount\FHIRSubstanceAmountReferenceRange
      */
-    protected ?FHIRSubstanceAmountReferenceRange $referenceRange = null;
+    protected null|FHIRSubstanceAmountReferenceRange $referenceRange = null;
 
     /**
      * Validation map for fields in type SubstanceAmount
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRSubstanceAmount Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRSubstanceAmount::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_AMOUNT_QUANTITY])) {
@@ -270,24 +261,13 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<SubstanceAmount{$xmlns}></SubstanceAmount>";
     }
 
     /**
@@ -303,7 +283,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getAmountQuantity(): ?FHIRQuantity
+    public function getAmountQuantity(): null|FHIRQuantity
     {
         return $this->amountQuantity;
     }
@@ -322,8 +302,11 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $amountQuantity
      * @return static
      */
-    public function setAmountQuantity(?FHIRQuantity $amountQuantity = null): object
+    public function setAmountQuantity(null|FHIRQuantity $amountQuantity = null): self
     {
+        if (null === $amountQuantity) {
+            $amountQuantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->amountQuantity, $amountQuantity);
         $this->amountQuantity = $amountQuantity;
         return $this;
@@ -340,7 +323,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getAmountRange(): ?FHIRRange
+    public function getAmountRange(): null|FHIRRange
     {
         return $this->amountRange;
     }
@@ -357,8 +340,11 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $amountRange
      * @return static
      */
-    public function setAmountRange(?FHIRRange $amountRange = null): object
+    public function setAmountRange(null|FHIRRange $amountRange = null): self
     {
+        if (null === $amountRange) {
+            $amountRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->amountRange, $amountRange);
         $this->amountRange = $amountRange;
         return $this;
@@ -373,9 +359,9 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * are given, the arithmetic mean would be the average. If only a single definite
      * value for a given element is given, it would be captured in this field.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getAmountString(): ?FHIRString
+    public function getAmountString(): null|FHIRString
     {
         return $this->amountString;
     }
@@ -389,10 +375,10 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * are given, the arithmetic mean would be the average. If only a single definite
      * value for a given element is given, it would be captured in this field.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $amountString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $amountString
      * @return static
      */
-    public function setAmountString($amountString = null): object
+    public function setAmountString(null|string|FHIRStringPrimitive|FHIRString $amountString = null): self
     {
         if (null !== $amountString && !($amountString instanceof FHIRString)) {
             $amountString = new FHIRString($amountString);
@@ -418,7 +404,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getAmountType(): ?FHIRCodeableConcept
+    public function getAmountType(): null|FHIRCodeableConcept
     {
         return $this->amountType;
     }
@@ -440,8 +426,11 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $amountType
      * @return static
      */
-    public function setAmountType(?FHIRCodeableConcept $amountType = null): object
+    public function setAmountType(null|FHIRCodeableConcept $amountType = null): self
     {
+        if (null === $amountType) {
+            $amountType = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->amountType, $amountType);
         $this->amountType = $amountType;
         return $this;
@@ -454,9 +443,9 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * A textual comment on a numeric value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getAmountText(): ?FHIRString
+    public function getAmountText(): null|FHIRString
     {
         return $this->amountText;
     }
@@ -468,10 +457,10 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * A textual comment on a numeric value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $amountText
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $amountText
      * @return static
      */
-    public function setAmountText($amountText = null): object
+    public function setAmountText(null|string|FHIRStringPrimitive|FHIRString $amountText = null): self
     {
         if (null !== $amountText && !($amountText instanceof FHIRString)) {
             $amountText = new FHIRString($amountText);
@@ -495,7 +484,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceAmount\FHIRSubstanceAmountReferenceRange
      */
-    public function getReferenceRange(): ?FHIRSubstanceAmountReferenceRange
+    public function getReferenceRange(): null|FHIRSubstanceAmountReferenceRange
     {
         return $this->referenceRange;
     }
@@ -515,8 +504,11 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceAmount\FHIRSubstanceAmountReferenceRange $referenceRange
      * @return static
      */
-    public function setReferenceRange(?FHIRSubstanceAmountReferenceRange $referenceRange = null): object
+    public function setReferenceRange(null|FHIRSubstanceAmountReferenceRange $referenceRange = null): self
     {
+        if (null === $referenceRange) {
+            $referenceRange = new FHIRSubstanceAmountReferenceRange();
+        }
         $this->_trackValueSet($this->referenceRange, $referenceRange);
         $this->referenceRange = $referenceRange;
         return $this;
@@ -530,7 +522,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -687,36 +679,48 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceAmount $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceAmount
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRSubstanceAmount::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRSubstanceAmount::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRSubstanceAmount(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRSubstanceAmount)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRSubstanceAmount)) {
             throw new \RuntimeException(sprintf(
-                'FHIRSubstanceAmount::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceAmount or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -775,17 +779,25 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('SubstanceAmount'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getAmountQuantity())) {
@@ -824,7 +836,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getAmountQuantity())) {
@@ -862,7 +874,6 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

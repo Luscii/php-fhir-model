@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\R4\FHIRElement\FHIRCoding;
@@ -77,11 +78,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUrl;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\FHIRUrlPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The technical details of an endpoint that can be used for electronic services,
@@ -96,6 +104,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ENDPOINT;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
@@ -113,9 +122,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     const FIELD_HEADER = 'header';
     const FIELD_HEADER_EXT = '_header';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -127,8 +133,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * The status of the endpoint.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -137,8 +142,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIREndpointStatus
      */
-    protected ?FHIREndpointStatus $status = null;
-
+    protected null|FHIREndpointStatus $status = null;
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -150,8 +154,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    protected ?FHIRCoding $connectionType = null;
-
+    protected null|FHIRCoding $connectionType = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -159,10 +162,9 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * A friendly name that this endpoint can be referred to with.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -174,8 +176,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $managingOrganization = null;
-
+    protected null|FHIRReference $managingOrganization = null;
     /**
      * Details for all kinds of technology mediated contact points for a person or
      * organization, including telephone, email, etc.
@@ -187,8 +188,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint[]
      */
-    protected ?array $contact = [];
-
+    protected null|array $contact = [];
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -198,8 +198,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $period = null;
-
+    protected null|FHIRPeriod $period = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -211,8 +210,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $payloadType = [];
-
+    protected null|array $payloadType = [];
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -223,10 +221,9 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * application/fhir+json. If the mime type is not specified, then the sender could
      * send any content (including no content depending on the connectionType).
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
      */
-    protected ?array $payloadMimeType = [];
-
+    protected null|array $payloadMimeType = [];
     /**
      * A URI that is a literal reference
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -234,10 +231,9 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * The uri that describes the actual end-point to connect to.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    protected ?FHIRUrl $address = null;
-
+    protected null|FHIRUrl $address = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -245,15 +241,15 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * Additional headers / information to send as part of the notification.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $header = [];
+    protected null|array $header = [];
 
     /**
      * Validation map for fields in type Endpoint
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_PAYLOAD_TYPE => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -262,17 +258,12 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * FHIREndpoint Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIREndpoint::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -457,6 +448,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         }
     }
 
+
     /**
      * @return string
      */
@@ -465,17 +457,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Endpoint{$xmlns}></Endpoint>";
-    }
     /**
      * @return string
      */
@@ -496,7 +477,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -513,8 +494,11 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -532,7 +516,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -559,7 +543,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIREndpointStatus
      */
-    public function getStatus(): ?FHIREndpointStatus
+    public function getStatus(): null|FHIREndpointStatus
     {
         return $this->status;
     }
@@ -573,8 +557,11 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIREndpointStatus $status
      * @return static
      */
-    public function setStatus(?FHIREndpointStatus $status = null): object
+    public function setStatus(null|FHIREndpointStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIREndpointStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -591,7 +578,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    public function getConnectionType(): ?FHIRCoding
+    public function getConnectionType(): null|FHIRCoding
     {
         return $this->connectionType;
     }
@@ -608,8 +595,11 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $connectionType
      * @return static
      */
-    public function setConnectionType(?FHIRCoding $connectionType = null): object
+    public function setConnectionType(null|FHIRCoding $connectionType = null): self
     {
+        if (null === $connectionType) {
+            $connectionType = new FHIRCoding();
+        }
         $this->_trackValueSet($this->connectionType, $connectionType);
         $this->connectionType = $connectionType;
         return $this;
@@ -622,9 +612,9 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * A friendly name that this endpoint can be referred to with.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -636,10 +626,10 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * A friendly name that this endpoint can be referred to with.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -660,7 +650,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getManagingOrganization(): ?FHIRReference
+    public function getManagingOrganization(): null|FHIRReference
     {
         return $this->managingOrganization;
     }
@@ -677,8 +667,11 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $managingOrganization
      * @return static
      */
-    public function setManagingOrganization(?FHIRReference $managingOrganization = null): object
+    public function setManagingOrganization(null|FHIRReference $managingOrganization = null): self
     {
+        if (null === $managingOrganization) {
+            $managingOrganization = new FHIRReference();
+        }
         $this->_trackValueSet($this->managingOrganization, $managingOrganization);
         $this->managingOrganization = $managingOrganization;
         return $this;
@@ -695,7 +688,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint[]
      */
-    public function getContact(): ?array
+    public function getContact(): null|array
     {
         return $this->contact;
     }
@@ -712,8 +705,11 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint $contact
      * @return static
      */
-    public function addContact(?FHIRContactPoint $contact = null): object
+    public function addContact(null|FHIRContactPoint $contact = null): self
     {
+        if (null === $contact) {
+            $contact = new FHIRContactPoint();
+        }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
         return $this;
@@ -731,7 +727,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactPoint[] $contact
      * @return static
      */
-    public function setContact(array $contact = []): object
+    public function setContact(array $contact = []): self
     {
         if ([] !== $this->contact) {
             $this->_trackValuesRemoved(count($this->contact));
@@ -759,7 +755,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getPeriod(): ?FHIRPeriod
+    public function getPeriod(): null|FHIRPeriod
     {
         return $this->period;
     }
@@ -774,8 +770,11 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $period
      * @return static
      */
-    public function setPeriod(?FHIRPeriod $period = null): object
+    public function setPeriod(null|FHIRPeriod $period = null): self
     {
+        if (null === $period) {
+            $period = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->period, $period);
         $this->period = $period;
         return $this;
@@ -792,7 +791,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getPayloadType(): ?array
+    public function getPayloadType(): null|array
     {
         return $this->payloadType;
     }
@@ -809,8 +808,11 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $payloadType
      * @return static
      */
-    public function addPayloadType(?FHIRCodeableConcept $payloadType = null): object
+    public function addPayloadType(null|FHIRCodeableConcept $payloadType = null): self
     {
+        if (null === $payloadType) {
+            $payloadType = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->payloadType[] = $payloadType;
         return $this;
@@ -828,7 +830,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $payloadType
      * @return static
      */
-    public function setPayloadType(array $payloadType = []): object
+    public function setPayloadType(array $payloadType = []): self
     {
         if ([] !== $this->payloadType) {
             $this->_trackValuesRemoved(count($this->payloadType));
@@ -857,9 +859,9 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * application/fhir+json. If the mime type is not specified, then the sender could
      * send any content (including no content depending on the connectionType).
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
      */
-    public function getPayloadMimeType(): ?array
+    public function getPayloadMimeType(): null|array
     {
         return $this->payloadMimeType;
     }
@@ -874,10 +876,10 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * application/fhir+json. If the mime type is not specified, then the sender could
      * send any content (including no content depending on the connectionType).
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[] $payloadMimeType
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $payloadMimeType
      * @return static
      */
-    public function addPayloadMimeType($payloadMimeType = null): object
+    public function addPayloadMimeType(null|string|FHIRCodePrimitive|FHIRCode $payloadMimeType = null): self
     {
         if (null !== $payloadMimeType && !($payloadMimeType instanceof FHIRCode)) {
             $payloadMimeType = new FHIRCode($payloadMimeType);
@@ -900,7 +902,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCode[] $payloadMimeType
      * @return static
      */
-    public function setPayloadMimeType(array $payloadMimeType = []): object
+    public function setPayloadMimeType(array $payloadMimeType = []): self
     {
         if ([] !== $this->payloadMimeType) {
             $this->_trackValuesRemoved(count($this->payloadMimeType));
@@ -926,9 +928,9 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * The uri that describes the actual end-point to connect to.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    public function getAddress(): ?FHIRUrl
+    public function getAddress(): null|FHIRUrl
     {
         return $this->address;
     }
@@ -940,10 +942,10 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * The uri that describes the actual end-point to connect to.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $address
+     * @param null|string|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $address
      * @return static
      */
-    public function setAddress($address = null): object
+    public function setAddress(null|string|FHIRUrlPrimitive|FHIRUrl $address = null): self
     {
         if (null !== $address && !($address instanceof FHIRUrl)) {
             $address = new FHIRUrl($address);
@@ -960,9 +962,9 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * Additional headers / information to send as part of the notification.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getHeader(): ?array
+    public function getHeader(): null|array
     {
         return $this->header;
     }
@@ -974,10 +976,10 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * Additional headers / information to send as part of the notification.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $header
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $header
      * @return static
      */
-    public function addHeader($header = null): object
+    public function addHeader(null|string|FHIRStringPrimitive|FHIRString $header = null): self
     {
         if (null !== $header && !($header instanceof FHIRString)) {
             $header = new FHIRString($header);
@@ -997,7 +999,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $header
      * @return static
      */
-    public function setHeader(array $header = []): object
+    public function setHeader(array $header = []): self
     {
         if ([] !== $this->header) {
             $this->_trackValuesRemoved(count($this->header));
@@ -1024,7 +1026,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1336,36 +1338,48 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIREndpoint $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIREndpoint
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIREndpoint::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIREndpoint::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIREndpoint(null);
-        } elseif (!is_object($type) || !($type instanceof FHIREndpoint)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIREndpoint)) {
             throw new \RuntimeException(sprintf(
-                'FHIREndpoint::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIREndpoint or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1428,12 +1442,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         }
         $n = $element->attributes->getNamedItem(self::FIELD_PAYLOAD_MIME_TYPE);
         if (null !== $n) {
-            $pt = $type->getPayloadMimeType();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addPayloadMimeType($n->nodeValue);
-            }
+            $type->addPayloadMimeType($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ADDRESS);
         if (null !== $n) {
@@ -1446,12 +1455,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         }
         $n = $element->attributes->getNamedItem(self::FIELD_HEADER);
         if (null !== $n) {
-            $pt = $type->getHeader();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addHeader($n->nodeValue);
-            }
+            $type->addHeader($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -1485,17 +1489,25 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Endpoint'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1584,7 +1596,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1706,7 +1718,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
 
         return $out;
     }
-
 
     /**
      * @return string

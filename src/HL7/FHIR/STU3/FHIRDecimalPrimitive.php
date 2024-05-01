@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,27 +66,27 @@ namespace HL7\FHIR\STU3;
  * Class FHIRDecimalPrimitive
  * @package \HL7\FHIR\STU3
  */
-class FHIRDecimalPrimitive implements PHPFHIRTypeInterface
+class FHIRDecimalPrimitive implements PHPFHIRPrimitiveTypeInterface
 {
     use PHPFHIRValidationAssertionsTrait;
+    use PHPFHIRChangeTrackingTrait;
+    use PHPFHIRXmlNamespaceTrait;
 
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DECIMAL_HYPHEN_PRIMITIVE;
+
     const FIELD_VALUE = 'value';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
     /**
-     * @var null|double
+     * @var null|float
      */
-    protected $value = null;
+    protected null|float $value = null;
 
     /**
      * Validation map for fields in type decimal-primitive
      * @var array
      */
-    private static $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_VALUE => [
             PHPFHIRConstants::VALIDATE_PATTERN => '/^-?([0]|([1-9][0-9]*))(\\.[0-9]+)?$/',
         ],
@@ -94,79 +94,72 @@ class FHIRDecimalPrimitive implements PHPFHIRTypeInterface
 
     /**
      * FHIRDecimalPrimitive Constructor
-     * @param null|double $value
+     * @param null|string|float|int $value
      */
-    public function __construct($value = null)
+    public function __construct(null|string|float|int $value = null)
     {
         $this->setValue($value);
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * @return string|null
+     * @return null|float
      */
-    public function _getFHIRXMLNamespace()
+    public function getValue(): null|float
     {
-        return '' === $this->_xmlns ? null : $this->_xmlns;
+        return $this->value;
     }
 
+    /** @var int */
+    private int $_decimals = 1;
+
+    /** @var bool */
+    private bool $_commas = false;
+
     /**
-     * @param null|string $xmlNamespace
+     * @param null|string|float|int $value
      * @return static
      */
-    public function _setFHIRXMLNamespace($xmlNamespace)
+    public function setValue(null|string|float|int $value): self
     {
-        if (null === $xmlNamespace || is_string($xmlNamespace)) {
-            $this->_xmlns = (string)$xmlNamespace;
+        if (null === $value) {
+            $this->value = null;
+            $this->_decimals = 1;
+            $this->_commas = false;
             return $this;
         }
-        throw new \InvalidArgumentException(sprintf(
-            '$xmlNamespace must be a null or string value, %s seen.',
-            gettype($xmlNamespace)
-        ));
+        $str = (string)$value;
+        $dec = strstr($str, '.');
+        if ($this->_commas = str_contains($str, ',')) {
+            $str = str_replace(',', '', $str);
+        }
+        if (false === $dec) {
+            $this->_decimals = 0;
+        } else {
+            $this->_decimals = strlen($dec) - 1;
+        }
+        $this->value = floatval($str);
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition()
+    public function getFormattedValue(): string
     {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
+        $v = $this->getValue();
+        if (null === $v) {
+            return '0.0';
         }
-        return "<decimal_primitive{$xmlns}></decimal_primitive>";
-    }
-
-    /**
-     * @return null|double
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * @param null|float|string $value
-     * @return static
-     */
-    public function setValue($value)
-    {
-        if (null === $value) {
-            $this->value = null;
-        } elseif (is_scalar($value)) {
-            $this->value = floatval($value);
-        } else {
-            throw new \InvalidArgumentException(sprintf('decimal-primitive value must be null, float, or numeric string, %s seen.', gettype($value)));
-        }
-        return $this;
+        return number_format($v, $this->_decimals, '.', $this->_commas ? ',' : '');
     }
 
     /**
@@ -175,9 +168,9 @@ class FHIRDecimalPrimitive implements PHPFHIRTypeInterface
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -186,7 +179,7 @@ class FHIRDecimalPrimitive implements PHPFHIRTypeInterface
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = [];
         $validationRules = $this->_getValidationRules();
@@ -205,82 +198,112 @@ class FHIRDecimalPrimitive implements PHPFHIRTypeInterface
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRDecimalPrimitive $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRDecimalPrimitive
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRDecimalPrimitive::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRDecimalPrimitive::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRDecimalPrimitive;
-        } elseif (!is_object($type) || !($type instanceof FHIRDecimalPrimitive)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRDecimalPrimitive)) {
             throw new \RuntimeException(sprintf(
-                'FHIRDecimalPrimitive::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRDecimalPrimitive or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_VALUE === $n->nodeName) {
+                $valueAttr = $n->attributes->getNamedItem('value');
+                if (null !== $valueAttr) {
+                    $type->setValue($valueAttr->nodeValue);
+                } elseif ($n->hasChildNodes()) {
+                    $type->setValue($n->ownerDocument->saveXML($n));
+                } else {
+                    $type->setValue($n->textContent);
+                }
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($attributes->value)) {
-            $type->setValue((string)$attributes->value);
-        } elseif (isset($children->value)) {
-            $type->setValue((string)$children->value);
-        } elseif ('' !== ($v = (string)$sxe)) {
-            $type->setValue($v);
+        $n = $element->attributes->getNamedItem(self::FIELD_VALUE);
+        if (null !== $n) {
+            $type->setValue($n->nodeValue);
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        $sxe->addAttribute(self::FIELD_VALUE, (string)$this);
-        return $sxe;
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('decimal_primitive'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        $element->setAttribute(self::FIELD_VALUE, (string)$this);
+        return $element;
     }
 
     /**
-     * @return null|double
+     * @return null|float
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->getValue();
     }
 
-
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return (string)$this->getValue();
+        return $this->getFormattedValue();
     }
 }

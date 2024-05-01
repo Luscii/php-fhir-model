@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRContract;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRContract;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,10 +64,15 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRContract;
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\STU3\FHIRElement\FHIRCoding;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRSignature;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A formal agreement between parties regarding the conduct of business, exchange
@@ -80,13 +85,21 @@ class FHIRContractSigner extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CONTRACT_DOT_SIGNER;
+
+    const FIELD_TYPE = 'type';
     const FIELD_PARTY = 'party';
     const FIELD_SIGNATURE = 'signature';
-    const FIELD_TYPE = 'type';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Role of this Contract signer, e.g. notary, grantee.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
+     */
+    protected null|FHIRCoding $type = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -96,8 +109,7 @@ class FHIRContractSigner extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $party = null;
-
+    protected null|FHIRReference $party = null;
     /**
      * A digital signature along with supporting context. The signature may be
      * electronic/cryptographic in nature, or a graphical image representing a
@@ -110,24 +122,13 @@ class FHIRContractSigner extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature[]
      */
-    protected $signature = [];
-
-    /**
-     * A reference to a code defined by a terminology system.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Role of this Contract signer, e.g. notary, grantee.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
-     */
-    protected $type = null;
+    protected null|array $signature = [];
 
     /**
      * Validation map for fields in type Contract.Signer
      * @var array
      */
-    private static $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_SIGNATURE => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -136,19 +137,21 @@ class FHIRContractSigner extends FHIRBackboneElement
     /**
      * FHIRContractSigner Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRContractSigner::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_TYPE])) {
+            if ($data[self::FIELD_TYPE] instanceof FHIRCoding) {
+                $this->setType($data[self::FIELD_TYPE]);
+            } else {
+                $this->setType(new FHIRCoding($data[self::FIELD_TYPE]));
+            }
+        }
         if (isset($data[self::FIELD_PARTY])) {
             if ($data[self::FIELD_PARTY] instanceof FHIRReference) {
                 $this->setParty($data[self::FIELD_PARTY]);
@@ -168,39 +171,55 @@ class FHIRContractSigner extends FHIRBackboneElement
                         $this->addSignature(new FHIRSignature($v));
                     }
                 }
-            } else if ($data[self::FIELD_SIGNATURE] instanceof FHIRSignature) {
+            } elseif ($data[self::FIELD_SIGNATURE] instanceof FHIRSignature) {
                 $this->addSignature($data[self::FIELD_SIGNATURE]);
             } else {
                 $this->addSignature(new FHIRSignature($data[self::FIELD_SIGNATURE]));
             }
         }
-        if (isset($data[self::FIELD_TYPE])) {
-            if ($data[self::FIELD_TYPE] instanceof FHIRCoding) {
-                $this->setType($data[self::FIELD_TYPE]);
-            } else {
-                $this->setType(new FHIRCoding($data[self::FIELD_TYPE]));
-            }
-        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * @return string
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Role of this Contract signer, e.g. notary, grantee.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
      */
-    public function _getFHIRXMLElementDefinition()
+    public function getType(): null|FHIRCoding
     {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
+        return $this->type;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Role of this Contract signer, e.g. notary, grantee.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding $type
+     * @return static
+     */
+    public function setType(null|FHIRCoding $type = null): self
+    {
+        if (null === $type) {
+            $type = new FHIRCoding();
         }
-        return "<ContractSigner{$xmlns}></ContractSigner>";
+        $this->_trackValueSet($this->type, $type);
+        $this->type = $type;
+        return $this;
     }
 
     /**
@@ -212,7 +231,7 @@ class FHIRContractSigner extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getParty()
+    public function getParty(): null|FHIRReference
     {
         return $this->party;
     }
@@ -227,8 +246,12 @@ class FHIRContractSigner extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $party
      * @return static
      */
-    public function setParty(FHIRReference $party = null)
+    public function setParty(null|FHIRReference $party = null): self
     {
+        if (null === $party) {
+            $party = new FHIRReference();
+        }
+        $this->_trackValueSet($this->party, $party);
         $this->party = $party;
         return $this;
     }
@@ -245,7 +268,7 @@ class FHIRContractSigner extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature[]
      */
-    public function getSignature()
+    public function getSignature(): null|array
     {
         return $this->signature;
     }
@@ -263,8 +286,12 @@ class FHIRContractSigner extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature $signature
      * @return static
      */
-    public function addSignature(FHIRSignature $signature = null)
+    public function addSignature(null|FHIRSignature $signature = null): self
     {
+        if (null === $signature) {
+            $signature = new FHIRSignature();
+        }
+        $this->_trackValueAdded();
         $this->signature[] = $signature;
         return $this;
     }
@@ -282,9 +309,12 @@ class FHIRContractSigner extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRSignature[] $signature
      * @return static
      */
-    public function setSignature(array $signature = [])
+    public function setSignature(array $signature = []): self
     {
-        $this->signature = [];
+        if ([] !== $this->signature) {
+            $this->_trackValuesRemoved(count($this->signature));
+            $this->signature = [];
+        }
         if ([] === $signature) {
             return $this;
         }
@@ -299,44 +329,14 @@ class FHIRContractSigner extends FHIRBackboneElement
     }
 
     /**
-     * A reference to a code defined by a terminology system.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Role of this Contract signer, e.g. notary, grantee.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * A reference to a code defined by a terminology system.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Role of this Contract signer, e.g. notary, grantee.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding $type
-     * @return static
-     */
-    public function setType(FHIRCoding $type = null)
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
      * Returns the validation rules that this type's fields must comply with to be considered "valid"
      * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -345,10 +345,15 @@ class FHIRContractSigner extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
         if (null !== ($v = $this->getParty())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_PARTY] = $fieldErrs;
@@ -361,9 +366,16 @@ class FHIRContractSigner extends FHIRBackboneElement
                 }
             }
         }
-        if (null !== ($v = $this->getType())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_TYPE] = $fieldErrs;
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CONTRACT_DOT_SIGNER, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
+                }
             }
         }
         if (isset($validationRules[self::FIELD_PARTY])) {
@@ -387,18 +399,6 @@ class FHIRContractSigner extends FHIRBackboneElement
                         $errs[self::FIELD_SIGNATURE] = [];
                     }
                     $errs[self::FIELD_SIGNATURE][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_TYPE])) {
-            $v = $this->getType();
-            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CONTRACT_DOT_SIGNER, self::FIELD_TYPE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TYPE])) {
-                        $errs[self::FIELD_TYPE] = [];
-                    }
-                    $errs[self::FIELD_TYPE][$rule] = $err;
                 }
             }
         }
@@ -442,119 +442,157 @@ class FHIRContractSigner extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractSigner $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractSigner
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRContractSigner::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRContractSigner::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRContractSigner;
-        } elseif (!is_object($type) || !($type instanceof FHIRContractSigner)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRContractSigner)) {
             throw new \RuntimeException(sprintf(
-                'FHIRContractSigner::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRContract\FHIRContractSigner or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_TYPE === $n->nodeName) {
+                $type->setType(FHIRCoding::xmlUnserialize($n));
+            } elseif (self::FIELD_PARTY === $n->nodeName) {
+                $type->setParty(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_SIGNATURE === $n->nodeName) {
+                $type->addSignature(FHIRSignature::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->party)) {
-            $type->setParty(FHIRReference::xmlUnserialize($children->party));
-        }
-        if (isset($children->signature)) {
-            foreach($children->signature as $child) {
-                $type->addSignature(FHIRSignature::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
-        }
-        if (isset($children->type)) {
-            $type->setType(FHIRCoding::xmlUnserialize($children->type));
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ContractSigner'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getType())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if (null !== ($v = $this->getParty())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PARTY, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_PARTY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getSignature())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SIGNATURE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_SIGNATURE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getType())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getType())) {
+            $out->{self::FIELD_TYPE} = $v;
+        }
         if (null !== ($v = $this->getParty())) {
-            $a[self::FIELD_PARTY] = $v;
+            $out->{self::FIELD_PARTY} = $v;
         }
         if ([] !== ($vs = $this->getSignature())) {
-            $a[self::FIELD_SIGNATURE] = [];
+            $out->{self::FIELD_SIGNATURE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_SIGNATURE][] = $v;
+                $out->{self::FIELD_SIGNATURE}[] = $v;
             }
         }
-        if (null !== ($v = $this->getType())) {
-            $a[self::FIELD_TYPE] = $v;
-        }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

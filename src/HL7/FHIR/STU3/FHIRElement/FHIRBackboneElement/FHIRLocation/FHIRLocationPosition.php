@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRLocation;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRLocation;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,10 +62,16 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRLocation;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRDecimalPrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\STU3\FHIRElement\FHIRDecimal;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * Details and position information for a physical place where services are
@@ -79,41 +85,13 @@ class FHIRLocationPosition extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_LOCATION_DOT_POSITION;
-    const FIELD_ALTITUDE = 'altitude';
-    const FIELD_ALTITUDE_EXT = '_altitude';
-    const FIELD_LATITUDE = 'latitude';
-    const FIELD_LATITUDE_EXT = '_latitude';
+
     const FIELD_LONGITUDE = 'longitude';
     const FIELD_LONGITUDE_EXT = '_longitude';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A rational number with implicit precision
-     * Do not use a IEEE type floating point type, instead use something that works
-     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Altitude. The value domain and the interpretation are the same as for the text
-     * of the altitude element in KML (see notes below).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
-     */
-    protected $altitude = null;
-
-    /**
-     * A rational number with implicit precision
-     * Do not use a IEEE type floating point type, instead use something that works
-     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Latitude. The value domain and the interpretation are the same as for the text
-     * of the latitude element in KML (see notes below).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
-     */
-    protected $latitude = null;
+    const FIELD_LATITUDE = 'latitude';
+    const FIELD_LATITUDE_EXT = '_latitude';
+    const FIELD_ALTITUDE = 'altitude';
+    const FIELD_ALTITUDE_EXT = '_altitude';
 
     /**
      * A rational number with implicit precision
@@ -126,87 +104,52 @@ class FHIRLocationPosition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
      */
-    protected $longitude = null;
+    protected null|FHIRDecimal $longitude = null;
+    /**
+     * A rational number with implicit precision
+     * Do not use a IEEE type floating point type, instead use something that works
+     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Latitude. The value domain and the interpretation are the same as for the text
+     * of the latitude element in KML (see notes below).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
+     */
+    protected null|FHIRDecimal $latitude = null;
+    /**
+     * A rational number with implicit precision
+     * Do not use a IEEE type floating point type, instead use something that works
+     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Altitude. The value domain and the interpretation are the same as for the text
+     * of the altitude element in KML (see notes below).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
+     */
+    protected null|FHIRDecimal $altitude = null;
 
     /**
      * Validation map for fields in type Location.Position
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRLocationPosition Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRLocationPosition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_ALTITUDE]) || isset($data[self::FIELD_ALTITUDE_EXT])) {
-            if (isset($data[self::FIELD_ALTITUDE])) {
-                $value = $data[self::FIELD_ALTITUDE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ALTITUDE_EXT]) && is_array($data[self::FIELD_ALTITUDE_EXT])) {
-                $ext = $data[self::FIELD_ALTITUDE_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRDecimal) {
-                    $this->setAltitude($value);
-                } else if (is_array($value)) {
-                    $this->setAltitude(new FHIRDecimal(array_merge($ext, $value)));
-                } else {
-                    $this->setAltitude(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setAltitude(new FHIRDecimal($ext));
-            }
-        }
-        if (isset($data[self::FIELD_LATITUDE]) || isset($data[self::FIELD_LATITUDE_EXT])) {
-            if (isset($data[self::FIELD_LATITUDE])) {
-                $value = $data[self::FIELD_LATITUDE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_LATITUDE_EXT]) && is_array($data[self::FIELD_LATITUDE_EXT])) {
-                $ext = $data[self::FIELD_LATITUDE_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRDecimal) {
-                    $this->setLatitude($value);
-                } else if (is_array($value)) {
-                    $this->setLatitude(new FHIRDecimal(array_merge($ext, $value)));
-                } else {
-                    $this->setLatitude(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setLatitude(new FHIRDecimal($ext));
-            }
-        }
         if (isset($data[self::FIELD_LONGITUDE]) || isset($data[self::FIELD_LONGITUDE_EXT])) {
-            if (isset($data[self::FIELD_LONGITUDE])) {
-                $value = $data[self::FIELD_LONGITUDE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_LONGITUDE_EXT]) && is_array($data[self::FIELD_LONGITUDE_EXT])) {
-                $ext = $data[self::FIELD_LONGITUDE_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_LONGITUDE] ?? null;
+            $ext = (isset($data[self::FIELD_LONGITUDE_EXT]) && is_array($data[self::FIELD_LONGITUDE_EXT])) ? $data[self::FIELD_LONGITUDE_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRDecimal) {
                     $this->setLongitude($value);
@@ -215,114 +158,49 @@ class FHIRLocationPosition extends FHIRBackboneElement
                 } else {
                     $this->setLongitude(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setLongitude(new FHIRDecimal($ext));
+            }
+        }
+        if (isset($data[self::FIELD_LATITUDE]) || isset($data[self::FIELD_LATITUDE_EXT])) {
+            $value = $data[self::FIELD_LATITUDE] ?? null;
+            $ext = (isset($data[self::FIELD_LATITUDE_EXT]) && is_array($data[self::FIELD_LATITUDE_EXT])) ? $data[self::FIELD_LATITUDE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDecimal) {
+                    $this->setLatitude($value);
+                } else if (is_array($value)) {
+                    $this->setLatitude(new FHIRDecimal(array_merge($ext, $value)));
+                } else {
+                    $this->setLatitude(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setLatitude(new FHIRDecimal($ext));
+            }
+        }
+        if (isset($data[self::FIELD_ALTITUDE]) || isset($data[self::FIELD_ALTITUDE_EXT])) {
+            $value = $data[self::FIELD_ALTITUDE] ?? null;
+            $ext = (isset($data[self::FIELD_ALTITUDE_EXT]) && is_array($data[self::FIELD_ALTITUDE_EXT])) ? $data[self::FIELD_ALTITUDE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDecimal) {
+                    $this->setAltitude($value);
+                } else if (is_array($value)) {
+                    $this->setAltitude(new FHIRDecimal(array_merge($ext, $value)));
+                } else {
+                    $this->setAltitude(new FHIRDecimal([FHIRDecimal::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setAltitude(new FHIRDecimal($ext));
             }
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<LocationPosition{$xmlns}></LocationPosition>";
-    }
-
-    /**
-     * A rational number with implicit precision
-     * Do not use a IEEE type floating point type, instead use something that works
-     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Altitude. The value domain and the interpretation are the same as for the text
-     * of the altitude element in KML (see notes below).
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
-     */
-    public function getAltitude()
-    {
-        return $this->altitude;
-    }
-
-    /**
-     * A rational number with implicit precision
-     * Do not use a IEEE type floating point type, instead use something that works
-     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Altitude. The value domain and the interpretation are the same as for the text
-     * of the altitude element in KML (see notes below).
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal $altitude
-     * @return static
-     */
-    public function setAltitude($altitude = null)
-    {
-        if (null === $altitude) {
-            $this->altitude = null;
-            return $this;
-        }
-        if ($altitude instanceof FHIRDecimal) {
-            $this->altitude = $altitude;
-            return $this;
-        }
-        $this->altitude = new FHIRDecimal($altitude);
-        return $this;
-    }
-
-    /**
-     * A rational number with implicit precision
-     * Do not use a IEEE type floating point type, instead use something that works
-     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Latitude. The value domain and the interpretation are the same as for the text
-     * of the latitude element in KML (see notes below).
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
-     */
-    public function getLatitude()
-    {
-        return $this->latitude;
-    }
-
-    /**
-     * A rational number with implicit precision
-     * Do not use a IEEE type floating point type, instead use something that works
-     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Latitude. The value domain and the interpretation are the same as for the text
-     * of the latitude element in KML (see notes below).
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal $latitude
-     * @return static
-     */
-    public function setLatitude($latitude = null)
-    {
-        if (null === $latitude) {
-            $this->latitude = null;
-            return $this;
-        }
-        if ($latitude instanceof FHIRDecimal) {
-            $this->latitude = $latitude;
-            return $this;
-        }
-        $this->latitude = new FHIRDecimal($latitude);
-        return $this;
     }
 
     /**
@@ -336,7 +214,7 @@ class FHIRLocationPosition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
      */
-    public function getLongitude()
+    public function getLongitude(): null|FHIRDecimal
     {
         return $this->longitude;
     }
@@ -350,20 +228,92 @@ class FHIRLocationPosition extends FHIRBackboneElement
      * Longitude. The value domain and the interpretation are the same as for the text
      * of the longitude element in KML (see notes below).
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal $longitude
+     * @param null|string|float|int|\HL7\FHIR\STU3\FHIRDecimalPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal $longitude
      * @return static
      */
-    public function setLongitude($longitude = null)
+    public function setLongitude(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $longitude = null): self
     {
-        if (null === $longitude) {
-            $this->longitude = null;
-            return $this;
+        if (null !== $longitude && !($longitude instanceof FHIRDecimal)) {
+            $longitude = new FHIRDecimal($longitude);
         }
-        if ($longitude instanceof FHIRDecimal) {
-            $this->longitude = $longitude;
-            return $this;
+        $this->_trackValueSet($this->longitude, $longitude);
+        $this->longitude = $longitude;
+        return $this;
+    }
+
+    /**
+     * A rational number with implicit precision
+     * Do not use a IEEE type floating point type, instead use something that works
+     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Latitude. The value domain and the interpretation are the same as for the text
+     * of the latitude element in KML (see notes below).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
+     */
+    public function getLatitude(): null|FHIRDecimal
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * A rational number with implicit precision
+     * Do not use a IEEE type floating point type, instead use something that works
+     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Latitude. The value domain and the interpretation are the same as for the text
+     * of the latitude element in KML (see notes below).
+     *
+     * @param null|string|float|int|\HL7\FHIR\STU3\FHIRDecimalPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal $latitude
+     * @return static
+     */
+    public function setLatitude(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $latitude = null): self
+    {
+        if (null !== $latitude && !($latitude instanceof FHIRDecimal)) {
+            $latitude = new FHIRDecimal($latitude);
         }
-        $this->longitude = new FHIRDecimal($longitude);
+        $this->_trackValueSet($this->latitude, $latitude);
+        $this->latitude = $latitude;
+        return $this;
+    }
+
+    /**
+     * A rational number with implicit precision
+     * Do not use a IEEE type floating point type, instead use something that works
+     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Altitude. The value domain and the interpretation are the same as for the text
+     * of the altitude element in KML (see notes below).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
+     */
+    public function getAltitude(): null|FHIRDecimal
+    {
+        return $this->altitude;
+    }
+
+    /**
+     * A rational number with implicit precision
+     * Do not use a IEEE type floating point type, instead use something that works
+     * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Altitude. The value domain and the interpretation are the same as for the text
+     * of the altitude element in KML (see notes below).
+     *
+     * @param null|string|float|int|\HL7\FHIR\STU3\FHIRDecimalPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal $altitude
+     * @return static
+     */
+    public function setAltitude(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $altitude = null): self
+    {
+        if (null !== $altitude && !($altitude instanceof FHIRDecimal)) {
+            $altitude = new FHIRDecimal($altitude);
+        }
+        $this->_trackValueSet($this->altitude, $altitude);
+        $this->altitude = $altitude;
         return $this;
     }
 
@@ -373,9 +323,9 @@ class FHIRLocationPosition extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -384,13 +334,13 @@ class FHIRLocationPosition extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (null !== ($v = $this->getAltitude())) {
+        if (null !== ($v = $this->getLongitude())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_ALTITUDE] = $fieldErrs;
+                $errs[self::FIELD_LONGITUDE] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getLatitude())) {
@@ -398,20 +348,20 @@ class FHIRLocationPosition extends FHIRBackboneElement
                 $errs[self::FIELD_LATITUDE] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getLongitude())) {
+        if (null !== ($v = $this->getAltitude())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_LONGITUDE] = $fieldErrs;
+                $errs[self::FIELD_ALTITUDE] = $fieldErrs;
             }
         }
-        if (isset($validationRules[self::FIELD_ALTITUDE])) {
-            $v = $this->getAltitude();
-            foreach($validationRules[self::FIELD_ALTITUDE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_LOCATION_DOT_POSITION, self::FIELD_ALTITUDE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_LONGITUDE])) {
+            $v = $this->getLongitude();
+            foreach($validationRules[self::FIELD_LONGITUDE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_LOCATION_DOT_POSITION, self::FIELD_LONGITUDE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ALTITUDE])) {
-                        $errs[self::FIELD_ALTITUDE] = [];
+                    if (!isset($errs[self::FIELD_LONGITUDE])) {
+                        $errs[self::FIELD_LONGITUDE] = [];
                     }
-                    $errs[self::FIELD_ALTITUDE][$rule] = $err;
+                    $errs[self::FIELD_LONGITUDE][$rule] = $err;
                 }
             }
         }
@@ -427,15 +377,15 @@ class FHIRLocationPosition extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_LONGITUDE])) {
-            $v = $this->getLongitude();
-            foreach($validationRules[self::FIELD_LONGITUDE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_LOCATION_DOT_POSITION, self::FIELD_LONGITUDE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_ALTITUDE])) {
+            $v = $this->getAltitude();
+            foreach($validationRules[self::FIELD_ALTITUDE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_LOCATION_DOT_POSITION, self::FIELD_ALTITUDE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_LONGITUDE])) {
-                        $errs[self::FIELD_LONGITUDE] = [];
+                    if (!isset($errs[self::FIELD_ALTITUDE])) {
+                        $errs[self::FIELD_ALTITUDE] = [];
                     }
-                    $errs[self::FIELD_LONGITUDE][$rule] = $err;
+                    $errs[self::FIELD_ALTITUDE][$rule] = $err;
                 }
             }
         }
@@ -479,148 +429,194 @@ class FHIRLocationPosition extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRLocation\FHIRLocationPosition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRLocation\FHIRLocationPosition
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRLocationPosition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRLocationPosition::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRLocationPosition;
-        } elseif (!is_object($type) || !($type instanceof FHIRLocationPosition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRLocationPosition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRLocationPosition::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRLocation\FHIRLocationPosition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_LONGITUDE === $n->nodeName) {
+                $type->setLongitude(FHIRDecimal::xmlUnserialize($n));
+            } elseif (self::FIELD_LATITUDE === $n->nodeName) {
+                $type->setLatitude(FHIRDecimal::xmlUnserialize($n));
+            } elseif (self::FIELD_ALTITUDE === $n->nodeName) {
+                $type->setAltitude(FHIRDecimal::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->altitude)) {
-            $type->setAltitude(FHIRDecimal::xmlUnserialize($children->altitude));
-        }
-        if (isset($attributes->altitude)) {
-            $pt = $type->getAltitude();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->altitude);
-            } else {
-                $type->setAltitude((string)$attributes->altitude);
-            }
-        }
-        if (isset($children->latitude)) {
-            $type->setLatitude(FHIRDecimal::xmlUnserialize($children->latitude));
-        }
-        if (isset($attributes->latitude)) {
-            $pt = $type->getLatitude();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->latitude);
-            } else {
-                $type->setLatitude((string)$attributes->latitude);
-            }
-        }
-        if (isset($children->longitude)) {
-            $type->setLongitude(FHIRDecimal::xmlUnserialize($children->longitude));
-        }
-        if (isset($attributes->longitude)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_LONGITUDE);
+        if (null !== $n) {
             $pt = $type->getLongitude();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->longitude);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setLongitude((string)$attributes->longitude);
+                $type->setLongitude($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_LATITUDE);
+        if (null !== $n) {
+            $pt = $type->getLatitude();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLatitude($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ALTITUDE);
+        if (null !== $n) {
+            $pt = $type->getAltitude();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setAltitude($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getAltitude())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ALTITUDE, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('LocationPosition'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getLongitude())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_LONGITUDE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getLatitude())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_LATITUDE, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_LATITUDE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getLongitude())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_LONGITUDE, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getAltitude())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ALTITUDE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getAltitude())) {
-            $a[self::FIELD_ALTITUDE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDecimal::FIELD_VALUE]);
-                $a[self::FIELD_ALTITUDE_EXT] = $enc;
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getLongitude())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_LONGITUDE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDecimal::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_LONGITUDE_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getLatitude())) {
-            $a[self::FIELD_LATITUDE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDecimal::FIELD_VALUE]);
-                $a[self::FIELD_LATITUDE_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_LATITUDE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDecimal::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_LATITUDE_EXT} = $ext;
             }
         }
-        if (null !== ($v = $this->getLongitude())) {
-            $a[self::FIELD_LONGITUDE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDecimal::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDecimal::FIELD_VALUE]);
-                $a[self::FIELD_LONGITUDE_EXT] = $enc;
+        if (null !== ($v = $this->getAltitude())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ALTITUDE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDecimal::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ALTITUDE_EXT} = $ext;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

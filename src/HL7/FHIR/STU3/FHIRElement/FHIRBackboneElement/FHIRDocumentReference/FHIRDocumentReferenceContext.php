@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,10 +64,15 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference;
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRPeriod;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A reference to a document.
@@ -79,16 +84,14 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DOCUMENT_REFERENCE_DOT_CONTEXT;
+
     const FIELD_ENCOUNTER = 'encounter';
     const FIELD_EVENT = 'event';
-    const FIELD_FACILITY_TYPE = 'facilityType';
     const FIELD_PERIOD = 'period';
+    const FIELD_FACILITY_TYPE = 'facilityType';
     const FIELD_PRACTICE_SETTING = 'practiceSetting';
-    const FIELD_RELATED = 'related';
     const FIELD_SOURCE_PATIENT_INFO = 'sourcePatientInfo';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
+    const FIELD_RELATED = 'related';
 
     /**
      * A reference from one resource to another.
@@ -100,8 +103,7 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $encounter = null;
-
+    protected null|FHIRReference $encounter = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -115,20 +117,7 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    protected $event = [];
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The kind of facility where the patient was seen.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    protected $facilityType = null;
-
+    protected null|array $event = [];
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -139,8 +128,18 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    protected $period = null;
-
+    protected null|FHIRPeriod $period = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The kind of facility where the patient was seen.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected null|FHIRCodeableConcept $facilityType = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -152,17 +151,7 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    protected $practiceSetting = null;
-
-    /**
-     * A reference to a document.
-     *
-     * Related identifiers or resources associated with the DocumentReference.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceRelated[]
-     */
-    protected $related = [];
-
+    protected null|FHIRCodeableConcept $practiceSetting = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -173,28 +162,31 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $sourcePatientInfo = null;
+    protected null|FHIRReference $sourcePatientInfo = null;
+    /**
+     * A reference to a document.
+     *
+     * Related identifiers or resources associated with the DocumentReference.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceRelated[]
+     */
+    protected null|array $related = [];
 
     /**
      * Validation map for fields in type DocumentReference.Context
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRDocumentReferenceContext Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRDocumentReferenceContext::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_ENCOUNTER])) {
@@ -216,17 +208,10 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
                         $this->addEvent(new FHIRCodeableConcept($v));
                     }
                 }
-            } else if ($data[self::FIELD_EVENT] instanceof FHIRCodeableConcept) {
+            } elseif ($data[self::FIELD_EVENT] instanceof FHIRCodeableConcept) {
                 $this->addEvent($data[self::FIELD_EVENT]);
             } else {
                 $this->addEvent(new FHIRCodeableConcept($data[self::FIELD_EVENT]));
-            }
-        }
-        if (isset($data[self::FIELD_FACILITY_TYPE])) {
-            if ($data[self::FIELD_FACILITY_TYPE] instanceof FHIRCodeableConcept) {
-                $this->setFacilityType($data[self::FIELD_FACILITY_TYPE]);
-            } else {
-                $this->setFacilityType(new FHIRCodeableConcept($data[self::FIELD_FACILITY_TYPE]));
             }
         }
         if (isset($data[self::FIELD_PERIOD])) {
@@ -236,11 +221,25 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
                 $this->setPeriod(new FHIRPeriod($data[self::FIELD_PERIOD]));
             }
         }
+        if (isset($data[self::FIELD_FACILITY_TYPE])) {
+            if ($data[self::FIELD_FACILITY_TYPE] instanceof FHIRCodeableConcept) {
+                $this->setFacilityType($data[self::FIELD_FACILITY_TYPE]);
+            } else {
+                $this->setFacilityType(new FHIRCodeableConcept($data[self::FIELD_FACILITY_TYPE]));
+            }
+        }
         if (isset($data[self::FIELD_PRACTICE_SETTING])) {
             if ($data[self::FIELD_PRACTICE_SETTING] instanceof FHIRCodeableConcept) {
                 $this->setPracticeSetting($data[self::FIELD_PRACTICE_SETTING]);
             } else {
                 $this->setPracticeSetting(new FHIRCodeableConcept($data[self::FIELD_PRACTICE_SETTING]));
+            }
+        }
+        if (isset($data[self::FIELD_SOURCE_PATIENT_INFO])) {
+            if ($data[self::FIELD_SOURCE_PATIENT_INFO] instanceof FHIRReference) {
+                $this->setSourcePatientInfo($data[self::FIELD_SOURCE_PATIENT_INFO]);
+            } else {
+                $this->setSourcePatientInfo(new FHIRReference($data[self::FIELD_SOURCE_PATIENT_INFO]));
             }
         }
         if (isset($data[self::FIELD_RELATED])) {
@@ -255,39 +254,21 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
                         $this->addRelated(new FHIRDocumentReferenceRelated($v));
                     }
                 }
-            } else if ($data[self::FIELD_RELATED] instanceof FHIRDocumentReferenceRelated) {
+            } elseif ($data[self::FIELD_RELATED] instanceof FHIRDocumentReferenceRelated) {
                 $this->addRelated($data[self::FIELD_RELATED]);
             } else {
                 $this->addRelated(new FHIRDocumentReferenceRelated($data[self::FIELD_RELATED]));
             }
         }
-        if (isset($data[self::FIELD_SOURCE_PATIENT_INFO])) {
-            if ($data[self::FIELD_SOURCE_PATIENT_INFO] instanceof FHIRReference) {
-                $this->setSourcePatientInfo($data[self::FIELD_SOURCE_PATIENT_INFO]);
-            } else {
-                $this->setSourcePatientInfo(new FHIRReference($data[self::FIELD_SOURCE_PATIENT_INFO]));
-            }
-        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<DocumentReferenceContext{$xmlns}></DocumentReferenceContext>";
     }
 
     /**
@@ -300,7 +281,7 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getEncounter()
+    public function getEncounter(): null|FHIRReference
     {
         return $this->encounter;
     }
@@ -316,8 +297,12 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $encounter
      * @return static
      */
-    public function setEncounter(FHIRReference $encounter = null)
+    public function setEncounter(null|FHIRReference $encounter = null): self
     {
+        if (null === $encounter) {
+            $encounter = new FHIRReference();
+        }
+        $this->_trackValueSet($this->encounter, $encounter);
         $this->encounter = $encounter;
         return $this;
     }
@@ -335,7 +320,7 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getEvent()
+    public function getEvent(): null|array
     {
         return $this->event;
     }
@@ -354,8 +339,12 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $event
      * @return static
      */
-    public function addEvent(FHIRCodeableConcept $event = null)
+    public function addEvent(null|FHIRCodeableConcept $event = null): self
     {
+        if (null === $event) {
+            $event = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
         $this->event[] = $event;
         return $this;
     }
@@ -374,9 +363,12 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $event
      * @return static
      */
-    public function setEvent(array $event = [])
+    public function setEvent(array $event = []): self
     {
-        $this->event = [];
+        if ([] !== $this->event) {
+            $this->_trackValuesRemoved(count($this->event));
+            $this->event = [];
+        }
         if ([] === $event) {
             return $this;
         }
@@ -391,38 +383,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The kind of facility where the patient was seen.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public function getFacilityType()
-    {
-        return $this->facilityType;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The kind of facility where the patient was seen.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $facilityType
-     * @return static
-     */
-    public function setFacilityType(FHIRCodeableConcept $facilityType = null)
-    {
-        $this->facilityType = $facilityType;
-        return $this;
-    }
-
-    /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -432,7 +392,7 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function getPeriod()
+    public function getPeriod(): null|FHIRPeriod
     {
         return $this->period;
     }
@@ -448,9 +408,49 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
      * @return static
      */
-    public function setPeriod(FHIRPeriod $period = null)
+    public function setPeriod(null|FHIRPeriod $period = null): self
     {
+        if (null === $period) {
+            $period = new FHIRPeriod();
+        }
+        $this->_trackValueSet($this->period, $period);
         $this->period = $period;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The kind of facility where the patient was seen.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    public function getFacilityType(): null|FHIRCodeableConcept
+    {
+        return $this->facilityType;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The kind of facility where the patient was seen.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $facilityType
+     * @return static
+     */
+    public function setFacilityType(null|FHIRCodeableConcept $facilityType = null): self
+    {
+        if (null === $facilityType) {
+            $facilityType = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->facilityType, $facilityType);
+        $this->facilityType = $facilityType;
         return $this;
     }
 
@@ -465,7 +465,7 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getPracticeSetting()
+    public function getPracticeSetting(): null|FHIRCodeableConcept
     {
         return $this->practiceSetting;
     }
@@ -482,59 +482,13 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $practiceSetting
      * @return static
      */
-    public function setPracticeSetting(FHIRCodeableConcept $practiceSetting = null)
+    public function setPracticeSetting(null|FHIRCodeableConcept $practiceSetting = null): self
     {
+        if (null === $practiceSetting) {
+            $practiceSetting = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->practiceSetting, $practiceSetting);
         $this->practiceSetting = $practiceSetting;
-        return $this;
-    }
-
-    /**
-     * A reference to a document.
-     *
-     * Related identifiers or resources associated with the DocumentReference.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceRelated[]
-     */
-    public function getRelated()
-    {
-        return $this->related;
-    }
-
-    /**
-     * A reference to a document.
-     *
-     * Related identifiers or resources associated with the DocumentReference.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceRelated $related
-     * @return static
-     */
-    public function addRelated(FHIRDocumentReferenceRelated $related = null)
-    {
-        $this->related[] = $related;
-        return $this;
-    }
-
-    /**
-     * A reference to a document.
-     *
-     * Related identifiers or resources associated with the DocumentReference.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceRelated[] $related
-     * @return static
-     */
-    public function setRelated(array $related = [])
-    {
-        $this->related = [];
-        if ([] === $related) {
-            return $this;
-        }
-        foreach($related as $v) {
-            if ($v instanceof FHIRDocumentReferenceRelated) {
-                $this->addRelated($v);
-            } else {
-                $this->addRelated(new FHIRDocumentReferenceRelated($v));
-            }
-        }
         return $this;
     }
 
@@ -548,7 +502,7 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getSourcePatientInfo()
+    public function getSourcePatientInfo(): null|FHIRReference
     {
         return $this->sourcePatientInfo;
     }
@@ -564,9 +518,70 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $sourcePatientInfo
      * @return static
      */
-    public function setSourcePatientInfo(FHIRReference $sourcePatientInfo = null)
+    public function setSourcePatientInfo(null|FHIRReference $sourcePatientInfo = null): self
     {
+        if (null === $sourcePatientInfo) {
+            $sourcePatientInfo = new FHIRReference();
+        }
+        $this->_trackValueSet($this->sourcePatientInfo, $sourcePatientInfo);
         $this->sourcePatientInfo = $sourcePatientInfo;
+        return $this;
+    }
+
+    /**
+     * A reference to a document.
+     *
+     * Related identifiers or resources associated with the DocumentReference.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceRelated[]
+     */
+    public function getRelated(): null|array
+    {
+        return $this->related;
+    }
+
+    /**
+     * A reference to a document.
+     *
+     * Related identifiers or resources associated with the DocumentReference.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceRelated $related
+     * @return static
+     */
+    public function addRelated(null|FHIRDocumentReferenceRelated $related = null): self
+    {
+        if (null === $related) {
+            $related = new FHIRDocumentReferenceRelated();
+        }
+        $this->_trackValueAdded();
+        $this->related[] = $related;
+        return $this;
+    }
+
+    /**
+     * A reference to a document.
+     *
+     * Related identifiers or resources associated with the DocumentReference.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceRelated[] $related
+     * @return static
+     */
+    public function setRelated(array $related = []): self
+    {
+        if ([] !== $this->related) {
+            $this->_trackValuesRemoved(count($this->related));
+            $this->related = [];
+        }
+        if ([] === $related) {
+            return $this;
+        }
+        foreach($related as $v) {
+            if ($v instanceof FHIRDocumentReferenceRelated) {
+                $this->addRelated($v);
+            } else {
+                $this->addRelated(new FHIRDocumentReferenceRelated($v));
+            }
+        }
         return $this;
     }
 
@@ -576,9 +591,9 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -587,7 +602,7 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
@@ -603,14 +618,14 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
                 }
             }
         }
-        if (null !== ($v = $this->getFacilityType())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_FACILITY_TYPE] = $fieldErrs;
-            }
-        }
         if (null !== ($v = $this->getPeriod())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_PERIOD] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getFacilityType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_FACILITY_TYPE] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getPracticeSetting())) {
@@ -618,16 +633,16 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
                 $errs[self::FIELD_PRACTICE_SETTING] = $fieldErrs;
             }
         }
+        if (null !== ($v = $this->getSourcePatientInfo())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SOURCE_PATIENT_INFO] = $fieldErrs;
+            }
+        }
         if ([] !== ($vs = $this->getRelated())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                     $errs[sprintf('%s.%d', self::FIELD_RELATED, $i)] = $fieldErrs;
                 }
-            }
-        }
-        if (null !== ($v = $this->getSourcePatientInfo())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_SOURCE_PATIENT_INFO] = $fieldErrs;
             }
         }
         if (isset($validationRules[self::FIELD_ENCOUNTER])) {
@@ -654,18 +669,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_FACILITY_TYPE])) {
-            $v = $this->getFacilityType();
-            foreach($validationRules[self::FIELD_FACILITY_TYPE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOCUMENT_REFERENCE_DOT_CONTEXT, self::FIELD_FACILITY_TYPE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_FACILITY_TYPE])) {
-                        $errs[self::FIELD_FACILITY_TYPE] = [];
-                    }
-                    $errs[self::FIELD_FACILITY_TYPE][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_PERIOD])) {
             $v = $this->getPeriod();
             foreach($validationRules[self::FIELD_PERIOD] as $rule => $constraint) {
@@ -675,6 +678,18 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
                         $errs[self::FIELD_PERIOD] = [];
                     }
                     $errs[self::FIELD_PERIOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_FACILITY_TYPE])) {
+            $v = $this->getFacilityType();
+            foreach($validationRules[self::FIELD_FACILITY_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOCUMENT_REFERENCE_DOT_CONTEXT, self::FIELD_FACILITY_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_FACILITY_TYPE])) {
+                        $errs[self::FIELD_FACILITY_TYPE] = [];
+                    }
+                    $errs[self::FIELD_FACILITY_TYPE][$rule] = $err;
                 }
             }
         }
@@ -690,18 +705,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_RELATED])) {
-            $v = $this->getRelated();
-            foreach($validationRules[self::FIELD_RELATED] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOCUMENT_REFERENCE_DOT_CONTEXT, self::FIELD_RELATED, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_RELATED])) {
-                        $errs[self::FIELD_RELATED] = [];
-                    }
-                    $errs[self::FIELD_RELATED][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_SOURCE_PATIENT_INFO])) {
             $v = $this->getSourcePatientInfo();
             foreach($validationRules[self::FIELD_SOURCE_PATIENT_INFO] as $rule => $constraint) {
@@ -711,6 +714,18 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
                         $errs[self::FIELD_SOURCE_PATIENT_INFO] = [];
                     }
                     $errs[self::FIELD_SOURCE_PATIENT_INFO][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RELATED])) {
+            $v = $this->getRelated();
+            foreach($validationRules[self::FIELD_RELATED] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOCUMENT_REFERENCE_DOT_CONTEXT, self::FIELD_RELATED, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RELATED])) {
+                        $errs[self::FIELD_RELATED] = [];
+                    }
+                    $errs[self::FIELD_RELATED][$rule] = $err;
                 }
             }
         }
@@ -754,168 +769,208 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceContext $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceContext
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRDocumentReferenceContext::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRDocumentReferenceContext::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRDocumentReferenceContext;
-        } elseif (!is_object($type) || !($type instanceof FHIRDocumentReferenceContext)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRDocumentReferenceContext)) {
             throw new \RuntimeException(sprintf(
-                'FHIRDocumentReferenceContext::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDocumentReference\FHIRDocumentReferenceContext or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_ENCOUNTER === $n->nodeName) {
+                $type->setEncounter(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_EVENT === $n->nodeName) {
+                $type->addEvent(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_PERIOD === $n->nodeName) {
+                $type->setPeriod(FHIRPeriod::xmlUnserialize($n));
+            } elseif (self::FIELD_FACILITY_TYPE === $n->nodeName) {
+                $type->setFacilityType(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_PRACTICE_SETTING === $n->nodeName) {
+                $type->setPracticeSetting(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_SOURCE_PATIENT_INFO === $n->nodeName) {
+                $type->setSourcePatientInfo(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_RELATED === $n->nodeName) {
+                $type->addRelated(FHIRDocumentReferenceRelated::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->encounter)) {
-            $type->setEncounter(FHIRReference::xmlUnserialize($children->encounter));
-        }
-        if (isset($children->event)) {
-            foreach($children->event as $child) {
-                $type->addEvent(FHIRCodeableConcept::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
-        }
-        if (isset($children->facilityType)) {
-            $type->setFacilityType(FHIRCodeableConcept::xmlUnserialize($children->facilityType));
-        }
-        if (isset($children->period)) {
-            $type->setPeriod(FHIRPeriod::xmlUnserialize($children->period));
-        }
-        if (isset($children->practiceSetting)) {
-            $type->setPracticeSetting(FHIRCodeableConcept::xmlUnserialize($children->practiceSetting));
-        }
-        if (isset($children->related)) {
-            foreach($children->related as $child) {
-                $type->addRelated(FHIRDocumentReferenceRelated::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->sourcePatientInfo)) {
-            $type->setSourcePatientInfo(FHIRReference::xmlUnserialize($children->sourcePatientInfo));
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('DocumentReferenceContext'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
         if (null !== ($v = $this->getEncounter())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ENCOUNTER, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_ENCOUNTER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getEvent())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_EVENT, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_EVENT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getFacilityType())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_FACILITY_TYPE, null, $v->_getFHIRXMLNamespace()));
-        }
         if (null !== ($v = $this->getPeriod())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PERIOD, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_PERIOD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getFacilityType())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_FACILITY_TYPE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getPracticeSetting())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PRACTICE_SETTING, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_PRACTICE_SETTING);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getSourcePatientInfo())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_SOURCE_PATIENT_INFO);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getRelated())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_RELATED, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_RELATED);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getSourcePatientInfo())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_SOURCE_PATIENT_INFO, null, $v->_getFHIRXMLNamespace()));
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
+        $out = parent::jsonSerialize();
         if (null !== ($v = $this->getEncounter())) {
-            $a[self::FIELD_ENCOUNTER] = $v;
+            $out->{self::FIELD_ENCOUNTER} = $v;
         }
         if ([] !== ($vs = $this->getEvent())) {
-            $a[self::FIELD_EVENT] = [];
+            $out->{self::FIELD_EVENT} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_EVENT][] = $v;
+                $out->{self::FIELD_EVENT}[] = $v;
             }
-        }
-        if (null !== ($v = $this->getFacilityType())) {
-            $a[self::FIELD_FACILITY_TYPE] = $v;
         }
         if (null !== ($v = $this->getPeriod())) {
-            $a[self::FIELD_PERIOD] = $v;
+            $out->{self::FIELD_PERIOD} = $v;
+        }
+        if (null !== ($v = $this->getFacilityType())) {
+            $out->{self::FIELD_FACILITY_TYPE} = $v;
         }
         if (null !== ($v = $this->getPracticeSetting())) {
-            $a[self::FIELD_PRACTICE_SETTING] = $v;
+            $out->{self::FIELD_PRACTICE_SETTING} = $v;
+        }
+        if (null !== ($v = $this->getSourcePatientInfo())) {
+            $out->{self::FIELD_SOURCE_PATIENT_INFO} = $v;
         }
         if ([] !== ($vs = $this->getRelated())) {
-            $a[self::FIELD_RELATED] = [];
+            $out->{self::FIELD_RELATED} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_RELATED][] = $v;
+                $out->{self::FIELD_RELATED}[] = $v;
             }
         }
-        if (null !== ($v = $this->getSourcePatientInfo())) {
-            $a[self::FIELD_SOURCE_PATIENT_INFO] = $v;
-        }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

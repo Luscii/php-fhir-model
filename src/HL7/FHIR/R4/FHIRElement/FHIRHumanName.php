@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,8 +64,11 @@ namespace HL7\FHIR\R4\FHIRElement;
 
 use HL7\FHIR\R4\FHIRElement;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A human's name with the ability to identify parts and usage.
@@ -79,6 +82,7 @@ class FHIRHumanName extends FHIRElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_HUMAN_NAME;
+
     const FIELD_USE = 'use';
     const FIELD_USE_EXT = '_use';
     const FIELD_TEXT = 'text';
@@ -93,9 +97,6 @@ class FHIRHumanName extends FHIRElement
     const FIELD_SUFFIX_EXT = '_suffix';
     const FIELD_PERIOD = 'period';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * The use of a human name.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -104,8 +105,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRNameUse
      */
-    protected ?FHIRNameUse $use = null;
-
+    protected null|FHIRNameUse $use = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -114,10 +114,9 @@ class FHIRHumanName extends FHIRElement
      * Specifies the entire name as it should be displayed e.g. on an application UI.
      * This may be provided instead of or as well as the specific parts.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $text = null;
-
+    protected null|FHIRString $text = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -126,10 +125,9 @@ class FHIRHumanName extends FHIRElement
      * The part of a name that links to the genealogy. In some cultures (e.g. Eritrea)
      * the family name of a son is the first name of his father.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $family = null;
-
+    protected null|FHIRString $family = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -137,10 +135,9 @@ class FHIRHumanName extends FHIRElement
      *
      * Given name.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $given = [];
-
+    protected null|array $given = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -149,10 +146,9 @@ class FHIRHumanName extends FHIRElement
      * Part of the name that is acquired as a title due to academic, legal, employment
      * or nobility status, etc. and that appears at the start of the name.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $prefix = [];
-
+    protected null|array $prefix = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -161,10 +157,9 @@ class FHIRHumanName extends FHIRElement
      * Part of the name that is acquired as a title due to academic, legal, employment
      * or nobility status, etc. and that appears at the end of the name.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $suffix = [];
-
+    protected null|array $suffix = [];
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -174,28 +169,23 @@ class FHIRHumanName extends FHIRElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $period = null;
+    protected null|FHIRPeriod $period = null;
 
     /**
      * Validation map for fields in type HumanName
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRHumanName Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRHumanName::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_USE]) || isset($data[self::FIELD_USE_EXT])) {
@@ -342,24 +332,13 @@ class FHIRHumanName extends FHIRElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<HumanName{$xmlns}></HumanName>";
     }
 
     /**
@@ -370,7 +349,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRNameUse
      */
-    public function getUse(): ?FHIRNameUse
+    public function getUse(): null|FHIRNameUse
     {
         return $this->use;
     }
@@ -384,8 +363,11 @@ class FHIRHumanName extends FHIRElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRNameUse $use
      * @return static
      */
-    public function setUse(?FHIRNameUse $use = null): object
+    public function setUse(null|FHIRNameUse $use = null): self
     {
+        if (null === $use) {
+            $use = new FHIRNameUse();
+        }
         $this->_trackValueSet($this->use, $use);
         $this->use = $use;
         return $this;
@@ -399,9 +381,9 @@ class FHIRHumanName extends FHIRElement
      * Specifies the entire name as it should be displayed e.g. on an application UI.
      * This may be provided instead of or as well as the specific parts.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getText(): ?FHIRString
+    public function getText(): null|FHIRString
     {
         return $this->text;
     }
@@ -414,10 +396,10 @@ class FHIRHumanName extends FHIRElement
      * Specifies the entire name as it should be displayed e.g. on an application UI.
      * This may be provided instead of or as well as the specific parts.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $text
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $text
      * @return static
      */
-    public function setText($text = null): object
+    public function setText(null|string|FHIRStringPrimitive|FHIRString $text = null): self
     {
         if (null !== $text && !($text instanceof FHIRString)) {
             $text = new FHIRString($text);
@@ -435,9 +417,9 @@ class FHIRHumanName extends FHIRElement
      * The part of a name that links to the genealogy. In some cultures (e.g. Eritrea)
      * the family name of a son is the first name of his father.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getFamily(): ?FHIRString
+    public function getFamily(): null|FHIRString
     {
         return $this->family;
     }
@@ -450,10 +432,10 @@ class FHIRHumanName extends FHIRElement
      * The part of a name that links to the genealogy. In some cultures (e.g. Eritrea)
      * the family name of a son is the first name of his father.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $family
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $family
      * @return static
      */
-    public function setFamily($family = null): object
+    public function setFamily(null|string|FHIRStringPrimitive|FHIRString $family = null): self
     {
         if (null !== $family && !($family instanceof FHIRString)) {
             $family = new FHIRString($family);
@@ -470,9 +452,9 @@ class FHIRHumanName extends FHIRElement
      *
      * Given name.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getGiven(): ?array
+    public function getGiven(): null|array
     {
         return $this->given;
     }
@@ -484,10 +466,10 @@ class FHIRHumanName extends FHIRElement
      *
      * Given name.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $given
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $given
      * @return static
      */
-    public function addGiven($given = null): object
+    public function addGiven(null|string|FHIRStringPrimitive|FHIRString $given = null): self
     {
         if (null !== $given && !($given instanceof FHIRString)) {
             $given = new FHIRString($given);
@@ -507,7 +489,7 @@ class FHIRHumanName extends FHIRElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $given
      * @return static
      */
-    public function setGiven(array $given = []): object
+    public function setGiven(array $given = []): self
     {
         if ([] !== $this->given) {
             $this->_trackValuesRemoved(count($this->given));
@@ -534,9 +516,9 @@ class FHIRHumanName extends FHIRElement
      * Part of the name that is acquired as a title due to academic, legal, employment
      * or nobility status, etc. and that appears at the start of the name.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getPrefix(): ?array
+    public function getPrefix(): null|array
     {
         return $this->prefix;
     }
@@ -549,10 +531,10 @@ class FHIRHumanName extends FHIRElement
      * Part of the name that is acquired as a title due to academic, legal, employment
      * or nobility status, etc. and that appears at the start of the name.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $prefix
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $prefix
      * @return static
      */
-    public function addPrefix($prefix = null): object
+    public function addPrefix(null|string|FHIRStringPrimitive|FHIRString $prefix = null): self
     {
         if (null !== $prefix && !($prefix instanceof FHIRString)) {
             $prefix = new FHIRString($prefix);
@@ -573,7 +555,7 @@ class FHIRHumanName extends FHIRElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $prefix
      * @return static
      */
-    public function setPrefix(array $prefix = []): object
+    public function setPrefix(array $prefix = []): self
     {
         if ([] !== $this->prefix) {
             $this->_trackValuesRemoved(count($this->prefix));
@@ -600,9 +582,9 @@ class FHIRHumanName extends FHIRElement
      * Part of the name that is acquired as a title due to academic, legal, employment
      * or nobility status, etc. and that appears at the end of the name.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getSuffix(): ?array
+    public function getSuffix(): null|array
     {
         return $this->suffix;
     }
@@ -615,10 +597,10 @@ class FHIRHumanName extends FHIRElement
      * Part of the name that is acquired as a title due to academic, legal, employment
      * or nobility status, etc. and that appears at the end of the name.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $suffix
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $suffix
      * @return static
      */
-    public function addSuffix($suffix = null): object
+    public function addSuffix(null|string|FHIRStringPrimitive|FHIRString $suffix = null): self
     {
         if (null !== $suffix && !($suffix instanceof FHIRString)) {
             $suffix = new FHIRString($suffix);
@@ -639,7 +621,7 @@ class FHIRHumanName extends FHIRElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $suffix
      * @return static
      */
-    public function setSuffix(array $suffix = []): object
+    public function setSuffix(array $suffix = []): self
     {
         if ([] !== $this->suffix) {
             $this->_trackValuesRemoved(count($this->suffix));
@@ -667,7 +649,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getPeriod(): ?FHIRPeriod
+    public function getPeriod(): null|FHIRPeriod
     {
         return $this->period;
     }
@@ -682,8 +664,11 @@ class FHIRHumanName extends FHIRElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $period
      * @return static
      */
-    public function setPeriod(?FHIRPeriod $period = null): object
+    public function setPeriod(null|FHIRPeriod $period = null): self
     {
+        if (null === $period) {
+            $period = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->period, $period);
         $this->period = $period;
         return $this;
@@ -697,7 +682,7 @@ class FHIRHumanName extends FHIRElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -865,36 +850,48 @@ class FHIRHumanName extends FHIRElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRHumanName::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRHumanName::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRHumanName(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRHumanName)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRHumanName)) {
             throw new \RuntimeException(sprintf(
-                'FHIRHumanName::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRHumanName or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -941,30 +938,15 @@ class FHIRHumanName extends FHIRElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_GIVEN);
         if (null !== $n) {
-            $pt = $type->getGiven();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addGiven($n->nodeValue);
-            }
+            $type->addGiven($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_PREFIX);
         if (null !== $n) {
-            $pt = $type->getPrefix();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addPrefix($n->nodeValue);
-            }
+            $type->addPrefix($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_SUFFIX);
         if (null !== $n) {
-            $pt = $type->getSuffix();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addSuffix($n->nodeValue);
-            }
+            $type->addSuffix($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -980,17 +962,25 @@ class FHIRHumanName extends FHIRElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('HumanName'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getUse())) {
@@ -1049,7 +1039,7 @@ class FHIRHumanName extends FHIRElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getUse())) {
@@ -1160,7 +1150,6 @@ class FHIRHumanName extends FHIRElement
 
         return $out;
     }
-
 
     /**
      * @return string

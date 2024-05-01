@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription;
  * 
  */
 
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAnnotation;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
@@ -71,9 +72,13 @@ use HL7\FHIR\R4\FHIRElement\FHIRInteger;
 use HL7\FHIR\R4\FHIRElement\FHIRQuantity;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRVisionEyes;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * An authorization for the provision of glasses and/or contact lenses to a
@@ -86,6 +91,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_LENS_SPECIFICATION;
+
     const FIELD_PRODUCT = 'product';
     const FIELD_EYE = 'eye';
     const FIELD_EYE_EXT = '_eye';
@@ -111,9 +117,6 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
     const FIELD_BRAND_EXT = '_brand';
     const FIELD_NOTE = 'note';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -125,8 +128,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $product = null;
-
+    protected null|FHIRCodeableConcept $product = null;
     /**
      * A coded concept listing the eye codes.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -135,8 +137,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRVisionEyes
      */
-    protected ?FHIRVisionEyes $eye = null;
-
+    protected null|FHIRVisionEyes $eye = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -145,10 +146,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Lens power measured in dioptres (0.25 units).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $sphere = null;
-
+    protected null|FHIRDecimal $sphere = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -157,10 +157,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for astigmatism measured in dioptres (0.25 units).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $cylinder = null;
-
+    protected null|FHIRDecimal $cylinder = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -168,10 +167,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Adjustment for astigmatism measured in integer degrees.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $axis = null;
-
+    protected null|FHIRInteger $axis = null;
     /**
      * An authorization for the provision of glasses and/or contact lenses to a
      * patient.
@@ -180,8 +178,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism[]
      */
-    protected ?array $prism = [];
-
+    protected null|array $prism = [];
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -190,10 +187,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for multifocal lenses measured in dioptres (0.25 units).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $add = null;
-
+    protected null|FHIRDecimal $add = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -202,10 +198,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens power measured in dioptres (0.25 units).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $power = null;
-
+    protected null|FHIRDecimal $power = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -214,10 +209,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Back curvature measured in millimetres.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $backCurve = null;
-
+    protected null|FHIRDecimal $backCurve = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -226,10 +220,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens diameter measured in millimetres.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $diameter = null;
-
+    protected null|FHIRDecimal $diameter = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -241,8 +234,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $duration = null;
-
+    protected null|FHIRQuantity $duration = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -250,10 +242,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Special color or pattern.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $color = null;
-
+    protected null|FHIRString $color = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -261,10 +252,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Brand recommendations or restrictions.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $brand = null;
-
+    protected null|FHIRString $brand = null;
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -275,28 +265,23 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    protected ?array $note = [];
+    protected null|array $note = [];
 
     /**
      * Validation map for fields in type VisionPrescription.LensSpecification
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRVisionPrescriptionLensSpecification Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRVisionPrescriptionLensSpecification::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_PRODUCT])) {
@@ -501,24 +486,13 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<VisionPrescriptionLensSpecification{$xmlns}></VisionPrescriptionLensSpecification>";
     }
 
     /**
@@ -532,7 +506,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getProduct(): ?FHIRCodeableConcept
+    public function getProduct(): null|FHIRCodeableConcept
     {
         return $this->product;
     }
@@ -549,8 +523,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $product
      * @return static
      */
-    public function setProduct(?FHIRCodeableConcept $product = null): object
+    public function setProduct(null|FHIRCodeableConcept $product = null): self
     {
+        if (null === $product) {
+            $product = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->product, $product);
         $this->product = $product;
         return $this;
@@ -564,7 +541,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRVisionEyes
      */
-    public function getEye(): ?FHIRVisionEyes
+    public function getEye(): null|FHIRVisionEyes
     {
         return $this->eye;
     }
@@ -578,8 +555,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRVisionEyes $eye
      * @return static
      */
-    public function setEye(?FHIRVisionEyes $eye = null): object
+    public function setEye(null|FHIRVisionEyes $eye = null): self
     {
+        if (null === $eye) {
+            $eye = new FHIRVisionEyes();
+        }
         $this->_trackValueSet($this->eye, $eye);
         $this->eye = $eye;
         return $this;
@@ -593,9 +573,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Lens power measured in dioptres (0.25 units).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getSphere(): ?FHIRDecimal
+    public function getSphere(): null|FHIRDecimal
     {
         return $this->sphere;
     }
@@ -608,10 +588,10 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Lens power measured in dioptres (0.25 units).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $sphere
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $sphere
      * @return static
      */
-    public function setSphere($sphere = null): object
+    public function setSphere(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $sphere = null): self
     {
         if (null !== $sphere && !($sphere instanceof FHIRDecimal)) {
             $sphere = new FHIRDecimal($sphere);
@@ -629,9 +609,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for astigmatism measured in dioptres (0.25 units).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getCylinder(): ?FHIRDecimal
+    public function getCylinder(): null|FHIRDecimal
     {
         return $this->cylinder;
     }
@@ -644,10 +624,10 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for astigmatism measured in dioptres (0.25 units).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $cylinder
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $cylinder
      * @return static
      */
-    public function setCylinder($cylinder = null): object
+    public function setCylinder(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $cylinder = null): self
     {
         if (null !== $cylinder && !($cylinder instanceof FHIRDecimal)) {
             $cylinder = new FHIRDecimal($cylinder);
@@ -664,9 +644,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Adjustment for astigmatism measured in integer degrees.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getAxis(): ?FHIRInteger
+    public function getAxis(): null|FHIRInteger
     {
         return $this->axis;
     }
@@ -678,10 +658,10 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Adjustment for astigmatism measured in integer degrees.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $axis
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $axis
      * @return static
      */
-    public function setAxis($axis = null): object
+    public function setAxis(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $axis = null): self
     {
         if (null !== $axis && !($axis instanceof FHIRInteger)) {
             $axis = new FHIRInteger($axis);
@@ -699,7 +679,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism[]
      */
-    public function getPrism(): ?array
+    public function getPrism(): null|array
     {
         return $this->prism;
     }
@@ -713,8 +693,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism $prism
      * @return static
      */
-    public function addPrism(?FHIRVisionPrescriptionPrism $prism = null): object
+    public function addPrism(null|FHIRVisionPrescriptionPrism $prism = null): self
     {
+        if (null === $prism) {
+            $prism = new FHIRVisionPrescriptionPrism();
+        }
         $this->_trackValueAdded();
         $this->prism[] = $prism;
         return $this;
@@ -729,7 +712,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism[] $prism
      * @return static
      */
-    public function setPrism(array $prism = []): object
+    public function setPrism(array $prism = []): self
     {
         if ([] !== $this->prism) {
             $this->_trackValuesRemoved(count($this->prism));
@@ -756,9 +739,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for multifocal lenses measured in dioptres (0.25 units).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getAdd(): ?FHIRDecimal
+    public function getAdd(): null|FHIRDecimal
     {
         return $this->add;
     }
@@ -771,10 +754,10 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for multifocal lenses measured in dioptres (0.25 units).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $add
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $add
      * @return static
      */
-    public function setAdd($add = null): object
+    public function setAdd(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $add = null): self
     {
         if (null !== $add && !($add instanceof FHIRDecimal)) {
             $add = new FHIRDecimal($add);
@@ -792,9 +775,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens power measured in dioptres (0.25 units).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getPower(): ?FHIRDecimal
+    public function getPower(): null|FHIRDecimal
     {
         return $this->power;
     }
@@ -807,10 +790,10 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens power measured in dioptres (0.25 units).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $power
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $power
      * @return static
      */
-    public function setPower($power = null): object
+    public function setPower(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $power = null): self
     {
         if (null !== $power && !($power instanceof FHIRDecimal)) {
             $power = new FHIRDecimal($power);
@@ -828,9 +811,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Back curvature measured in millimetres.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getBackCurve(): ?FHIRDecimal
+    public function getBackCurve(): null|FHIRDecimal
     {
         return $this->backCurve;
     }
@@ -843,10 +826,10 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Back curvature measured in millimetres.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $backCurve
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $backCurve
      * @return static
      */
-    public function setBackCurve($backCurve = null): object
+    public function setBackCurve(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $backCurve = null): self
     {
         if (null !== $backCurve && !($backCurve instanceof FHIRDecimal)) {
             $backCurve = new FHIRDecimal($backCurve);
@@ -864,9 +847,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens diameter measured in millimetres.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getDiameter(): ?FHIRDecimal
+    public function getDiameter(): null|FHIRDecimal
     {
         return $this->diameter;
     }
@@ -879,10 +862,10 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens diameter measured in millimetres.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $diameter
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $diameter
      * @return static
      */
-    public function setDiameter($diameter = null): object
+    public function setDiameter(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $diameter = null): self
     {
         if (null !== $diameter && !($diameter instanceof FHIRDecimal)) {
             $diameter = new FHIRDecimal($diameter);
@@ -903,7 +886,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getDuration(): ?FHIRQuantity
+    public function getDuration(): null|FHIRQuantity
     {
         return $this->duration;
     }
@@ -920,8 +903,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $duration
      * @return static
      */
-    public function setDuration(?FHIRQuantity $duration = null): object
+    public function setDuration(null|FHIRQuantity $duration = null): self
     {
+        if (null === $duration) {
+            $duration = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->duration, $duration);
         $this->duration = $duration;
         return $this;
@@ -934,9 +920,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Special color or pattern.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getColor(): ?FHIRString
+    public function getColor(): null|FHIRString
     {
         return $this->color;
     }
@@ -948,10 +934,10 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Special color or pattern.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $color
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $color
      * @return static
      */
-    public function setColor($color = null): object
+    public function setColor(null|string|FHIRStringPrimitive|FHIRString $color = null): self
     {
         if (null !== $color && !($color instanceof FHIRString)) {
             $color = new FHIRString($color);
@@ -968,9 +954,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Brand recommendations or restrictions.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getBrand(): ?FHIRString
+    public function getBrand(): null|FHIRString
     {
         return $this->brand;
     }
@@ -982,10 +968,10 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Brand recommendations or restrictions.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $brand
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $brand
      * @return static
      */
-    public function setBrand($brand = null): object
+    public function setBrand(null|string|FHIRStringPrimitive|FHIRString $brand = null): self
     {
         if (null !== $brand && !($brand instanceof FHIRString)) {
             $brand = new FHIRString($brand);
@@ -1005,7 +991,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    public function getNote(): ?array
+    public function getNote(): null|array
     {
         return $this->note;
     }
@@ -1021,8 +1007,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $note
      * @return static
      */
-    public function addNote(?FHIRAnnotation $note = null): object
+    public function addNote(null|FHIRAnnotation $note = null): self
     {
+        if (null === $note) {
+            $note = new FHIRAnnotation();
+        }
         $this->_trackValueAdded();
         $this->note[] = $note;
         return $this;
@@ -1039,7 +1028,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation[] $note
      * @return static
      */
-    public function setNote(array $note = []): object
+    public function setNote(array $note = []): self
     {
         if ([] !== $this->note) {
             $this->_trackValuesRemoved(count($this->note));
@@ -1066,7 +1055,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1363,36 +1352,48 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionLensSpecification $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionLensSpecification
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRVisionPrescriptionLensSpecification::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRVisionPrescriptionLensSpecification::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRVisionPrescriptionLensSpecification(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRVisionPrescriptionLensSpecification)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRVisionPrescriptionLensSpecification)) {
             throw new \RuntimeException(sprintf(
-                'FHIRVisionPrescriptionLensSpecification::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionLensSpecification or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1530,17 +1531,25 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('VisionPrescriptionLensSpecification'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getProduct())) {
@@ -1629,7 +1638,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getProduct())) {
@@ -1759,7 +1768,6 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

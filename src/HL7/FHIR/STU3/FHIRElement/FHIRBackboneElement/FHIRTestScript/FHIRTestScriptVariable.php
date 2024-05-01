@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,10 +63,16 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript;
  */
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRId;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRIdPrimitive;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A structured set of tests against a FHIR server implementation to determine
@@ -79,6 +85,9 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_TEST_SCRIPT_DOT_VARIABLE;
+
+    const FIELD_NAME = 'name';
+    const FIELD_NAME_EXT = '_name';
     const FIELD_DEFAULT_VALUE = 'defaultValue';
     const FIELD_DEFAULT_VALUE_EXT = '_defaultValue';
     const FIELD_DESCRIPTION = 'description';
@@ -89,16 +98,21 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
     const FIELD_HEADER_FIELD_EXT = '_headerField';
     const FIELD_HINT = 'hint';
     const FIELD_HINT_EXT = '_hint';
-    const FIELD_NAME = 'name';
-    const FIELD_NAME_EXT = '_name';
     const FIELD_PATH = 'path';
     const FIELD_PATH_EXT = '_path';
     const FIELD_SOURCE_ID = 'sourceId';
     const FIELD_SOURCE_ID_EXT = '_sourceId';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Descriptive name for this variable.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $name = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -108,8 +122,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $defaultValue = null;
-
+    protected null|FHIRString $defaultValue = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -119,8 +132,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $description = null;
-
+    protected null|FHIRString $description = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -132,8 +144,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $expression = null;
-
+    protected null|FHIRString $expression = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -144,8 +155,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $headerField = null;
-
+    protected null|FHIRString $headerField = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -156,19 +166,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $hint = null;
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Descriptive name for this variable.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $name = null;
-
+    protected null|FHIRString $hint = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -179,8 +177,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $path = null;
-
+    protected null|FHIRString $path = null;
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -194,156 +191,28 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRId
      */
-    protected $sourceId = null;
+    protected null|FHIRId $sourceId = null;
 
     /**
      * Validation map for fields in type TestScript.Variable
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRTestScriptVariable Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRTestScriptVariable::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_DEFAULT_VALUE]) || isset($data[self::FIELD_DEFAULT_VALUE_EXT])) {
-            if (isset($data[self::FIELD_DEFAULT_VALUE])) {
-                $value = $data[self::FIELD_DEFAULT_VALUE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_DEFAULT_VALUE_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_EXT])) {
-                $ext = $data[self::FIELD_DEFAULT_VALUE_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setDefaultValue($value);
-                } else if (is_array($value)) {
-                    $this->setDefaultValue(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setDefaultValue(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setDefaultValue(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
-            if (isset($data[self::FIELD_DESCRIPTION])) {
-                $value = $data[self::FIELD_DESCRIPTION];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) {
-                $ext = $data[self::FIELD_DESCRIPTION_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setDescription($value);
-                } else if (is_array($value)) {
-                    $this->setDescription(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setDescription(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setDescription(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_EXPRESSION]) || isset($data[self::FIELD_EXPRESSION_EXT])) {
-            if (isset($data[self::FIELD_EXPRESSION])) {
-                $value = $data[self::FIELD_EXPRESSION];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_EXPRESSION_EXT]) && is_array($data[self::FIELD_EXPRESSION_EXT])) {
-                $ext = $data[self::FIELD_EXPRESSION_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setExpression($value);
-                } else if (is_array($value)) {
-                    $this->setExpression(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setExpression(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setExpression(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_HEADER_FIELD]) || isset($data[self::FIELD_HEADER_FIELD_EXT])) {
-            if (isset($data[self::FIELD_HEADER_FIELD])) {
-                $value = $data[self::FIELD_HEADER_FIELD];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_HEADER_FIELD_EXT]) && is_array($data[self::FIELD_HEADER_FIELD_EXT])) {
-                $ext = $data[self::FIELD_HEADER_FIELD_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setHeaderField($value);
-                } else if (is_array($value)) {
-                    $this->setHeaderField(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setHeaderField(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setHeaderField(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_HINT]) || isset($data[self::FIELD_HINT_EXT])) {
-            if (isset($data[self::FIELD_HINT])) {
-                $value = $data[self::FIELD_HINT];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_HINT_EXT]) && is_array($data[self::FIELD_HINT_EXT])) {
-                $ext = $data[self::FIELD_HINT_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setHint($value);
-                } else if (is_array($value)) {
-                    $this->setHint(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setHint(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setHint(new FHIRString($ext));
-            }
-        }
         if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
-            if (isset($data[self::FIELD_NAME])) {
-                $value = $data[self::FIELD_NAME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) {
-                $ext = $data[self::FIELD_NAME_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_NAME] ?? null;
+            $ext = (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) ? $data[self::FIELD_NAME_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->setName($value);
@@ -352,21 +221,88 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
                 } else {
                     $this->setName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setName(new FHIRString($ext));
             }
         }
+        if (isset($data[self::FIELD_DEFAULT_VALUE]) || isset($data[self::FIELD_DEFAULT_VALUE_EXT])) {
+            $value = $data[self::FIELD_DEFAULT_VALUE] ?? null;
+            $ext = (isset($data[self::FIELD_DEFAULT_VALUE_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setDefaultValue($value);
+                } else if (is_array($value)) {
+                    $this->setDefaultValue(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setDefaultValue(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setDefaultValue(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
+            $value = $data[self::FIELD_DESCRIPTION] ?? null;
+            $ext = (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) ? $data[self::FIELD_DESCRIPTION_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setDescription($value);
+                } else if (is_array($value)) {
+                    $this->setDescription(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setDescription(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setDescription(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_EXPRESSION]) || isset($data[self::FIELD_EXPRESSION_EXT])) {
+            $value = $data[self::FIELD_EXPRESSION] ?? null;
+            $ext = (isset($data[self::FIELD_EXPRESSION_EXT]) && is_array($data[self::FIELD_EXPRESSION_EXT])) ? $data[self::FIELD_EXPRESSION_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setExpression($value);
+                } else if (is_array($value)) {
+                    $this->setExpression(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setExpression(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setExpression(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_HEADER_FIELD]) || isset($data[self::FIELD_HEADER_FIELD_EXT])) {
+            $value = $data[self::FIELD_HEADER_FIELD] ?? null;
+            $ext = (isset($data[self::FIELD_HEADER_FIELD_EXT]) && is_array($data[self::FIELD_HEADER_FIELD_EXT])) ? $data[self::FIELD_HEADER_FIELD_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setHeaderField($value);
+                } else if (is_array($value)) {
+                    $this->setHeaderField(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setHeaderField(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setHeaderField(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_HINT]) || isset($data[self::FIELD_HINT_EXT])) {
+            $value = $data[self::FIELD_HINT] ?? null;
+            $ext = (isset($data[self::FIELD_HINT_EXT]) && is_array($data[self::FIELD_HINT_EXT])) ? $data[self::FIELD_HINT_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setHint($value);
+                } else if (is_array($value)) {
+                    $this->setHint(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setHint(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setHint(new FHIRString($ext));
+            }
+        }
         if (isset($data[self::FIELD_PATH]) || isset($data[self::FIELD_PATH_EXT])) {
-            if (isset($data[self::FIELD_PATH])) {
-                $value = $data[self::FIELD_PATH];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_PATH_EXT]) && is_array($data[self::FIELD_PATH_EXT])) {
-                $ext = $data[self::FIELD_PATH_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_PATH] ?? null;
+            $ext = (isset($data[self::FIELD_PATH_EXT]) && is_array($data[self::FIELD_PATH_EXT])) ? $data[self::FIELD_PATH_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->setPath($value);
@@ -375,21 +311,13 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
                 } else {
                     $this->setPath(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setPath(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_SOURCE_ID]) || isset($data[self::FIELD_SOURCE_ID_EXT])) {
-            if (isset($data[self::FIELD_SOURCE_ID])) {
-                $value = $data[self::FIELD_SOURCE_ID];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_SOURCE_ID_EXT]) && is_array($data[self::FIELD_SOURCE_ID_EXT])) {
-                $ext = $data[self::FIELD_SOURCE_ID_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_SOURCE_ID] ?? null;
+            $ext = (isset($data[self::FIELD_SOURCE_ID_EXT]) && is_array($data[self::FIELD_SOURCE_ID_EXT])) ? $data[self::FIELD_SOURCE_ID_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRId) {
                     $this->setSourceId($value);
@@ -398,30 +326,53 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
                 } else {
                     $this->setSourceId(new FHIRId([FHIRId::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setSourceId(new FHIRId($ext));
             }
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * @return string
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Descriptive name for this variable.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function _getFHIRXMLElementDefinition()
+    public function getName(): null|FHIRString
     {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
+        return $this->name;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Descriptive name for this variable.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $name
+     * @return static
+     */
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
+    {
+        if (null !== $name && !($name instanceof FHIRString)) {
+            $name = new FHIRString($name);
         }
-        return "<TestScriptVariable{$xmlns}></TestScriptVariable>";
+        $this->_trackValueSet($this->name, $name);
+        $this->name = $name;
+        return $this;
     }
 
     /**
@@ -433,7 +384,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): null|FHIRString
     {
         return $this->defaultValue;
     }
@@ -445,20 +396,16 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * A default, hard-coded, or user-defined value for this variable.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $defaultValue
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $defaultValue
      * @return static
      */
-    public function setDefaultValue($defaultValue = null)
+    public function setDefaultValue(null|string|FHIRStringPrimitive|FHIRString $defaultValue = null): self
     {
-        if (null === $defaultValue) {
-            $this->defaultValue = null;
-            return $this;
+        if (null !== $defaultValue && !($defaultValue instanceof FHIRString)) {
+            $defaultValue = new FHIRString($defaultValue);
         }
-        if ($defaultValue instanceof FHIRString) {
-            $this->defaultValue = $defaultValue;
-            return $this;
-        }
-        $this->defaultValue = new FHIRString($defaultValue);
+        $this->_trackValueSet($this->defaultValue, $defaultValue);
+        $this->defaultValue = $defaultValue;
         return $this;
     }
 
@@ -471,7 +418,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getDescription()
+    public function getDescription(): null|FHIRString
     {
         return $this->description;
     }
@@ -483,20 +430,16 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * A free text natural language description of the variable and its purpose.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $description
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $description
      * @return static
      */
-    public function setDescription($description = null)
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null): self
     {
-        if (null === $description) {
-            $this->description = null;
-            return $this;
+        if (null !== $description && !($description instanceof FHIRString)) {
+            $description = new FHIRString($description);
         }
-        if ($description instanceof FHIRString) {
-            $this->description = $description;
-            return $this;
-        }
-        $this->description = new FHIRString($description);
+        $this->_trackValueSet($this->description, $description);
+        $this->description = $description;
         return $this;
     }
 
@@ -511,7 +454,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getExpression()
+    public function getExpression(): null|FHIRString
     {
         return $this->expression;
     }
@@ -525,20 +468,16 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      * are defined, only one of either expression, headerField or path must be
      * specified.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $expression
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $expression
      * @return static
      */
-    public function setExpression($expression = null)
+    public function setExpression(null|string|FHIRStringPrimitive|FHIRString $expression = null): self
     {
-        if (null === $expression) {
-            $this->expression = null;
-            return $this;
+        if (null !== $expression && !($expression instanceof FHIRString)) {
+            $expression = new FHIRString($expression);
         }
-        if ($expression instanceof FHIRString) {
-            $this->expression = $expression;
-            return $this;
-        }
-        $this->expression = new FHIRString($expression);
+        $this->_trackValueSet($this->expression, $expression);
+        $this->expression = $expression;
         return $this;
     }
 
@@ -552,7 +491,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getHeaderField()
+    public function getHeaderField(): null|FHIRString
     {
         return $this->headerField;
     }
@@ -565,20 +504,16 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      * Will be used to grab the HTTP header field value from the headers that sourceId
      * is pointing to.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $headerField
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $headerField
      * @return static
      */
-    public function setHeaderField($headerField = null)
+    public function setHeaderField(null|string|FHIRStringPrimitive|FHIRString $headerField = null): self
     {
-        if (null === $headerField) {
-            $this->headerField = null;
-            return $this;
+        if (null !== $headerField && !($headerField instanceof FHIRString)) {
+            $headerField = new FHIRString($headerField);
         }
-        if ($headerField instanceof FHIRString) {
-            $this->headerField = $headerField;
-            return $this;
-        }
-        $this->headerField = new FHIRString($headerField);
+        $this->_trackValueSet($this->headerField, $headerField);
+        $this->headerField = $headerField;
         return $this;
     }
 
@@ -592,7 +527,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getHint()
+    public function getHint(): null|FHIRString
     {
         return $this->hint;
     }
@@ -605,58 +540,16 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      * Displayable text string with hint help information to the user when entering a
      * default value.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $hint
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $hint
      * @return static
      */
-    public function setHint($hint = null)
+    public function setHint(null|string|FHIRStringPrimitive|FHIRString $hint = null): self
     {
-        if (null === $hint) {
-            $this->hint = null;
-            return $this;
+        if (null !== $hint && !($hint instanceof FHIRString)) {
+            $hint = new FHIRString($hint);
         }
-        if ($hint instanceof FHIRString) {
-            $this->hint = $hint;
-            return $this;
-        }
-        $this->hint = new FHIRString($hint);
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Descriptive name for this variable.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Descriptive name for this variable.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $name
-     * @return static
-     */
-    public function setName($name = null)
-    {
-        if (null === $name) {
-            $this->name = null;
-            return $this;
-        }
-        if ($name instanceof FHIRString) {
-            $this->name = $name;
-            return $this;
-        }
-        $this->name = new FHIRString($name);
+        $this->_trackValueSet($this->hint, $hint);
+        $this->hint = $hint;
         return $this;
     }
 
@@ -670,7 +563,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getPath()
+    public function getPath(): null|FHIRString
     {
         return $this->path;
     }
@@ -683,20 +576,16 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      * XPath or JSONPath to evaluate against the fixture body. When variables are
      * defined, only one of either expression, headerField or path must be specified.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $path
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $path
      * @return static
      */
-    public function setPath($path = null)
+    public function setPath(null|string|FHIRStringPrimitive|FHIRString $path = null): self
     {
-        if (null === $path) {
-            $this->path = null;
-            return $this;
+        if (null !== $path && !($path instanceof FHIRString)) {
+            $path = new FHIRString($path);
         }
-        if ($path instanceof FHIRString) {
-            $this->path = $path;
-            return $this;
-        }
-        $this->path = new FHIRString($path);
+        $this->_trackValueSet($this->path, $path);
+        $this->path = $path;
         return $this;
     }
 
@@ -713,7 +602,7 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRId
      */
-    public function getSourceId()
+    public function getSourceId(): null|FHIRId
     {
         return $this->sourceId;
     }
@@ -729,20 +618,16 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      * Fixture to evaluate the XPath/JSONPath expression or the headerField against
      * within this variable.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRId $sourceId
+     * @param null|string|\HL7\FHIR\STU3\FHIRIdPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRId $sourceId
      * @return static
      */
-    public function setSourceId($sourceId = null)
+    public function setSourceId(null|string|FHIRIdPrimitive|FHIRId $sourceId = null): self
     {
-        if (null === $sourceId) {
-            $this->sourceId = null;
-            return $this;
+        if (null !== $sourceId && !($sourceId instanceof FHIRId)) {
+            $sourceId = new FHIRId($sourceId);
         }
-        if ($sourceId instanceof FHIRId) {
-            $this->sourceId = $sourceId;
-            return $this;
-        }
-        $this->sourceId = new FHIRId($sourceId);
+        $this->_trackValueSet($this->sourceId, $sourceId);
+        $this->sourceId = $sourceId;
         return $this;
     }
 
@@ -752,9 +637,9 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -763,10 +648,15 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getName())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_NAME] = $fieldErrs;
+            }
+        }
         if (null !== ($v = $this->getDefaultValue())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_DEFAULT_VALUE] = $fieldErrs;
@@ -792,11 +682,6 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
                 $errs[self::FIELD_HINT] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getName())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_NAME] = $fieldErrs;
-            }
-        }
         if (null !== ($v = $this->getPath())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_PATH] = $fieldErrs;
@@ -805,6 +690,18 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
         if (null !== ($v = $this->getSourceId())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_SOURCE_ID] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_NAME])) {
+            $v = $this->getName();
+            foreach($validationRules[self::FIELD_NAME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_TEST_SCRIPT_DOT_VARIABLE, self::FIELD_NAME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NAME])) {
+                        $errs[self::FIELD_NAME] = [];
+                    }
+                    $errs[self::FIELD_NAME][$rule] = $err;
+                }
             }
         }
         if (isset($validationRules[self::FIELD_DEFAULT_VALUE])) {
@@ -864,18 +761,6 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
                         $errs[self::FIELD_HINT] = [];
                     }
                     $errs[self::FIELD_HINT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_NAME])) {
-            $v = $this->getName();
-            foreach($validationRules[self::FIELD_NAME] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_TEST_SCRIPT_DOT_VARIABLE, self::FIELD_NAME, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_NAME])) {
-                        $errs[self::FIELD_NAME] = [];
-                    }
-                    $errs[self::FIELD_NAME][$rule] = $err;
                 }
             }
         }
@@ -943,263 +828,324 @@ class FHIRTestScriptVariable extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptVariable $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptVariable
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRTestScriptVariable::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRTestScriptVariable::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRTestScriptVariable;
-        } elseif (!is_object($type) || !($type instanceof FHIRTestScriptVariable)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRTestScriptVariable)) {
             throw new \RuntimeException(sprintf(
-                'FHIRTestScriptVariable::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptVariable or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_NAME === $n->nodeName) {
+                $type->setName(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_DEFAULT_VALUE === $n->nodeName) {
+                $type->setDefaultValue(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_DESCRIPTION === $n->nodeName) {
+                $type->setDescription(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_EXPRESSION === $n->nodeName) {
+                $type->setExpression(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_HEADER_FIELD === $n->nodeName) {
+                $type->setHeaderField(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_HINT === $n->nodeName) {
+                $type->setHint(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_PATH === $n->nodeName) {
+                $type->setPath(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_SOURCE_ID === $n->nodeName) {
+                $type->setSourceId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->defaultValue)) {
-            $type->setDefaultValue(FHIRString::xmlUnserialize($children->defaultValue));
-        }
-        if (isset($attributes->defaultValue)) {
-            $pt = $type->getDefaultValue();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->defaultValue);
-            } else {
-                $type->setDefaultValue((string)$attributes->defaultValue);
-            }
-        }
-        if (isset($children->description)) {
-            $type->setDescription(FHIRString::xmlUnserialize($children->description));
-        }
-        if (isset($attributes->description)) {
-            $pt = $type->getDescription();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->description);
-            } else {
-                $type->setDescription((string)$attributes->description);
-            }
-        }
-        if (isset($children->expression)) {
-            $type->setExpression(FHIRString::xmlUnserialize($children->expression));
-        }
-        if (isset($attributes->expression)) {
-            $pt = $type->getExpression();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->expression);
-            } else {
-                $type->setExpression((string)$attributes->expression);
-            }
-        }
-        if (isset($children->headerField)) {
-            $type->setHeaderField(FHIRString::xmlUnserialize($children->headerField));
-        }
-        if (isset($attributes->headerField)) {
-            $pt = $type->getHeaderField();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->headerField);
-            } else {
-                $type->setHeaderField((string)$attributes->headerField);
-            }
-        }
-        if (isset($children->hint)) {
-            $type->setHint(FHIRString::xmlUnserialize($children->hint));
-        }
-        if (isset($attributes->hint)) {
-            $pt = $type->getHint();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->hint);
-            } else {
-                $type->setHint((string)$attributes->hint);
-            }
-        }
-        if (isset($children->name)) {
-            $type->setName(FHIRString::xmlUnserialize($children->name));
-        }
-        if (isset($attributes->name)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_NAME);
+        if (null !== $n) {
             $pt = $type->getName();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->name);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setName((string)$attributes->name);
+                $type->setName($n->nodeValue);
             }
         }
-        if (isset($children->path)) {
-            $type->setPath(FHIRString::xmlUnserialize($children->path));
+        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE);
+        if (null !== $n) {
+            $pt = $type->getDefaultValue();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setDefaultValue($n->nodeValue);
+            }
         }
-        if (isset($attributes->path)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_DESCRIPTION);
+        if (null !== $n) {
+            $pt = $type->getDescription();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setDescription($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_EXPRESSION);
+        if (null !== $n) {
+            $pt = $type->getExpression();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setExpression($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_HEADER_FIELD);
+        if (null !== $n) {
+            $pt = $type->getHeaderField();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setHeaderField($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_HINT);
+        if (null !== $n) {
+            $pt = $type->getHint();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setHint($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_PATH);
+        if (null !== $n) {
             $pt = $type->getPath();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->path);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setPath((string)$attributes->path);
+                $type->setPath($n->nodeValue);
             }
         }
-        if (isset($children->sourceId)) {
-            $type->setSourceId(FHIRId::xmlUnserialize($children->sourceId));
-        }
-        if (isset($attributes->sourceId)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_SOURCE_ID);
+        if (null !== $n) {
             $pt = $type->getSourceId();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->sourceId);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setSourceId((string)$attributes->sourceId);
+                $type->setSourceId($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('TestScriptVariable'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getName())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_NAME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if (null !== ($v = $this->getDefaultValue())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_DEFAULT_VALUE, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getDescription())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_DESCRIPTION, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_DESCRIPTION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getExpression())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_EXPRESSION, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_EXPRESSION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getHeaderField())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_HEADER_FIELD, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_HEADER_FIELD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getHint())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_HINT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getName())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_NAME, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_HINT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getPath())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PATH, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_PATH);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getSourceId())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_SOURCE_ID, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_SOURCE_ID);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getName())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_NAME} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_NAME_EXT} = $ext;
+            }
+        }
         if (null !== ($v = $this->getDefaultValue())) {
-            $a[self::FIELD_DEFAULT_VALUE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_DEFAULT_VALUE_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DEFAULT_VALUE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DEFAULT_VALUE_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getDescription())) {
-            $a[self::FIELD_DESCRIPTION] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_DESCRIPTION_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DESCRIPTION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DESCRIPTION_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getExpression())) {
-            $a[self::FIELD_EXPRESSION] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_EXPRESSION_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_EXPRESSION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_EXPRESSION_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getHeaderField())) {
-            $a[self::FIELD_HEADER_FIELD] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_HEADER_FIELD_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_HEADER_FIELD} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_HEADER_FIELD_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getHint())) {
-            $a[self::FIELD_HINT] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_HINT_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_HINT} = $val;
             }
-        }
-        if (null !== ($v = $this->getName())) {
-            $a[self::FIELD_NAME] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_NAME_EXT] = $enc;
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_HINT_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getPath())) {
-            $a[self::FIELD_PATH] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_PATH_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_PATH} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_PATH_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getSourceId())) {
-            $a[self::FIELD_SOURCE_ID] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRId::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRId::FIELD_VALUE]);
-                $a[self::FIELD_SOURCE_ID_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_SOURCE_ID} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRId::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_SOURCE_ID_EXT} = $ext;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

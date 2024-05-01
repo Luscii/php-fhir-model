@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservation;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservation;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
@@ -75,9 +77,14 @@ use HL7\FHIR\R4\FHIRElement\FHIRRatio;
 use HL7\FHIR\R4\FHIRElement\FHIRSampledData;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRTime;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRTimePrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Measurements and simple assertions made about a patient, device or other
@@ -90,6 +97,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_OBSERVATION_DOT_COMPONENT;
+
     const FIELD_CODE = 'code';
     const FIELD_VALUE_QUANTITY = 'valueQuantity';
     const FIELD_VALUE_CODEABLE_CONCEPT = 'valueCodeableConcept';
@@ -111,9 +119,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
     const FIELD_INTERPRETATION = 'interpretation';
     const FIELD_REFERENCE_RANGE = 'referenceRange';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -124,8 +129,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $code = null;
-
+    protected null|FHIRCodeableConcept $code = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -138,8 +142,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $valueQuantity = null;
-
+    protected null|FHIRQuantity $valueQuantity = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -151,8 +154,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $valueCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $valueCodeableConcept = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -161,10 +163,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $valueString = null;
-
+    protected null|FHIRString $valueString = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -172,10 +173,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $valueBoolean = null;
-
+    protected null|FHIRBoolean $valueBoolean = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -184,10 +184,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $valueInteger = null;
-
+    protected null|FHIRInteger $valueInteger = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -198,8 +197,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $valueRange = null;
-
+    protected null|FHIRRange $valueRange = null;
     /**
      * A relationship of two Quantity values - expressed as a numerator and a
      * denominator.
@@ -211,8 +209,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    protected ?FHIRRatio $valueRatio = null;
-
+    protected null|FHIRRatio $valueRatio = null;
     /**
      * A series of measurements taken by a device, with upper and lower limits. There
      * may be more than one dimension in the data.
@@ -224,8 +221,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    protected ?FHIRSampledData $valueSampledData = null;
-
+    protected null|FHIRSampledData $valueSampledData = null;
     /**
      * A time during the day, with no date specified
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -233,10 +229,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    protected ?FHIRTime $valueTime = null;
-
+    protected null|FHIRTime $valueTime = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -248,10 +243,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $valueDateTime = null;
-
+    protected null|FHIRDateTime $valueDateTime = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -262,8 +256,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $valuePeriod = null;
-
+    protected null|FHIRPeriod $valuePeriod = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -275,8 +268,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $dataAbsentReason = null;
-
+    protected null|FHIRCodeableConcept $dataAbsentReason = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -288,8 +280,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $interpretation = [];
-
+    protected null|array $interpretation = [];
     /**
      * Measurements and simple assertions made about a patient, device or other
      * subject.
@@ -299,28 +290,23 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservation\FHIRObservationReferenceRange[]
      */
-    protected ?array $referenceRange = [];
+    protected null|array $referenceRange = [];
 
     /**
      * Validation map for fields in type Observation.Component
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRObservationComponent Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRObservationComponent::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_CODE])) {
@@ -492,24 +478,13 @@ class FHIRObservationComponent extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ObservationComponent{$xmlns}></ObservationComponent>";
     }
 
     /**
@@ -522,7 +497,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getCode(): ?FHIRCodeableConcept
+    public function getCode(): null|FHIRCodeableConcept
     {
         return $this->code;
     }
@@ -538,8 +513,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $code
      * @return static
      */
-    public function setCode(?FHIRCodeableConcept $code = null): object
+    public function setCode(null|FHIRCodeableConcept $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->code, $code);
         $this->code = $code;
         return $this;
@@ -557,7 +535,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getValueQuantity(): ?FHIRQuantity
+    public function getValueQuantity(): null|FHIRQuantity
     {
         return $this->valueQuantity;
     }
@@ -575,8 +553,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $valueQuantity
      * @return static
      */
-    public function setValueQuantity(?FHIRQuantity $valueQuantity = null): object
+    public function setValueQuantity(null|FHIRQuantity $valueQuantity = null): self
     {
+        if (null === $valueQuantity) {
+            $valueQuantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->valueQuantity, $valueQuantity);
         $this->valueQuantity = $valueQuantity;
         return $this;
@@ -593,7 +574,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getValueCodeableConcept(): ?FHIRCodeableConcept
+    public function getValueCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->valueCodeableConcept;
     }
@@ -610,8 +591,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $valueCodeableConcept
      * @return static
      */
-    public function setValueCodeableConcept(?FHIRCodeableConcept $valueCodeableConcept = null): object
+    public function setValueCodeableConcept(null|FHIRCodeableConcept $valueCodeableConcept = null): self
     {
+        if (null === $valueCodeableConcept) {
+            $valueCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->valueCodeableConcept, $valueCodeableConcept);
         $this->valueCodeableConcept = $valueCodeableConcept;
         return $this;
@@ -625,9 +609,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getValueString(): ?FHIRString
+    public function getValueString(): null|FHIRString
     {
         return $this->valueString;
     }
@@ -640,10 +624,10 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $valueString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $valueString
      * @return static
      */
-    public function setValueString($valueString = null): object
+    public function setValueString(null|string|FHIRStringPrimitive|FHIRString $valueString = null): self
     {
         if (null !== $valueString && !($valueString instanceof FHIRString)) {
             $valueString = new FHIRString($valueString);
@@ -660,9 +644,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getValueBoolean(): ?FHIRBoolean
+    public function getValueBoolean(): null|FHIRBoolean
     {
         return $this->valueBoolean;
     }
@@ -674,10 +658,10 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $valueBoolean
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $valueBoolean
      * @return static
      */
-    public function setValueBoolean($valueBoolean = null): object
+    public function setValueBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $valueBoolean = null): self
     {
         if (null !== $valueBoolean && !($valueBoolean instanceof FHIRBoolean)) {
             $valueBoolean = new FHIRBoolean($valueBoolean);
@@ -695,9 +679,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getValueInteger(): ?FHIRInteger
+    public function getValueInteger(): null|FHIRInteger
     {
         return $this->valueInteger;
     }
@@ -710,10 +694,10 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $valueInteger
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $valueInteger
      * @return static
      */
-    public function setValueInteger($valueInteger = null): object
+    public function setValueInteger(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $valueInteger = null): self
     {
         if (null !== $valueInteger && !($valueInteger instanceof FHIRInteger)) {
             $valueInteger = new FHIRInteger($valueInteger);
@@ -733,7 +717,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getValueRange(): ?FHIRRange
+    public function getValueRange(): null|FHIRRange
     {
         return $this->valueRange;
     }
@@ -749,8 +733,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $valueRange
      * @return static
      */
-    public function setValueRange(?FHIRRange $valueRange = null): object
+    public function setValueRange(null|FHIRRange $valueRange = null): self
     {
+        if (null === $valueRange) {
+            $valueRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->valueRange, $valueRange);
         $this->valueRange = $valueRange;
         return $this;
@@ -767,7 +754,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    public function getValueRatio(): ?FHIRRatio
+    public function getValueRatio(): null|FHIRRatio
     {
         return $this->valueRatio;
     }
@@ -784,8 +771,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRatio $valueRatio
      * @return static
      */
-    public function setValueRatio(?FHIRRatio $valueRatio = null): object
+    public function setValueRatio(null|FHIRRatio $valueRatio = null): self
     {
+        if (null === $valueRatio) {
+            $valueRatio = new FHIRRatio();
+        }
         $this->_trackValueSet($this->valueRatio, $valueRatio);
         $this->valueRatio = $valueRatio;
         return $this;
@@ -802,7 +792,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    public function getValueSampledData(): ?FHIRSampledData
+    public function getValueSampledData(): null|FHIRSampledData
     {
         return $this->valueSampledData;
     }
@@ -819,8 +809,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData $valueSampledData
      * @return static
      */
-    public function setValueSampledData(?FHIRSampledData $valueSampledData = null): object
+    public function setValueSampledData(null|FHIRSampledData $valueSampledData = null): self
     {
+        if (null === $valueSampledData) {
+            $valueSampledData = new FHIRSampledData();
+        }
         $this->_trackValueSet($this->valueSampledData, $valueSampledData);
         $this->valueSampledData = $valueSampledData;
         return $this;
@@ -833,9 +826,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    public function getValueTime(): ?FHIRTime
+    public function getValueTime(): null|FHIRTime
     {
         return $this->valueTime;
     }
@@ -847,10 +840,10 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $valueTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $valueTime
      * @return static
      */
-    public function setValueTime($valueTime = null): object
+    public function setValueTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $valueTime = null): self
     {
         if (null !== $valueTime && !($valueTime instanceof FHIRTime)) {
             $valueTime = new FHIRTime($valueTime);
@@ -871,9 +864,9 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getValueDateTime(): ?FHIRDateTime
+    public function getValueDateTime(): null|FHIRDateTime
     {
         return $this->valueDateTime;
     }
@@ -889,10 +882,10 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * The information determined as a result of making the observation, if the
      * information has a simple value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $valueDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $valueDateTime
      * @return static
      */
-    public function setValueDateTime($valueDateTime = null): object
+    public function setValueDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $valueDateTime = null): self
     {
         if (null !== $valueDateTime && !($valueDateTime instanceof FHIRDateTime)) {
             $valueDateTime = new FHIRDateTime($valueDateTime);
@@ -912,7 +905,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getValuePeriod(): ?FHIRPeriod
+    public function getValuePeriod(): null|FHIRPeriod
     {
         return $this->valuePeriod;
     }
@@ -928,8 +921,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $valuePeriod
      * @return static
      */
-    public function setValuePeriod(?FHIRPeriod $valuePeriod = null): object
+    public function setValuePeriod(null|FHIRPeriod $valuePeriod = null): self
     {
+        if (null === $valuePeriod) {
+            $valuePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->valuePeriod, $valuePeriod);
         $this->valuePeriod = $valuePeriod;
         return $this;
@@ -946,7 +942,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getDataAbsentReason(): ?FHIRCodeableConcept
+    public function getDataAbsentReason(): null|FHIRCodeableConcept
     {
         return $this->dataAbsentReason;
     }
@@ -963,8 +959,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $dataAbsentReason
      * @return static
      */
-    public function setDataAbsentReason(?FHIRCodeableConcept $dataAbsentReason = null): object
+    public function setDataAbsentReason(null|FHIRCodeableConcept $dataAbsentReason = null): self
     {
+        if (null === $dataAbsentReason) {
+            $dataAbsentReason = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->dataAbsentReason, $dataAbsentReason);
         $this->dataAbsentReason = $dataAbsentReason;
         return $this;
@@ -981,7 +980,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getInterpretation(): ?array
+    public function getInterpretation(): null|array
     {
         return $this->interpretation;
     }
@@ -998,8 +997,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $interpretation
      * @return static
      */
-    public function addInterpretation(?FHIRCodeableConcept $interpretation = null): object
+    public function addInterpretation(null|FHIRCodeableConcept $interpretation = null): self
     {
+        if (null === $interpretation) {
+            $interpretation = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->interpretation[] = $interpretation;
         return $this;
@@ -1017,7 +1019,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $interpretation
      * @return static
      */
-    public function setInterpretation(array $interpretation = []): object
+    public function setInterpretation(array $interpretation = []): self
     {
         if ([] !== $this->interpretation) {
             $this->_trackValuesRemoved(count($this->interpretation));
@@ -1045,7 +1047,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservation\FHIRObservationReferenceRange[]
      */
-    public function getReferenceRange(): ?array
+    public function getReferenceRange(): null|array
     {
         return $this->referenceRange;
     }
@@ -1060,8 +1062,11 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservation\FHIRObservationReferenceRange $referenceRange
      * @return static
      */
-    public function addReferenceRange(?FHIRObservationReferenceRange $referenceRange = null): object
+    public function addReferenceRange(null|FHIRObservationReferenceRange $referenceRange = null): self
     {
+        if (null === $referenceRange) {
+            $referenceRange = new FHIRObservationReferenceRange();
+        }
         $this->_trackValueAdded();
         $this->referenceRange[] = $referenceRange;
         return $this;
@@ -1077,7 +1082,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservation\FHIRObservationReferenceRange[] $referenceRange
      * @return static
      */
-    public function setReferenceRange(array $referenceRange = []): object
+    public function setReferenceRange(array $referenceRange = []): self
     {
         if ([] !== $this->referenceRange) {
             $this->_trackValuesRemoved(count($this->referenceRange));
@@ -1104,7 +1109,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1418,36 +1423,48 @@ class FHIRObservationComponent extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservation\FHIRObservationComponent $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservation\FHIRObservationComponent
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRObservationComponent::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRObservationComponent::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRObservationComponent(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRObservationComponent)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRObservationComponent)) {
             throw new \RuntimeException(sprintf(
-                'FHIRObservationComponent::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservation\FHIRObservationComponent or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1551,17 +1568,25 @@ class FHIRObservationComponent extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ObservationComponent'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getCode())) {
@@ -1655,7 +1680,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getCode())) {
@@ -1753,7 +1778,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

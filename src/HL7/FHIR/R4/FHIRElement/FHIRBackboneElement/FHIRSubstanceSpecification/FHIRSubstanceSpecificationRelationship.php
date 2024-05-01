@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
@@ -72,8 +73,11 @@ use HL7\FHIR\R4\FHIRElement\FHIRRatio;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The detailed description of a substance, typically at a level beyond what is
@@ -86,6 +90,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SUBSTANCE_SPECIFICATION_DOT_RELATIONSHIP;
+
     const FIELD_SUBSTANCE_REFERENCE = 'substanceReference';
     const FIELD_SUBSTANCE_CODEABLE_CONCEPT = 'substanceCodeableConcept';
     const FIELD_RELATIONSHIP = 'relationship';
@@ -100,9 +105,6 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
     const FIELD_AMOUNT_TYPE = 'amountType';
     const FIELD_SOURCE = 'source';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -112,8 +114,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $substanceReference = null;
-
+    protected null|FHIRReference $substanceReference = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -124,8 +125,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $substanceCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $substanceCodeableConcept = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -136,8 +136,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $relationship = null;
-
+    protected null|FHIRCodeableConcept $relationship = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -146,10 +145,9 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * a defining relationship for that enzyme, out of several possible substance
      * relationships.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $isDefining = null;
-
+    protected null|FHIRBoolean $isDefining = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -163,8 +161,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $amountQuantity = null;
-
+    protected null|FHIRQuantity $amountQuantity = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -176,8 +173,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $amountRange = null;
-
+    protected null|FHIRRange $amountRange = null;
     /**
      * A relationship of two Quantity values - expressed as a numerator and a
      * denominator.
@@ -190,8 +186,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    protected ?FHIRRatio $amountRatio = null;
-
+    protected null|FHIRRatio $amountRatio = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -201,10 +196,9 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * a substance has some percentage of the active substance in relation to some
      * other.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $amountString = null;
-
+    protected null|FHIRString $amountString = null;
     /**
      * A relationship of two Quantity values - expressed as a numerator and a
      * denominator.
@@ -215,8 +209,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    protected ?FHIRRatio $amountRatioLowLimit = null;
-
+    protected null|FHIRRatio $amountRatioLowLimit = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -227,8 +220,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $amountType = null;
-
+    protected null|FHIRCodeableConcept $amountType = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -238,28 +230,23 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $source = [];
+    protected null|array $source = [];
 
     /**
      * Validation map for fields in type SubstanceSpecification.Relationship
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRSubstanceSpecificationRelationship Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRSubstanceSpecificationRelationship::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_SUBSTANCE_REFERENCE])) {
@@ -368,24 +355,13 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<SubstanceSpecificationRelationship{$xmlns}></SubstanceSpecificationRelationship>";
     }
 
     /**
@@ -397,7 +373,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubstanceReference(): ?FHIRReference
+    public function getSubstanceReference(): null|FHIRReference
     {
         return $this->substanceReference;
     }
@@ -412,8 +388,11 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $substanceReference
      * @return static
      */
-    public function setSubstanceReference(?FHIRReference $substanceReference = null): object
+    public function setSubstanceReference(null|FHIRReference $substanceReference = null): self
     {
+        if (null === $substanceReference) {
+            $substanceReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->substanceReference, $substanceReference);
         $this->substanceReference = $substanceReference;
         return $this;
@@ -429,7 +408,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getSubstanceCodeableConcept(): ?FHIRCodeableConcept
+    public function getSubstanceCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->substanceCodeableConcept;
     }
@@ -445,8 +424,11 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $substanceCodeableConcept
      * @return static
      */
-    public function setSubstanceCodeableConcept(?FHIRCodeableConcept $substanceCodeableConcept = null): object
+    public function setSubstanceCodeableConcept(null|FHIRCodeableConcept $substanceCodeableConcept = null): self
     {
+        if (null === $substanceCodeableConcept) {
+            $substanceCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->substanceCodeableConcept, $substanceCodeableConcept);
         $this->substanceCodeableConcept = $substanceCodeableConcept;
         return $this;
@@ -462,7 +444,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getRelationship(): ?FHIRCodeableConcept
+    public function getRelationship(): null|FHIRCodeableConcept
     {
         return $this->relationship;
     }
@@ -478,8 +460,11 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $relationship
      * @return static
      */
-    public function setRelationship(?FHIRCodeableConcept $relationship = null): object
+    public function setRelationship(null|FHIRCodeableConcept $relationship = null): self
     {
+        if (null === $relationship) {
+            $relationship = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->relationship, $relationship);
         $this->relationship = $relationship;
         return $this;
@@ -493,9 +478,9 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * a defining relationship for that enzyme, out of several possible substance
      * relationships.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getIsDefining(): ?FHIRBoolean
+    public function getIsDefining(): null|FHIRBoolean
     {
         return $this->isDefining;
     }
@@ -508,10 +493,10 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * a defining relationship for that enzyme, out of several possible substance
      * relationships.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $isDefining
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $isDefining
      * @return static
      */
-    public function setIsDefining($isDefining = null): object
+    public function setIsDefining(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isDefining = null): self
     {
         if (null !== $isDefining && !($isDefining instanceof FHIRBoolean)) {
             $isDefining = new FHIRBoolean($isDefining);
@@ -534,7 +519,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getAmountQuantity(): ?FHIRQuantity
+    public function getAmountQuantity(): null|FHIRQuantity
     {
         return $this->amountQuantity;
     }
@@ -553,8 +538,11 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $amountQuantity
      * @return static
      */
-    public function setAmountQuantity(?FHIRQuantity $amountQuantity = null): object
+    public function setAmountQuantity(null|FHIRQuantity $amountQuantity = null): self
     {
+        if (null === $amountQuantity) {
+            $amountQuantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->amountQuantity, $amountQuantity);
         $this->amountQuantity = $amountQuantity;
         return $this;
@@ -571,7 +559,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getAmountRange(): ?FHIRRange
+    public function getAmountRange(): null|FHIRRange
     {
         return $this->amountRange;
     }
@@ -588,8 +576,11 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $amountRange
      * @return static
      */
-    public function setAmountRange(?FHIRRange $amountRange = null): object
+    public function setAmountRange(null|FHIRRange $amountRange = null): self
     {
+        if (null === $amountRange) {
+            $amountRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->amountRange, $amountRange);
         $this->amountRange = $amountRange;
         return $this;
@@ -607,7 +598,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    public function getAmountRatio(): ?FHIRRatio
+    public function getAmountRatio(): null|FHIRRatio
     {
         return $this->amountRatio;
     }
@@ -625,8 +616,11 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRatio $amountRatio
      * @return static
      */
-    public function setAmountRatio(?FHIRRatio $amountRatio = null): object
+    public function setAmountRatio(null|FHIRRatio $amountRatio = null): self
     {
+        if (null === $amountRatio) {
+            $amountRatio = new FHIRRatio();
+        }
         $this->_trackValueSet($this->amountRatio, $amountRatio);
         $this->amountRatio = $amountRatio;
         return $this;
@@ -641,9 +635,9 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * a substance has some percentage of the active substance in relation to some
      * other.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getAmountString(): ?FHIRString
+    public function getAmountString(): null|FHIRString
     {
         return $this->amountString;
     }
@@ -657,10 +651,10 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * a substance has some percentage of the active substance in relation to some
      * other.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $amountString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $amountString
      * @return static
      */
-    public function setAmountString($amountString = null): object
+    public function setAmountString(null|string|FHIRStringPrimitive|FHIRString $amountString = null): self
     {
         if (null !== $amountString && !($amountString instanceof FHIRString)) {
             $amountString = new FHIRString($amountString);
@@ -680,7 +674,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    public function getAmountRatioLowLimit(): ?FHIRRatio
+    public function getAmountRatioLowLimit(): null|FHIRRatio
     {
         return $this->amountRatioLowLimit;
     }
@@ -696,8 +690,11 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRatio $amountRatioLowLimit
      * @return static
      */
-    public function setAmountRatioLowLimit(?FHIRRatio $amountRatioLowLimit = null): object
+    public function setAmountRatioLowLimit(null|FHIRRatio $amountRatioLowLimit = null): self
     {
+        if (null === $amountRatioLowLimit) {
+            $amountRatioLowLimit = new FHIRRatio();
+        }
         $this->_trackValueSet($this->amountRatioLowLimit, $amountRatioLowLimit);
         $this->amountRatioLowLimit = $amountRatioLowLimit;
         return $this;
@@ -713,7 +710,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getAmountType(): ?FHIRCodeableConcept
+    public function getAmountType(): null|FHIRCodeableConcept
     {
         return $this->amountType;
     }
@@ -729,8 +726,11 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $amountType
      * @return static
      */
-    public function setAmountType(?FHIRCodeableConcept $amountType = null): object
+    public function setAmountType(null|FHIRCodeableConcept $amountType = null): self
     {
+        if (null === $amountType) {
+            $amountType = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->amountType, $amountType);
         $this->amountType = $amountType;
         return $this;
@@ -745,7 +745,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getSource(): ?array
+    public function getSource(): null|array
     {
         return $this->source;
     }
@@ -760,8 +760,11 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $source
      * @return static
      */
-    public function addSource(?FHIRReference $source = null): object
+    public function addSource(null|FHIRReference $source = null): self
     {
+        if (null === $source) {
+            $source = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->source[] = $source;
         return $this;
@@ -777,7 +780,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $source
      * @return static
      */
-    public function setSource(array $source = []): object
+    public function setSource(array $source = []): self
     {
         if ([] !== $this->source) {
             $this->_trackValuesRemoved(count($this->source));
@@ -804,7 +807,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1048,36 +1051,48 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRSubstanceSpecificationRelationship::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRSubstanceSpecificationRelationship::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRSubstanceSpecificationRelationship(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRSubstanceSpecificationRelationship)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRSubstanceSpecificationRelationship)) {
             throw new \RuntimeException(sprintf(
-                'FHIRSubstanceSpecificationRelationship::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1146,17 +1161,25 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('SubstanceSpecificationRelationship'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getSubstanceReference())) {
@@ -1225,7 +1248,7 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getSubstanceReference())) {
@@ -1284,7 +1307,6 @@ class FHIRSubstanceSpecificationRelationship extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

@@ -1,0 +1,762 @@
+<?php declare(strict_types=1);
+
+namespace HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide;
+
+/*!
+ * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
+ * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
+ * 
+ * Class creation date: May 1st, 2024 06:49+0000
+ * 
+ * PHPFHIR Copyright:
+ * 
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ *
+ * FHIR Copyright Notice:
+ *
+ *  * #%L
+ *  * org.hl7.fhir.r5
+ *  * %%
+ *  * Copyright (C) 2014 - 2019 Health Level 7
+ *  * %%
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *      http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
+ *  * #L%
+ *  
+ * 
+ * 
+ *   Copyright (c) 2011+, HL7, Inc.
+ *   All rights reserved.
+ * 
+ *   Redistribution and use in source and binary forms, with or without modification,
+ *   are permitted provided that the following conditions are met:
+ * 
+ *    * Redistributions of source code must retain the above copyright notice, this
+ *      list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright notice,
+ *      this list of conditions and the following disclaimer in the documentation
+ *      and/or other materials provided with the distribution.
+ *    * Neither the name of HL7 nor the names of its contributors may be used to
+ *      endorse or promote products derived from this software without specific
+ *      prior written permission.
+ * 
+ *   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ *   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ *   IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ *   INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ *   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ *   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ *   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ *   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *   POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * 
+ *   Generated on Sun, Mar 26, 2023 15:21+1100 for FHIR v5.0.0
+ * 
+ *   Note: the schemas & schematrons do not contain all of the rules about what makes resources
+ *   valid. Implementers will still need to be familiar with the content of the specification and with
+ *   any profiles that apply to the resources in order to make a conformant implementation.
+ * 
+ */
+
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRCanonical;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRExtension;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRId;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRMarkdown;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRString;
+use HL7\FHIR\R5\FHIRCanonicalPrimitive;
+use HL7\FHIR\R5\FHIRIdPrimitive;
+use HL7\FHIR\R5\FHIRMarkdownPrimitive;
+use HL7\FHIR\R5\FHIRStringPrimitive;
+use HL7\FHIR\R5\PHPFHIRConfig;
+use HL7\FHIR\R5\PHPFHIRConstants;
+use HL7\FHIR\R5\PHPFHIRTypeInterface;
+use HL7\FHIR\R5\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R5\PHPFHIRXmlSerializableInterface;
+
+/**
+ * A set of rules of how a particular interoperability or standards problem is
+ * solved - typically through the use of FHIR resources. This resource is used to
+ * gather all the parts of an implementation guide into a logical whole and to
+ * publish a computable definition of all the parts.
+ *
+ * Class FHIRImplementationGuideDependsOn
+ * @package \HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide
+ */
+class FHIRImplementationGuideDependsOn extends FHIRBackboneElement
+{
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_IMPLEMENTATION_GUIDE_DOT_DEPENDS_ON;
+
+    const FIELD_URI = 'uri';
+    const FIELD_URI_EXT = '_uri';
+    const FIELD_PACKAGE_ID = 'packageId';
+    const FIELD_PACKAGE_ID_EXT = '_packageId';
+    const FIELD_VERSION = 'version';
+    const FIELD_VERSION_EXT = '_version';
+    const FIELD_REASON = 'reason';
+    const FIELD_REASON_EXT = '_reason';
+
+    /**
+     * A URI that is a reference to a canonical URL on a FHIR resource
+     * see [Canonical References](references.html#canonical)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A canonical reference to the Implementation guide for the dependency.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRCanonical
+     */
+    protected null|FHIRCanonical $uri = null;
+    /**
+     * Any combination of letters, numerals, "-" and ".", with a length limit of 64
+     * characters. (This might be an integer, an unprefixed OID, UUID or any other
+     * identifier pattern that meets these constraints.) Ids are case-insensitive.
+     * RFC 4122
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The NPM package name for the Implementation Guide that this IG depends on.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRId
+     */
+    protected null|FHIRId $packageId = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings SHALL NOT exceed 1,048,576 (1024*1024) characters in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The version of the IG that is depended on, when the correct version is required
+     * to understand the IG correctly.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $version = null;
+    /**
+     * A string that may contain Github Flavored Markdown syntax for optional
+     * processing by a mark down presentation engine
+     * Systems are not required to have markdown support, so the text should be
+     * readable without markdown processing. The markdown syntax is GFM - see
+     * https://github.github.com/gfm/
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A description explaining the nature of the dependency on the listed IG.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRMarkdown
+     */
+    protected null|FHIRMarkdown $reason = null;
+
+    /**
+     * Validation map for fields in type ImplementationGuide.DependsOn
+     * @var array
+     */
+    private const _VALIDATION_RULES = [    ];
+
+    /**
+     * FHIRImplementationGuideDependsOn Constructor
+     * @param null|array $data
+
+     */
+    public function __construct(null|array $data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_URI]) || isset($data[self::FIELD_URI_EXT])) {
+            $value = $data[self::FIELD_URI] ?? null;
+            $ext = (isset($data[self::FIELD_URI_EXT]) && is_array($data[self::FIELD_URI_EXT])) ? $data[self::FIELD_URI_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRCanonical) {
+                    $this->setUri($value);
+                } else if (is_array($value)) {
+                    $this->setUri(new FHIRCanonical(array_merge($ext, $value)));
+                } else {
+                    $this->setUri(new FHIRCanonical([FHIRCanonical::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setUri(new FHIRCanonical($ext));
+            }
+        }
+        if (isset($data[self::FIELD_PACKAGE_ID]) || isset($data[self::FIELD_PACKAGE_ID_EXT])) {
+            $value = $data[self::FIELD_PACKAGE_ID] ?? null;
+            $ext = (isset($data[self::FIELD_PACKAGE_ID_EXT]) && is_array($data[self::FIELD_PACKAGE_ID_EXT])) ? $data[self::FIELD_PACKAGE_ID_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRId) {
+                    $this->setPackageId($value);
+                } else if (is_array($value)) {
+                    $this->setPackageId(new FHIRId(array_merge($ext, $value)));
+                } else {
+                    $this->setPackageId(new FHIRId([FHIRId::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setPackageId(new FHIRId($ext));
+            }
+        }
+        if (isset($data[self::FIELD_VERSION]) || isset($data[self::FIELD_VERSION_EXT])) {
+            $value = $data[self::FIELD_VERSION] ?? null;
+            $ext = (isset($data[self::FIELD_VERSION_EXT]) && is_array($data[self::FIELD_VERSION_EXT])) ? $data[self::FIELD_VERSION_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setVersion($value);
+                } else if (is_array($value)) {
+                    $this->setVersion(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setVersion(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setVersion(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_REASON]) || isset($data[self::FIELD_REASON_EXT])) {
+            $value = $data[self::FIELD_REASON] ?? null;
+            $ext = (isset($data[self::FIELD_REASON_EXT]) && is_array($data[self::FIELD_REASON_EXT])) ? $data[self::FIELD_REASON_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRMarkdown) {
+                    $this->setReason($value);
+                } else if (is_array($value)) {
+                    $this->setReason(new FHIRMarkdown(array_merge($ext, $value)));
+                } else {
+                    $this->setReason(new FHIRMarkdown([FHIRMarkdown::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setReason(new FHIRMarkdown($ext));
+            }
+        }
+    }
+
+
+    /**
+     * @return string
+     */
+    public function _getFHIRTypeName(): string
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+
+    /**
+     * A URI that is a reference to a canonical URL on a FHIR resource
+     * see [Canonical References](references.html#canonical)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A canonical reference to the Implementation guide for the dependency.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRCanonical
+     */
+    public function getUri(): null|FHIRCanonical
+    {
+        return $this->uri;
+    }
+
+    /**
+     * A URI that is a reference to a canonical URL on a FHIR resource
+     * see [Canonical References](references.html#canonical)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A canonical reference to the Implementation guide for the dependency.
+     *
+     * @param null|string|\HL7\FHIR\R5\FHIRCanonicalPrimitive|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRCanonical $uri
+     * @return static
+     */
+    public function setUri(null|string|FHIRCanonicalPrimitive|FHIRCanonical $uri = null): self
+    {
+        if (null !== $uri && !($uri instanceof FHIRCanonical)) {
+            $uri = new FHIRCanonical($uri);
+        }
+        $this->_trackValueSet($this->uri, $uri);
+        $this->uri = $uri;
+        return $this;
+    }
+
+    /**
+     * Any combination of letters, numerals, "-" and ".", with a length limit of 64
+     * characters. (This might be an integer, an unprefixed OID, UUID or any other
+     * identifier pattern that meets these constraints.) Ids are case-insensitive.
+     * RFC 4122
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The NPM package name for the Implementation Guide that this IG depends on.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRId
+     */
+    public function getPackageId(): null|FHIRId
+    {
+        return $this->packageId;
+    }
+
+    /**
+     * Any combination of letters, numerals, "-" and ".", with a length limit of 64
+     * characters. (This might be an integer, an unprefixed OID, UUID or any other
+     * identifier pattern that meets these constraints.) Ids are case-insensitive.
+     * RFC 4122
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * The NPM package name for the Implementation Guide that this IG depends on.
+     *
+     * @param null|string|\HL7\FHIR\R5\FHIRIdPrimitive|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRId $packageId
+     * @return static
+     */
+    public function setPackageId(null|string|FHIRIdPrimitive|FHIRId $packageId = null): self
+    {
+        if (null !== $packageId && !($packageId instanceof FHIRId)) {
+            $packageId = new FHIRId($packageId);
+        }
+        $this->_trackValueSet($this->packageId, $packageId);
+        $this->packageId = $packageId;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings SHALL NOT exceed 1,048,576 (1024*1024) characters in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The version of the IG that is depended on, when the correct version is required
+     * to understand the IG correctly.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRString
+     */
+    public function getVersion(): null|FHIRString
+    {
+        return $this->version;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings SHALL NOT exceed 1,048,576 (1024*1024) characters in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The version of the IG that is depended on, when the correct version is required
+     * to understand the IG correctly.
+     *
+     * @param null|string|\HL7\FHIR\R5\FHIRStringPrimitive|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRString $version
+     * @return static
+     */
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null): self
+    {
+        if (null !== $version && !($version instanceof FHIRString)) {
+            $version = new FHIRString($version);
+        }
+        $this->_trackValueSet($this->version, $version);
+        $this->version = $version;
+        return $this;
+    }
+
+    /**
+     * A string that may contain Github Flavored Markdown syntax for optional
+     * processing by a mark down presentation engine
+     * Systems are not required to have markdown support, so the text should be
+     * readable without markdown processing. The markdown syntax is GFM - see
+     * https://github.github.com/gfm/
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A description explaining the nature of the dependency on the listed IG.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRMarkdown
+     */
+    public function getReason(): null|FHIRMarkdown
+    {
+        return $this->reason;
+    }
+
+    /**
+     * A string that may contain Github Flavored Markdown syntax for optional
+     * processing by a mark down presentation engine
+     * Systems are not required to have markdown support, so the text should be
+     * readable without markdown processing. The markdown syntax is GFM - see
+     * https://github.github.com/gfm/
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A description explaining the nature of the dependency on the listed IG.
+     *
+     * @param null|string|\HL7\FHIR\R5\FHIRMarkdownPrimitive|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRMarkdown $reason
+     * @return static
+     */
+    public function setReason(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $reason = null): self
+    {
+        if (null !== $reason && !($reason instanceof FHIRMarkdown)) {
+            $reason = new FHIRMarkdown($reason);
+        }
+        $this->_trackValueSet($this->reason, $reason);
+        $this->reason = $reason;
+        return $this;
+    }
+
+    /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules(): array
+    {
+        return self::_VALIDATION_RULES;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors(): array
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getUri())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_URI] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPackageId())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PACKAGE_ID] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getVersion())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_VERSION] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getReason())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_REASON] = $fieldErrs;
+            }
+        }
+        if (isset($validationRules[self::FIELD_URI])) {
+            $v = $this->getUri();
+            foreach($validationRules[self::FIELD_URI] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMPLEMENTATION_GUIDE_DOT_DEPENDS_ON, self::FIELD_URI, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_URI])) {
+                        $errs[self::FIELD_URI] = [];
+                    }
+                    $errs[self::FIELD_URI][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PACKAGE_ID])) {
+            $v = $this->getPackageId();
+            foreach($validationRules[self::FIELD_PACKAGE_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMPLEMENTATION_GUIDE_DOT_DEPENDS_ON, self::FIELD_PACKAGE_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PACKAGE_ID])) {
+                        $errs[self::FIELD_PACKAGE_ID] = [];
+                    }
+                    $errs[self::FIELD_PACKAGE_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_VERSION])) {
+            $v = $this->getVersion();
+            foreach($validationRules[self::FIELD_VERSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMPLEMENTATION_GUIDE_DOT_DEPENDS_ON, self::FIELD_VERSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_VERSION])) {
+                        $errs[self::FIELD_VERSION] = [];
+                    }
+                    $errs[self::FIELD_VERSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REASON])) {
+            $v = $this->getReason();
+            foreach($validationRules[self::FIELD_REASON] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMPLEMENTATION_GUIDE_DOT_DEPENDS_ON, self::FIELD_REASON, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REASON])) {
+                        $errs[self::FIELD_REASON] = [];
+                    }
+                    $errs[self::FIELD_REASON][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BACKBONE_ELEMENT, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELEMENT, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
+     * @param null|string|\DOMElement $element
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuideDependsOn $type
+     * @param null|int|\HL7\FHIR\R5\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuideDependsOn
+     */
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
+    {
+        if (null === $element) {
+            return null;
+        }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
+            libxml_use_internal_errors(true);
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
+            }
+            libxml_use_internal_errors(false);
+            $element = $dom->documentElement;
+        }
+        if (null === $type) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRImplementationGuideDependsOn)) {
+            throw new \RuntimeException(sprintf(
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
+            ));
+        }
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_URI === $n->nodeName) {
+                $type->setUri(FHIRCanonical::xmlUnserialize($n));
+            } elseif (self::FIELD_PACKAGE_ID === $n->nodeName) {
+                $type->setPackageId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_VERSION === $n->nodeName) {
+                $type->setVersion(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_REASON === $n->nodeName) {
+                $type->setReason(FHIRMarkdown::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_URI);
+        if (null !== $n) {
+            $pt = $type->getUri();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setUri($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_PACKAGE_ID);
+        if (null !== $n) {
+            $pt = $type->getPackageId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setPackageId($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_VERSION);
+        if (null !== $n) {
+            $pt = $type->getVersion();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setVersion($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_REASON);
+        if (null !== $n) {
+            $pt = $type->getReason();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setReason($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\R5\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
+     */
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
+    {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ImplementationGuideDependsOn'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getUri())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_URI);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPackageId())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PACKAGE_ID);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getVersion())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_VERSION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getReason())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_REASON);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        return $element;
+    }
+
+    /**
+     * @return \stdClass
+     */
+    public function jsonSerialize(): mixed
+    {
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getUri())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_URI} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRCanonical::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_URI_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getPackageId())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_PACKAGE_ID} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRId::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_PACKAGE_ID_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getVersion())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_VERSION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_VERSION_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getReason())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_REASON} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRMarkdown::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_REASON_EXT} = $ext;
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+}

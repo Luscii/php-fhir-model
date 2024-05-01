@@ -1,0 +1,2421 @@
+<?php declare(strict_types=1);
+
+namespace HL7\FHIR\R5\FHIRBase\FHIRResource\FHIRDomainResource;
+
+/*!
+ * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
+ * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
+ * 
+ * Class creation date: May 1st, 2024 06:49+0000
+ * 
+ * PHPFHIR Copyright:
+ * 
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ *
+ * FHIR Copyright Notice:
+ *
+ *  * #%L
+ *  * org.hl7.fhir.r5
+ *  * %%
+ *  * Copyright (C) 2014 - 2019 Health Level 7
+ *  * %%
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *      http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
+ *  * #L%
+ *  
+ * 
+ * 
+ *   Copyright (c) 2011+, HL7, Inc.
+ *   All rights reserved.
+ * 
+ *   Redistribution and use in source and binary forms, with or without modification,
+ *   are permitted provided that the following conditions are met:
+ * 
+ *    * Redistributions of source code must retain the above copyright notice, this
+ *      list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright notice,
+ *      this list of conditions and the following disclaimer in the documentation
+ *      and/or other materials provided with the distribution.
+ *    * Neither the name of HL7 nor the names of its contributors may be used to
+ *      endorse or promote products derived from this software without specific
+ *      prior written permission.
+ * 
+ *   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ *   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ *   IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ *   INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ *   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ *   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ *   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ *   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *   POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * 
+ *   Generated on Sun, Mar 26, 2023 15:21+1100 for FHIR v5.0.0
+ * 
+ *   Note: the schemas & schematrons do not contain all of the rules about what makes resources
+ *   valid. Implementers will still need to be familiar with the content of the specification and with
+ *   any profiles that apply to the resources in order to make a conformant implementation.
+ * 
+ */
+
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceLineItem;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceParticipant;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRCode;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRAnnotation;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRCodeableConcept;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRExtension;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRIdentifier;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMeta;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMonetaryComponent;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMoney;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRNarrative;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRPeriod;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDate;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDateTime;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRId;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRInvoiceStatus;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRMarkdown;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRString;
+use HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRUri;
+use HL7\FHIR\R5\FHIRBase\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R5\FHIRCodePrimitive;
+use HL7\FHIR\R5\FHIRDatePrimitive;
+use HL7\FHIR\R5\FHIRDateTimePrimitive;
+use HL7\FHIR\R5\FHIRIdPrimitive;
+use HL7\FHIR\R5\FHIRMarkdownPrimitive;
+use HL7\FHIR\R5\FHIRStringPrimitive;
+use HL7\FHIR\R5\FHIRUriPrimitive;
+use HL7\FHIR\R5\PHPFHIRConfig;
+use HL7\FHIR\R5\PHPFHIRConstants;
+use HL7\FHIR\R5\PHPFHIRContainedTypeInterface;
+use HL7\FHIR\R5\PHPFHIRTypeInterface;
+use HL7\FHIR\R5\PHPFHIRTypeMap;
+use HL7\FHIR\R5\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R5\PHPFHIRXmlSerializableInterface;
+
+/**
+ * Invoice containing collected ChargeItems from an Account with calculated
+ * individual and total price for Billing purpose.
+ * If the element is present, it must have either a \@value, an \@id, or extensions
+ *
+ * Class FHIRInvoice
+ * @package \HL7\FHIR\R5\FHIRBase\FHIRResource\FHIRDomainResource
+ */
+class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInterface
+{
+    // name of FHIR type this class describes
+    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_INVOICE;
+
+    const FIELD_IDENTIFIER = 'identifier';
+    const FIELD_STATUS = 'status';
+    const FIELD_STATUS_EXT = '_status';
+    const FIELD_CANCELLED_REASON = 'cancelledReason';
+    const FIELD_CANCELLED_REASON_EXT = '_cancelledReason';
+    const FIELD_TYPE = 'type';
+    const FIELD_SUBJECT = 'subject';
+    const FIELD_RECIPIENT = 'recipient';
+    const FIELD_DATE = 'date';
+    const FIELD_DATE_EXT = '_date';
+    const FIELD_CREATION = 'creation';
+    const FIELD_CREATION_EXT = '_creation';
+    const FIELD_PERIOD_DATE = 'periodDate';
+    const FIELD_PERIOD_DATE_EXT = '_periodDate';
+    const FIELD_PERIOD_PERIOD = 'periodPeriod';
+    const FIELD_PARTICIPANT = 'participant';
+    const FIELD_ISSUER = 'issuer';
+    const FIELD_ACCOUNT = 'account';
+    const FIELD_LINE_ITEM = 'lineItem';
+    const FIELD_TOTAL_PRICE_COMPONENT = 'totalPriceComponent';
+    const FIELD_TOTAL_NET = 'totalNet';
+    const FIELD_TOTAL_GROSS = 'totalGross';
+    const FIELD_PAYMENT_TERMS = 'paymentTerms';
+    const FIELD_PAYMENT_TERMS_EXT = '_paymentTerms';
+    const FIELD_NOTE = 'note';
+
+    /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifier of this Invoice, often used for reference in correspondence about
+     * this invoice or for tracking of payments.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRIdentifier[]
+     */
+    protected null|array $identifier = [];
+    /**
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The current state of the Invoice.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRInvoiceStatus
+     */
+    protected null|FHIRInvoiceStatus $status = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings SHALL NOT exceed 1,048,576 (1024*1024) characters in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * In case of Invoice cancellation a reason must be given (entered in error,
+     * superseded by corrected invoice etc.).
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $cancelledReason = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Type of Invoice depending on domain, realm an usage (e.g. internal/external,
+     * dental, preliminary).
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRCodeableConcept
+     */
+    protected null|FHIRCodeableConcept $type = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The individual or set of individuals receiving the goods and services billed in
+     * this invoice.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference
+     */
+    protected null|FHIRReference $subject = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The individual or Organization responsible for balancing of this invoice.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference
+     */
+    protected null|FHIRReference $recipient = null;
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a UTC offset SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * UTC offset is allowed for dates and partial dates
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Depricared by the element below.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDateTime
+     */
+    protected null|FHIRDateTime $date = null;
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a UTC offset SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * UTC offset is allowed for dates and partial dates
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Date/time(s) of when this Invoice was posted.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDateTime
+     */
+    protected null|FHIRDateTime $creation = null;
+    /**
+     * A date or partial date (e.g. just year or year + month). There is no UTC offset.
+     * The format is a union of the schema types gYear, gYearMonth and date. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Date/time(s) range of services included in this invoice.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDate
+     */
+    protected null|FHIRDate $periodDate = null;
+    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Date/time(s) range of services included in this invoice.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRPeriod
+     */
+    protected null|FHIRPeriod $periodPeriod = null;
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * Indicates who or what performed or participated in the charged service.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceParticipant[]
+     */
+    protected null|array $participant = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The organizationissuing the Invoice.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference
+     */
+    protected null|FHIRReference $issuer = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Account which is supposed to be balanced with this Invoice.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference
+     */
+    protected null|FHIRReference $account = null;
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * Each line item represents one charge for goods and services rendered. Details
+     * such.ofType(date), code and amount are found in the referenced ChargeItem
+     * resource.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceLineItem[]
+     */
+    protected null|array $lineItem = [];
+    /**
+     * Availability data for an {item}.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The total amount for the Invoice may be calculated as the sum of the line items
+     * with surcharges/deductions that apply in certain conditions. The priceComponent
+     * element can be used to offer transparency to the recipient of the Invoice of how
+     * the total price was calculated.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMonetaryComponent[]
+     */
+    protected null|array $totalPriceComponent = [];
+    /**
+     * An amount of economic utility in some recognized currency.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Invoice total , taxes excluded.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMoney
+     */
+    protected null|FHIRMoney $totalNet = null;
+    /**
+     * An amount of economic utility in some recognized currency.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Invoice total, tax included.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMoney
+     */
+    protected null|FHIRMoney $totalGross = null;
+    /**
+     * A string that may contain Github Flavored Markdown syntax for optional
+     * processing by a mark down presentation engine
+     * Systems are not required to have markdown support, so the text should be
+     * readable without markdown processing. The markdown syntax is GFM - see
+     * https://github.github.com/gfm/
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * Payment details such as banking details, period of payment, deductibles, methods
+     * of payment.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRMarkdown
+     */
+    protected null|FHIRMarkdown $paymentTerms = null;
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Comments made about the invoice by the issuer, subject, or other participants.
+     *
+     * @var null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRAnnotation[]
+     */
+    protected null|array $note = [];
+
+    /**
+     * Validation map for fields in type Invoice
+     * @var array
+     */
+    private const _VALIDATION_RULES = [    ];
+
+    /**
+     * FHIRInvoice Constructor
+     * @param null|array $data
+
+     */
+    public function __construct(null|array $data = null)
+    {
+        if (null === $data || [] === $data) {
+            return;
+        }
+        parent::__construct($data);
+        if (isset($data[self::FIELD_IDENTIFIER])) {
+            if (is_array($data[self::FIELD_IDENTIFIER])) {
+                foreach($data[self::FIELD_IDENTIFIER] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRIdentifier) {
+                        $this->addIdentifier($v);
+                    } else {
+                        $this->addIdentifier(new FHIRIdentifier($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+                $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
+            } else {
+                $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+            }
+        }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            $value = $data[self::FIELD_STATUS] ?? null;
+            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) ? $data[self::FIELD_STATUS_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRInvoiceStatus) {
+                    $this->setStatus($value);
+                } else if (is_array($value)) {
+                    $this->setStatus(new FHIRInvoiceStatus(array_merge($ext, $value)));
+                } else {
+                    $this->setStatus(new FHIRInvoiceStatus([FHIRInvoiceStatus::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setStatus(new FHIRInvoiceStatus($ext));
+            }
+        }
+        if (isset($data[self::FIELD_CANCELLED_REASON]) || isset($data[self::FIELD_CANCELLED_REASON_EXT])) {
+            $value = $data[self::FIELD_CANCELLED_REASON] ?? null;
+            $ext = (isset($data[self::FIELD_CANCELLED_REASON_EXT]) && is_array($data[self::FIELD_CANCELLED_REASON_EXT])) ? $data[self::FIELD_CANCELLED_REASON_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setCancelledReason($value);
+                } else if (is_array($value)) {
+                    $this->setCancelledReason(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setCancelledReason(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setCancelledReason(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_TYPE])) {
+            if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
+                $this->setType($data[self::FIELD_TYPE]);
+            } else {
+                $this->setType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
+            }
+        }
+        if (isset($data[self::FIELD_SUBJECT])) {
+            if ($data[self::FIELD_SUBJECT] instanceof FHIRReference) {
+                $this->setSubject($data[self::FIELD_SUBJECT]);
+            } else {
+                $this->setSubject(new FHIRReference($data[self::FIELD_SUBJECT]));
+            }
+        }
+        if (isset($data[self::FIELD_RECIPIENT])) {
+            if ($data[self::FIELD_RECIPIENT] instanceof FHIRReference) {
+                $this->setRecipient($data[self::FIELD_RECIPIENT]);
+            } else {
+                $this->setRecipient(new FHIRReference($data[self::FIELD_RECIPIENT]));
+            }
+        }
+        if (isset($data[self::FIELD_DATE]) || isset($data[self::FIELD_DATE_EXT])) {
+            $value = $data[self::FIELD_DATE] ?? null;
+            $ext = (isset($data[self::FIELD_DATE_EXT]) && is_array($data[self::FIELD_DATE_EXT])) ? $data[self::FIELD_DATE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setDate($value);
+                } else if (is_array($value)) {
+                    $this->setDate(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setDate(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setDate(new FHIRDateTime($ext));
+            }
+        }
+        if (isset($data[self::FIELD_CREATION]) || isset($data[self::FIELD_CREATION_EXT])) {
+            $value = $data[self::FIELD_CREATION] ?? null;
+            $ext = (isset($data[self::FIELD_CREATION_EXT]) && is_array($data[self::FIELD_CREATION_EXT])) ? $data[self::FIELD_CREATION_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setCreation($value);
+                } else if (is_array($value)) {
+                    $this->setCreation(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setCreation(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setCreation(new FHIRDateTime($ext));
+            }
+        }
+        if (isset($data[self::FIELD_PERIOD_DATE]) || isset($data[self::FIELD_PERIOD_DATE_EXT])) {
+            $value = $data[self::FIELD_PERIOD_DATE] ?? null;
+            $ext = (isset($data[self::FIELD_PERIOD_DATE_EXT]) && is_array($data[self::FIELD_PERIOD_DATE_EXT])) ? $data[self::FIELD_PERIOD_DATE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDate) {
+                    $this->setPeriodDate($value);
+                } else if (is_array($value)) {
+                    $this->setPeriodDate(new FHIRDate(array_merge($ext, $value)));
+                } else {
+                    $this->setPeriodDate(new FHIRDate([FHIRDate::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setPeriodDate(new FHIRDate($ext));
+            }
+        }
+        if (isset($data[self::FIELD_PERIOD_PERIOD])) {
+            if ($data[self::FIELD_PERIOD_PERIOD] instanceof FHIRPeriod) {
+                $this->setPeriodPeriod($data[self::FIELD_PERIOD_PERIOD]);
+            } else {
+                $this->setPeriodPeriod(new FHIRPeriod($data[self::FIELD_PERIOD_PERIOD]));
+            }
+        }
+        if (isset($data[self::FIELD_PARTICIPANT])) {
+            if (is_array($data[self::FIELD_PARTICIPANT])) {
+                foreach($data[self::FIELD_PARTICIPANT] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRInvoiceParticipant) {
+                        $this->addParticipant($v);
+                    } else {
+                        $this->addParticipant(new FHIRInvoiceParticipant($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_PARTICIPANT] instanceof FHIRInvoiceParticipant) {
+                $this->addParticipant($data[self::FIELD_PARTICIPANT]);
+            } else {
+                $this->addParticipant(new FHIRInvoiceParticipant($data[self::FIELD_PARTICIPANT]));
+            }
+        }
+        if (isset($data[self::FIELD_ISSUER])) {
+            if ($data[self::FIELD_ISSUER] instanceof FHIRReference) {
+                $this->setIssuer($data[self::FIELD_ISSUER]);
+            } else {
+                $this->setIssuer(new FHIRReference($data[self::FIELD_ISSUER]));
+            }
+        }
+        if (isset($data[self::FIELD_ACCOUNT])) {
+            if ($data[self::FIELD_ACCOUNT] instanceof FHIRReference) {
+                $this->setAccount($data[self::FIELD_ACCOUNT]);
+            } else {
+                $this->setAccount(new FHIRReference($data[self::FIELD_ACCOUNT]));
+            }
+        }
+        if (isset($data[self::FIELD_LINE_ITEM])) {
+            if (is_array($data[self::FIELD_LINE_ITEM])) {
+                foreach($data[self::FIELD_LINE_ITEM] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRInvoiceLineItem) {
+                        $this->addLineItem($v);
+                    } else {
+                        $this->addLineItem(new FHIRInvoiceLineItem($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_LINE_ITEM] instanceof FHIRInvoiceLineItem) {
+                $this->addLineItem($data[self::FIELD_LINE_ITEM]);
+            } else {
+                $this->addLineItem(new FHIRInvoiceLineItem($data[self::FIELD_LINE_ITEM]));
+            }
+        }
+        if (isset($data[self::FIELD_TOTAL_PRICE_COMPONENT])) {
+            if (is_array($data[self::FIELD_TOTAL_PRICE_COMPONENT])) {
+                foreach($data[self::FIELD_TOTAL_PRICE_COMPONENT] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRMonetaryComponent) {
+                        $this->addTotalPriceComponent($v);
+                    } else {
+                        $this->addTotalPriceComponent(new FHIRMonetaryComponent($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_TOTAL_PRICE_COMPONENT] instanceof FHIRMonetaryComponent) {
+                $this->addTotalPriceComponent($data[self::FIELD_TOTAL_PRICE_COMPONENT]);
+            } else {
+                $this->addTotalPriceComponent(new FHIRMonetaryComponent($data[self::FIELD_TOTAL_PRICE_COMPONENT]));
+            }
+        }
+        if (isset($data[self::FIELD_TOTAL_NET])) {
+            if ($data[self::FIELD_TOTAL_NET] instanceof FHIRMoney) {
+                $this->setTotalNet($data[self::FIELD_TOTAL_NET]);
+            } else {
+                $this->setTotalNet(new FHIRMoney($data[self::FIELD_TOTAL_NET]));
+            }
+        }
+        if (isset($data[self::FIELD_TOTAL_GROSS])) {
+            if ($data[self::FIELD_TOTAL_GROSS] instanceof FHIRMoney) {
+                $this->setTotalGross($data[self::FIELD_TOTAL_GROSS]);
+            } else {
+                $this->setTotalGross(new FHIRMoney($data[self::FIELD_TOTAL_GROSS]));
+            }
+        }
+        if (isset($data[self::FIELD_PAYMENT_TERMS]) || isset($data[self::FIELD_PAYMENT_TERMS_EXT])) {
+            $value = $data[self::FIELD_PAYMENT_TERMS] ?? null;
+            $ext = (isset($data[self::FIELD_PAYMENT_TERMS_EXT]) && is_array($data[self::FIELD_PAYMENT_TERMS_EXT])) ? $data[self::FIELD_PAYMENT_TERMS_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRMarkdown) {
+                    $this->setPaymentTerms($value);
+                } else if (is_array($value)) {
+                    $this->setPaymentTerms(new FHIRMarkdown(array_merge($ext, $value)));
+                } else {
+                    $this->setPaymentTerms(new FHIRMarkdown([FHIRMarkdown::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setPaymentTerms(new FHIRMarkdown($ext));
+            }
+        }
+        if (isset($data[self::FIELD_NOTE])) {
+            if (is_array($data[self::FIELD_NOTE])) {
+                foreach($data[self::FIELD_NOTE] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRAnnotation) {
+                        $this->addNote($v);
+                    } else {
+                        $this->addNote(new FHIRAnnotation($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_NOTE] instanceof FHIRAnnotation) {
+                $this->addNote($data[self::FIELD_NOTE]);
+            } else {
+                $this->addNote(new FHIRAnnotation($data[self::FIELD_NOTE]));
+            }
+        }
+    }
+
+
+    /**
+     * @return string
+     */
+    public function _getFHIRTypeName(): string
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+
+    /**
+     * @return string
+     */
+    public function _getResourceType(): string
+    {
+        return static::FHIR_TYPE_NAME;
+    }
+
+
+    /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifier of this Invoice, often used for reference in correspondence about
+     * this invoice or for tracking of payments.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRIdentifier[]
+     */
+    public function getIdentifier(): null|array
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifier of this Invoice, often used for reference in correspondence about
+     * this invoice or for tracking of payments.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRIdentifier $identifier
+     * @return static
+     */
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
+    {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
+        $this->_trackValueAdded();
+        $this->identifier[] = $identifier;
+        return $this;
+    }
+
+    /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifier of this Invoice, often used for reference in correspondence about
+     * this invoice or for tracking of payments.
+     *
+     * @param \HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRIdentifier[] $identifier
+     * @return static
+     */
+    public function setIdentifier(array $identifier = []): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            if ($v instanceof FHIRIdentifier) {
+                $this->addIdentifier($v);
+            } else {
+                $this->addIdentifier(new FHIRIdentifier($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The current state of the Invoice.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRInvoiceStatus
+     */
+    public function getStatus(): null|FHIRInvoiceStatus
+    {
+        return $this->status;
+    }
+
+    /**
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The current state of the Invoice.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRInvoiceStatus $status
+     * @return static
+     */
+    public function setStatus(null|FHIRInvoiceStatus $status = null): self
+    {
+        if (null === $status) {
+            $status = new FHIRInvoiceStatus();
+        }
+        $this->_trackValueSet($this->status, $status);
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings SHALL NOT exceed 1,048,576 (1024*1024) characters in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * In case of Invoice cancellation a reason must be given (entered in error,
+     * superseded by corrected invoice etc.).
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRString
+     */
+    public function getCancelledReason(): null|FHIRString
+    {
+        return $this->cancelledReason;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings SHALL NOT exceed 1,048,576 (1024*1024) characters in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * In case of Invoice cancellation a reason must be given (entered in error,
+     * superseded by corrected invoice etc.).
+     *
+     * @param null|string|\HL7\FHIR\R5\FHIRStringPrimitive|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRString $cancelledReason
+     * @return static
+     */
+    public function setCancelledReason(null|string|FHIRStringPrimitive|FHIRString $cancelledReason = null): self
+    {
+        if (null !== $cancelledReason && !($cancelledReason instanceof FHIRString)) {
+            $cancelledReason = new FHIRString($cancelledReason);
+        }
+        $this->_trackValueSet($this->cancelledReason, $cancelledReason);
+        $this->cancelledReason = $cancelledReason;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Type of Invoice depending on domain, realm an usage (e.g. internal/external,
+     * dental, preliminary).
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRCodeableConcept
+     */
+    public function getType(): null|FHIRCodeableConcept
+    {
+        return $this->type;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Type of Invoice depending on domain, realm an usage (e.g. internal/external,
+     * dental, preliminary).
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRCodeableConcept $type
+     * @return static
+     */
+    public function setType(null|FHIRCodeableConcept $type = null): self
+    {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->type, $type);
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The individual or set of individuals receiving the goods and services billed in
+     * this invoice.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference
+     */
+    public function getSubject(): null|FHIRReference
+    {
+        return $this->subject;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The individual or set of individuals receiving the goods and services billed in
+     * this invoice.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference $subject
+     * @return static
+     */
+    public function setSubject(null|FHIRReference $subject = null): self
+    {
+        if (null === $subject) {
+            $subject = new FHIRReference();
+        }
+        $this->_trackValueSet($this->subject, $subject);
+        $this->subject = $subject;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The individual or Organization responsible for balancing of this invoice.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference
+     */
+    public function getRecipient(): null|FHIRReference
+    {
+        return $this->recipient;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The individual or Organization responsible for balancing of this invoice.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference $recipient
+     * @return static
+     */
+    public function setRecipient(null|FHIRReference $recipient = null): self
+    {
+        if (null === $recipient) {
+            $recipient = new FHIRReference();
+        }
+        $this->_trackValueSet($this->recipient, $recipient);
+        $this->recipient = $recipient;
+        return $this;
+    }
+
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a UTC offset SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * UTC offset is allowed for dates and partial dates
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Depricared by the element below.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDateTime
+     */
+    public function getDate(): null|FHIRDateTime
+    {
+        return $this->date;
+    }
+
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a UTC offset SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * UTC offset is allowed for dates and partial dates
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Depricared by the element below.
+     *
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R5\FHIRDateTimePrimitive|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDateTime $date
+     * @return static
+     */
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
+    {
+        if (null !== $date && !($date instanceof FHIRDateTime)) {
+            $date = new FHIRDateTime($date);
+        }
+        $this->_trackValueSet($this->date, $date);
+        $this->date = $date;
+        return $this;
+    }
+
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a UTC offset SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * UTC offset is allowed for dates and partial dates
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Date/time(s) of when this Invoice was posted.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDateTime
+     */
+    public function getCreation(): null|FHIRDateTime
+    {
+        return $this->creation;
+    }
+
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a UTC offset SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * UTC offset is allowed for dates and partial dates
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Date/time(s) of when this Invoice was posted.
+     *
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R5\FHIRDateTimePrimitive|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDateTime $creation
+     * @return static
+     */
+    public function setCreation(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $creation = null): self
+    {
+        if (null !== $creation && !($creation instanceof FHIRDateTime)) {
+            $creation = new FHIRDateTime($creation);
+        }
+        $this->_trackValueSet($this->creation, $creation);
+        $this->creation = $creation;
+        return $this;
+    }
+
+    /**
+     * A date or partial date (e.g. just year or year + month). There is no UTC offset.
+     * The format is a union of the schema types gYear, gYearMonth and date. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Date/time(s) range of services included in this invoice.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDate
+     */
+    public function getPeriodDate(): null|FHIRDate
+    {
+        return $this->periodDate;
+    }
+
+    /**
+     * A date or partial date (e.g. just year or year + month). There is no UTC offset.
+     * The format is a union of the schema types gYear, gYearMonth and date. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Date/time(s) range of services included in this invoice.
+     *
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R5\FHIRDatePrimitive|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDate $periodDate
+     * @return static
+     */
+    public function setPeriodDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $periodDate = null): self
+    {
+        if (null !== $periodDate && !($periodDate instanceof FHIRDate)) {
+            $periodDate = new FHIRDate($periodDate);
+        }
+        $this->_trackValueSet($this->periodDate, $periodDate);
+        $this->periodDate = $periodDate;
+        return $this;
+    }
+
+    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Date/time(s) range of services included in this invoice.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRPeriod
+     */
+    public function getPeriodPeriod(): null|FHIRPeriod
+    {
+        return $this->periodPeriod;
+    }
+
+    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Date/time(s) range of services included in this invoice.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRPeriod $periodPeriod
+     * @return static
+     */
+    public function setPeriodPeriod(null|FHIRPeriod $periodPeriod = null): self
+    {
+        if (null === $periodPeriod) {
+            $periodPeriod = new FHIRPeriod();
+        }
+        $this->_trackValueSet($this->periodPeriod, $periodPeriod);
+        $this->periodPeriod = $periodPeriod;
+        return $this;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * Indicates who or what performed or participated in the charged service.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceParticipant[]
+     */
+    public function getParticipant(): null|array
+    {
+        return $this->participant;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * Indicates who or what performed or participated in the charged service.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceParticipant $participant
+     * @return static
+     */
+    public function addParticipant(null|FHIRInvoiceParticipant $participant = null): self
+    {
+        if (null === $participant) {
+            $participant = new FHIRInvoiceParticipant();
+        }
+        $this->_trackValueAdded();
+        $this->participant[] = $participant;
+        return $this;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * Indicates who or what performed or participated in the charged service.
+     *
+     * @param \HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceParticipant[] $participant
+     * @return static
+     */
+    public function setParticipant(array $participant = []): self
+    {
+        if ([] !== $this->participant) {
+            $this->_trackValuesRemoved(count($this->participant));
+            $this->participant = [];
+        }
+        if ([] === $participant) {
+            return $this;
+        }
+        foreach($participant as $v) {
+            if ($v instanceof FHIRInvoiceParticipant) {
+                $this->addParticipant($v);
+            } else {
+                $this->addParticipant(new FHIRInvoiceParticipant($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The organizationissuing the Invoice.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference
+     */
+    public function getIssuer(): null|FHIRReference
+    {
+        return $this->issuer;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The organizationissuing the Invoice.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference $issuer
+     * @return static
+     */
+    public function setIssuer(null|FHIRReference $issuer = null): self
+    {
+        if (null === $issuer) {
+            $issuer = new FHIRReference();
+        }
+        $this->_trackValueSet($this->issuer, $issuer);
+        $this->issuer = $issuer;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Account which is supposed to be balanced with this Invoice.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference
+     */
+    public function getAccount(): null|FHIRReference
+    {
+        return $this->account;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Account which is supposed to be balanced with this Invoice.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRReference $account
+     * @return static
+     */
+    public function setAccount(null|FHIRReference $account = null): self
+    {
+        if (null === $account) {
+            $account = new FHIRReference();
+        }
+        $this->_trackValueSet($this->account, $account);
+        $this->account = $account;
+        return $this;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * Each line item represents one charge for goods and services rendered. Details
+     * such.ofType(date), code and amount are found in the referenced ChargeItem
+     * resource.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceLineItem[]
+     */
+    public function getLineItem(): null|array
+    {
+        return $this->lineItem;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * Each line item represents one charge for goods and services rendered. Details
+     * such.ofType(date), code and amount are found in the referenced ChargeItem
+     * resource.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceLineItem $lineItem
+     * @return static
+     */
+    public function addLineItem(null|FHIRInvoiceLineItem $lineItem = null): self
+    {
+        if (null === $lineItem) {
+            $lineItem = new FHIRInvoiceLineItem();
+        }
+        $this->_trackValueAdded();
+        $this->lineItem[] = $lineItem;
+        return $this;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * Each line item represents one charge for goods and services rendered. Details
+     * such.ofType(date), code and amount are found in the referenced ChargeItem
+     * resource.
+     *
+     * @param \HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceLineItem[] $lineItem
+     * @return static
+     */
+    public function setLineItem(array $lineItem = []): self
+    {
+        if ([] !== $this->lineItem) {
+            $this->_trackValuesRemoved(count($this->lineItem));
+            $this->lineItem = [];
+        }
+        if ([] === $lineItem) {
+            return $this;
+        }
+        foreach($lineItem as $v) {
+            if ($v instanceof FHIRInvoiceLineItem) {
+                $this->addLineItem($v);
+            } else {
+                $this->addLineItem(new FHIRInvoiceLineItem($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Availability data for an {item}.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The total amount for the Invoice may be calculated as the sum of the line items
+     * with surcharges/deductions that apply in certain conditions. The priceComponent
+     * element can be used to offer transparency to the recipient of the Invoice of how
+     * the total price was calculated.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMonetaryComponent[]
+     */
+    public function getTotalPriceComponent(): null|array
+    {
+        return $this->totalPriceComponent;
+    }
+
+    /**
+     * Availability data for an {item}.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The total amount for the Invoice may be calculated as the sum of the line items
+     * with surcharges/deductions that apply in certain conditions. The priceComponent
+     * element can be used to offer transparency to the recipient of the Invoice of how
+     * the total price was calculated.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMonetaryComponent $totalPriceComponent
+     * @return static
+     */
+    public function addTotalPriceComponent(null|FHIRMonetaryComponent $totalPriceComponent = null): self
+    {
+        if (null === $totalPriceComponent) {
+            $totalPriceComponent = new FHIRMonetaryComponent();
+        }
+        $this->_trackValueAdded();
+        $this->totalPriceComponent[] = $totalPriceComponent;
+        return $this;
+    }
+
+    /**
+     * Availability data for an {item}.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The total amount for the Invoice may be calculated as the sum of the line items
+     * with surcharges/deductions that apply in certain conditions. The priceComponent
+     * element can be used to offer transparency to the recipient of the Invoice of how
+     * the total price was calculated.
+     *
+     * @param \HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMonetaryComponent[] $totalPriceComponent
+     * @return static
+     */
+    public function setTotalPriceComponent(array $totalPriceComponent = []): self
+    {
+        if ([] !== $this->totalPriceComponent) {
+            $this->_trackValuesRemoved(count($this->totalPriceComponent));
+            $this->totalPriceComponent = [];
+        }
+        if ([] === $totalPriceComponent) {
+            return $this;
+        }
+        foreach($totalPriceComponent as $v) {
+            if ($v instanceof FHIRMonetaryComponent) {
+                $this->addTotalPriceComponent($v);
+            } else {
+                $this->addTotalPriceComponent(new FHIRMonetaryComponent($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * An amount of economic utility in some recognized currency.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Invoice total , taxes excluded.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMoney
+     */
+    public function getTotalNet(): null|FHIRMoney
+    {
+        return $this->totalNet;
+    }
+
+    /**
+     * An amount of economic utility in some recognized currency.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Invoice total , taxes excluded.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMoney $totalNet
+     * @return static
+     */
+    public function setTotalNet(null|FHIRMoney $totalNet = null): self
+    {
+        if (null === $totalNet) {
+            $totalNet = new FHIRMoney();
+        }
+        $this->_trackValueSet($this->totalNet, $totalNet);
+        $this->totalNet = $totalNet;
+        return $this;
+    }
+
+    /**
+     * An amount of economic utility in some recognized currency.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Invoice total, tax included.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMoney
+     */
+    public function getTotalGross(): null|FHIRMoney
+    {
+        return $this->totalGross;
+    }
+
+    /**
+     * An amount of economic utility in some recognized currency.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Invoice total, tax included.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRMoney $totalGross
+     * @return static
+     */
+    public function setTotalGross(null|FHIRMoney $totalGross = null): self
+    {
+        if (null === $totalGross) {
+            $totalGross = new FHIRMoney();
+        }
+        $this->_trackValueSet($this->totalGross, $totalGross);
+        $this->totalGross = $totalGross;
+        return $this;
+    }
+
+    /**
+     * A string that may contain Github Flavored Markdown syntax for optional
+     * processing by a mark down presentation engine
+     * Systems are not required to have markdown support, so the text should be
+     * readable without markdown processing. The markdown syntax is GFM - see
+     * https://github.github.com/gfm/
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * Payment details such as banking details, period of payment, deductibles, methods
+     * of payment.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRMarkdown
+     */
+    public function getPaymentTerms(): null|FHIRMarkdown
+    {
+        return $this->paymentTerms;
+    }
+
+    /**
+     * A string that may contain Github Flavored Markdown syntax for optional
+     * processing by a mark down presentation engine
+     * Systems are not required to have markdown support, so the text should be
+     * readable without markdown processing. The markdown syntax is GFM - see
+     * https://github.github.com/gfm/
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * Payment details such as banking details, period of payment, deductibles, methods
+     * of payment.
+     *
+     * @param null|string|\HL7\FHIR\R5\FHIRMarkdownPrimitive|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRMarkdown $paymentTerms
+     * @return static
+     */
+    public function setPaymentTerms(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $paymentTerms = null): self
+    {
+        if (null !== $paymentTerms && !($paymentTerms instanceof FHIRMarkdown)) {
+            $paymentTerms = new FHIRMarkdown($paymentTerms);
+        }
+        $this->_trackValueSet($this->paymentTerms, $paymentTerms);
+        $this->paymentTerms = $paymentTerms;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Comments made about the invoice by the issuer, subject, or other participants.
+     *
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRAnnotation[]
+     */
+    public function getNote(): null|array
+    {
+        return $this->note;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Comments made about the invoice by the issuer, subject, or other participants.
+     *
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRAnnotation $note
+     * @return static
+     */
+    public function addNote(null|FHIRAnnotation $note = null): self
+    {
+        if (null === $note) {
+            $note = new FHIRAnnotation();
+        }
+        $this->_trackValueAdded();
+        $this->note[] = $note;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Comments made about the invoice by the issuer, subject, or other participants.
+     *
+     * @param \HL7\FHIR\R5\FHIRBase\FHIRElement\FHIRDataType\FHIRAnnotation[] $note
+     * @return static
+     */
+    public function setNote(array $note = []): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            if ($v instanceof FHIRAnnotation) {
+                $this->addNote($v);
+            } else {
+                $this->addNote(new FHIRAnnotation($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Returns the validation rules that this type's fields must comply with to be considered "valid"
+     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
+     *
+     * @return array
+     */
+    public function _getValidationRules(): array
+    {
+        return self::_VALIDATION_RULES;
+    }
+
+    /**
+     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
+     * passing.
+     *
+     * @return array
+     */
+    public function _getValidationErrors(): array
+    {
+        $errs = parent::_getValidationErrors();
+        $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getIdentifier())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getStatus())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_STATUS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getCancelledReason())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CANCELLED_REASON] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubject())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUBJECT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getRecipient())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RECIPIENT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getDate())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DATE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getCreation())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CREATION] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPeriodDate())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PERIOD_DATE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPeriodPeriod())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PERIOD_PERIOD] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getParticipant())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_PARTICIPANT, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getIssuer())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ISSUER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getAccount())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ACCOUNT] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getLineItem())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_LINE_ITEM, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if ([] !== ($vs = $this->getTotalPriceComponent())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_TOTAL_PRICE_COMPONENT, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getTotalNet())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TOTAL_NET] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getTotalGross())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TOTAL_GROSS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPaymentTerms())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PAYMENT_TERMS] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getNote())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_NOTE, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IDENTIFIER])) {
+            $v = $this->getIdentifier();
+            foreach($validationRules[self::FIELD_IDENTIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_IDENTIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IDENTIFIER])) {
+                        $errs[self::FIELD_IDENTIFIER] = [];
+                    }
+                    $errs[self::FIELD_IDENTIFIER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_STATUS])) {
+            $v = $this->getStatus();
+            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_STATUS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_STATUS])) {
+                        $errs[self::FIELD_STATUS] = [];
+                    }
+                    $errs[self::FIELD_STATUS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CANCELLED_REASON])) {
+            $v = $this->getCancelledReason();
+            foreach($validationRules[self::FIELD_CANCELLED_REASON] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_CANCELLED_REASON, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CANCELLED_REASON])) {
+                        $errs[self::FIELD_CANCELLED_REASON] = [];
+                    }
+                    $errs[self::FIELD_CANCELLED_REASON][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUBJECT])) {
+            $v = $this->getSubject();
+            foreach($validationRules[self::FIELD_SUBJECT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_SUBJECT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUBJECT])) {
+                        $errs[self::FIELD_SUBJECT] = [];
+                    }
+                    $errs[self::FIELD_SUBJECT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RECIPIENT])) {
+            $v = $this->getRecipient();
+            foreach($validationRules[self::FIELD_RECIPIENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_RECIPIENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RECIPIENT])) {
+                        $errs[self::FIELD_RECIPIENT] = [];
+                    }
+                    $errs[self::FIELD_RECIPIENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DATE])) {
+            $v = $this->getDate();
+            foreach($validationRules[self::FIELD_DATE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_DATE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DATE])) {
+                        $errs[self::FIELD_DATE] = [];
+                    }
+                    $errs[self::FIELD_DATE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CREATION])) {
+            $v = $this->getCreation();
+            foreach($validationRules[self::FIELD_CREATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_CREATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CREATION])) {
+                        $errs[self::FIELD_CREATION] = [];
+                    }
+                    $errs[self::FIELD_CREATION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PERIOD_DATE])) {
+            $v = $this->getPeriodDate();
+            foreach($validationRules[self::FIELD_PERIOD_DATE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_PERIOD_DATE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PERIOD_DATE])) {
+                        $errs[self::FIELD_PERIOD_DATE] = [];
+                    }
+                    $errs[self::FIELD_PERIOD_DATE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PERIOD_PERIOD])) {
+            $v = $this->getPeriodPeriod();
+            foreach($validationRules[self::FIELD_PERIOD_PERIOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_PERIOD_PERIOD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PERIOD_PERIOD])) {
+                        $errs[self::FIELD_PERIOD_PERIOD] = [];
+                    }
+                    $errs[self::FIELD_PERIOD_PERIOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PARTICIPANT])) {
+            $v = $this->getParticipant();
+            foreach($validationRules[self::FIELD_PARTICIPANT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_PARTICIPANT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PARTICIPANT])) {
+                        $errs[self::FIELD_PARTICIPANT] = [];
+                    }
+                    $errs[self::FIELD_PARTICIPANT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ISSUER])) {
+            $v = $this->getIssuer();
+            foreach($validationRules[self::FIELD_ISSUER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_ISSUER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ISSUER])) {
+                        $errs[self::FIELD_ISSUER] = [];
+                    }
+                    $errs[self::FIELD_ISSUER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ACCOUNT])) {
+            $v = $this->getAccount();
+            foreach($validationRules[self::FIELD_ACCOUNT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_ACCOUNT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ACCOUNT])) {
+                        $errs[self::FIELD_ACCOUNT] = [];
+                    }
+                    $errs[self::FIELD_ACCOUNT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LINE_ITEM])) {
+            $v = $this->getLineItem();
+            foreach($validationRules[self::FIELD_LINE_ITEM] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_LINE_ITEM, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LINE_ITEM])) {
+                        $errs[self::FIELD_LINE_ITEM] = [];
+                    }
+                    $errs[self::FIELD_LINE_ITEM][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TOTAL_PRICE_COMPONENT])) {
+            $v = $this->getTotalPriceComponent();
+            foreach($validationRules[self::FIELD_TOTAL_PRICE_COMPONENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_TOTAL_PRICE_COMPONENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TOTAL_PRICE_COMPONENT])) {
+                        $errs[self::FIELD_TOTAL_PRICE_COMPONENT] = [];
+                    }
+                    $errs[self::FIELD_TOTAL_PRICE_COMPONENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TOTAL_NET])) {
+            $v = $this->getTotalNet();
+            foreach($validationRules[self::FIELD_TOTAL_NET] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_TOTAL_NET, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TOTAL_NET])) {
+                        $errs[self::FIELD_TOTAL_NET] = [];
+                    }
+                    $errs[self::FIELD_TOTAL_NET][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TOTAL_GROSS])) {
+            $v = $this->getTotalGross();
+            foreach($validationRules[self::FIELD_TOTAL_GROSS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_TOTAL_GROSS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TOTAL_GROSS])) {
+                        $errs[self::FIELD_TOTAL_GROSS] = [];
+                    }
+                    $errs[self::FIELD_TOTAL_GROSS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PAYMENT_TERMS])) {
+            $v = $this->getPaymentTerms();
+            foreach($validationRules[self::FIELD_PAYMENT_TERMS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_PAYMENT_TERMS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PAYMENT_TERMS])) {
+                        $errs[self::FIELD_PAYMENT_TERMS] = [];
+                    }
+                    $errs[self::FIELD_PAYMENT_TERMS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NOTE])) {
+            $v = $this->getNote();
+            foreach($validationRules[self::FIELD_NOTE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_INVOICE, self::FIELD_NOTE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NOTE])) {
+                        $errs[self::FIELD_NOTE] = [];
+                    }
+                    $errs[self::FIELD_NOTE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTAINED])) {
+            $v = $this->getContained();
+            foreach($validationRules[self::FIELD_CONTAINED] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_CONTAINED, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTAINED])) {
+                        $errs[self::FIELD_CONTAINED] = [];
+                    }
+                    $errs[self::FIELD_CONTAINED][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTENSION])) {
+            $v = $this->getExtension();
+            foreach($validationRules[self::FIELD_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTENSION])) {
+                        $errs[self::FIELD_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MODIFIER_EXTENSION])) {
+            $v = $this->getModifierExtension();
+            foreach($validationRules[self::FIELD_MODIFIER_EXTENSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_MODIFIER_EXTENSION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MODIFIER_EXTENSION])) {
+                        $errs[self::FIELD_MODIFIER_EXTENSION] = [];
+                    }
+                    $errs[self::FIELD_MODIFIER_EXTENSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ID])) {
+            $v = $this->getId();
+            foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ID])) {
+                        $errs[self::FIELD_ID] = [];
+                    }
+                    $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IMPLICIT_RULES])) {
+            $v = $this->getImplicitRules();
+            foreach($validationRules[self::FIELD_IMPLICIT_RULES] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_IMPLICIT_RULES, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IMPLICIT_RULES])) {
+                        $errs[self::FIELD_IMPLICIT_RULES] = [];
+                    }
+                    $errs[self::FIELD_IMPLICIT_RULES][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LANGUAGE])) {
+            $v = $this->getLanguage();
+            foreach($validationRules[self::FIELD_LANGUAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_LANGUAGE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LANGUAGE])) {
+                        $errs[self::FIELD_LANGUAGE] = [];
+                    }
+                    $errs[self::FIELD_LANGUAGE][$rule] = $err;
+                }
+            }
+        }
+        return $errs;
+    }
+
+    /**
+     * @param null|string|\DOMElement $element
+     * @param null|\HL7\FHIR\R5\FHIRBase\FHIRResource\FHIRDomainResource\FHIRInvoice $type
+     * @param null|int|\HL7\FHIR\R5\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return null|\HL7\FHIR\R5\FHIRBase\FHIRResource\FHIRDomainResource\FHIRInvoice
+     */
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
+    {
+        if (null === $element) {
+            return null;
+        }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
+            libxml_use_internal_errors(true);
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
+            }
+            libxml_use_internal_errors(false);
+            $element = $dom->documentElement;
+        }
+        if (null === $type) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRInvoice)) {
+            throw new \RuntimeException(sprintf(
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
+            ));
+        }
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_IDENTIFIER === $n->nodeName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_STATUS === $n->nodeName) {
+                $type->setStatus(FHIRInvoiceStatus::xmlUnserialize($n));
+            } elseif (self::FIELD_CANCELLED_REASON === $n->nodeName) {
+                $type->setCancelledReason(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_TYPE === $n->nodeName) {
+                $type->setType(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_SUBJECT === $n->nodeName) {
+                $type->setSubject(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_RECIPIENT === $n->nodeName) {
+                $type->setRecipient(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_DATE === $n->nodeName) {
+                $type->setDate(FHIRDateTime::xmlUnserialize($n));
+            } elseif (self::FIELD_CREATION === $n->nodeName) {
+                $type->setCreation(FHIRDateTime::xmlUnserialize($n));
+            } elseif (self::FIELD_PERIOD_DATE === $n->nodeName) {
+                $type->setPeriodDate(FHIRDate::xmlUnserialize($n));
+            } elseif (self::FIELD_PERIOD_PERIOD === $n->nodeName) {
+                $type->setPeriodPeriod(FHIRPeriod::xmlUnserialize($n));
+            } elseif (self::FIELD_PARTICIPANT === $n->nodeName) {
+                $type->addParticipant(FHIRInvoiceParticipant::xmlUnserialize($n));
+            } elseif (self::FIELD_ISSUER === $n->nodeName) {
+                $type->setIssuer(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_ACCOUNT === $n->nodeName) {
+                $type->setAccount(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_LINE_ITEM === $n->nodeName) {
+                $type->addLineItem(FHIRInvoiceLineItem::xmlUnserialize($n));
+            } elseif (self::FIELD_TOTAL_PRICE_COMPONENT === $n->nodeName) {
+                $type->addTotalPriceComponent(FHIRMonetaryComponent::xmlUnserialize($n));
+            } elseif (self::FIELD_TOTAL_NET === $n->nodeName) {
+                $type->setTotalNet(FHIRMoney::xmlUnserialize($n));
+            } elseif (self::FIELD_TOTAL_GROSS === $n->nodeName) {
+                $type->setTotalGross(FHIRMoney::xmlUnserialize($n));
+            } elseif (self::FIELD_PAYMENT_TERMS === $n->nodeName) {
+                $type->setPaymentTerms(FHIRMarkdown::xmlUnserialize($n));
+            } elseif (self::FIELD_NOTE === $n->nodeName) {
+                $type->addNote(FHIRAnnotation::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_META === $n->nodeName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n));
+            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n));
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_CANCELLED_REASON);
+        if (null !== $n) {
+            $pt = $type->getCancelledReason();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setCancelledReason($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_DATE);
+        if (null !== $n) {
+            $pt = $type->getDate();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setDate($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_CREATION);
+        if (null !== $n) {
+            $pt = $type->getCreation();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setCreation($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_PERIOD_DATE);
+        if (null !== $n) {
+            $pt = $type->getPeriodDate();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setPeriodDate($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_PAYMENT_TERMS);
+        if (null !== $n) {
+            $pt = $type->getPaymentTerms();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setPaymentTerms($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
+        if (null !== $n) {
+            $pt = $type->getImplicitRules();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setImplicitRules($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
+        if (null !== $n) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLanguage($n->nodeValue);
+            }
+        }
+        return $type;
+    }
+
+    /**
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\R5\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
+     */
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
+    {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Invoice'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if ([] !== ($vs = $this->getIdentifier())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if (null !== ($v = $this->getStatus())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getCancelledReason())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CANCELLED_REASON);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getType())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getSubject())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_SUBJECT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getRecipient())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_RECIPIENT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getDate())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_DATE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getCreation())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CREATION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPeriodDate())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PERIOD_DATE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPeriodPeriod())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PERIOD_PERIOD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if ([] !== ($vs = $this->getParticipant())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_PARTICIPANT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if (null !== ($v = $this->getIssuer())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ISSUER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getAccount())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ACCOUNT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if ([] !== ($vs = $this->getLineItem())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_LINE_ITEM);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if ([] !== ($vs = $this->getTotalPriceComponent())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_TOTAL_PRICE_COMPONENT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if (null !== ($v = $this->getTotalNet())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_TOTAL_NET);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getTotalGross())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_TOTAL_GROSS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPaymentTerms())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PAYMENT_TERMS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if ([] !== ($vs = $this->getNote())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_NOTE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        return $element;
+    }
+
+    /**
+     * @return \stdClass
+     */
+    public function jsonSerialize(): mixed
+    {
+        $out = parent::jsonSerialize();
+        if ([] !== ($vs = $this->getIdentifier())) {
+            $out->{self::FIELD_IDENTIFIER} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_IDENTIFIER}[] = $v;
+            }
+        }
+        if (null !== ($v = $this->getStatus())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_STATUS} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRInvoiceStatus::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_STATUS_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getCancelledReason())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_CANCELLED_REASON} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_CANCELLED_REASON_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            $out->{self::FIELD_TYPE} = $v;
+        }
+        if (null !== ($v = $this->getSubject())) {
+            $out->{self::FIELD_SUBJECT} = $v;
+        }
+        if (null !== ($v = $this->getRecipient())) {
+            $out->{self::FIELD_RECIPIENT} = $v;
+        }
+        if (null !== ($v = $this->getDate())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DATE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDateTime::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DATE_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getCreation())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_CREATION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDateTime::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_CREATION_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getPeriodDate())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_PERIOD_DATE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDate::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_PERIOD_DATE_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getPeriodPeriod())) {
+            $out->{self::FIELD_PERIOD_PERIOD} = $v;
+        }
+        if ([] !== ($vs = $this->getParticipant())) {
+            $out->{self::FIELD_PARTICIPANT} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_PARTICIPANT}[] = $v;
+            }
+        }
+        if (null !== ($v = $this->getIssuer())) {
+            $out->{self::FIELD_ISSUER} = $v;
+        }
+        if (null !== ($v = $this->getAccount())) {
+            $out->{self::FIELD_ACCOUNT} = $v;
+        }
+        if ([] !== ($vs = $this->getLineItem())) {
+            $out->{self::FIELD_LINE_ITEM} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_LINE_ITEM}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getTotalPriceComponent())) {
+            $out->{self::FIELD_TOTAL_PRICE_COMPONENT} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_TOTAL_PRICE_COMPONENT}[] = $v;
+            }
+        }
+        if (null !== ($v = $this->getTotalNet())) {
+            $out->{self::FIELD_TOTAL_NET} = $v;
+        }
+        if (null !== ($v = $this->getTotalGross())) {
+            $out->{self::FIELD_TOTAL_GROSS} = $v;
+        }
+        if (null !== ($v = $this->getPaymentTerms())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_PAYMENT_TERMS} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRMarkdown::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_PAYMENT_TERMS_EXT} = $ext;
+            }
+        }
+        if ([] !== ($vs = $this->getNote())) {
+            $out->{self::FIELD_NOTE} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_NOTE}[] = $v;
+            }
+        }
+
+        $out->{PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE} = $this->_getResourceType();
+
+        return $out;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return self::FHIR_TYPE_NAME;
+    }
+}

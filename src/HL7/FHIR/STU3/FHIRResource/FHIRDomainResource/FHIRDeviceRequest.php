@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,20 +62,34 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRCodePrimitive;
+use HL7\FHIR\STU3\FHIRDateTimePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRAnnotation;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceRequest\FHIRDeviceRequestRequester;
+use HL7\FHIR\STU3\FHIRElement\FHIRCode;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\STU3\FHIRElement\FHIRDateTime;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
+use HL7\FHIR\STU3\FHIRElement\FHIRId;
 use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
+use HL7\FHIR\STU3\FHIRElement\FHIRMeta;
+use HL7\FHIR\STU3\FHIRElement\FHIRNarrative;
 use HL7\FHIR\STU3\FHIRElement\FHIRPeriod;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRRequestPriority;
 use HL7\FHIR\STU3\FHIRElement\FHIRRequestStatus;
 use HL7\FHIR\STU3\FHIRElement\FHIRTiming;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRIdPrimitive;
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRTypeMap;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * Represents a request for a patient to employ a medical device. The device may be
@@ -89,97 +103,46 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST;
-    const FIELD_AUTHORED_ON = 'authoredOn';
-    const FIELD_AUTHORED_ON_EXT = '_authoredOn';
-    const FIELD_BASED_ON = 'basedOn';
-    const FIELD_CODE_CODEABLE_CONCEPT = 'codeCodeableConcept';
-    const FIELD_CODE_REFERENCE = 'codeReference';
-    const FIELD_CONTEXT = 'context';
-    const FIELD_DEFINITION = 'definition';
-    const FIELD_GROUP_IDENTIFIER = 'groupIdentifier';
+
     const FIELD_IDENTIFIER = 'identifier';
+    const FIELD_DEFINITION = 'definition';
+    const FIELD_BASED_ON = 'basedOn';
+    const FIELD_PRIOR_REQUEST = 'priorRequest';
+    const FIELD_GROUP_IDENTIFIER = 'groupIdentifier';
+    const FIELD_STATUS = 'status';
+    const FIELD_STATUS_EXT = '_status';
     const FIELD_INTENT = 'intent';
-    const FIELD_NOTE = 'note';
+    const FIELD_PRIORITY = 'priority';
+    const FIELD_PRIORITY_EXT = '_priority';
+    const FIELD_CODE_REFERENCE = 'codeReference';
+    const FIELD_CODE_CODEABLE_CONCEPT = 'codeCodeableConcept';
+    const FIELD_SUBJECT = 'subject';
+    const FIELD_CONTEXT = 'context';
     const FIELD_OCCURRENCE_DATE_TIME = 'occurrenceDateTime';
     const FIELD_OCCURRENCE_DATE_TIME_EXT = '_occurrenceDateTime';
     const FIELD_OCCURRENCE_PERIOD = 'occurrencePeriod';
     const FIELD_OCCURRENCE_TIMING = 'occurrenceTiming';
-    const FIELD_PERFORMER = 'performer';
+    const FIELD_AUTHORED_ON = 'authoredOn';
+    const FIELD_AUTHORED_ON_EXT = '_authoredOn';
+    const FIELD_REQUESTER = 'requester';
     const FIELD_PERFORMER_TYPE = 'performerType';
-    const FIELD_PRIOR_REQUEST = 'priorRequest';
-    const FIELD_PRIORITY = 'priority';
-    const FIELD_PRIORITY_EXT = '_priority';
+    const FIELD_PERFORMER = 'performer';
     const FIELD_REASON_CODE = 'reasonCode';
     const FIELD_REASON_REFERENCE = 'reasonReference';
-    const FIELD_RELEVANT_HISTORY = 'relevantHistory';
-    const FIELD_REQUESTER = 'requester';
-    const FIELD_STATUS = 'status';
-    const FIELD_STATUS_EXT = '_status';
-    const FIELD_SUBJECT = 'subject';
     const FIELD_SUPPORTING_INFO = 'supportingInfo';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A date, date-time or partial date (e.g. just year or year + month). If hours and
-     * minutes are specified, a time zone SHALL be populated. The format is a union of
-     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
-     * due to schema type constraints but may be zero-filled and may be ignored. Dates
-     * SHALL be valid dates.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * When the request transitioned to being actionable.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
-     */
-    protected $authoredOn = null;
+    const FIELD_NOTE = 'note';
+    const FIELD_RELEVANT_HISTORY = 'relevantHistory';
 
     /**
-     * A reference from one resource to another.
+     * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Plan/proposal/order fulfilled by this request.
+     * Identifiers assigned to this order by the orderer or by the receiver.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
-    protected $basedOn = [];
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The details of the device to be used.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    protected $codeCodeableConcept = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The details of the device to be used.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $codeReference = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * An encounter that provides additional context in which this request is made.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $context = null;
-
+    protected null|array $identifier = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -191,8 +154,28 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $definition = [];
-
+    protected null|array $definition = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Plan/proposal/order fulfilled by this request.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $basedOn = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The request takes the place of the referenced completed or terminated
+     * request(s).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $priorRequest = [];
     /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
@@ -202,19 +185,16 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
-    protected $groupIdentifier = null;
-
+    protected null|FHIRIdentifier $groupIdentifier = null;
     /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * The status of the communication request.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Identifiers assigned to this order by the orderer or by the receiver.
+     * The status of the request.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestStatus
      */
-    protected $identifier = [];
-
+    protected null|FHIRRequestStatus $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -225,22 +205,58 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    protected $intent = null;
-
+    protected null|FHIRCodeableConcept $intent = null;
     /**
-     * A text note which also contains information about who made the statement and
-     * when.
+     * Codes indicating the relative importance of a communication request.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates how quickly the {{title}} should be addressed with respect to other
+     * requests.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestPriority
+     */
+    protected null|FHIRRequestPriority $priority = null;
+    /**
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Details about this request that were not represented at all or sufficiently in
-     * one of the attributes provided in a class. These may include for example a
-     * comment, an instruction, or a note associated with the statement.
+     * The details of the device to be used.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $note = [];
-
+    protected null|FHIRReference $codeReference = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The details of the device to be used.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected null|FHIRCodeableConcept $codeCodeableConcept = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The patient who will use the device.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $subject = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An encounter that provides additional context in which this request is made.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $context = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -256,8 +272,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    protected $occurrenceDateTime = null;
-
+    protected null|FHIRDateTime $occurrenceDateTime = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -270,8 +285,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    protected $occurrencePeriod = null;
-
+    protected null|FHIRPeriod $occurrencePeriod = null;
     /**
      * Specifies an event that may occur multiple times. Timing schedules are used to
      * record when things are planned, expected or requested to occur. The most common
@@ -288,19 +302,30 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming
      */
-    protected $occurrenceTiming = null;
-
+    protected null|FHIRTiming $occurrenceTiming = null;
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The desired perfomer for doing the diagnostic testing.
+     * When the request transitioned to being actionable.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    protected $performer = null;
-
+    protected null|FHIRDateTime $authoredOn = null;
+    /**
+     * Represents a request for a patient to employ a medical device. The device may be
+     * an implantable device, or an external assistive device, such as a walker.
+     *
+     * The individual who initiated the request and has responsibility for its
+     * activation.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceRequest\FHIRDeviceRequestRequester
+     */
+    protected null|FHIRDeviceRequestRequester $requester = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -311,31 +336,17 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    protected $performerType = null;
-
+    protected null|FHIRCodeableConcept $performerType = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The request takes the place of the referenced completed or terminated
-     * request(s).
+     * The desired perfomer for doing the diagnostic testing.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $priorRequest = [];
-
-    /**
-     * Codes indicating the relative importance of a communication request.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Indicates how quickly the {{title}} should be addressed with respect to other
-     * requests.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestPriority
-     */
-    protected $priority = null;
-
+    protected null|FHIRReference $performer = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -346,8 +357,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    protected $reasonCode = [];
-
+    protected null|array $reasonCode = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -357,51 +367,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $reasonReference = [];
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Key events in the history of the request.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $relevantHistory = [];
-
-    /**
-     * Represents a request for a patient to employ a medical device. The device may be
-     * an implantable device, or an external assistive device, such as a walker.
-     *
-     * The individual who initiated the request and has responsibility for its
-     * activation.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceRequest\FHIRDeviceRequestRequester
-     */
-    protected $requester = null;
-
-    /**
-     * The status of the communication request.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The status of the request.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestStatus
-     */
-    protected $status = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The patient who will use the device.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $subject = null;
-
+    protected null|array $reasonReference = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -413,90 +379,64 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $supportingInfo = [];
+    protected null|array $supportingInfo = [];
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Details about this request that were not represented at all or sufficiently in
+     * one of the attributes provided in a class. These may include for example a
+     * comment, an instruction, or a note associated with the statement.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
+     */
+    protected null|array $note = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Key events in the history of the request.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $relevantHistory = [];
 
     /**
      * Validation map for fields in type DeviceRequest
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRDeviceRequest Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRDeviceRequest::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_AUTHORED_ON]) || isset($data[self::FIELD_AUTHORED_ON_EXT])) {
-            if (isset($data[self::FIELD_AUTHORED_ON])) {
-                $value = $data[self::FIELD_AUTHORED_ON];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_AUTHORED_ON_EXT]) && is_array($data[self::FIELD_AUTHORED_ON_EXT])) {
-                $ext = $data[self::FIELD_AUTHORED_ON_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRDateTime) {
-                    $this->setAuthoredOn($value);
-                } else if (is_array($value)) {
-                    $this->setAuthoredOn(new FHIRDateTime(array_merge($ext, $value)));
-                } else {
-                    $this->setAuthoredOn(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setAuthoredOn(new FHIRDateTime($ext));
-            }
-        }
-        if (isset($data[self::FIELD_BASED_ON])) {
-            if (is_array($data[self::FIELD_BASED_ON])) {
-                foreach($data[self::FIELD_BASED_ON] as $v) {
+        if (isset($data[self::FIELD_IDENTIFIER])) {
+            if (is_array($data[self::FIELD_IDENTIFIER])) {
+                foreach($data[self::FIELD_IDENTIFIER] as $v) {
                     if (null === $v) {
                         continue;
                     }
-                    if ($v instanceof FHIRReference) {
-                        $this->addBasedOn($v);
+                    if ($v instanceof FHIRIdentifier) {
+                        $this->addIdentifier($v);
                     } else {
-                        $this->addBasedOn(new FHIRReference($v));
+                        $this->addIdentifier(new FHIRIdentifier($v));
                     }
                 }
-            } else if ($data[self::FIELD_BASED_ON] instanceof FHIRReference) {
-                $this->addBasedOn($data[self::FIELD_BASED_ON]);
+            } elseif ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+                $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
             } else {
-                $this->addBasedOn(new FHIRReference($data[self::FIELD_BASED_ON]));
-            }
-        }
-        if (isset($data[self::FIELD_CODE_CODEABLE_CONCEPT])) {
-            if ($data[self::FIELD_CODE_CODEABLE_CONCEPT] instanceof FHIRCodeableConcept) {
-                $this->setCodeCodeableConcept($data[self::FIELD_CODE_CODEABLE_CONCEPT]);
-            } else {
-                $this->setCodeCodeableConcept(new FHIRCodeableConcept($data[self::FIELD_CODE_CODEABLE_CONCEPT]));
-            }
-        }
-        if (isset($data[self::FIELD_CODE_REFERENCE])) {
-            if ($data[self::FIELD_CODE_REFERENCE] instanceof FHIRReference) {
-                $this->setCodeReference($data[self::FIELD_CODE_REFERENCE]);
-            } else {
-                $this->setCodeReference(new FHIRReference($data[self::FIELD_CODE_REFERENCE]));
-            }
-        }
-        if (isset($data[self::FIELD_CONTEXT])) {
-            if ($data[self::FIELD_CONTEXT] instanceof FHIRReference) {
-                $this->setContext($data[self::FIELD_CONTEXT]);
-            } else {
-                $this->setContext(new FHIRReference($data[self::FIELD_CONTEXT]));
+                $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
         }
         if (isset($data[self::FIELD_DEFINITION])) {
@@ -511,10 +451,46 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                         $this->addDefinition(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_DEFINITION] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_DEFINITION] instanceof FHIRReference) {
                 $this->addDefinition($data[self::FIELD_DEFINITION]);
             } else {
                 $this->addDefinition(new FHIRReference($data[self::FIELD_DEFINITION]));
+            }
+        }
+        if (isset($data[self::FIELD_BASED_ON])) {
+            if (is_array($data[self::FIELD_BASED_ON])) {
+                foreach($data[self::FIELD_BASED_ON] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addBasedOn($v);
+                    } else {
+                        $this->addBasedOn(new FHIRReference($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_BASED_ON] instanceof FHIRReference) {
+                $this->addBasedOn($data[self::FIELD_BASED_ON]);
+            } else {
+                $this->addBasedOn(new FHIRReference($data[self::FIELD_BASED_ON]));
+            }
+        }
+        if (isset($data[self::FIELD_PRIOR_REQUEST])) {
+            if (is_array($data[self::FIELD_PRIOR_REQUEST])) {
+                foreach($data[self::FIELD_PRIOR_REQUEST] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addPriorRequest($v);
+                    } else {
+                        $this->addPriorRequest(new FHIRReference($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_PRIOR_REQUEST] instanceof FHIRReference) {
+                $this->addPriorRequest($data[self::FIELD_PRIOR_REQUEST]);
+            } else {
+                $this->addPriorRequest(new FHIRReference($data[self::FIELD_PRIOR_REQUEST]));
             }
         }
         if (isset($data[self::FIELD_GROUP_IDENTIFIER])) {
@@ -524,22 +500,19 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 $this->setGroupIdentifier(new FHIRIdentifier($data[self::FIELD_GROUP_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_IDENTIFIER])) {
-            if (is_array($data[self::FIELD_IDENTIFIER])) {
-                foreach($data[self::FIELD_IDENTIFIER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRIdentifier) {
-                        $this->addIdentifier($v);
-                    } else {
-                        $this->addIdentifier(new FHIRIdentifier($v));
-                    }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            $value = $data[self::FIELD_STATUS] ?? null;
+            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) ? $data[self::FIELD_STATUS_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRRequestStatus) {
+                    $this->setStatus($value);
+                } else if (is_array($value)) {
+                    $this->setStatus(new FHIRRequestStatus(array_merge($ext, $value)));
+                } else {
+                    $this->setStatus(new FHIRRequestStatus([FHIRRequestStatus::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
-                $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+            } elseif ([] !== $ext) {
+                $this->setStatus(new FHIRRequestStatus($ext));
             }
         }
         if (isset($data[self::FIELD_INTENT])) {
@@ -549,35 +522,52 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 $this->setIntent(new FHIRCodeableConcept($data[self::FIELD_INTENT]));
             }
         }
-        if (isset($data[self::FIELD_NOTE])) {
-            if (is_array($data[self::FIELD_NOTE])) {
-                foreach($data[self::FIELD_NOTE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRAnnotation) {
-                        $this->addNote($v);
-                    } else {
-                        $this->addNote(new FHIRAnnotation($v));
-                    }
+        if (isset($data[self::FIELD_PRIORITY]) || isset($data[self::FIELD_PRIORITY_EXT])) {
+            $value = $data[self::FIELD_PRIORITY] ?? null;
+            $ext = (isset($data[self::FIELD_PRIORITY_EXT]) && is_array($data[self::FIELD_PRIORITY_EXT])) ? $data[self::FIELD_PRIORITY_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRRequestPriority) {
+                    $this->setPriority($value);
+                } else if (is_array($value)) {
+                    $this->setPriority(new FHIRRequestPriority(array_merge($ext, $value)));
+                } else {
+                    $this->setPriority(new FHIRRequestPriority([FHIRRequestPriority::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ($data[self::FIELD_NOTE] instanceof FHIRAnnotation) {
-                $this->addNote($data[self::FIELD_NOTE]);
+            } elseif ([] !== $ext) {
+                $this->setPriority(new FHIRRequestPriority($ext));
+            }
+        }
+        if (isset($data[self::FIELD_CODE_REFERENCE])) {
+            if ($data[self::FIELD_CODE_REFERENCE] instanceof FHIRReference) {
+                $this->setCodeReference($data[self::FIELD_CODE_REFERENCE]);
             } else {
-                $this->addNote(new FHIRAnnotation($data[self::FIELD_NOTE]));
+                $this->setCodeReference(new FHIRReference($data[self::FIELD_CODE_REFERENCE]));
+            }
+        }
+        if (isset($data[self::FIELD_CODE_CODEABLE_CONCEPT])) {
+            if ($data[self::FIELD_CODE_CODEABLE_CONCEPT] instanceof FHIRCodeableConcept) {
+                $this->setCodeCodeableConcept($data[self::FIELD_CODE_CODEABLE_CONCEPT]);
+            } else {
+                $this->setCodeCodeableConcept(new FHIRCodeableConcept($data[self::FIELD_CODE_CODEABLE_CONCEPT]));
+            }
+        }
+        if (isset($data[self::FIELD_SUBJECT])) {
+            if ($data[self::FIELD_SUBJECT] instanceof FHIRReference) {
+                $this->setSubject($data[self::FIELD_SUBJECT]);
+            } else {
+                $this->setSubject(new FHIRReference($data[self::FIELD_SUBJECT]));
+            }
+        }
+        if (isset($data[self::FIELD_CONTEXT])) {
+            if ($data[self::FIELD_CONTEXT] instanceof FHIRReference) {
+                $this->setContext($data[self::FIELD_CONTEXT]);
+            } else {
+                $this->setContext(new FHIRReference($data[self::FIELD_CONTEXT]));
             }
         }
         if (isset($data[self::FIELD_OCCURRENCE_DATE_TIME]) || isset($data[self::FIELD_OCCURRENCE_DATE_TIME_EXT])) {
-            if (isset($data[self::FIELD_OCCURRENCE_DATE_TIME])) {
-                $value = $data[self::FIELD_OCCURRENCE_DATE_TIME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_OCCURRENCE_DATE_TIME_EXT]) && is_array($data[self::FIELD_OCCURRENCE_DATE_TIME_EXT])) {
-                $ext = $data[self::FIELD_OCCURRENCE_DATE_TIME_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_OCCURRENCE_DATE_TIME] ?? null;
+            $ext = (isset($data[self::FIELD_OCCURRENCE_DATE_TIME_EXT]) && is_array($data[self::FIELD_OCCURRENCE_DATE_TIME_EXT])) ? $data[self::FIELD_OCCURRENCE_DATE_TIME_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRDateTime) {
                     $this->setOccurrenceDateTime($value);
@@ -586,7 +576,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 } else {
                     $this->setOccurrenceDateTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setOccurrenceDateTime(new FHIRDateTime($ext));
             }
         }
@@ -604,11 +594,26 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 $this->setOccurrenceTiming(new FHIRTiming($data[self::FIELD_OCCURRENCE_TIMING]));
             }
         }
-        if (isset($data[self::FIELD_PERFORMER])) {
-            if ($data[self::FIELD_PERFORMER] instanceof FHIRReference) {
-                $this->setPerformer($data[self::FIELD_PERFORMER]);
+        if (isset($data[self::FIELD_AUTHORED_ON]) || isset($data[self::FIELD_AUTHORED_ON_EXT])) {
+            $value = $data[self::FIELD_AUTHORED_ON] ?? null;
+            $ext = (isset($data[self::FIELD_AUTHORED_ON_EXT]) && is_array($data[self::FIELD_AUTHORED_ON_EXT])) ? $data[self::FIELD_AUTHORED_ON_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setAuthoredOn($value);
+                } else if (is_array($value)) {
+                    $this->setAuthoredOn(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setAuthoredOn(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setAuthoredOn(new FHIRDateTime($ext));
+            }
+        }
+        if (isset($data[self::FIELD_REQUESTER])) {
+            if ($data[self::FIELD_REQUESTER] instanceof FHIRDeviceRequestRequester) {
+                $this->setRequester($data[self::FIELD_REQUESTER]);
             } else {
-                $this->setPerformer(new FHIRReference($data[self::FIELD_PERFORMER]));
+                $this->setRequester(new FHIRDeviceRequestRequester($data[self::FIELD_REQUESTER]));
             }
         }
         if (isset($data[self::FIELD_PERFORMER_TYPE])) {
@@ -618,45 +623,11 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 $this->setPerformerType(new FHIRCodeableConcept($data[self::FIELD_PERFORMER_TYPE]));
             }
         }
-        if (isset($data[self::FIELD_PRIOR_REQUEST])) {
-            if (is_array($data[self::FIELD_PRIOR_REQUEST])) {
-                foreach($data[self::FIELD_PRIOR_REQUEST] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addPriorRequest($v);
-                    } else {
-                        $this->addPriorRequest(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_PRIOR_REQUEST] instanceof FHIRReference) {
-                $this->addPriorRequest($data[self::FIELD_PRIOR_REQUEST]);
+        if (isset($data[self::FIELD_PERFORMER])) {
+            if ($data[self::FIELD_PERFORMER] instanceof FHIRReference) {
+                $this->setPerformer($data[self::FIELD_PERFORMER]);
             } else {
-                $this->addPriorRequest(new FHIRReference($data[self::FIELD_PRIOR_REQUEST]));
-            }
-        }
-        if (isset($data[self::FIELD_PRIORITY]) || isset($data[self::FIELD_PRIORITY_EXT])) {
-            if (isset($data[self::FIELD_PRIORITY])) {
-                $value = $data[self::FIELD_PRIORITY];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_PRIORITY_EXT]) && is_array($data[self::FIELD_PRIORITY_EXT])) {
-                $ext = $data[self::FIELD_PRIORITY_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRRequestPriority) {
-                    $this->setPriority($value);
-                } else if (is_array($value)) {
-                    $this->setPriority(new FHIRRequestPriority(array_merge($ext, $value)));
-                } else {
-                    $this->setPriority(new FHIRRequestPriority([FHIRRequestPriority::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setPriority(new FHIRRequestPriority($ext));
+                $this->setPerformer(new FHIRReference($data[self::FIELD_PERFORMER]));
             }
         }
         if (isset($data[self::FIELD_REASON_CODE])) {
@@ -671,7 +642,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                         $this->addReasonCode(new FHIRCodeableConcept($v));
                     }
                 }
-            } else if ($data[self::FIELD_REASON_CODE] instanceof FHIRCodeableConcept) {
+            } elseif ($data[self::FIELD_REASON_CODE] instanceof FHIRCodeableConcept) {
                 $this->addReasonCode($data[self::FIELD_REASON_CODE]);
             } else {
                 $this->addReasonCode(new FHIRCodeableConcept($data[self::FIELD_REASON_CODE]));
@@ -689,65 +660,10 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                         $this->addReasonReference(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_REASON_REFERENCE] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_REASON_REFERENCE] instanceof FHIRReference) {
                 $this->addReasonReference($data[self::FIELD_REASON_REFERENCE]);
             } else {
                 $this->addReasonReference(new FHIRReference($data[self::FIELD_REASON_REFERENCE]));
-            }
-        }
-        if (isset($data[self::FIELD_RELEVANT_HISTORY])) {
-            if (is_array($data[self::FIELD_RELEVANT_HISTORY])) {
-                foreach($data[self::FIELD_RELEVANT_HISTORY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addRelevantHistory($v);
-                    } else {
-                        $this->addRelevantHistory(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_RELEVANT_HISTORY] instanceof FHIRReference) {
-                $this->addRelevantHistory($data[self::FIELD_RELEVANT_HISTORY]);
-            } else {
-                $this->addRelevantHistory(new FHIRReference($data[self::FIELD_RELEVANT_HISTORY]));
-            }
-        }
-        if (isset($data[self::FIELD_REQUESTER])) {
-            if ($data[self::FIELD_REQUESTER] instanceof FHIRDeviceRequestRequester) {
-                $this->setRequester($data[self::FIELD_REQUESTER]);
-            } else {
-                $this->setRequester(new FHIRDeviceRequestRequester($data[self::FIELD_REQUESTER]));
-            }
-        }
-        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
-            if (isset($data[self::FIELD_STATUS])) {
-                $value = $data[self::FIELD_STATUS];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) {
-                $ext = $data[self::FIELD_STATUS_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRRequestStatus) {
-                    $this->setStatus($value);
-                } else if (is_array($value)) {
-                    $this->setStatus(new FHIRRequestStatus(array_merge($ext, $value)));
-                } else {
-                    $this->setStatus(new FHIRRequestStatus([FHIRRequestStatus::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setStatus(new FHIRRequestStatus($ext));
-            }
-        }
-        if (isset($data[self::FIELD_SUBJECT])) {
-            if ($data[self::FIELD_SUBJECT] instanceof FHIRReference) {
-                $this->setSubject($data[self::FIELD_SUBJECT]);
-            } else {
-                $this->setSubject(new FHIRReference($data[self::FIELD_SUBJECT]));
             }
         }
         if (isset($data[self::FIELD_SUPPORTING_INFO])) {
@@ -762,18 +678,55 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                         $this->addSupportingInfo(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_SUPPORTING_INFO] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_SUPPORTING_INFO] instanceof FHIRReference) {
                 $this->addSupportingInfo($data[self::FIELD_SUPPORTING_INFO]);
             } else {
                 $this->addSupportingInfo(new FHIRReference($data[self::FIELD_SUPPORTING_INFO]));
             }
         }
+        if (isset($data[self::FIELD_NOTE])) {
+            if (is_array($data[self::FIELD_NOTE])) {
+                foreach($data[self::FIELD_NOTE] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRAnnotation) {
+                        $this->addNote($v);
+                    } else {
+                        $this->addNote(new FHIRAnnotation($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_NOTE] instanceof FHIRAnnotation) {
+                $this->addNote($data[self::FIELD_NOTE]);
+            } else {
+                $this->addNote(new FHIRAnnotation($data[self::FIELD_NOTE]));
+            }
+        }
+        if (isset($data[self::FIELD_RELEVANT_HISTORY])) {
+            if (is_array($data[self::FIELD_RELEVANT_HISTORY])) {
+                foreach($data[self::FIELD_RELEVANT_HISTORY] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addRelevantHistory($v);
+                    } else {
+                        $this->addRelevantHistory(new FHIRReference($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_RELEVANT_HISTORY] instanceof FHIRReference) {
+                $this->addRelevantHistory($data[self::FIELD_RELEVANT_HISTORY]);
+            } else {
+                $this->addRelevantHistory(new FHIRReference($data[self::FIELD_RELEVANT_HISTORY]));
+            }
+        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -781,212 +734,72 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<DeviceRequest{$xmlns}></DeviceRequest>";
-    }
-    /**
-     * @return string
-     */
-    public function _getResourceType()
+    public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
 
 
     /**
-     * A date, date-time or partial date (e.g. just year or year + month). If hours and
-     * minutes are specified, a time zone SHALL be populated. The format is a union of
-     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
-     * due to schema type constraints but may be zero-filled and may be ignored. Dates
-     * SHALL be valid dates.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * When the request transitioned to being actionable.
+     * Identifiers assigned to this order by the orderer or by the receiver.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
-    public function getAuthoredOn()
+    public function getIdentifier(): null|array
     {
-        return $this->authoredOn;
+        return $this->identifier;
     }
 
     /**
-     * A date, date-time or partial date (e.g. just year or year + month). If hours and
-     * minutes are specified, a time zone SHALL be populated. The format is a union of
-     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
-     * due to schema type constraints but may be zero-filled and may be ignored. Dates
-     * SHALL be valid dates.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * When the request transitioned to being actionable.
+     * Identifiers assigned to this order by the orderer or by the receiver.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $authoredOn
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function setAuthoredOn($authoredOn = null)
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
-        if (null === $authoredOn) {
-            $this->authoredOn = null;
-            return $this;
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
         }
-        if ($authoredOn instanceof FHIRDateTime) {
-            $this->authoredOn = $authoredOn;
-            return $this;
-        }
-        $this->authoredOn = new FHIRDateTime($authoredOn);
+        $this->_trackValueAdded();
+        $this->identifier[] = $identifier;
         return $this;
     }
 
     /**
-     * A reference from one resource to another.
+     * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Plan/proposal/order fulfilled by this request.
+     * Identifiers assigned to this order by the orderer or by the receiver.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    public function getBasedOn()
-    {
-        return $this->basedOn;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Plan/proposal/order fulfilled by this request.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $basedOn
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function addBasedOn(FHIRReference $basedOn = null)
+    public function setIdentifier(array $identifier = []): self
     {
-        $this->basedOn[] = $basedOn;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Plan/proposal/order fulfilled by this request.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $basedOn
-     * @return static
-     */
-    public function setBasedOn(array $basedOn = [])
-    {
-        $this->basedOn = [];
-        if ([] === $basedOn) {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
             return $this;
         }
-        foreach($basedOn as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addBasedOn($v);
+        foreach($identifier as $v) {
+            if ($v instanceof FHIRIdentifier) {
+                $this->addIdentifier($v);
             } else {
-                $this->addBasedOn(new FHIRReference($v));
+                $this->addIdentifier(new FHIRIdentifier($v));
             }
         }
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The details of the device to be used.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public function getCodeCodeableConcept()
-    {
-        return $this->codeCodeableConcept;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The details of the device to be used.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $codeCodeableConcept
-     * @return static
-     */
-    public function setCodeCodeableConcept(FHIRCodeableConcept $codeCodeableConcept = null)
-    {
-        $this->codeCodeableConcept = $codeCodeableConcept;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The details of the device to be used.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getCodeReference()
-    {
-        return $this->codeReference;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The details of the device to be used.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $codeReference
-     * @return static
-     */
-    public function setCodeReference(FHIRReference $codeReference = null)
-    {
-        $this->codeReference = $codeReference;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * An encounter that provides additional context in which this request is made.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getContext()
-    {
-        return $this->context;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * An encounter that provides additional context in which this request is made.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $context
-     * @return static
-     */
-    public function setContext(FHIRReference $context = null)
-    {
-        $this->context = $context;
         return $this;
     }
 
@@ -1001,7 +814,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getDefinition()
+    public function getDefinition(): null|array
     {
         return $this->definition;
     }
@@ -1018,8 +831,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $definition
      * @return static
      */
-    public function addDefinition(FHIRReference $definition = null)
+    public function addDefinition(null|FHIRReference $definition = null): self
     {
+        if (null === $definition) {
+            $definition = new FHIRReference();
+        }
+        $this->_trackValueAdded();
         $this->definition[] = $definition;
         return $this;
     }
@@ -1036,9 +853,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $definition
      * @return static
      */
-    public function setDefinition(array $definition = [])
+    public function setDefinition(array $definition = []): self
     {
-        $this->definition = [];
+        if ([] !== $this->definition) {
+            $this->_trackValuesRemoved(count($this->definition));
+            $this->definition = [];
+        }
         if ([] === $definition) {
             return $this;
         }
@@ -1053,6 +873,135 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Plan/proposal/order fulfilled by this request.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    public function getBasedOn(): null|array
+    {
+        return $this->basedOn;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Plan/proposal/order fulfilled by this request.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $basedOn
+     * @return static
+     */
+    public function addBasedOn(null|FHIRReference $basedOn = null): self
+    {
+        if (null === $basedOn) {
+            $basedOn = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->basedOn[] = $basedOn;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Plan/proposal/order fulfilled by this request.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $basedOn
+     * @return static
+     */
+    public function setBasedOn(array $basedOn = []): self
+    {
+        if ([] !== $this->basedOn) {
+            $this->_trackValuesRemoved(count($this->basedOn));
+            $this->basedOn = [];
+        }
+        if ([] === $basedOn) {
+            return $this;
+        }
+        foreach($basedOn as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addBasedOn($v);
+            } else {
+                $this->addBasedOn(new FHIRReference($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The request takes the place of the referenced completed or terminated
+     * request(s).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    public function getPriorRequest(): null|array
+    {
+        return $this->priorRequest;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The request takes the place of the referenced completed or terminated
+     * request(s).
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $priorRequest
+     * @return static
+     */
+    public function addPriorRequest(null|FHIRReference $priorRequest = null): self
+    {
+        if (null === $priorRequest) {
+            $priorRequest = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->priorRequest[] = $priorRequest;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The request takes the place of the referenced completed or terminated
+     * request(s).
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $priorRequest
+     * @return static
+     */
+    public function setPriorRequest(array $priorRequest = []): self
+    {
+        if ([] !== $this->priorRequest) {
+            $this->_trackValuesRemoved(count($this->priorRequest));
+            $this->priorRequest = [];
+        }
+        if ([] === $priorRequest) {
+            return $this;
+        }
+        foreach($priorRequest as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addPriorRequest($v);
+            } else {
+                $this->addPriorRequest(new FHIRReference($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -1061,7 +1010,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
-    public function getGroupIdentifier()
+    public function getGroupIdentifier(): null|FHIRIdentifier
     {
         return $this->groupIdentifier;
     }
@@ -1076,65 +1025,45 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $groupIdentifier
      * @return static
      */
-    public function setGroupIdentifier(FHIRIdentifier $groupIdentifier = null)
+    public function setGroupIdentifier(null|FHIRIdentifier $groupIdentifier = null): self
     {
+        if (null === $groupIdentifier) {
+            $groupIdentifier = new FHIRIdentifier();
+        }
+        $this->_trackValueSet($this->groupIdentifier, $groupIdentifier);
         $this->groupIdentifier = $groupIdentifier;
         return $this;
     }
 
     /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * The status of the communication request.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Identifiers assigned to this order by the orderer or by the receiver.
+     * The status of the request.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestStatus
      */
-    public function getIdentifier()
+    public function getStatus(): null|FHIRRequestStatus
     {
-        return $this->identifier;
+        return $this->status;
     }
 
     /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * The status of the communication request.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Identifiers assigned to this order by the orderer or by the receiver.
+     * The status of the request.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestStatus $status
      * @return static
      */
-    public function addIdentifier(FHIRIdentifier $identifier = null)
+    public function setStatus(null|FHIRRequestStatus $status = null): self
     {
-        $this->identifier[] = $identifier;
-        return $this;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifiers assigned to this order by the orderer or by the receiver.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
-     * @return static
-     */
-    public function setIdentifier(array $identifier = [])
-    {
-        $this->identifier = [];
-        if ([] === $identifier) {
-            return $this;
+        if (null === $status) {
+            $status = new FHIRRequestStatus();
         }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
-            }
-        }
+        $this->_trackValueSet($this->status, $status);
+        $this->status = $status;
         return $this;
     }
 
@@ -1148,7 +1077,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getIntent()
+    public function getIntent(): null|FHIRCodeableConcept
     {
         return $this->intent;
     }
@@ -1164,74 +1093,185 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $intent
      * @return static
      */
-    public function setIntent(FHIRCodeableConcept $intent = null)
+    public function setIntent(null|FHIRCodeableConcept $intent = null): self
     {
+        if (null === $intent) {
+            $intent = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->intent, $intent);
         $this->intent = $intent;
         return $this;
     }
 
     /**
-     * A text note which also contains information about who made the statement and
-     * when.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * Codes indicating the relative importance of a communication request.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Details about this request that were not represented at all or sufficiently in
-     * one of the attributes provided in a class. These may include for example a
-     * comment, an instruction, or a note associated with the statement.
+     * Indicates how quickly the {{title}} should be addressed with respect to other
+     * requests.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestPriority
      */
-    public function getNote()
+    public function getPriority(): null|FHIRRequestPriority
     {
-        return $this->note;
+        return $this->priority;
     }
 
     /**
-     * A text note which also contains information about who made the statement and
-     * when.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * Codes indicating the relative importance of a communication request.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Details about this request that were not represented at all or sufficiently in
-     * one of the attributes provided in a class. These may include for example a
-     * comment, an instruction, or a note associated with the statement.
+     * Indicates how quickly the {{title}} should be addressed with respect to other
+     * requests.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation $note
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestPriority $priority
      * @return static
      */
-    public function addNote(FHIRAnnotation $note = null)
+    public function setPriority(null|FHIRRequestPriority $priority = null): self
     {
-        $this->note[] = $note;
+        if (null === $priority) {
+            $priority = new FHIRRequestPriority();
+        }
+        $this->_trackValueSet($this->priority, $priority);
+        $this->priority = $priority;
         return $this;
     }
 
     /**
-     * A text note which also contains information about who made the statement and
-     * when.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Details about this request that were not represented at all or sufficiently in
-     * one of the attributes provided in a class. These may include for example a
-     * comment, an instruction, or a note associated with the statement.
+     * The details of the device to be used.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[] $note
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getCodeReference(): null|FHIRReference
+    {
+        return $this->codeReference;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The details of the device to be used.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $codeReference
      * @return static
      */
-    public function setNote(array $note = [])
+    public function setCodeReference(null|FHIRReference $codeReference = null): self
     {
-        $this->note = [];
-        if ([] === $note) {
-            return $this;
+        if (null === $codeReference) {
+            $codeReference = new FHIRReference();
         }
-        foreach($note as $v) {
-            if ($v instanceof FHIRAnnotation) {
-                $this->addNote($v);
-            } else {
-                $this->addNote(new FHIRAnnotation($v));
-            }
+        $this->_trackValueSet($this->codeReference, $codeReference);
+        $this->codeReference = $codeReference;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The details of the device to be used.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    public function getCodeCodeableConcept(): null|FHIRCodeableConcept
+    {
+        return $this->codeCodeableConcept;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The details of the device to be used.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $codeCodeableConcept
+     * @return static
+     */
+    public function setCodeCodeableConcept(null|FHIRCodeableConcept $codeCodeableConcept = null): self
+    {
+        if (null === $codeCodeableConcept) {
+            $codeCodeableConcept = new FHIRCodeableConcept();
         }
+        $this->_trackValueSet($this->codeCodeableConcept, $codeCodeableConcept);
+        $this->codeCodeableConcept = $codeCodeableConcept;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The patient who will use the device.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getSubject(): null|FHIRReference
+    {
+        return $this->subject;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The patient who will use the device.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subject
+     * @return static
+     */
+    public function setSubject(null|FHIRReference $subject = null): self
+    {
+        if (null === $subject) {
+            $subject = new FHIRReference();
+        }
+        $this->_trackValueSet($this->subject, $subject);
+        $this->subject = $subject;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An encounter that provides additional context in which this request is made.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getContext(): null|FHIRReference
+    {
+        return $this->context;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An encounter that provides additional context in which this request is made.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $context
+     * @return static
+     */
+    public function setContext(null|FHIRReference $context = null): self
+    {
+        if (null === $context) {
+            $context = new FHIRReference();
+        }
+        $this->_trackValueSet($this->context, $context);
+        $this->context = $context;
         return $this;
     }
 
@@ -1250,7 +1290,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    public function getOccurrenceDateTime()
+    public function getOccurrenceDateTime(): null|FHIRDateTime
     {
         return $this->occurrenceDateTime;
     }
@@ -1268,20 +1308,16 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * "1/2 an hour before breakfast for 10 days from 23-Dec 2011:"; "15 Oct 2013, 17
      * Oct 2013 and 1 Nov 2013".
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $occurrenceDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRDateTimePrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $occurrenceDateTime
      * @return static
      */
-    public function setOccurrenceDateTime($occurrenceDateTime = null)
+    public function setOccurrenceDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $occurrenceDateTime = null): self
     {
-        if (null === $occurrenceDateTime) {
-            $this->occurrenceDateTime = null;
-            return $this;
+        if (null !== $occurrenceDateTime && !($occurrenceDateTime instanceof FHIRDateTime)) {
+            $occurrenceDateTime = new FHIRDateTime($occurrenceDateTime);
         }
-        if ($occurrenceDateTime instanceof FHIRDateTime) {
-            $this->occurrenceDateTime = $occurrenceDateTime;
-            return $this;
-        }
-        $this->occurrenceDateTime = new FHIRDateTime($occurrenceDateTime);
+        $this->_trackValueSet($this->occurrenceDateTime, $occurrenceDateTime);
+        $this->occurrenceDateTime = $occurrenceDateTime;
         return $this;
     }
 
@@ -1297,7 +1333,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function getOccurrencePeriod()
+    public function getOccurrencePeriod(): null|FHIRPeriod
     {
         return $this->occurrencePeriod;
     }
@@ -1315,8 +1351,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $occurrencePeriod
      * @return static
      */
-    public function setOccurrencePeriod(FHIRPeriod $occurrencePeriod = null)
+    public function setOccurrencePeriod(null|FHIRPeriod $occurrencePeriod = null): self
     {
+        if (null === $occurrencePeriod) {
+            $occurrencePeriod = new FHIRPeriod();
+        }
+        $this->_trackValueSet($this->occurrencePeriod, $occurrencePeriod);
         $this->occurrencePeriod = $occurrencePeriod;
         return $this;
     }
@@ -1337,7 +1377,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming
      */
-    public function getOccurrenceTiming()
+    public function getOccurrenceTiming(): null|FHIRTiming
     {
         return $this->occurrenceTiming;
     }
@@ -1359,39 +1399,87 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming $occurrenceTiming
      * @return static
      */
-    public function setOccurrenceTiming(FHIRTiming $occurrenceTiming = null)
+    public function setOccurrenceTiming(null|FHIRTiming $occurrenceTiming = null): self
     {
+        if (null === $occurrenceTiming) {
+            $occurrenceTiming = new FHIRTiming();
+        }
+        $this->_trackValueSet($this->occurrenceTiming, $occurrenceTiming);
         $this->occurrenceTiming = $occurrenceTiming;
         return $this;
     }
 
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The desired perfomer for doing the diagnostic testing.
+     * When the request transitioned to being actionable.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    public function getPerformer()
+    public function getAuthoredOn(): null|FHIRDateTime
     {
-        return $this->performer;
+        return $this->authoredOn;
     }
 
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The desired perfomer for doing the diagnostic testing.
+     * When the request transitioned to being actionable.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $performer
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRDateTimePrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $authoredOn
      * @return static
      */
-    public function setPerformer(FHIRReference $performer = null)
+    public function setAuthoredOn(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authoredOn = null): self
     {
-        $this->performer = $performer;
+        if (null !== $authoredOn && !($authoredOn instanceof FHIRDateTime)) {
+            $authoredOn = new FHIRDateTime($authoredOn);
+        }
+        $this->_trackValueSet($this->authoredOn, $authoredOn);
+        $this->authoredOn = $authoredOn;
+        return $this;
+    }
+
+    /**
+     * Represents a request for a patient to employ a medical device. The device may be
+     * an implantable device, or an external assistive device, such as a walker.
+     *
+     * The individual who initiated the request and has responsibility for its
+     * activation.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceRequest\FHIRDeviceRequestRequester
+     */
+    public function getRequester(): null|FHIRDeviceRequestRequester
+    {
+        return $this->requester;
+    }
+
+    /**
+     * Represents a request for a patient to employ a medical device. The device may be
+     * an implantable device, or an external assistive device, such as a walker.
+     *
+     * The individual who initiated the request and has responsibility for its
+     * activation.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceRequest\FHIRDeviceRequestRequester $requester
+     * @return static
+     */
+    public function setRequester(null|FHIRDeviceRequestRequester $requester = null): self
+    {
+        if (null === $requester) {
+            $requester = new FHIRDeviceRequestRequester();
+        }
+        $this->_trackValueSet($this->requester, $requester);
+        $this->requester = $requester;
         return $this;
     }
 
@@ -1405,7 +1493,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getPerformerType()
+    public function getPerformerType(): null|FHIRCodeableConcept
     {
         return $this->performerType;
     }
@@ -1421,8 +1509,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $performerType
      * @return static
      */
-    public function setPerformerType(FHIRCodeableConcept $performerType = null)
+    public function setPerformerType(null|FHIRCodeableConcept $performerType = null): self
     {
+        if (null === $performerType) {
+            $performerType = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->performerType, $performerType);
         $this->performerType = $performerType;
         return $this;
     }
@@ -1432,14 +1524,13 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The request takes the place of the referenced completed or terminated
-     * request(s).
+     * The desired perfomer for doing the diagnostic testing.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getPriorRequest()
+    public function getPerformer(): null|FHIRReference
     {
-        return $this->priorRequest;
+        return $this->performer;
     }
 
     /**
@@ -1447,72 +1538,18 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The request takes the place of the referenced completed or terminated
-     * request(s).
+     * The desired perfomer for doing the diagnostic testing.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $priorRequest
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $performer
      * @return static
      */
-    public function addPriorRequest(FHIRReference $priorRequest = null)
+    public function setPerformer(null|FHIRReference $performer = null): self
     {
-        $this->priorRequest[] = $priorRequest;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The request takes the place of the referenced completed or terminated
-     * request(s).
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $priorRequest
-     * @return static
-     */
-    public function setPriorRequest(array $priorRequest = [])
-    {
-        $this->priorRequest = [];
-        if ([] === $priorRequest) {
-            return $this;
+        if (null === $performer) {
+            $performer = new FHIRReference();
         }
-        foreach($priorRequest as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addPriorRequest($v);
-            } else {
-                $this->addPriorRequest(new FHIRReference($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * Codes indicating the relative importance of a communication request.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Indicates how quickly the {{title}} should be addressed with respect to other
-     * requests.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestPriority
-     */
-    public function getPriority()
-    {
-        return $this->priority;
-    }
-
-    /**
-     * Codes indicating the relative importance of a communication request.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Indicates how quickly the {{title}} should be addressed with respect to other
-     * requests.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestPriority $priority
-     * @return static
-     */
-    public function setPriority(FHIRRequestPriority $priority = null)
-    {
-        $this->priority = $priority;
+        $this->_trackValueSet($this->performer, $performer);
+        $this->performer = $performer;
         return $this;
     }
 
@@ -1526,7 +1563,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getReasonCode()
+    public function getReasonCode(): null|array
     {
         return $this->reasonCode;
     }
@@ -1542,8 +1579,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $reasonCode
      * @return static
      */
-    public function addReasonCode(FHIRCodeableConcept $reasonCode = null)
+    public function addReasonCode(null|FHIRCodeableConcept $reasonCode = null): self
     {
+        if (null === $reasonCode) {
+            $reasonCode = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
         $this->reasonCode[] = $reasonCode;
         return $this;
     }
@@ -1559,9 +1600,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $reasonCode
      * @return static
      */
-    public function setReasonCode(array $reasonCode = [])
+    public function setReasonCode(array $reasonCode = []): self
     {
-        $this->reasonCode = [];
+        if ([] !== $this->reasonCode) {
+            $this->_trackValuesRemoved(count($this->reasonCode));
+            $this->reasonCode = [];
+        }
         if ([] === $reasonCode) {
             return $this;
         }
@@ -1584,7 +1628,7 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getReasonReference()
+    public function getReasonReference(): null|array
     {
         return $this->reasonReference;
     }
@@ -1599,8 +1643,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $reasonReference
      * @return static
      */
-    public function addReasonReference(FHIRReference $reasonReference = null)
+    public function addReasonReference(null|FHIRReference $reasonReference = null): self
     {
+        if (null === $reasonReference) {
+            $reasonReference = new FHIRReference();
+        }
+        $this->_trackValueAdded();
         $this->reasonReference[] = $reasonReference;
         return $this;
     }
@@ -1615,9 +1663,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $reasonReference
      * @return static
      */
-    public function setReasonReference(array $reasonReference = [])
+    public function setReasonReference(array $reasonReference = []): self
     {
-        $this->reasonReference = [];
+        if ([] !== $this->reasonReference) {
+            $this->_trackValuesRemoved(count($this->reasonReference));
+            $this->reasonReference = [];
+        }
         if ([] === $reasonReference) {
             return $this;
         }
@@ -1636,157 +1687,13 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Key events in the history of the request.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    public function getRelevantHistory()
-    {
-        return $this->relevantHistory;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Key events in the history of the request.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $relevantHistory
-     * @return static
-     */
-    public function addRelevantHistory(FHIRReference $relevantHistory = null)
-    {
-        $this->relevantHistory[] = $relevantHistory;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Key events in the history of the request.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $relevantHistory
-     * @return static
-     */
-    public function setRelevantHistory(array $relevantHistory = [])
-    {
-        $this->relevantHistory = [];
-        if ([] === $relevantHistory) {
-            return $this;
-        }
-        foreach($relevantHistory as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addRelevantHistory($v);
-            } else {
-                $this->addRelevantHistory(new FHIRReference($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * Represents a request for a patient to employ a medical device. The device may be
-     * an implantable device, or an external assistive device, such as a walker.
-     *
-     * The individual who initiated the request and has responsibility for its
-     * activation.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceRequest\FHIRDeviceRequestRequester
-     */
-    public function getRequester()
-    {
-        return $this->requester;
-    }
-
-    /**
-     * Represents a request for a patient to employ a medical device. The device may be
-     * an implantable device, or an external assistive device, such as a walker.
-     *
-     * The individual who initiated the request and has responsibility for its
-     * activation.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceRequest\FHIRDeviceRequestRequester $requester
-     * @return static
-     */
-    public function setRequester(FHIRDeviceRequestRequester $requester = null)
-    {
-        $this->requester = $requester;
-        return $this;
-    }
-
-    /**
-     * The status of the communication request.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The status of the request.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestStatus
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * The status of the communication request.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The status of the request.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestStatus $status
-     * @return static
-     */
-    public function setStatus(FHIRRequestStatus $status = null)
-    {
-        $this->status = $status;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The patient who will use the device.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getSubject()
-    {
-        return $this->subject;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The patient who will use the device.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subject
-     * @return static
-     */
-    public function setSubject(FHIRReference $subject = null)
-    {
-        $this->subject = $subject;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
      * Additional clinical information about the patient that may influence the request
      * fulfilment. For example, this may includes body where on the subject's the
      * device will be used ( i.e. the target site).
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getSupportingInfo()
+    public function getSupportingInfo(): null|array
     {
         return $this->supportingInfo;
     }
@@ -1803,8 +1710,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $supportingInfo
      * @return static
      */
-    public function addSupportingInfo(FHIRReference $supportingInfo = null)
+    public function addSupportingInfo(null|FHIRReference $supportingInfo = null): self
     {
+        if (null === $supportingInfo) {
+            $supportingInfo = new FHIRReference();
+        }
+        $this->_trackValueAdded();
         $this->supportingInfo[] = $supportingInfo;
         return $this;
     }
@@ -1821,9 +1732,12 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $supportingInfo
      * @return static
      */
-    public function setSupportingInfo(array $supportingInfo = [])
+    public function setSupportingInfo(array $supportingInfo = []): self
     {
-        $this->supportingInfo = [];
+        if ([] !== $this->supportingInfo) {
+            $this->_trackValuesRemoved(count($this->supportingInfo));
+            $this->supportingInfo = [];
+        }
         if ([] === $supportingInfo) {
             return $this;
         }
@@ -1838,14 +1752,149 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
     }
 
     /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Details about this request that were not represented at all or sufficiently in
+     * one of the attributes provided in a class. These may include for example a
+     * comment, an instruction, or a note associated with the statement.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
+     */
+    public function getNote(): null|array
+    {
+        return $this->note;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Details about this request that were not represented at all or sufficiently in
+     * one of the attributes provided in a class. These may include for example a
+     * comment, an instruction, or a note associated with the statement.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation $note
+     * @return static
+     */
+    public function addNote(null|FHIRAnnotation $note = null): self
+    {
+        if (null === $note) {
+            $note = new FHIRAnnotation();
+        }
+        $this->_trackValueAdded();
+        $this->note[] = $note;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Details about this request that were not represented at all or sufficiently in
+     * one of the attributes provided in a class. These may include for example a
+     * comment, an instruction, or a note associated with the statement.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[] $note
+     * @return static
+     */
+    public function setNote(array $note = []): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            if ($v instanceof FHIRAnnotation) {
+                $this->addNote($v);
+            } else {
+                $this->addNote(new FHIRAnnotation($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Key events in the history of the request.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    public function getRelevantHistory(): null|array
+    {
+        return $this->relevantHistory;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Key events in the history of the request.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $relevantHistory
+     * @return static
+     */
+    public function addRelevantHistory(null|FHIRReference $relevantHistory = null): self
+    {
+        if (null === $relevantHistory) {
+            $relevantHistory = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->relevantHistory[] = $relevantHistory;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Key events in the history of the request.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $relevantHistory
+     * @return static
+     */
+    public function setRelevantHistory(array $relevantHistory = []): self
+    {
+        if ([] !== $this->relevantHistory) {
+            $this->_trackValuesRemoved(count($this->relevantHistory));
+            $this->relevantHistory = [];
+        }
+        if ([] === $relevantHistory) {
+            return $this;
+        }
+        foreach($relevantHistory as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addRelevantHistory($v);
+            } else {
+                $this->addRelevantHistory(new FHIRReference($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
      * Returns the validation rules that this type's fields must comply with to be considered "valid"
      * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1854,35 +1903,15 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (null !== ($v = $this->getAuthoredOn())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_AUTHORED_ON] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getBasedOn())) {
+        if ([] !== ($vs = $this->getIdentifier())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_BASED_ON, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
                 }
-            }
-        }
-        if (null !== ($v = $this->getCodeCodeableConcept())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_CODE_CODEABLE_CONCEPT] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getCodeReference())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_CODE_REFERENCE] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getContext())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_CONTEXT] = $fieldErrs;
             }
         }
         if ([] !== ($vs = $this->getDefinition())) {
@@ -1892,16 +1921,28 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
+        if ([] !== ($vs = $this->getBasedOn())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_BASED_ON, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if ([] !== ($vs = $this->getPriorRequest())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_PRIOR_REQUEST, $i)] = $fieldErrs;
+                }
+            }
+        }
         if (null !== ($v = $this->getGroupIdentifier())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_GROUP_IDENTIFIER] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getIdentifier())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
-                }
+        if (null !== ($v = $this->getStatus())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_STATUS] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getIntent())) {
@@ -1909,11 +1950,29 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 $errs[self::FIELD_INTENT] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getNote())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_NOTE, $i)] = $fieldErrs;
-                }
+        if (null !== ($v = $this->getPriority())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PRIORITY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getCodeReference())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CODE_REFERENCE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getCodeCodeableConcept())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CODE_CODEABLE_CONCEPT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubject())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUBJECT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getContext())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CONTEXT] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getOccurrenceDateTime())) {
@@ -1931,9 +1990,14 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 $errs[self::FIELD_OCCURRENCE_TIMING] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getPerformer())) {
+        if (null !== ($v = $this->getAuthoredOn())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_PERFORMER] = $fieldErrs;
+                $errs[self::FIELD_AUTHORED_ON] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getRequester())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_REQUESTER] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getPerformerType())) {
@@ -1941,16 +2005,9 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 $errs[self::FIELD_PERFORMER_TYPE] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getPriorRequest())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_PRIOR_REQUEST, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getPriority())) {
+        if (null !== ($v = $this->getPerformer())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_PRIORITY] = $fieldErrs;
+                $errs[self::FIELD_PERFORMER] = $fieldErrs;
             }
         }
         if ([] !== ($vs = $this->getReasonCode())) {
@@ -1967,28 +2024,6 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
-        if ([] !== ($vs = $this->getRelevantHistory())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_RELEVANT_HISTORY, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getRequester())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_REQUESTER] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getStatus())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_STATUS] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getSubject())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_SUBJECT] = $fieldErrs;
-            }
-        }
         if ([] !== ($vs = $this->getSupportingInfo())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
@@ -1996,87 +2031,17 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_AUTHORED_ON])) {
-            $v = $this->getAuthoredOn();
-            foreach($validationRules[self::FIELD_AUTHORED_ON] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_AUTHORED_ON, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_AUTHORED_ON])) {
-                        $errs[self::FIELD_AUTHORED_ON] = [];
-                    }
-                    $errs[self::FIELD_AUTHORED_ON][$rule] = $err;
+        if ([] !== ($vs = $this->getNote())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_NOTE, $i)] = $fieldErrs;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_BASED_ON])) {
-            $v = $this->getBasedOn();
-            foreach($validationRules[self::FIELD_BASED_ON] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_BASED_ON, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_BASED_ON])) {
-                        $errs[self::FIELD_BASED_ON] = [];
-                    }
-                    $errs[self::FIELD_BASED_ON][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_CODE_CODEABLE_CONCEPT])) {
-            $v = $this->getCodeCodeableConcept();
-            foreach($validationRules[self::FIELD_CODE_CODEABLE_CONCEPT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_CODE_CODEABLE_CONCEPT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CODE_CODEABLE_CONCEPT])) {
-                        $errs[self::FIELD_CODE_CODEABLE_CONCEPT] = [];
-                    }
-                    $errs[self::FIELD_CODE_CODEABLE_CONCEPT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_CODE_REFERENCE])) {
-            $v = $this->getCodeReference();
-            foreach($validationRules[self::FIELD_CODE_REFERENCE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_CODE_REFERENCE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CODE_REFERENCE])) {
-                        $errs[self::FIELD_CODE_REFERENCE] = [];
-                    }
-                    $errs[self::FIELD_CODE_REFERENCE][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_CONTEXT])) {
-            $v = $this->getContext();
-            foreach($validationRules[self::FIELD_CONTEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_CONTEXT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CONTEXT])) {
-                        $errs[self::FIELD_CONTEXT] = [];
-                    }
-                    $errs[self::FIELD_CONTEXT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_DEFINITION])) {
-            $v = $this->getDefinition();
-            foreach($validationRules[self::FIELD_DEFINITION] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_DEFINITION, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_DEFINITION])) {
-                        $errs[self::FIELD_DEFINITION] = [];
-                    }
-                    $errs[self::FIELD_DEFINITION][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_GROUP_IDENTIFIER])) {
-            $v = $this->getGroupIdentifier();
-            foreach($validationRules[self::FIELD_GROUP_IDENTIFIER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_GROUP_IDENTIFIER, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_GROUP_IDENTIFIER])) {
-                        $errs[self::FIELD_GROUP_IDENTIFIER] = [];
-                    }
-                    $errs[self::FIELD_GROUP_IDENTIFIER][$rule] = $err;
+        if ([] !== ($vs = $this->getRelevantHistory())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_RELEVANT_HISTORY, $i)] = $fieldErrs;
                 }
             }
         }
@@ -2092,6 +2057,66 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
+        if (isset($validationRules[self::FIELD_DEFINITION])) {
+            $v = $this->getDefinition();
+            foreach($validationRules[self::FIELD_DEFINITION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_DEFINITION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DEFINITION])) {
+                        $errs[self::FIELD_DEFINITION] = [];
+                    }
+                    $errs[self::FIELD_DEFINITION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_BASED_ON])) {
+            $v = $this->getBasedOn();
+            foreach($validationRules[self::FIELD_BASED_ON] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_BASED_ON, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_BASED_ON])) {
+                        $errs[self::FIELD_BASED_ON] = [];
+                    }
+                    $errs[self::FIELD_BASED_ON][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PRIOR_REQUEST])) {
+            $v = $this->getPriorRequest();
+            foreach($validationRules[self::FIELD_PRIOR_REQUEST] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_PRIOR_REQUEST, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PRIOR_REQUEST])) {
+                        $errs[self::FIELD_PRIOR_REQUEST] = [];
+                    }
+                    $errs[self::FIELD_PRIOR_REQUEST][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_GROUP_IDENTIFIER])) {
+            $v = $this->getGroupIdentifier();
+            foreach($validationRules[self::FIELD_GROUP_IDENTIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_GROUP_IDENTIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_GROUP_IDENTIFIER])) {
+                        $errs[self::FIELD_GROUP_IDENTIFIER] = [];
+                    }
+                    $errs[self::FIELD_GROUP_IDENTIFIER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_STATUS])) {
+            $v = $this->getStatus();
+            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_STATUS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_STATUS])) {
+                        $errs[self::FIELD_STATUS] = [];
+                    }
+                    $errs[self::FIELD_STATUS][$rule] = $err;
+                }
+            }
+        }
         if (isset($validationRules[self::FIELD_INTENT])) {
             $v = $this->getIntent();
             foreach($validationRules[self::FIELD_INTENT] as $rule => $constraint) {
@@ -2104,15 +2129,63 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_NOTE])) {
-            $v = $this->getNote();
-            foreach($validationRules[self::FIELD_NOTE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_NOTE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_PRIORITY])) {
+            $v = $this->getPriority();
+            foreach($validationRules[self::FIELD_PRIORITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_PRIORITY, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_NOTE])) {
-                        $errs[self::FIELD_NOTE] = [];
+                    if (!isset($errs[self::FIELD_PRIORITY])) {
+                        $errs[self::FIELD_PRIORITY] = [];
                     }
-                    $errs[self::FIELD_NOTE][$rule] = $err;
+                    $errs[self::FIELD_PRIORITY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CODE_REFERENCE])) {
+            $v = $this->getCodeReference();
+            foreach($validationRules[self::FIELD_CODE_REFERENCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_CODE_REFERENCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CODE_REFERENCE])) {
+                        $errs[self::FIELD_CODE_REFERENCE] = [];
+                    }
+                    $errs[self::FIELD_CODE_REFERENCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CODE_CODEABLE_CONCEPT])) {
+            $v = $this->getCodeCodeableConcept();
+            foreach($validationRules[self::FIELD_CODE_CODEABLE_CONCEPT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_CODE_CODEABLE_CONCEPT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CODE_CODEABLE_CONCEPT])) {
+                        $errs[self::FIELD_CODE_CODEABLE_CONCEPT] = [];
+                    }
+                    $errs[self::FIELD_CODE_CODEABLE_CONCEPT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SUBJECT])) {
+            $v = $this->getSubject();
+            foreach($validationRules[self::FIELD_SUBJECT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_SUBJECT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUBJECT])) {
+                        $errs[self::FIELD_SUBJECT] = [];
+                    }
+                    $errs[self::FIELD_SUBJECT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTEXT])) {
+            $v = $this->getContext();
+            foreach($validationRules[self::FIELD_CONTEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_CONTEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTEXT])) {
+                        $errs[self::FIELD_CONTEXT] = [];
+                    }
+                    $errs[self::FIELD_CONTEXT][$rule] = $err;
                 }
             }
         }
@@ -2152,15 +2225,27 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_PERFORMER])) {
-            $v = $this->getPerformer();
-            foreach($validationRules[self::FIELD_PERFORMER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_PERFORMER, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_AUTHORED_ON])) {
+            $v = $this->getAuthoredOn();
+            foreach($validationRules[self::FIELD_AUTHORED_ON] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_AUTHORED_ON, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PERFORMER])) {
-                        $errs[self::FIELD_PERFORMER] = [];
+                    if (!isset($errs[self::FIELD_AUTHORED_ON])) {
+                        $errs[self::FIELD_AUTHORED_ON] = [];
                     }
-                    $errs[self::FIELD_PERFORMER][$rule] = $err;
+                    $errs[self::FIELD_AUTHORED_ON][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REQUESTER])) {
+            $v = $this->getRequester();
+            foreach($validationRules[self::FIELD_REQUESTER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_REQUESTER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REQUESTER])) {
+                        $errs[self::FIELD_REQUESTER] = [];
+                    }
+                    $errs[self::FIELD_REQUESTER][$rule] = $err;
                 }
             }
         }
@@ -2176,27 +2261,15 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_PRIOR_REQUEST])) {
-            $v = $this->getPriorRequest();
-            foreach($validationRules[self::FIELD_PRIOR_REQUEST] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_PRIOR_REQUEST, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_PERFORMER])) {
+            $v = $this->getPerformer();
+            foreach($validationRules[self::FIELD_PERFORMER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_PERFORMER, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PRIOR_REQUEST])) {
-                        $errs[self::FIELD_PRIOR_REQUEST] = [];
+                    if (!isset($errs[self::FIELD_PERFORMER])) {
+                        $errs[self::FIELD_PERFORMER] = [];
                     }
-                    $errs[self::FIELD_PRIOR_REQUEST][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_PRIORITY])) {
-            $v = $this->getPriority();
-            foreach($validationRules[self::FIELD_PRIORITY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_PRIORITY, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PRIORITY])) {
-                        $errs[self::FIELD_PRIORITY] = [];
-                    }
-                    $errs[self::FIELD_PRIORITY][$rule] = $err;
+                    $errs[self::FIELD_PERFORMER][$rule] = $err;
                 }
             }
         }
@@ -2224,6 +2297,30 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
+        if (isset($validationRules[self::FIELD_SUPPORTING_INFO])) {
+            $v = $this->getSupportingInfo();
+            foreach($validationRules[self::FIELD_SUPPORTING_INFO] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_SUPPORTING_INFO, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SUPPORTING_INFO])) {
+                        $errs[self::FIELD_SUPPORTING_INFO] = [];
+                    }
+                    $errs[self::FIELD_SUPPORTING_INFO][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NOTE])) {
+            $v = $this->getNote();
+            foreach($validationRules[self::FIELD_NOTE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_NOTE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NOTE])) {
+                        $errs[self::FIELD_NOTE] = [];
+                    }
+                    $errs[self::FIELD_NOTE][$rule] = $err;
+                }
+            }
+        }
         if (isset($validationRules[self::FIELD_RELEVANT_HISTORY])) {
             $v = $this->getRelevantHistory();
             foreach($validationRules[self::FIELD_RELEVANT_HISTORY] as $rule => $constraint) {
@@ -2236,51 +2333,15 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_REQUESTER])) {
-            $v = $this->getRequester();
-            foreach($validationRules[self::FIELD_REQUESTER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_REQUESTER, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_REQUESTER])) {
-                        $errs[self::FIELD_REQUESTER] = [];
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
                     }
-                    $errs[self::FIELD_REQUESTER][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_STATUS])) {
-            $v = $this->getStatus();
-            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_STATUS, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_STATUS])) {
-                        $errs[self::FIELD_STATUS] = [];
-                    }
-                    $errs[self::FIELD_STATUS][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_SUBJECT])) {
-            $v = $this->getSubject();
-            foreach($validationRules[self::FIELD_SUBJECT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_SUBJECT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_SUBJECT])) {
-                        $errs[self::FIELD_SUBJECT] = [];
-                    }
-                    $errs[self::FIELD_SUBJECT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_SUPPORTING_INFO])) {
-            $v = $this->getSupportingInfo();
-            foreach($validationRules[self::FIELD_SUPPORTING_INFO] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DEVICE_REQUEST, self::FIELD_SUPPORTING_INFO, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_SUPPORTING_INFO])) {
-                        $errs[self::FIELD_SUPPORTING_INFO] = [];
-                    }
-                    $errs[self::FIELD_SUPPORTING_INFO][$rule] = $err;
+                    $errs[self::FIELD_TEXT][$rule] = $err;
                 }
             }
         }
@@ -2320,18 +2381,6 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TEXT])) {
-            $v = $this->getText();
-            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TEXT])) {
-                        $errs[self::FIELD_TEXT] = [];
-                    }
-                    $errs[self::FIELD_TEXT][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_ID])) {
             $v = $this->getId();
             foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
@@ -2341,6 +2390,18 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                         $errs[self::FIELD_ID] = [];
                     }
                     $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
                 }
             }
         }
@@ -2368,263 +2429,325 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_META])) {
-            $v = $this->getMeta();
-            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_META])) {
-                        $errs[self::FIELD_META] = [];
-                    }
-                    $errs[self::FIELD_META][$rule] = $err;
-                }
-            }
-        }
         return $errs;
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRDeviceRequest $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRDeviceRequest
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRDeviceRequest::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRDeviceRequest::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRDeviceRequest;
-        } elseif (!is_object($type) || !($type instanceof FHIRDeviceRequest)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRDeviceRequest)) {
             throw new \RuntimeException(sprintf(
-                'FHIRDeviceRequest::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRDeviceRequest or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRDomainResource::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_IDENTIFIER === $n->nodeName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_DEFINITION === $n->nodeName) {
+                $type->addDefinition(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_BASED_ON === $n->nodeName) {
+                $type->addBasedOn(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_PRIOR_REQUEST === $n->nodeName) {
+                $type->addPriorRequest(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_GROUP_IDENTIFIER === $n->nodeName) {
+                $type->setGroupIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_STATUS === $n->nodeName) {
+                $type->setStatus(FHIRRequestStatus::xmlUnserialize($n));
+            } elseif (self::FIELD_INTENT === $n->nodeName) {
+                $type->setIntent(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_PRIORITY === $n->nodeName) {
+                $type->setPriority(FHIRRequestPriority::xmlUnserialize($n));
+            } elseif (self::FIELD_CODE_REFERENCE === $n->nodeName) {
+                $type->setCodeReference(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_CODE_CODEABLE_CONCEPT === $n->nodeName) {
+                $type->setCodeCodeableConcept(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_SUBJECT === $n->nodeName) {
+                $type->setSubject(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTEXT === $n->nodeName) {
+                $type->setContext(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_OCCURRENCE_DATE_TIME === $n->nodeName) {
+                $type->setOccurrenceDateTime(FHIRDateTime::xmlUnserialize($n));
+            } elseif (self::FIELD_OCCURRENCE_PERIOD === $n->nodeName) {
+                $type->setOccurrencePeriod(FHIRPeriod::xmlUnserialize($n));
+            } elseif (self::FIELD_OCCURRENCE_TIMING === $n->nodeName) {
+                $type->setOccurrenceTiming(FHIRTiming::xmlUnserialize($n));
+            } elseif (self::FIELD_AUTHORED_ON === $n->nodeName) {
+                $type->setAuthoredOn(FHIRDateTime::xmlUnserialize($n));
+            } elseif (self::FIELD_REQUESTER === $n->nodeName) {
+                $type->setRequester(FHIRDeviceRequestRequester::xmlUnserialize($n));
+            } elseif (self::FIELD_PERFORMER_TYPE === $n->nodeName) {
+                $type->setPerformerType(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_PERFORMER === $n->nodeName) {
+                $type->setPerformer(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_REASON_CODE === $n->nodeName) {
+                $type->addReasonCode(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_REASON_REFERENCE === $n->nodeName) {
+                $type->addReasonReference(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_SUPPORTING_INFO === $n->nodeName) {
+                $type->addSupportingInfo(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_NOTE === $n->nodeName) {
+                $type->addNote(FHIRAnnotation::xmlUnserialize($n));
+            } elseif (self::FIELD_RELEVANT_HISTORY === $n->nodeName) {
+                $type->addRelevantHistory(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_META === $n->nodeName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n));
+            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->authoredOn)) {
-            $type->setAuthoredOn(FHIRDateTime::xmlUnserialize($children->authoredOn));
-        }
-        if (isset($attributes->authoredOn)) {
-            $pt = $type->getAuthoredOn();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->authoredOn);
-            } else {
-                $type->setAuthoredOn((string)$attributes->authoredOn);
-            }
-        }
-        if (isset($children->basedOn)) {
-            foreach($children->basedOn as $child) {
-                $type->addBasedOn(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->codeCodeableConcept)) {
-            $type->setCodeCodeableConcept(FHIRCodeableConcept::xmlUnserialize($children->codeCodeableConcept));
-        }
-        if (isset($children->codeReference)) {
-            $type->setCodeReference(FHIRReference::xmlUnserialize($children->codeReference));
-        }
-        if (isset($children->context)) {
-            $type->setContext(FHIRReference::xmlUnserialize($children->context));
-        }
-        if (isset($children->definition)) {
-            foreach($children->definition as $child) {
-                $type->addDefinition(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->groupIdentifier)) {
-            $type->setGroupIdentifier(FHIRIdentifier::xmlUnserialize($children->groupIdentifier));
-        }
-        if (isset($children->identifier)) {
-            foreach($children->identifier as $child) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->intent)) {
-            $type->setIntent(FHIRCodeableConcept::xmlUnserialize($children->intent));
-        }
-        if (isset($children->note)) {
-            foreach($children->note as $child) {
-                $type->addNote(FHIRAnnotation::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->occurrenceDateTime)) {
-            $type->setOccurrenceDateTime(FHIRDateTime::xmlUnserialize($children->occurrenceDateTime));
-        }
-        if (isset($attributes->occurrenceDateTime)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_OCCURRENCE_DATE_TIME);
+        if (null !== $n) {
             $pt = $type->getOccurrenceDateTime();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->occurrenceDateTime);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setOccurrenceDateTime((string)$attributes->occurrenceDateTime);
+                $type->setOccurrenceDateTime($n->nodeValue);
             }
         }
-        if (isset($children->occurrencePeriod)) {
-            $type->setOccurrencePeriod(FHIRPeriod::xmlUnserialize($children->occurrencePeriod));
-        }
-        if (isset($children->occurrenceTiming)) {
-            $type->setOccurrenceTiming(FHIRTiming::xmlUnserialize($children->occurrenceTiming));
-        }
-        if (isset($children->performer)) {
-            $type->setPerformer(FHIRReference::xmlUnserialize($children->performer));
-        }
-        if (isset($children->performerType)) {
-            $type->setPerformerType(FHIRCodeableConcept::xmlUnserialize($children->performerType));
-        }
-        if (isset($children->priorRequest)) {
-            foreach($children->priorRequest as $child) {
-                $type->addPriorRequest(FHIRReference::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_AUTHORED_ON);
+        if (null !== $n) {
+            $pt = $type->getAuthoredOn();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setAuthoredOn($n->nodeValue);
             }
         }
-        if (isset($children->priority)) {
-            $type->setPriority(FHIRRequestPriority::xmlUnserialize($children->priority));
-        }
-        if (isset($children->reasonCode)) {
-            foreach($children->reasonCode as $child) {
-                $type->addReasonCode(FHIRCodeableConcept::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
-        if (isset($children->reasonReference)) {
-            foreach($children->reasonReference as $child) {
-                $type->addReasonReference(FHIRReference::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
+        if (null !== $n) {
+            $pt = $type->getImplicitRules();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setImplicitRules($n->nodeValue);
             }
         }
-        if (isset($children->relevantHistory)) {
-            foreach($children->relevantHistory as $child) {
-                $type->addRelevantHistory(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->requester)) {
-            $type->setRequester(FHIRDeviceRequestRequester::xmlUnserialize($children->requester));
-        }
-        if (isset($children->status)) {
-            $type->setStatus(FHIRRequestStatus::xmlUnserialize($children->status));
-        }
-        if (isset($children->subject)) {
-            $type->setSubject(FHIRReference::xmlUnserialize($children->subject));
-        }
-        if (isset($children->supportingInfo)) {
-            foreach($children->supportingInfo as $child) {
-                $type->addSupportingInfo(FHIRReference::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
+        if (null !== $n) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLanguage($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getAuthoredOn())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_AUTHORED_ON, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('DeviceRequest'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
-        if ([] !== ($vs = $this->getBasedOn())) {
+        parent::xmlSerialize($element);
+        if ([] !== ($vs = $this->getIdentifier())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_BASED_ON, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
-        }
-        if (null !== ($v = $this->getCodeCodeableConcept())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CODE_CODEABLE_CONCEPT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getCodeReference())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CODE_REFERENCE, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getContext())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CONTEXT, null, $v->_getFHIRXMLNamespace()));
         }
         if ([] !== ($vs = $this->getDefinition())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_DEFINITION, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_DEFINITION);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getGroupIdentifier())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_GROUP_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getIdentifier())) {
+        if ([] !== ($vs = $this->getBasedOn())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_BASED_ON);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
-        }
-        if (null !== ($v = $this->getIntent())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_INTENT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getNote())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_NOTE, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getOccurrenceDateTime())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_OCCURRENCE_DATE_TIME, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getOccurrencePeriod())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_OCCURRENCE_PERIOD, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getOccurrenceTiming())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_OCCURRENCE_TIMING, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getPerformer())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PERFORMER, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getPerformerType())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PERFORMER_TYPE, null, $v->_getFHIRXMLNamespace()));
         }
         if ([] !== ($vs = $this->getPriorRequest())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_PRIOR_REQUEST, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_PRIOR_REQUEST);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
+        if (null !== ($v = $this->getGroupIdentifier())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_GROUP_IDENTIFIER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getStatus())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getIntent())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_INTENT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if (null !== ($v = $this->getPriority())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PRIORITY, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_PRIORITY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getCodeReference())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CODE_REFERENCE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getCodeCodeableConcept())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CODE_CODEABLE_CONCEPT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getSubject())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_SUBJECT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getContext())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CONTEXT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getOccurrenceDateTime())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_OCCURRENCE_DATE_TIME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getOccurrencePeriod())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_OCCURRENCE_PERIOD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getOccurrenceTiming())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_OCCURRENCE_TIMING);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getAuthoredOn())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_AUTHORED_ON);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getRequester())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_REQUESTER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPerformerType())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PERFORMER_TYPE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPerformer())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PERFORMER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getReasonCode())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_REASON_CODE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_REASON_CODE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getReasonReference())) {
@@ -2632,7 +2755,29 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_REASON_REFERENCE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_REASON_REFERENCE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if ([] !== ($vs = $this->getSupportingInfo())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_SUPPORTING_INFO);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if ([] !== ($vs = $this->getNote())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_NOTE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getRelevantHistory())) {
@@ -2640,196 +2785,184 @@ class FHIRDeviceRequest extends FHIRDomainResource implements PHPFHIRContainedTy
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_RELEVANT_HISTORY, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_RELEVANT_HISTORY);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getRequester())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_REQUESTER, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getStatus())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_STATUS, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getSubject())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_SUBJECT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getSupportingInfo())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SUPPORTING_INFO, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getAuthoredOn())) {
-            $a[self::FIELD_AUTHORED_ON] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDateTime::FIELD_VALUE]);
-                $a[self::FIELD_AUTHORED_ON_EXT] = $enc;
+        $out = parent::jsonSerialize();
+        if ([] !== ($vs = $this->getIdentifier())) {
+            $out->{self::FIELD_IDENTIFIER} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_IDENTIFIER}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getDefinition())) {
+            $out->{self::FIELD_DEFINITION} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_DEFINITION}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getBasedOn())) {
-            $a[self::FIELD_BASED_ON] = [];
+            $out->{self::FIELD_BASED_ON} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_BASED_ON][] = $v;
+                $out->{self::FIELD_BASED_ON}[] = $v;
             }
         }
-        if (null !== ($v = $this->getCodeCodeableConcept())) {
-            $a[self::FIELD_CODE_CODEABLE_CONCEPT] = $v;
-        }
-        if (null !== ($v = $this->getCodeReference())) {
-            $a[self::FIELD_CODE_REFERENCE] = $v;
-        }
-        if (null !== ($v = $this->getContext())) {
-            $a[self::FIELD_CONTEXT] = $v;
-        }
-        if ([] !== ($vs = $this->getDefinition())) {
-            $a[self::FIELD_DEFINITION] = [];
+        if ([] !== ($vs = $this->getPriorRequest())) {
+            $out->{self::FIELD_PRIOR_REQUEST} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_DEFINITION][] = $v;
+                $out->{self::FIELD_PRIOR_REQUEST}[] = $v;
             }
         }
         if (null !== ($v = $this->getGroupIdentifier())) {
-            $a[self::FIELD_GROUP_IDENTIFIER] = $v;
+            $out->{self::FIELD_GROUP_IDENTIFIER} = $v;
         }
-        if ([] !== ($vs = $this->getIdentifier())) {
-            $a[self::FIELD_IDENTIFIER] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_IDENTIFIER][] = $v;
+        if (null !== ($v = $this->getStatus())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_STATUS} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRRequestStatus::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_STATUS_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getIntent())) {
-            $a[self::FIELD_INTENT] = $v;
+            $out->{self::FIELD_INTENT} = $v;
         }
-        if ([] !== ($vs = $this->getNote())) {
-            $a[self::FIELD_NOTE] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_NOTE][] = $v;
+        if (null !== ($v = $this->getPriority())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_PRIORITY} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRRequestPriority::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_PRIORITY_EXT} = $ext;
             }
         }
+        if (null !== ($v = $this->getCodeReference())) {
+            $out->{self::FIELD_CODE_REFERENCE} = $v;
+        }
+        if (null !== ($v = $this->getCodeCodeableConcept())) {
+            $out->{self::FIELD_CODE_CODEABLE_CONCEPT} = $v;
+        }
+        if (null !== ($v = $this->getSubject())) {
+            $out->{self::FIELD_SUBJECT} = $v;
+        }
+        if (null !== ($v = $this->getContext())) {
+            $out->{self::FIELD_CONTEXT} = $v;
+        }
         if (null !== ($v = $this->getOccurrenceDateTime())) {
-            $a[self::FIELD_OCCURRENCE_DATE_TIME] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDateTime::FIELD_VALUE]);
-                $a[self::FIELD_OCCURRENCE_DATE_TIME_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_OCCURRENCE_DATE_TIME} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDateTime::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_OCCURRENCE_DATE_TIME_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getOccurrencePeriod())) {
-            $a[self::FIELD_OCCURRENCE_PERIOD] = $v;
+            $out->{self::FIELD_OCCURRENCE_PERIOD} = $v;
         }
         if (null !== ($v = $this->getOccurrenceTiming())) {
-            $a[self::FIELD_OCCURRENCE_TIMING] = $v;
+            $out->{self::FIELD_OCCURRENCE_TIMING} = $v;
         }
-        if (null !== ($v = $this->getPerformer())) {
-            $a[self::FIELD_PERFORMER] = $v;
-        }
-        if (null !== ($v = $this->getPerformerType())) {
-            $a[self::FIELD_PERFORMER_TYPE] = $v;
-        }
-        if ([] !== ($vs = $this->getPriorRequest())) {
-            $a[self::FIELD_PRIOR_REQUEST] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_PRIOR_REQUEST][] = $v;
+        if (null !== ($v = $this->getAuthoredOn())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_AUTHORED_ON} = $val;
             }
-        }
-        if (null !== ($v = $this->getPriority())) {
-            $a[self::FIELD_PRIORITY] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRRequestPriority::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRRequestPriority::FIELD_VALUE]);
-                $a[self::FIELD_PRIORITY_EXT] = $enc;
-            }
-        }
-        if ([] !== ($vs = $this->getReasonCode())) {
-            $a[self::FIELD_REASON_CODE] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_REASON_CODE][] = $v;
-            }
-        }
-        if ([] !== ($vs = $this->getReasonReference())) {
-            $a[self::FIELD_REASON_REFERENCE] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_REASON_REFERENCE][] = $v;
-            }
-        }
-        if ([] !== ($vs = $this->getRelevantHistory())) {
-            $a[self::FIELD_RELEVANT_HISTORY] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_RELEVANT_HISTORY][] = $v;
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDateTime::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_AUTHORED_ON_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getRequester())) {
-            $a[self::FIELD_REQUESTER] = $v;
+            $out->{self::FIELD_REQUESTER} = $v;
         }
-        if (null !== ($v = $this->getStatus())) {
-            $a[self::FIELD_STATUS] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRRequestStatus::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRRequestStatus::FIELD_VALUE]);
-                $a[self::FIELD_STATUS_EXT] = $enc;
-            }
+        if (null !== ($v = $this->getPerformerType())) {
+            $out->{self::FIELD_PERFORMER_TYPE} = $v;
         }
-        if (null !== ($v = $this->getSubject())) {
-            $a[self::FIELD_SUBJECT] = $v;
+        if (null !== ($v = $this->getPerformer())) {
+            $out->{self::FIELD_PERFORMER} = $v;
         }
-        if ([] !== ($vs = $this->getSupportingInfo())) {
-            $a[self::FIELD_SUPPORTING_INFO] = [];
+        if ([] !== ($vs = $this->getReasonCode())) {
+            $out->{self::FIELD_REASON_CODE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_SUPPORTING_INFO][] = $v;
+                $out->{self::FIELD_REASON_CODE}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if ([] !== ($vs = $this->getReasonReference())) {
+            $out->{self::FIELD_REASON_REFERENCE} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_REASON_REFERENCE}[] = $v;
+            }
         }
-        return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
-    }
+        if ([] !== ($vs = $this->getSupportingInfo())) {
+            $out->{self::FIELD_SUPPORTING_INFO} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_SUPPORTING_INFO}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getNote())) {
+            $out->{self::FIELD_NOTE} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_NOTE}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getRelevantHistory())) {
+            $out->{self::FIELD_RELEVANT_HISTORY} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_RELEVANT_HISTORY}[] = $v;
+            }
+        }
 
+        $out->{PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE} = $this->_getResourceType();
+
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

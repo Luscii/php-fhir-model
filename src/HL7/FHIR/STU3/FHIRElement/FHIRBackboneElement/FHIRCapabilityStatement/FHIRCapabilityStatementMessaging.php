@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,10 +63,16 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement;
  */
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
 use HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUnsignedIntPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
@@ -80,29 +86,14 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CAPABILITY_STATEMENT_DOT_MESSAGING;
-    const FIELD_DOCUMENTATION = 'documentation';
-    const FIELD_DOCUMENTATION_EXT = '_documentation';
+
     const FIELD_ENDPOINT = 'endpoint';
-    const FIELD_EVENT = 'event';
     const FIELD_RELIABLE_CACHE = 'reliableCache';
     const FIELD_RELIABLE_CACHE_EXT = '_reliableCache';
+    const FIELD_DOCUMENTATION = 'documentation';
+    const FIELD_DOCUMENTATION_EXT = '_documentation';
     const FIELD_SUPPORTED_MESSAGE = 'supportedMessage';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Documentation about the system's messaging capabilities for this endpoint not
-     * otherwise documented by the capability statement. For example, the process for
-     * becoming an authorized messaging exchange partner.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $documentation = null;
+    const FIELD_EVENT = 'event';
 
     /**
      * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
@@ -114,19 +105,7 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEndpoint[]
      */
-    protected $endpoint = [];
-
-    /**
-     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
-     * Server that may be used as a statement of actual server functionality or a
-     * statement of required or desired server implementation.
-     *
-     * A description of the solution's support for an event at this end-point.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEvent[]
-     */
-    protected $event = [];
-
+    protected null|array $endpoint = [];
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -137,8 +116,19 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
-    protected $reliableCache = null;
-
+    protected null|FHIRUnsignedInt $reliableCache = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Documentation about the system's messaging capabilities for this endpoint not
+     * otherwise documented by the capability statement. For example, the process for
+     * becoming an authorized messaging exchange partner.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $documentation = null;
     /**
      * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
      * Server that may be used as a statement of actual server functionality or a
@@ -148,53 +138,35 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSupportedMessage[]
      */
-    protected $supportedMessage = [];
+    protected null|array $supportedMessage = [];
+    /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
+     * A description of the solution's support for an event at this end-point.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEvent[]
+     */
+    protected null|array $event = [];
 
     /**
      * Validation map for fields in type CapabilityStatement.Messaging
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRCapabilityStatementMessaging Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRCapabilityStatementMessaging::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_DOCUMENTATION]) || isset($data[self::FIELD_DOCUMENTATION_EXT])) {
-            if (isset($data[self::FIELD_DOCUMENTATION])) {
-                $value = $data[self::FIELD_DOCUMENTATION];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_DOCUMENTATION_EXT]) && is_array($data[self::FIELD_DOCUMENTATION_EXT])) {
-                $ext = $data[self::FIELD_DOCUMENTATION_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setDocumentation($value);
-                } else if (is_array($value)) {
-                    $this->setDocumentation(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setDocumentation(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setDocumentation(new FHIRString($ext));
-            }
-        }
         if (isset($data[self::FIELD_ENDPOINT])) {
             if (is_array($data[self::FIELD_ENDPOINT])) {
                 foreach($data[self::FIELD_ENDPOINT] as $v) {
@@ -207,41 +179,15 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                         $this->addEndpoint(new FHIRCapabilityStatementEndpoint($v));
                     }
                 }
-            } else if ($data[self::FIELD_ENDPOINT] instanceof FHIRCapabilityStatementEndpoint) {
+            } elseif ($data[self::FIELD_ENDPOINT] instanceof FHIRCapabilityStatementEndpoint) {
                 $this->addEndpoint($data[self::FIELD_ENDPOINT]);
             } else {
                 $this->addEndpoint(new FHIRCapabilityStatementEndpoint($data[self::FIELD_ENDPOINT]));
             }
         }
-        if (isset($data[self::FIELD_EVENT])) {
-            if (is_array($data[self::FIELD_EVENT])) {
-                foreach($data[self::FIELD_EVENT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRCapabilityStatementEvent) {
-                        $this->addEvent($v);
-                    } else {
-                        $this->addEvent(new FHIRCapabilityStatementEvent($v));
-                    }
-                }
-            } else if ($data[self::FIELD_EVENT] instanceof FHIRCapabilityStatementEvent) {
-                $this->addEvent($data[self::FIELD_EVENT]);
-            } else {
-                $this->addEvent(new FHIRCapabilityStatementEvent($data[self::FIELD_EVENT]));
-            }
-        }
         if (isset($data[self::FIELD_RELIABLE_CACHE]) || isset($data[self::FIELD_RELIABLE_CACHE_EXT])) {
-            if (isset($data[self::FIELD_RELIABLE_CACHE])) {
-                $value = $data[self::FIELD_RELIABLE_CACHE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_RELIABLE_CACHE_EXT]) && is_array($data[self::FIELD_RELIABLE_CACHE_EXT])) {
-                $ext = $data[self::FIELD_RELIABLE_CACHE_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_RELIABLE_CACHE] ?? null;
+            $ext = (isset($data[self::FIELD_RELIABLE_CACHE_EXT]) && is_array($data[self::FIELD_RELIABLE_CACHE_EXT])) ? $data[self::FIELD_RELIABLE_CACHE_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRUnsignedInt) {
                     $this->setReliableCache($value);
@@ -250,8 +196,23 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                 } else {
                     $this->setReliableCache(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setReliableCache(new FHIRUnsignedInt($ext));
+            }
+        }
+        if (isset($data[self::FIELD_DOCUMENTATION]) || isset($data[self::FIELD_DOCUMENTATION_EXT])) {
+            $value = $data[self::FIELD_DOCUMENTATION] ?? null;
+            $ext = (isset($data[self::FIELD_DOCUMENTATION_EXT]) && is_array($data[self::FIELD_DOCUMENTATION_EXT])) ? $data[self::FIELD_DOCUMENTATION_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setDocumentation($value);
+                } else if (is_array($value)) {
+                    $this->setDocumentation(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setDocumentation(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setDocumentation(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_SUPPORTED_MESSAGE])) {
@@ -266,74 +227,39 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                         $this->addSupportedMessage(new FHIRCapabilityStatementSupportedMessage($v));
                     }
                 }
-            } else if ($data[self::FIELD_SUPPORTED_MESSAGE] instanceof FHIRCapabilityStatementSupportedMessage) {
+            } elseif ($data[self::FIELD_SUPPORTED_MESSAGE] instanceof FHIRCapabilityStatementSupportedMessage) {
                 $this->addSupportedMessage($data[self::FIELD_SUPPORTED_MESSAGE]);
             } else {
                 $this->addSupportedMessage(new FHIRCapabilityStatementSupportedMessage($data[self::FIELD_SUPPORTED_MESSAGE]));
             }
         }
+        if (isset($data[self::FIELD_EVENT])) {
+            if (is_array($data[self::FIELD_EVENT])) {
+                foreach($data[self::FIELD_EVENT] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRCapabilityStatementEvent) {
+                        $this->addEvent($v);
+                    } else {
+                        $this->addEvent(new FHIRCapabilityStatementEvent($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_EVENT] instanceof FHIRCapabilityStatementEvent) {
+                $this->addEvent($data[self::FIELD_EVENT]);
+            } else {
+                $this->addEvent(new FHIRCapabilityStatementEvent($data[self::FIELD_EVENT]));
+            }
+        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<CapabilityStatementMessaging{$xmlns}></CapabilityStatementMessaging>";
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Documentation about the system's messaging capabilities for this endpoint not
-     * otherwise documented by the capability statement. For example, the process for
-     * becoming an authorized messaging exchange partner.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getDocumentation()
-    {
-        return $this->documentation;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Documentation about the system's messaging capabilities for this endpoint not
-     * otherwise documented by the capability statement. For example, the process for
-     * becoming an authorized messaging exchange partner.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $documentation
-     * @return static
-     */
-    public function setDocumentation($documentation = null)
-    {
-        if (null === $documentation) {
-            $this->documentation = null;
-            return $this;
-        }
-        if ($documentation instanceof FHIRString) {
-            $this->documentation = $documentation;
-            return $this;
-        }
-        $this->documentation = new FHIRString($documentation);
-        return $this;
     }
 
     /**
@@ -346,7 +272,7 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEndpoint[]
      */
-    public function getEndpoint()
+    public function getEndpoint(): null|array
     {
         return $this->endpoint;
     }
@@ -362,8 +288,12 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEndpoint $endpoint
      * @return static
      */
-    public function addEndpoint(FHIRCapabilityStatementEndpoint $endpoint = null)
+    public function addEndpoint(null|FHIRCapabilityStatementEndpoint $endpoint = null): self
     {
+        if (null === $endpoint) {
+            $endpoint = new FHIRCapabilityStatementEndpoint();
+        }
+        $this->_trackValueAdded();
         $this->endpoint[] = $endpoint;
         return $this;
     }
@@ -379,9 +309,12 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEndpoint[] $endpoint
      * @return static
      */
-    public function setEndpoint(array $endpoint = [])
+    public function setEndpoint(array $endpoint = []): self
     {
-        $this->endpoint = [];
+        if ([] !== $this->endpoint) {
+            $this->_trackValuesRemoved(count($this->endpoint));
+            $this->endpoint = [];
+        }
         if ([] === $endpoint) {
             return $this;
         }
@@ -390,62 +323,6 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                 $this->addEndpoint($v);
             } else {
                 $this->addEndpoint(new FHIRCapabilityStatementEndpoint($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
-     * Server that may be used as a statement of actual server functionality or a
-     * statement of required or desired server implementation.
-     *
-     * A description of the solution's support for an event at this end-point.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEvent[]
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
-
-    /**
-     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
-     * Server that may be used as a statement of actual server functionality or a
-     * statement of required or desired server implementation.
-     *
-     * A description of the solution's support for an event at this end-point.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEvent $event
-     * @return static
-     */
-    public function addEvent(FHIRCapabilityStatementEvent $event = null)
-    {
-        $this->event[] = $event;
-        return $this;
-    }
-
-    /**
-     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
-     * Server that may be used as a statement of actual server functionality or a
-     * statement of required or desired server implementation.
-     *
-     * A description of the solution's support for an event at this end-point.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEvent[] $event
-     * @return static
-     */
-    public function setEvent(array $event = [])
-    {
-        $this->event = [];
-        if ([] === $event) {
-            return $this;
-        }
-        foreach($event as $v) {
-            if ($v instanceof FHIRCapabilityStatementEvent) {
-                $this->addEvent($v);
-            } else {
-                $this->addEvent(new FHIRCapabilityStatementEvent($v));
             }
         }
         return $this;
@@ -461,7 +338,7 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
-    public function getReliableCache()
+    public function getReliableCache(): null|FHIRUnsignedInt
     {
         return $this->reliableCache;
     }
@@ -474,20 +351,54 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      * Length if the receiver's reliable messaging cache in minutes (if a receiver) or
      * how long the cache length on the receiver should be (if a sender).
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt $reliableCache
+     * @param null|string|int|float|\HL7\FHIR\STU3\FHIRUnsignedIntPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt $reliableCache
      * @return static
      */
-    public function setReliableCache($reliableCache = null)
+    public function setReliableCache(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $reliableCache = null): self
     {
-        if (null === $reliableCache) {
-            $this->reliableCache = null;
-            return $this;
+        if (null !== $reliableCache && !($reliableCache instanceof FHIRUnsignedInt)) {
+            $reliableCache = new FHIRUnsignedInt($reliableCache);
         }
-        if ($reliableCache instanceof FHIRUnsignedInt) {
-            $this->reliableCache = $reliableCache;
-            return $this;
+        $this->_trackValueSet($this->reliableCache, $reliableCache);
+        $this->reliableCache = $reliableCache;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Documentation about the system's messaging capabilities for this endpoint not
+     * otherwise documented by the capability statement. For example, the process for
+     * becoming an authorized messaging exchange partner.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getDocumentation(): null|FHIRString
+    {
+        return $this->documentation;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Documentation about the system's messaging capabilities for this endpoint not
+     * otherwise documented by the capability statement. For example, the process for
+     * becoming an authorized messaging exchange partner.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $documentation
+     * @return static
+     */
+    public function setDocumentation(null|string|FHIRStringPrimitive|FHIRString $documentation = null): self
+    {
+        if (null !== $documentation && !($documentation instanceof FHIRString)) {
+            $documentation = new FHIRString($documentation);
         }
-        $this->reliableCache = new FHIRUnsignedInt($reliableCache);
+        $this->_trackValueSet($this->documentation, $documentation);
+        $this->documentation = $documentation;
         return $this;
     }
 
@@ -500,7 +411,7 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSupportedMessage[]
      */
-    public function getSupportedMessage()
+    public function getSupportedMessage(): null|array
     {
         return $this->supportedMessage;
     }
@@ -515,8 +426,12 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSupportedMessage $supportedMessage
      * @return static
      */
-    public function addSupportedMessage(FHIRCapabilityStatementSupportedMessage $supportedMessage = null)
+    public function addSupportedMessage(null|FHIRCapabilityStatementSupportedMessage $supportedMessage = null): self
     {
+        if (null === $supportedMessage) {
+            $supportedMessage = new FHIRCapabilityStatementSupportedMessage();
+        }
+        $this->_trackValueAdded();
         $this->supportedMessage[] = $supportedMessage;
         return $this;
     }
@@ -531,9 +446,12 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSupportedMessage[] $supportedMessage
      * @return static
      */
-    public function setSupportedMessage(array $supportedMessage = [])
+    public function setSupportedMessage(array $supportedMessage = []): self
     {
-        $this->supportedMessage = [];
+        if ([] !== $this->supportedMessage) {
+            $this->_trackValuesRemoved(count($this->supportedMessage));
+            $this->supportedMessage = [];
+        }
         if ([] === $supportedMessage) {
             return $this;
         }
@@ -548,14 +466,77 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
     }
 
     /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
+     * A description of the solution's support for an event at this end-point.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEvent[]
+     */
+    public function getEvent(): null|array
+    {
+        return $this->event;
+    }
+
+    /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
+     * A description of the solution's support for an event at this end-point.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEvent $event
+     * @return static
+     */
+    public function addEvent(null|FHIRCapabilityStatementEvent $event = null): self
+    {
+        if (null === $event) {
+            $event = new FHIRCapabilityStatementEvent();
+        }
+        $this->_trackValueAdded();
+        $this->event[] = $event;
+        return $this;
+    }
+
+    /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
+     * A description of the solution's support for an event at this end-point.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementEvent[] $event
+     * @return static
+     */
+    public function setEvent(array $event = []): self
+    {
+        if ([] !== $this->event) {
+            $this->_trackValuesRemoved(count($this->event));
+            $this->event = [];
+        }
+        if ([] === $event) {
+            return $this;
+        }
+        foreach($event as $v) {
+            if ($v instanceof FHIRCapabilityStatementEvent) {
+                $this->addEvent($v);
+            } else {
+                $this->addEvent(new FHIRCapabilityStatementEvent($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
      * Returns the validation rules that this type's fields must comply with to be considered "valid"
      * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -564,15 +545,10 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (null !== ($v = $this->getDocumentation())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_DOCUMENTATION] = $fieldErrs;
-            }
-        }
         if ([] !== ($vs = $this->getEndpoint())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
@@ -580,16 +556,14 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                 }
             }
         }
-        if ([] !== ($vs = $this->getEvent())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_EVENT, $i)] = $fieldErrs;
-                }
-            }
-        }
         if (null !== ($v = $this->getReliableCache())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_RELIABLE_CACHE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getDocumentation())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DOCUMENTATION] = $fieldErrs;
             }
         }
         if ([] !== ($vs = $this->getSupportedMessage())) {
@@ -599,15 +573,10 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_DOCUMENTATION])) {
-            $v = $this->getDocumentation();
-            foreach($validationRules[self::FIELD_DOCUMENTATION] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CAPABILITY_STATEMENT_DOT_MESSAGING, self::FIELD_DOCUMENTATION, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_DOCUMENTATION])) {
-                        $errs[self::FIELD_DOCUMENTATION] = [];
-                    }
-                    $errs[self::FIELD_DOCUMENTATION][$rule] = $err;
+        if ([] !== ($vs = $this->getEvent())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_EVENT, $i)] = $fieldErrs;
                 }
             }
         }
@@ -623,18 +592,6 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_EVENT])) {
-            $v = $this->getEvent();
-            foreach($validationRules[self::FIELD_EVENT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CAPABILITY_STATEMENT_DOT_MESSAGING, self::FIELD_EVENT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_EVENT])) {
-                        $errs[self::FIELD_EVENT] = [];
-                    }
-                    $errs[self::FIELD_EVENT][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_RELIABLE_CACHE])) {
             $v = $this->getReliableCache();
             foreach($validationRules[self::FIELD_RELIABLE_CACHE] as $rule => $constraint) {
@@ -647,6 +604,18 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                 }
             }
         }
+        if (isset($validationRules[self::FIELD_DOCUMENTATION])) {
+            $v = $this->getDocumentation();
+            foreach($validationRules[self::FIELD_DOCUMENTATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CAPABILITY_STATEMENT_DOT_MESSAGING, self::FIELD_DOCUMENTATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DOCUMENTATION])) {
+                        $errs[self::FIELD_DOCUMENTATION] = [];
+                    }
+                    $errs[self::FIELD_DOCUMENTATION][$rule] = $err;
+                }
+            }
+        }
         if (isset($validationRules[self::FIELD_SUPPORTED_MESSAGE])) {
             $v = $this->getSupportedMessage();
             foreach($validationRules[self::FIELD_SUPPORTED_MESSAGE] as $rule => $constraint) {
@@ -656,6 +625,18 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                         $errs[self::FIELD_SUPPORTED_MESSAGE] = [];
                     }
                     $errs[self::FIELD_SUPPORTED_MESSAGE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EVENT])) {
+            $v = $this->getEvent();
+            foreach($validationRules[self::FIELD_EVENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CAPABILITY_STATEMENT_DOT_MESSAGING, self::FIELD_EVENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EVENT])) {
+                        $errs[self::FIELD_EVENT] = [];
+                    }
+                    $errs[self::FIELD_EVENT][$rule] = $err;
                 }
             }
         }
@@ -699,105 +680,155 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementMessaging $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementMessaging
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRCapabilityStatementMessaging::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRCapabilityStatementMessaging::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRCapabilityStatementMessaging;
-        } elseif (!is_object($type) || !($type instanceof FHIRCapabilityStatementMessaging)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRCapabilityStatementMessaging)) {
             throw new \RuntimeException(sprintf(
-                'FHIRCapabilityStatementMessaging::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementMessaging or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_ENDPOINT === $n->nodeName) {
+                $type->addEndpoint(FHIRCapabilityStatementEndpoint::xmlUnserialize($n));
+            } elseif (self::FIELD_RELIABLE_CACHE === $n->nodeName) {
+                $type->setReliableCache(FHIRUnsignedInt::xmlUnserialize($n));
+            } elseif (self::FIELD_DOCUMENTATION === $n->nodeName) {
+                $type->setDocumentation(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_SUPPORTED_MESSAGE === $n->nodeName) {
+                $type->addSupportedMessage(FHIRCapabilityStatementSupportedMessage::xmlUnserialize($n));
+            } elseif (self::FIELD_EVENT === $n->nodeName) {
+                $type->addEvent(FHIRCapabilityStatementEvent::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->documentation)) {
-            $type->setDocumentation(FHIRString::xmlUnserialize($children->documentation));
-        }
-        if (isset($attributes->documentation)) {
-            $pt = $type->getDocumentation();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->documentation);
-            } else {
-                $type->setDocumentation((string)$attributes->documentation);
-            }
-        }
-        if (isset($children->endpoint)) {
-            foreach($children->endpoint as $child) {
-                $type->addEndpoint(FHIRCapabilityStatementEndpoint::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->event)) {
-            foreach($children->event as $child) {
-                $type->addEvent(FHIRCapabilityStatementEvent::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->reliableCache)) {
-            $type->setReliableCache(FHIRUnsignedInt::xmlUnserialize($children->reliableCache));
-        }
-        if (isset($attributes->reliableCache)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_RELIABLE_CACHE);
+        if (null !== $n) {
             $pt = $type->getReliableCache();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->reliableCache);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setReliableCache((string)$attributes->reliableCache);
+                $type->setReliableCache($n->nodeValue);
             }
         }
-        if (isset($children->supportedMessage)) {
-            foreach($children->supportedMessage as $child) {
-                $type->addSupportedMessage(FHIRCapabilityStatementSupportedMessage::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_DOCUMENTATION);
+        if (null !== $n) {
+            $pt = $type->getDocumentation();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setDocumentation($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getDocumentation())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_DOCUMENTATION, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('CapabilityStatementMessaging'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
+        parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getEndpoint())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_ENDPOINT, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_ENDPOINT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if (null !== ($v = $this->getReliableCache())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_RELIABLE_CACHE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getDocumentation())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_DOCUMENTATION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if ([] !== ($vs = $this->getSupportedMessage())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_SUPPORTED_MESSAGE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getEvent())) {
@@ -805,85 +836,75 @@ class FHIRCapabilityStatementMessaging extends FHIRBackboneElement
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_EVENT, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_EVENT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getReliableCache())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_RELIABLE_CACHE, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getSupportedMessage())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SUPPORTED_MESSAGE, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getDocumentation())) {
-            $a[self::FIELD_DOCUMENTATION] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_DOCUMENTATION_EXT] = $enc;
-            }
-        }
+        $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getEndpoint())) {
-            $a[self::FIELD_ENDPOINT] = [];
+            $out->{self::FIELD_ENDPOINT} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_ENDPOINT][] = $v;
-            }
-        }
-        if ([] !== ($vs = $this->getEvent())) {
-            $a[self::FIELD_EVENT] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_EVENT][] = $v;
+                $out->{self::FIELD_ENDPOINT}[] = $v;
             }
         }
         if (null !== ($v = $this->getReliableCache())) {
-            $a[self::FIELD_RELIABLE_CACHE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUnsignedInt::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRUnsignedInt::FIELD_VALUE]);
-                $a[self::FIELD_RELIABLE_CACHE_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_RELIABLE_CACHE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRUnsignedInt::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_RELIABLE_CACHE_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getDocumentation())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DOCUMENTATION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DOCUMENTATION_EXT} = $ext;
             }
         }
         if ([] !== ($vs = $this->getSupportedMessage())) {
-            $a[self::FIELD_SUPPORTED_MESSAGE] = [];
+            $out->{self::FIELD_SUPPORTED_MESSAGE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_SUPPORTED_MESSAGE][] = $v;
+                $out->{self::FIELD_SUPPORTED_MESSAGE}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if ([] !== ($vs = $this->getEvent())) {
+            $out->{self::FIELD_EVENT} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_EVENT}[] = $v;
+            }
         }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

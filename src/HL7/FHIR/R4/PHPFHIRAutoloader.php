@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\R4;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,11 +68,20 @@ namespace HL7\FHIR\R4;
 if (!interface_exists('\HL7\FHIR\R4\PHPFHIRTypeInterface', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRTypeInterface.php';
 }
+if (!interface_exists('\HL7\FHIR\R4\PHPFHIRPrimitiveTypeInterface', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRPrimitiveTypeInterface.php';
+}
 if (!interface_exists('\HL7\FHIR\R4\PHPFHIRContainedTypeInterface', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRContainedTypeInterface.php';
 }
 if (!interface_exists('\HL7\FHIR\R4\PHPFHIRCommentContainerInterface', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRCommentContainerInterface.php';
+}
+if (!interface_exists('\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRXmlSerializableConfigInterface.php';
+}
+if (!interface_exists('\HL7\FHIR\R4\PHPFHIRXmlSerializableInterface', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRXmlSerializableInterface.php';
 }
 
 // traits
@@ -85,19 +94,42 @@ if (!trait_exists('\HL7\FHIR\R4\PHPFHIRValidationAssertionsTrait', false)) {
 if (!trait_exists('\HL7\FHIR\R4\PHPFHIRChangeTrackingTrait', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRChangeTrackingTrait.php';
 }
+if (!trait_exists('\HL7\FHIR\R4\PHPFHIRXmlNamespaceTrait', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRXmlNamespaceTrait.php';
+}
+if (!trait_exists('\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigTrait', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRXmlSerializableConfigTrait.php';
+}
 
-// common classes
+// enums
+if (!enum_exists('\HL7\FHIR\R4\PHPFHIRConfigKeyEnum', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRConfigKeyEnum.php';
+}
+if (!enum_exists('\HL7\FHIR\R4\PHPFHIRTypeEnum', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRTypeEnum.php';
+}
+if (!enum_exists('\HL7\FHIR\R4\PHPFHIRApiFormatEnum', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRApiFormatEnum.php';
+}
+
+// classes
 if (!class_exists('\HL7\FHIR\R4\PHPFHIRConstants', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRConstants.php';
 }
 if (!class_exists('\HL7\FHIR\R4\PHPFHIRTypeMap', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRTypeMap.php';
 }
-if (!class_exists('\HL7\FHIR\R4\PHPFHIRResponseParserConfig', false)) {
-    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRResponseParserConfig.php';
+if (!class_exists('\HL7\FHIR\R4\PHPFHIRConfig', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRConfig.php';
 }
 if (!class_exists('\HL7\FHIR\R4\PHPFHIRResponseParser', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRResponseParser.php';
+}
+if (!class_exists('\HL7\FHIR\R4\PHPFHIRDebugClientResponse', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRDebugClientResponse.php';
+}
+if (!class_exists('\HL7\FHIR\R4\PHPFHIRDebugClient', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRDebugClient.php';
 }
 
 /**
@@ -1227,7 +1259,7 @@ abstract class PHPFHIRAutoloader
         'HL7\FHIR\R4\FHIRUriPrimitive' => 'FHIRUriPrimitive.php',
         'HL7\FHIR\R4\FHIRUrlPrimitive' => 'FHIRUrlPrimitive.php',
         'HL7\FHIR\R4\FHIRUuidPrimitive' => 'FHIRUuidPrimitive.php',
-        'HL7\FHIR\R4\FHIRXHTML' => 'FHIRXHTML.php',
+        'HL7\FHIR\R4\FHIRXhtml' => 'FHIRXhtml.php',
     ];
 
     /** @var bool */
@@ -1239,10 +1271,10 @@ abstract class PHPFHIRAutoloader
      */
     public static function register(): bool
     {
-        if (self::$_registered) {
-            return self::$_registered;
+        if (!self::$_registered) {
+            self::$_registered = spl_autoload_register(__CLASS__ . '::loadClass', true);
         }
-        return self::$_registered = spl_autoload_register([__CLASS__, 'loadClass'], true);
+        return self::$_registered;
     }
 
     /**
@@ -1251,7 +1283,7 @@ abstract class PHPFHIRAutoloader
     public static function unregister(): bool
     {
         if (self::$_registered) {
-            if (spl_autoload_unregister([__CLASS__, 'loadClass'])) {
+            if (spl_autoload_unregister(__CLASS__ . '::loadClass')) {
                 self::$_registered = false;
                 return true;
             }
@@ -1265,7 +1297,7 @@ abstract class PHPFHIRAutoloader
      * @param string $class
      * @return bool|null
      */
-    public static function loadClass(string $class): ?bool
+    public static function loadClass(string $class): null|bool
     {
         if (isset(self::_CLASS_MAP[$class])) {
             return (bool)require __DIR__ . DIRECTORY_SEPARATOR . self::_CLASS_MAP[$class];

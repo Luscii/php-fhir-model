@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAppointment;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAppointment;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,11 +64,16 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAppointment;
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRParticipantRequired;
 use HL7\FHIR\STU3\FHIRElement\FHIRParticipationStatus;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A booking of a healthcare event among patient(s), practitioner(s), related
@@ -82,49 +87,13 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_APPOINTMENT_DOT_PARTICIPANT;
+
+    const FIELD_TYPE = 'type';
     const FIELD_ACTOR = 'actor';
     const FIELD_REQUIRED = 'required';
     const FIELD_REQUIRED_EXT = '_required';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
-    const FIELD_TYPE = 'type';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A Person, Location/HealthcareService or Device that is participating in the
-     * appointment.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $actor = null;
-
-    /**
-     * Is the Participant required to attend the appointment.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Is this participant required to be present at the meeting. This covers a
-     * use-case where 2 doctors need to meet to discuss the results for a specific
-     * patient, and the patient is not required to be present.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipantRequired
-     */
-    protected $required = null;
-
-    /**
-     * The Participation status of an appointment.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Participation status of the actor.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipationStatus
-     */
-    protected $status = null;
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -136,83 +105,56 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    protected $type = [];
+    protected null|array $type = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A Person, Location/HealthcareService or Device that is participating in the
+     * appointment.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $actor = null;
+    /**
+     * Is the Participant required to attend the appointment.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Is this participant required to be present at the meeting. This covers a
+     * use-case where 2 doctors need to meet to discuss the results for a specific
+     * patient, and the patient is not required to be present.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipantRequired
+     */
+    protected null|FHIRParticipantRequired $required = null;
+    /**
+     * The Participation status of an appointment.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Participation status of the actor.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipationStatus
+     */
+    protected null|FHIRParticipationStatus $status = null;
 
     /**
      * Validation map for fields in type Appointment.Participant
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRAppointmentParticipant Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRAppointmentParticipant::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_ACTOR])) {
-            if ($data[self::FIELD_ACTOR] instanceof FHIRReference) {
-                $this->setActor($data[self::FIELD_ACTOR]);
-            } else {
-                $this->setActor(new FHIRReference($data[self::FIELD_ACTOR]));
-            }
-        }
-        if (isset($data[self::FIELD_REQUIRED]) || isset($data[self::FIELD_REQUIRED_EXT])) {
-            if (isset($data[self::FIELD_REQUIRED])) {
-                $value = $data[self::FIELD_REQUIRED];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_REQUIRED_EXT]) && is_array($data[self::FIELD_REQUIRED_EXT])) {
-                $ext = $data[self::FIELD_REQUIRED_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRParticipantRequired) {
-                    $this->setRequired($value);
-                } else if (is_array($value)) {
-                    $this->setRequired(new FHIRParticipantRequired(array_merge($ext, $value)));
-                } else {
-                    $this->setRequired(new FHIRParticipantRequired([FHIRParticipantRequired::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setRequired(new FHIRParticipantRequired($ext));
-            }
-        }
-        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
-            if (isset($data[self::FIELD_STATUS])) {
-                $value = $data[self::FIELD_STATUS];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) {
-                $ext = $data[self::FIELD_STATUS_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRParticipationStatus) {
-                    $this->setStatus($value);
-                } else if (is_array($value)) {
-                    $this->setStatus(new FHIRParticipationStatus(array_merge($ext, $value)));
-                } else {
-                    $this->setStatus(new FHIRParticipationStatus([FHIRParticipationStatus::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setStatus(new FHIRParticipationStatus($ext));
-            }
-        }
         if (isset($data[self::FIELD_TYPE])) {
             if (is_array($data[self::FIELD_TYPE])) {
                 foreach($data[self::FIELD_TYPE] as $v) {
@@ -225,124 +167,58 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
                         $this->addType(new FHIRCodeableConcept($v));
                     }
                 }
-            } else if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
+            } elseif ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
                 $this->addType($data[self::FIELD_TYPE]);
             } else {
                 $this->addType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
             }
         }
+        if (isset($data[self::FIELD_ACTOR])) {
+            if ($data[self::FIELD_ACTOR] instanceof FHIRReference) {
+                $this->setActor($data[self::FIELD_ACTOR]);
+            } else {
+                $this->setActor(new FHIRReference($data[self::FIELD_ACTOR]));
+            }
+        }
+        if (isset($data[self::FIELD_REQUIRED]) || isset($data[self::FIELD_REQUIRED_EXT])) {
+            $value = $data[self::FIELD_REQUIRED] ?? null;
+            $ext = (isset($data[self::FIELD_REQUIRED_EXT]) && is_array($data[self::FIELD_REQUIRED_EXT])) ? $data[self::FIELD_REQUIRED_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRParticipantRequired) {
+                    $this->setRequired($value);
+                } else if (is_array($value)) {
+                    $this->setRequired(new FHIRParticipantRequired(array_merge($ext, $value)));
+                } else {
+                    $this->setRequired(new FHIRParticipantRequired([FHIRParticipantRequired::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setRequired(new FHIRParticipantRequired($ext));
+            }
+        }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            $value = $data[self::FIELD_STATUS] ?? null;
+            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) ? $data[self::FIELD_STATUS_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRParticipationStatus) {
+                    $this->setStatus($value);
+                } else if (is_array($value)) {
+                    $this->setStatus(new FHIRParticipationStatus(array_merge($ext, $value)));
+                } else {
+                    $this->setStatus(new FHIRParticipationStatus([FHIRParticipationStatus::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setStatus(new FHIRParticipationStatus($ext));
+            }
+        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<AppointmentParticipant{$xmlns}></AppointmentParticipant>";
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A Person, Location/HealthcareService or Device that is participating in the
-     * appointment.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getActor()
-    {
-        return $this->actor;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A Person, Location/HealthcareService or Device that is participating in the
-     * appointment.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $actor
-     * @return static
-     */
-    public function setActor(FHIRReference $actor = null)
-    {
-        $this->actor = $actor;
-        return $this;
-    }
-
-    /**
-     * Is the Participant required to attend the appointment.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Is this participant required to be present at the meeting. This covers a
-     * use-case where 2 doctors need to meet to discuss the results for a specific
-     * patient, and the patient is not required to be present.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipantRequired
-     */
-    public function getRequired()
-    {
-        return $this->required;
-    }
-
-    /**
-     * Is the Participant required to attend the appointment.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Is this participant required to be present at the meeting. This covers a
-     * use-case where 2 doctors need to meet to discuss the results for a specific
-     * patient, and the patient is not required to be present.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipantRequired $required
-     * @return static
-     */
-    public function setRequired(FHIRParticipantRequired $required = null)
-    {
-        $this->required = $required;
-        return $this;
-    }
-
-    /**
-     * The Participation status of an appointment.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Participation status of the actor.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipationStatus
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * The Participation status of an appointment.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Participation status of the actor.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipationStatus $status
-     * @return static
-     */
-    public function setStatus(FHIRParticipationStatus $status = null)
-    {
-        $this->status = $status;
-        return $this;
     }
 
     /**
@@ -355,7 +231,7 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getType()
+    public function getType(): null|array
     {
         return $this->type;
     }
@@ -371,8 +247,12 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function addType(FHIRCodeableConcept $type = null)
+    public function addType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
         $this->type[] = $type;
         return $this;
     }
@@ -388,9 +268,12 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $type
      * @return static
      */
-    public function setType(array $type = [])
+    public function setType(array $type = []): self
     {
-        $this->type = [];
+        if ([] !== $this->type) {
+            $this->_trackValuesRemoved(count($this->type));
+            $this->type = [];
+        }
         if ([] === $type) {
             return $this;
         }
@@ -405,14 +288,118 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A Person, Location/HealthcareService or Device that is participating in the
+     * appointment.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getActor(): null|FHIRReference
+    {
+        return $this->actor;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A Person, Location/HealthcareService or Device that is participating in the
+     * appointment.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $actor
+     * @return static
+     */
+    public function setActor(null|FHIRReference $actor = null): self
+    {
+        if (null === $actor) {
+            $actor = new FHIRReference();
+        }
+        $this->_trackValueSet($this->actor, $actor);
+        $this->actor = $actor;
+        return $this;
+    }
+
+    /**
+     * Is the Participant required to attend the appointment.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Is this participant required to be present at the meeting. This covers a
+     * use-case where 2 doctors need to meet to discuss the results for a specific
+     * patient, and the patient is not required to be present.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipantRequired
+     */
+    public function getRequired(): null|FHIRParticipantRequired
+    {
+        return $this->required;
+    }
+
+    /**
+     * Is the Participant required to attend the appointment.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Is this participant required to be present at the meeting. This covers a
+     * use-case where 2 doctors need to meet to discuss the results for a specific
+     * patient, and the patient is not required to be present.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipantRequired $required
+     * @return static
+     */
+    public function setRequired(null|FHIRParticipantRequired $required = null): self
+    {
+        if (null === $required) {
+            $required = new FHIRParticipantRequired();
+        }
+        $this->_trackValueSet($this->required, $required);
+        $this->required = $required;
+        return $this;
+    }
+
+    /**
+     * The Participation status of an appointment.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Participation status of the actor.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipationStatus
+     */
+    public function getStatus(): null|FHIRParticipationStatus
+    {
+        return $this->status;
+    }
+
+    /**
+     * The Participation status of an appointment.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Participation status of the actor.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRParticipationStatus $status
+     * @return static
+     */
+    public function setStatus(null|FHIRParticipationStatus $status = null): self
+    {
+        if (null === $status) {
+            $status = new FHIRParticipationStatus();
+        }
+        $this->_trackValueSet($this->status, $status);
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
      * Returns the validation rules that this type's fields must comply with to be considered "valid"
      * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -421,10 +408,17 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getType())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_TYPE, $i)] = $fieldErrs;
+                }
+            }
+        }
         if (null !== ($v = $this->getActor())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_ACTOR] = $fieldErrs;
@@ -440,10 +434,15 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
                 $errs[self::FIELD_STATUS] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getType())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_TYPE, $i)] = $fieldErrs;
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_APPOINTMENT_DOT_PARTICIPANT, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
                 }
             }
         }
@@ -480,18 +479,6 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
                         $errs[self::FIELD_STATUS] = [];
                     }
                     $errs[self::FIELD_STATUS][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_TYPE])) {
-            $v = $this->getType();
-            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_APPOINTMENT_DOT_PARTICIPANT, self::FIELD_TYPE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TYPE])) {
-                        $errs[self::FIELD_TYPE] = [];
-                    }
-                    $errs[self::FIELD_TYPE][$rule] = $err;
                 }
             }
         }
@@ -535,140 +522,181 @@ class FHIRAppointmentParticipant extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAppointment\FHIRAppointmentParticipant $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAppointment\FHIRAppointmentParticipant
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRAppointmentParticipant::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRAppointmentParticipant::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRAppointmentParticipant;
-        } elseif (!is_object($type) || !($type instanceof FHIRAppointmentParticipant)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRAppointmentParticipant)) {
             throw new \RuntimeException(sprintf(
-                'FHIRAppointmentParticipant::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAppointment\FHIRAppointmentParticipant or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_TYPE === $n->nodeName) {
+                $type->addType(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_ACTOR === $n->nodeName) {
+                $type->setActor(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_REQUIRED === $n->nodeName) {
+                $type->setRequired(FHIRParticipantRequired::xmlUnserialize($n));
+            } elseif (self::FIELD_STATUS === $n->nodeName) {
+                $type->setStatus(FHIRParticipationStatus::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->actor)) {
-            $type->setActor(FHIRReference::xmlUnserialize($children->actor));
-        }
-        if (isset($children->required)) {
-            $type->setRequired(FHIRParticipantRequired::xmlUnserialize($children->required));
-        }
-        if (isset($children->status)) {
-            $type->setStatus(FHIRParticipationStatus::xmlUnserialize($children->status));
-        }
-        if (isset($children->type)) {
-            foreach($children->type as $child) {
-                $type->addType(FHIRCodeableConcept::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getActor())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ACTOR, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('AppointmentParticipant'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
-        if (null !== ($v = $this->getRequired())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_REQUIRED, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getStatus())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_STATUS, null, $v->_getFHIRXMLNamespace()));
-        }
+        parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getType())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        return $sxe;
+        if (null !== ($v = $this->getActor())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ACTOR);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getRequired())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_REQUIRED);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getStatus())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getActor())) {
-            $a[self::FIELD_ACTOR] = $v;
-        }
-        if (null !== ($v = $this->getRequired())) {
-            $a[self::FIELD_REQUIRED] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRParticipantRequired::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRParticipantRequired::FIELD_VALUE]);
-                $a[self::FIELD_REQUIRED_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getStatus())) {
-            $a[self::FIELD_STATUS] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRParticipationStatus::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRParticipationStatus::FIELD_VALUE]);
-                $a[self::FIELD_STATUS_EXT] = $enc;
-            }
-        }
+        $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getType())) {
-            $a[self::FIELD_TYPE] = [];
+            $out->{self::FIELD_TYPE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_TYPE][] = $v;
+                $out->{self::FIELD_TYPE}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if (null !== ($v = $this->getActor())) {
+            $out->{self::FIELD_ACTOR} = $v;
         }
-        return $a;
-    }
+        if (null !== ($v = $this->getRequired())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_REQUIRED} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRParticipantRequired::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_REQUIRED_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getStatus())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_STATUS} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRParticipationStatus::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_STATUS_EXT} = $ext;
+            }
+        }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

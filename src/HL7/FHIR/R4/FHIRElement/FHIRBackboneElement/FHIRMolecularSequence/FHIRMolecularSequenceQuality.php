@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence;
  * 
  */
 
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\R4\FHIRElement\FHIRDecimal;
@@ -69,9 +70,13 @@ use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRInteger;
 use HL7\FHIR\R4\FHIRElement\FHIRQualityType;
 use HL7\FHIR\R4\FHIRElement\FHIRQuantity;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Raw data describing a biological sequence.
@@ -83,6 +88,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MOLECULAR_SEQUENCE_DOT_QUALITY;
+
     const FIELD_TYPE = 'type';
     const FIELD_TYPE_EXT = '_type';
     const FIELD_STANDARD_SEQUENCE = 'standardSequence';
@@ -110,9 +116,6 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
     const FIELD_F_SCORE_EXT = '_fScore';
     const FIELD_ROC = 'roc';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * Type for quality report.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -121,8 +124,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQualityType
      */
-    protected ?FHIRQualityType $type = null;
-
+    protected null|FHIRQualityType $type = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -133,8 +135,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $standardSequence = null;
-
+    protected null|FHIRCodeableConcept $standardSequence = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -143,10 +144,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * Start position of the sequence. If the coordinate system is either 0-based or
      * 1-based, then start position is inclusive.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $start = null;
-
+    protected null|FHIRInteger $start = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -156,10 +156,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * exclusive and does not include the last position. If the coordinate system is
      * 1-base, then end is inclusive and includes the last position.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $end = null;
-
+    protected null|FHIRInteger $end = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -172,8 +171,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $score = null;
-
+    protected null|FHIRQuantity $score = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -184,8 +182,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $method = null;
-
+    protected null|FHIRCodeableConcept $method = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -197,10 +194,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * are consistent with all of the alleles at this site, and for which there is an
      * accurate genotype call for the event.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $truthTP = null;
-
+    protected null|FHIRDecimal $truthTP = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -212,10 +208,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * are consistent with all of the alleles at this site, and for which there is an
      * accurate genotype call for the event.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $queryTP = null;
-
+    protected null|FHIRDecimal $queryTP = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -227,10 +222,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * at this site, or sites for which there is an inaccurate genotype call for the
      * event. Sites with correct variant but incorrect genotype are counted here.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $truthFN = null;
-
+    protected null|FHIRDecimal $truthFN = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -241,10 +235,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * is no path through the Truth Call Set that is consistent with this site. Sites
      * with correct variant but incorrect genotype are counted here.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $queryFP = null;
-
+    protected null|FHIRDecimal $queryFP = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -255,10 +248,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * Call Sets match (i.e. cases where the truth is 1/1 and the query is 0/1 or
      * similar).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $gtFP = null;
-
+    protected null|FHIRDecimal $gtFP = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -267,10 +259,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * QUERY.TP / (QUERY.TP + QUERY.FP).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $precision = null;
-
+    protected null|FHIRDecimal $precision = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -279,10 +270,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * TRUTH.TP / (TRUTH.TP + TRUTH.FN).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $recall = null;
-
+    protected null|FHIRDecimal $recall = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -292,10 +282,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * Harmonic mean of Recall and Precision, computed as: 2 * precision * recall /
      * (precision + recall).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $fScore = null;
-
+    protected null|FHIRDecimal $fScore = null;
     /**
      * Raw data describing a biological sequence.
      *
@@ -304,28 +293,23 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRoc
      */
-    protected ?FHIRMolecularSequenceRoc $roc = null;
+    protected null|FHIRMolecularSequenceRoc $roc = null;
 
     /**
      * Validation map for fields in type MolecularSequence.Quality
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRMolecularSequenceQuality Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMolecularSequenceQuality::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_TYPE]) || isset($data[self::FIELD_TYPE_EXT])) {
@@ -523,24 +507,13 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<MolecularSequenceQuality{$xmlns}></MolecularSequenceQuality>";
     }
 
     /**
@@ -551,7 +524,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQualityType
      */
-    public function getType(): ?FHIRQualityType
+    public function getType(): null|FHIRQualityType
     {
         return $this->type;
     }
@@ -565,8 +538,11 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQualityType $type
      * @return static
      */
-    public function setType(?FHIRQualityType $type = null): object
+    public function setType(null|FHIRQualityType $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRQualityType();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -582,7 +558,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getStandardSequence(): ?FHIRCodeableConcept
+    public function getStandardSequence(): null|FHIRCodeableConcept
     {
         return $this->standardSequence;
     }
@@ -598,8 +574,11 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $standardSequence
      * @return static
      */
-    public function setStandardSequence(?FHIRCodeableConcept $standardSequence = null): object
+    public function setStandardSequence(null|FHIRCodeableConcept $standardSequence = null): self
     {
+        if (null === $standardSequence) {
+            $standardSequence = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->standardSequence, $standardSequence);
         $this->standardSequence = $standardSequence;
         return $this;
@@ -613,9 +592,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * Start position of the sequence. If the coordinate system is either 0-based or
      * 1-based, then start position is inclusive.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getStart(): ?FHIRInteger
+    public function getStart(): null|FHIRInteger
     {
         return $this->start;
     }
@@ -628,10 +607,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * Start position of the sequence. If the coordinate system is either 0-based or
      * 1-based, then start position is inclusive.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $start
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $start
      * @return static
      */
-    public function setStart($start = null): object
+    public function setStart(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $start = null): self
     {
         if (null !== $start && !($start instanceof FHIRInteger)) {
             $start = new FHIRInteger($start);
@@ -650,9 +629,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * exclusive and does not include the last position. If the coordinate system is
      * 1-base, then end is inclusive and includes the last position.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getEnd(): ?FHIRInteger
+    public function getEnd(): null|FHIRInteger
     {
         return $this->end;
     }
@@ -666,10 +645,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * exclusive and does not include the last position. If the coordinate system is
      * 1-base, then end is inclusive and includes the last position.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $end
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $end
      * @return static
      */
-    public function setEnd($end = null): object
+    public function setEnd(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $end = null): self
     {
         if (null !== $end && !($end instanceof FHIRInteger)) {
             $end = new FHIRInteger($end);
@@ -691,7 +670,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getScore(): ?FHIRQuantity
+    public function getScore(): null|FHIRQuantity
     {
         return $this->score;
     }
@@ -709,8 +688,11 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $score
      * @return static
      */
-    public function setScore(?FHIRQuantity $score = null): object
+    public function setScore(null|FHIRQuantity $score = null): self
     {
+        if (null === $score) {
+            $score = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->score, $score);
         $this->score = $score;
         return $this;
@@ -726,7 +708,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getMethod(): ?FHIRCodeableConcept
+    public function getMethod(): null|FHIRCodeableConcept
     {
         return $this->method;
     }
@@ -742,8 +724,11 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $method
      * @return static
      */
-    public function setMethod(?FHIRCodeableConcept $method = null): object
+    public function setMethod(null|FHIRCodeableConcept $method = null): self
     {
+        if (null === $method) {
+            $method = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->method, $method);
         $this->method = $method;
         return $this;
@@ -760,9 +745,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * are consistent with all of the alleles at this site, and for which there is an
      * accurate genotype call for the event.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getTruthTP(): ?FHIRDecimal
+    public function getTruthTP(): null|FHIRDecimal
     {
         return $this->truthTP;
     }
@@ -778,10 +763,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * are consistent with all of the alleles at this site, and for which there is an
      * accurate genotype call for the event.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $truthTP
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $truthTP
      * @return static
      */
-    public function setTruthTP($truthTP = null): object
+    public function setTruthTP(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $truthTP = null): self
     {
         if (null !== $truthTP && !($truthTP instanceof FHIRDecimal)) {
             $truthTP = new FHIRDecimal($truthTP);
@@ -802,9 +787,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * are consistent with all of the alleles at this site, and for which there is an
      * accurate genotype call for the event.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getQueryTP(): ?FHIRDecimal
+    public function getQueryTP(): null|FHIRDecimal
     {
         return $this->queryTP;
     }
@@ -820,10 +805,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * are consistent with all of the alleles at this site, and for which there is an
      * accurate genotype call for the event.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $queryTP
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $queryTP
      * @return static
      */
-    public function setQueryTP($queryTP = null): object
+    public function setQueryTP(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $queryTP = null): self
     {
         if (null !== $queryTP && !($queryTP instanceof FHIRDecimal)) {
             $queryTP = new FHIRDecimal($queryTP);
@@ -844,9 +829,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * at this site, or sites for which there is an inaccurate genotype call for the
      * event. Sites with correct variant but incorrect genotype are counted here.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getTruthFN(): ?FHIRDecimal
+    public function getTruthFN(): null|FHIRDecimal
     {
         return $this->truthFN;
     }
@@ -862,10 +847,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * at this site, or sites for which there is an inaccurate genotype call for the
      * event. Sites with correct variant but incorrect genotype are counted here.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $truthFN
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $truthFN
      * @return static
      */
-    public function setTruthFN($truthFN = null): object
+    public function setTruthFN(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $truthFN = null): self
     {
         if (null !== $truthFN && !($truthFN instanceof FHIRDecimal)) {
             $truthFN = new FHIRDecimal($truthFN);
@@ -885,9 +870,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * is no path through the Truth Call Set that is consistent with this site. Sites
      * with correct variant but incorrect genotype are counted here.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getQueryFP(): ?FHIRDecimal
+    public function getQueryFP(): null|FHIRDecimal
     {
         return $this->queryFP;
     }
@@ -902,10 +887,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * is no path through the Truth Call Set that is consistent with this site. Sites
      * with correct variant but incorrect genotype are counted here.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $queryFP
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $queryFP
      * @return static
      */
-    public function setQueryFP($queryFP = null): object
+    public function setQueryFP(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $queryFP = null): self
     {
         if (null !== $queryFP && !($queryFP instanceof FHIRDecimal)) {
             $queryFP = new FHIRDecimal($queryFP);
@@ -925,9 +910,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * Call Sets match (i.e. cases where the truth is 1/1 and the query is 0/1 or
      * similar).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getGtFP(): ?FHIRDecimal
+    public function getGtFP(): null|FHIRDecimal
     {
         return $this->gtFP;
     }
@@ -942,10 +927,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * Call Sets match (i.e. cases where the truth is 1/1 and the query is 0/1 or
      * similar).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $gtFP
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $gtFP
      * @return static
      */
-    public function setGtFP($gtFP = null): object
+    public function setGtFP(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $gtFP = null): self
     {
         if (null !== $gtFP && !($gtFP instanceof FHIRDecimal)) {
             $gtFP = new FHIRDecimal($gtFP);
@@ -963,9 +948,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * QUERY.TP / (QUERY.TP + QUERY.FP).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getPrecision(): ?FHIRDecimal
+    public function getPrecision(): null|FHIRDecimal
     {
         return $this->precision;
     }
@@ -978,10 +963,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * QUERY.TP / (QUERY.TP + QUERY.FP).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $precision
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $precision
      * @return static
      */
-    public function setPrecision($precision = null): object
+    public function setPrecision(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $precision = null): self
     {
         if (null !== $precision && !($precision instanceof FHIRDecimal)) {
             $precision = new FHIRDecimal($precision);
@@ -999,9 +984,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * TRUTH.TP / (TRUTH.TP + TRUTH.FN).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getRecall(): ?FHIRDecimal
+    public function getRecall(): null|FHIRDecimal
     {
         return $this->recall;
     }
@@ -1014,10 +999,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * TRUTH.TP / (TRUTH.TP + TRUTH.FN).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $recall
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $recall
      * @return static
      */
-    public function setRecall($recall = null): object
+    public function setRecall(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $recall = null): self
     {
         if (null !== $recall && !($recall instanceof FHIRDecimal)) {
             $recall = new FHIRDecimal($recall);
@@ -1036,9 +1021,9 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * Harmonic mean of Recall and Precision, computed as: 2 * precision * recall /
      * (precision + recall).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getFScore(): ?FHIRDecimal
+    public function getFScore(): null|FHIRDecimal
     {
         return $this->fScore;
     }
@@ -1052,10 +1037,10 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * Harmonic mean of Recall and Precision, computed as: 2 * precision * recall /
      * (precision + recall).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $fScore
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $fScore
      * @return static
      */
-    public function setFScore($fScore = null): object
+    public function setFScore(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $fScore = null): self
     {
         if (null !== $fScore && !($fScore instanceof FHIRDecimal)) {
             $fScore = new FHIRDecimal($fScore);
@@ -1073,7 +1058,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRoc
      */
-    public function getRoc(): ?FHIRMolecularSequenceRoc
+    public function getRoc(): null|FHIRMolecularSequenceRoc
     {
         return $this->roc;
     }
@@ -1087,8 +1072,11 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRoc $roc
      * @return static
      */
-    public function setRoc(?FHIRMolecularSequenceRoc $roc = null): object
+    public function setRoc(null|FHIRMolecularSequenceRoc $roc = null): self
     {
+        if (null === $roc) {
+            $roc = new FHIRMolecularSequenceRoc();
+        }
         $this->_trackValueSet($this->roc, $roc);
         $this->roc = $roc;
         return $this;
@@ -1102,7 +1090,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1412,36 +1400,48 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMolecularSequenceQuality::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMolecularSequenceQuality::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRMolecularSequenceQuality(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMolecularSequenceQuality)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMolecularSequenceQuality)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMolecularSequenceQuality::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1590,17 +1590,25 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('MolecularSequenceQuality'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getType())) {
@@ -1684,7 +1692,7 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getType())) {
@@ -1812,7 +1820,6 @@ class FHIRMolecularSequenceQuality extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

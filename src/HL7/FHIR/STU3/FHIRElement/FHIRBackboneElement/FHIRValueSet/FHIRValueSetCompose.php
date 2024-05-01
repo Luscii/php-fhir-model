@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,11 +62,18 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRBooleanPrimitive;
+use HL7\FHIR\STU3\FHIRDatePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\STU3\FHIRElement\FHIRBoolean;
 use HL7\FHIR\STU3\FHIRElement\FHIRDate;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A value set specifies a set of codes drawn from one or more code systems.
@@ -78,49 +85,13 @@ class FHIRValueSetCompose extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_VALUE_SET_DOT_COMPOSE;
-    const FIELD_EXCLUDE = 'exclude';
+
+    const FIELD_LOCKED_DATE = 'lockedDate';
+    const FIELD_LOCKED_DATE_EXT = '_lockedDate';
     const FIELD_INACTIVE = 'inactive';
     const FIELD_INACTIVE_EXT = '_inactive';
     const FIELD_INCLUDE = 'include';
-    const FIELD_LOCKED_DATE = 'lockedDate';
-    const FIELD_LOCKED_DATE_EXT = '_lockedDate';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A value set specifies a set of codes drawn from one or more code systems.
-     *
-     * Exclude one or more codes from the value set based on code system filters and/or
-     * other value sets.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[]
-     */
-    protected $exclude = [];
-
-    /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Whether inactive codes - codes that are not approved for current use - are in
-     * the value set. If inactive = true, inactive codes are to be included in the
-     * expansion, if inactive = false, the inactive codes will not be included in the
-     * expansion. If absent, the behavior is determined by the implementation, or by
-     * the applicable ExpansionProfile (but generally, inactive codes would be expected
-     * to be included).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
-     */
-    protected $inactive = null;
-
-    /**
-     * A value set specifies a set of codes drawn from one or more code systems.
-     *
-     * Include one or more codes from a code system or other value set(s).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[]
-     */
-    protected $include = [];
+    const FIELD_EXCLUDE = 'exclude';
 
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
@@ -135,13 +106,44 @@ class FHIRValueSetCompose extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDate
      */
-    protected $lockedDate = null;
+    protected null|FHIRDate $lockedDate = null;
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Whether inactive codes - codes that are not approved for current use - are in
+     * the value set. If inactive = true, inactive codes are to be included in the
+     * expansion, if inactive = false, the inactive codes will not be included in the
+     * expansion. If absent, the behavior is determined by the implementation, or by
+     * the applicable ExpansionProfile (but generally, inactive codes would be expected
+     * to be included).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     */
+    protected null|FHIRBoolean $inactive = null;
+    /**
+     * A value set specifies a set of codes drawn from one or more code systems.
+     *
+     * Include one or more codes from a code system or other value set(s).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[]
+     */
+    protected null|array $include = [];
+    /**
+     * A value set specifies a set of codes drawn from one or more code systems.
+     *
+     * Exclude one or more codes from the value set based on code system filters and/or
+     * other value sets.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[]
+     */
+    protected null|array $exclude = [];
 
     /**
      * Validation map for fields in type ValueSet.Compose
      * @var array
      */
-    private static $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_INCLUDE => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -150,48 +152,32 @@ class FHIRValueSetCompose extends FHIRBackboneElement
     /**
      * FHIRValueSetCompose Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRValueSetCompose::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_EXCLUDE])) {
-            if (is_array($data[self::FIELD_EXCLUDE])) {
-                foreach($data[self::FIELD_EXCLUDE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRValueSetInclude) {
-                        $this->addExclude($v);
-                    } else {
-                        $this->addExclude(new FHIRValueSetInclude($v));
-                    }
+        if (isset($data[self::FIELD_LOCKED_DATE]) || isset($data[self::FIELD_LOCKED_DATE_EXT])) {
+            $value = $data[self::FIELD_LOCKED_DATE] ?? null;
+            $ext = (isset($data[self::FIELD_LOCKED_DATE_EXT]) && is_array($data[self::FIELD_LOCKED_DATE_EXT])) ? $data[self::FIELD_LOCKED_DATE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDate) {
+                    $this->setLockedDate($value);
+                } else if (is_array($value)) {
+                    $this->setLockedDate(new FHIRDate(array_merge($ext, $value)));
+                } else {
+                    $this->setLockedDate(new FHIRDate([FHIRDate::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ($data[self::FIELD_EXCLUDE] instanceof FHIRValueSetInclude) {
-                $this->addExclude($data[self::FIELD_EXCLUDE]);
-            } else {
-                $this->addExclude(new FHIRValueSetInclude($data[self::FIELD_EXCLUDE]));
+            } elseif ([] !== $ext) {
+                $this->setLockedDate(new FHIRDate($ext));
             }
         }
         if (isset($data[self::FIELD_INACTIVE]) || isset($data[self::FIELD_INACTIVE_EXT])) {
-            if (isset($data[self::FIELD_INACTIVE])) {
-                $value = $data[self::FIELD_INACTIVE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_INACTIVE_EXT]) && is_array($data[self::FIELD_INACTIVE_EXT])) {
-                $ext = $data[self::FIELD_INACTIVE_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_INACTIVE] ?? null;
+            $ext = (isset($data[self::FIELD_INACTIVE_EXT]) && is_array($data[self::FIELD_INACTIVE_EXT])) ? $data[self::FIELD_INACTIVE_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRBoolean) {
                     $this->setInactive($value);
@@ -200,7 +186,7 @@ class FHIRValueSetCompose extends FHIRBackboneElement
                 } else {
                     $this->setInactive(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setInactive(new FHIRBoolean($ext));
             }
         }
@@ -216,107 +202,80 @@ class FHIRValueSetCompose extends FHIRBackboneElement
                         $this->addInclude(new FHIRValueSetInclude($v));
                     }
                 }
-            } else if ($data[self::FIELD_INCLUDE] instanceof FHIRValueSetInclude) {
+            } elseif ($data[self::FIELD_INCLUDE] instanceof FHIRValueSetInclude) {
                 $this->addInclude($data[self::FIELD_INCLUDE]);
             } else {
                 $this->addInclude(new FHIRValueSetInclude($data[self::FIELD_INCLUDE]));
             }
         }
-        if (isset($data[self::FIELD_LOCKED_DATE]) || isset($data[self::FIELD_LOCKED_DATE_EXT])) {
-            if (isset($data[self::FIELD_LOCKED_DATE])) {
-                $value = $data[self::FIELD_LOCKED_DATE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_LOCKED_DATE_EXT]) && is_array($data[self::FIELD_LOCKED_DATE_EXT])) {
-                $ext = $data[self::FIELD_LOCKED_DATE_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRDate) {
-                    $this->setLockedDate($value);
-                } else if (is_array($value)) {
-                    $this->setLockedDate(new FHIRDate(array_merge($ext, $value)));
-                } else {
-                    $this->setLockedDate(new FHIRDate([FHIRDate::FIELD_VALUE => $value] + $ext));
+        if (isset($data[self::FIELD_EXCLUDE])) {
+            if (is_array($data[self::FIELD_EXCLUDE])) {
+                foreach($data[self::FIELD_EXCLUDE] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRValueSetInclude) {
+                        $this->addExclude($v);
+                    } else {
+                        $this->addExclude(new FHIRValueSetInclude($v));
+                    }
                 }
-            } else if ([] !== $ext) {
-                $this->setLockedDate(new FHIRDate($ext));
+            } elseif ($data[self::FIELD_EXCLUDE] instanceof FHIRValueSetInclude) {
+                $this->addExclude($data[self::FIELD_EXCLUDE]);
+            } else {
+                $this->addExclude(new FHIRValueSetInclude($data[self::FIELD_EXCLUDE]));
             }
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * @return string
+     * A date or partial date (e.g. just year or year + month). There is no time zone.
+     * The format is a union of the schema types gYear, gYearMonth and date. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * If a locked date is defined, then the Content Logical Definition must be
+     * evaluated using the current version as of the locked date for referenced code
+     * system(s) and value set instances where ValueSet.compose.include.version is not
+     * defined.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDate
      */
-    public function _getFHIRXMLElementDefinition()
+    public function getLockedDate(): null|FHIRDate
     {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ValueSetCompose{$xmlns}></ValueSetCompose>";
+        return $this->lockedDate;
     }
 
     /**
-     * A value set specifies a set of codes drawn from one or more code systems.
+     * A date or partial date (e.g. just year or year + month). There is no time zone.
+     * The format is a union of the schema types gYear, gYearMonth and date. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Exclude one or more codes from the value set based on code system filters and/or
-     * other value sets.
+     * If a locked date is defined, then the Content Logical Definition must be
+     * evaluated using the current version as of the locked date for referenced code
+     * system(s) and value set instances where ValueSet.compose.include.version is not
+     * defined.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[]
-     */
-    public function getExclude()
-    {
-        return $this->exclude;
-    }
-
-    /**
-     * A value set specifies a set of codes drawn from one or more code systems.
-     *
-     * Exclude one or more codes from the value set based on code system filters and/or
-     * other value sets.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude $exclude
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRDatePrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDate $lockedDate
      * @return static
      */
-    public function addExclude(FHIRValueSetInclude $exclude = null)
+    public function setLockedDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $lockedDate = null): self
     {
-        $this->exclude[] = $exclude;
-        return $this;
-    }
-
-    /**
-     * A value set specifies a set of codes drawn from one or more code systems.
-     *
-     * Exclude one or more codes from the value set based on code system filters and/or
-     * other value sets.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[] $exclude
-     * @return static
-     */
-    public function setExclude(array $exclude = [])
-    {
-        $this->exclude = [];
-        if ([] === $exclude) {
-            return $this;
+        if (null !== $lockedDate && !($lockedDate instanceof FHIRDate)) {
+            $lockedDate = new FHIRDate($lockedDate);
         }
-        foreach($exclude as $v) {
-            if ($v instanceof FHIRValueSetInclude) {
-                $this->addExclude($v);
-            } else {
-                $this->addExclude(new FHIRValueSetInclude($v));
-            }
-        }
+        $this->_trackValueSet($this->lockedDate, $lockedDate);
+        $this->lockedDate = $lockedDate;
         return $this;
     }
 
@@ -333,7 +292,7 @@ class FHIRValueSetCompose extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
-    public function getInactive()
+    public function getInactive(): null|FHIRBoolean
     {
         return $this->inactive;
     }
@@ -349,20 +308,16 @@ class FHIRValueSetCompose extends FHIRBackboneElement
      * the applicable ExpansionProfile (but generally, inactive codes would be expected
      * to be included).
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $inactive
+     * @param null|string|bool|\HL7\FHIR\STU3\FHIRBooleanPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $inactive
      * @return static
      */
-    public function setInactive($inactive = null)
+    public function setInactive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $inactive = null): self
     {
-        if (null === $inactive) {
-            $this->inactive = null;
-            return $this;
+        if (null !== $inactive && !($inactive instanceof FHIRBoolean)) {
+            $inactive = new FHIRBoolean($inactive);
         }
-        if ($inactive instanceof FHIRBoolean) {
-            $this->inactive = $inactive;
-            return $this;
-        }
-        $this->inactive = new FHIRBoolean($inactive);
+        $this->_trackValueSet($this->inactive, $inactive);
+        $this->inactive = $inactive;
         return $this;
     }
 
@@ -373,7 +328,7 @@ class FHIRValueSetCompose extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[]
      */
-    public function getInclude()
+    public function getInclude(): null|array
     {
         return $this->include;
     }
@@ -386,8 +341,12 @@ class FHIRValueSetCompose extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude $include
      * @return static
      */
-    public function addInclude(FHIRValueSetInclude $include = null)
+    public function addInclude(null|FHIRValueSetInclude $include = null): self
     {
+        if (null === $include) {
+            $include = new FHIRValueSetInclude();
+        }
+        $this->_trackValueAdded();
         $this->include[] = $include;
         return $this;
     }
@@ -400,9 +359,12 @@ class FHIRValueSetCompose extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[] $include
      * @return static
      */
-    public function setInclude(array $include = [])
+    public function setInclude(array $include = []): self
     {
-        $this->include = [];
+        if ([] !== $this->include) {
+            $this->_trackValuesRemoved(count($this->include));
+            $this->include = [];
+        }
         if ([] === $include) {
             return $this;
         }
@@ -417,48 +379,62 @@ class FHIRValueSetCompose extends FHIRBackboneElement
     }
 
     /**
-     * A date or partial date (e.g. just year or year + month). There is no time zone.
-     * The format is a union of the schema types gYear, gYearMonth and date. Dates
-     * SHALL be valid dates.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A value set specifies a set of codes drawn from one or more code systems.
      *
-     * If a locked date is defined, then the Content Logical Definition must be
-     * evaluated using the current version as of the locked date for referenced code
-     * system(s) and value set instances where ValueSet.compose.include.version is not
-     * defined.
+     * Exclude one or more codes from the value set based on code system filters and/or
+     * other value sets.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[]
      */
-    public function getLockedDate()
+    public function getExclude(): null|array
     {
-        return $this->lockedDate;
+        return $this->exclude;
     }
 
     /**
-     * A date or partial date (e.g. just year or year + month). There is no time zone.
-     * The format is a union of the schema types gYear, gYearMonth and date. Dates
-     * SHALL be valid dates.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A value set specifies a set of codes drawn from one or more code systems.
      *
-     * If a locked date is defined, then the Content Logical Definition must be
-     * evaluated using the current version as of the locked date for referenced code
-     * system(s) and value set instances where ValueSet.compose.include.version is not
-     * defined.
+     * Exclude one or more codes from the value set based on code system filters and/or
+     * other value sets.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDate $lockedDate
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude $exclude
      * @return static
      */
-    public function setLockedDate($lockedDate = null)
+    public function addExclude(null|FHIRValueSetInclude $exclude = null): self
     {
-        if (null === $lockedDate) {
-            $this->lockedDate = null;
+        if (null === $exclude) {
+            $exclude = new FHIRValueSetInclude();
+        }
+        $this->_trackValueAdded();
+        $this->exclude[] = $exclude;
+        return $this;
+    }
+
+    /**
+     * A value set specifies a set of codes drawn from one or more code systems.
+     *
+     * Exclude one or more codes from the value set based on code system filters and/or
+     * other value sets.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetInclude[] $exclude
+     * @return static
+     */
+    public function setExclude(array $exclude = []): self
+    {
+        if ([] !== $this->exclude) {
+            $this->_trackValuesRemoved(count($this->exclude));
+            $this->exclude = [];
+        }
+        if ([] === $exclude) {
             return $this;
         }
-        if ($lockedDate instanceof FHIRDate) {
-            $this->lockedDate = $lockedDate;
-            return $this;
+        foreach($exclude as $v) {
+            if ($v instanceof FHIRValueSetInclude) {
+                $this->addExclude($v);
+            } else {
+                $this->addExclude(new FHIRValueSetInclude($v));
+            }
         }
-        $this->lockedDate = new FHIRDate($lockedDate);
         return $this;
     }
 
@@ -468,9 +444,9 @@ class FHIRValueSetCompose extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -479,15 +455,13 @@ class FHIRValueSetCompose extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if ([] !== ($vs = $this->getExclude())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_EXCLUDE, $i)] = $fieldErrs;
-                }
+        if (null !== ($v = $this->getLockedDate())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_LOCKED_DATE] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getInactive())) {
@@ -502,20 +476,22 @@ class FHIRValueSetCompose extends FHIRBackboneElement
                 }
             }
         }
-        if (null !== ($v = $this->getLockedDate())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_LOCKED_DATE] = $fieldErrs;
+        if ([] !== ($vs = $this->getExclude())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_EXCLUDE, $i)] = $fieldErrs;
+                }
             }
         }
-        if (isset($validationRules[self::FIELD_EXCLUDE])) {
-            $v = $this->getExclude();
-            foreach($validationRules[self::FIELD_EXCLUDE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VALUE_SET_DOT_COMPOSE, self::FIELD_EXCLUDE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_LOCKED_DATE])) {
+            $v = $this->getLockedDate();
+            foreach($validationRules[self::FIELD_LOCKED_DATE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VALUE_SET_DOT_COMPOSE, self::FIELD_LOCKED_DATE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_EXCLUDE])) {
-                        $errs[self::FIELD_EXCLUDE] = [];
+                    if (!isset($errs[self::FIELD_LOCKED_DATE])) {
+                        $errs[self::FIELD_LOCKED_DATE] = [];
                     }
-                    $errs[self::FIELD_EXCLUDE][$rule] = $err;
+                    $errs[self::FIELD_LOCKED_DATE][$rule] = $err;
                 }
             }
         }
@@ -543,15 +519,15 @@ class FHIRValueSetCompose extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_LOCKED_DATE])) {
-            $v = $this->getLockedDate();
-            foreach($validationRules[self::FIELD_LOCKED_DATE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VALUE_SET_DOT_COMPOSE, self::FIELD_LOCKED_DATE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_EXCLUDE])) {
+            $v = $this->getExclude();
+            foreach($validationRules[self::FIELD_EXCLUDE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_VALUE_SET_DOT_COMPOSE, self::FIELD_EXCLUDE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_LOCKED_DATE])) {
-                        $errs[self::FIELD_LOCKED_DATE] = [];
+                    if (!isset($errs[self::FIELD_EXCLUDE])) {
+                        $errs[self::FIELD_EXCLUDE] = [];
                     }
-                    $errs[self::FIELD_LOCKED_DATE][$rule] = $err;
+                    $errs[self::FIELD_EXCLUDE][$rule] = $err;
                 }
             }
         }
@@ -595,169 +571,210 @@ class FHIRValueSetCompose extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetCompose $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetCompose
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRValueSetCompose::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRValueSetCompose::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRValueSetCompose;
-        } elseif (!is_object($type) || !($type instanceof FHIRValueSetCompose)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRValueSetCompose)) {
             throw new \RuntimeException(sprintf(
-                'FHIRValueSetCompose::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRValueSet\FHIRValueSetCompose or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_LOCKED_DATE === $n->nodeName) {
+                $type->setLockedDate(FHIRDate::xmlUnserialize($n));
+            } elseif (self::FIELD_INACTIVE === $n->nodeName) {
+                $type->setInactive(FHIRBoolean::xmlUnserialize($n));
+            } elseif (self::FIELD_INCLUDE === $n->nodeName) {
+                $type->addInclude(FHIRValueSetInclude::xmlUnserialize($n));
+            } elseif (self::FIELD_EXCLUDE === $n->nodeName) {
+                $type->addExclude(FHIRValueSetInclude::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->exclude)) {
-            foreach($children->exclude as $child) {
-                $type->addExclude(FHIRValueSetInclude::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->inactive)) {
-            $type->setInactive(FHIRBoolean::xmlUnserialize($children->inactive));
-        }
-        if (isset($attributes->inactive)) {
-            $pt = $type->getInactive();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->inactive);
-            } else {
-                $type->setInactive((string)$attributes->inactive);
-            }
-        }
-        if (isset($children->include)) {
-            foreach($children->include as $child) {
-                $type->addInclude(FHIRValueSetInclude::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->lockedDate)) {
-            $type->setLockedDate(FHIRDate::xmlUnserialize($children->lockedDate));
-        }
-        if (isset($attributes->lockedDate)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_LOCKED_DATE);
+        if (null !== $n) {
             $pt = $type->getLockedDate();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->lockedDate);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setLockedDate((string)$attributes->lockedDate);
+                $type->setLockedDate($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_INACTIVE);
+        if (null !== $n) {
+            $pt = $type->getInactive();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setInactive($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if ([] !== ($vs = $this->getExclude())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_EXCLUDE, null, $v->_getFHIRXMLNamespace()));
-            }
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ValueSetCompose'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getLockedDate())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_LOCKED_DATE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getInactive())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_INACTIVE, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_INACTIVE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getInclude())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_INCLUDE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_INCLUDE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getLockedDate())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_LOCKED_DATE, null, $v->_getFHIRXMLNamespace()));
+        if ([] !== ($vs = $this->getExclude())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_EXCLUDE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
         }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if ([] !== ($vs = $this->getExclude())) {
-            $a[self::FIELD_EXCLUDE] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_EXCLUDE][] = $v;
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getLockedDate())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_LOCKED_DATE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDate::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_LOCKED_DATE_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getInactive())) {
-            $a[self::FIELD_INACTIVE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRBoolean::FIELD_VALUE]);
-                $a[self::FIELD_INACTIVE_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_INACTIVE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRBoolean::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_INACTIVE_EXT} = $ext;
             }
         }
         if ([] !== ($vs = $this->getInclude())) {
-            $a[self::FIELD_INCLUDE] = [];
+            $out->{self::FIELD_INCLUDE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_INCLUDE][] = $v;
+                $out->{self::FIELD_INCLUDE}[] = $v;
             }
         }
-        if (null !== ($v = $this->getLockedDate())) {
-            $a[self::FIELD_LOCKED_DATE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDate::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDate::FIELD_VALUE]);
-                $a[self::FIELD_LOCKED_DATE_EXT] = $enc;
+        if ([] !== ($vs = $this->getExclude())) {
+            $out->{self::FIELD_EXCLUDE} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_EXCLUDE}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

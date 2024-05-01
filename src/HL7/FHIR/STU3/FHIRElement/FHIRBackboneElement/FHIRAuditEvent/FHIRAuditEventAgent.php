@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,16 +62,23 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRBooleanPrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\STU3\FHIRElement\FHIRBoolean;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\STU3\FHIRElement\FHIRCoding;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
 use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A record of an event made for purposes of maintaining a security log. Typical
@@ -85,131 +92,22 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT;
+
+    const FIELD_ROLE = 'role';
+    const FIELD_REFERENCE = 'reference';
+    const FIELD_USER_ID = 'userId';
     const FIELD_ALT_ID = 'altId';
     const FIELD_ALT_ID_EXT = '_altId';
-    const FIELD_LOCATION = 'location';
-    const FIELD_MEDIA = 'media';
     const FIELD_NAME = 'name';
     const FIELD_NAME_EXT = '_name';
-    const FIELD_NETWORK = 'network';
-    const FIELD_POLICY = 'policy';
-    const FIELD_POLICY_EXT = '_policy';
-    const FIELD_PURPOSE_OF_USE = 'purposeOfUse';
-    const FIELD_REFERENCE = 'reference';
     const FIELD_REQUESTOR = 'requestor';
     const FIELD_REQUESTOR_EXT = '_requestor';
-    const FIELD_ROLE = 'role';
-    const FIELD_USER_ID = 'userId';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Alternative agent Identifier. For a human, this should be a user identifier text
-     * string from authentication system. This identifier would be one known to a
-     * common authentication system (e.g. single sign-on), if available.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $altId = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Where the event occurred.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $location = null;
-
-    /**
-     * A reference to a code defined by a terminology system.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Type of media involved. Used when the event is about exporting/importing onto
-     * media.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
-     */
-    protected $media = null;
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Human-meaningful name for the agent.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $name = null;
-
-    /**
-     * A record of an event made for purposes of maintaining a security log. Typical
-     * uses include detection of intrusion attempts and monitoring for inappropriate
-     * usage.
-     *
-     * Logical network location for application activity, if the activity has a network
-     * location.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork
-     */
-    protected $network = null;
-
-    /**
-     * String of characters used to identify a name or a resource
-     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The policy or plan that authorized the activity being recorded. Typically, a
-     * single activity may have multiple applicable policies, such as patient consent,
-     * guarantor funding, etc. The policy would also indicate the security token used.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri[]
-     */
-    protected $policy = [];
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The reason (purpose of use), specific to this agent, that was used during the
-     * event being recorded.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
-     */
-    protected $purposeOfUse = [];
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Direct reference to a resource that identifies the agent.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $reference = null;
-
-    /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Indicator that the user is or is not the requestor, or initiator, for the event
-     * being audited.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
-     */
-    protected $requestor = null;
+    const FIELD_LOCATION = 'location';
+    const FIELD_POLICY = 'policy';
+    const FIELD_POLICY_EXT = '_policy';
+    const FIELD_MEDIA = 'media';
+    const FIELD_NETWORK = 'network';
+    const FIELD_PURPOSE_OF_USE = 'purposeOfUse';
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -223,8 +121,17 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    protected $role = [];
-
+    protected null|array $role = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Direct reference to a resource that identifies the agent.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $reference = null;
     /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
@@ -234,41 +141,148 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
-    protected $userId = null;
+    protected null|FHIRIdentifier $userId = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Alternative agent Identifier. For a human, this should be a user identifier text
+     * string from authentication system. This identifier would be one known to a
+     * common authentication system (e.g. single sign-on), if available.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $altId = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Human-meaningful name for the agent.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $name = null;
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicator that the user is or is not the requestor, or initiator, for the event
+     * being audited.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     */
+    protected null|FHIRBoolean $requestor = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Where the event occurred.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $location = null;
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The policy or plan that authorized the activity being recorded. Typically, a
+     * single activity may have multiple applicable policies, such as patient consent,
+     * guarantor funding, etc. The policy would also indicate the security token used.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri[]
+     */
+    protected null|array $policy = [];
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Type of media involved. Used when the event is about exporting/importing onto
+     * media.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
+     */
+    protected null|FHIRCoding $media = null;
+    /**
+     * A record of an event made for purposes of maintaining a security log. Typical
+     * uses include detection of intrusion attempts and monitoring for inappropriate
+     * usage.
+     *
+     * Logical network location for application activity, if the activity has a network
+     * location.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork
+     */
+    protected null|FHIRAuditEventNetwork $network = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The reason (purpose of use), specific to this agent, that was used during the
+     * event being recorded.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     */
+    protected null|array $purposeOfUse = [];
 
     /**
      * Validation map for fields in type AuditEvent.Agent
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRAuditEventAgent Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRAuditEventAgent::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_ROLE])) {
+            if (is_array($data[self::FIELD_ROLE])) {
+                foreach($data[self::FIELD_ROLE] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRCodeableConcept) {
+                        $this->addRole($v);
+                    } else {
+                        $this->addRole(new FHIRCodeableConcept($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_ROLE] instanceof FHIRCodeableConcept) {
+                $this->addRole($data[self::FIELD_ROLE]);
+            } else {
+                $this->addRole(new FHIRCodeableConcept($data[self::FIELD_ROLE]));
+            }
+        }
+        if (isset($data[self::FIELD_REFERENCE])) {
+            if ($data[self::FIELD_REFERENCE] instanceof FHIRReference) {
+                $this->setReference($data[self::FIELD_REFERENCE]);
+            } else {
+                $this->setReference(new FHIRReference($data[self::FIELD_REFERENCE]));
+            }
+        }
+        if (isset($data[self::FIELD_USER_ID])) {
+            if ($data[self::FIELD_USER_ID] instanceof FHIRIdentifier) {
+                $this->setUserId($data[self::FIELD_USER_ID]);
+            } else {
+                $this->setUserId(new FHIRIdentifier($data[self::FIELD_USER_ID]));
+            }
+        }
         if (isset($data[self::FIELD_ALT_ID]) || isset($data[self::FIELD_ALT_ID_EXT])) {
-            if (isset($data[self::FIELD_ALT_ID])) {
-                $value = $data[self::FIELD_ALT_ID];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ALT_ID_EXT]) && is_array($data[self::FIELD_ALT_ID_EXT])) {
-                $ext = $data[self::FIELD_ALT_ID_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_ALT_ID] ?? null;
+            $ext = (isset($data[self::FIELD_ALT_ID_EXT]) && is_array($data[self::FIELD_ALT_ID_EXT])) ? $data[self::FIELD_ALT_ID_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->setAltId($value);
@@ -277,8 +291,38 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
                 } else {
                     $this->setAltId(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setAltId(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
+            $value = $data[self::FIELD_NAME] ?? null;
+            $ext = (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) ? $data[self::FIELD_NAME_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setName($value);
+                } else if (is_array($value)) {
+                    $this->setName(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setName(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_REQUESTOR]) || isset($data[self::FIELD_REQUESTOR_EXT])) {
+            $value = $data[self::FIELD_REQUESTOR] ?? null;
+            $ext = (isset($data[self::FIELD_REQUESTOR_EXT]) && is_array($data[self::FIELD_REQUESTOR_EXT])) ? $data[self::FIELD_REQUESTOR_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRBoolean) {
+                    $this->setRequestor($value);
+                } else if (is_array($value)) {
+                    $this->setRequestor(new FHIRBoolean(array_merge($ext, $value)));
+                } else {
+                    $this->setRequestor(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setRequestor(new FHIRBoolean($ext));
             }
         }
         if (isset($data[self::FIELD_LOCATION])) {
@@ -288,54 +332,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
                 $this->setLocation(new FHIRReference($data[self::FIELD_LOCATION]));
             }
         }
-        if (isset($data[self::FIELD_MEDIA])) {
-            if ($data[self::FIELD_MEDIA] instanceof FHIRCoding) {
-                $this->setMedia($data[self::FIELD_MEDIA]);
-            } else {
-                $this->setMedia(new FHIRCoding($data[self::FIELD_MEDIA]));
-            }
-        }
-        if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
-            if (isset($data[self::FIELD_NAME])) {
-                $value = $data[self::FIELD_NAME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) {
-                $ext = $data[self::FIELD_NAME_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setName($value);
-                } else if (is_array($value)) {
-                    $this->setName(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setName(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_NETWORK])) {
-            if ($data[self::FIELD_NETWORK] instanceof FHIRAuditEventNetwork) {
-                $this->setNetwork($data[self::FIELD_NETWORK]);
-            } else {
-                $this->setNetwork(new FHIRAuditEventNetwork($data[self::FIELD_NETWORK]));
-            }
-        }
         if (isset($data[self::FIELD_POLICY]) || isset($data[self::FIELD_POLICY_EXT])) {
-            if (isset($data[self::FIELD_POLICY])) {
-                $value = $data[self::FIELD_POLICY];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_POLICY_EXT]) && is_array($data[self::FIELD_POLICY_EXT])) {
-                $ext = $data[self::FIELD_POLICY_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_POLICY] ?? null;
+            $ext = (isset($data[self::FIELD_POLICY_EXT]) && is_array($data[self::FIELD_POLICY_EXT])) ? $data[self::FIELD_POLICY_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRUri) {
                     $this->addPolicy($value);
@@ -357,10 +356,24 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
                 } else {
                     $this->addPolicy(new FHIRUri([FHIRUri::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 foreach($ext as $iext) {
                     $this->addPolicy(new FHIRUri($iext));
                 }
+            }
+        }
+        if (isset($data[self::FIELD_MEDIA])) {
+            if ($data[self::FIELD_MEDIA] instanceof FHIRCoding) {
+                $this->setMedia($data[self::FIELD_MEDIA]);
+            } else {
+                $this->setMedia(new FHIRCoding($data[self::FIELD_MEDIA]));
+            }
+        }
+        if (isset($data[self::FIELD_NETWORK])) {
+            if ($data[self::FIELD_NETWORK] instanceof FHIRAuditEventNetwork) {
+                $this->setNetwork($data[self::FIELD_NETWORK]);
+            } else {
+                $this->setNetwork(new FHIRAuditEventNetwork($data[self::FIELD_NETWORK]));
             }
         }
         if (isset($data[self::FIELD_PURPOSE_OF_USE])) {
@@ -375,461 +388,21 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
                         $this->addPurposeOfUse(new FHIRCodeableConcept($v));
                     }
                 }
-            } else if ($data[self::FIELD_PURPOSE_OF_USE] instanceof FHIRCodeableConcept) {
+            } elseif ($data[self::FIELD_PURPOSE_OF_USE] instanceof FHIRCodeableConcept) {
                 $this->addPurposeOfUse($data[self::FIELD_PURPOSE_OF_USE]);
             } else {
                 $this->addPurposeOfUse(new FHIRCodeableConcept($data[self::FIELD_PURPOSE_OF_USE]));
             }
         }
-        if (isset($data[self::FIELD_REFERENCE])) {
-            if ($data[self::FIELD_REFERENCE] instanceof FHIRReference) {
-                $this->setReference($data[self::FIELD_REFERENCE]);
-            } else {
-                $this->setReference(new FHIRReference($data[self::FIELD_REFERENCE]));
-            }
-        }
-        if (isset($data[self::FIELD_REQUESTOR]) || isset($data[self::FIELD_REQUESTOR_EXT])) {
-            if (isset($data[self::FIELD_REQUESTOR])) {
-                $value = $data[self::FIELD_REQUESTOR];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_REQUESTOR_EXT]) && is_array($data[self::FIELD_REQUESTOR_EXT])) {
-                $ext = $data[self::FIELD_REQUESTOR_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRBoolean) {
-                    $this->setRequestor($value);
-                } else if (is_array($value)) {
-                    $this->setRequestor(new FHIRBoolean(array_merge($ext, $value)));
-                } else {
-                    $this->setRequestor(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setRequestor(new FHIRBoolean($ext));
-            }
-        }
-        if (isset($data[self::FIELD_ROLE])) {
-            if (is_array($data[self::FIELD_ROLE])) {
-                foreach($data[self::FIELD_ROLE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRCodeableConcept) {
-                        $this->addRole($v);
-                    } else {
-                        $this->addRole(new FHIRCodeableConcept($v));
-                    }
-                }
-            } else if ($data[self::FIELD_ROLE] instanceof FHIRCodeableConcept) {
-                $this->addRole($data[self::FIELD_ROLE]);
-            } else {
-                $this->addRole(new FHIRCodeableConcept($data[self::FIELD_ROLE]));
-            }
-        }
-        if (isset($data[self::FIELD_USER_ID])) {
-            if ($data[self::FIELD_USER_ID] instanceof FHIRIdentifier) {
-                $this->setUserId($data[self::FIELD_USER_ID]);
-            } else {
-                $this->setUserId(new FHIRIdentifier($data[self::FIELD_USER_ID]));
-            }
-        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<AuditEventAgent{$xmlns}></AuditEventAgent>";
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Alternative agent Identifier. For a human, this should be a user identifier text
-     * string from authentication system. This identifier would be one known to a
-     * common authentication system (e.g. single sign-on), if available.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getAltId()
-    {
-        return $this->altId;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Alternative agent Identifier. For a human, this should be a user identifier text
-     * string from authentication system. This identifier would be one known to a
-     * common authentication system (e.g. single sign-on), if available.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $altId
-     * @return static
-     */
-    public function setAltId($altId = null)
-    {
-        if (null === $altId) {
-            $this->altId = null;
-            return $this;
-        }
-        if ($altId instanceof FHIRString) {
-            $this->altId = $altId;
-            return $this;
-        }
-        $this->altId = new FHIRString($altId);
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Where the event occurred.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Where the event occurred.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $location
-     * @return static
-     */
-    public function setLocation(FHIRReference $location = null)
-    {
-        $this->location = $location;
-        return $this;
-    }
-
-    /**
-     * A reference to a code defined by a terminology system.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Type of media involved. Used when the event is about exporting/importing onto
-     * media.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
-     */
-    public function getMedia()
-    {
-        return $this->media;
-    }
-
-    /**
-     * A reference to a code defined by a terminology system.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Type of media involved. Used when the event is about exporting/importing onto
-     * media.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding $media
-     * @return static
-     */
-    public function setMedia(FHIRCoding $media = null)
-    {
-        $this->media = $media;
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Human-meaningful name for the agent.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Human-meaningful name for the agent.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $name
-     * @return static
-     */
-    public function setName($name = null)
-    {
-        if (null === $name) {
-            $this->name = null;
-            return $this;
-        }
-        if ($name instanceof FHIRString) {
-            $this->name = $name;
-            return $this;
-        }
-        $this->name = new FHIRString($name);
-        return $this;
-    }
-
-    /**
-     * A record of an event made for purposes of maintaining a security log. Typical
-     * uses include detection of intrusion attempts and monitoring for inappropriate
-     * usage.
-     *
-     * Logical network location for application activity, if the activity has a network
-     * location.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork
-     */
-    public function getNetwork()
-    {
-        return $this->network;
-    }
-
-    /**
-     * A record of an event made for purposes of maintaining a security log. Typical
-     * uses include detection of intrusion attempts and monitoring for inappropriate
-     * usage.
-     *
-     * Logical network location for application activity, if the activity has a network
-     * location.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork $network
-     * @return static
-     */
-    public function setNetwork(FHIRAuditEventNetwork $network = null)
-    {
-        $this->network = $network;
-        return $this;
-    }
-
-    /**
-     * String of characters used to identify a name or a resource
-     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The policy or plan that authorized the activity being recorded. Typically, a
-     * single activity may have multiple applicable policies, such as patient consent,
-     * guarantor funding, etc. The policy would also indicate the security token used.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri[]
-     */
-    public function getPolicy()
-    {
-        return $this->policy;
-    }
-
-    /**
-     * String of characters used to identify a name or a resource
-     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The policy or plan that authorized the activity being recorded. Typically, a
-     * single activity may have multiple applicable policies, such as patient consent,
-     * guarantor funding, etc. The policy would also indicate the security token used.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUri $policy
-     * @return static
-     */
-    public function addPolicy($policy = null)
-    {
-        if (null === $policy) {
-            $this->policy = [];
-            return $this;
-        }
-        if ($policy instanceof FHIRUri) {
-            $this->policy[] = $policy;
-            return $this;
-        }
-        $this->policy[] = new FHIRUri($policy);
-        return $this;
-    }
-
-    /**
-     * String of characters used to identify a name or a resource
-     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The policy or plan that authorized the activity being recorded. Typically, a
-     * single activity may have multiple applicable policies, such as patient consent,
-     * guarantor funding, etc. The policy would also indicate the security token used.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUri[] $policy
-     * @return static
-     */
-    public function setPolicy(array $policy = [])
-    {
-        $this->policy = [];
-        if ([] === $policy) {
-            return $this;
-        }
-        foreach($policy as $v) {
-            if ($v instanceof FHIRUri) {
-                $this->addPolicy($v);
-            } else {
-                $this->addPolicy(new FHIRUri($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The reason (purpose of use), specific to this agent, that was used during the
-     * event being recorded.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
-     */
-    public function getPurposeOfUse()
-    {
-        return $this->purposeOfUse;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The reason (purpose of use), specific to this agent, that was used during the
-     * event being recorded.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $purposeOfUse
-     * @return static
-     */
-    public function addPurposeOfUse(FHIRCodeableConcept $purposeOfUse = null)
-    {
-        $this->purposeOfUse[] = $purposeOfUse;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The reason (purpose of use), specific to this agent, that was used during the
-     * event being recorded.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $purposeOfUse
-     * @return static
-     */
-    public function setPurposeOfUse(array $purposeOfUse = [])
-    {
-        $this->purposeOfUse = [];
-        if ([] === $purposeOfUse) {
-            return $this;
-        }
-        foreach($purposeOfUse as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addPurposeOfUse($v);
-            } else {
-                $this->addPurposeOfUse(new FHIRCodeableConcept($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Direct reference to a resource that identifies the agent.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getReference()
-    {
-        return $this->reference;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Direct reference to a resource that identifies the agent.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $reference
-     * @return static
-     */
-    public function setReference(FHIRReference $reference = null)
-    {
-        $this->reference = $reference;
-        return $this;
-    }
-
-    /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Indicator that the user is or is not the requestor, or initiator, for the event
-     * being audited.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
-     */
-    public function getRequestor()
-    {
-        return $this->requestor;
-    }
-
-    /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Indicator that the user is or is not the requestor, or initiator, for the event
-     * being audited.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $requestor
-     * @return static
-     */
-    public function setRequestor($requestor = null)
-    {
-        if (null === $requestor) {
-            $this->requestor = null;
-            return $this;
-        }
-        if ($requestor instanceof FHIRBoolean) {
-            $this->requestor = $requestor;
-            return $this;
-        }
-        $this->requestor = new FHIRBoolean($requestor);
-        return $this;
     }
 
     /**
@@ -844,7 +417,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getRole()
+    public function getRole(): null|array
     {
         return $this->role;
     }
@@ -862,8 +435,12 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $role
      * @return static
      */
-    public function addRole(FHIRCodeableConcept $role = null)
+    public function addRole(null|FHIRCodeableConcept $role = null): self
     {
+        if (null === $role) {
+            $role = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
         $this->role[] = $role;
         return $this;
     }
@@ -881,9 +458,12 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $role
      * @return static
      */
-    public function setRole(array $role = [])
+    public function setRole(array $role = []): self
     {
-        $this->role = [];
+        if ([] !== $this->role) {
+            $this->_trackValuesRemoved(count($this->role));
+            $this->role = [];
+        }
         if ([] === $role) {
             return $this;
         }
@@ -898,6 +478,40 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Direct reference to a resource that identifies the agent.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getReference(): null|FHIRReference
+    {
+        return $this->reference;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Direct reference to a resource that identifies the agent.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $reference
+     * @return static
+     */
+    public function setReference(null|FHIRReference $reference = null): self
+    {
+        if (null === $reference) {
+            $reference = new FHIRReference();
+        }
+        $this->_trackValueSet($this->reference, $reference);
+        $this->reference = $reference;
+        return $this;
+    }
+
+    /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -906,7 +520,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
-    public function getUserId()
+    public function getUserId(): null|FHIRIdentifier
     {
         return $this->userId;
     }
@@ -921,9 +535,363 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $userId
      * @return static
      */
-    public function setUserId(FHIRIdentifier $userId = null)
+    public function setUserId(null|FHIRIdentifier $userId = null): self
     {
+        if (null === $userId) {
+            $userId = new FHIRIdentifier();
+        }
+        $this->_trackValueSet($this->userId, $userId);
         $this->userId = $userId;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Alternative agent Identifier. For a human, this should be a user identifier text
+     * string from authentication system. This identifier would be one known to a
+     * common authentication system (e.g. single sign-on), if available.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getAltId(): null|FHIRString
+    {
+        return $this->altId;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Alternative agent Identifier. For a human, this should be a user identifier text
+     * string from authentication system. This identifier would be one known to a
+     * common authentication system (e.g. single sign-on), if available.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $altId
+     * @return static
+     */
+    public function setAltId(null|string|FHIRStringPrimitive|FHIRString $altId = null): self
+    {
+        if (null !== $altId && !($altId instanceof FHIRString)) {
+            $altId = new FHIRString($altId);
+        }
+        $this->_trackValueSet($this->altId, $altId);
+        $this->altId = $altId;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Human-meaningful name for the agent.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getName(): null|FHIRString
+    {
+        return $this->name;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Human-meaningful name for the agent.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $name
+     * @return static
+     */
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
+    {
+        if (null !== $name && !($name instanceof FHIRString)) {
+            $name = new FHIRString($name);
+        }
+        $this->_trackValueSet($this->name, $name);
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicator that the user is or is not the requestor, or initiator, for the event
+     * being audited.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     */
+    public function getRequestor(): null|FHIRBoolean
+    {
+        return $this->requestor;
+    }
+
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicator that the user is or is not the requestor, or initiator, for the event
+     * being audited.
+     *
+     * @param null|string|bool|\HL7\FHIR\STU3\FHIRBooleanPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $requestor
+     * @return static
+     */
+    public function setRequestor(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $requestor = null): self
+    {
+        if (null !== $requestor && !($requestor instanceof FHIRBoolean)) {
+            $requestor = new FHIRBoolean($requestor);
+        }
+        $this->_trackValueSet($this->requestor, $requestor);
+        $this->requestor = $requestor;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Where the event occurred.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getLocation(): null|FHIRReference
+    {
+        return $this->location;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Where the event occurred.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $location
+     * @return static
+     */
+    public function setLocation(null|FHIRReference $location = null): self
+    {
+        if (null === $location) {
+            $location = new FHIRReference();
+        }
+        $this->_trackValueSet($this->location, $location);
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The policy or plan that authorized the activity being recorded. Typically, a
+     * single activity may have multiple applicable policies, such as patient consent,
+     * guarantor funding, etc. The policy would also indicate the security token used.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri[]
+     */
+    public function getPolicy(): null|array
+    {
+        return $this->policy;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The policy or plan that authorized the activity being recorded. Typically, a
+     * single activity may have multiple applicable policies, such as patient consent,
+     * guarantor funding, etc. The policy would also indicate the security token used.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRUriPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRUri $policy
+     * @return static
+     */
+    public function addPolicy(null|string|FHIRUriPrimitive|FHIRUri $policy = null): self
+    {
+        if (null !== $policy && !($policy instanceof FHIRUri)) {
+            $policy = new FHIRUri($policy);
+        }
+        $this->_trackValueAdded();
+        $this->policy[] = $policy;
+        return $this;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The policy or plan that authorized the activity being recorded. Typically, a
+     * single activity may have multiple applicable policies, such as patient consent,
+     * guarantor funding, etc. The policy would also indicate the security token used.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUri[] $policy
+     * @return static
+     */
+    public function setPolicy(array $policy = []): self
+    {
+        if ([] !== $this->policy) {
+            $this->_trackValuesRemoved(count($this->policy));
+            $this->policy = [];
+        }
+        if ([] === $policy) {
+            return $this;
+        }
+        foreach($policy as $v) {
+            if ($v instanceof FHIRUri) {
+                $this->addPolicy($v);
+            } else {
+                $this->addPolicy(new FHIRUri($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Type of media involved. Used when the event is about exporting/importing onto
+     * media.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
+     */
+    public function getMedia(): null|FHIRCoding
+    {
+        return $this->media;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Type of media involved. Used when the event is about exporting/importing onto
+     * media.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding $media
+     * @return static
+     */
+    public function setMedia(null|FHIRCoding $media = null): self
+    {
+        if (null === $media) {
+            $media = new FHIRCoding();
+        }
+        $this->_trackValueSet($this->media, $media);
+        $this->media = $media;
+        return $this;
+    }
+
+    /**
+     * A record of an event made for purposes of maintaining a security log. Typical
+     * uses include detection of intrusion attempts and monitoring for inappropriate
+     * usage.
+     *
+     * Logical network location for application activity, if the activity has a network
+     * location.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork
+     */
+    public function getNetwork(): null|FHIRAuditEventNetwork
+    {
+        return $this->network;
+    }
+
+    /**
+     * A record of an event made for purposes of maintaining a security log. Typical
+     * uses include detection of intrusion attempts and monitoring for inappropriate
+     * usage.
+     *
+     * Logical network location for application activity, if the activity has a network
+     * location.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork $network
+     * @return static
+     */
+    public function setNetwork(null|FHIRAuditEventNetwork $network = null): self
+    {
+        if (null === $network) {
+            $network = new FHIRAuditEventNetwork();
+        }
+        $this->_trackValueSet($this->network, $network);
+        $this->network = $network;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The reason (purpose of use), specific to this agent, that was used during the
+     * event being recorded.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     */
+    public function getPurposeOfUse(): null|array
+    {
+        return $this->purposeOfUse;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The reason (purpose of use), specific to this agent, that was used during the
+     * event being recorded.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $purposeOfUse
+     * @return static
+     */
+    public function addPurposeOfUse(null|FHIRCodeableConcept $purposeOfUse = null): self
+    {
+        if (null === $purposeOfUse) {
+            $purposeOfUse = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
+        $this->purposeOfUse[] = $purposeOfUse;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The reason (purpose of use), specific to this agent, that was used during the
+     * event being recorded.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $purposeOfUse
+     * @return static
+     */
+    public function setPurposeOfUse(array $purposeOfUse = []): self
+    {
+        if ([] !== $this->purposeOfUse) {
+            $this->_trackValuesRemoved(count($this->purposeOfUse));
+            $this->purposeOfUse = [];
+        }
+        if ([] === $purposeOfUse) {
+            return $this;
+        }
+        foreach($purposeOfUse as $v) {
+            if ($v instanceof FHIRCodeableConcept) {
+                $this->addPurposeOfUse($v);
+            } else {
+                $this->addPurposeOfUse(new FHIRCodeableConcept($v));
+            }
+        }
         return $this;
     }
 
@@ -933,9 +901,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -944,23 +912,30 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getRole())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_ROLE, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getReference())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_REFERENCE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getUserId())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_USER_ID] = $fieldErrs;
+            }
+        }
         if (null !== ($v = $this->getAltId())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_ALT_ID] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getLocation())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_LOCATION] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getMedia())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_MEDIA] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getName())) {
@@ -968,9 +943,14 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
                 $errs[self::FIELD_NAME] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getNetwork())) {
+        if (null !== ($v = $this->getRequestor())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_NETWORK] = $fieldErrs;
+                $errs[self::FIELD_REQUESTOR] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getLocation())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_LOCATION] = $fieldErrs;
             }
         }
         if ([] !== ($vs = $this->getPolicy())) {
@@ -980,140 +960,20 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
                 }
             }
         }
+        if (null !== ($v = $this->getMedia())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_MEDIA] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getNetwork())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_NETWORK] = $fieldErrs;
+            }
+        }
         if ([] !== ($vs = $this->getPurposeOfUse())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                     $errs[sprintf('%s.%d', self::FIELD_PURPOSE_OF_USE, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getReference())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_REFERENCE] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getRequestor())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_REQUESTOR] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getRole())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_ROLE, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getUserId())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_USER_ID] = $fieldErrs;
-            }
-        }
-        if (isset($validationRules[self::FIELD_ALT_ID])) {
-            $v = $this->getAltId();
-            foreach($validationRules[self::FIELD_ALT_ID] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_ALT_ID, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ALT_ID])) {
-                        $errs[self::FIELD_ALT_ID] = [];
-                    }
-                    $errs[self::FIELD_ALT_ID][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_LOCATION])) {
-            $v = $this->getLocation();
-            foreach($validationRules[self::FIELD_LOCATION] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_LOCATION, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_LOCATION])) {
-                        $errs[self::FIELD_LOCATION] = [];
-                    }
-                    $errs[self::FIELD_LOCATION][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_MEDIA])) {
-            $v = $this->getMedia();
-            foreach($validationRules[self::FIELD_MEDIA] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_MEDIA, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_MEDIA])) {
-                        $errs[self::FIELD_MEDIA] = [];
-                    }
-                    $errs[self::FIELD_MEDIA][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_NAME])) {
-            $v = $this->getName();
-            foreach($validationRules[self::FIELD_NAME] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_NAME, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_NAME])) {
-                        $errs[self::FIELD_NAME] = [];
-                    }
-                    $errs[self::FIELD_NAME][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_NETWORK])) {
-            $v = $this->getNetwork();
-            foreach($validationRules[self::FIELD_NETWORK] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_NETWORK, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_NETWORK])) {
-                        $errs[self::FIELD_NETWORK] = [];
-                    }
-                    $errs[self::FIELD_NETWORK][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_POLICY])) {
-            $v = $this->getPolicy();
-            foreach($validationRules[self::FIELD_POLICY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_POLICY, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_POLICY])) {
-                        $errs[self::FIELD_POLICY] = [];
-                    }
-                    $errs[self::FIELD_POLICY][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_PURPOSE_OF_USE])) {
-            $v = $this->getPurposeOfUse();
-            foreach($validationRules[self::FIELD_PURPOSE_OF_USE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_PURPOSE_OF_USE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PURPOSE_OF_USE])) {
-                        $errs[self::FIELD_PURPOSE_OF_USE] = [];
-                    }
-                    $errs[self::FIELD_PURPOSE_OF_USE][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_REFERENCE])) {
-            $v = $this->getReference();
-            foreach($validationRules[self::FIELD_REFERENCE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_REFERENCE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_REFERENCE])) {
-                        $errs[self::FIELD_REFERENCE] = [];
-                    }
-                    $errs[self::FIELD_REFERENCE][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_REQUESTOR])) {
-            $v = $this->getRequestor();
-            foreach($validationRules[self::FIELD_REQUESTOR] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_REQUESTOR, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_REQUESTOR])) {
-                        $errs[self::FIELD_REQUESTOR] = [];
-                    }
-                    $errs[self::FIELD_REQUESTOR][$rule] = $err;
                 }
             }
         }
@@ -1129,6 +989,18 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
                 }
             }
         }
+        if (isset($validationRules[self::FIELD_REFERENCE])) {
+            $v = $this->getReference();
+            foreach($validationRules[self::FIELD_REFERENCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_REFERENCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REFERENCE])) {
+                        $errs[self::FIELD_REFERENCE] = [];
+                    }
+                    $errs[self::FIELD_REFERENCE][$rule] = $err;
+                }
+            }
+        }
         if (isset($validationRules[self::FIELD_USER_ID])) {
             $v = $this->getUserId();
             foreach($validationRules[self::FIELD_USER_ID] as $rule => $constraint) {
@@ -1138,6 +1010,102 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
                         $errs[self::FIELD_USER_ID] = [];
                     }
                     $errs[self::FIELD_USER_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ALT_ID])) {
+            $v = $this->getAltId();
+            foreach($validationRules[self::FIELD_ALT_ID] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_ALT_ID, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ALT_ID])) {
+                        $errs[self::FIELD_ALT_ID] = [];
+                    }
+                    $errs[self::FIELD_ALT_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NAME])) {
+            $v = $this->getName();
+            foreach($validationRules[self::FIELD_NAME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_NAME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NAME])) {
+                        $errs[self::FIELD_NAME] = [];
+                    }
+                    $errs[self::FIELD_NAME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REQUESTOR])) {
+            $v = $this->getRequestor();
+            foreach($validationRules[self::FIELD_REQUESTOR] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_REQUESTOR, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REQUESTOR])) {
+                        $errs[self::FIELD_REQUESTOR] = [];
+                    }
+                    $errs[self::FIELD_REQUESTOR][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LOCATION])) {
+            $v = $this->getLocation();
+            foreach($validationRules[self::FIELD_LOCATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_LOCATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LOCATION])) {
+                        $errs[self::FIELD_LOCATION] = [];
+                    }
+                    $errs[self::FIELD_LOCATION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_POLICY])) {
+            $v = $this->getPolicy();
+            foreach($validationRules[self::FIELD_POLICY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_POLICY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_POLICY])) {
+                        $errs[self::FIELD_POLICY] = [];
+                    }
+                    $errs[self::FIELD_POLICY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MEDIA])) {
+            $v = $this->getMedia();
+            foreach($validationRules[self::FIELD_MEDIA] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_MEDIA, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MEDIA])) {
+                        $errs[self::FIELD_MEDIA] = [];
+                    }
+                    $errs[self::FIELD_MEDIA][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NETWORK])) {
+            $v = $this->getNetwork();
+            foreach($validationRules[self::FIELD_NETWORK] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_NETWORK, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NETWORK])) {
+                        $errs[self::FIELD_NETWORK] = [];
+                    }
+                    $errs[self::FIELD_NETWORK][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PURPOSE_OF_USE])) {
+            $v = $this->getPurposeOfUse();
+            foreach($validationRules[self::FIELD_PURPOSE_OF_USE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT, self::FIELD_PURPOSE_OF_USE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PURPOSE_OF_USE])) {
+                        $errs[self::FIELD_PURPOSE_OF_USE] = [];
+                    }
+                    $errs[self::FIELD_PURPOSE_OF_USE][$rule] = $err;
                 }
             }
         }
@@ -1181,273 +1149,326 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventAgent $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventAgent
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRAuditEventAgent::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRAuditEventAgent::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRAuditEventAgent;
-        } elseif (!is_object($type) || !($type instanceof FHIRAuditEventAgent)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRAuditEventAgent)) {
             throw new \RuntimeException(sprintf(
-                'FHIRAuditEventAgent::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventAgent or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_ROLE === $n->nodeName) {
+                $type->addRole(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_REFERENCE === $n->nodeName) {
+                $type->setReference(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_USER_ID === $n->nodeName) {
+                $type->setUserId(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_ALT_ID === $n->nodeName) {
+                $type->setAltId(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_NAME === $n->nodeName) {
+                $type->setName(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_REQUESTOR === $n->nodeName) {
+                $type->setRequestor(FHIRBoolean::xmlUnserialize($n));
+            } elseif (self::FIELD_LOCATION === $n->nodeName) {
+                $type->setLocation(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_POLICY === $n->nodeName) {
+                $type->addPolicy(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_MEDIA === $n->nodeName) {
+                $type->setMedia(FHIRCoding::xmlUnserialize($n));
+            } elseif (self::FIELD_NETWORK === $n->nodeName) {
+                $type->setNetwork(FHIRAuditEventNetwork::xmlUnserialize($n));
+            } elseif (self::FIELD_PURPOSE_OF_USE === $n->nodeName) {
+                $type->addPurposeOfUse(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->altId)) {
-            $type->setAltId(FHIRString::xmlUnserialize($children->altId));
-        }
-        if (isset($attributes->altId)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_ALT_ID);
+        if (null !== $n) {
             $pt = $type->getAltId();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->altId);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setAltId((string)$attributes->altId);
+                $type->setAltId($n->nodeValue);
             }
         }
-        if (isset($children->location)) {
-            $type->setLocation(FHIRReference::xmlUnserialize($children->location));
-        }
-        if (isset($children->media)) {
-            $type->setMedia(FHIRCoding::xmlUnserialize($children->media));
-        }
-        if (isset($children->name)) {
-            $type->setName(FHIRString::xmlUnserialize($children->name));
-        }
-        if (isset($attributes->name)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_NAME);
+        if (null !== $n) {
             $pt = $type->getName();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->name);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setName((string)$attributes->name);
+                $type->setName($n->nodeValue);
             }
         }
-        if (isset($children->network)) {
-            $type->setNetwork(FHIRAuditEventNetwork::xmlUnserialize($children->network));
-        }
-        if (isset($children->policy)) {
-            foreach($children->policy as $child) {
-                $type->addPolicy(FHIRUri::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->purposeOfUse)) {
-            foreach($children->purposeOfUse as $child) {
-                $type->addPurposeOfUse(FHIRCodeableConcept::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->reference)) {
-            $type->setReference(FHIRReference::xmlUnserialize($children->reference));
-        }
-        if (isset($children->requestor)) {
-            $type->setRequestor(FHIRBoolean::xmlUnserialize($children->requestor));
-        }
-        if (isset($attributes->requestor)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_REQUESTOR);
+        if (null !== $n) {
             $pt = $type->getRequestor();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->requestor);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setRequestor((string)$attributes->requestor);
+                $type->setRequestor($n->nodeValue);
             }
         }
-        if (isset($children->role)) {
-            foreach($children->role as $child) {
-                $type->addRole(FHIRCodeableConcept::xmlUnserialize($child));
-            }
+        $n = $element->attributes->getNamedItem(self::FIELD_POLICY);
+        if (null !== $n) {
+            $type->addPolicy($n->nodeValue);
         }
-        if (isset($children->userId)) {
-            $type->setUserId(FHIRIdentifier::xmlUnserialize($children->userId));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('AuditEventAgent'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if ([] !== ($vs = $this->getRole())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_ROLE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if (null !== ($v = $this->getReference())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_REFERENCE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getUserId())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_USER_ID);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if (null !== ($v = $this->getAltId())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ALT_ID, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getLocation())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_LOCATION, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getMedia())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_MEDIA, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_ALT_ID);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getName())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_NAME, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_NAME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getNetwork())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_NETWORK, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getRequestor())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_REQUESTOR);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getLocation())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_LOCATION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getPolicy())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_POLICY, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_POLICY);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
+        }
+        if (null !== ($v = $this->getMedia())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_MEDIA);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getNetwork())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_NETWORK);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getPurposeOfUse())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_PURPOSE_OF_USE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_PURPOSE_OF_USE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getReference())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_REFERENCE, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getRequestor())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_REQUESTOR, null, $v->_getFHIRXMLNamespace()));
-        }
+        return $element;
+    }
+
+    /**
+     * @return \stdClass
+     */
+    public function jsonSerialize(): mixed
+    {
+        $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getRole())) {
+            $out->{self::FIELD_ROLE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_ROLE, null, $v->_getFHIRXMLNamespace()));
+                $out->{self::FIELD_ROLE}[] = $v;
             }
         }
-        if (null !== ($v = $this->getUserId())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_USER_ID, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getReference())) {
+            $out->{self::FIELD_REFERENCE} = $v;
         }
-        return $sxe;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $a = parent::jsonSerialize();
+        if (null !== ($v = $this->getUserId())) {
+            $out->{self::FIELD_USER_ID} = $v;
+        }
         if (null !== ($v = $this->getAltId())) {
-            $a[self::FIELD_ALT_ID] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_ALT_ID_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ALT_ID} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ALT_ID_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getName())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_NAME} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_NAME_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getRequestor())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_REQUESTOR} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRBoolean::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_REQUESTOR_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getLocation())) {
-            $a[self::FIELD_LOCATION] = $v;
-        }
-        if (null !== ($v = $this->getMedia())) {
-            $a[self::FIELD_MEDIA] = $v;
-        }
-        if (null !== ($v = $this->getName())) {
-            $a[self::FIELD_NAME] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_NAME_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getNetwork())) {
-            $a[self::FIELD_NETWORK] = $v;
+            $out->{self::FIELD_LOCATION} = $v;
         }
         if ([] !== ($vs = $this->getPolicy())) {
-            $a[self::FIELD_POLICY] = [];
-            $encs = [];
-            $encValued = false;
+            $vals = [];
+            $exts = [];
             foreach ($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_POLICY][] = $v->getValue();
-                $enc = $v->jsonSerialize();
-                $cnt = count($enc);
-                if (0 === $cnt || (1 === $cnt && (isset($enc[FHIRUri::FIELD_VALUE]) || array_key_exists(FHIRUri::FIELD_VALUE, $enc)))) {
-                    $encs[] = null;
-                } else {
-                    unset($enc[FHIRUri::FIELD_VALUE]);
-                    $encs[] = $enc;
-                    $encValued = true;
+                $val = $v->getValue();
+                $ext = $v->jsonSerialize();
+                unset($ext->{FHIRUri::FIELD_VALUE});
+                if (null !== $val) {
+                    $vals[] = $val;
+                }
+                if ([] !== $ext) {
+                    $exts[] = $ext;
                 }
             }
-            if ($encValued) {
-                $a[self::FIELD_POLICY_EXT] = $encs;
+            if ([] !== $vals) {
+                $out->{self::FIELD_POLICY} = $vals;
             }
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_POLICY_EXT} = $exts;
+            }
+        }
+        if (null !== ($v = $this->getMedia())) {
+            $out->{self::FIELD_MEDIA} = $v;
+        }
+        if (null !== ($v = $this->getNetwork())) {
+            $out->{self::FIELD_NETWORK} = $v;
         }
         if ([] !== ($vs = $this->getPurposeOfUse())) {
-            $a[self::FIELD_PURPOSE_OF_USE] = [];
+            $out->{self::FIELD_PURPOSE_OF_USE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_PURPOSE_OF_USE][] = $v;
+                $out->{self::FIELD_PURPOSE_OF_USE}[] = $v;
             }
         }
-        if (null !== ($v = $this->getReference())) {
-            $a[self::FIELD_REFERENCE] = $v;
-        }
-        if (null !== ($v = $this->getRequestor())) {
-            $a[self::FIELD_REQUESTOR] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRBoolean::FIELD_VALUE]);
-                $a[self::FIELD_REQUESTOR_EXT] = $enc;
-            }
-        }
-        if ([] !== ($vs = $this->getRole())) {
-            $a[self::FIELD_ROLE] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_ROLE][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getUserId())) {
-            $a[self::FIELD_USER_ID] = $v;
-        }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

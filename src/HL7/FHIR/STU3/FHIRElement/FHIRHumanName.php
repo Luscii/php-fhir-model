@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,8 +63,12 @@ namespace HL7\FHIR\STU3\FHIRElement;
  */
 
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A human's name with the ability to identify parts and usage.
@@ -78,23 +82,40 @@ class FHIRHumanName extends FHIRElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_HUMAN_NAME;
+
+    const FIELD_USE = 'use';
+    const FIELD_USE_EXT = '_use';
+    const FIELD_TEXT = 'text';
+    const FIELD_TEXT_EXT = '_text';
     const FIELD_FAMILY = 'family';
     const FIELD_FAMILY_EXT = '_family';
     const FIELD_GIVEN = 'given';
     const FIELD_GIVEN_EXT = '_given';
-    const FIELD_PERIOD = 'period';
     const FIELD_PREFIX = 'prefix';
     const FIELD_PREFIX_EXT = '_prefix';
     const FIELD_SUFFIX = 'suffix';
     const FIELD_SUFFIX_EXT = '_suffix';
-    const FIELD_TEXT = 'text';
-    const FIELD_TEXT_EXT = '_text';
-    const FIELD_USE = 'use';
-    const FIELD_USE_EXT = '_use';
+    const FIELD_PERIOD = 'period';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
+    /**
+     * The use of a human name
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies the purpose for this name.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRNameUse
+     */
+    protected null|FHIRNameUse $use = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A full text representation of the name.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $text = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -105,8 +126,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $family = null;
-
+    protected null|FHIRString $family = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -116,19 +136,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    protected $given = [];
-
-    /**
-     * A time period defined by a start and end date and optionally time.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Indicates the period of time when this name was valid for the named person.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
-     */
-    protected $period = null;
-
+    protected null|array $given = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -139,8 +147,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    protected $prefix = [];
-
+    protected null|array $prefix = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -151,62 +158,68 @@ class FHIRHumanName extends FHIRElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    protected $suffix = [];
-
+    protected null|array $suffix = [];
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * A full text representation of the name.
+     * Indicates the period of time when this name was valid for the named person.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    protected $text = null;
-
-    /**
-     * The use of a human name
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Identifies the purpose for this name.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRNameUse
-     */
-    protected $use = null;
+    protected null|FHIRPeriod $period = null;
 
     /**
      * Validation map for fields in type HumanName
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRHumanName Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRHumanName::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_USE]) || isset($data[self::FIELD_USE_EXT])) {
+            $value = $data[self::FIELD_USE] ?? null;
+            $ext = (isset($data[self::FIELD_USE_EXT]) && is_array($data[self::FIELD_USE_EXT])) ? $data[self::FIELD_USE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRNameUse) {
+                    $this->setUse($value);
+                } else if (is_array($value)) {
+                    $this->setUse(new FHIRNameUse(array_merge($ext, $value)));
+                } else {
+                    $this->setUse(new FHIRNameUse([FHIRNameUse::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setUse(new FHIRNameUse($ext));
+            }
+        }
+        if (isset($data[self::FIELD_TEXT]) || isset($data[self::FIELD_TEXT_EXT])) {
+            $value = $data[self::FIELD_TEXT] ?? null;
+            $ext = (isset($data[self::FIELD_TEXT_EXT]) && is_array($data[self::FIELD_TEXT_EXT])) ? $data[self::FIELD_TEXT_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setText($value);
+                } else if (is_array($value)) {
+                    $this->setText(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setText(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setText(new FHIRString($ext));
+            }
+        }
         if (isset($data[self::FIELD_FAMILY]) || isset($data[self::FIELD_FAMILY_EXT])) {
-            if (isset($data[self::FIELD_FAMILY])) {
-                $value = $data[self::FIELD_FAMILY];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_FAMILY_EXT]) && is_array($data[self::FIELD_FAMILY_EXT])) {
-                $ext = $data[self::FIELD_FAMILY_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_FAMILY] ?? null;
+            $ext = (isset($data[self::FIELD_FAMILY_EXT]) && is_array($data[self::FIELD_FAMILY_EXT])) ? $data[self::FIELD_FAMILY_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->setFamily($value);
@@ -215,21 +228,13 @@ class FHIRHumanName extends FHIRElement
                 } else {
                     $this->setFamily(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setFamily(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_GIVEN]) || isset($data[self::FIELD_GIVEN_EXT])) {
-            if (isset($data[self::FIELD_GIVEN])) {
-                $value = $data[self::FIELD_GIVEN];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_GIVEN_EXT]) && is_array($data[self::FIELD_GIVEN_EXT])) {
-                $ext = $data[self::FIELD_GIVEN_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_GIVEN] ?? null;
+            $ext = (isset($data[self::FIELD_GIVEN_EXT]) && is_array($data[self::FIELD_GIVEN_EXT])) ? $data[self::FIELD_GIVEN_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->addGiven($value);
@@ -251,30 +256,15 @@ class FHIRHumanName extends FHIRElement
                 } else {
                     $this->addGiven(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 foreach($ext as $iext) {
                     $this->addGiven(new FHIRString($iext));
                 }
             }
         }
-        if (isset($data[self::FIELD_PERIOD])) {
-            if ($data[self::FIELD_PERIOD] instanceof FHIRPeriod) {
-                $this->setPeriod($data[self::FIELD_PERIOD]);
-            } else {
-                $this->setPeriod(new FHIRPeriod($data[self::FIELD_PERIOD]));
-            }
-        }
         if (isset($data[self::FIELD_PREFIX]) || isset($data[self::FIELD_PREFIX_EXT])) {
-            if (isset($data[self::FIELD_PREFIX])) {
-                $value = $data[self::FIELD_PREFIX];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_PREFIX_EXT]) && is_array($data[self::FIELD_PREFIX_EXT])) {
-                $ext = $data[self::FIELD_PREFIX_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_PREFIX] ?? null;
+            $ext = (isset($data[self::FIELD_PREFIX_EXT]) && is_array($data[self::FIELD_PREFIX_EXT])) ? $data[self::FIELD_PREFIX_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->addPrefix($value);
@@ -296,23 +286,15 @@ class FHIRHumanName extends FHIRElement
                 } else {
                     $this->addPrefix(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 foreach($ext as $iext) {
                     $this->addPrefix(new FHIRString($iext));
                 }
             }
         }
         if (isset($data[self::FIELD_SUFFIX]) || isset($data[self::FIELD_SUFFIX_EXT])) {
-            if (isset($data[self::FIELD_SUFFIX])) {
-                $value = $data[self::FIELD_SUFFIX];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_SUFFIX_EXT]) && is_array($data[self::FIELD_SUFFIX_EXT])) {
-                $ext = $data[self::FIELD_SUFFIX_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_SUFFIX] ?? null;
+            $ext = (isset($data[self::FIELD_SUFFIX_EXT]) && is_array($data[self::FIELD_SUFFIX_EXT])) ? $data[self::FIELD_SUFFIX_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->addSuffix($value);
@@ -334,78 +316,94 @@ class FHIRHumanName extends FHIRElement
                 } else {
                     $this->addSuffix(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 foreach($ext as $iext) {
                     $this->addSuffix(new FHIRString($iext));
                 }
             }
         }
-        if (isset($data[self::FIELD_TEXT]) || isset($data[self::FIELD_TEXT_EXT])) {
-            if (isset($data[self::FIELD_TEXT])) {
-                $value = $data[self::FIELD_TEXT];
+        if (isset($data[self::FIELD_PERIOD])) {
+            if ($data[self::FIELD_PERIOD] instanceof FHIRPeriod) {
+                $this->setPeriod($data[self::FIELD_PERIOD]);
             } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_TEXT_EXT]) && is_array($data[self::FIELD_TEXT_EXT])) {
-                $ext = $data[self::FIELD_TEXT_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setText($value);
-                } else if (is_array($value)) {
-                    $this->setText(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setText(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setText(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_USE]) || isset($data[self::FIELD_USE_EXT])) {
-            if (isset($data[self::FIELD_USE])) {
-                $value = $data[self::FIELD_USE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_USE_EXT]) && is_array($data[self::FIELD_USE_EXT])) {
-                $ext = $data[self::FIELD_USE_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRNameUse) {
-                    $this->setUse($value);
-                } else if (is_array($value)) {
-                    $this->setUse(new FHIRNameUse(array_merge($ext, $value)));
-                } else {
-                    $this->setUse(new FHIRNameUse([FHIRNameUse::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setUse(new FHIRNameUse($ext));
+                $this->setPeriod(new FHIRPeriod($data[self::FIELD_PERIOD]));
             }
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * @return string
+     * The use of a human name
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies the purpose for this name.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRNameUse
      */
-    public function _getFHIRXMLElementDefinition()
+    public function getUse(): null|FHIRNameUse
     {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
+        return $this->use;
+    }
+
+    /**
+     * The use of a human name
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies the purpose for this name.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRNameUse $use
+     * @return static
+     */
+    public function setUse(null|FHIRNameUse $use = null): self
+    {
+        if (null === $use) {
+            $use = new FHIRNameUse();
         }
-        return "<HumanName{$xmlns}></HumanName>";
+        $this->_trackValueSet($this->use, $use);
+        $this->use = $use;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A full text representation of the name.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getText(): null|FHIRString
+    {
+        return $this->text;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A full text representation of the name.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $text
+     * @return static
+     */
+    public function setText(null|string|FHIRStringPrimitive|FHIRString $text = null): self
+    {
+        if (null !== $text && !($text instanceof FHIRString)) {
+            $text = new FHIRString($text);
+        }
+        $this->_trackValueSet($this->text, $text);
+        $this->text = $text;
+        return $this;
     }
 
     /**
@@ -418,7 +416,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getFamily()
+    public function getFamily(): null|FHIRString
     {
         return $this->family;
     }
@@ -431,20 +429,16 @@ class FHIRHumanName extends FHIRElement
      * The part of a name that links to the genealogy. In some cultures (e.g. Eritrea)
      * the family name of a son is the first name of his father.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $family
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $family
      * @return static
      */
-    public function setFamily($family = null)
+    public function setFamily(null|string|FHIRStringPrimitive|FHIRString $family = null): self
     {
-        if (null === $family) {
-            $this->family = null;
-            return $this;
+        if (null !== $family && !($family instanceof FHIRString)) {
+            $family = new FHIRString($family);
         }
-        if ($family instanceof FHIRString) {
-            $this->family = $family;
-            return $this;
-        }
-        $this->family = new FHIRString($family);
+        $this->_trackValueSet($this->family, $family);
+        $this->family = $family;
         return $this;
     }
 
@@ -457,7 +451,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    public function getGiven()
+    public function getGiven(): null|array
     {
         return $this->given;
     }
@@ -469,20 +463,16 @@ class FHIRHumanName extends FHIRElement
      *
      * Given name.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $given
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $given
      * @return static
      */
-    public function addGiven($given = null)
+    public function addGiven(null|string|FHIRStringPrimitive|FHIRString $given = null): self
     {
-        if (null === $given) {
-            $this->given = [];
-            return $this;
+        if (null !== $given && !($given instanceof FHIRString)) {
+            $given = new FHIRString($given);
         }
-        if ($given instanceof FHIRString) {
-            $this->given[] = $given;
-            return $this;
-        }
-        $this->given[] = new FHIRString($given);
+        $this->_trackValueAdded();
+        $this->given[] = $given;
         return $this;
     }
 
@@ -496,9 +486,12 @@ class FHIRHumanName extends FHIRElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $given
      * @return static
      */
-    public function setGiven(array $given = [])
+    public function setGiven(array $given = []): self
     {
-        $this->given = [];
+        if ([] !== $this->given) {
+            $this->_trackValuesRemoved(count($this->given));
+            $this->given = [];
+        }
         if ([] === $given) {
             return $this;
         }
@@ -513,36 +506,6 @@ class FHIRHumanName extends FHIRElement
     }
 
     /**
-     * A time period defined by a start and end date and optionally time.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Indicates the period of time when this name was valid for the named person.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
-     */
-    public function getPeriod()
-    {
-        return $this->period;
-    }
-
-    /**
-     * A time period defined by a start and end date and optionally time.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Indicates the period of time when this name was valid for the named person.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
-     * @return static
-     */
-    public function setPeriod(FHIRPeriod $period = null)
-    {
-        $this->period = $period;
-        return $this;
-    }
-
-    /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -552,7 +515,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    public function getPrefix()
+    public function getPrefix(): null|array
     {
         return $this->prefix;
     }
@@ -565,20 +528,16 @@ class FHIRHumanName extends FHIRElement
      * Part of the name that is acquired as a title due to academic, legal, employment
      * or nobility status, etc. and that appears at the start of the name.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $prefix
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $prefix
      * @return static
      */
-    public function addPrefix($prefix = null)
+    public function addPrefix(null|string|FHIRStringPrimitive|FHIRString $prefix = null): self
     {
-        if (null === $prefix) {
-            $this->prefix = [];
-            return $this;
+        if (null !== $prefix && !($prefix instanceof FHIRString)) {
+            $prefix = new FHIRString($prefix);
         }
-        if ($prefix instanceof FHIRString) {
-            $this->prefix[] = $prefix;
-            return $this;
-        }
-        $this->prefix[] = new FHIRString($prefix);
+        $this->_trackValueAdded();
+        $this->prefix[] = $prefix;
         return $this;
     }
 
@@ -593,9 +552,12 @@ class FHIRHumanName extends FHIRElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $prefix
      * @return static
      */
-    public function setPrefix(array $prefix = [])
+    public function setPrefix(array $prefix = []): self
     {
-        $this->prefix = [];
+        if ([] !== $this->prefix) {
+            $this->_trackValuesRemoved(count($this->prefix));
+            $this->prefix = [];
+        }
         if ([] === $prefix) {
             return $this;
         }
@@ -619,7 +581,7 @@ class FHIRHumanName extends FHIRElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    public function getSuffix()
+    public function getSuffix(): null|array
     {
         return $this->suffix;
     }
@@ -632,20 +594,16 @@ class FHIRHumanName extends FHIRElement
      * Part of the name that is acquired as a title due to academic, legal, employment
      * or nobility status, etc. and that appears at the end of the name.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $suffix
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $suffix
      * @return static
      */
-    public function addSuffix($suffix = null)
+    public function addSuffix(null|string|FHIRStringPrimitive|FHIRString $suffix = null): self
     {
-        if (null === $suffix) {
-            $this->suffix = [];
-            return $this;
+        if (null !== $suffix && !($suffix instanceof FHIRString)) {
+            $suffix = new FHIRString($suffix);
         }
-        if ($suffix instanceof FHIRString) {
-            $this->suffix[] = $suffix;
-            return $this;
-        }
-        $this->suffix[] = new FHIRString($suffix);
+        $this->_trackValueAdded();
+        $this->suffix[] = $suffix;
         return $this;
     }
 
@@ -660,9 +618,12 @@ class FHIRHumanName extends FHIRElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $suffix
      * @return static
      */
-    public function setSuffix(array $suffix = [])
+    public function setSuffix(array $suffix = []): self
     {
-        $this->suffix = [];
+        if ([] !== $this->suffix) {
+            $this->_trackValuesRemoved(count($this->suffix));
+            $this->suffix = [];
+        }
         if ([] === $suffix) {
             return $this;
         }
@@ -677,68 +638,36 @@ class FHIRHumanName extends FHIRElement
     }
 
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * A full text representation of the name.
+     * Indicates the period of time when this name was valid for the named person.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function getText()
+    public function getPeriod(): null|FHIRPeriod
     {
-        return $this->text;
+        return $this->period;
     }
 
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * A full text representation of the name.
+     * Indicates the period of time when this name was valid for the named person.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $text
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
      * @return static
      */
-    public function setText($text = null)
+    public function setPeriod(null|FHIRPeriod $period = null): self
     {
-        if (null === $text) {
-            $this->text = null;
-            return $this;
+        if (null === $period) {
+            $period = new FHIRPeriod();
         }
-        if ($text instanceof FHIRString) {
-            $this->text = $text;
-            return $this;
-        }
-        $this->text = new FHIRString($text);
-        return $this;
-    }
-
-    /**
-     * The use of a human name
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Identifies the purpose for this name.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRNameUse
-     */
-    public function getUse()
-    {
-        return $this->use;
-    }
-
-    /**
-     * The use of a human name
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Identifies the purpose for this name.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRNameUse $use
-     * @return static
-     */
-    public function setUse(FHIRNameUse $use = null)
-    {
-        $this->use = $use;
+        $this->_trackValueSet($this->period, $period);
+        $this->period = $period;
         return $this;
     }
 
@@ -748,9 +677,9 @@ class FHIRHumanName extends FHIRElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -759,10 +688,20 @@ class FHIRHumanName extends FHIRElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getUse())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_USE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getText())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TEXT] = $fieldErrs;
+            }
+        }
         if (null !== ($v = $this->getFamily())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_FAMILY] = $fieldErrs;
@@ -773,11 +712,6 @@ class FHIRHumanName extends FHIRElement
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                     $errs[sprintf('%s.%d', self::FIELD_GIVEN, $i)] = $fieldErrs;
                 }
-            }
-        }
-        if (null !== ($v = $this->getPeriod())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_PERIOD] = $fieldErrs;
             }
         }
         if ([] !== ($vs = $this->getPrefix())) {
@@ -794,14 +728,33 @@ class FHIRHumanName extends FHIRElement
                 }
             }
         }
-        if (null !== ($v = $this->getText())) {
+        if (null !== ($v = $this->getPeriod())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_TEXT] = $fieldErrs;
+                $errs[self::FIELD_PERIOD] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getUse())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_USE] = $fieldErrs;
+        if (isset($validationRules[self::FIELD_USE])) {
+            $v = $this->getUse();
+            foreach($validationRules[self::FIELD_USE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HUMAN_NAME, self::FIELD_USE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_USE])) {
+                        $errs[self::FIELD_USE] = [];
+                    }
+                    $errs[self::FIELD_USE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HUMAN_NAME, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
+                }
             }
         }
         if (isset($validationRules[self::FIELD_FAMILY])) {
@@ -825,18 +778,6 @@ class FHIRHumanName extends FHIRElement
                         $errs[self::FIELD_GIVEN] = [];
                     }
                     $errs[self::FIELD_GIVEN][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_PERIOD])) {
-            $v = $this->getPeriod();
-            foreach($validationRules[self::FIELD_PERIOD] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HUMAN_NAME, self::FIELD_PERIOD, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PERIOD])) {
-                        $errs[self::FIELD_PERIOD] = [];
-                    }
-                    $errs[self::FIELD_PERIOD][$rule] = $err;
                 }
             }
         }
@@ -864,27 +805,15 @@ class FHIRHumanName extends FHIRElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TEXT])) {
-            $v = $this->getText();
-            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HUMAN_NAME, self::FIELD_TEXT, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_PERIOD])) {
+            $v = $this->getPeriod();
+            foreach($validationRules[self::FIELD_PERIOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HUMAN_NAME, self::FIELD_PERIOD, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TEXT])) {
-                        $errs[self::FIELD_TEXT] = [];
+                    if (!isset($errs[self::FIELD_PERIOD])) {
+                        $errs[self::FIELD_PERIOD] = [];
                     }
-                    $errs[self::FIELD_TEXT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_USE])) {
-            $v = $this->getUse();
-            foreach($validationRules[self::FIELD_USE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HUMAN_NAME, self::FIELD_USE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_USE])) {
-                        $errs[self::FIELD_USE] = [];
-                    }
-                    $errs[self::FIELD_USE][$rule] = $err;
+                    $errs[self::FIELD_PERIOD][$rule] = $err;
                 }
             }
         }
@@ -916,122 +845,174 @@ class FHIRHumanName extends FHIRElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRHumanName $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRHumanName
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRHumanName::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRHumanName::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRHumanName;
-        } elseif (!is_object($type) || !($type instanceof FHIRHumanName)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRHumanName)) {
             throw new \RuntimeException(sprintf(
-                'FHIRHumanName::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRHumanName or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_USE === $n->nodeName) {
+                $type->setUse(FHIRNameUse::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_FAMILY === $n->nodeName) {
+                $type->setFamily(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_GIVEN === $n->nodeName) {
+                $type->addGiven(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_PREFIX === $n->nodeName) {
+                $type->addPrefix(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_SUFFIX === $n->nodeName) {
+                $type->addSuffix(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_PERIOD === $n->nodeName) {
+                $type->setPeriod(FHIRPeriod::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->family)) {
-            $type->setFamily(FHIRString::xmlUnserialize($children->family));
-        }
-        if (isset($attributes->family)) {
-            $pt = $type->getFamily();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->family);
-            } else {
-                $type->setFamily((string)$attributes->family);
-            }
-        }
-        if (isset($children->given)) {
-            foreach($children->given as $child) {
-                $type->addGiven(FHIRString::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->period)) {
-            $type->setPeriod(FHIRPeriod::xmlUnserialize($children->period));
-        }
-        if (isset($children->prefix)) {
-            foreach($children->prefix as $child) {
-                $type->addPrefix(FHIRString::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->suffix)) {
-            foreach($children->suffix as $child) {
-                $type->addSuffix(FHIRString::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->text)) {
-            $type->setText(FHIRString::xmlUnserialize($children->text));
-        }
-        if (isset($attributes->text)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_TEXT);
+        if (null !== $n) {
             $pt = $type->getText();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->text);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setText((string)$attributes->text);
+                $type->setText($n->nodeValue);
             }
         }
-        if (isset($children->use)) {
-            $type->setUse(FHIRNameUse::xmlUnserialize($children->use));
+        $n = $element->attributes->getNamedItem(self::FIELD_FAMILY);
+        if (null !== $n) {
+            $pt = $type->getFamily();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setFamily($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_GIVEN);
+        if (null !== $n) {
+            $type->addGiven($n->nodeValue);
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_PREFIX);
+        if (null !== $n) {
+            $type->addPrefix($n->nodeValue);
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_SUFFIX);
+        if (null !== $n) {
+            $type->addSuffix($n->nodeValue);
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('HumanName'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getUse())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_USE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getText())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_TEXT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if (null !== ($v = $this->getFamily())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_FAMILY, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_FAMILY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getGiven())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_GIVEN, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_GIVEN);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
-        }
-        if (null !== ($v = $this->getPeriod())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PERIOD, null, $v->_getFHIRXMLNamespace()));
         }
         if ([] !== ($vs = $this->getPrefix())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_PREFIX, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_PREFIX);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getSuffix())) {
@@ -1039,134 +1020,138 @@ class FHIRHumanName extends FHIRElement
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SUFFIX, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_SUFFIX);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getText())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_TEXT, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getPeriod())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PERIOD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getUse())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_USE, null, $v->_getFHIRXMLNamespace()));
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getFamily())) {
-            $a[self::FIELD_FAMILY] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_FAMILY_EXT] = $enc;
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getUse())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_USE} = $val;
             }
-        }
-        if ([] !== ($vs = $this->getGiven())) {
-            $a[self::FIELD_GIVEN] = [];
-            $encs = [];
-            $encValued = false;
-            foreach ($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_GIVEN][] = $v->getValue();
-                $enc = $v->jsonSerialize();
-                $cnt = count($enc);
-                if (0 === $cnt || (1 === $cnt && (isset($enc[FHIRString::FIELD_VALUE]) || array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                    $encs[] = null;
-                } else {
-                    unset($enc[FHIRString::FIELD_VALUE]);
-                    $encs[] = $enc;
-                    $encValued = true;
-                }
-            }
-            if ($encValued) {
-                $a[self::FIELD_GIVEN_EXT] = $encs;
-            }
-        }
-        if (null !== ($v = $this->getPeriod())) {
-            $a[self::FIELD_PERIOD] = $v;
-        }
-        if ([] !== ($vs = $this->getPrefix())) {
-            $a[self::FIELD_PREFIX] = [];
-            $encs = [];
-            $encValued = false;
-            foreach ($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_PREFIX][] = $v->getValue();
-                $enc = $v->jsonSerialize();
-                $cnt = count($enc);
-                if (0 === $cnt || (1 === $cnt && (isset($enc[FHIRString::FIELD_VALUE]) || array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                    $encs[] = null;
-                } else {
-                    unset($enc[FHIRString::FIELD_VALUE]);
-                    $encs[] = $enc;
-                    $encValued = true;
-                }
-            }
-            if ($encValued) {
-                $a[self::FIELD_PREFIX_EXT] = $encs;
-            }
-        }
-        if ([] !== ($vs = $this->getSuffix())) {
-            $a[self::FIELD_SUFFIX] = [];
-            $encs = [];
-            $encValued = false;
-            foreach ($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_SUFFIX][] = $v->getValue();
-                $enc = $v->jsonSerialize();
-                $cnt = count($enc);
-                if (0 === $cnt || (1 === $cnt && (isset($enc[FHIRString::FIELD_VALUE]) || array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                    $encs[] = null;
-                } else {
-                    unset($enc[FHIRString::FIELD_VALUE]);
-                    $encs[] = $enc;
-                    $encValued = true;
-                }
-            }
-            if ($encValued) {
-                $a[self::FIELD_SUFFIX_EXT] = $encs;
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRNameUse::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_USE_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getText())) {
-            $a[self::FIELD_TEXT] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_TEXT_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_TEXT} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_TEXT_EXT} = $ext;
             }
         }
-        if (null !== ($v = $this->getUse())) {
-            $a[self::FIELD_USE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRNameUse::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRNameUse::FIELD_VALUE]);
-                $a[self::FIELD_USE_EXT] = $enc;
+        if (null !== ($v = $this->getFamily())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_FAMILY} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_FAMILY_EXT} = $ext;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if ([] !== ($vs = $this->getGiven())) {
+            $vals = [];
+            $exts = [];
+            foreach ($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $val = $v->getValue();
+                $ext = $v->jsonSerialize();
+                unset($ext->{FHIRString::FIELD_VALUE});
+                if (null !== $val) {
+                    $vals[] = $val;
+                }
+                if ([] !== $ext) {
+                    $exts[] = $ext;
+                }
+            }
+            if ([] !== $vals) {
+                $out->{self::FIELD_GIVEN} = $vals;
+            }
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_GIVEN_EXT} = $exts;
+            }
         }
-        return $a;
-    }
+        if ([] !== ($vs = $this->getPrefix())) {
+            $vals = [];
+            $exts = [];
+            foreach ($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $val = $v->getValue();
+                $ext = $v->jsonSerialize();
+                unset($ext->{FHIRString::FIELD_VALUE});
+                if (null !== $val) {
+                    $vals[] = $val;
+                }
+                if ([] !== $ext) {
+                    $exts[] = $ext;
+                }
+            }
+            if ([] !== $vals) {
+                $out->{self::FIELD_PREFIX} = $vals;
+            }
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_PREFIX_EXT} = $exts;
+            }
+        }
+        if ([] !== ($vs = $this->getSuffix())) {
+            $vals = [];
+            $exts = [];
+            foreach ($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $val = $v->getValue();
+                $ext = $v->jsonSerialize();
+                unset($ext->{FHIRString::FIELD_VALUE});
+                if (null !== $val) {
+                    $vals[] = $val;
+                }
+                if ([] !== $ext) {
+                    $exts[] = $ext;
+                }
+            }
+            if ([] !== $vals) {
+                $out->{self::FIELD_SUFFIX} = $vals;
+            }
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_SUFFIX_EXT} = $exts;
+            }
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            $out->{self::FIELD_PERIOD} = $v;
+        }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

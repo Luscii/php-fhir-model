@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIROperationDefinition;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIROperationDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,9 +63,14 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIROperationDefinition;
  */
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A formal computable definition of an operation (on the RESTful interface) or a
@@ -78,24 +83,11 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_OPERATION_DEFINITION_DOT_OVERLOAD;
-    const FIELD_COMMENT = 'comment';
-    const FIELD_COMMENT_EXT = '_comment';
+
     const FIELD_PARAMETER_NAME = 'parameterName';
     const FIELD_PARAMETER_NAME_EXT = '_parameterName';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Comments to go on overload.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $comment = null;
+    const FIELD_COMMENT = 'comment';
+    const FIELD_COMMENT_EXT = '_comment';
 
     /**
      * A sequence of Unicode characters
@@ -106,64 +98,38 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    protected $parameterName = [];
+    protected null|array $parameterName = [];
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Comments to go on overload.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $comment = null;
 
     /**
      * Validation map for fields in type OperationDefinition.Overload
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIROperationDefinitionOverload Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIROperationDefinitionOverload::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_COMMENT]) || isset($data[self::FIELD_COMMENT_EXT])) {
-            if (isset($data[self::FIELD_COMMENT])) {
-                $value = $data[self::FIELD_COMMENT];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_COMMENT_EXT]) && is_array($data[self::FIELD_COMMENT_EXT])) {
-                $ext = $data[self::FIELD_COMMENT_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setComment($value);
-                } else if (is_array($value)) {
-                    $this->setComment(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setComment(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setComment(new FHIRString($ext));
-            }
-        }
         if (isset($data[self::FIELD_PARAMETER_NAME]) || isset($data[self::FIELD_PARAMETER_NAME_EXT])) {
-            if (isset($data[self::FIELD_PARAMETER_NAME])) {
-                $value = $data[self::FIELD_PARAMETER_NAME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_PARAMETER_NAME_EXT]) && is_array($data[self::FIELD_PARAMETER_NAME_EXT])) {
-                $ext = $data[self::FIELD_PARAMETER_NAME_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_PARAMETER_NAME] ?? null;
+            $ext = (isset($data[self::FIELD_PARAMETER_NAME_EXT]) && is_array($data[self::FIELD_PARAMETER_NAME_EXT])) ? $data[self::FIELD_PARAMETER_NAME_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->addParameterName($value);
@@ -185,70 +151,36 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
                 } else {
                     $this->addParameterName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 foreach($ext as $iext) {
                     $this->addParameterName(new FHIRString($iext));
                 }
             }
         }
+        if (isset($data[self::FIELD_COMMENT]) || isset($data[self::FIELD_COMMENT_EXT])) {
+            $value = $data[self::FIELD_COMMENT] ?? null;
+            $ext = (isset($data[self::FIELD_COMMENT_EXT]) && is_array($data[self::FIELD_COMMENT_EXT])) ? $data[self::FIELD_COMMENT_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setComment($value);
+                } else if (is_array($value)) {
+                    $this->setComment(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setComment(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setComment(new FHIRString($ext));
+            }
+        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<OperationDefinitionOverload{$xmlns}></OperationDefinitionOverload>";
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Comments to go on overload.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Comments to go on overload.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $comment
-     * @return static
-     */
-    public function setComment($comment = null)
-    {
-        if (null === $comment) {
-            $this->comment = null;
-            return $this;
-        }
-        if ($comment instanceof FHIRString) {
-            $this->comment = $comment;
-            return $this;
-        }
-        $this->comment = new FHIRString($comment);
-        return $this;
     }
 
     /**
@@ -260,7 +192,7 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    public function getParameterName()
+    public function getParameterName(): null|array
     {
         return $this->parameterName;
     }
@@ -272,20 +204,16 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
      *
      * Name of parameter to include in overload.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $parameterName
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $parameterName
      * @return static
      */
-    public function addParameterName($parameterName = null)
+    public function addParameterName(null|string|FHIRStringPrimitive|FHIRString $parameterName = null): self
     {
-        if (null === $parameterName) {
-            $this->parameterName = [];
-            return $this;
+        if (null !== $parameterName && !($parameterName instanceof FHIRString)) {
+            $parameterName = new FHIRString($parameterName);
         }
-        if ($parameterName instanceof FHIRString) {
-            $this->parameterName[] = $parameterName;
-            return $this;
-        }
-        $this->parameterName[] = new FHIRString($parameterName);
+        $this->_trackValueAdded();
+        $this->parameterName[] = $parameterName;
         return $this;
     }
 
@@ -299,9 +227,12 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $parameterName
      * @return static
      */
-    public function setParameterName(array $parameterName = [])
+    public function setParameterName(array $parameterName = []): self
     {
-        $this->parameterName = [];
+        if ([] !== $this->parameterName) {
+            $this->_trackValuesRemoved(count($this->parameterName));
+            $this->parameterName = [];
+        }
         if ([] === $parameterName) {
             return $this;
         }
@@ -316,14 +247,48 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
     }
 
     /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Comments to go on overload.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getComment(): null|FHIRString
+    {
+        return $this->comment;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Comments to go on overload.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $comment
+     * @return static
+     */
+    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null): self
+    {
+        if (null !== $comment && !($comment instanceof FHIRString)) {
+            $comment = new FHIRString($comment);
+        }
+        $this->_trackValueSet($this->comment, $comment);
+        $this->comment = $comment;
+        return $this;
+    }
+
+    /**
      * Returns the validation rules that this type's fields must comply with to be considered "valid"
      * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -332,19 +297,31 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getParameterName())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_PARAMETER_NAME, $i)] = $fieldErrs;
+                }
+            }
+        }
         if (null !== ($v = $this->getComment())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_COMMENT] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getParameterName())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_PARAMETER_NAME, $i)] = $fieldErrs;
+        if (isset($validationRules[self::FIELD_PARAMETER_NAME])) {
+            $v = $this->getParameterName();
+            foreach($validationRules[self::FIELD_PARAMETER_NAME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_OPERATION_DEFINITION_DOT_OVERLOAD, self::FIELD_PARAMETER_NAME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PARAMETER_NAME])) {
+                        $errs[self::FIELD_PARAMETER_NAME] = [];
+                    }
+                    $errs[self::FIELD_PARAMETER_NAME][$rule] = $err;
                 }
             }
         }
@@ -357,18 +334,6 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
                         $errs[self::FIELD_COMMENT] = [];
                     }
                     $errs[self::FIELD_COMMENT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_PARAMETER_NAME])) {
-            $v = $this->getParameterName();
-            foreach($validationRules[self::FIELD_PARAMETER_NAME] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_OPERATION_DEFINITION_DOT_OVERLOAD, self::FIELD_PARAMETER_NAME, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PARAMETER_NAME])) {
-                        $errs[self::FIELD_PARAMETER_NAME] = [];
-                    }
-                    $errs[self::FIELD_PARAMETER_NAME][$rule] = $err;
                 }
             }
         }
@@ -412,138 +377,182 @@ class FHIROperationDefinitionOverload extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionOverload $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionOverload
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIROperationDefinitionOverload::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIROperationDefinitionOverload::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIROperationDefinitionOverload;
-        } elseif (!is_object($type) || !($type instanceof FHIROperationDefinitionOverload)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIROperationDefinitionOverload)) {
             throw new \RuntimeException(sprintf(
-                'FHIROperationDefinitionOverload::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionOverload or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_PARAMETER_NAME === $n->nodeName) {
+                $type->addParameterName(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_COMMENT === $n->nodeName) {
+                $type->setComment(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->comment)) {
-            $type->setComment(FHIRString::xmlUnserialize($children->comment));
+        $n = $element->attributes->getNamedItem(self::FIELD_PARAMETER_NAME);
+        if (null !== $n) {
+            $type->addParameterName($n->nodeValue);
         }
-        if (isset($attributes->comment)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_COMMENT);
+        if (null !== $n) {
             $pt = $type->getComment();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->comment);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setComment((string)$attributes->comment);
+                $type->setComment($n->nodeValue);
             }
         }
-        if (isset($children->parameterName)) {
-            foreach($children->parameterName as $child) {
-                $type->addParameterName(FHIRString::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getComment())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_COMMENT, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('OperationDefinitionOverload'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
+        parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getParameterName())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_PARAMETER_NAME, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_PARAMETER_NAME);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        return $sxe;
+        if (null !== ($v = $this->getComment())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_COMMENT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getComment())) {
-            $a[self::FIELD_COMMENT] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_COMMENT_EXT] = $enc;
-            }
-        }
+        $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getParameterName())) {
-            $a[self::FIELD_PARAMETER_NAME] = [];
-            $encs = [];
-            $encValued = false;
+            $vals = [];
+            $exts = [];
             foreach ($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_PARAMETER_NAME][] = $v->getValue();
-                $enc = $v->jsonSerialize();
-                $cnt = count($enc);
-                if (0 === $cnt || (1 === $cnt && (isset($enc[FHIRString::FIELD_VALUE]) || array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                    $encs[] = null;
-                } else {
-                    unset($enc[FHIRString::FIELD_VALUE]);
-                    $encs[] = $enc;
-                    $encValued = true;
+                $val = $v->getValue();
+                $ext = $v->jsonSerialize();
+                unset($ext->{FHIRString::FIELD_VALUE});
+                if (null !== $val) {
+                    $vals[] = $val;
+                }
+                if ([] !== $ext) {
+                    $exts[] = $ext;
                 }
             }
-            if ($encValued) {
-                $a[self::FIELD_PARAMETER_NAME_EXT] = $encs;
+            if ([] !== $vals) {
+                $out->{self::FIELD_PARAMETER_NAME} = $vals;
+            }
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_PARAMETER_NAME_EXT} = $exts;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if (null !== ($v = $this->getComment())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_COMMENT} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_COMMENT_EXT} = $ext;
+            }
         }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

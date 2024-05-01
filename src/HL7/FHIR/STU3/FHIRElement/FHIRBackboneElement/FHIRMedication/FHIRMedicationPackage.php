@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,8 +64,13 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication;
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * This resource is primarily used for the identification and definition of a
@@ -78,23 +83,10 @@ class FHIRMedicationPackage extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MEDICATION_DOT_PACKAGE;
-    const FIELD_BATCH = 'batch';
+
     const FIELD_CONTAINER = 'container';
     const FIELD_CONTENT = 'content';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * This resource is primarily used for the identification and definition of a
-     * medication. It covers the ingredients and the packaging for a medication.
-     *
-     * Information about a group of medication produced or packaged from one production
-     * run.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch[]
-     */
-    protected $batch = [];
+    const FIELD_BATCH = 'batch';
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -106,8 +98,7 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    protected $container = null;
-
+    protected null|FHIRCodeableConcept $container = null;
     /**
      * This resource is primarily used for the identification and definition of a
      * medication. It covers the ingredients and the packaging for a medication.
@@ -116,48 +107,35 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationContent[]
      */
-    protected $content = [];
+    protected null|array $content = [];
+    /**
+     * This resource is primarily used for the identification and definition of a
+     * medication. It covers the ingredients and the packaging for a medication.
+     *
+     * Information about a group of medication produced or packaged from one production
+     * run.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch[]
+     */
+    protected null|array $batch = [];
 
     /**
      * Validation map for fields in type Medication.Package
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRMedicationPackage Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMedicationPackage::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_BATCH])) {
-            if (is_array($data[self::FIELD_BATCH])) {
-                foreach($data[self::FIELD_BATCH] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRMedicationBatch) {
-                        $this->addBatch($v);
-                    } else {
-                        $this->addBatch(new FHIRMedicationBatch($v));
-                    }
-                }
-            } else if ($data[self::FIELD_BATCH] instanceof FHIRMedicationBatch) {
-                $this->addBatch($data[self::FIELD_BATCH]);
-            } else {
-                $this->addBatch(new FHIRMedicationBatch($data[self::FIELD_BATCH]));
-            }
-        }
         if (isset($data[self::FIELD_CONTAINER])) {
             if ($data[self::FIELD_CONTAINER] instanceof FHIRCodeableConcept) {
                 $this->setContainer($data[self::FIELD_CONTAINER]);
@@ -177,88 +155,39 @@ class FHIRMedicationPackage extends FHIRBackboneElement
                         $this->addContent(new FHIRMedicationContent($v));
                     }
                 }
-            } else if ($data[self::FIELD_CONTENT] instanceof FHIRMedicationContent) {
+            } elseif ($data[self::FIELD_CONTENT] instanceof FHIRMedicationContent) {
                 $this->addContent($data[self::FIELD_CONTENT]);
             } else {
                 $this->addContent(new FHIRMedicationContent($data[self::FIELD_CONTENT]));
             }
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRTypeName()
-    {
-        return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<MedicationPackage{$xmlns}></MedicationPackage>";
-    }
-
-    /**
-     * This resource is primarily used for the identification and definition of a
-     * medication. It covers the ingredients and the packaging for a medication.
-     *
-     * Information about a group of medication produced or packaged from one production
-     * run.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch[]
-     */
-    public function getBatch()
-    {
-        return $this->batch;
-    }
-
-    /**
-     * This resource is primarily used for the identification and definition of a
-     * medication. It covers the ingredients and the packaging for a medication.
-     *
-     * Information about a group of medication produced or packaged from one production
-     * run.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch $batch
-     * @return static
-     */
-    public function addBatch(FHIRMedicationBatch $batch = null)
-    {
-        $this->batch[] = $batch;
-        return $this;
-    }
-
-    /**
-     * This resource is primarily used for the identification and definition of a
-     * medication. It covers the ingredients and the packaging for a medication.
-     *
-     * Information about a group of medication produced or packaged from one production
-     * run.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch[] $batch
-     * @return static
-     */
-    public function setBatch(array $batch = [])
-    {
-        $this->batch = [];
-        if ([] === $batch) {
-            return $this;
-        }
-        foreach($batch as $v) {
-            if ($v instanceof FHIRMedicationBatch) {
-                $this->addBatch($v);
+        if (isset($data[self::FIELD_BATCH])) {
+            if (is_array($data[self::FIELD_BATCH])) {
+                foreach($data[self::FIELD_BATCH] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRMedicationBatch) {
+                        $this->addBatch($v);
+                    } else {
+                        $this->addBatch(new FHIRMedicationBatch($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_BATCH] instanceof FHIRMedicationBatch) {
+                $this->addBatch($data[self::FIELD_BATCH]);
             } else {
-                $this->addBatch(new FHIRMedicationBatch($v));
+                $this->addBatch(new FHIRMedicationBatch($data[self::FIELD_BATCH]));
             }
         }
-        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function _getFHIRTypeName(): string
+    {
+        return self::FHIR_TYPE_NAME;
     }
 
     /**
@@ -271,7 +200,7 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getContainer()
+    public function getContainer(): null|FHIRCodeableConcept
     {
         return $this->container;
     }
@@ -287,8 +216,12 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $container
      * @return static
      */
-    public function setContainer(FHIRCodeableConcept $container = null)
+    public function setContainer(null|FHIRCodeableConcept $container = null): self
     {
+        if (null === $container) {
+            $container = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->container, $container);
         $this->container = $container;
         return $this;
     }
@@ -301,7 +234,7 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationContent[]
      */
-    public function getContent()
+    public function getContent(): null|array
     {
         return $this->content;
     }
@@ -315,8 +248,12 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationContent $content
      * @return static
      */
-    public function addContent(FHIRMedicationContent $content = null)
+    public function addContent(null|FHIRMedicationContent $content = null): self
     {
+        if (null === $content) {
+            $content = new FHIRMedicationContent();
+        }
+        $this->_trackValueAdded();
         $this->content[] = $content;
         return $this;
     }
@@ -330,9 +267,12 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationContent[] $content
      * @return static
      */
-    public function setContent(array $content = [])
+    public function setContent(array $content = []): self
     {
-        $this->content = [];
+        if ([] !== $this->content) {
+            $this->_trackValuesRemoved(count($this->content));
+            $this->content = [];
+        }
         if ([] === $content) {
             return $this;
         }
@@ -347,14 +287,77 @@ class FHIRMedicationPackage extends FHIRBackboneElement
     }
 
     /**
+     * This resource is primarily used for the identification and definition of a
+     * medication. It covers the ingredients and the packaging for a medication.
+     *
+     * Information about a group of medication produced or packaged from one production
+     * run.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch[]
+     */
+    public function getBatch(): null|array
+    {
+        return $this->batch;
+    }
+
+    /**
+     * This resource is primarily used for the identification and definition of a
+     * medication. It covers the ingredients and the packaging for a medication.
+     *
+     * Information about a group of medication produced or packaged from one production
+     * run.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch $batch
+     * @return static
+     */
+    public function addBatch(null|FHIRMedicationBatch $batch = null): self
+    {
+        if (null === $batch) {
+            $batch = new FHIRMedicationBatch();
+        }
+        $this->_trackValueAdded();
+        $this->batch[] = $batch;
+        return $this;
+    }
+
+    /**
+     * This resource is primarily used for the identification and definition of a
+     * medication. It covers the ingredients and the packaging for a medication.
+     *
+     * Information about a group of medication produced or packaged from one production
+     * run.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch[] $batch
+     * @return static
+     */
+    public function setBatch(array $batch = []): self
+    {
+        if ([] !== $this->batch) {
+            $this->_trackValuesRemoved(count($this->batch));
+            $this->batch = [];
+        }
+        if ([] === $batch) {
+            return $this;
+        }
+        foreach($batch as $v) {
+            if ($v instanceof FHIRMedicationBatch) {
+                $this->addBatch($v);
+            } else {
+                $this->addBatch(new FHIRMedicationBatch($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
      * Returns the validation rules that this type's fields must comply with to be considered "valid"
      * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -363,17 +366,10 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if ([] !== ($vs = $this->getBatch())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_BATCH, $i)] = $fieldErrs;
-                }
-            }
-        }
         if (null !== ($v = $this->getContainer())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_CONTAINER] = $fieldErrs;
@@ -386,15 +382,10 @@ class FHIRMedicationPackage extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_BATCH])) {
-            $v = $this->getBatch();
-            foreach($validationRules[self::FIELD_BATCH] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEDICATION_DOT_PACKAGE, self::FIELD_BATCH, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_BATCH])) {
-                        $errs[self::FIELD_BATCH] = [];
-                    }
-                    $errs[self::FIELD_BATCH][$rule] = $err;
+        if ([] !== ($vs = $this->getBatch())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_BATCH, $i)] = $fieldErrs;
                 }
             }
         }
@@ -419,6 +410,18 @@ class FHIRMedicationPackage extends FHIRBackboneElement
                         $errs[self::FIELD_CONTENT] = [];
                     }
                     $errs[self::FIELD_CONTENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_BATCH])) {
+            $v = $this->getBatch();
+            foreach($validationRules[self::FIELD_BATCH] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_MEDICATION_DOT_PACKAGE, self::FIELD_BATCH, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_BATCH])) {
+                        $errs[self::FIELD_BATCH] = [];
+                    }
+                    $errs[self::FIELD_BATCH][$rule] = $err;
                 }
             }
         }
@@ -462,132 +465,168 @@ class FHIRMedicationPackage extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationPackage $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationPackage
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRMedicationPackage::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMedicationPackage::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRMedicationPackage;
-        } elseif (!is_object($type) || !($type instanceof FHIRMedicationPackage)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMedicationPackage)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMedicationPackage::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationPackage or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_CONTAINER === $n->nodeName) {
+                $type->setContainer(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTENT === $n->nodeName) {
+                $type->addContent(FHIRMedicationContent::xmlUnserialize($n));
+            } elseif (self::FIELD_BATCH === $n->nodeName) {
+                $type->addBatch(FHIRMedicationBatch::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->batch)) {
-            foreach($children->batch as $child) {
-                $type->addBatch(FHIRMedicationBatch::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->container)) {
-            $type->setContainer(FHIRCodeableConcept::xmlUnserialize($children->container));
-        }
-        if (isset($children->content)) {
-            foreach($children->content as $child) {
-                $type->addContent(FHIRMedicationContent::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if ([] !== ($vs = $this->getBatch())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_BATCH, null, $v->_getFHIRXMLNamespace()));
-            }
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('MedicationPackage'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
+        parent::xmlSerialize($element);
         if (null !== ($v = $this->getContainer())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CONTAINER, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_CONTAINER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getContent())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_CONTENT, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_CONTENT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        return $sxe;
+        if ([] !== ($vs = $this->getBatch())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_BATCH);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if ([] !== ($vs = $this->getBatch())) {
-            $a[self::FIELD_BATCH] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_BATCH][] = $v;
-            }
-        }
+        $out = parent::jsonSerialize();
         if (null !== ($v = $this->getContainer())) {
-            $a[self::FIELD_CONTAINER] = $v;
+            $out->{self::FIELD_CONTAINER} = $v;
         }
         if ([] !== ($vs = $this->getContent())) {
-            $a[self::FIELD_CONTENT] = [];
+            $out->{self::FIELD_CONTENT} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_CONTENT][] = $v;
+                $out->{self::FIELD_CONTENT}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if ([] !== ($vs = $this->getBatch())) {
+            $out->{self::FIELD_BATCH} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_BATCH}[] = $v;
+            }
         }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

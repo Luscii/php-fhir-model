@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAccount;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAccount;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,12 +62,18 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAccount;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRBooleanPrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\STU3\FHIRElement\FHIRBoolean;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRPeriod;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A financial tool for tracking value accrued for a particular purpose. In the
@@ -80,24 +86,11 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ACCOUNT_DOT_GUARANTOR;
+
+    const FIELD_PARTY = 'party';
     const FIELD_ON_HOLD = 'onHold';
     const FIELD_ON_HOLD_EXT = '_onHold';
-    const FIELD_PARTY = 'party';
     const FIELD_PERIOD = 'period';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A guarantor may be placed on credit hold or otherwise have their role
-     * temporarily suspended.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
-     */
-    protected $onHold = null;
 
     /**
      * A reference from one resource to another.
@@ -108,8 +101,17 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $party = null;
-
+    protected null|FHIRReference $party = null;
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A guarantor may be placed on credit hold or otherwise have their role
+     * temporarily suspended.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     */
+    protected null|FHIRBoolean $onHold = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -119,41 +121,35 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    protected $period = null;
+    protected null|FHIRPeriod $period = null;
 
     /**
      * Validation map for fields in type Account.Guarantor
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRAccountGuarantor Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRAccountGuarantor::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_PARTY])) {
+            if ($data[self::FIELD_PARTY] instanceof FHIRReference) {
+                $this->setParty($data[self::FIELD_PARTY]);
+            } else {
+                $this->setParty(new FHIRReference($data[self::FIELD_PARTY]));
+            }
+        }
         if (isset($data[self::FIELD_ON_HOLD]) || isset($data[self::FIELD_ON_HOLD_EXT])) {
-            if (isset($data[self::FIELD_ON_HOLD])) {
-                $value = $data[self::FIELD_ON_HOLD];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ON_HOLD_EXT]) && is_array($data[self::FIELD_ON_HOLD_EXT])) {
-                $ext = $data[self::FIELD_ON_HOLD_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_ON_HOLD] ?? null;
+            $ext = (isset($data[self::FIELD_ON_HOLD_EXT]) && is_array($data[self::FIELD_ON_HOLD_EXT])) ? $data[self::FIELD_ON_HOLD_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRBoolean) {
                     $this->setOnHold($value);
@@ -162,15 +158,8 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
                 } else {
                     $this->setOnHold(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setOnHold(new FHIRBoolean($ext));
-            }
-        }
-        if (isset($data[self::FIELD_PARTY])) {
-            if ($data[self::FIELD_PARTY] instanceof FHIRReference) {
-                $this->setParty($data[self::FIELD_PARTY]);
-            } else {
-                $this->setParty(new FHIRReference($data[self::FIELD_PARTY]));
             }
         }
         if (isset($data[self::FIELD_PERIOD])) {
@@ -182,62 +171,13 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<AccountGuarantor{$xmlns}></AccountGuarantor>";
-    }
-
-    /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A guarantor may be placed on credit hold or otherwise have their role
-     * temporarily suspended.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
-     */
-    public function getOnHold()
-    {
-        return $this->onHold;
-    }
-
-    /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A guarantor may be placed on credit hold or otherwise have their role
-     * temporarily suspended.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $onHold
-     * @return static
-     */
-    public function setOnHold($onHold = null)
-    {
-        if (null === $onHold) {
-            $this->onHold = null;
-            return $this;
-        }
-        if ($onHold instanceof FHIRBoolean) {
-            $this->onHold = $onHold;
-            return $this;
-        }
-        $this->onHold = new FHIRBoolean($onHold);
-        return $this;
     }
 
     /**
@@ -249,7 +189,7 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getParty()
+    public function getParty(): null|FHIRReference
     {
         return $this->party;
     }
@@ -264,9 +204,47 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $party
      * @return static
      */
-    public function setParty(FHIRReference $party = null)
+    public function setParty(null|FHIRReference $party = null): self
     {
+        if (null === $party) {
+            $party = new FHIRReference();
+        }
+        $this->_trackValueSet($this->party, $party);
         $this->party = $party;
+        return $this;
+    }
+
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A guarantor may be placed on credit hold or otherwise have their role
+     * temporarily suspended.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     */
+    public function getOnHold(): null|FHIRBoolean
+    {
+        return $this->onHold;
+    }
+
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A guarantor may be placed on credit hold or otherwise have their role
+     * temporarily suspended.
+     *
+     * @param null|string|bool|\HL7\FHIR\STU3\FHIRBooleanPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $onHold
+     * @return static
+     */
+    public function setOnHold(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $onHold = null): self
+    {
+        if (null !== $onHold && !($onHold instanceof FHIRBoolean)) {
+            $onHold = new FHIRBoolean($onHold);
+        }
+        $this->_trackValueSet($this->onHold, $onHold);
+        $this->onHold = $onHold;
         return $this;
     }
 
@@ -279,7 +257,7 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function getPeriod()
+    public function getPeriod(): null|FHIRPeriod
     {
         return $this->period;
     }
@@ -294,8 +272,12 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
      * @return static
      */
-    public function setPeriod(FHIRPeriod $period = null)
+    public function setPeriod(null|FHIRPeriod $period = null): self
     {
+        if (null === $period) {
+            $period = new FHIRPeriod();
+        }
+        $this->_trackValueSet($this->period, $period);
         $this->period = $period;
         return $this;
     }
@@ -306,9 +288,9 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -317,35 +299,23 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (null !== ($v = $this->getOnHold())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_ON_HOLD] = $fieldErrs;
-            }
-        }
         if (null !== ($v = $this->getParty())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_PARTY] = $fieldErrs;
             }
         }
+        if (null !== ($v = $this->getOnHold())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ON_HOLD] = $fieldErrs;
+            }
+        }
         if (null !== ($v = $this->getPeriod())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_PERIOD] = $fieldErrs;
-            }
-        }
-        if (isset($validationRules[self::FIELD_ON_HOLD])) {
-            $v = $this->getOnHold();
-            foreach($validationRules[self::FIELD_ON_HOLD] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ACCOUNT_DOT_GUARANTOR, self::FIELD_ON_HOLD, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ON_HOLD])) {
-                        $errs[self::FIELD_ON_HOLD] = [];
-                    }
-                    $errs[self::FIELD_ON_HOLD][$rule] = $err;
-                }
             }
         }
         if (isset($validationRules[self::FIELD_PARTY])) {
@@ -357,6 +327,18 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
                         $errs[self::FIELD_PARTY] = [];
                     }
                     $errs[self::FIELD_PARTY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ON_HOLD])) {
+            $v = $this->getOnHold();
+            foreach($validationRules[self::FIELD_ON_HOLD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ACCOUNT_DOT_GUARANTOR, self::FIELD_ON_HOLD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ON_HOLD])) {
+                        $errs[self::FIELD_ON_HOLD] = [];
+                    }
+                    $errs[self::FIELD_ON_HOLD][$rule] = $err;
                 }
             }
         }
@@ -412,120 +394,162 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAccount\FHIRAccountGuarantor $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAccount\FHIRAccountGuarantor
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRAccountGuarantor::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRAccountGuarantor::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRAccountGuarantor;
-        } elseif (!is_object($type) || !($type instanceof FHIRAccountGuarantor)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRAccountGuarantor)) {
             throw new \RuntimeException(sprintf(
-                'FHIRAccountGuarantor::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAccount\FHIRAccountGuarantor or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_PARTY === $n->nodeName) {
+                $type->setParty(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_ON_HOLD === $n->nodeName) {
+                $type->setOnHold(FHIRBoolean::xmlUnserialize($n));
+            } elseif (self::FIELD_PERIOD === $n->nodeName) {
+                $type->setPeriod(FHIRPeriod::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->onHold)) {
-            $type->setOnHold(FHIRBoolean::xmlUnserialize($children->onHold));
-        }
-        if (isset($attributes->onHold)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_ON_HOLD);
+        if (null !== $n) {
             $pt = $type->getOnHold();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->onHold);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setOnHold((string)$attributes->onHold);
+                $type->setOnHold($n->nodeValue);
             }
         }
-        if (isset($children->party)) {
-            $type->setParty(FHIRReference::xmlUnserialize($children->party));
-        }
-        if (isset($children->period)) {
-            $type->setPeriod(FHIRPeriod::xmlUnserialize($children->period));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getOnHold())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ON_HOLD, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('AccountGuarantor'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
+        parent::xmlSerialize($element);
         if (null !== ($v = $this->getParty())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PARTY, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_PARTY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getOnHold())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ON_HOLD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getPeriod())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PERIOD, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_PERIOD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getParty())) {
+            $out->{self::FIELD_PARTY} = $v;
+        }
         if (null !== ($v = $this->getOnHold())) {
-            $a[self::FIELD_ON_HOLD] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRBoolean::FIELD_VALUE]);
-                $a[self::FIELD_ON_HOLD_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ON_HOLD} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRBoolean::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ON_HOLD_EXT} = $ext;
             }
         }
-        if (null !== ($v = $this->getParty())) {
-            $a[self::FIELD_PARTY] = $v;
-        }
         if (null !== ($v = $this->getPeriod())) {
-            $a[self::FIELD_PERIOD] = $v;
+            $out->{self::FIELD_PERIOD} = $v;
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

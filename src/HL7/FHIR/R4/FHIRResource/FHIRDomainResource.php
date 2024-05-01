@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,17 +62,23 @@ namespace HL7\FHIR\R4\FHIRResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
 use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRId;
 use HL7\FHIR\R4\FHIRElement\FHIRMeta;
 use HL7\FHIR\R4\FHIRElement\FHIRNarrative;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A resource that includes narrative, extensions, and contained resources.
@@ -84,13 +90,11 @@ class FHIRDomainResource extends FHIRResource
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE;
+
     const FIELD_TEXT = 'text';
     const FIELD_CONTAINED = 'contained';
     const FIELD_EXTENSION = 'extension';
     const FIELD_MODIFIER_EXTENSION = 'modifierExtension';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A human-readable summary of the resource conveying the essential clinical and
@@ -107,17 +111,15 @@ class FHIRDomainResource extends FHIRResource
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRNarrative
      */
-    protected ?FHIRNarrative $text = null;
-
+    protected null|FHIRNarrative $text = null;
     /**
      * These resources do not have an independent existence apart from the resource
      * that contains them - they cannot be identified independently, and nor can they
      * have their own independent transaction scope.
      *
-     * @var null|\HL7\FHIR\R4\PHPFHIRContainedTypeInterface[]
+     * @var null|\HL7\FHIR\R4\[]|PHPFHIRContainedTypeInterface[]
      */
-    protected ?array $contained = [];
-
+    protected null|array $contained = [];
     /**
      * Optional Extension Element - found in all resources.
      * If the element is present, it must have a value for at least one of the defined
@@ -131,8 +133,7 @@ class FHIRDomainResource extends FHIRResource
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRExtension[]
      */
-    protected ?array $extension = [];
-
+    protected null|array $extension = [];
     /**
      * Optional Extension Element - found in all resources.
      * If the element is present, it must have a value for at least one of the defined
@@ -153,28 +154,23 @@ class FHIRDomainResource extends FHIRResource
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRExtension[]
      */
-    protected ?array $modifierExtension = [];
+    protected null|array $modifierExtension = [];
 
     /**
      * Validation map for fields in type DomainResource
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRDomainResource Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRDomainResource::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_TEXT])) {
@@ -240,24 +236,13 @@ class FHIRDomainResource extends FHIRResource
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<DomainResource{$xmlns}></DomainResource>";
     }
 
     /**
@@ -275,7 +260,7 @@ class FHIRDomainResource extends FHIRResource
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRNarrative
      */
-    public function getText(): ?FHIRNarrative
+    public function getText(): null|FHIRNarrative
     {
         return $this->text;
     }
@@ -296,8 +281,11 @@ class FHIRDomainResource extends FHIRResource
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRNarrative $text
      * @return static
      */
-    public function setText(?FHIRNarrative $text = null): object
+    public function setText(null|FHIRNarrative $text = null): self
     {
+        if (null === $text) {
+            $text = new FHIRNarrative();
+        }
         $this->_trackValueSet($this->text, $text);
         $this->text = $text;
         return $this;
@@ -308,9 +296,9 @@ class FHIRDomainResource extends FHIRResource
      * that contains them - they cannot be identified independently, and nor can they
      * have their own independent transaction scope.
      *
-     * @return null|\HL7\FHIR\R4\PHPFHIRContainedTypeInterface[]
+     * @return null|\HL7\FHIR\R4\[]|PHPFHIRContainedTypeInterface[]
      */
-    public function getContained(): ?array
+    public function getContained(): null|array
     {
         return $this->contained;
     }
@@ -323,7 +311,7 @@ class FHIRDomainResource extends FHIRResource
      * @param null|\HL7\FHIR\R4\PHPFHIRContainedTypeInterface $contained
      * @return static
      */
-    public function addContained(?PHPFHIRContainedTypeInterface $contained = null): object
+    public function addContained(?PHPFHIRContainedTypeInterface $contained = null): self
     {
         $this->_trackValueAdded();
         $this->contained[] = $contained;
@@ -338,7 +326,7 @@ class FHIRDomainResource extends FHIRResource
      * @param \HL7\FHIR\R4\PHPFHIRContainedTypeInterface[] $contained
      * @return static
      */
-    public function setContained(array $contained = []): object
+    public function setContained(array $contained = []): self
     {
         if ([] !== $this->contained) {
             $this->_trackValuesRemoved(count($this->contained));
@@ -392,7 +380,7 @@ class FHIRDomainResource extends FHIRResource
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRExtension[]
      */
-    public function getExtension(): ?array
+    public function getExtension(): null|array
     {
         return $this->extension;
     }
@@ -411,8 +399,11 @@ class FHIRDomainResource extends FHIRResource
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRExtension $extension
      * @return static
      */
-    public function addExtension(?FHIRExtension $extension = null): object
+    public function addExtension(null|FHIRExtension $extension = null): self
     {
+        if (null === $extension) {
+            $extension = new FHIRExtension();
+        }
         $this->_trackValueAdded();
         $this->extension[] = $extension;
         return $this;
@@ -432,7 +423,7 @@ class FHIRDomainResource extends FHIRResource
      * @param \HL7\FHIR\R4\FHIRElement\FHIRExtension[] $extension
      * @return static
      */
-    public function setExtension(array $extension = []): object
+    public function setExtension(array $extension = []): self
     {
         if ([] !== $this->extension) {
             $this->_trackValuesRemoved(count($this->extension));
@@ -471,7 +462,7 @@ class FHIRDomainResource extends FHIRResource
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRExtension[]
      */
-    public function getModifierExtension(): ?array
+    public function getModifierExtension(): null|array
     {
         return $this->modifierExtension;
     }
@@ -497,8 +488,11 @@ class FHIRDomainResource extends FHIRResource
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRExtension $modifierExtension
      * @return static
      */
-    public function addModifierExtension(?FHIRExtension $modifierExtension = null): object
+    public function addModifierExtension(null|FHIRExtension $modifierExtension = null): self
     {
+        if (null === $modifierExtension) {
+            $modifierExtension = new FHIRExtension();
+        }
         $this->_trackValueAdded();
         $this->modifierExtension[] = $modifierExtension;
         return $this;
@@ -525,7 +519,7 @@ class FHIRDomainResource extends FHIRResource
      * @param \HL7\FHIR\R4\FHIRElement\FHIRExtension[] $modifierExtension
      * @return static
      */
-    public function setModifierExtension(array $modifierExtension = []): object
+    public function setModifierExtension(array $modifierExtension = []): self
     {
         if ([] !== $this->modifierExtension) {
             $this->_trackValuesRemoved(count($this->modifierExtension));
@@ -552,7 +546,7 @@ class FHIRDomainResource extends FHIRResource
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -693,36 +687,48 @@ class FHIRDomainResource extends FHIRResource
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRDomainResource::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRDomainResource::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRDomainResource(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRDomainResource)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRDomainResource)) {
             throw new \RuntimeException(sprintf(
-                'FHIRDomainResource::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -784,17 +790,25 @@ class FHIRDomainResource extends FHIRResource
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('DomainResource'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getText())) {
@@ -813,7 +827,8 @@ class FHIRDomainResource extends FHIRResource
                 $e2->appendChild($e3);
                 $v->xmlSerialize($e3);
             }
-        }        if ([] !== ($vs = $this->getExtension())) {
+        }
+        if ([] !== ($vs = $this->getExtension())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
@@ -839,7 +854,7 @@ class FHIRDomainResource extends FHIRResource
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getText())) {
@@ -875,7 +890,6 @@ class FHIRDomainResource extends FHIRResource
 
         return $out;
     }
-
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,10 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemConcept;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemFilter;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemProperty;
@@ -84,11 +88,19 @@ use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUsageContext;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUnsignedIntPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The CodeSystem resource is used to declare the existence of and describe a code
@@ -103,6 +115,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CODE_SYSTEM;
+
     const FIELD_URL = 'url';
     const FIELD_URL_EXT = '_url';
     const FIELD_IDENTIFIER = 'identifier';
@@ -149,9 +162,6 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
     const FIELD_PROPERTY = 'property';
     const FIELD_CONCEPT = 'concept';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -165,10 +175,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * the same when the code system is stored on different servers. This is used in
      * [Coding](datatypes.html#Coding).system.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $url = null;
-
+    protected null|FHIRUri $url = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -181,8 +190,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -196,10 +204,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * be placed in a lexicographical sequence. This is used in
      * [Coding](datatypes.html#Coding).version.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $version = null;
-
+    protected null|FHIRString $version = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -209,10 +216,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * as an identifier for the module by machine processing applications such as code
      * generation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -220,10 +226,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * A short, descriptive, user-friendly title for the code system.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $title = null;
-
+    protected null|FHIRString $title = null;
     /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -232,8 +237,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    protected ?FHIRPublicationStatus $status = null;
-
+    protected null|FHIRPublicationStatus $status = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -242,10 +246,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $experimental = null;
-
+    protected null|FHIRBoolean $experimental = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -259,10 +262,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * changes. In addition, it should change when the substantive content of the code
      * system changes.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -270,10 +272,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The name of the organization or individual that published the code system.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $publisher = null;
-
+    protected null|FHIRString $publisher = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -284,8 +285,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $contact = [];
-
+    protected null|array $contact = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -298,10 +298,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * A free text natural language description of the code system from a consumer's
      * perspective.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $description = null;
-
+    protected null|FHIRMarkdown $description = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -318,8 +317,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    protected ?array $useContext = [];
-
+    protected null|array $useContext = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -330,8 +328,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $jurisdiction = [];
-
+    protected null|array $jurisdiction = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -344,10 +341,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * Explanation of why this code system is needed and why it has been designed as it
      * has.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $purpose = null;
-
+    protected null|FHIRMarkdown $purpose = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -361,10 +357,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * statements are generally legal restrictions on the use and publishing of the
      * code system.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $copyright = null;
-
+    protected null|FHIRMarkdown $copyright = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -372,10 +367,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * If code comparison is case sensitive when codes within this system are compared
      * to each other.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $caseSensitive = null;
-
+    protected null|FHIRBoolean $caseSensitive = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -384,10 +378,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * Canonical reference to the value set that contains the entire code system.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $valueSet = null;
-
+    protected null|FHIRCanonical $valueSet = null;
     /**
      * The meaning of the hierarchy of concepts in a code system.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -396,18 +389,16 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeSystemHierarchyMeaning
      */
-    protected ?FHIRCodeSystemHierarchyMeaning $hierarchyMeaning = null;
-
+    protected null|FHIRCodeSystemHierarchyMeaning $hierarchyMeaning = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The code system defines a compositional (post-coordination) grammar.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $compositional = null;
-
+    protected null|FHIRBoolean $compositional = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -416,10 +407,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * permanence across versions. If true, a version must be specified when
      * referencing this code system.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $versionNeeded = null;
-
+    protected null|FHIRBoolean $versionNeeded = null;
     /**
      * The extent of the content of the code system (the concepts and codes it defines)
      * are represented in a code system resource.
@@ -430,8 +420,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeSystemContentMode
      */
-    protected ?FHIRCodeSystemContentMode $content = null;
-
+    protected null|FHIRCodeSystemContentMode $content = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -441,10 +430,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * The canonical URL of the code system that this code system supplement is adding
      * designations and properties to.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $supplements = null;
-
+    protected null|FHIRCanonical $supplements = null;
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -454,10 +442,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * has a compositional grammar, the basis of this count is defined by the system
      * steward.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    protected ?FHIRUnsignedInt $count = null;
-
+    protected null|FHIRUnsignedInt $count = null;
     /**
      * The CodeSystem resource is used to declare the existence of and describe a code
      * system or code system supplement and its key properties, and optionally define a
@@ -468,8 +455,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemFilter[]
      */
-    protected ?array $filter = [];
-
+    protected null|array $filter = [];
     /**
      * The CodeSystem resource is used to declare the existence of and describe a code
      * system or code system supplement and its key properties, and optionally define a
@@ -480,8 +466,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemProperty[]
      */
-    protected ?array $property = [];
-
+    protected null|array $property = [];
     /**
      * The CodeSystem resource is used to declare the existence of and describe a code
      * system or code system supplement and its key properties, and optionally define a
@@ -493,28 +478,23 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemConcept[]
      */
-    protected ?array $concept = [];
+    protected null|array $concept = [];
 
     /**
      * Validation map for fields in type CodeSystem
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRCodeSystem Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRCodeSystem::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_URL]) || isset($data[self::FIELD_URL_EXT])) {
@@ -930,6 +910,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
         }
     }
 
+
     /**
      * @return string
      */
@@ -938,17 +919,6 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<CodeSystem{$xmlns}></CodeSystem>";
-    }
     /**
      * @return string
      */
@@ -971,9 +941,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * the same when the code system is stored on different servers. This is used in
      * [Coding](datatypes.html#Coding).system.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getUrl(): ?FHIRUri
+    public function getUrl(): null|FHIRUri
     {
         return $this->url;
     }
@@ -991,10 +961,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * the same when the code system is stored on different servers. This is used in
      * [Coding](datatypes.html#Coding).system.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
      * @return static
      */
-    public function setUrl($url = null): object
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
@@ -1016,7 +986,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -1034,8 +1004,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -1054,7 +1027,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -1086,9 +1059,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * be placed in a lexicographical sequence. This is used in
      * [Coding](datatypes.html#Coding).version.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getVersion(): ?FHIRString
+    public function getVersion(): null|FHIRString
     {
         return $this->version;
     }
@@ -1106,10 +1079,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * be placed in a lexicographical sequence. This is used in
      * [Coding](datatypes.html#Coding).version.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
      * @return static
      */
-    public function setVersion($version = null): object
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
@@ -1128,9 +1101,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * as an identifier for the module by machine processing applications such as code
      * generation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -1144,10 +1117,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * as an identifier for the module by machine processing applications such as code
      * generation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -1164,9 +1137,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * A short, descriptive, user-friendly title for the code system.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTitle(): ?FHIRString
+    public function getTitle(): null|FHIRString
     {
         return $this->title;
     }
@@ -1178,10 +1151,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * A short, descriptive, user-friendly title for the code system.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
      * @return static
      */
-    public function setTitle($title = null): object
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
@@ -1199,7 +1172,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    public function getStatus(): ?FHIRPublicationStatus
+    public function getStatus(): null|FHIRPublicationStatus
     {
         return $this->status;
     }
@@ -1213,8 +1186,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus $status
      * @return static
      */
-    public function setStatus(?FHIRPublicationStatus $status = null): object
+    public function setStatus(null|FHIRPublicationStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRPublicationStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -1228,9 +1204,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getExperimental(): ?FHIRBoolean
+    public function getExperimental(): null|FHIRBoolean
     {
         return $this->experimental;
     }
@@ -1243,10 +1219,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
      * @return static
      */
-    public function setExperimental($experimental = null): object
+    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null): self
     {
         if (null !== $experimental && !($experimental instanceof FHIRBoolean)) {
             $experimental = new FHIRBoolean($experimental);
@@ -1269,9 +1245,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * changes. In addition, it should change when the substantive content of the code
      * system changes.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDate(): ?FHIRDateTime
+    public function getDate(): null|FHIRDateTime
     {
         return $this->date;
     }
@@ -1289,10 +1265,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * changes. In addition, it should change when the substantive content of the code
      * system changes.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
      * @return static
      */
-    public function setDate($date = null): object
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
@@ -1309,9 +1285,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The name of the organization or individual that published the code system.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPublisher(): ?FHIRString
+    public function getPublisher(): null|FHIRString
     {
         return $this->publisher;
     }
@@ -1323,10 +1299,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The name of the organization or individual that published the code system.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
      * @return static
      */
-    public function setPublisher($publisher = null): object
+    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null): self
     {
         if (null !== $publisher && !($publisher instanceof FHIRString)) {
             $publisher = new FHIRString($publisher);
@@ -1346,7 +1322,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getContact(): ?array
+    public function getContact(): null|array
     {
         return $this->contact;
     }
@@ -1362,8 +1338,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $contact
      * @return static
      */
-    public function addContact(?FHIRContactDetail $contact = null): object
+    public function addContact(null|FHIRContactDetail $contact = null): self
     {
+        if (null === $contact) {
+            $contact = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
         return $this;
@@ -1380,7 +1359,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $contact
      * @return static
      */
-    public function setContact(array $contact = []): object
+    public function setContact(array $contact = []): self
     {
         if ([] !== $this->contact) {
             $this->_trackValuesRemoved(count($this->contact));
@@ -1411,9 +1390,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * A free text natural language description of the code system from a consumer's
      * perspective.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDescription(): ?FHIRMarkdown
+    public function getDescription(): null|FHIRMarkdown
     {
         return $this->description;
     }
@@ -1430,10 +1409,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * A free text natural language description of the code system from a consumer's
      * perspective.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
@@ -1459,7 +1438,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    public function getUseContext(): ?array
+    public function getUseContext(): null|array
     {
         return $this->useContext;
     }
@@ -1481,8 +1460,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $useContext
      * @return static
      */
-    public function addUseContext(?FHIRUsageContext $useContext = null): object
+    public function addUseContext(null|FHIRUsageContext $useContext = null): self
     {
+        if (null === $useContext) {
+            $useContext = new FHIRUsageContext();
+        }
         $this->_trackValueAdded();
         $this->useContext[] = $useContext;
         return $this;
@@ -1505,7 +1487,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUsageContext[] $useContext
      * @return static
      */
-    public function setUseContext(array $useContext = []): object
+    public function setUseContext(array $useContext = []): self
     {
         if ([] !== $this->useContext) {
             $this->_trackValuesRemoved(count($this->useContext));
@@ -1534,7 +1516,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getJurisdiction(): ?array
+    public function getJurisdiction(): null|array
     {
         return $this->jurisdiction;
     }
@@ -1550,8 +1532,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $jurisdiction
      * @return static
      */
-    public function addJurisdiction(?FHIRCodeableConcept $jurisdiction = null): object
+    public function addJurisdiction(null|FHIRCodeableConcept $jurisdiction = null): self
     {
+        if (null === $jurisdiction) {
+            $jurisdiction = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
         return $this;
@@ -1568,7 +1553,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $jurisdiction
      * @return static
      */
-    public function setJurisdiction(array $jurisdiction = []): object
+    public function setJurisdiction(array $jurisdiction = []): self
     {
         if ([] !== $this->jurisdiction) {
             $this->_trackValuesRemoved(count($this->jurisdiction));
@@ -1599,9 +1584,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * Explanation of why this code system is needed and why it has been designed as it
      * has.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getPurpose(): ?FHIRMarkdown
+    public function getPurpose(): null|FHIRMarkdown
     {
         return $this->purpose;
     }
@@ -1618,10 +1603,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * Explanation of why this code system is needed and why it has been designed as it
      * has.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
      * @return static
      */
-    public function setPurpose($purpose = null): object
+    public function setPurpose(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $purpose = null): self
     {
         if (null !== $purpose && !($purpose instanceof FHIRMarkdown)) {
             $purpose = new FHIRMarkdown($purpose);
@@ -1644,9 +1629,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * statements are generally legal restrictions on the use and publishing of the
      * code system.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getCopyright(): ?FHIRMarkdown
+    public function getCopyright(): null|FHIRMarkdown
     {
         return $this->copyright;
     }
@@ -1664,10 +1649,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * statements are generally legal restrictions on the use and publishing of the
      * code system.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
      * @return static
      */
-    public function setCopyright($copyright = null): object
+    public function setCopyright(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $copyright = null): self
     {
         if (null !== $copyright && !($copyright instanceof FHIRMarkdown)) {
             $copyright = new FHIRMarkdown($copyright);
@@ -1684,9 +1669,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * If code comparison is case sensitive when codes within this system are compared
      * to each other.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getCaseSensitive(): ?FHIRBoolean
+    public function getCaseSensitive(): null|FHIRBoolean
     {
         return $this->caseSensitive;
     }
@@ -1698,10 +1683,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * If code comparison is case sensitive when codes within this system are compared
      * to each other.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $caseSensitive
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $caseSensitive
      * @return static
      */
-    public function setCaseSensitive($caseSensitive = null): object
+    public function setCaseSensitive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $caseSensitive = null): self
     {
         if (null !== $caseSensitive && !($caseSensitive instanceof FHIRBoolean)) {
             $caseSensitive = new FHIRBoolean($caseSensitive);
@@ -1719,9 +1704,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * Canonical reference to the value set that contains the entire code system.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getValueSet(): ?FHIRCanonical
+    public function getValueSet(): null|FHIRCanonical
     {
         return $this->valueSet;
     }
@@ -1734,10 +1719,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * Canonical reference to the value set that contains the entire code system.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $valueSet
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $valueSet
      * @return static
      */
-    public function setValueSet($valueSet = null): object
+    public function setValueSet(null|string|FHIRCanonicalPrimitive|FHIRCanonical $valueSet = null): self
     {
         if (null !== $valueSet && !($valueSet instanceof FHIRCanonical)) {
             $valueSet = new FHIRCanonical($valueSet);
@@ -1755,7 +1740,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeSystemHierarchyMeaning
      */
-    public function getHierarchyMeaning(): ?FHIRCodeSystemHierarchyMeaning
+    public function getHierarchyMeaning(): null|FHIRCodeSystemHierarchyMeaning
     {
         return $this->hierarchyMeaning;
     }
@@ -1769,8 +1754,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeSystemHierarchyMeaning $hierarchyMeaning
      * @return static
      */
-    public function setHierarchyMeaning(?FHIRCodeSystemHierarchyMeaning $hierarchyMeaning = null): object
+    public function setHierarchyMeaning(null|FHIRCodeSystemHierarchyMeaning $hierarchyMeaning = null): self
     {
+        if (null === $hierarchyMeaning) {
+            $hierarchyMeaning = new FHIRCodeSystemHierarchyMeaning();
+        }
         $this->_trackValueSet($this->hierarchyMeaning, $hierarchyMeaning);
         $this->hierarchyMeaning = $hierarchyMeaning;
         return $this;
@@ -1782,9 +1770,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The code system defines a compositional (post-coordination) grammar.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getCompositional(): ?FHIRBoolean
+    public function getCompositional(): null|FHIRBoolean
     {
         return $this->compositional;
     }
@@ -1795,10 +1783,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The code system defines a compositional (post-coordination) grammar.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $compositional
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $compositional
      * @return static
      */
-    public function setCompositional($compositional = null): object
+    public function setCompositional(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $compositional = null): self
     {
         if (null !== $compositional && !($compositional instanceof FHIRBoolean)) {
             $compositional = new FHIRBoolean($compositional);
@@ -1816,9 +1804,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * permanence across versions. If true, a version must be specified when
      * referencing this code system.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getVersionNeeded(): ?FHIRBoolean
+    public function getVersionNeeded(): null|FHIRBoolean
     {
         return $this->versionNeeded;
     }
@@ -1831,10 +1819,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * permanence across versions. If true, a version must be specified when
      * referencing this code system.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $versionNeeded
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $versionNeeded
      * @return static
      */
-    public function setVersionNeeded($versionNeeded = null): object
+    public function setVersionNeeded(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $versionNeeded = null): self
     {
         if (null !== $versionNeeded && !($versionNeeded instanceof FHIRBoolean)) {
             $versionNeeded = new FHIRBoolean($versionNeeded);
@@ -1854,7 +1842,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeSystemContentMode
      */
-    public function getContent(): ?FHIRCodeSystemContentMode
+    public function getContent(): null|FHIRCodeSystemContentMode
     {
         return $this->content;
     }
@@ -1870,8 +1858,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeSystemContentMode $content
      * @return static
      */
-    public function setContent(?FHIRCodeSystemContentMode $content = null): object
+    public function setContent(null|FHIRCodeSystemContentMode $content = null): self
     {
+        if (null === $content) {
+            $content = new FHIRCodeSystemContentMode();
+        }
         $this->_trackValueSet($this->content, $content);
         $this->content = $content;
         return $this;
@@ -1886,9 +1877,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * The canonical URL of the code system that this code system supplement is adding
      * designations and properties to.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getSupplements(): ?FHIRCanonical
+    public function getSupplements(): null|FHIRCanonical
     {
         return $this->supplements;
     }
@@ -1902,10 +1893,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * The canonical URL of the code system that this code system supplement is adding
      * designations and properties to.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $supplements
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $supplements
      * @return static
      */
-    public function setSupplements($supplements = null): object
+    public function setSupplements(null|string|FHIRCanonicalPrimitive|FHIRCanonical $supplements = null): self
     {
         if (null !== $supplements && !($supplements instanceof FHIRCanonical)) {
             $supplements = new FHIRCanonical($supplements);
@@ -1924,9 +1915,9 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * has a compositional grammar, the basis of this count is defined by the system
      * steward.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    public function getCount(): ?FHIRUnsignedInt
+    public function getCount(): null|FHIRUnsignedInt
     {
         return $this->count;
     }
@@ -1940,10 +1931,10 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * has a compositional grammar, the basis of this count is defined by the system
      * steward.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $count
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $count
      * @return static
      */
-    public function setCount($count = null): object
+    public function setCount(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $count = null): self
     {
         if (null !== $count && !($count instanceof FHIRUnsignedInt)) {
             $count = new FHIRUnsignedInt($count);
@@ -1963,7 +1954,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemFilter[]
      */
-    public function getFilter(): ?array
+    public function getFilter(): null|array
     {
         return $this->filter;
     }
@@ -1979,8 +1970,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemFilter $filter
      * @return static
      */
-    public function addFilter(?FHIRCodeSystemFilter $filter = null): object
+    public function addFilter(null|FHIRCodeSystemFilter $filter = null): self
     {
+        if (null === $filter) {
+            $filter = new FHIRCodeSystemFilter();
+        }
         $this->_trackValueAdded();
         $this->filter[] = $filter;
         return $this;
@@ -1997,7 +1991,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemFilter[] $filter
      * @return static
      */
-    public function setFilter(array $filter = []): object
+    public function setFilter(array $filter = []): self
     {
         if ([] !== $this->filter) {
             $this->_trackValuesRemoved(count($this->filter));
@@ -2026,7 +2020,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemProperty[]
      */
-    public function getProperty(): ?array
+    public function getProperty(): null|array
     {
         return $this->property;
     }
@@ -2042,8 +2036,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemProperty $property
      * @return static
      */
-    public function addProperty(?FHIRCodeSystemProperty $property = null): object
+    public function addProperty(null|FHIRCodeSystemProperty $property = null): self
     {
+        if (null === $property) {
+            $property = new FHIRCodeSystemProperty();
+        }
         $this->_trackValueAdded();
         $this->property[] = $property;
         return $this;
@@ -2060,7 +2057,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemProperty[] $property
      * @return static
      */
-    public function setProperty(array $property = []): object
+    public function setProperty(array $property = []): self
     {
         if ([] !== $this->property) {
             $this->_trackValuesRemoved(count($this->property));
@@ -2090,7 +2087,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemConcept[]
      */
-    public function getConcept(): ?array
+    public function getConcept(): null|array
     {
         return $this->concept;
     }
@@ -2107,8 +2104,11 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemConcept $concept
      * @return static
      */
-    public function addConcept(?FHIRCodeSystemConcept $concept = null): object
+    public function addConcept(null|FHIRCodeSystemConcept $concept = null): self
     {
+        if (null === $concept) {
+            $concept = new FHIRCodeSystemConcept();
+        }
         $this->_trackValueAdded();
         $this->concept[] = $concept;
         return $this;
@@ -2126,7 +2126,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCodeSystem\FHIRCodeSystemConcept[] $concept
      * @return static
      */
-    public function setConcept(array $concept = []): object
+    public function setConcept(array $concept = []): self
     {
         if ([] !== $this->concept) {
             $this->_trackValuesRemoved(count($this->concept));
@@ -2153,7 +2153,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2724,36 +2724,48 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRCodeSystem $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRCodeSystem
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRCodeSystem::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRCodeSystem::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRCodeSystem(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRCodeSystem)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRCodeSystem)) {
             throw new \RuntimeException(sprintf(
-                'FHIRCodeSystem::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRCodeSystem or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -3011,17 +3023,25 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('CodeSystem'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getUrl())) {
@@ -3195,7 +3215,7 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getUrl())) {
@@ -3456,7 +3476,6 @@ class FHIRCodeSystem extends FHIRDomainResource implements PHPFHIRContainedTypeI
 
         return $out;
     }
-
 
     /**
      * @return string

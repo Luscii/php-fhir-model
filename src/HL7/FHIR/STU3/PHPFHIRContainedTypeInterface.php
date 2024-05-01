@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,10 +67,11 @@ namespace HL7\FHIR\STU3;
  * This interface is applied to any class that is containable within a 
  * @package \HL7\FHIR\STU3
  */
-interface PHPFHIRContainedTypeInterface extends PHPFHIRTypeInterface {
+interface PHPFHIRContainedTypeInterface extends PHPFHIRTypeInterface
+{
     /**
      * The return from this method is used only when json serializing this type
      * @return string
      */
-    public function _getResourceType();
+    public function _getResourceType(): string;
 }

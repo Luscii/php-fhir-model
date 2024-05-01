@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,67 +66,35 @@ namespace HL7\FHIR\STU3;
  * Interface PHPFHIRTypeInterface
  * @package \HL7\FHIR\STU3
  */
-interface PHPFHIRTypeInterface extends \JsonSerializable {
-    /**
-     * @param array|null $data
-     */
-    public function __construct($data = null);
-
+interface PHPFHIRTypeInterface extends PHPFHIRXmlSerializableInterface, \JsonSerializable
+{
     /**
      * Returns the FHIR name represented by this Type
      * @return string
      */
-    public function _getFHIRTypeName();
-
-    /**
-     * Returns the xml namespace to use for this type when serializing to XML, if applicable.
-     * @return string
-     */
-    public function _getFHIRXMLNamespace();
-
-    /**
-     * Set the XML Namespace to be output when serializing this type to XML
-     * @param string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace($xmlNamespace);
-
-    /**
-     * Returns the base xml element definition for this type
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition();
+    public function _getFHIRTypeName(): string;
 
     /**
      * Must return an associative array in structure ["field" => ["rule" => {constraint}]] to be used during validation
      * @return array
      */
-    public function _getValidationRules();
+    public function _getValidationRules(): array;
 
     /**
      * Must return associative array where, if there are validation errors, the keys are the names of fields within the
      * type that failed validation.  The value must be a string message describing the manner of error
      * @return array
      */
-    public function _getValidationErrors();
+    public function _getValidationErrors(): array;
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
-     * @param null|static $type
-     * @param null|int $libxmlOpts
-     * @return null|static
+     * Must return true if any field on this type is set to a non-empty value
+     * @return bool
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872);
-
-    /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return string|\SimpleXMLElement
-     */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872);
+    public function _isValued(): bool;
 
     /**
      * @return string
      */
-    public function __toString();
+    public function __toString(): string;
 }

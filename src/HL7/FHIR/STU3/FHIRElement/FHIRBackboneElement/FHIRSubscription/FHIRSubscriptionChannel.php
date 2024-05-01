@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSubscription;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSubscription;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,11 +63,17 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSubscription;
  */
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
 use HL7\FHIR\STU3\FHIRElement\FHIRSubscriptionChannelType;
 use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * The subscription resource is used to define a push based subscription from a
@@ -83,18 +89,25 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SUBSCRIPTION_DOT_CHANNEL;
-    const FIELD_ENDPOINT = 'endpoint';
-    const FIELD_ENDPOINT_EXT = '_endpoint';
-    const FIELD_HEADER = 'header';
-    const FIELD_HEADER_EXT = '_header';
-    const FIELD_PAYLOAD = 'payload';
-    const FIELD_PAYLOAD_EXT = '_payload';
+
     const FIELD_TYPE = 'type';
     const FIELD_TYPE_EXT = '_type';
+    const FIELD_ENDPOINT = 'endpoint';
+    const FIELD_ENDPOINT_EXT = '_endpoint';
+    const FIELD_PAYLOAD = 'payload';
+    const FIELD_PAYLOAD_EXT = '_payload';
+    const FIELD_HEADER = 'header';
+    const FIELD_HEADER_EXT = '_header';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
+    /**
+     * The type of method used to execute a subscription.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The type of channel to send notifications on.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRSubscriptionChannelType
+     */
+    protected null|FHIRSubscriptionChannelType $type = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -104,19 +117,7 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
-    protected $endpoint = null;
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Additional headers / information to send as part of the notification.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
-     */
-    protected $header = [];
-
+    protected null|FHIRUri $endpoint = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -128,51 +129,53 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $payload = null;
-
+    protected null|FHIRString $payload = null;
     /**
-     * The type of method used to execute a subscription.
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The type of channel to send notifications on.
+     * Additional headers / information to send as part of the notification.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRSubscriptionChannelType
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    protected $type = null;
+    protected null|array $header = [];
 
     /**
      * Validation map for fields in type Subscription.Channel
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRSubscriptionChannel Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRSubscriptionChannel::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_TYPE]) || isset($data[self::FIELD_TYPE_EXT])) {
+            $value = $data[self::FIELD_TYPE] ?? null;
+            $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT])) ? $data[self::FIELD_TYPE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRSubscriptionChannelType) {
+                    $this->setType($value);
+                } else if (is_array($value)) {
+                    $this->setType(new FHIRSubscriptionChannelType(array_merge($ext, $value)));
+                } else {
+                    $this->setType(new FHIRSubscriptionChannelType([FHIRSubscriptionChannelType::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setType(new FHIRSubscriptionChannelType($ext));
+            }
+        }
         if (isset($data[self::FIELD_ENDPOINT]) || isset($data[self::FIELD_ENDPOINT_EXT])) {
-            if (isset($data[self::FIELD_ENDPOINT])) {
-                $value = $data[self::FIELD_ENDPOINT];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ENDPOINT_EXT]) && is_array($data[self::FIELD_ENDPOINT_EXT])) {
-                $ext = $data[self::FIELD_ENDPOINT_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_ENDPOINT] ?? null;
+            $ext = (isset($data[self::FIELD_ENDPOINT_EXT]) && is_array($data[self::FIELD_ENDPOINT_EXT])) ? $data[self::FIELD_ENDPOINT_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRUri) {
                     $this->setEndpoint($value);
@@ -181,21 +184,28 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
                 } else {
                     $this->setEndpoint(new FHIRUri([FHIRUri::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setEndpoint(new FHIRUri($ext));
             }
         }
+        if (isset($data[self::FIELD_PAYLOAD]) || isset($data[self::FIELD_PAYLOAD_EXT])) {
+            $value = $data[self::FIELD_PAYLOAD] ?? null;
+            $ext = (isset($data[self::FIELD_PAYLOAD_EXT]) && is_array($data[self::FIELD_PAYLOAD_EXT])) ? $data[self::FIELD_PAYLOAD_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setPayload($value);
+                } else if (is_array($value)) {
+                    $this->setPayload(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setPayload(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setPayload(new FHIRString($ext));
+            }
+        }
         if (isset($data[self::FIELD_HEADER]) || isset($data[self::FIELD_HEADER_EXT])) {
-            if (isset($data[self::FIELD_HEADER])) {
-                $value = $data[self::FIELD_HEADER];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_HEADER_EXT]) && is_array($data[self::FIELD_HEADER_EXT])) {
-                $ext = $data[self::FIELD_HEADER_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_HEADER] ?? null;
+            $ext = (isset($data[self::FIELD_HEADER_EXT]) && is_array($data[self::FIELD_HEADER_EXT])) ? $data[self::FIELD_HEADER_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->addHeader($value);
@@ -217,78 +227,53 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
                 } else {
                     $this->addHeader(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 foreach($ext as $iext) {
                     $this->addHeader(new FHIRString($iext));
                 }
             }
         }
-        if (isset($data[self::FIELD_PAYLOAD]) || isset($data[self::FIELD_PAYLOAD_EXT])) {
-            if (isset($data[self::FIELD_PAYLOAD])) {
-                $value = $data[self::FIELD_PAYLOAD];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_PAYLOAD_EXT]) && is_array($data[self::FIELD_PAYLOAD_EXT])) {
-                $ext = $data[self::FIELD_PAYLOAD_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setPayload($value);
-                } else if (is_array($value)) {
-                    $this->setPayload(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setPayload(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setPayload(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_TYPE]) || isset($data[self::FIELD_TYPE_EXT])) {
-            if (isset($data[self::FIELD_TYPE])) {
-                $value = $data[self::FIELD_TYPE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT])) {
-                $ext = $data[self::FIELD_TYPE_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRSubscriptionChannelType) {
-                    $this->setType($value);
-                } else if (is_array($value)) {
-                    $this->setType(new FHIRSubscriptionChannelType(array_merge($ext, $value)));
-                } else {
-                    $this->setType(new FHIRSubscriptionChannelType([FHIRSubscriptionChannelType::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setType(new FHIRSubscriptionChannelType($ext));
-            }
-        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * @return string
+     * The type of method used to execute a subscription.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The type of channel to send notifications on.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRSubscriptionChannelType
      */
-    public function _getFHIRXMLElementDefinition()
+    public function getType(): null|FHIRSubscriptionChannelType
     {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
+        return $this->type;
+    }
+
+    /**
+     * The type of method used to execute a subscription.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The type of channel to send notifications on.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRSubscriptionChannelType $type
+     * @return static
+     */
+    public function setType(null|FHIRSubscriptionChannelType $type = null): self
+    {
+        if (null === $type) {
+            $type = new FHIRSubscriptionChannelType();
         }
-        return "<SubscriptionChannel{$xmlns}></SubscriptionChannel>";
+        $this->_trackValueSet($this->type, $type);
+        $this->type = $type;
+        return $this;
     }
 
     /**
@@ -300,7 +285,7 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
-    public function getEndpoint()
+    public function getEndpoint(): null|FHIRUri
     {
         return $this->endpoint;
     }
@@ -312,84 +297,16 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
      *
      * The uri that describes the actual end-point to send messages to.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUri $endpoint
+     * @param null|string|\HL7\FHIR\STU3\FHIRUriPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRUri $endpoint
      * @return static
      */
-    public function setEndpoint($endpoint = null)
+    public function setEndpoint(null|string|FHIRUriPrimitive|FHIRUri $endpoint = null): self
     {
-        if (null === $endpoint) {
-            $this->endpoint = null;
-            return $this;
+        if (null !== $endpoint && !($endpoint instanceof FHIRUri)) {
+            $endpoint = new FHIRUri($endpoint);
         }
-        if ($endpoint instanceof FHIRUri) {
-            $this->endpoint = $endpoint;
-            return $this;
-        }
-        $this->endpoint = new FHIRUri($endpoint);
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Additional headers / information to send as part of the notification.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
-     */
-    public function getHeader()
-    {
-        return $this->header;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Additional headers / information to send as part of the notification.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $header
-     * @return static
-     */
-    public function addHeader($header = null)
-    {
-        if (null === $header) {
-            $this->header = [];
-            return $this;
-        }
-        if ($header instanceof FHIRString) {
-            $this->header[] = $header;
-            return $this;
-        }
-        $this->header[] = new FHIRString($header);
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Additional headers / information to send as part of the notification.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $header
-     * @return static
-     */
-    public function setHeader(array $header = [])
-    {
-        $this->header = [];
-        if ([] === $header) {
-            return $this;
-        }
-        foreach($header as $v) {
-            if ($v instanceof FHIRString) {
-                $this->addHeader($v);
-            } else {
-                $this->addHeader(new FHIRString($v));
-            }
-        }
+        $this->_trackValueSet($this->endpoint, $endpoint);
+        $this->endpoint = $endpoint;
         return $this;
     }
 
@@ -404,7 +321,7 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getPayload()
+    public function getPayload(): null|FHIRString
     {
         return $this->payload;
     }
@@ -418,48 +335,79 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
      * application/fhir+json. If the payload is not present, then there is no payload
      * in the notification, just a notification.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $payload
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $payload
      * @return static
      */
-    public function setPayload($payload = null)
+    public function setPayload(null|string|FHIRStringPrimitive|FHIRString $payload = null): self
     {
-        if (null === $payload) {
-            $this->payload = null;
-            return $this;
+        if (null !== $payload && !($payload instanceof FHIRString)) {
+            $payload = new FHIRString($payload);
         }
-        if ($payload instanceof FHIRString) {
-            $this->payload = $payload;
-            return $this;
-        }
-        $this->payload = new FHIRString($payload);
+        $this->_trackValueSet($this->payload, $payload);
+        $this->payload = $payload;
         return $this;
     }
 
     /**
-     * The type of method used to execute a subscription.
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The type of channel to send notifications on.
+     * Additional headers / information to send as part of the notification.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRSubscriptionChannelType
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
-    public function getType()
+    public function getHeader(): null|array
     {
-        return $this->type;
+        return $this->header;
     }
 
     /**
-     * The type of method used to execute a subscription.
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The type of channel to send notifications on.
+     * Additional headers / information to send as part of the notification.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRSubscriptionChannelType $type
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $header
      * @return static
      */
-    public function setType(FHIRSubscriptionChannelType $type = null)
+    public function addHeader(null|string|FHIRStringPrimitive|FHIRString $header = null): self
     {
-        $this->type = $type;
+        if (null !== $header && !($header instanceof FHIRString)) {
+            $header = new FHIRString($header);
+        }
+        $this->_trackValueAdded();
+        $this->header[] = $header;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Additional headers / information to send as part of the notification.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $header
+     * @return static
+     */
+    public function setHeader(array $header = []): self
+    {
+        if ([] !== $this->header) {
+            $this->_trackValuesRemoved(count($this->header));
+            $this->header = [];
+        }
+        if ([] === $header) {
+            return $this;
+        }
+        foreach($header as $v) {
+            if ($v instanceof FHIRString) {
+                $this->addHeader($v);
+            } else {
+                $this->addHeader(new FHIRString($v));
+            }
+        }
         return $this;
     }
 
@@ -469,9 +417,9 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -480,13 +428,23 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
         if (null !== ($v = $this->getEndpoint())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_ENDPOINT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPayload())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PAYLOAD] = $fieldErrs;
             }
         }
         if ([] !== ($vs = $this->getHeader())) {
@@ -496,14 +454,16 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
                 }
             }
         }
-        if (null !== ($v = $this->getPayload())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_PAYLOAD] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getType())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_TYPE] = $fieldErrs;
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_SUBSCRIPTION_DOT_CHANNEL, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
+                }
             }
         }
         if (isset($validationRules[self::FIELD_ENDPOINT])) {
@@ -515,18 +475,6 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
                         $errs[self::FIELD_ENDPOINT] = [];
                     }
                     $errs[self::FIELD_ENDPOINT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_HEADER])) {
-            $v = $this->getHeader();
-            foreach($validationRules[self::FIELD_HEADER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_SUBSCRIPTION_DOT_CHANNEL, self::FIELD_HEADER, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_HEADER])) {
-                        $errs[self::FIELD_HEADER] = [];
-                    }
-                    $errs[self::FIELD_HEADER][$rule] = $err;
                 }
             }
         }
@@ -542,15 +490,15 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TYPE])) {
-            $v = $this->getType();
-            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_SUBSCRIPTION_DOT_CHANNEL, self::FIELD_TYPE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_HEADER])) {
+            $v = $this->getHeader();
+            foreach($validationRules[self::FIELD_HEADER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_SUBSCRIPTION_DOT_CHANNEL, self::FIELD_HEADER, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TYPE])) {
-                        $errs[self::FIELD_TYPE] = [];
+                    if (!isset($errs[self::FIELD_HEADER])) {
+                        $errs[self::FIELD_HEADER] = [];
                     }
-                    $errs[self::FIELD_TYPE][$rule] = $err;
+                    $errs[self::FIELD_HEADER][$rule] = $err;
                 }
             }
         }
@@ -594,176 +542,225 @@ class FHIRSubscriptionChannel extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSubscription\FHIRSubscriptionChannel $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSubscription\FHIRSubscriptionChannel
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRSubscriptionChannel::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRSubscriptionChannel::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRSubscriptionChannel;
-        } elseif (!is_object($type) || !($type instanceof FHIRSubscriptionChannel)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRSubscriptionChannel)) {
             throw new \RuntimeException(sprintf(
-                'FHIRSubscriptionChannel::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSubscription\FHIRSubscriptionChannel or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_TYPE === $n->nodeName) {
+                $type->setType(FHIRSubscriptionChannelType::xmlUnserialize($n));
+            } elseif (self::FIELD_ENDPOINT === $n->nodeName) {
+                $type->setEndpoint(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_PAYLOAD === $n->nodeName) {
+                $type->setPayload(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_HEADER === $n->nodeName) {
+                $type->addHeader(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->endpoint)) {
-            $type->setEndpoint(FHIRUri::xmlUnserialize($children->endpoint));
-        }
-        if (isset($attributes->endpoint)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_ENDPOINT);
+        if (null !== $n) {
             $pt = $type->getEndpoint();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->endpoint);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setEndpoint((string)$attributes->endpoint);
+                $type->setEndpoint($n->nodeValue);
             }
         }
-        if (isset($children->header)) {
-            foreach($children->header as $child) {
-                $type->addHeader(FHIRString::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->payload)) {
-            $type->setPayload(FHIRString::xmlUnserialize($children->payload));
-        }
-        if (isset($attributes->payload)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_PAYLOAD);
+        if (null !== $n) {
             $pt = $type->getPayload();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->payload);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setPayload((string)$attributes->payload);
+                $type->setPayload($n->nodeValue);
             }
         }
-        if (isset($children->type)) {
-            $type->setType(FHIRSubscriptionChannelType::xmlUnserialize($children->type));
+        $n = $element->attributes->getNamedItem(self::FIELD_HEADER);
+        if (null !== $n) {
+            $type->addHeader($n->nodeValue);
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('SubscriptionChannel'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getType())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if (null !== ($v = $this->getEndpoint())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ENDPOINT, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_ENDPOINT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPayload())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PAYLOAD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getHeader())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_HEADER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_HEADER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getPayload())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PAYLOAD, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getType())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getType())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_TYPE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRSubscriptionChannelType::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_TYPE_EXT} = $ext;
+            }
+        }
         if (null !== ($v = $this->getEndpoint())) {
-            $a[self::FIELD_ENDPOINT] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUri::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRUri::FIELD_VALUE]);
-                $a[self::FIELD_ENDPOINT_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ENDPOINT} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRUri::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ENDPOINT_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getPayload())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_PAYLOAD} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_PAYLOAD_EXT} = $ext;
             }
         }
         if ([] !== ($vs = $this->getHeader())) {
-            $a[self::FIELD_HEADER] = [];
-            $encs = [];
-            $encValued = false;
+            $vals = [];
+            $exts = [];
             foreach ($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_HEADER][] = $v->getValue();
-                $enc = $v->jsonSerialize();
-                $cnt = count($enc);
-                if (0 === $cnt || (1 === $cnt && (isset($enc[FHIRString::FIELD_VALUE]) || array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                    $encs[] = null;
-                } else {
-                    unset($enc[FHIRString::FIELD_VALUE]);
-                    $encs[] = $enc;
-                    $encValued = true;
+                $val = $v->getValue();
+                $ext = $v->jsonSerialize();
+                unset($ext->{FHIRString::FIELD_VALUE});
+                if (null !== $val) {
+                    $vals[] = $val;
+                }
+                if ([] !== $ext) {
+                    $exts[] = $ext;
                 }
             }
-            if ($encValued) {
-                $a[self::FIELD_HEADER_EXT] = $encs;
+            if ([] !== $vals) {
+                $out->{self::FIELD_HEADER} = $vals;
+            }
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_HEADER_EXT} = $exts;
             }
         }
-        if (null !== ($v = $this->getPayload())) {
-            $a[self::FIELD_PAYLOAD] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_PAYLOAD_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getType())) {
-            $a[self::FIELD_TYPE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRSubscriptionChannelType::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRSubscriptionChannelType::FIELD_VALUE]);
-                $a[self::FIELD_TYPE_EXT] = $enc;
-            }
-        }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

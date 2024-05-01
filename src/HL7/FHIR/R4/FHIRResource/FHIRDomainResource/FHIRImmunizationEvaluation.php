@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\R4\FHIRElement\FHIRDateTime;
@@ -75,11 +77,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRPositiveInt;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRPositiveIntPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Describes a comparison of an immunization event against published
@@ -94,6 +103,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_IMMUNIZATION_EVALUATION;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
@@ -118,9 +128,6 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
     const FIELD_SERIES_DOSES_STRING = 'seriesDosesString';
     const FIELD_SERIES_DOSES_STRING_EXT = '_seriesDosesString';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -131,8 +138,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * The status of the evaluation being done.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -142,8 +148,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRImmunizationEvaluationStatusCodes
      */
-    protected ?FHIRImmunizationEvaluationStatusCodes $status = null;
-
+    protected null|FHIRImmunizationEvaluationStatusCodes $status = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -153,8 +158,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $patient = null;
-
+    protected null|FHIRReference $patient = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -165,10 +169,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * The date the evaluation of the vaccine administration event was performed.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -178,8 +181,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $authority = null;
-
+    protected null|FHIRReference $authority = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -190,8 +192,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $targetDisease = null;
-
+    protected null|FHIRCodeableConcept $targetDisease = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -201,8 +202,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $immunizationEvent = null;
-
+    protected null|FHIRReference $immunizationEvent = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -214,8 +214,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $doseStatus = null;
-
+    protected null|FHIRCodeableConcept $doseStatus = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -227,8 +226,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $doseStatusReason = [];
-
+    protected null|array $doseStatusReason = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -236,10 +234,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * Additional information about the evaluation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $description = null;
-
+    protected null|FHIRString $description = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -248,10 +245,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * One possible path to achieve presumed immunity against a disease - within the
      * context of an authority.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $series = null;
-
+    protected null|FHIRString $series = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -259,10 +255,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * Nominal position in a series.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $doseNumberPositiveInt = null;
-
+    protected null|FHIRPositiveInt $doseNumberPositiveInt = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -270,10 +265,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * Nominal position in a series.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $doseNumberString = null;
-
+    protected null|FHIRString $doseNumberString = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -281,10 +275,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $seriesDosesPositiveInt = null;
-
+    protected null|FHIRPositiveInt $seriesDosesPositiveInt = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -292,30 +285,25 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $seriesDosesString = null;
+    protected null|FHIRString $seriesDosesString = null;
 
     /**
      * Validation map for fields in type ImmunizationEvaluation
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRImmunizationEvaluation Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRImmunizationEvaluation::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -511,6 +499,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
         }
     }
 
+
     /**
      * @return string
      */
@@ -519,17 +508,6 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ImmunizationEvaluation{$xmlns}></ImmunizationEvaluation>";
-    }
     /**
      * @return string
      */
@@ -549,7 +527,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -565,8 +543,11 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -583,7 +564,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -611,7 +592,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRImmunizationEvaluationStatusCodes
      */
-    public function getStatus(): ?FHIRImmunizationEvaluationStatusCodes
+    public function getStatus(): null|FHIRImmunizationEvaluationStatusCodes
     {
         return $this->status;
     }
@@ -626,8 +607,11 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRImmunizationEvaluationStatusCodes $status
      * @return static
      */
-    public function setStatus(?FHIRImmunizationEvaluationStatusCodes $status = null): object
+    public function setStatus(null|FHIRImmunizationEvaluationStatusCodes $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRImmunizationEvaluationStatusCodes();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -642,7 +626,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPatient(): ?FHIRReference
+    public function getPatient(): null|FHIRReference
     {
         return $this->patient;
     }
@@ -657,8 +641,11 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $patient
      * @return static
      */
-    public function setPatient(?FHIRReference $patient = null): object
+    public function setPatient(null|FHIRReference $patient = null): self
     {
+        if (null === $patient) {
+            $patient = new FHIRReference();
+        }
         $this->_trackValueSet($this->patient, $patient);
         $this->patient = $patient;
         return $this;
@@ -674,9 +661,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * The date the evaluation of the vaccine administration event was performed.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDate(): ?FHIRDateTime
+    public function getDate(): null|FHIRDateTime
     {
         return $this->date;
     }
@@ -691,10 +678,10 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * The date the evaluation of the vaccine administration event was performed.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
      * @return static
      */
-    public function setDate($date = null): object
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
@@ -713,7 +700,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getAuthority(): ?FHIRReference
+    public function getAuthority(): null|FHIRReference
     {
         return $this->authority;
     }
@@ -728,8 +715,11 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $authority
      * @return static
      */
-    public function setAuthority(?FHIRReference $authority = null): object
+    public function setAuthority(null|FHIRReference $authority = null): self
     {
+        if (null === $authority) {
+            $authority = new FHIRReference();
+        }
         $this->_trackValueSet($this->authority, $authority);
         $this->authority = $authority;
         return $this;
@@ -745,7 +735,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getTargetDisease(): ?FHIRCodeableConcept
+    public function getTargetDisease(): null|FHIRCodeableConcept
     {
         return $this->targetDisease;
     }
@@ -761,8 +751,11 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $targetDisease
      * @return static
      */
-    public function setTargetDisease(?FHIRCodeableConcept $targetDisease = null): object
+    public function setTargetDisease(null|FHIRCodeableConcept $targetDisease = null): self
     {
+        if (null === $targetDisease) {
+            $targetDisease = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->targetDisease, $targetDisease);
         $this->targetDisease = $targetDisease;
         return $this;
@@ -777,7 +770,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getImmunizationEvent(): ?FHIRReference
+    public function getImmunizationEvent(): null|FHIRReference
     {
         return $this->immunizationEvent;
     }
@@ -792,8 +785,11 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $immunizationEvent
      * @return static
      */
-    public function setImmunizationEvent(?FHIRReference $immunizationEvent = null): object
+    public function setImmunizationEvent(null|FHIRReference $immunizationEvent = null): self
     {
+        if (null === $immunizationEvent) {
+            $immunizationEvent = new FHIRReference();
+        }
         $this->_trackValueSet($this->immunizationEvent, $immunizationEvent);
         $this->immunizationEvent = $immunizationEvent;
         return $this;
@@ -810,7 +806,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getDoseStatus(): ?FHIRCodeableConcept
+    public function getDoseStatus(): null|FHIRCodeableConcept
     {
         return $this->doseStatus;
     }
@@ -827,8 +823,11 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $doseStatus
      * @return static
      */
-    public function setDoseStatus(?FHIRCodeableConcept $doseStatus = null): object
+    public function setDoseStatus(null|FHIRCodeableConcept $doseStatus = null): self
     {
+        if (null === $doseStatus) {
+            $doseStatus = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->doseStatus, $doseStatus);
         $this->doseStatus = $doseStatus;
         return $this;
@@ -845,7 +844,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getDoseStatusReason(): ?array
+    public function getDoseStatusReason(): null|array
     {
         return $this->doseStatusReason;
     }
@@ -862,8 +861,11 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $doseStatusReason
      * @return static
      */
-    public function addDoseStatusReason(?FHIRCodeableConcept $doseStatusReason = null): object
+    public function addDoseStatusReason(null|FHIRCodeableConcept $doseStatusReason = null): self
     {
+        if (null === $doseStatusReason) {
+            $doseStatusReason = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->doseStatusReason[] = $doseStatusReason;
         return $this;
@@ -881,7 +883,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $doseStatusReason
      * @return static
      */
-    public function setDoseStatusReason(array $doseStatusReason = []): object
+    public function setDoseStatusReason(array $doseStatusReason = []): self
     {
         if ([] !== $this->doseStatusReason) {
             $this->_trackValuesRemoved(count($this->doseStatusReason));
@@ -907,9 +909,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * Additional information about the evaluation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDescription(): ?FHIRString
+    public function getDescription(): null|FHIRString
     {
         return $this->description;
     }
@@ -921,10 +923,10 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * Additional information about the evaluation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $description
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
@@ -942,9 +944,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * One possible path to achieve presumed immunity against a disease - within the
      * context of an authority.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getSeries(): ?FHIRString
+    public function getSeries(): null|FHIRString
     {
         return $this->series;
     }
@@ -957,10 +959,10 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      * One possible path to achieve presumed immunity against a disease - within the
      * context of an authority.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $series
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $series
      * @return static
      */
-    public function setSeries($series = null): object
+    public function setSeries(null|string|FHIRStringPrimitive|FHIRString $series = null): self
     {
         if (null !== $series && !($series instanceof FHIRString)) {
             $series = new FHIRString($series);
@@ -977,9 +979,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * Nominal position in a series.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getDoseNumberPositiveInt(): ?FHIRPositiveInt
+    public function getDoseNumberPositiveInt(): null|FHIRPositiveInt
     {
         return $this->doseNumberPositiveInt;
     }
@@ -991,10 +993,10 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * Nominal position in a series.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $doseNumberPositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $doseNumberPositiveInt
      * @return static
      */
-    public function setDoseNumberPositiveInt($doseNumberPositiveInt = null): object
+    public function setDoseNumberPositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $doseNumberPositiveInt = null): self
     {
         if (null !== $doseNumberPositiveInt && !($doseNumberPositiveInt instanceof FHIRPositiveInt)) {
             $doseNumberPositiveInt = new FHIRPositiveInt($doseNumberPositiveInt);
@@ -1011,9 +1013,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * Nominal position in a series.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDoseNumberString(): ?FHIRString
+    public function getDoseNumberString(): null|FHIRString
     {
         return $this->doseNumberString;
     }
@@ -1025,10 +1027,10 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * Nominal position in a series.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $doseNumberString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $doseNumberString
      * @return static
      */
-    public function setDoseNumberString($doseNumberString = null): object
+    public function setDoseNumberString(null|string|FHIRStringPrimitive|FHIRString $doseNumberString = null): self
     {
         if (null !== $doseNumberString && !($doseNumberString instanceof FHIRString)) {
             $doseNumberString = new FHIRString($doseNumberString);
@@ -1045,9 +1047,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getSeriesDosesPositiveInt(): ?FHIRPositiveInt
+    public function getSeriesDosesPositiveInt(): null|FHIRPositiveInt
     {
         return $this->seriesDosesPositiveInt;
     }
@@ -1059,10 +1061,10 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $seriesDosesPositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $seriesDosesPositiveInt
      * @return static
      */
-    public function setSeriesDosesPositiveInt($seriesDosesPositiveInt = null): object
+    public function setSeriesDosesPositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $seriesDosesPositiveInt = null): self
     {
         if (null !== $seriesDosesPositiveInt && !($seriesDosesPositiveInt instanceof FHIRPositiveInt)) {
             $seriesDosesPositiveInt = new FHIRPositiveInt($seriesDosesPositiveInt);
@@ -1079,9 +1081,9 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getSeriesDosesString(): ?FHIRString
+    public function getSeriesDosesString(): null|FHIRString
     {
         return $this->seriesDosesString;
     }
@@ -1093,10 +1095,10 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $seriesDosesString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $seriesDosesString
      * @return static
      */
-    public function setSeriesDosesString($seriesDosesString = null): object
+    public function setSeriesDosesString(null|string|FHIRStringPrimitive|FHIRString $seriesDosesString = null): self
     {
         if (null !== $seriesDosesString && !($seriesDosesString instanceof FHIRString)) {
             $seriesDosesString = new FHIRString($seriesDosesString);
@@ -1114,7 +1116,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1488,36 +1490,48 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRImmunizationEvaluation $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRImmunizationEvaluation
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRImmunizationEvaluation::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRImmunizationEvaluation::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRImmunizationEvaluation(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRImmunizationEvaluation)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRImmunizationEvaluation)) {
             throw new \RuntimeException(sprintf(
-                'FHIRImmunizationEvaluation::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRImmunizationEvaluation or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1672,17 +1686,25 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ImmunizationEvaluation'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1776,7 +1798,7 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1897,7 +1919,6 @@ class FHIRImmunizationEvaluation extends FHIRDomainResource implements PHPFHIRCo
 
         return $out;
     }
-
 
     /**
      * @return string

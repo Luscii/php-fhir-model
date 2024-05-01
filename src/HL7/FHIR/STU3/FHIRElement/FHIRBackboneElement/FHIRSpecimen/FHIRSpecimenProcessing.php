@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,14 +62,20 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRDateTimePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\STU3\FHIRElement\FHIRDateTime;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRPeriod;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A sample to be used for analysis.
@@ -81,27 +87,14 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SPECIMEN_DOT_PROCESSING;
-    const FIELD_ADDITIVE = 'additive';
+
     const FIELD_DESCRIPTION = 'description';
     const FIELD_DESCRIPTION_EXT = '_description';
     const FIELD_PROCEDURE = 'procedure';
+    const FIELD_ADDITIVE = 'additive';
     const FIELD_TIME_DATE_TIME = 'timeDateTime';
     const FIELD_TIME_DATE_TIME_EXT = '_timeDateTime';
     const FIELD_TIME_PERIOD = 'timePeriod';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Material used in the processing step.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $additive = [];
 
     /**
      * A sequence of Unicode characters
@@ -112,8 +105,7 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $description = null;
-
+    protected null|FHIRString $description = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -124,8 +116,17 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    protected $procedure = null;
-
+    protected null|FHIRCodeableConcept $procedure = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Material used in the processing step.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $additive = [];
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -140,8 +141,7 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    protected $timeDateTime = null;
-
+    protected null|FHIRDateTime $timeDateTime = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -153,30 +153,47 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    protected $timePeriod = null;
+    protected null|FHIRPeriod $timePeriod = null;
 
     /**
      * Validation map for fields in type Specimen.Processing
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRSpecimenProcessing Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRSpecimenProcessing::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
+            $value = $data[self::FIELD_DESCRIPTION] ?? null;
+            $ext = (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) ? $data[self::FIELD_DESCRIPTION_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setDescription($value);
+                } else if (is_array($value)) {
+                    $this->setDescription(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setDescription(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setDescription(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_PROCEDURE])) {
+            if ($data[self::FIELD_PROCEDURE] instanceof FHIRCodeableConcept) {
+                $this->setProcedure($data[self::FIELD_PROCEDURE]);
+            } else {
+                $this->setProcedure(new FHIRCodeableConcept($data[self::FIELD_PROCEDURE]));
+            }
+        }
         if (isset($data[self::FIELD_ADDITIVE])) {
             if (is_array($data[self::FIELD_ADDITIVE])) {
                 foreach($data[self::FIELD_ADDITIVE] as $v) {
@@ -189,53 +206,15 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
                         $this->addAdditive(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_ADDITIVE] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_ADDITIVE] instanceof FHIRReference) {
                 $this->addAdditive($data[self::FIELD_ADDITIVE]);
             } else {
                 $this->addAdditive(new FHIRReference($data[self::FIELD_ADDITIVE]));
             }
         }
-        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
-            if (isset($data[self::FIELD_DESCRIPTION])) {
-                $value = $data[self::FIELD_DESCRIPTION];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) {
-                $ext = $data[self::FIELD_DESCRIPTION_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setDescription($value);
-                } else if (is_array($value)) {
-                    $this->setDescription(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setDescription(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setDescription(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_PROCEDURE])) {
-            if ($data[self::FIELD_PROCEDURE] instanceof FHIRCodeableConcept) {
-                $this->setProcedure($data[self::FIELD_PROCEDURE]);
-            } else {
-                $this->setProcedure(new FHIRCodeableConcept($data[self::FIELD_PROCEDURE]));
-            }
-        }
         if (isset($data[self::FIELD_TIME_DATE_TIME]) || isset($data[self::FIELD_TIME_DATE_TIME_EXT])) {
-            if (isset($data[self::FIELD_TIME_DATE_TIME])) {
-                $value = $data[self::FIELD_TIME_DATE_TIME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_TIME_DATE_TIME_EXT]) && is_array($data[self::FIELD_TIME_DATE_TIME_EXT])) {
-                $ext = $data[self::FIELD_TIME_DATE_TIME_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_TIME_DATE_TIME] ?? null;
+            $ext = (isset($data[self::FIELD_TIME_DATE_TIME_EXT]) && is_array($data[self::FIELD_TIME_DATE_TIME_EXT])) ? $data[self::FIELD_TIME_DATE_TIME_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRDateTime) {
                     $this->setTimeDateTime($value);
@@ -244,7 +223,7 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
                 } else {
                     $this->setTimeDateTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setTimeDateTime(new FHIRDateTime($ext));
             }
         }
@@ -257,80 +236,13 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<SpecimenProcessing{$xmlns}></SpecimenProcessing>";
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Material used in the processing step.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    public function getAdditive()
-    {
-        return $this->additive;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Material used in the processing step.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $additive
-     * @return static
-     */
-    public function addAdditive(FHIRReference $additive = null)
-    {
-        $this->additive[] = $additive;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Material used in the processing step.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $additive
-     * @return static
-     */
-    public function setAdditive(array $additive = [])
-    {
-        $this->additive = [];
-        if ([] === $additive) {
-            return $this;
-        }
-        foreach($additive as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addAdditive($v);
-            } else {
-                $this->addAdditive(new FHIRReference($v));
-            }
-        }
-        return $this;
     }
 
     /**
@@ -342,7 +254,7 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getDescription()
+    public function getDescription(): null|FHIRString
     {
         return $this->description;
     }
@@ -354,20 +266,16 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * Textual description of procedure.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $description
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $description
      * @return static
      */
-    public function setDescription($description = null)
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null): self
     {
-        if (null === $description) {
-            $this->description = null;
-            return $this;
+        if (null !== $description && !($description instanceof FHIRString)) {
+            $description = new FHIRString($description);
         }
-        if ($description instanceof FHIRString) {
-            $this->description = $description;
-            return $this;
-        }
-        $this->description = new FHIRString($description);
+        $this->_trackValueSet($this->description, $description);
+        $this->description = $description;
         return $this;
     }
 
@@ -381,7 +289,7 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getProcedure()
+    public function getProcedure(): null|FHIRCodeableConcept
     {
         return $this->procedure;
     }
@@ -397,9 +305,76 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $procedure
      * @return static
      */
-    public function setProcedure(FHIRCodeableConcept $procedure = null)
+    public function setProcedure(null|FHIRCodeableConcept $procedure = null): self
     {
+        if (null === $procedure) {
+            $procedure = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->procedure, $procedure);
         $this->procedure = $procedure;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Material used in the processing step.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    public function getAdditive(): null|array
+    {
+        return $this->additive;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Material used in the processing step.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $additive
+     * @return static
+     */
+    public function addAdditive(null|FHIRReference $additive = null): self
+    {
+        if (null === $additive) {
+            $additive = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->additive[] = $additive;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Material used in the processing step.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $additive
+     * @return static
+     */
+    public function setAdditive(array $additive = []): self
+    {
+        if ([] !== $this->additive) {
+            $this->_trackValuesRemoved(count($this->additive));
+            $this->additive = [];
+        }
+        if ([] === $additive) {
+            return $this;
+        }
+        foreach($additive as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addAdditive($v);
+            } else {
+                $this->addAdditive(new FHIRReference($v));
+            }
+        }
         return $this;
     }
 
@@ -417,7 +392,7 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    public function getTimeDateTime()
+    public function getTimeDateTime(): null|FHIRDateTime
     {
         return $this->timeDateTime;
     }
@@ -434,20 +409,16 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * example the time of sample fixation or the period of time the sample was in
      * formalin.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $timeDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRDateTimePrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $timeDateTime
      * @return static
      */
-    public function setTimeDateTime($timeDateTime = null)
+    public function setTimeDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $timeDateTime = null): self
     {
-        if (null === $timeDateTime) {
-            $this->timeDateTime = null;
-            return $this;
+        if (null !== $timeDateTime && !($timeDateTime instanceof FHIRDateTime)) {
+            $timeDateTime = new FHIRDateTime($timeDateTime);
         }
-        if ($timeDateTime instanceof FHIRDateTime) {
-            $this->timeDateTime = $timeDateTime;
-            return $this;
-        }
-        $this->timeDateTime = new FHIRDateTime($timeDateTime);
+        $this->_trackValueSet($this->timeDateTime, $timeDateTime);
+        $this->timeDateTime = $timeDateTime;
         return $this;
     }
 
@@ -462,7 +433,7 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function getTimePeriod()
+    public function getTimePeriod(): null|FHIRPeriod
     {
         return $this->timePeriod;
     }
@@ -479,8 +450,12 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $timePeriod
      * @return static
      */
-    public function setTimePeriod(FHIRPeriod $timePeriod = null)
+    public function setTimePeriod(null|FHIRPeriod $timePeriod = null): self
     {
+        if (null === $timePeriod) {
+            $timePeriod = new FHIRPeriod();
+        }
+        $this->_trackValueSet($this->timePeriod, $timePeriod);
         $this->timePeriod = $timePeriod;
         return $this;
     }
@@ -491,9 +466,9 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -502,17 +477,10 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if ([] !== ($vs = $this->getAdditive())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_ADDITIVE, $i)] = $fieldErrs;
-                }
-            }
-        }
         if (null !== ($v = $this->getDescription())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_DESCRIPTION] = $fieldErrs;
@@ -523,6 +491,13 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
                 $errs[self::FIELD_PROCEDURE] = $fieldErrs;
             }
         }
+        if ([] !== ($vs = $this->getAdditive())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_ADDITIVE, $i)] = $fieldErrs;
+                }
+            }
+        }
         if (null !== ($v = $this->getTimeDateTime())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_TIME_DATE_TIME] = $fieldErrs;
@@ -531,18 +506,6 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
         if (null !== ($v = $this->getTimePeriod())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_TIME_PERIOD] = $fieldErrs;
-            }
-        }
-        if (isset($validationRules[self::FIELD_ADDITIVE])) {
-            $v = $this->getAdditive();
-            foreach($validationRules[self::FIELD_ADDITIVE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_SPECIMEN_DOT_PROCESSING, self::FIELD_ADDITIVE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ADDITIVE])) {
-                        $errs[self::FIELD_ADDITIVE] = [];
-                    }
-                    $errs[self::FIELD_ADDITIVE][$rule] = $err;
-                }
             }
         }
         if (isset($validationRules[self::FIELD_DESCRIPTION])) {
@@ -566,6 +529,18 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
                         $errs[self::FIELD_PROCEDURE] = [];
                     }
                     $errs[self::FIELD_PROCEDURE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ADDITIVE])) {
+            $v = $this->getAdditive();
+            foreach($validationRules[self::FIELD_ADDITIVE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_SPECIMEN_DOT_PROCESSING, self::FIELD_ADDITIVE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ADDITIVE])) {
+                        $errs[self::FIELD_ADDITIVE] = [];
+                    }
+                    $errs[self::FIELD_ADDITIVE][$rule] = $err;
                 }
             }
         }
@@ -633,165 +608,209 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen\FHIRSpecimenProcessing $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen\FHIRSpecimenProcessing
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRSpecimenProcessing::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRSpecimenProcessing::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRSpecimenProcessing;
-        } elseif (!is_object($type) || !($type instanceof FHIRSpecimenProcessing)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRSpecimenProcessing)) {
             throw new \RuntimeException(sprintf(
-                'FHIRSpecimenProcessing::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen\FHIRSpecimenProcessing or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_DESCRIPTION === $n->nodeName) {
+                $type->setDescription(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_PROCEDURE === $n->nodeName) {
+                $type->setProcedure(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_ADDITIVE === $n->nodeName) {
+                $type->addAdditive(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_TIME_DATE_TIME === $n->nodeName) {
+                $type->setTimeDateTime(FHIRDateTime::xmlUnserialize($n));
+            } elseif (self::FIELD_TIME_PERIOD === $n->nodeName) {
+                $type->setTimePeriod(FHIRPeriod::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->additive)) {
-            foreach($children->additive as $child) {
-                $type->addAdditive(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->description)) {
-            $type->setDescription(FHIRString::xmlUnserialize($children->description));
-        }
-        if (isset($attributes->description)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_DESCRIPTION);
+        if (null !== $n) {
             $pt = $type->getDescription();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->description);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setDescription((string)$attributes->description);
+                $type->setDescription($n->nodeValue);
             }
         }
-        if (isset($children->procedure)) {
-            $type->setProcedure(FHIRCodeableConcept::xmlUnserialize($children->procedure));
-        }
-        if (isset($children->timeDateTime)) {
-            $type->setTimeDateTime(FHIRDateTime::xmlUnserialize($children->timeDateTime));
-        }
-        if (isset($attributes->timeDateTime)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_TIME_DATE_TIME);
+        if (null !== $n) {
             $pt = $type->getTimeDateTime();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->timeDateTime);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setTimeDateTime((string)$attributes->timeDateTime);
+                $type->setTimeDateTime($n->nodeValue);
             }
         }
-        if (isset($children->timePeriod)) {
-            $type->setTimePeriod(FHIRPeriod::xmlUnserialize($children->timePeriod));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('SpecimenProcessing'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getDescription())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_DESCRIPTION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getProcedure())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PROCEDURE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if ([] !== ($vs = $this->getAdditive())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_ADDITIVE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_ADDITIVE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getDescription())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_DESCRIPTION, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getProcedure())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PROCEDURE, null, $v->_getFHIRXMLNamespace()));
-        }
         if (null !== ($v = $this->getTimeDateTime())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_TIME_DATE_TIME, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_TIME_DATE_TIME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getTimePeriod())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_TIME_PERIOD, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_TIME_PERIOD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getDescription())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DESCRIPTION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DESCRIPTION_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getProcedure())) {
+            $out->{self::FIELD_PROCEDURE} = $v;
+        }
         if ([] !== ($vs = $this->getAdditive())) {
-            $a[self::FIELD_ADDITIVE] = [];
+            $out->{self::FIELD_ADDITIVE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_ADDITIVE][] = $v;
+                $out->{self::FIELD_ADDITIVE}[] = $v;
             }
-        }
-        if (null !== ($v = $this->getDescription())) {
-            $a[self::FIELD_DESCRIPTION] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_DESCRIPTION_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getProcedure())) {
-            $a[self::FIELD_PROCEDURE] = $v;
         }
         if (null !== ($v = $this->getTimeDateTime())) {
-            $a[self::FIELD_TIME_DATE_TIME] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDateTime::FIELD_VALUE]);
-                $a[self::FIELD_TIME_DATE_TIME_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_TIME_DATE_TIME} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDateTime::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_TIME_DATE_TIME_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getTimePeriod())) {
-            $a[self::FIELD_TIME_PERIOD] = $v;
+            $out->{self::FIELD_TIME_PERIOD} = $v;
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

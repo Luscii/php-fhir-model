@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAttachment;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAccident;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAddItem;
@@ -94,11 +96,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUse;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRPositiveIntPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * This resource provides: the claim details; adjudication details from the
@@ -113,6 +122,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_EXPLANATION_OF_BENEFIT;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
@@ -164,9 +174,6 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
     const FIELD_BENEFIT_PERIOD = 'benefitPeriod';
     const FIELD_BENEFIT_BALANCE = 'benefitBalance';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -177,8 +184,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A code specifying the state of the resource instance.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -187,8 +193,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRExplanationOfBenefitStatus
      */
-    protected ?FHIRExplanationOfBenefitStatus $status = null;
-
+    protected null|FHIRExplanationOfBenefitStatus $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -199,8 +204,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -212,8 +216,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $subType = null;
-
+    protected null|FHIRCodeableConcept $subType = null;
     /**
      * The purpose of the Claim: predetermination, preauthorization, claim.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -226,8 +229,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUse
      */
-    protected ?FHIRUse $use = null;
-
+    protected null|FHIRUse $use = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -239,8 +241,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $patient = null;
-
+    protected null|FHIRReference $patient = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -250,8 +251,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $billablePeriod = null;
-
+    protected null|FHIRPeriod $billablePeriod = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -262,10 +262,9 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * The date this resource was created.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $created = null;
-
+    protected null|FHIRDateTime $created = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -275,8 +274,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $enterer = null;
-
+    protected null|FHIRReference $enterer = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -286,8 +284,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $insurer = null;
-
+    protected null|FHIRReference $insurer = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -298,8 +295,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $provider = null;
-
+    protected null|FHIRReference $provider = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -311,8 +307,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $priority = null;
-
+    protected null|FHIRCodeableConcept $priority = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -324,8 +319,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $fundsReserveRequested = null;
-
+    protected null|FHIRCodeableConcept $fundsReserveRequested = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -337,8 +331,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $fundsReserve = null;
-
+    protected null|FHIRCodeableConcept $fundsReserve = null;
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -349,8 +342,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitRelated[]
      */
-    protected ?array $related = [];
-
+    protected null|array $related = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -360,8 +352,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $prescription = null;
-
+    protected null|FHIRReference $prescription = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -372,8 +363,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $originalPrescription = null;
-
+    protected null|FHIRReference $originalPrescription = null;
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -384,8 +374,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitPayee
      */
-    protected ?FHIRExplanationOfBenefitPayee $payee = null;
-
+    protected null|FHIRExplanationOfBenefitPayee $payee = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -395,8 +384,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $referral = null;
-
+    protected null|FHIRReference $referral = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -406,8 +394,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $facility = null;
-
+    protected null|FHIRReference $facility = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -418,8 +405,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $claim = null;
-
+    protected null|FHIRReference $claim = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -430,8 +416,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $claimResponse = null;
-
+    protected null|FHIRReference $claimResponse = null;
     /**
      * The result of the claim processing.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -440,8 +425,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRClaimProcessingCodes
      */
-    protected ?FHIRClaimProcessingCodes $outcome = null;
-
+    protected null|FHIRClaimProcessingCodes $outcome = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -449,10 +433,9 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * A human readable description of the status of the adjudication.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $disposition = null;
-
+    protected null|FHIRString $disposition = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -461,10 +444,9 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * Reference from the Insurer which is used in later communications which refers to
      * this adjudication.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $preAuthRef = [];
-
+    protected null|array $preAuthRef = [];
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -475,8 +457,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod[]
      */
-    protected ?array $preAuthRefPeriod = [];
-
+    protected null|array $preAuthRefPeriod = [];
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -486,8 +467,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitCareTeam[]
      */
-    protected ?array $careTeam = [];
-
+    protected null|array $careTeam = [];
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -498,8 +478,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitSupportingInfo[]
      */
-    protected ?array $supportingInfo = [];
-
+    protected null|array $supportingInfo = [];
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -509,8 +488,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitDiagnosis[]
      */
-    protected ?array $diagnosis = [];
-
+    protected null|array $diagnosis = [];
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -521,8 +499,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitProcedure[]
      */
-    protected ?array $procedure = [];
-
+    protected null|array $procedure = [];
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -531,10 +508,9 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * This indicates the relative order of a series of EOBs related to different
      * coverages for the same suite of services.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $precedence = null;
-
+    protected null|FHIRPositiveInt $precedence = null;
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -545,8 +521,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitInsurance[]
      */
-    protected ?array $insurance = [];
-
+    protected null|array $insurance = [];
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -557,8 +532,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAccident
      */
-    protected ?FHIRExplanationOfBenefitAccident $accident = null;
-
+    protected null|FHIRExplanationOfBenefitAccident $accident = null;
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -569,8 +543,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitItem[]
      */
-    protected ?array $item = [];
-
+    protected null|array $item = [];
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -580,8 +553,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAddItem[]
      */
-    protected ?array $addItem = [];
-
+    protected null|array $addItem = [];
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -592,8 +564,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAdjudication[]
      */
-    protected ?array $adjudication = [];
-
+    protected null|array $adjudication = [];
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -603,8 +574,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitTotal[]
      */
-    protected ?array $total = [];
-
+    protected null|array $total = [];
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -614,8 +584,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitPayment
      */
-    protected ?FHIRExplanationOfBenefitPayment $payment = null;
-
+    protected null|FHIRExplanationOfBenefitPayment $payment = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -626,8 +595,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $formCode = null;
-
+    protected null|FHIRCodeableConcept $formCode = null;
     /**
      * For referring to data content defined in other formats.
      * If the element is present, it must have a value for at least one of the defined
@@ -637,8 +605,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    protected ?FHIRAttachment $form = null;
-
+    protected null|FHIRAttachment $form = null;
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -648,8 +615,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitProcessNote[]
      */
-    protected ?array $processNote = [];
-
+    protected null|array $processNote = [];
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -659,8 +625,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $benefitPeriod = null;
-
+    protected null|FHIRPeriod $benefitPeriod = null;
     /**
      * This resource provides: the claim details; adjudication details from the
      * processing of a Claim; and optionally account balance information, for informing
@@ -670,13 +635,13 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitBenefitBalance[]
      */
-    protected ?array $benefitBalance = [];
+    protected null|array $benefitBalance = [];
 
     /**
      * Validation map for fields in type ExplanationOfBenefit
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_INSURANCE => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -685,17 +650,12 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
     /**
      * FHIRExplanationOfBenefit Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRExplanationOfBenefit::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -1226,6 +1186,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
         }
     }
 
+
     /**
      * @return string
      */
@@ -1234,17 +1195,6 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ExplanationOfBenefit{$xmlns}></ExplanationOfBenefit>";
-    }
     /**
      * @return string
      */
@@ -1264,7 +1214,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -1280,8 +1230,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -1298,7 +1251,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -1325,7 +1278,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRExplanationOfBenefitStatus
      */
-    public function getStatus(): ?FHIRExplanationOfBenefitStatus
+    public function getStatus(): null|FHIRExplanationOfBenefitStatus
     {
         return $this->status;
     }
@@ -1339,8 +1292,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRExplanationOfBenefitStatus $status
      * @return static
      */
-    public function setStatus(?FHIRExplanationOfBenefitStatus $status = null): object
+    public function setStatus(null|FHIRExplanationOfBenefitStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRExplanationOfBenefitStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -1356,7 +1312,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -1372,8 +1328,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -1390,7 +1349,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getSubType(): ?FHIRCodeableConcept
+    public function getSubType(): null|FHIRCodeableConcept
     {
         return $this->subType;
     }
@@ -1407,8 +1366,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $subType
      * @return static
      */
-    public function setSubType(?FHIRCodeableConcept $subType = null): object
+    public function setSubType(null|FHIRCodeableConcept $subType = null): self
     {
+        if (null === $subType) {
+            $subType = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->subType, $subType);
         $this->subType = $subType;
         return $this;
@@ -1426,7 +1388,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUse
      */
-    public function getUse(): ?FHIRUse
+    public function getUse(): null|FHIRUse
     {
         return $this->use;
     }
@@ -1444,8 +1406,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUse $use
      * @return static
      */
-    public function setUse(?FHIRUse $use = null): object
+    public function setUse(null|FHIRUse $use = null): self
     {
+        if (null === $use) {
+            $use = new FHIRUse();
+        }
         $this->_trackValueSet($this->use, $use);
         $this->use = $use;
         return $this;
@@ -1462,7 +1427,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPatient(): ?FHIRReference
+    public function getPatient(): null|FHIRReference
     {
         return $this->patient;
     }
@@ -1479,8 +1444,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $patient
      * @return static
      */
-    public function setPatient(?FHIRReference $patient = null): object
+    public function setPatient(null|FHIRReference $patient = null): self
     {
+        if (null === $patient) {
+            $patient = new FHIRReference();
+        }
         $this->_trackValueSet($this->patient, $patient);
         $this->patient = $patient;
         return $this;
@@ -1495,7 +1463,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getBillablePeriod(): ?FHIRPeriod
+    public function getBillablePeriod(): null|FHIRPeriod
     {
         return $this->billablePeriod;
     }
@@ -1510,8 +1478,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $billablePeriod
      * @return static
      */
-    public function setBillablePeriod(?FHIRPeriod $billablePeriod = null): object
+    public function setBillablePeriod(null|FHIRPeriod $billablePeriod = null): self
     {
+        if (null === $billablePeriod) {
+            $billablePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->billablePeriod, $billablePeriod);
         $this->billablePeriod = $billablePeriod;
         return $this;
@@ -1527,9 +1498,9 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * The date this resource was created.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getCreated(): ?FHIRDateTime
+    public function getCreated(): null|FHIRDateTime
     {
         return $this->created;
     }
@@ -1544,10 +1515,10 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * The date this resource was created.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $created
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $created
      * @return static
      */
-    public function setCreated($created = null): object
+    public function setCreated(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $created = null): self
     {
         if (null !== $created && !($created instanceof FHIRDateTime)) {
             $created = new FHIRDateTime($created);
@@ -1566,7 +1537,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getEnterer(): ?FHIRReference
+    public function getEnterer(): null|FHIRReference
     {
         return $this->enterer;
     }
@@ -1581,8 +1552,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $enterer
      * @return static
      */
-    public function setEnterer(?FHIRReference $enterer = null): object
+    public function setEnterer(null|FHIRReference $enterer = null): self
     {
+        if (null === $enterer) {
+            $enterer = new FHIRReference();
+        }
         $this->_trackValueSet($this->enterer, $enterer);
         $this->enterer = $enterer;
         return $this;
@@ -1597,7 +1571,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getInsurer(): ?FHIRReference
+    public function getInsurer(): null|FHIRReference
     {
         return $this->insurer;
     }
@@ -1612,8 +1586,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $insurer
      * @return static
      */
-    public function setInsurer(?FHIRReference $insurer = null): object
+    public function setInsurer(null|FHIRReference $insurer = null): self
     {
+        if (null === $insurer) {
+            $insurer = new FHIRReference();
+        }
         $this->_trackValueSet($this->insurer, $insurer);
         $this->insurer = $insurer;
         return $this;
@@ -1629,7 +1606,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getProvider(): ?FHIRReference
+    public function getProvider(): null|FHIRReference
     {
         return $this->provider;
     }
@@ -1645,8 +1622,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $provider
      * @return static
      */
-    public function setProvider(?FHIRReference $provider = null): object
+    public function setProvider(null|FHIRReference $provider = null): self
     {
+        if (null === $provider) {
+            $provider = new FHIRReference();
+        }
         $this->_trackValueSet($this->provider, $provider);
         $this->provider = $provider;
         return $this;
@@ -1663,7 +1643,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getPriority(): ?FHIRCodeableConcept
+    public function getPriority(): null|FHIRCodeableConcept
     {
         return $this->priority;
     }
@@ -1680,8 +1660,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $priority
      * @return static
      */
-    public function setPriority(?FHIRCodeableConcept $priority = null): object
+    public function setPriority(null|FHIRCodeableConcept $priority = null): self
     {
+        if (null === $priority) {
+            $priority = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->priority, $priority);
         $this->priority = $priority;
         return $this;
@@ -1698,7 +1681,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getFundsReserveRequested(): ?FHIRCodeableConcept
+    public function getFundsReserveRequested(): null|FHIRCodeableConcept
     {
         return $this->fundsReserveRequested;
     }
@@ -1715,8 +1698,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $fundsReserveRequested
      * @return static
      */
-    public function setFundsReserveRequested(?FHIRCodeableConcept $fundsReserveRequested = null): object
+    public function setFundsReserveRequested(null|FHIRCodeableConcept $fundsReserveRequested = null): self
     {
+        if (null === $fundsReserveRequested) {
+            $fundsReserveRequested = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->fundsReserveRequested, $fundsReserveRequested);
         $this->fundsReserveRequested = $fundsReserveRequested;
         return $this;
@@ -1733,7 +1719,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getFundsReserve(): ?FHIRCodeableConcept
+    public function getFundsReserve(): null|FHIRCodeableConcept
     {
         return $this->fundsReserve;
     }
@@ -1750,8 +1736,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $fundsReserve
      * @return static
      */
-    public function setFundsReserve(?FHIRCodeableConcept $fundsReserve = null): object
+    public function setFundsReserve(null|FHIRCodeableConcept $fundsReserve = null): self
     {
+        if (null === $fundsReserve) {
+            $fundsReserve = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->fundsReserve, $fundsReserve);
         $this->fundsReserve = $fundsReserve;
         return $this;
@@ -1767,7 +1756,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitRelated[]
      */
-    public function getRelated(): ?array
+    public function getRelated(): null|array
     {
         return $this->related;
     }
@@ -1783,8 +1772,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitRelated $related
      * @return static
      */
-    public function addRelated(?FHIRExplanationOfBenefitRelated $related = null): object
+    public function addRelated(null|FHIRExplanationOfBenefitRelated $related = null): self
     {
+        if (null === $related) {
+            $related = new FHIRExplanationOfBenefitRelated();
+        }
         $this->_trackValueAdded();
         $this->related[] = $related;
         return $this;
@@ -1801,7 +1793,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitRelated[] $related
      * @return static
      */
-    public function setRelated(array $related = []): object
+    public function setRelated(array $related = []): self
     {
         if ([] !== $this->related) {
             $this->_trackValuesRemoved(count($this->related));
@@ -1829,7 +1821,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPrescription(): ?FHIRReference
+    public function getPrescription(): null|FHIRReference
     {
         return $this->prescription;
     }
@@ -1844,8 +1836,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $prescription
      * @return static
      */
-    public function setPrescription(?FHIRReference $prescription = null): object
+    public function setPrescription(null|FHIRReference $prescription = null): self
     {
+        if (null === $prescription) {
+            $prescription = new FHIRReference();
+        }
         $this->_trackValueSet($this->prescription, $prescription);
         $this->prescription = $prescription;
         return $this;
@@ -1861,7 +1856,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getOriginalPrescription(): ?FHIRReference
+    public function getOriginalPrescription(): null|FHIRReference
     {
         return $this->originalPrescription;
     }
@@ -1877,8 +1872,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $originalPrescription
      * @return static
      */
-    public function setOriginalPrescription(?FHIRReference $originalPrescription = null): object
+    public function setOriginalPrescription(null|FHIRReference $originalPrescription = null): self
     {
+        if (null === $originalPrescription) {
+            $originalPrescription = new FHIRReference();
+        }
         $this->_trackValueSet($this->originalPrescription, $originalPrescription);
         $this->originalPrescription = $originalPrescription;
         return $this;
@@ -1894,7 +1892,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitPayee
      */
-    public function getPayee(): ?FHIRExplanationOfBenefitPayee
+    public function getPayee(): null|FHIRExplanationOfBenefitPayee
     {
         return $this->payee;
     }
@@ -1910,8 +1908,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitPayee $payee
      * @return static
      */
-    public function setPayee(?FHIRExplanationOfBenefitPayee $payee = null): object
+    public function setPayee(null|FHIRExplanationOfBenefitPayee $payee = null): self
     {
+        if (null === $payee) {
+            $payee = new FHIRExplanationOfBenefitPayee();
+        }
         $this->_trackValueSet($this->payee, $payee);
         $this->payee = $payee;
         return $this;
@@ -1926,7 +1927,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getReferral(): ?FHIRReference
+    public function getReferral(): null|FHIRReference
     {
         return $this->referral;
     }
@@ -1941,8 +1942,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $referral
      * @return static
      */
-    public function setReferral(?FHIRReference $referral = null): object
+    public function setReferral(null|FHIRReference $referral = null): self
     {
+        if (null === $referral) {
+            $referral = new FHIRReference();
+        }
         $this->_trackValueSet($this->referral, $referral);
         $this->referral = $referral;
         return $this;
@@ -1957,7 +1961,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getFacility(): ?FHIRReference
+    public function getFacility(): null|FHIRReference
     {
         return $this->facility;
     }
@@ -1972,8 +1976,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $facility
      * @return static
      */
-    public function setFacility(?FHIRReference $facility = null): object
+    public function setFacility(null|FHIRReference $facility = null): self
     {
+        if (null === $facility) {
+            $facility = new FHIRReference();
+        }
         $this->_trackValueSet($this->facility, $facility);
         $this->facility = $facility;
         return $this;
@@ -1989,7 +1996,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getClaim(): ?FHIRReference
+    public function getClaim(): null|FHIRReference
     {
         return $this->claim;
     }
@@ -2005,8 +2012,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $claim
      * @return static
      */
-    public function setClaim(?FHIRReference $claim = null): object
+    public function setClaim(null|FHIRReference $claim = null): self
     {
+        if (null === $claim) {
+            $claim = new FHIRReference();
+        }
         $this->_trackValueSet($this->claim, $claim);
         $this->claim = $claim;
         return $this;
@@ -2022,7 +2032,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getClaimResponse(): ?FHIRReference
+    public function getClaimResponse(): null|FHIRReference
     {
         return $this->claimResponse;
     }
@@ -2038,8 +2048,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $claimResponse
      * @return static
      */
-    public function setClaimResponse(?FHIRReference $claimResponse = null): object
+    public function setClaimResponse(null|FHIRReference $claimResponse = null): self
     {
+        if (null === $claimResponse) {
+            $claimResponse = new FHIRReference();
+        }
         $this->_trackValueSet($this->claimResponse, $claimResponse);
         $this->claimResponse = $claimResponse;
         return $this;
@@ -2053,7 +2066,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRClaimProcessingCodes
      */
-    public function getOutcome(): ?FHIRClaimProcessingCodes
+    public function getOutcome(): null|FHIRClaimProcessingCodes
     {
         return $this->outcome;
     }
@@ -2067,8 +2080,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRClaimProcessingCodes $outcome
      * @return static
      */
-    public function setOutcome(?FHIRClaimProcessingCodes $outcome = null): object
+    public function setOutcome(null|FHIRClaimProcessingCodes $outcome = null): self
     {
+        if (null === $outcome) {
+            $outcome = new FHIRClaimProcessingCodes();
+        }
         $this->_trackValueSet($this->outcome, $outcome);
         $this->outcome = $outcome;
         return $this;
@@ -2081,9 +2097,9 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * A human readable description of the status of the adjudication.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDisposition(): ?FHIRString
+    public function getDisposition(): null|FHIRString
     {
         return $this->disposition;
     }
@@ -2095,10 +2111,10 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * A human readable description of the status of the adjudication.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $disposition
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $disposition
      * @return static
      */
-    public function setDisposition($disposition = null): object
+    public function setDisposition(null|string|FHIRStringPrimitive|FHIRString $disposition = null): self
     {
         if (null !== $disposition && !($disposition instanceof FHIRString)) {
             $disposition = new FHIRString($disposition);
@@ -2116,9 +2132,9 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * Reference from the Insurer which is used in later communications which refers to
      * this adjudication.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getPreAuthRef(): ?array
+    public function getPreAuthRef(): null|array
     {
         return $this->preAuthRef;
     }
@@ -2131,10 +2147,10 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * Reference from the Insurer which is used in later communications which refers to
      * this adjudication.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $preAuthRef
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $preAuthRef
      * @return static
      */
-    public function addPreAuthRef($preAuthRef = null): object
+    public function addPreAuthRef(null|string|FHIRStringPrimitive|FHIRString $preAuthRef = null): self
     {
         if (null !== $preAuthRef && !($preAuthRef instanceof FHIRString)) {
             $preAuthRef = new FHIRString($preAuthRef);
@@ -2155,7 +2171,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $preAuthRef
      * @return static
      */
-    public function setPreAuthRef(array $preAuthRef = []): object
+    public function setPreAuthRef(array $preAuthRef = []): self
     {
         if ([] !== $this->preAuthRef) {
             $this->_trackValuesRemoved(count($this->preAuthRef));
@@ -2184,7 +2200,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod[]
      */
-    public function getPreAuthRefPeriod(): ?array
+    public function getPreAuthRefPeriod(): null|array
     {
         return $this->preAuthRefPeriod;
     }
@@ -2200,8 +2216,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $preAuthRefPeriod
      * @return static
      */
-    public function addPreAuthRefPeriod(?FHIRPeriod $preAuthRefPeriod = null): object
+    public function addPreAuthRefPeriod(null|FHIRPeriod $preAuthRefPeriod = null): self
     {
+        if (null === $preAuthRefPeriod) {
+            $preAuthRefPeriod = new FHIRPeriod();
+        }
         $this->_trackValueAdded();
         $this->preAuthRefPeriod[] = $preAuthRefPeriod;
         return $this;
@@ -2218,7 +2237,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRPeriod[] $preAuthRefPeriod
      * @return static
      */
-    public function setPreAuthRefPeriod(array $preAuthRefPeriod = []): object
+    public function setPreAuthRefPeriod(array $preAuthRefPeriod = []): self
     {
         if ([] !== $this->preAuthRefPeriod) {
             $this->_trackValuesRemoved(count($this->preAuthRefPeriod));
@@ -2246,7 +2265,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitCareTeam[]
      */
-    public function getCareTeam(): ?array
+    public function getCareTeam(): null|array
     {
         return $this->careTeam;
     }
@@ -2261,8 +2280,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitCareTeam $careTeam
      * @return static
      */
-    public function addCareTeam(?FHIRExplanationOfBenefitCareTeam $careTeam = null): object
+    public function addCareTeam(null|FHIRExplanationOfBenefitCareTeam $careTeam = null): self
     {
+        if (null === $careTeam) {
+            $careTeam = new FHIRExplanationOfBenefitCareTeam();
+        }
         $this->_trackValueAdded();
         $this->careTeam[] = $careTeam;
         return $this;
@@ -2278,7 +2300,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitCareTeam[] $careTeam
      * @return static
      */
-    public function setCareTeam(array $careTeam = []): object
+    public function setCareTeam(array $careTeam = []): self
     {
         if ([] !== $this->careTeam) {
             $this->_trackValuesRemoved(count($this->careTeam));
@@ -2307,7 +2329,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitSupportingInfo[]
      */
-    public function getSupportingInfo(): ?array
+    public function getSupportingInfo(): null|array
     {
         return $this->supportingInfo;
     }
@@ -2323,8 +2345,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitSupportingInfo $supportingInfo
      * @return static
      */
-    public function addSupportingInfo(?FHIRExplanationOfBenefitSupportingInfo $supportingInfo = null): object
+    public function addSupportingInfo(null|FHIRExplanationOfBenefitSupportingInfo $supportingInfo = null): self
     {
+        if (null === $supportingInfo) {
+            $supportingInfo = new FHIRExplanationOfBenefitSupportingInfo();
+        }
         $this->_trackValueAdded();
         $this->supportingInfo[] = $supportingInfo;
         return $this;
@@ -2341,7 +2366,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitSupportingInfo[] $supportingInfo
      * @return static
      */
-    public function setSupportingInfo(array $supportingInfo = []): object
+    public function setSupportingInfo(array $supportingInfo = []): self
     {
         if ([] !== $this->supportingInfo) {
             $this->_trackValuesRemoved(count($this->supportingInfo));
@@ -2369,7 +2394,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitDiagnosis[]
      */
-    public function getDiagnosis(): ?array
+    public function getDiagnosis(): null|array
     {
         return $this->diagnosis;
     }
@@ -2384,8 +2409,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitDiagnosis $diagnosis
      * @return static
      */
-    public function addDiagnosis(?FHIRExplanationOfBenefitDiagnosis $diagnosis = null): object
+    public function addDiagnosis(null|FHIRExplanationOfBenefitDiagnosis $diagnosis = null): self
     {
+        if (null === $diagnosis) {
+            $diagnosis = new FHIRExplanationOfBenefitDiagnosis();
+        }
         $this->_trackValueAdded();
         $this->diagnosis[] = $diagnosis;
         return $this;
@@ -2401,7 +2429,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitDiagnosis[] $diagnosis
      * @return static
      */
-    public function setDiagnosis(array $diagnosis = []): object
+    public function setDiagnosis(array $diagnosis = []): self
     {
         if ([] !== $this->diagnosis) {
             $this->_trackValuesRemoved(count($this->diagnosis));
@@ -2430,7 +2458,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitProcedure[]
      */
-    public function getProcedure(): ?array
+    public function getProcedure(): null|array
     {
         return $this->procedure;
     }
@@ -2446,8 +2474,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitProcedure $procedure
      * @return static
      */
-    public function addProcedure(?FHIRExplanationOfBenefitProcedure $procedure = null): object
+    public function addProcedure(null|FHIRExplanationOfBenefitProcedure $procedure = null): self
     {
+        if (null === $procedure) {
+            $procedure = new FHIRExplanationOfBenefitProcedure();
+        }
         $this->_trackValueAdded();
         $this->procedure[] = $procedure;
         return $this;
@@ -2464,7 +2495,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitProcedure[] $procedure
      * @return static
      */
-    public function setProcedure(array $procedure = []): object
+    public function setProcedure(array $procedure = []): self
     {
         if ([] !== $this->procedure) {
             $this->_trackValuesRemoved(count($this->procedure));
@@ -2491,9 +2522,9 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * This indicates the relative order of a series of EOBs related to different
      * coverages for the same suite of services.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getPrecedence(): ?FHIRPositiveInt
+    public function getPrecedence(): null|FHIRPositiveInt
     {
         return $this->precedence;
     }
@@ -2506,10 +2537,10 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * This indicates the relative order of a series of EOBs related to different
      * coverages for the same suite of services.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $precedence
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $precedence
      * @return static
      */
-    public function setPrecedence($precedence = null): object
+    public function setPrecedence(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $precedence = null): self
     {
         if (null !== $precedence && !($precedence instanceof FHIRPositiveInt)) {
             $precedence = new FHIRPositiveInt($precedence);
@@ -2529,7 +2560,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitInsurance[]
      */
-    public function getInsurance(): ?array
+    public function getInsurance(): null|array
     {
         return $this->insurance;
     }
@@ -2545,8 +2576,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitInsurance $insurance
      * @return static
      */
-    public function addInsurance(?FHIRExplanationOfBenefitInsurance $insurance = null): object
+    public function addInsurance(null|FHIRExplanationOfBenefitInsurance $insurance = null): self
     {
+        if (null === $insurance) {
+            $insurance = new FHIRExplanationOfBenefitInsurance();
+        }
         $this->_trackValueAdded();
         $this->insurance[] = $insurance;
         return $this;
@@ -2563,7 +2597,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitInsurance[] $insurance
      * @return static
      */
-    public function setInsurance(array $insurance = []): object
+    public function setInsurance(array $insurance = []): self
     {
         if ([] !== $this->insurance) {
             $this->_trackValuesRemoved(count($this->insurance));
@@ -2592,7 +2626,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAccident
      */
-    public function getAccident(): ?FHIRExplanationOfBenefitAccident
+    public function getAccident(): null|FHIRExplanationOfBenefitAccident
     {
         return $this->accident;
     }
@@ -2608,8 +2642,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAccident $accident
      * @return static
      */
-    public function setAccident(?FHIRExplanationOfBenefitAccident $accident = null): object
+    public function setAccident(null|FHIRExplanationOfBenefitAccident $accident = null): self
     {
+        if (null === $accident) {
+            $accident = new FHIRExplanationOfBenefitAccident();
+        }
         $this->_trackValueSet($this->accident, $accident);
         $this->accident = $accident;
         return $this;
@@ -2625,7 +2662,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitItem[]
      */
-    public function getItem(): ?array
+    public function getItem(): null|array
     {
         return $this->item;
     }
@@ -2641,8 +2678,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitItem $item
      * @return static
      */
-    public function addItem(?FHIRExplanationOfBenefitItem $item = null): object
+    public function addItem(null|FHIRExplanationOfBenefitItem $item = null): self
     {
+        if (null === $item) {
+            $item = new FHIRExplanationOfBenefitItem();
+        }
         $this->_trackValueAdded();
         $this->item[] = $item;
         return $this;
@@ -2659,7 +2699,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitItem[] $item
      * @return static
      */
-    public function setItem(array $item = []): object
+    public function setItem(array $item = []): self
     {
         if ([] !== $this->item) {
             $this->_trackValuesRemoved(count($this->item));
@@ -2687,7 +2727,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAddItem[]
      */
-    public function getAddItem(): ?array
+    public function getAddItem(): null|array
     {
         return $this->addItem;
     }
@@ -2702,8 +2742,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAddItem $addItem
      * @return static
      */
-    public function addAddItem(?FHIRExplanationOfBenefitAddItem $addItem = null): object
+    public function addAddItem(null|FHIRExplanationOfBenefitAddItem $addItem = null): self
     {
+        if (null === $addItem) {
+            $addItem = new FHIRExplanationOfBenefitAddItem();
+        }
         $this->_trackValueAdded();
         $this->addItem[] = $addItem;
         return $this;
@@ -2719,7 +2762,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAddItem[] $addItem
      * @return static
      */
-    public function setAddItem(array $addItem = []): object
+    public function setAddItem(array $addItem = []): self
     {
         if ([] !== $this->addItem) {
             $this->_trackValuesRemoved(count($this->addItem));
@@ -2748,7 +2791,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAdjudication[]
      */
-    public function getAdjudication(): ?array
+    public function getAdjudication(): null|array
     {
         return $this->adjudication;
     }
@@ -2764,8 +2807,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAdjudication $adjudication
      * @return static
      */
-    public function addAdjudication(?FHIRExplanationOfBenefitAdjudication $adjudication = null): object
+    public function addAdjudication(null|FHIRExplanationOfBenefitAdjudication $adjudication = null): self
     {
+        if (null === $adjudication) {
+            $adjudication = new FHIRExplanationOfBenefitAdjudication();
+        }
         $this->_trackValueAdded();
         $this->adjudication[] = $adjudication;
         return $this;
@@ -2782,7 +2828,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitAdjudication[] $adjudication
      * @return static
      */
-    public function setAdjudication(array $adjudication = []): object
+    public function setAdjudication(array $adjudication = []): self
     {
         if ([] !== $this->adjudication) {
             $this->_trackValuesRemoved(count($this->adjudication));
@@ -2810,7 +2856,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitTotal[]
      */
-    public function getTotal(): ?array
+    public function getTotal(): null|array
     {
         return $this->total;
     }
@@ -2825,8 +2871,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitTotal $total
      * @return static
      */
-    public function addTotal(?FHIRExplanationOfBenefitTotal $total = null): object
+    public function addTotal(null|FHIRExplanationOfBenefitTotal $total = null): self
     {
+        if (null === $total) {
+            $total = new FHIRExplanationOfBenefitTotal();
+        }
         $this->_trackValueAdded();
         $this->total[] = $total;
         return $this;
@@ -2842,7 +2891,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitTotal[] $total
      * @return static
      */
-    public function setTotal(array $total = []): object
+    public function setTotal(array $total = []): self
     {
         if ([] !== $this->total) {
             $this->_trackValuesRemoved(count($this->total));
@@ -2870,7 +2919,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitPayment
      */
-    public function getPayment(): ?FHIRExplanationOfBenefitPayment
+    public function getPayment(): null|FHIRExplanationOfBenefitPayment
     {
         return $this->payment;
     }
@@ -2885,8 +2934,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitPayment $payment
      * @return static
      */
-    public function setPayment(?FHIRExplanationOfBenefitPayment $payment = null): object
+    public function setPayment(null|FHIRExplanationOfBenefitPayment $payment = null): self
     {
+        if (null === $payment) {
+            $payment = new FHIRExplanationOfBenefitPayment();
+        }
         $this->_trackValueSet($this->payment, $payment);
         $this->payment = $payment;
         return $this;
@@ -2902,7 +2954,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getFormCode(): ?FHIRCodeableConcept
+    public function getFormCode(): null|FHIRCodeableConcept
     {
         return $this->formCode;
     }
@@ -2918,8 +2970,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $formCode
      * @return static
      */
-    public function setFormCode(?FHIRCodeableConcept $formCode = null): object
+    public function setFormCode(null|FHIRCodeableConcept $formCode = null): self
     {
+        if (null === $formCode) {
+            $formCode = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->formCode, $formCode);
         $this->formCode = $formCode;
         return $this;
@@ -2934,7 +2989,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    public function getForm(): ?FHIRAttachment
+    public function getForm(): null|FHIRAttachment
     {
         return $this->form;
     }
@@ -2949,8 +3004,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment $form
      * @return static
      */
-    public function setForm(?FHIRAttachment $form = null): object
+    public function setForm(null|FHIRAttachment $form = null): self
     {
+        if (null === $form) {
+            $form = new FHIRAttachment();
+        }
         $this->_trackValueSet($this->form, $form);
         $this->form = $form;
         return $this;
@@ -2965,7 +3023,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitProcessNote[]
      */
-    public function getProcessNote(): ?array
+    public function getProcessNote(): null|array
     {
         return $this->processNote;
     }
@@ -2980,8 +3038,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitProcessNote $processNote
      * @return static
      */
-    public function addProcessNote(?FHIRExplanationOfBenefitProcessNote $processNote = null): object
+    public function addProcessNote(null|FHIRExplanationOfBenefitProcessNote $processNote = null): self
     {
+        if (null === $processNote) {
+            $processNote = new FHIRExplanationOfBenefitProcessNote();
+        }
         $this->_trackValueAdded();
         $this->processNote[] = $processNote;
         return $this;
@@ -2997,7 +3058,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitProcessNote[] $processNote
      * @return static
      */
-    public function setProcessNote(array $processNote = []): object
+    public function setProcessNote(array $processNote = []): self
     {
         if ([] !== $this->processNote) {
             $this->_trackValuesRemoved(count($this->processNote));
@@ -3025,7 +3086,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getBenefitPeriod(): ?FHIRPeriod
+    public function getBenefitPeriod(): null|FHIRPeriod
     {
         return $this->benefitPeriod;
     }
@@ -3040,8 +3101,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $benefitPeriod
      * @return static
      */
-    public function setBenefitPeriod(?FHIRPeriod $benefitPeriod = null): object
+    public function setBenefitPeriod(null|FHIRPeriod $benefitPeriod = null): self
     {
+        if (null === $benefitPeriod) {
+            $benefitPeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->benefitPeriod, $benefitPeriod);
         $this->benefitPeriod = $benefitPeriod;
         return $this;
@@ -3056,7 +3120,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitBenefitBalance[]
      */
-    public function getBenefitBalance(): ?array
+    public function getBenefitBalance(): null|array
     {
         return $this->benefitBalance;
     }
@@ -3071,8 +3135,11 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitBenefitBalance $benefitBalance
      * @return static
      */
-    public function addBenefitBalance(?FHIRExplanationOfBenefitBenefitBalance $benefitBalance = null): object
+    public function addBenefitBalance(null|FHIRExplanationOfBenefitBenefitBalance $benefitBalance = null): self
     {
+        if (null === $benefitBalance) {
+            $benefitBalance = new FHIRExplanationOfBenefitBenefitBalance();
+        }
         $this->_trackValueAdded();
         $this->benefitBalance[] = $benefitBalance;
         return $this;
@@ -3088,7 +3155,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit\FHIRExplanationOfBenefitBenefitBalance[] $benefitBalance
      * @return static
      */
-    public function setBenefitBalance(array $benefitBalance = []): object
+    public function setBenefitBalance(array $benefitBalance = []): self
     {
         if ([] !== $this->benefitBalance) {
             $this->_trackValuesRemoved(count($this->benefitBalance));
@@ -3115,7 +3182,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -3991,36 +4058,48 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRExplanationOfBenefit $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRExplanationOfBenefit
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRExplanationOfBenefit::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRExplanationOfBenefit::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRExplanationOfBenefit(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRExplanationOfBenefit)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRExplanationOfBenefit)) {
             throw new \RuntimeException(sprintf(
-                'FHIRExplanationOfBenefit::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRExplanationOfBenefit or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -4156,12 +4235,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
         }
         $n = $element->attributes->getNamedItem(self::FIELD_PRE_AUTH_REF);
         if (null !== $n) {
-            $pt = $type->getPreAuthRef();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addPreAuthRef($n->nodeValue);
-            }
+            $type->addPreAuthRef($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_PRECEDENCE);
         if (null !== $n) {
@@ -4204,17 +4278,25 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ExplanationOfBenefit'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -4513,7 +4595,7 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -4797,7 +4879,6 @@ class FHIRExplanationOfBenefit extends FHIRDomainResource implements PHPFHIRCont
 
         return $out;
     }
-
 
     /**
      * @return string

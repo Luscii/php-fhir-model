@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCanonical;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
@@ -70,9 +72,13 @@ use HL7\FHIR\R4\FHIRElement\FHIRInteger;
 use HL7\FHIR\R4\FHIRElement\FHIROperationParameterUse;
 use HL7\FHIR\R4\FHIRElement\FHIRSearchParamType;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A formal computable definition of an operation (on the RESTful interface) or a
@@ -85,6 +91,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_OPERATION_DEFINITION_DOT_PARAMETER;
+
     const FIELD_NAME = 'name';
     const FIELD_NAME_EXT = '_name';
     const FIELD_USE = 'use';
@@ -105,9 +112,6 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
     const FIELD_REFERENCED_FROM = 'referencedFrom';
     const FIELD_PART = 'part';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -116,10 +120,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * The name of used to identify the parameter.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    protected ?FHIRCode $name = null;
-
+    protected null|FHIRCode $name = null;
     /**
      * Whether an operation parameter is an input or an output parameter.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -128,8 +131,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIROperationParameterUse
      */
-    protected ?FHIROperationParameterUse $use = null;
-
+    protected null|FHIROperationParameterUse $use = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -138,10 +140,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * The minimum number of times this parameter SHALL appear in the request or
      * response.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $min = null;
-
+    protected null|FHIRInteger $min = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -150,10 +151,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * The maximum number of times this element is permitted to appear in the request
      * or response.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $max = null;
-
+    protected null|FHIRString $max = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -161,10 +161,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * Describes the meaning or use of this parameter.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $documentation = null;
-
+    protected null|FHIRString $documentation = null;
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -173,10 +172,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * The type for this parameter.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    protected ?FHIRCode $type = null;
-
+    protected null|FHIRCode $type = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -192,10 +190,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * specified, the target resource SHALL conform to at least one profile defined in
      * the implementation guide.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $targetProfile = [];
-
+    protected null|array $targetProfile = [];
     /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -204,8 +201,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSearchParamType
      */
-    protected ?FHIRSearchParamType $searchType = null;
-
+    protected null|FHIRSearchParamType $searchType = null;
     /**
      * A formal computable definition of an operation (on the RESTful interface) or a
      * named query (using the search interaction).
@@ -214,8 +210,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionBinding
      */
-    protected ?FHIROperationDefinitionBinding $binding = null;
-
+    protected null|FHIROperationDefinitionBinding $binding = null;
     /**
      * A formal computable definition of an operation (on the RESTful interface) or a
      * named query (using the search interaction).
@@ -225,8 +220,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionReferencedFrom[]
      */
-    protected ?array $referencedFrom = [];
-
+    protected null|array $referencedFrom = [];
     /**
      * A formal computable definition of an operation (on the RESTful interface) or a
      * named query (using the search interaction).
@@ -235,28 +229,23 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionParameter[]
      */
-    protected ?array $part = [];
+    protected null|array $part = [];
 
     /**
      * Validation map for fields in type OperationDefinition.Parameter
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIROperationDefinitionParameter Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIROperationDefinitionParameter::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
@@ -439,24 +428,13 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<OperationDefinitionParameter{$xmlns}></OperationDefinitionParameter>";
     }
 
     /**
@@ -467,9 +445,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * The name of used to identify the parameter.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    public function getName(): ?FHIRCode
+    public function getName(): null|FHIRCode
     {
         return $this->name;
     }
@@ -482,10 +460,10 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * The name of used to identify the parameter.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $name
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRCodePrimitive|FHIRCode $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRCode)) {
             $name = new FHIRCode($name);
@@ -503,7 +481,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIROperationParameterUse
      */
-    public function getUse(): ?FHIROperationParameterUse
+    public function getUse(): null|FHIROperationParameterUse
     {
         return $this->use;
     }
@@ -517,8 +495,11 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIROperationParameterUse $use
      * @return static
      */
-    public function setUse(?FHIROperationParameterUse $use = null): object
+    public function setUse(null|FHIROperationParameterUse $use = null): self
     {
+        if (null === $use) {
+            $use = new FHIROperationParameterUse();
+        }
         $this->_trackValueSet($this->use, $use);
         $this->use = $use;
         return $this;
@@ -532,9 +513,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * The minimum number of times this parameter SHALL appear in the request or
      * response.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getMin(): ?FHIRInteger
+    public function getMin(): null|FHIRInteger
     {
         return $this->min;
     }
@@ -547,10 +528,10 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * The minimum number of times this parameter SHALL appear in the request or
      * response.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $min
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $min
      * @return static
      */
-    public function setMin($min = null): object
+    public function setMin(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $min = null): self
     {
         if (null !== $min && !($min instanceof FHIRInteger)) {
             $min = new FHIRInteger($min);
@@ -568,9 +549,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * The maximum number of times this element is permitted to appear in the request
      * or response.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getMax(): ?FHIRString
+    public function getMax(): null|FHIRString
     {
         return $this->max;
     }
@@ -583,10 +564,10 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * The maximum number of times this element is permitted to appear in the request
      * or response.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $max
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $max
      * @return static
      */
-    public function setMax($max = null): object
+    public function setMax(null|string|FHIRStringPrimitive|FHIRString $max = null): self
     {
         if (null !== $max && !($max instanceof FHIRString)) {
             $max = new FHIRString($max);
@@ -603,9 +584,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * Describes the meaning or use of this parameter.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDocumentation(): ?FHIRString
+    public function getDocumentation(): null|FHIRString
     {
         return $this->documentation;
     }
@@ -617,10 +598,10 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * Describes the meaning or use of this parameter.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $documentation
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $documentation
      * @return static
      */
-    public function setDocumentation($documentation = null): object
+    public function setDocumentation(null|string|FHIRStringPrimitive|FHIRString $documentation = null): self
     {
         if (null !== $documentation && !($documentation instanceof FHIRString)) {
             $documentation = new FHIRString($documentation);
@@ -638,9 +619,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * The type for this parameter.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    public function getType(): ?FHIRCode
+    public function getType(): null|FHIRCode
     {
         return $this->type;
     }
@@ -653,10 +634,10 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * The type for this parameter.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $type
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $type
      * @return static
      */
-    public function setType($type = null): object
+    public function setType(null|string|FHIRCodePrimitive|FHIRCode $type = null): self
     {
         if (null !== $type && !($type instanceof FHIRCode)) {
             $type = new FHIRCode($type);
@@ -681,9 +662,9 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * specified, the target resource SHALL conform to at least one profile defined in
      * the implementation guide.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getTargetProfile(): ?array
+    public function getTargetProfile(): null|array
     {
         return $this->targetProfile;
     }
@@ -703,10 +684,10 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * specified, the target resource SHALL conform to at least one profile defined in
      * the implementation guide.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $targetProfile
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $targetProfile
      * @return static
      */
-    public function addTargetProfile($targetProfile = null): object
+    public function addTargetProfile(null|string|FHIRCanonicalPrimitive|FHIRCanonical $targetProfile = null): self
     {
         if (null !== $targetProfile && !($targetProfile instanceof FHIRCanonical)) {
             $targetProfile = new FHIRCanonical($targetProfile);
@@ -734,7 +715,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $targetProfile
      * @return static
      */
-    public function setTargetProfile(array $targetProfile = []): object
+    public function setTargetProfile(array $targetProfile = []): self
     {
         if ([] !== $this->targetProfile) {
             $this->_trackValuesRemoved(count($this->targetProfile));
@@ -761,7 +742,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSearchParamType
      */
-    public function getSearchType(): ?FHIRSearchParamType
+    public function getSearchType(): null|FHIRSearchParamType
     {
         return $this->searchType;
     }
@@ -775,8 +756,11 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSearchParamType $searchType
      * @return static
      */
-    public function setSearchType(?FHIRSearchParamType $searchType = null): object
+    public function setSearchType(null|FHIRSearchParamType $searchType = null): self
     {
+        if (null === $searchType) {
+            $searchType = new FHIRSearchParamType();
+        }
         $this->_trackValueSet($this->searchType, $searchType);
         $this->searchType = $searchType;
         return $this;
@@ -790,7 +774,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionBinding
      */
-    public function getBinding(): ?FHIROperationDefinitionBinding
+    public function getBinding(): null|FHIROperationDefinitionBinding
     {
         return $this->binding;
     }
@@ -804,8 +788,11 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionBinding $binding
      * @return static
      */
-    public function setBinding(?FHIROperationDefinitionBinding $binding = null): object
+    public function setBinding(null|FHIROperationDefinitionBinding $binding = null): self
     {
+        if (null === $binding) {
+            $binding = new FHIROperationDefinitionBinding();
+        }
         $this->_trackValueSet($this->binding, $binding);
         $this->binding = $binding;
         return $this;
@@ -820,7 +807,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionReferencedFrom[]
      */
-    public function getReferencedFrom(): ?array
+    public function getReferencedFrom(): null|array
     {
         return $this->referencedFrom;
     }
@@ -835,8 +822,11 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionReferencedFrom $referencedFrom
      * @return static
      */
-    public function addReferencedFrom(?FHIROperationDefinitionReferencedFrom $referencedFrom = null): object
+    public function addReferencedFrom(null|FHIROperationDefinitionReferencedFrom $referencedFrom = null): self
     {
+        if (null === $referencedFrom) {
+            $referencedFrom = new FHIROperationDefinitionReferencedFrom();
+        }
         $this->_trackValueAdded();
         $this->referencedFrom[] = $referencedFrom;
         return $this;
@@ -852,7 +842,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionReferencedFrom[] $referencedFrom
      * @return static
      */
-    public function setReferencedFrom(array $referencedFrom = []): object
+    public function setReferencedFrom(array $referencedFrom = []): self
     {
         if ([] !== $this->referencedFrom) {
             $this->_trackValuesRemoved(count($this->referencedFrom));
@@ -879,7 +869,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionParameter[]
      */
-    public function getPart(): ?array
+    public function getPart(): null|array
     {
         return $this->part;
     }
@@ -893,8 +883,11 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionParameter $part
      * @return static
      */
-    public function addPart(?FHIROperationDefinitionParameter $part = null): object
+    public function addPart(null|FHIROperationDefinitionParameter $part = null): self
     {
+        if (null === $part) {
+            $part = new FHIROperationDefinitionParameter();
+        }
         $this->_trackValueAdded();
         $this->part[] = $part;
         return $this;
@@ -909,7 +902,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionParameter[] $part
      * @return static
      */
-    public function setPart(array $part = []): object
+    public function setPart(array $part = []): self
     {
         if ([] !== $this->part) {
             $this->_trackValuesRemoved(count($this->part));
@@ -936,7 +929,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1184,36 +1177,48 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionParameter $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionParameter
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIROperationDefinitionParameter::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIROperationDefinitionParameter::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIROperationDefinitionParameter(null);
-        } elseif (!is_object($type) || !($type instanceof FHIROperationDefinitionParameter)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIROperationDefinitionParameter)) {
             throw new \RuntimeException(sprintf(
-                'FHIROperationDefinitionParameter::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition\FHIROperationDefinitionParameter or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1297,12 +1302,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_TARGET_PROFILE);
         if (null !== $n) {
-            $pt = $type->getTargetProfile();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addTargetProfile($n->nodeValue);
-            }
+            $type->addTargetProfile($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -1318,17 +1318,25 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('OperationDefinitionParameter'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getName())) {
@@ -1407,7 +1415,7 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getName())) {
@@ -1528,7 +1536,6 @@ class FHIROperationDefinitionParameter extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

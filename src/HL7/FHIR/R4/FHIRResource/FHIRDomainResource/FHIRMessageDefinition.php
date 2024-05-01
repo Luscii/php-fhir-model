@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,10 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
@@ -83,11 +87,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUsageContext;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Defines the characteristics of a message that can be shared between systems,
@@ -102,6 +113,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MESSAGE_DEFINITION;
+
     const FIELD_URL = 'url';
     const FIELD_URL_EXT = '_url';
     const FIELD_IDENTIFIER = 'identifier';
@@ -146,9 +158,6 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
     const FIELD_GRAPH = 'graph';
     const FIELD_GRAPH_EXT = '_graph';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -157,10 +166,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The business identifier that is used to reference the MessageDefinition and *is*
      * expected to be consistent from server to server.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $url = null;
-
+    protected null|FHIRUri $url = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -173,8 +181,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -187,10 +194,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * managed version is not available. There is also no expectation that versions can
      * be placed in a lexicographical sequence.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $version = null;
-
+    protected null|FHIRString $version = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -200,10 +206,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -211,10 +216,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A short, descriptive, user-friendly title for the message definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $title = null;
-
+    protected null|FHIRString $title = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -223,10 +227,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A MessageDefinition that is superseded by this definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $replaces = [];
-
+    protected null|array $replaces = [];
     /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -235,8 +238,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    protected ?FHIRPublicationStatus $status = null;
-
+    protected null|FHIRPublicationStatus $status = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -245,10 +247,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $experimental = null;
-
+    protected null|FHIRBoolean $experimental = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -262,10 +263,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * status code changes. In addition, it should change when the substantive content
      * of the message definition changes.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -274,10 +274,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The name of the organization or individual that published the message
      * definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $publisher = null;
-
+    protected null|FHIRString $publisher = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -288,8 +287,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $contact = [];
-
+    protected null|array $contact = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -302,10 +300,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * A free text natural language description of the message definition from a
      * consumer's perspective.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $description = null;
-
+    protected null|FHIRMarkdown $description = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -322,8 +319,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    protected ?array $useContext = [];
-
+    protected null|array $useContext = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -335,8 +331,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $jurisdiction = [];
-
+    protected null|array $jurisdiction = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -349,10 +344,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Explanation of why this message definition is needed and why it has been
      * designed as it has.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $purpose = null;
-
+    protected null|FHIRMarkdown $purpose = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -366,10 +360,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Copyright statements are generally legal restrictions on the use and publishing
      * of the message definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $copyright = null;
-
+    protected null|FHIRMarkdown $copyright = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -378,10 +371,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * The MessageDefinition that is the basis for the contents of this resource.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $base = null;
-
+    protected null|FHIRCanonical $base = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -391,10 +383,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Identifies a protocol or workflow that this MessageDefinition represents a step
      * in.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $parent = [];
-
+    protected null|array $parent = [];
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -404,8 +395,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    protected ?FHIRCoding $eventCoding = null;
-
+    protected null|FHIRCoding $eventCoding = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -413,10 +403,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * Event code or link to the EventDefinition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $eventUri = null;
-
+    protected null|FHIRUri $eventUri = null;
     /**
      * The impact of the content of a message.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -425,8 +414,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMessageSignificanceCategory
      */
-    protected ?FHIRMessageSignificanceCategory $category = null;
-
+    protected null|FHIRMessageSignificanceCategory $category = null;
     /**
      * Defines the characteristics of a message that can be shared between systems,
      * including the type of event that initiates the message, the content to be
@@ -438,8 +426,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus[]
      */
-    protected ?array $focus = [];
-
+    protected null|array $focus = [];
     /**
      * HL7-defined table of codes which identify conditions under which acknowledgments
      * are required to be returned in response to a message.
@@ -450,8 +437,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMessageheaderResponseRequest
      */
-    protected ?FHIRMessageheaderResponseRequest $responseRequired = null;
-
+    protected null|FHIRMessageheaderResponseRequest $responseRequired = null;
     /**
      * Defines the characteristics of a message that can be shared between systems,
      * including the type of event that initiates the message, the content to be
@@ -462,8 +448,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse[]
      */
-    protected ?array $allowedResponse = [];
-
+    protected null|array $allowedResponse = [];
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -475,30 +460,25 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * are to be added to the bundle when building the document. The GraphDefinition
      * can also specify profiles that apply to the various resources.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $graph = [];
+    protected null|array $graph = [];
 
     /**
      * Validation map for fields in type MessageDefinition
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRMessageDefinition Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMessageDefinition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_URL]) || isset($data[self::FIELD_URL_EXT])) {
@@ -933,6 +913,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         }
     }
 
+
     /**
      * @return string
      */
@@ -941,17 +922,6 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<MessageDefinition{$xmlns}></MessageDefinition>";
-    }
     /**
      * @return string
      */
@@ -969,9 +939,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The business identifier that is used to reference the MessageDefinition and *is*
      * expected to be consistent from server to server.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getUrl(): ?FHIRUri
+    public function getUrl(): null|FHIRUri
     {
         return $this->url;
     }
@@ -984,10 +954,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The business identifier that is used to reference the MessageDefinition and *is*
      * expected to be consistent from server to server.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
      * @return static
      */
-    public function setUrl($url = null): object
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
@@ -1009,7 +979,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -1027,8 +997,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -1047,7 +1020,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -1078,9 +1051,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * managed version is not available. There is also no expectation that versions can
      * be placed in a lexicographical sequence.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getVersion(): ?FHIRString
+    public function getVersion(): null|FHIRString
     {
         return $this->version;
     }
@@ -1097,10 +1070,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * managed version is not available. There is also no expectation that versions can
      * be placed in a lexicographical sequence.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
      * @return static
      */
-    public function setVersion($version = null): object
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
@@ -1119,9 +1092,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -1135,10 +1108,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -1155,9 +1128,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A short, descriptive, user-friendly title for the message definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTitle(): ?FHIRString
+    public function getTitle(): null|FHIRString
     {
         return $this->title;
     }
@@ -1169,10 +1142,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A short, descriptive, user-friendly title for the message definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
      * @return static
      */
-    public function setTitle($title = null): object
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
@@ -1190,9 +1163,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A MessageDefinition that is superseded by this definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getReplaces(): ?array
+    public function getReplaces(): null|array
     {
         return $this->replaces;
     }
@@ -1205,10 +1178,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A MessageDefinition that is superseded by this definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $replaces
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $replaces
      * @return static
      */
-    public function addReplaces($replaces = null): object
+    public function addReplaces(null|string|FHIRCanonicalPrimitive|FHIRCanonical $replaces = null): self
     {
         if (null !== $replaces && !($replaces instanceof FHIRCanonical)) {
             $replaces = new FHIRCanonical($replaces);
@@ -1229,7 +1202,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $replaces
      * @return static
      */
-    public function setReplaces(array $replaces = []): object
+    public function setReplaces(array $replaces = []): self
     {
         if ([] !== $this->replaces) {
             $this->_trackValuesRemoved(count($this->replaces));
@@ -1256,7 +1229,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    public function getStatus(): ?FHIRPublicationStatus
+    public function getStatus(): null|FHIRPublicationStatus
     {
         return $this->status;
     }
@@ -1270,8 +1243,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus $status
      * @return static
      */
-    public function setStatus(?FHIRPublicationStatus $status = null): object
+    public function setStatus(null|FHIRPublicationStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRPublicationStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -1285,9 +1261,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getExperimental(): ?FHIRBoolean
+    public function getExperimental(): null|FHIRBoolean
     {
         return $this->experimental;
     }
@@ -1300,10 +1276,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
      * @return static
      */
-    public function setExperimental($experimental = null): object
+    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null): self
     {
         if (null !== $experimental && !($experimental instanceof FHIRBoolean)) {
             $experimental = new FHIRBoolean($experimental);
@@ -1326,9 +1302,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * status code changes. In addition, it should change when the substantive content
      * of the message definition changes.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDate(): ?FHIRDateTime
+    public function getDate(): null|FHIRDateTime
     {
         return $this->date;
     }
@@ -1346,10 +1322,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * status code changes. In addition, it should change when the substantive content
      * of the message definition changes.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
      * @return static
      */
-    public function setDate($date = null): object
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
@@ -1367,9 +1343,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The name of the organization or individual that published the message
      * definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPublisher(): ?FHIRString
+    public function getPublisher(): null|FHIRString
     {
         return $this->publisher;
     }
@@ -1382,10 +1358,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The name of the organization or individual that published the message
      * definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
      * @return static
      */
-    public function setPublisher($publisher = null): object
+    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null): self
     {
         if (null !== $publisher && !($publisher instanceof FHIRString)) {
             $publisher = new FHIRString($publisher);
@@ -1405,7 +1381,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getContact(): ?array
+    public function getContact(): null|array
     {
         return $this->contact;
     }
@@ -1421,8 +1397,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $contact
      * @return static
      */
-    public function addContact(?FHIRContactDetail $contact = null): object
+    public function addContact(null|FHIRContactDetail $contact = null): self
     {
+        if (null === $contact) {
+            $contact = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
         return $this;
@@ -1439,7 +1418,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $contact
      * @return static
      */
-    public function setContact(array $contact = []): object
+    public function setContact(array $contact = []): self
     {
         if ([] !== $this->contact) {
             $this->_trackValuesRemoved(count($this->contact));
@@ -1470,9 +1449,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * A free text natural language description of the message definition from a
      * consumer's perspective.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDescription(): ?FHIRMarkdown
+    public function getDescription(): null|FHIRMarkdown
     {
         return $this->description;
     }
@@ -1489,10 +1468,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * A free text natural language description of the message definition from a
      * consumer's perspective.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
@@ -1518,7 +1497,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    public function getUseContext(): ?array
+    public function getUseContext(): null|array
     {
         return $this->useContext;
     }
@@ -1540,8 +1519,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $useContext
      * @return static
      */
-    public function addUseContext(?FHIRUsageContext $useContext = null): object
+    public function addUseContext(null|FHIRUsageContext $useContext = null): self
     {
+        if (null === $useContext) {
+            $useContext = new FHIRUsageContext();
+        }
         $this->_trackValueAdded();
         $this->useContext[] = $useContext;
         return $this;
@@ -1564,7 +1546,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUsageContext[] $useContext
      * @return static
      */
-    public function setUseContext(array $useContext = []): object
+    public function setUseContext(array $useContext = []): self
     {
         if ([] !== $this->useContext) {
             $this->_trackValuesRemoved(count($this->useContext));
@@ -1594,7 +1576,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getJurisdiction(): ?array
+    public function getJurisdiction(): null|array
     {
         return $this->jurisdiction;
     }
@@ -1611,8 +1593,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $jurisdiction
      * @return static
      */
-    public function addJurisdiction(?FHIRCodeableConcept $jurisdiction = null): object
+    public function addJurisdiction(null|FHIRCodeableConcept $jurisdiction = null): self
     {
+        if (null === $jurisdiction) {
+            $jurisdiction = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
         return $this;
@@ -1630,7 +1615,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $jurisdiction
      * @return static
      */
-    public function setJurisdiction(array $jurisdiction = []): object
+    public function setJurisdiction(array $jurisdiction = []): self
     {
         if ([] !== $this->jurisdiction) {
             $this->_trackValuesRemoved(count($this->jurisdiction));
@@ -1661,9 +1646,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Explanation of why this message definition is needed and why it has been
      * designed as it has.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getPurpose(): ?FHIRMarkdown
+    public function getPurpose(): null|FHIRMarkdown
     {
         return $this->purpose;
     }
@@ -1680,10 +1665,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Explanation of why this message definition is needed and why it has been
      * designed as it has.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
      * @return static
      */
-    public function setPurpose($purpose = null): object
+    public function setPurpose(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $purpose = null): self
     {
         if (null !== $purpose && !($purpose instanceof FHIRMarkdown)) {
             $purpose = new FHIRMarkdown($purpose);
@@ -1706,9 +1691,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Copyright statements are generally legal restrictions on the use and publishing
      * of the message definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getCopyright(): ?FHIRMarkdown
+    public function getCopyright(): null|FHIRMarkdown
     {
         return $this->copyright;
     }
@@ -1726,10 +1711,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Copyright statements are generally legal restrictions on the use and publishing
      * of the message definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
      * @return static
      */
-    public function setCopyright($copyright = null): object
+    public function setCopyright(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $copyright = null): self
     {
         if (null !== $copyright && !($copyright instanceof FHIRMarkdown)) {
             $copyright = new FHIRMarkdown($copyright);
@@ -1747,9 +1732,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * The MessageDefinition that is the basis for the contents of this resource.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getBase(): ?FHIRCanonical
+    public function getBase(): null|FHIRCanonical
     {
         return $this->base;
     }
@@ -1762,10 +1747,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * The MessageDefinition that is the basis for the contents of this resource.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $base
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $base
      * @return static
      */
-    public function setBase($base = null): object
+    public function setBase(null|string|FHIRCanonicalPrimitive|FHIRCanonical $base = null): self
     {
         if (null !== $base && !($base instanceof FHIRCanonical)) {
             $base = new FHIRCanonical($base);
@@ -1784,9 +1769,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Identifies a protocol or workflow that this MessageDefinition represents a step
      * in.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getParent(): ?array
+    public function getParent(): null|array
     {
         return $this->parent;
     }
@@ -1800,10 +1785,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Identifies a protocol or workflow that this MessageDefinition represents a step
      * in.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $parent
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $parent
      * @return static
      */
-    public function addParent($parent = null): object
+    public function addParent(null|string|FHIRCanonicalPrimitive|FHIRCanonical $parent = null): self
     {
         if (null !== $parent && !($parent instanceof FHIRCanonical)) {
             $parent = new FHIRCanonical($parent);
@@ -1825,7 +1810,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $parent
      * @return static
      */
-    public function setParent(array $parent = []): object
+    public function setParent(array $parent = []): self
     {
         if ([] !== $this->parent) {
             $this->_trackValuesRemoved(count($this->parent));
@@ -1853,7 +1838,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    public function getEventCoding(): ?FHIRCoding
+    public function getEventCoding(): null|FHIRCoding
     {
         return $this->eventCoding;
     }
@@ -1868,8 +1853,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $eventCoding
      * @return static
      */
-    public function setEventCoding(?FHIRCoding $eventCoding = null): object
+    public function setEventCoding(null|FHIRCoding $eventCoding = null): self
     {
+        if (null === $eventCoding) {
+            $eventCoding = new FHIRCoding();
+        }
         $this->_trackValueSet($this->eventCoding, $eventCoding);
         $this->eventCoding = $eventCoding;
         return $this;
@@ -1882,9 +1870,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * Event code or link to the EventDefinition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getEventUri(): ?FHIRUri
+    public function getEventUri(): null|FHIRUri
     {
         return $this->eventUri;
     }
@@ -1896,10 +1884,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * Event code or link to the EventDefinition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $eventUri
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $eventUri
      * @return static
      */
-    public function setEventUri($eventUri = null): object
+    public function setEventUri(null|string|FHIRUriPrimitive|FHIRUri $eventUri = null): self
     {
         if (null !== $eventUri && !($eventUri instanceof FHIRUri)) {
             $eventUri = new FHIRUri($eventUri);
@@ -1917,7 +1905,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMessageSignificanceCategory
      */
-    public function getCategory(): ?FHIRMessageSignificanceCategory
+    public function getCategory(): null|FHIRMessageSignificanceCategory
     {
         return $this->category;
     }
@@ -1931,8 +1919,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMessageSignificanceCategory $category
      * @return static
      */
-    public function setCategory(?FHIRMessageSignificanceCategory $category = null): object
+    public function setCategory(null|FHIRMessageSignificanceCategory $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRMessageSignificanceCategory();
+        }
         $this->_trackValueSet($this->category, $category);
         $this->category = $category;
         return $this;
@@ -1949,7 +1940,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus[]
      */
-    public function getFocus(): ?array
+    public function getFocus(): null|array
     {
         return $this->focus;
     }
@@ -1966,8 +1957,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus $focus
      * @return static
      */
-    public function addFocus(?FHIRMessageDefinitionFocus $focus = null): object
+    public function addFocus(null|FHIRMessageDefinitionFocus $focus = null): self
     {
+        if (null === $focus) {
+            $focus = new FHIRMessageDefinitionFocus();
+        }
         $this->_trackValueAdded();
         $this->focus[] = $focus;
         return $this;
@@ -1985,7 +1979,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus[] $focus
      * @return static
      */
-    public function setFocus(array $focus = []): object
+    public function setFocus(array $focus = []): self
     {
         if ([] !== $this->focus) {
             $this->_trackValuesRemoved(count($this->focus));
@@ -2014,7 +2008,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMessageheaderResponseRequest
      */
-    public function getResponseRequired(): ?FHIRMessageheaderResponseRequest
+    public function getResponseRequired(): null|FHIRMessageheaderResponseRequest
     {
         return $this->responseRequired;
     }
@@ -2030,8 +2024,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMessageheaderResponseRequest $responseRequired
      * @return static
      */
-    public function setResponseRequired(?FHIRMessageheaderResponseRequest $responseRequired = null): object
+    public function setResponseRequired(null|FHIRMessageheaderResponseRequest $responseRequired = null): self
     {
+        if (null === $responseRequired) {
+            $responseRequired = new FHIRMessageheaderResponseRequest();
+        }
         $this->_trackValueSet($this->responseRequired, $responseRequired);
         $this->responseRequired = $responseRequired;
         return $this;
@@ -2047,7 +2044,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse[]
      */
-    public function getAllowedResponse(): ?array
+    public function getAllowedResponse(): null|array
     {
         return $this->allowedResponse;
     }
@@ -2063,8 +2060,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse $allowedResponse
      * @return static
      */
-    public function addAllowedResponse(?FHIRMessageDefinitionAllowedResponse $allowedResponse = null): object
+    public function addAllowedResponse(null|FHIRMessageDefinitionAllowedResponse $allowedResponse = null): self
     {
+        if (null === $allowedResponse) {
+            $allowedResponse = new FHIRMessageDefinitionAllowedResponse();
+        }
         $this->_trackValueAdded();
         $this->allowedResponse[] = $allowedResponse;
         return $this;
@@ -2081,7 +2081,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse[] $allowedResponse
      * @return static
      */
-    public function setAllowedResponse(array $allowedResponse = []): object
+    public function setAllowedResponse(array $allowedResponse = []): self
     {
         if ([] !== $this->allowedResponse) {
             $this->_trackValuesRemoved(count($this->allowedResponse));
@@ -2111,9 +2111,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * are to be added to the bundle when building the document. The GraphDefinition
      * can also specify profiles that apply to the various resources.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getGraph(): ?array
+    public function getGraph(): null|array
     {
         return $this->graph;
     }
@@ -2129,10 +2129,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * are to be added to the bundle when building the document. The GraphDefinition
      * can also specify profiles that apply to the various resources.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $graph
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $graph
      * @return static
      */
-    public function addGraph($graph = null): object
+    public function addGraph(null|string|FHIRCanonicalPrimitive|FHIRCanonical $graph = null): self
     {
         if (null !== $graph && !($graph instanceof FHIRCanonical)) {
             $graph = new FHIRCanonical($graph);
@@ -2156,7 +2156,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $graph
      * @return static
      */
-    public function setGraph(array $graph = []): object
+    public function setGraph(array $graph = []): self
     {
         if ([] !== $this->graph) {
             $this->_trackValuesRemoved(count($this->graph));
@@ -2183,7 +2183,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2741,36 +2741,48 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMessageDefinition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMessageDefinition
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMessageDefinition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMessageDefinition::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRMessageDefinition(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMessageDefinition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMessageDefinition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMessageDefinition::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMessageDefinition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -2888,12 +2900,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         }
         $n = $element->attributes->getNamedItem(self::FIELD_REPLACES);
         if (null !== $n) {
-            $pt = $type->getReplaces();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addReplaces($n->nodeValue);
-            }
+            $type->addReplaces($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_EXPERIMENTAL);
         if (null !== $n) {
@@ -2960,12 +2967,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         }
         $n = $element->attributes->getNamedItem(self::FIELD_PARENT);
         if (null !== $n) {
-            $pt = $type->getParent();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addParent($n->nodeValue);
-            }
+            $type->addParent($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_EVENT_URI);
         if (null !== $n) {
@@ -2978,12 +2980,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         }
         $n = $element->attributes->getNamedItem(self::FIELD_GRAPH);
         if (null !== $n) {
-            $pt = $type->getGraph();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addGraph($n->nodeValue);
-            }
+            $type->addGraph($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -3017,17 +3014,25 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('MessageDefinition'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getUrl())) {
@@ -3206,7 +3211,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getUrl())) {
@@ -3493,7 +3498,6 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
 
         return $out;
     }
-
 
     /**
      * @return string

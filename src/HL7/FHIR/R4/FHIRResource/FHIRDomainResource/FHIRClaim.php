@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimAccident;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimCareTeam;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimDiagnosis;
@@ -85,11 +87,16 @@ use HL7\FHIR\R4\FHIRElement\FHIRPeriod;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUse;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A provider issued list of professional services and products which have been
@@ -104,6 +111,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CLAIM;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
@@ -135,9 +143,6 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     const FIELD_ITEM = 'item';
     const FIELD_TOTAL = 'total';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -148,8 +153,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A code specifying the state of the resource instance.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -158,8 +162,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRFinancialResourceStatusCodes
      */
-    protected ?FHIRFinancialResourceStatusCodes $status = null;
-
+    protected null|FHIRFinancialResourceStatusCodes $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -170,8 +173,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -183,8 +185,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $subType = null;
-
+    protected null|FHIRCodeableConcept $subType = null;
     /**
      * The purpose of the Claim: predetermination, preauthorization, claim.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -197,8 +198,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUse
      */
-    protected ?FHIRUse $use = null;
-
+    protected null|FHIRUse $use = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -209,8 +209,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $patient = null;
-
+    protected null|FHIRReference $patient = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -220,8 +219,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $billablePeriod = null;
-
+    protected null|FHIRPeriod $billablePeriod = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -232,10 +230,9 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The date this resource was created.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $created = null;
-
+    protected null|FHIRDateTime $created = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -245,8 +242,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $enterer = null;
-
+    protected null|FHIRReference $enterer = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -256,8 +252,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $insurer = null;
-
+    protected null|FHIRReference $insurer = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -268,8 +263,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $provider = null;
-
+    protected null|FHIRReference $provider = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -281,8 +275,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $priority = null;
-
+    protected null|FHIRCodeableConcept $priority = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -294,8 +287,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $fundsReserve = null;
-
+    protected null|FHIRCodeableConcept $fundsReserve = null;
     /**
      * A provider issued list of professional services and products which have been
      * provided, or are to be provided, to a patient which is sent to an insurer for
@@ -306,8 +298,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimRelated[]
      */
-    protected ?array $related = [];
-
+    protected null|array $related = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -317,8 +308,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $prescription = null;
-
+    protected null|FHIRReference $prescription = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -329,8 +319,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $originalPrescription = null;
-
+    protected null|FHIRReference $originalPrescription = null;
     /**
      * A provider issued list of professional services and products which have been
      * provided, or are to be provided, to a patient which is sent to an insurer for
@@ -341,8 +330,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimPayee
      */
-    protected ?FHIRClaimPayee $payee = null;
-
+    protected null|FHIRClaimPayee $payee = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -352,8 +340,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $referral = null;
-
+    protected null|FHIRReference $referral = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -363,8 +350,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $facility = null;
-
+    protected null|FHIRReference $facility = null;
     /**
      * A provider issued list of professional services and products which have been
      * provided, or are to be provided, to a patient which is sent to an insurer for
@@ -374,8 +360,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimCareTeam[]
      */
-    protected ?array $careTeam = [];
-
+    protected null|array $careTeam = [];
     /**
      * A provider issued list of professional services and products which have been
      * provided, or are to be provided, to a patient which is sent to an insurer for
@@ -386,8 +371,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimSupportingInfo[]
      */
-    protected ?array $supportingInfo = [];
-
+    protected null|array $supportingInfo = [];
     /**
      * A provider issued list of professional services and products which have been
      * provided, or are to be provided, to a patient which is sent to an insurer for
@@ -397,8 +381,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimDiagnosis[]
      */
-    protected ?array $diagnosis = [];
-
+    protected null|array $diagnosis = [];
     /**
      * A provider issued list of professional services and products which have been
      * provided, or are to be provided, to a patient which is sent to an insurer for
@@ -409,8 +392,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimProcedure[]
      */
-    protected ?array $procedure = [];
-
+    protected null|array $procedure = [];
     /**
      * A provider issued list of professional services and products which have been
      * provided, or are to be provided, to a patient which is sent to an insurer for
@@ -421,8 +403,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimInsurance[]
      */
-    protected ?array $insurance = [];
-
+    protected null|array $insurance = [];
     /**
      * A provider issued list of professional services and products which have been
      * provided, or are to be provided, to a patient which is sent to an insurer for
@@ -433,8 +414,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimAccident
      */
-    protected ?FHIRClaimAccident $accident = null;
-
+    protected null|FHIRClaimAccident $accident = null;
     /**
      * A provider issued list of professional services and products which have been
      * provided, or are to be provided, to a patient which is sent to an insurer for
@@ -445,8 +425,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimItem[]
      */
-    protected ?array $item = [];
-
+    protected null|array $item = [];
     /**
      * An amount of economic utility in some recognized currency.
      * If the element is present, it must have a value for at least one of the defined
@@ -456,13 +435,13 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    protected ?FHIRMoney $total = null;
+    protected null|FHIRMoney $total = null;
 
     /**
      * Validation map for fields in type Claim
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_INSURANCE => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -471,17 +450,12 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     /**
      * FHIRClaim Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRClaim::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -787,6 +761,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
         }
     }
 
+
     /**
      * @return string
      */
@@ -795,17 +770,6 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Claim{$xmlns}></Claim>";
-    }
     /**
      * @return string
      */
@@ -825,7 +789,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -841,8 +805,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -859,7 +826,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -886,7 +853,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRFinancialResourceStatusCodes
      */
-    public function getStatus(): ?FHIRFinancialResourceStatusCodes
+    public function getStatus(): null|FHIRFinancialResourceStatusCodes
     {
         return $this->status;
     }
@@ -900,8 +867,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRFinancialResourceStatusCodes $status
      * @return static
      */
-    public function setStatus(?FHIRFinancialResourceStatusCodes $status = null): object
+    public function setStatus(null|FHIRFinancialResourceStatusCodes $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRFinancialResourceStatusCodes();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -917,7 +887,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -933,8 +903,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -951,7 +924,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getSubType(): ?FHIRCodeableConcept
+    public function getSubType(): null|FHIRCodeableConcept
     {
         return $this->subType;
     }
@@ -968,8 +941,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $subType
      * @return static
      */
-    public function setSubType(?FHIRCodeableConcept $subType = null): object
+    public function setSubType(null|FHIRCodeableConcept $subType = null): self
     {
+        if (null === $subType) {
+            $subType = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->subType, $subType);
         $this->subType = $subType;
         return $this;
@@ -987,7 +963,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUse
      */
-    public function getUse(): ?FHIRUse
+    public function getUse(): null|FHIRUse
     {
         return $this->use;
     }
@@ -1005,8 +981,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUse $use
      * @return static
      */
-    public function setUse(?FHIRUse $use = null): object
+    public function setUse(null|FHIRUse $use = null): self
     {
+        if (null === $use) {
+            $use = new FHIRUse();
+        }
         $this->_trackValueSet($this->use, $use);
         $this->use = $use;
         return $this;
@@ -1022,7 +1001,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPatient(): ?FHIRReference
+    public function getPatient(): null|FHIRReference
     {
         return $this->patient;
     }
@@ -1038,8 +1017,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $patient
      * @return static
      */
-    public function setPatient(?FHIRReference $patient = null): object
+    public function setPatient(null|FHIRReference $patient = null): self
     {
+        if (null === $patient) {
+            $patient = new FHIRReference();
+        }
         $this->_trackValueSet($this->patient, $patient);
         $this->patient = $patient;
         return $this;
@@ -1054,7 +1036,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getBillablePeriod(): ?FHIRPeriod
+    public function getBillablePeriod(): null|FHIRPeriod
     {
         return $this->billablePeriod;
     }
@@ -1069,8 +1051,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $billablePeriod
      * @return static
      */
-    public function setBillablePeriod(?FHIRPeriod $billablePeriod = null): object
+    public function setBillablePeriod(null|FHIRPeriod $billablePeriod = null): self
     {
+        if (null === $billablePeriod) {
+            $billablePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->billablePeriod, $billablePeriod);
         $this->billablePeriod = $billablePeriod;
         return $this;
@@ -1086,9 +1071,9 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The date this resource was created.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getCreated(): ?FHIRDateTime
+    public function getCreated(): null|FHIRDateTime
     {
         return $this->created;
     }
@@ -1103,10 +1088,10 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The date this resource was created.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $created
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $created
      * @return static
      */
-    public function setCreated($created = null): object
+    public function setCreated(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $created = null): self
     {
         if (null !== $created && !($created instanceof FHIRDateTime)) {
             $created = new FHIRDateTime($created);
@@ -1125,7 +1110,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getEnterer(): ?FHIRReference
+    public function getEnterer(): null|FHIRReference
     {
         return $this->enterer;
     }
@@ -1140,8 +1125,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $enterer
      * @return static
      */
-    public function setEnterer(?FHIRReference $enterer = null): object
+    public function setEnterer(null|FHIRReference $enterer = null): self
     {
+        if (null === $enterer) {
+            $enterer = new FHIRReference();
+        }
         $this->_trackValueSet($this->enterer, $enterer);
         $this->enterer = $enterer;
         return $this;
@@ -1156,7 +1144,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getInsurer(): ?FHIRReference
+    public function getInsurer(): null|FHIRReference
     {
         return $this->insurer;
     }
@@ -1171,8 +1159,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $insurer
      * @return static
      */
-    public function setInsurer(?FHIRReference $insurer = null): object
+    public function setInsurer(null|FHIRReference $insurer = null): self
     {
+        if (null === $insurer) {
+            $insurer = new FHIRReference();
+        }
         $this->_trackValueSet($this->insurer, $insurer);
         $this->insurer = $insurer;
         return $this;
@@ -1188,7 +1179,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getProvider(): ?FHIRReference
+    public function getProvider(): null|FHIRReference
     {
         return $this->provider;
     }
@@ -1204,8 +1195,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $provider
      * @return static
      */
-    public function setProvider(?FHIRReference $provider = null): object
+    public function setProvider(null|FHIRReference $provider = null): self
     {
+        if (null === $provider) {
+            $provider = new FHIRReference();
+        }
         $this->_trackValueSet($this->provider, $provider);
         $this->provider = $provider;
         return $this;
@@ -1222,7 +1216,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getPriority(): ?FHIRCodeableConcept
+    public function getPriority(): null|FHIRCodeableConcept
     {
         return $this->priority;
     }
@@ -1239,8 +1233,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $priority
      * @return static
      */
-    public function setPriority(?FHIRCodeableConcept $priority = null): object
+    public function setPriority(null|FHIRCodeableConcept $priority = null): self
     {
+        if (null === $priority) {
+            $priority = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->priority, $priority);
         $this->priority = $priority;
         return $this;
@@ -1257,7 +1254,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getFundsReserve(): ?FHIRCodeableConcept
+    public function getFundsReserve(): null|FHIRCodeableConcept
     {
         return $this->fundsReserve;
     }
@@ -1274,8 +1271,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $fundsReserve
      * @return static
      */
-    public function setFundsReserve(?FHIRCodeableConcept $fundsReserve = null): object
+    public function setFundsReserve(null|FHIRCodeableConcept $fundsReserve = null): self
     {
+        if (null === $fundsReserve) {
+            $fundsReserve = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->fundsReserve, $fundsReserve);
         $this->fundsReserve = $fundsReserve;
         return $this;
@@ -1291,7 +1291,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimRelated[]
      */
-    public function getRelated(): ?array
+    public function getRelated(): null|array
     {
         return $this->related;
     }
@@ -1307,8 +1307,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimRelated $related
      * @return static
      */
-    public function addRelated(?FHIRClaimRelated $related = null): object
+    public function addRelated(null|FHIRClaimRelated $related = null): self
     {
+        if (null === $related) {
+            $related = new FHIRClaimRelated();
+        }
         $this->_trackValueAdded();
         $this->related[] = $related;
         return $this;
@@ -1325,7 +1328,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimRelated[] $related
      * @return static
      */
-    public function setRelated(array $related = []): object
+    public function setRelated(array $related = []): self
     {
         if ([] !== $this->related) {
             $this->_trackValuesRemoved(count($this->related));
@@ -1353,7 +1356,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPrescription(): ?FHIRReference
+    public function getPrescription(): null|FHIRReference
     {
         return $this->prescription;
     }
@@ -1368,8 +1371,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $prescription
      * @return static
      */
-    public function setPrescription(?FHIRReference $prescription = null): object
+    public function setPrescription(null|FHIRReference $prescription = null): self
     {
+        if (null === $prescription) {
+            $prescription = new FHIRReference();
+        }
         $this->_trackValueSet($this->prescription, $prescription);
         $this->prescription = $prescription;
         return $this;
@@ -1385,7 +1391,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getOriginalPrescription(): ?FHIRReference
+    public function getOriginalPrescription(): null|FHIRReference
     {
         return $this->originalPrescription;
     }
@@ -1401,8 +1407,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $originalPrescription
      * @return static
      */
-    public function setOriginalPrescription(?FHIRReference $originalPrescription = null): object
+    public function setOriginalPrescription(null|FHIRReference $originalPrescription = null): self
     {
+        if (null === $originalPrescription) {
+            $originalPrescription = new FHIRReference();
+        }
         $this->_trackValueSet($this->originalPrescription, $originalPrescription);
         $this->originalPrescription = $originalPrescription;
         return $this;
@@ -1418,7 +1427,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimPayee
      */
-    public function getPayee(): ?FHIRClaimPayee
+    public function getPayee(): null|FHIRClaimPayee
     {
         return $this->payee;
     }
@@ -1434,8 +1443,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimPayee $payee
      * @return static
      */
-    public function setPayee(?FHIRClaimPayee $payee = null): object
+    public function setPayee(null|FHIRClaimPayee $payee = null): self
     {
+        if (null === $payee) {
+            $payee = new FHIRClaimPayee();
+        }
         $this->_trackValueSet($this->payee, $payee);
         $this->payee = $payee;
         return $this;
@@ -1450,7 +1462,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getReferral(): ?FHIRReference
+    public function getReferral(): null|FHIRReference
     {
         return $this->referral;
     }
@@ -1465,8 +1477,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $referral
      * @return static
      */
-    public function setReferral(?FHIRReference $referral = null): object
+    public function setReferral(null|FHIRReference $referral = null): self
     {
+        if (null === $referral) {
+            $referral = new FHIRReference();
+        }
         $this->_trackValueSet($this->referral, $referral);
         $this->referral = $referral;
         return $this;
@@ -1481,7 +1496,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getFacility(): ?FHIRReference
+    public function getFacility(): null|FHIRReference
     {
         return $this->facility;
     }
@@ -1496,8 +1511,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $facility
      * @return static
      */
-    public function setFacility(?FHIRReference $facility = null): object
+    public function setFacility(null|FHIRReference $facility = null): self
     {
+        if (null === $facility) {
+            $facility = new FHIRReference();
+        }
         $this->_trackValueSet($this->facility, $facility);
         $this->facility = $facility;
         return $this;
@@ -1512,7 +1530,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimCareTeam[]
      */
-    public function getCareTeam(): ?array
+    public function getCareTeam(): null|array
     {
         return $this->careTeam;
     }
@@ -1527,8 +1545,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimCareTeam $careTeam
      * @return static
      */
-    public function addCareTeam(?FHIRClaimCareTeam $careTeam = null): object
+    public function addCareTeam(null|FHIRClaimCareTeam $careTeam = null): self
     {
+        if (null === $careTeam) {
+            $careTeam = new FHIRClaimCareTeam();
+        }
         $this->_trackValueAdded();
         $this->careTeam[] = $careTeam;
         return $this;
@@ -1544,7 +1565,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimCareTeam[] $careTeam
      * @return static
      */
-    public function setCareTeam(array $careTeam = []): object
+    public function setCareTeam(array $careTeam = []): self
     {
         if ([] !== $this->careTeam) {
             $this->_trackValuesRemoved(count($this->careTeam));
@@ -1573,7 +1594,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimSupportingInfo[]
      */
-    public function getSupportingInfo(): ?array
+    public function getSupportingInfo(): null|array
     {
         return $this->supportingInfo;
     }
@@ -1589,8 +1610,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimSupportingInfo $supportingInfo
      * @return static
      */
-    public function addSupportingInfo(?FHIRClaimSupportingInfo $supportingInfo = null): object
+    public function addSupportingInfo(null|FHIRClaimSupportingInfo $supportingInfo = null): self
     {
+        if (null === $supportingInfo) {
+            $supportingInfo = new FHIRClaimSupportingInfo();
+        }
         $this->_trackValueAdded();
         $this->supportingInfo[] = $supportingInfo;
         return $this;
@@ -1607,7 +1631,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimSupportingInfo[] $supportingInfo
      * @return static
      */
-    public function setSupportingInfo(array $supportingInfo = []): object
+    public function setSupportingInfo(array $supportingInfo = []): self
     {
         if ([] !== $this->supportingInfo) {
             $this->_trackValuesRemoved(count($this->supportingInfo));
@@ -1635,7 +1659,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimDiagnosis[]
      */
-    public function getDiagnosis(): ?array
+    public function getDiagnosis(): null|array
     {
         return $this->diagnosis;
     }
@@ -1650,8 +1674,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimDiagnosis $diagnosis
      * @return static
      */
-    public function addDiagnosis(?FHIRClaimDiagnosis $diagnosis = null): object
+    public function addDiagnosis(null|FHIRClaimDiagnosis $diagnosis = null): self
     {
+        if (null === $diagnosis) {
+            $diagnosis = new FHIRClaimDiagnosis();
+        }
         $this->_trackValueAdded();
         $this->diagnosis[] = $diagnosis;
         return $this;
@@ -1667,7 +1694,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimDiagnosis[] $diagnosis
      * @return static
      */
-    public function setDiagnosis(array $diagnosis = []): object
+    public function setDiagnosis(array $diagnosis = []): self
     {
         if ([] !== $this->diagnosis) {
             $this->_trackValuesRemoved(count($this->diagnosis));
@@ -1696,7 +1723,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimProcedure[]
      */
-    public function getProcedure(): ?array
+    public function getProcedure(): null|array
     {
         return $this->procedure;
     }
@@ -1712,8 +1739,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimProcedure $procedure
      * @return static
      */
-    public function addProcedure(?FHIRClaimProcedure $procedure = null): object
+    public function addProcedure(null|FHIRClaimProcedure $procedure = null): self
     {
+        if (null === $procedure) {
+            $procedure = new FHIRClaimProcedure();
+        }
         $this->_trackValueAdded();
         $this->procedure[] = $procedure;
         return $this;
@@ -1730,7 +1760,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimProcedure[] $procedure
      * @return static
      */
-    public function setProcedure(array $procedure = []): object
+    public function setProcedure(array $procedure = []): self
     {
         if ([] !== $this->procedure) {
             $this->_trackValuesRemoved(count($this->procedure));
@@ -1759,7 +1789,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimInsurance[]
      */
-    public function getInsurance(): ?array
+    public function getInsurance(): null|array
     {
         return $this->insurance;
     }
@@ -1775,8 +1805,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimInsurance $insurance
      * @return static
      */
-    public function addInsurance(?FHIRClaimInsurance $insurance = null): object
+    public function addInsurance(null|FHIRClaimInsurance $insurance = null): self
     {
+        if (null === $insurance) {
+            $insurance = new FHIRClaimInsurance();
+        }
         $this->_trackValueAdded();
         $this->insurance[] = $insurance;
         return $this;
@@ -1793,7 +1826,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimInsurance[] $insurance
      * @return static
      */
-    public function setInsurance(array $insurance = []): object
+    public function setInsurance(array $insurance = []): self
     {
         if ([] !== $this->insurance) {
             $this->_trackValuesRemoved(count($this->insurance));
@@ -1822,7 +1855,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimAccident
      */
-    public function getAccident(): ?FHIRClaimAccident
+    public function getAccident(): null|FHIRClaimAccident
     {
         return $this->accident;
     }
@@ -1838,8 +1871,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimAccident $accident
      * @return static
      */
-    public function setAccident(?FHIRClaimAccident $accident = null): object
+    public function setAccident(null|FHIRClaimAccident $accident = null): self
     {
+        if (null === $accident) {
+            $accident = new FHIRClaimAccident();
+        }
         $this->_trackValueSet($this->accident, $accident);
         $this->accident = $accident;
         return $this;
@@ -1855,7 +1891,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimItem[]
      */
-    public function getItem(): ?array
+    public function getItem(): null|array
     {
         return $this->item;
     }
@@ -1871,8 +1907,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimItem $item
      * @return static
      */
-    public function addItem(?FHIRClaimItem $item = null): object
+    public function addItem(null|FHIRClaimItem $item = null): self
     {
+        if (null === $item) {
+            $item = new FHIRClaimItem();
+        }
         $this->_trackValueAdded();
         $this->item[] = $item;
         return $this;
@@ -1889,7 +1928,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimItem[] $item
      * @return static
      */
-    public function setItem(array $item = []): object
+    public function setItem(array $item = []): self
     {
         if ([] !== $this->item) {
             $this->_trackValuesRemoved(count($this->item));
@@ -1917,7 +1956,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    public function getTotal(): ?FHIRMoney
+    public function getTotal(): null|FHIRMoney
     {
         return $this->total;
     }
@@ -1932,8 +1971,11 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMoney $total
      * @return static
      */
-    public function setTotal(?FHIRMoney $total = null): object
+    public function setTotal(null|FHIRMoney $total = null): self
     {
+        if (null === $total) {
+            $total = new FHIRMoney();
+        }
         $this->_trackValueSet($this->total, $total);
         $this->total = $total;
         return $this;
@@ -1947,7 +1989,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2537,36 +2579,48 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRClaim $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRClaim
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRClaim::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRClaim::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRClaim(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRClaim)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRClaim)) {
             throw new \RuntimeException(sprintf(
-                'FHIRClaim::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRClaim or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -2691,17 +2745,25 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Claim'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2885,7 +2947,7 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -3043,7 +3105,6 @@ class FHIRClaim extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
 
         return $out;
     }
-
 
     /**
      * @return string

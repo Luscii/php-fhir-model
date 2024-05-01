@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\PHPFHIRTests\Unit;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,17 +78,29 @@ class FHIRPositiveIntPrimitiveTest extends TestCase
     }
 
 
-
     public function testCanConstructWithString()
     {
-        $n = new FHIRPositiveIntPrimitive('10');
-        $this->assertEquals('10', (string)$n);
+        {
+            $n = new FHIRPositiveIntPrimitive('10');
+            $this->assertEquals('10', (string)$n);
+        }
+        {
+            $n = new FHIRPositiveIntPrimitive('1,000');
+            $this->assertEquals('1,000', (string)$n);
+        }
     }
 
     public function testCanSetValueFromString()
     {
-        $n = new FHIRPositiveIntPrimitive;
-        $n->setValue('10');
-        $this->assertEquals('10', (string)$n);
+        {
+            $n = new FHIRPositiveIntPrimitive;
+            $n->setValue('10');
+            $this->assertEquals('10', (string)$n);
+        }
+        {
+            $n = new FHIRPositiveIntPrimitive;
+            $n->setValue('1,000');
+            $this->assertEquals('1,000', (string)$n);
+        }
     }
 }

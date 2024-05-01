@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAnnotation;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionCapability;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionDeviceName;
@@ -83,11 +84,17 @@ use HL7\FHIR\R4\FHIRElement\FHIRQuantity;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The characteristics, operational status and capabilities of a medical-related
@@ -101,6 +108,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DEVICE_DEFINITION;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_UDI_DEVICE_IDENTIFIER = 'udiDeviceIdentifier';
     const FIELD_MANUFACTURER_STRING = 'manufacturerString';
@@ -130,9 +138,6 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
     const FIELD_PARENT_DEVICE = 'parentDevice';
     const FIELD_MATERIAL = 'material';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -144,8 +149,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * The characteristics, operational status and capabilities of a medical-related
      * component of a medical device.
@@ -157,8 +161,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionUdiDeviceIdentifier[]
      */
-    protected ?array $udiDeviceIdentifier = [];
-
+    protected null|array $udiDeviceIdentifier = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -166,10 +169,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * A name of the manufacturer.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $manufacturerString = null;
-
+    protected null|FHIRString $manufacturerString = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -179,8 +181,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $manufacturerReference = null;
-
+    protected null|FHIRReference $manufacturerReference = null;
     /**
      * The characteristics, operational status and capabilities of a medical-related
      * component of a medical device.
@@ -189,8 +190,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionDeviceName[]
      */
-    protected ?array $deviceName = [];
-
+    protected null|array $deviceName = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -198,10 +198,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * The model number for the device.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $modelNumber = null;
-
+    protected null|FHIRString $modelNumber = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -212,8 +211,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * The characteristics, operational status and capabilities of a medical-related
      * component of a medical device.
@@ -223,8 +221,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionSpecialization[]
      */
-    protected ?array $specialization = [];
-
+    protected null|array $specialization = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -232,10 +229,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * The available versions of the device, e.g., software versions.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $version = [];
-
+    protected null|array $version = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -246,8 +242,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $safety = [];
-
+    protected null|array $safety = [];
     /**
      * The shelf-life and storage information for a medicinal product item or container
      * can be described using this class.
@@ -258,8 +253,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife[]
      */
-    protected ?array $shelfLifeStorage = [];
-
+    protected null|array $shelfLifeStorage = [];
     /**
      * The marketing status describes the date when a medicinal product is actually put
      * on the market or the date as of which it is no longer available.
@@ -270,8 +264,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProdCharacteristic
      */
-    protected ?FHIRProdCharacteristic $physicalCharacteristics = null;
-
+    protected null|FHIRProdCharacteristic $physicalCharacteristics = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -283,8 +276,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $languageCode = [];
-
+    protected null|array $languageCode = [];
     /**
      * The characteristics, operational status and capabilities of a medical-related
      * component of a medical device.
@@ -293,8 +285,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionCapability[]
      */
-    protected ?array $capability = [];
-
+    protected null|array $capability = [];
     /**
      * The characteristics, operational status and capabilities of a medical-related
      * component of a medical device.
@@ -304,8 +295,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionProperty[]
      */
-    protected ?array $property = [];
-
+    protected null|array $property = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -316,8 +306,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $owner = null;
-
+    protected null|FHIRReference $owner = null;
     /**
      * Details for all kinds of technology mediated contact points for a person or
      * organization, including telephone, email, etc.
@@ -329,8 +318,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint[]
      */
-    protected ?array $contact = [];
-
+    protected null|array $contact = [];
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -338,10 +326,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * A network address on which the device may be contacted directly.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $url = null;
-
+    protected null|FHIRUri $url = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -349,10 +336,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Access to on-line information about the device.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $onlineInformation = null;
-
+    protected null|FHIRUri $onlineInformation = null;
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -364,8 +350,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    protected ?array $note = [];
-
+    protected null|array $note = [];
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -379,8 +364,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $quantity = null;
-
+    protected null|FHIRQuantity $quantity = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -390,8 +374,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $parentDevice = null;
-
+    protected null|FHIRReference $parentDevice = null;
     /**
      * The characteristics, operational status and capabilities of a medical-related
      * component of a medical device.
@@ -400,28 +383,23 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionMaterial[]
      */
-    protected ?array $material = [];
+    protected null|array $material = [];
 
     /**
      * Validation map for fields in type DeviceDefinition
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRDeviceDefinition Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRDeviceDefinition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -774,6 +752,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
         }
     }
 
+
     /**
      * @return string
      */
@@ -782,17 +761,6 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<DeviceDefinition{$xmlns}></DeviceDefinition>";
-    }
     /**
      * @return string
      */
@@ -813,7 +781,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -830,8 +798,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -849,7 +820,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -879,7 +850,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionUdiDeviceIdentifier[]
      */
-    public function getUdiDeviceIdentifier(): ?array
+    public function getUdiDeviceIdentifier(): null|array
     {
         return $this->udiDeviceIdentifier;
     }
@@ -896,8 +867,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionUdiDeviceIdentifier $udiDeviceIdentifier
      * @return static
      */
-    public function addUdiDeviceIdentifier(?FHIRDeviceDefinitionUdiDeviceIdentifier $udiDeviceIdentifier = null): object
+    public function addUdiDeviceIdentifier(null|FHIRDeviceDefinitionUdiDeviceIdentifier $udiDeviceIdentifier = null): self
     {
+        if (null === $udiDeviceIdentifier) {
+            $udiDeviceIdentifier = new FHIRDeviceDefinitionUdiDeviceIdentifier();
+        }
         $this->_trackValueAdded();
         $this->udiDeviceIdentifier[] = $udiDeviceIdentifier;
         return $this;
@@ -915,7 +889,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionUdiDeviceIdentifier[] $udiDeviceIdentifier
      * @return static
      */
-    public function setUdiDeviceIdentifier(array $udiDeviceIdentifier = []): object
+    public function setUdiDeviceIdentifier(array $udiDeviceIdentifier = []): self
     {
         if ([] !== $this->udiDeviceIdentifier) {
             $this->_trackValuesRemoved(count($this->udiDeviceIdentifier));
@@ -941,9 +915,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * A name of the manufacturer.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getManufacturerString(): ?FHIRString
+    public function getManufacturerString(): null|FHIRString
     {
         return $this->manufacturerString;
     }
@@ -955,10 +929,10 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * A name of the manufacturer.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $manufacturerString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $manufacturerString
      * @return static
      */
-    public function setManufacturerString($manufacturerString = null): object
+    public function setManufacturerString(null|string|FHIRStringPrimitive|FHIRString $manufacturerString = null): self
     {
         if (null !== $manufacturerString && !($manufacturerString instanceof FHIRString)) {
             $manufacturerString = new FHIRString($manufacturerString);
@@ -977,7 +951,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getManufacturerReference(): ?FHIRReference
+    public function getManufacturerReference(): null|FHIRReference
     {
         return $this->manufacturerReference;
     }
@@ -992,8 +966,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $manufacturerReference
      * @return static
      */
-    public function setManufacturerReference(?FHIRReference $manufacturerReference = null): object
+    public function setManufacturerReference(null|FHIRReference $manufacturerReference = null): self
     {
+        if (null === $manufacturerReference) {
+            $manufacturerReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->manufacturerReference, $manufacturerReference);
         $this->manufacturerReference = $manufacturerReference;
         return $this;
@@ -1007,7 +984,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionDeviceName[]
      */
-    public function getDeviceName(): ?array
+    public function getDeviceName(): null|array
     {
         return $this->deviceName;
     }
@@ -1021,8 +998,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionDeviceName $deviceName
      * @return static
      */
-    public function addDeviceName(?FHIRDeviceDefinitionDeviceName $deviceName = null): object
+    public function addDeviceName(null|FHIRDeviceDefinitionDeviceName $deviceName = null): self
     {
+        if (null === $deviceName) {
+            $deviceName = new FHIRDeviceDefinitionDeviceName();
+        }
         $this->_trackValueAdded();
         $this->deviceName[] = $deviceName;
         return $this;
@@ -1037,7 +1017,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionDeviceName[] $deviceName
      * @return static
      */
-    public function setDeviceName(array $deviceName = []): object
+    public function setDeviceName(array $deviceName = []): self
     {
         if ([] !== $this->deviceName) {
             $this->_trackValuesRemoved(count($this->deviceName));
@@ -1063,9 +1043,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * The model number for the device.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getModelNumber(): ?FHIRString
+    public function getModelNumber(): null|FHIRString
     {
         return $this->modelNumber;
     }
@@ -1077,10 +1057,10 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * The model number for the device.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $modelNumber
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $modelNumber
      * @return static
      */
-    public function setModelNumber($modelNumber = null): object
+    public function setModelNumber(null|string|FHIRStringPrimitive|FHIRString $modelNumber = null): self
     {
         if (null !== $modelNumber && !($modelNumber instanceof FHIRString)) {
             $modelNumber = new FHIRString($modelNumber);
@@ -1100,7 +1080,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -1116,8 +1096,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -1132,7 +1115,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionSpecialization[]
      */
-    public function getSpecialization(): ?array
+    public function getSpecialization(): null|array
     {
         return $this->specialization;
     }
@@ -1147,8 +1130,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionSpecialization $specialization
      * @return static
      */
-    public function addSpecialization(?FHIRDeviceDefinitionSpecialization $specialization = null): object
+    public function addSpecialization(null|FHIRDeviceDefinitionSpecialization $specialization = null): self
     {
+        if (null === $specialization) {
+            $specialization = new FHIRDeviceDefinitionSpecialization();
+        }
         $this->_trackValueAdded();
         $this->specialization[] = $specialization;
         return $this;
@@ -1164,7 +1150,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionSpecialization[] $specialization
      * @return static
      */
-    public function setSpecialization(array $specialization = []): object
+    public function setSpecialization(array $specialization = []): self
     {
         if ([] !== $this->specialization) {
             $this->_trackValuesRemoved(count($this->specialization));
@@ -1190,9 +1176,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * The available versions of the device, e.g., software versions.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getVersion(): ?array
+    public function getVersion(): null|array
     {
         return $this->version;
     }
@@ -1204,10 +1190,10 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * The available versions of the device, e.g., software versions.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $version
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
      * @return static
      */
-    public function addVersion($version = null): object
+    public function addVersion(null|string|FHIRStringPrimitive|FHIRString $version = null): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
@@ -1227,7 +1213,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $version
      * @return static
      */
-    public function setVersion(array $version = []): object
+    public function setVersion(array $version = []): self
     {
         if ([] !== $this->version) {
             $this->_trackValuesRemoved(count($this->version));
@@ -1256,7 +1242,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getSafety(): ?array
+    public function getSafety(): null|array
     {
         return $this->safety;
     }
@@ -1272,8 +1258,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $safety
      * @return static
      */
-    public function addSafety(?FHIRCodeableConcept $safety = null): object
+    public function addSafety(null|FHIRCodeableConcept $safety = null): self
     {
+        if (null === $safety) {
+            $safety = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->safety[] = $safety;
         return $this;
@@ -1290,7 +1279,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $safety
      * @return static
      */
-    public function setSafety(array $safety = []): object
+    public function setSafety(array $safety = []): self
     {
         if ([] !== $this->safety) {
             $this->_trackValuesRemoved(count($this->safety));
@@ -1319,7 +1308,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife[]
      */
-    public function getShelfLifeStorage(): ?array
+    public function getShelfLifeStorage(): null|array
     {
         return $this->shelfLifeStorage;
     }
@@ -1335,8 +1324,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife $shelfLifeStorage
      * @return static
      */
-    public function addShelfLifeStorage(?FHIRProductShelfLife $shelfLifeStorage = null): object
+    public function addShelfLifeStorage(null|FHIRProductShelfLife $shelfLifeStorage = null): self
     {
+        if (null === $shelfLifeStorage) {
+            $shelfLifeStorage = new FHIRProductShelfLife();
+        }
         $this->_trackValueAdded();
         $this->shelfLifeStorage[] = $shelfLifeStorage;
         return $this;
@@ -1353,7 +1345,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife[] $shelfLifeStorage
      * @return static
      */
-    public function setShelfLifeStorage(array $shelfLifeStorage = []): object
+    public function setShelfLifeStorage(array $shelfLifeStorage = []): self
     {
         if ([] !== $this->shelfLifeStorage) {
             $this->_trackValuesRemoved(count($this->shelfLifeStorage));
@@ -1382,7 +1374,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProdCharacteristic
      */
-    public function getPhysicalCharacteristics(): ?FHIRProdCharacteristic
+    public function getPhysicalCharacteristics(): null|FHIRProdCharacteristic
     {
         return $this->physicalCharacteristics;
     }
@@ -1398,8 +1390,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProdCharacteristic $physicalCharacteristics
      * @return static
      */
-    public function setPhysicalCharacteristics(?FHIRProdCharacteristic $physicalCharacteristics = null): object
+    public function setPhysicalCharacteristics(null|FHIRProdCharacteristic $physicalCharacteristics = null): self
     {
+        if (null === $physicalCharacteristics) {
+            $physicalCharacteristics = new FHIRProdCharacteristic();
+        }
         $this->_trackValueSet($this->physicalCharacteristics, $physicalCharacteristics);
         $this->physicalCharacteristics = $physicalCharacteristics;
         return $this;
@@ -1416,7 +1411,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getLanguageCode(): ?array
+    public function getLanguageCode(): null|array
     {
         return $this->languageCode;
     }
@@ -1433,8 +1428,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $languageCode
      * @return static
      */
-    public function addLanguageCode(?FHIRCodeableConcept $languageCode = null): object
+    public function addLanguageCode(null|FHIRCodeableConcept $languageCode = null): self
     {
+        if (null === $languageCode) {
+            $languageCode = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->languageCode[] = $languageCode;
         return $this;
@@ -1452,7 +1450,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $languageCode
      * @return static
      */
-    public function setLanguageCode(array $languageCode = []): object
+    public function setLanguageCode(array $languageCode = []): self
     {
         if ([] !== $this->languageCode) {
             $this->_trackValuesRemoved(count($this->languageCode));
@@ -1479,7 +1477,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionCapability[]
      */
-    public function getCapability(): ?array
+    public function getCapability(): null|array
     {
         return $this->capability;
     }
@@ -1493,8 +1491,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionCapability $capability
      * @return static
      */
-    public function addCapability(?FHIRDeviceDefinitionCapability $capability = null): object
+    public function addCapability(null|FHIRDeviceDefinitionCapability $capability = null): self
     {
+        if (null === $capability) {
+            $capability = new FHIRDeviceDefinitionCapability();
+        }
         $this->_trackValueAdded();
         $this->capability[] = $capability;
         return $this;
@@ -1509,7 +1510,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionCapability[] $capability
      * @return static
      */
-    public function setCapability(array $capability = []): object
+    public function setCapability(array $capability = []): self
     {
         if ([] !== $this->capability) {
             $this->_trackValuesRemoved(count($this->capability));
@@ -1537,7 +1538,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionProperty[]
      */
-    public function getProperty(): ?array
+    public function getProperty(): null|array
     {
         return $this->property;
     }
@@ -1552,8 +1553,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionProperty $property
      * @return static
      */
-    public function addProperty(?FHIRDeviceDefinitionProperty $property = null): object
+    public function addProperty(null|FHIRDeviceDefinitionProperty $property = null): self
     {
+        if (null === $property) {
+            $property = new FHIRDeviceDefinitionProperty();
+        }
         $this->_trackValueAdded();
         $this->property[] = $property;
         return $this;
@@ -1569,7 +1573,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionProperty[] $property
      * @return static
      */
-    public function setProperty(array $property = []): object
+    public function setProperty(array $property = []): self
     {
         if ([] !== $this->property) {
             $this->_trackValuesRemoved(count($this->property));
@@ -1598,7 +1602,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getOwner(): ?FHIRReference
+    public function getOwner(): null|FHIRReference
     {
         return $this->owner;
     }
@@ -1614,8 +1618,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $owner
      * @return static
      */
-    public function setOwner(?FHIRReference $owner = null): object
+    public function setOwner(null|FHIRReference $owner = null): self
     {
+        if (null === $owner) {
+            $owner = new FHIRReference();
+        }
         $this->_trackValueSet($this->owner, $owner);
         $this->owner = $owner;
         return $this;
@@ -1632,7 +1639,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint[]
      */
-    public function getContact(): ?array
+    public function getContact(): null|array
     {
         return $this->contact;
     }
@@ -1649,8 +1656,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint $contact
      * @return static
      */
-    public function addContact(?FHIRContactPoint $contact = null): object
+    public function addContact(null|FHIRContactPoint $contact = null): self
     {
+        if (null === $contact) {
+            $contact = new FHIRContactPoint();
+        }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
         return $this;
@@ -1668,7 +1678,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactPoint[] $contact
      * @return static
      */
-    public function setContact(array $contact = []): object
+    public function setContact(array $contact = []): self
     {
         if ([] !== $this->contact) {
             $this->_trackValuesRemoved(count($this->contact));
@@ -1694,9 +1704,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * A network address on which the device may be contacted directly.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getUrl(): ?FHIRUri
+    public function getUrl(): null|FHIRUri
     {
         return $this->url;
     }
@@ -1708,10 +1718,10 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * A network address on which the device may be contacted directly.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
      * @return static
      */
-    public function setUrl($url = null): object
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
@@ -1728,9 +1738,9 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Access to on-line information about the device.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getOnlineInformation(): ?FHIRUri
+    public function getOnlineInformation(): null|FHIRUri
     {
         return $this->onlineInformation;
     }
@@ -1742,10 +1752,10 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Access to on-line information about the device.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $onlineInformation
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $onlineInformation
      * @return static
      */
-    public function setOnlineInformation($onlineInformation = null): object
+    public function setOnlineInformation(null|string|FHIRUriPrimitive|FHIRUri $onlineInformation = null): self
     {
         if (null !== $onlineInformation && !($onlineInformation instanceof FHIRUri)) {
             $onlineInformation = new FHIRUri($onlineInformation);
@@ -1766,7 +1776,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    public function getNote(): ?array
+    public function getNote(): null|array
     {
         return $this->note;
     }
@@ -1783,8 +1793,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $note
      * @return static
      */
-    public function addNote(?FHIRAnnotation $note = null): object
+    public function addNote(null|FHIRAnnotation $note = null): self
     {
+        if (null === $note) {
+            $note = new FHIRAnnotation();
+        }
         $this->_trackValueAdded();
         $this->note[] = $note;
         return $this;
@@ -1802,7 +1815,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation[] $note
      * @return static
      */
-    public function setNote(array $note = []): object
+    public function setNote(array $note = []): self
     {
         if ([] !== $this->note) {
             $this->_trackValuesRemoved(count($this->note));
@@ -1834,7 +1847,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getQuantity(): ?FHIRQuantity
+    public function getQuantity(): null|FHIRQuantity
     {
         return $this->quantity;
     }
@@ -1853,8 +1866,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $quantity
      * @return static
      */
-    public function setQuantity(?FHIRQuantity $quantity = null): object
+    public function setQuantity(null|FHIRQuantity $quantity = null): self
     {
+        if (null === $quantity) {
+            $quantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->quantity, $quantity);
         $this->quantity = $quantity;
         return $this;
@@ -1869,7 +1885,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getParentDevice(): ?FHIRReference
+    public function getParentDevice(): null|FHIRReference
     {
         return $this->parentDevice;
     }
@@ -1884,8 +1900,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $parentDevice
      * @return static
      */
-    public function setParentDevice(?FHIRReference $parentDevice = null): object
+    public function setParentDevice(null|FHIRReference $parentDevice = null): self
     {
+        if (null === $parentDevice) {
+            $parentDevice = new FHIRReference();
+        }
         $this->_trackValueSet($this->parentDevice, $parentDevice);
         $this->parentDevice = $parentDevice;
         return $this;
@@ -1899,7 +1918,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionMaterial[]
      */
-    public function getMaterial(): ?array
+    public function getMaterial(): null|array
     {
         return $this->material;
     }
@@ -1913,8 +1932,11 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionMaterial $material
      * @return static
      */
-    public function addMaterial(?FHIRDeviceDefinitionMaterial $material = null): object
+    public function addMaterial(null|FHIRDeviceDefinitionMaterial $material = null): self
     {
+        if (null === $material) {
+            $material = new FHIRDeviceDefinitionMaterial();
+        }
         $this->_trackValueAdded();
         $this->material[] = $material;
         return $this;
@@ -1929,7 +1951,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDeviceDefinition\FHIRDeviceDefinitionMaterial[] $material
      * @return static
      */
-    public function setMaterial(array $material = []): object
+    public function setMaterial(array $material = []): self
     {
         if ([] !== $this->material) {
             $this->_trackValuesRemoved(count($this->material));
@@ -1956,7 +1978,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2488,36 +2510,48 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRDeviceDefinition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRDeviceDefinition
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRDeviceDefinition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRDeviceDefinition::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRDeviceDefinition(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRDeviceDefinition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRDeviceDefinition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRDeviceDefinition::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRDeviceDefinition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -2613,12 +2647,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
         }
         $n = $element->attributes->getNamedItem(self::FIELD_VERSION);
         if (null !== $n) {
-            $pt = $type->getVersion();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addVersion($n->nodeValue);
-            }
+            $type->addVersion($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_URL);
         if (null !== $n) {
@@ -2670,17 +2699,25 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('DeviceDefinition'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2869,7 +2906,7 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -3067,7 +3104,6 @@ class FHIRDeviceDefinition extends FHIRDomainResource implements PHPFHIRContaine
 
         return $out;
     }
-
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,14 +62,19 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition;
  * 
  */
 
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\R4\FHIRElement\FHIRDecimal;
 use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRInteger;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Set of definitional characteristics for a kind of observation or measurement
@@ -82,15 +87,13 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_OBSERVATION_DEFINITION_DOT_QUANTITATIVE_DETAILS;
+
     const FIELD_CUSTOMARY_UNIT = 'customaryUnit';
     const FIELD_UNIT = 'unit';
     const FIELD_CONVERSION_FACTOR = 'conversionFactor';
     const FIELD_CONVERSION_FACTOR_EXT = '_conversionFactor';
     const FIELD_DECIMAL_PRECISION = 'decimalPrecision';
     const FIELD_DECIMAL_PRECISION_EXT = '_decimalPrecision';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -103,8 +106,7 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $customaryUnit = null;
-
+    protected null|FHIRCodeableConcept $customaryUnit = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -116,8 +118,7 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $unit = null;
-
+    protected null|FHIRCodeableConcept $unit = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -127,10 +128,9 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * Factor for converting value expressed with SI unit to value expressed with
      * customary unit.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $conversionFactor = null;
-
+    protected null|FHIRDecimal $conversionFactor = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -139,30 +139,25 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * Number of digits after decimal separator when the results of such observations
      * are of type Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $decimalPrecision = null;
+    protected null|FHIRInteger $decimalPrecision = null;
 
     /**
      * Validation map for fields in type ObservationDefinition.QuantitativeDetails
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRObservationDefinitionQuantitativeDetails Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRObservationDefinitionQuantitativeDetails::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_CUSTOMARY_UNIT])) {
@@ -211,24 +206,13 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ObservationDefinitionQuantitativeDetails{$xmlns}></ObservationDefinitionQuantitativeDetails>";
     }
 
     /**
@@ -242,7 +226,7 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getCustomaryUnit(): ?FHIRCodeableConcept
+    public function getCustomaryUnit(): null|FHIRCodeableConcept
     {
         return $this->customaryUnit;
     }
@@ -259,8 +243,11 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $customaryUnit
      * @return static
      */
-    public function setCustomaryUnit(?FHIRCodeableConcept $customaryUnit = null): object
+    public function setCustomaryUnit(null|FHIRCodeableConcept $customaryUnit = null): self
     {
+        if (null === $customaryUnit) {
+            $customaryUnit = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->customaryUnit, $customaryUnit);
         $this->customaryUnit = $customaryUnit;
         return $this;
@@ -277,7 +264,7 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getUnit(): ?FHIRCodeableConcept
+    public function getUnit(): null|FHIRCodeableConcept
     {
         return $this->unit;
     }
@@ -294,8 +281,11 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $unit
      * @return static
      */
-    public function setUnit(?FHIRCodeableConcept $unit = null): object
+    public function setUnit(null|FHIRCodeableConcept $unit = null): self
     {
+        if (null === $unit) {
+            $unit = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->unit, $unit);
         $this->unit = $unit;
         return $this;
@@ -310,9 +300,9 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * Factor for converting value expressed with SI unit to value expressed with
      * customary unit.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getConversionFactor(): ?FHIRDecimal
+    public function getConversionFactor(): null|FHIRDecimal
     {
         return $this->conversionFactor;
     }
@@ -326,10 +316,10 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * Factor for converting value expressed with SI unit to value expressed with
      * customary unit.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $conversionFactor
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $conversionFactor
      * @return static
      */
-    public function setConversionFactor($conversionFactor = null): object
+    public function setConversionFactor(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $conversionFactor = null): self
     {
         if (null !== $conversionFactor && !($conversionFactor instanceof FHIRDecimal)) {
             $conversionFactor = new FHIRDecimal($conversionFactor);
@@ -347,9 +337,9 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * Number of digits after decimal separator when the results of such observations
      * are of type Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getDecimalPrecision(): ?FHIRInteger
+    public function getDecimalPrecision(): null|FHIRInteger
     {
         return $this->decimalPrecision;
     }
@@ -362,10 +352,10 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * Number of digits after decimal separator when the results of such observations
      * are of type Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $decimalPrecision
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $decimalPrecision
      * @return static
      */
-    public function setDecimalPrecision($decimalPrecision = null): object
+    public function setDecimalPrecision(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $decimalPrecision = null): self
     {
         if (null !== $decimalPrecision && !($decimalPrecision instanceof FHIRInteger)) {
             $decimalPrecision = new FHIRInteger($decimalPrecision);
@@ -383,7 +373,7 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -506,36 +496,48 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition\FHIRObservationDefinitionQuantitativeDetails $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition\FHIRObservationDefinitionQuantitativeDetails
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRObservationDefinitionQuantitativeDetails::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRObservationDefinitionQuantitativeDetails::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRObservationDefinitionQuantitativeDetails(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRObservationDefinitionQuantitativeDetails)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRObservationDefinitionQuantitativeDetails)) {
             throw new \RuntimeException(sprintf(
-                'FHIRObservationDefinitionQuantitativeDetails::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition\FHIRObservationDefinitionQuantitativeDetails or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -590,17 +592,25 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ObservationDefinitionQuantitativeDetails'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getCustomaryUnit())) {
@@ -629,7 +639,7 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getCustomaryUnit())) {
@@ -661,7 +671,6 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

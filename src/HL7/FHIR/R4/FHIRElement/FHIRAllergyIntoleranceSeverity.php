@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,8 +65,11 @@ namespace HL7\FHIR\R4\FHIRElement;
 use HL7\FHIR\R4\FHIRCodePrimitive\FHIRAllergyIntoleranceSeverityList;
 use HL7\FHIR\R4\FHIRElement;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Clinical assessment of the severity of a reaction event as a whole, potentially
@@ -80,27 +83,26 @@ class FHIRAllergyIntoleranceSeverity extends FHIRElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ALLERGY_INTOLERANCE_SEVERITY;
-    const FIELD_VALUE = 'value';
 
-    /** @var string */
-    private $_xmlns = '';
+    const FIELD_VALUE = 'value';
 
     /**
      * @var null|\HL7\FHIR\R4\FHIRCodePrimitive\FHIRAllergyIntoleranceSeverityList
      */
-    protected ?FHIRAllergyIntoleranceSeverityList $value = null;
+    protected null|FHIRAllergyIntoleranceSeverityList $value = null;
 
     /**
      * Validation map for fields in type AllergyIntoleranceSeverity
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRAllergyIntoleranceSeverity Constructor
-     * @param null|array $data
+     * @param null|array|string|FHIRAllergyIntoleranceSeverityList $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array|string|FHIRAllergyIntoleranceSeverityList $data = null)
     {
         if (null === $data || [] === $data) {
             return;
@@ -115,6 +117,7 @@ class FHIRAllergyIntoleranceSeverity extends FHIRElement
         }
     }
 
+
     /**
      * @return string
      */
@@ -124,30 +127,18 @@ class FHIRAllergyIntoleranceSeverity extends FHIRElement
     }
 
     /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<AllergyIntoleranceSeverity{$xmlns}></AllergyIntoleranceSeverity>";
-    }
-
-    /**
      * @return null|\HL7\FHIR\R4\FHIRCodePrimitive\FHIRAllergyIntoleranceSeverityList
      */
-    public function getValue(): ?FHIRAllergyIntoleranceSeverityList
+    public function getValue(): null|FHIRAllergyIntoleranceSeverityList
     {
         return $this->value;
     }
 
     /**
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive\FHIRAllergyIntoleranceSeverityList $value
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive\FHIRAllergyIntoleranceSeverityList $value
      * @return static
      */
-    public function setValue($value = null): object
+    public function setValue(null|string|FHIRAllergyIntoleranceSeverityList $value = null): self
     {
         if (null !== $value && !($value instanceof FHIRAllergyIntoleranceSeverityList)) {
             $value = new FHIRAllergyIntoleranceSeverityList($value);
@@ -165,7 +156,7 @@ class FHIRAllergyIntoleranceSeverity extends FHIRElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -225,36 +216,48 @@ class FHIRAllergyIntoleranceSeverity extends FHIRElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAllergyIntoleranceSeverity $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAllergyIntoleranceSeverity
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRAllergyIntoleranceSeverity::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRAllergyIntoleranceSeverity::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRAllergyIntoleranceSeverity(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRAllergyIntoleranceSeverity)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRAllergyIntoleranceSeverity)) {
             throw new \RuntimeException(sprintf(
-                'FHIRAllergyIntoleranceSeverity::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRAllergyIntoleranceSeverity or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -292,17 +295,25 @@ class FHIRAllergyIntoleranceSeverity extends FHIRElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('AllergyIntoleranceSeverity'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getValue())) {
@@ -314,7 +325,7 @@ class FHIRAllergyIntoleranceSeverity extends FHIRElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getValue())) {
@@ -323,7 +334,6 @@ class FHIRAllergyIntoleranceSeverity extends FHIRElement
 
         return $out;
     }
-
 
     /**
      * @return string

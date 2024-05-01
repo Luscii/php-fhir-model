@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAuditEvent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAuditEvent;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
@@ -71,8 +72,12 @@ use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A record of an event made for purposes of maintaining a security log. Typical
@@ -86,6 +91,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_AUDIT_EVENT_DOT_AGENT;
+
     const FIELD_TYPE = 'type';
     const FIELD_ROLE = 'role';
     const FIELD_WHO = 'who';
@@ -102,9 +108,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
     const FIELD_NETWORK = 'network';
     const FIELD_PURPOSE_OF_USE = 'purposeOfUse';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -116,8 +119,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -130,8 +132,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $role = [];
-
+    protected null|array $role = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -141,8 +142,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $who = null;
-
+    protected null|FHIRReference $who = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -152,10 +152,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * string from authentication system. This identifier would be one known to a
      * common authentication system (e.g. single sign-on), if available.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $altId = null;
-
+    protected null|FHIRString $altId = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -163,10 +162,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * Human-meaningful name for the agent.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -174,10 +172,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * Indicator that the user is or is not the requestor, or initiator, for the event
      * being audited.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $requestor = null;
-
+    protected null|FHIRBoolean $requestor = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -187,8 +184,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $location = null;
-
+    protected null|FHIRReference $location = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -198,10 +194,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * single activity may have multiple applicable policies, such as patient consent,
      * guarantor funding, etc. The policy would also indicate the security token used.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
      */
-    protected ?array $policy = [];
-
+    protected null|array $policy = [];
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -212,8 +207,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    protected ?FHIRCoding $media = null;
-
+    protected null|FHIRCoding $media = null;
     /**
      * A record of an event made for purposes of maintaining a security log. Typical
      * uses include detection of intrusion attempts and monitoring for inappropriate
@@ -224,8 +218,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork
      */
-    protected ?FHIRAuditEventNetwork $network = null;
-
+    protected null|FHIRAuditEventNetwork $network = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -237,28 +230,23 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $purposeOfUse = [];
+    protected null|array $purposeOfUse = [];
 
     /**
      * Validation map for fields in type AuditEvent.Agent
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRAuditEventAgent Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRAuditEventAgent::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_TYPE])) {
@@ -409,24 +397,13 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<AuditEventAgent{$xmlns}></AuditEventAgent>";
     }
 
     /**
@@ -440,7 +417,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -457,8 +434,11 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -476,7 +456,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getRole(): ?array
+    public function getRole(): null|array
     {
         return $this->role;
     }
@@ -494,8 +474,11 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $role
      * @return static
      */
-    public function addRole(?FHIRCodeableConcept $role = null): object
+    public function addRole(null|FHIRCodeableConcept $role = null): self
     {
+        if (null === $role) {
+            $role = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->role[] = $role;
         return $this;
@@ -514,7 +497,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $role
      * @return static
      */
-    public function setRole(array $role = []): object
+    public function setRole(array $role = []): self
     {
         if ([] !== $this->role) {
             $this->_trackValuesRemoved(count($this->role));
@@ -542,7 +525,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getWho(): ?FHIRReference
+    public function getWho(): null|FHIRReference
     {
         return $this->who;
     }
@@ -557,8 +540,11 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $who
      * @return static
      */
-    public function setWho(?FHIRReference $who = null): object
+    public function setWho(null|FHIRReference $who = null): self
     {
+        if (null === $who) {
+            $who = new FHIRReference();
+        }
         $this->_trackValueSet($this->who, $who);
         $this->who = $who;
         return $this;
@@ -573,9 +559,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * string from authentication system. This identifier would be one known to a
      * common authentication system (e.g. single sign-on), if available.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getAltId(): ?FHIRString
+    public function getAltId(): null|FHIRString
     {
         return $this->altId;
     }
@@ -589,10 +575,10 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * string from authentication system. This identifier would be one known to a
      * common authentication system (e.g. single sign-on), if available.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $altId
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $altId
      * @return static
      */
-    public function setAltId($altId = null): object
+    public function setAltId(null|string|FHIRStringPrimitive|FHIRString $altId = null): self
     {
         if (null !== $altId && !($altId instanceof FHIRString)) {
             $altId = new FHIRString($altId);
@@ -609,9 +595,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * Human-meaningful name for the agent.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -623,10 +609,10 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * Human-meaningful name for the agent.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -643,9 +629,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * Indicator that the user is or is not the requestor, or initiator, for the event
      * being audited.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getRequestor(): ?FHIRBoolean
+    public function getRequestor(): null|FHIRBoolean
     {
         return $this->requestor;
     }
@@ -657,10 +643,10 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * Indicator that the user is or is not the requestor, or initiator, for the event
      * being audited.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $requestor
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $requestor
      * @return static
      */
-    public function setRequestor($requestor = null): object
+    public function setRequestor(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $requestor = null): self
     {
         if (null !== $requestor && !($requestor instanceof FHIRBoolean)) {
             $requestor = new FHIRBoolean($requestor);
@@ -679,7 +665,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getLocation(): ?FHIRReference
+    public function getLocation(): null|FHIRReference
     {
         return $this->location;
     }
@@ -694,8 +680,11 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $location
      * @return static
      */
-    public function setLocation(?FHIRReference $location = null): object
+    public function setLocation(null|FHIRReference $location = null): self
     {
+        if (null === $location) {
+            $location = new FHIRReference();
+        }
         $this->_trackValueSet($this->location, $location);
         $this->location = $location;
         return $this;
@@ -710,9 +699,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * single activity may have multiple applicable policies, such as patient consent,
      * guarantor funding, etc. The policy would also indicate the security token used.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
      */
-    public function getPolicy(): ?array
+    public function getPolicy(): null|array
     {
         return $this->policy;
     }
@@ -726,10 +715,10 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * single activity may have multiple applicable policies, such as patient consent,
      * guarantor funding, etc. The policy would also indicate the security token used.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[] $policy
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $policy
      * @return static
      */
-    public function addPolicy($policy = null): object
+    public function addPolicy(null|string|FHIRUriPrimitive|FHIRUri $policy = null): self
     {
         if (null !== $policy && !($policy instanceof FHIRUri)) {
             $policy = new FHIRUri($policy);
@@ -751,7 +740,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUri[] $policy
      * @return static
      */
-    public function setPolicy(array $policy = []): object
+    public function setPolicy(array $policy = []): self
     {
         if ([] !== $this->policy) {
             $this->_trackValuesRemoved(count($this->policy));
@@ -780,7 +769,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    public function getMedia(): ?FHIRCoding
+    public function getMedia(): null|FHIRCoding
     {
         return $this->media;
     }
@@ -796,8 +785,11 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $media
      * @return static
      */
-    public function setMedia(?FHIRCoding $media = null): object
+    public function setMedia(null|FHIRCoding $media = null): self
     {
+        if (null === $media) {
+            $media = new FHIRCoding();
+        }
         $this->_trackValueSet($this->media, $media);
         $this->media = $media;
         return $this;
@@ -813,7 +805,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork
      */
-    public function getNetwork(): ?FHIRAuditEventNetwork
+    public function getNetwork(): null|FHIRAuditEventNetwork
     {
         return $this->network;
     }
@@ -829,8 +821,11 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork $network
      * @return static
      */
-    public function setNetwork(?FHIRAuditEventNetwork $network = null): object
+    public function setNetwork(null|FHIRAuditEventNetwork $network = null): self
     {
+        if (null === $network) {
+            $network = new FHIRAuditEventNetwork();
+        }
         $this->_trackValueSet($this->network, $network);
         $this->network = $network;
         return $this;
@@ -847,7 +842,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getPurposeOfUse(): ?array
+    public function getPurposeOfUse(): null|array
     {
         return $this->purposeOfUse;
     }
@@ -864,8 +859,11 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $purposeOfUse
      * @return static
      */
-    public function addPurposeOfUse(?FHIRCodeableConcept $purposeOfUse = null): object
+    public function addPurposeOfUse(null|FHIRCodeableConcept $purposeOfUse = null): self
     {
+        if (null === $purposeOfUse) {
+            $purposeOfUse = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->purposeOfUse[] = $purposeOfUse;
         return $this;
@@ -883,7 +881,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $purposeOfUse
      * @return static
      */
-    public function setPurposeOfUse(array $purposeOfUse = []): object
+    public function setPurposeOfUse(array $purposeOfUse = []): self
     {
         if ([] !== $this->purposeOfUse) {
             $this->_trackValuesRemoved(count($this->purposeOfUse));
@@ -910,7 +908,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1158,36 +1156,48 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventAgent $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventAgent
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRAuditEventAgent::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRAuditEventAgent::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRAuditEventAgent(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRAuditEventAgent)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRAuditEventAgent)) {
             throw new \RuntimeException(sprintf(
-                'FHIRAuditEventAgent::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventAgent or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1253,12 +1263,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_POLICY);
         if (null !== $n) {
-            $pt = $type->getPolicy();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addPolicy($n->nodeValue);
-            }
+            $type->addPolicy($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -1274,17 +1279,25 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('AuditEventAgent'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getType())) {
@@ -1363,7 +1376,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getType())) {
@@ -1456,7 +1469,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

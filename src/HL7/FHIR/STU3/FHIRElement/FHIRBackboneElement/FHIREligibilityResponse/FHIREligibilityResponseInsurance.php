@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,9 +63,14 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse;
  */
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * This resource provides eligibility and plan details from the processing of an
@@ -78,33 +83,10 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ELIGIBILITY_RESPONSE_DOT_INSURANCE;
-    const FIELD_BENEFIT_BALANCE = 'benefitBalance';
-    const FIELD_CONTRACT = 'contract';
+
     const FIELD_COVERAGE = 'coverage';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * This resource provides eligibility and plan details from the processing of an
-     * Eligibility resource.
-     *
-     * Benefits and optionally current balances by Category.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance[]
-     */
-    protected $benefitBalance = [];
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The contract resource which may provide more detailed information.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $contract = null;
+    const FIELD_CONTRACT = 'contract';
+    const FIELD_BENEFIT_BALANCE = 'benefitBalance';
 
     /**
      * A reference from one resource to another.
@@ -115,30 +97,58 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $coverage = null;
+    protected null|FHIRReference $coverage = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The contract resource which may provide more detailed information.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $contract = null;
+    /**
+     * This resource provides eligibility and plan details from the processing of an
+     * Eligibility resource.
+     *
+     * Benefits and optionally current balances by Category.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance[]
+     */
+    protected null|array $benefitBalance = [];
 
     /**
      * Validation map for fields in type EligibilityResponse.Insurance
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIREligibilityResponseInsurance Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIREligibilityResponseInsurance::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_COVERAGE])) {
+            if ($data[self::FIELD_COVERAGE] instanceof FHIRReference) {
+                $this->setCoverage($data[self::FIELD_COVERAGE]);
+            } else {
+                $this->setCoverage(new FHIRReference($data[self::FIELD_COVERAGE]));
+            }
+        }
+        if (isset($data[self::FIELD_CONTRACT])) {
+            if ($data[self::FIELD_CONTRACT] instanceof FHIRReference) {
+                $this->setContract($data[self::FIELD_CONTRACT]);
+            } else {
+                $this->setContract(new FHIRReference($data[self::FIELD_CONTRACT]));
+            }
+        }
         if (isset($data[self::FIELD_BENEFIT_BALANCE])) {
             if (is_array($data[self::FIELD_BENEFIT_BALANCE])) {
                 foreach($data[self::FIELD_BENEFIT_BALANCE] as $v) {
@@ -151,129 +161,21 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
                         $this->addBenefitBalance(new FHIREligibilityResponseBenefitBalance($v));
                     }
                 }
-            } else if ($data[self::FIELD_BENEFIT_BALANCE] instanceof FHIREligibilityResponseBenefitBalance) {
+            } elseif ($data[self::FIELD_BENEFIT_BALANCE] instanceof FHIREligibilityResponseBenefitBalance) {
                 $this->addBenefitBalance($data[self::FIELD_BENEFIT_BALANCE]);
             } else {
                 $this->addBenefitBalance(new FHIREligibilityResponseBenefitBalance($data[self::FIELD_BENEFIT_BALANCE]));
             }
         }
-        if (isset($data[self::FIELD_CONTRACT])) {
-            if ($data[self::FIELD_CONTRACT] instanceof FHIRReference) {
-                $this->setContract($data[self::FIELD_CONTRACT]);
-            } else {
-                $this->setContract(new FHIRReference($data[self::FIELD_CONTRACT]));
-            }
-        }
-        if (isset($data[self::FIELD_COVERAGE])) {
-            if ($data[self::FIELD_COVERAGE] instanceof FHIRReference) {
-                $this->setCoverage($data[self::FIELD_COVERAGE]);
-            } else {
-                $this->setCoverage(new FHIRReference($data[self::FIELD_COVERAGE]));
-            }
-        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<EligibilityResponseInsurance{$xmlns}></EligibilityResponseInsurance>";
-    }
-
-    /**
-     * This resource provides eligibility and plan details from the processing of an
-     * Eligibility resource.
-     *
-     * Benefits and optionally current balances by Category.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance[]
-     */
-    public function getBenefitBalance()
-    {
-        return $this->benefitBalance;
-    }
-
-    /**
-     * This resource provides eligibility and plan details from the processing of an
-     * Eligibility resource.
-     *
-     * Benefits and optionally current balances by Category.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance $benefitBalance
-     * @return static
-     */
-    public function addBenefitBalance(FHIREligibilityResponseBenefitBalance $benefitBalance = null)
-    {
-        $this->benefitBalance[] = $benefitBalance;
-        return $this;
-    }
-
-    /**
-     * This resource provides eligibility and plan details from the processing of an
-     * Eligibility resource.
-     *
-     * Benefits and optionally current balances by Category.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance[] $benefitBalance
-     * @return static
-     */
-    public function setBenefitBalance(array $benefitBalance = [])
-    {
-        $this->benefitBalance = [];
-        if ([] === $benefitBalance) {
-            return $this;
-        }
-        foreach($benefitBalance as $v) {
-            if ($v instanceof FHIREligibilityResponseBenefitBalance) {
-                $this->addBenefitBalance($v);
-            } else {
-                $this->addBenefitBalance(new FHIREligibilityResponseBenefitBalance($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The contract resource which may provide more detailed information.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getContract()
-    {
-        return $this->contract;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The contract resource which may provide more detailed information.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $contract
-     * @return static
-     */
-    public function setContract(FHIRReference $contract = null)
-    {
-        $this->contract = $contract;
-        return $this;
     }
 
     /**
@@ -285,7 +187,7 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getCoverage()
+    public function getCoverage(): null|FHIRReference
     {
         return $this->coverage;
     }
@@ -300,9 +202,107 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $coverage
      * @return static
      */
-    public function setCoverage(FHIRReference $coverage = null)
+    public function setCoverage(null|FHIRReference $coverage = null): self
     {
+        if (null === $coverage) {
+            $coverage = new FHIRReference();
+        }
+        $this->_trackValueSet($this->coverage, $coverage);
         $this->coverage = $coverage;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The contract resource which may provide more detailed information.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getContract(): null|FHIRReference
+    {
+        return $this->contract;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The contract resource which may provide more detailed information.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $contract
+     * @return static
+     */
+    public function setContract(null|FHIRReference $contract = null): self
+    {
+        if (null === $contract) {
+            $contract = new FHIRReference();
+        }
+        $this->_trackValueSet($this->contract, $contract);
+        $this->contract = $contract;
+        return $this;
+    }
+
+    /**
+     * This resource provides eligibility and plan details from the processing of an
+     * Eligibility resource.
+     *
+     * Benefits and optionally current balances by Category.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance[]
+     */
+    public function getBenefitBalance(): null|array
+    {
+        return $this->benefitBalance;
+    }
+
+    /**
+     * This resource provides eligibility and plan details from the processing of an
+     * Eligibility resource.
+     *
+     * Benefits and optionally current balances by Category.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance $benefitBalance
+     * @return static
+     */
+    public function addBenefitBalance(null|FHIREligibilityResponseBenefitBalance $benefitBalance = null): self
+    {
+        if (null === $benefitBalance) {
+            $benefitBalance = new FHIREligibilityResponseBenefitBalance();
+        }
+        $this->_trackValueAdded();
+        $this->benefitBalance[] = $benefitBalance;
+        return $this;
+    }
+
+    /**
+     * This resource provides eligibility and plan details from the processing of an
+     * Eligibility resource.
+     *
+     * Benefits and optionally current balances by Category.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance[] $benefitBalance
+     * @return static
+     */
+    public function setBenefitBalance(array $benefitBalance = []): self
+    {
+        if ([] !== $this->benefitBalance) {
+            $this->_trackValuesRemoved(count($this->benefitBalance));
+            $this->benefitBalance = [];
+        }
+        if ([] === $benefitBalance) {
+            return $this;
+        }
+        foreach($benefitBalance as $v) {
+            if ($v instanceof FHIREligibilityResponseBenefitBalance) {
+                $this->addBenefitBalance($v);
+            } else {
+                $this->addBenefitBalance(new FHIREligibilityResponseBenefitBalance($v));
+            }
+        }
         return $this;
     }
 
@@ -312,9 +312,9 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -323,15 +323,13 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if ([] !== ($vs = $this->getBenefitBalance())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_BENEFIT_BALANCE, $i)] = $fieldErrs;
-                }
+        if (null !== ($v = $this->getCoverage())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_COVERAGE] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getContract())) {
@@ -339,20 +337,22 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
                 $errs[self::FIELD_CONTRACT] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getCoverage())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_COVERAGE] = $fieldErrs;
+        if ([] !== ($vs = $this->getBenefitBalance())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_BENEFIT_BALANCE, $i)] = $fieldErrs;
+                }
             }
         }
-        if (isset($validationRules[self::FIELD_BENEFIT_BALANCE])) {
-            $v = $this->getBenefitBalance();
-            foreach($validationRules[self::FIELD_BENEFIT_BALANCE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELIGIBILITY_RESPONSE_DOT_INSURANCE, self::FIELD_BENEFIT_BALANCE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_COVERAGE])) {
+            $v = $this->getCoverage();
+            foreach($validationRules[self::FIELD_COVERAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELIGIBILITY_RESPONSE_DOT_INSURANCE, self::FIELD_COVERAGE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_BENEFIT_BALANCE])) {
-                        $errs[self::FIELD_BENEFIT_BALANCE] = [];
+                    if (!isset($errs[self::FIELD_COVERAGE])) {
+                        $errs[self::FIELD_COVERAGE] = [];
                     }
-                    $errs[self::FIELD_BENEFIT_BALANCE][$rule] = $err;
+                    $errs[self::FIELD_COVERAGE][$rule] = $err;
                 }
             }
         }
@@ -368,15 +368,15 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_COVERAGE])) {
-            $v = $this->getCoverage();
-            foreach($validationRules[self::FIELD_COVERAGE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELIGIBILITY_RESPONSE_DOT_INSURANCE, self::FIELD_COVERAGE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_BENEFIT_BALANCE])) {
+            $v = $this->getBenefitBalance();
+            foreach($validationRules[self::FIELD_BENEFIT_BALANCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ELIGIBILITY_RESPONSE_DOT_INSURANCE, self::FIELD_BENEFIT_BALANCE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_COVERAGE])) {
-                        $errs[self::FIELD_COVERAGE] = [];
+                    if (!isset($errs[self::FIELD_BENEFIT_BALANCE])) {
+                        $errs[self::FIELD_BENEFIT_BALANCE] = [];
                     }
-                    $errs[self::FIELD_COVERAGE][$rule] = $err;
+                    $errs[self::FIELD_BENEFIT_BALANCE][$rule] = $err;
                 }
             }
         }
@@ -420,119 +420,157 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseInsurance $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseInsurance
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIREligibilityResponseInsurance::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIREligibilityResponseInsurance::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIREligibilityResponseInsurance;
-        } elseif (!is_object($type) || !($type instanceof FHIREligibilityResponseInsurance)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIREligibilityResponseInsurance)) {
             throw new \RuntimeException(sprintf(
-                'FHIREligibilityResponseInsurance::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseInsurance or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_COVERAGE === $n->nodeName) {
+                $type->setCoverage(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTRACT === $n->nodeName) {
+                $type->setContract(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_BENEFIT_BALANCE === $n->nodeName) {
+                $type->addBenefitBalance(FHIREligibilityResponseBenefitBalance::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->benefitBalance)) {
-            foreach($children->benefitBalance as $child) {
-                $type->addBenefitBalance(FHIREligibilityResponseBenefitBalance::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
-        }
-        if (isset($children->contract)) {
-            $type->setContract(FHIRReference::xmlUnserialize($children->contract));
-        }
-        if (isset($children->coverage)) {
-            $type->setCoverage(FHIRReference::xmlUnserialize($children->coverage));
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('EligibilityResponseInsurance'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getCoverage())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_COVERAGE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getContract())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CONTRACT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if ([] !== ($vs = $this->getBenefitBalance())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_BENEFIT_BALANCE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_BENEFIT_BALANCE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getContract())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CONTRACT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getCoverage())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_COVERAGE, null, $v->_getFHIRXMLNamespace()));
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getCoverage())) {
+            $out->{self::FIELD_COVERAGE} = $v;
+        }
+        if (null !== ($v = $this->getContract())) {
+            $out->{self::FIELD_CONTRACT} = $v;
+        }
         if ([] !== ($vs = $this->getBenefitBalance())) {
-            $a[self::FIELD_BENEFIT_BALANCE] = [];
+            $out->{self::FIELD_BENEFIT_BALANCE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_BENEFIT_BALANCE][] = $v;
+                $out->{self::FIELD_BENEFIT_BALANCE}[] = $v;
             }
         }
-        if (null !== ($v = $this->getContract())) {
-            $a[self::FIELD_CONTRACT] = $v;
-        }
-        if (null !== ($v = $this->getCoverage())) {
-            $a[self::FIELD_COVERAGE] = $v;
-        }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

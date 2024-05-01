@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAnnotation;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionEvidence;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionStage;
@@ -79,11 +81,17 @@ use HL7\FHIR\R4\FHIRElement\FHIRRange;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A clinical condition, problem, diagnosis, or other event, situation, issue, or
@@ -97,6 +105,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CONDITION;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_CLINICAL_STATUS = 'clinicalStatus';
     const FIELD_VERIFICATION_STATUS = 'verificationStatus';
@@ -128,9 +137,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     const FIELD_EVIDENCE = 'evidence';
     const FIELD_NOTE = 'note';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -143,8 +149,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -155,8 +160,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $clinicalStatus = null;
-
+    protected null|FHIRCodeableConcept $clinicalStatus = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -167,8 +171,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $verificationStatus = null;
-
+    protected null|FHIRCodeableConcept $verificationStatus = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -179,8 +182,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $category = [];
-
+    protected null|array $category = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -192,8 +194,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $severity = null;
-
+    protected null|FHIRCodeableConcept $severity = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -204,8 +205,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $code = null;
-
+    protected null|FHIRCodeableConcept $code = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -216,8 +216,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $bodySite = [];
-
+    protected null|array $bodySite = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -227,8 +226,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $subject = null;
-
+    protected null|FHIRReference $subject = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -239,8 +237,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $encounter = null;
-
+    protected null|FHIRReference $encounter = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -252,10 +249,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $onsetDateTime = null;
-
+    protected null|FHIRDateTime $onsetDateTime = null;
     /**
      * A duration of time during which an organism (or a process) has existed.
      * If the element is present, it must have a value for at least one of the defined
@@ -266,8 +262,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    protected ?FHIRAge $onsetAge = null;
-
+    protected null|FHIRAge $onsetAge = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -278,8 +273,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $onsetPeriod = null;
-
+    protected null|FHIRPeriod $onsetPeriod = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -290,8 +284,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $onsetRange = null;
-
+    protected null|FHIRRange $onsetRange = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -300,10 +293,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $onsetString = null;
-
+    protected null|FHIRString $onsetString = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -317,10 +309,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $abatementDateTime = null;
-
+    protected null|FHIRDateTime $abatementDateTime = null;
     /**
      * A duration of time during which an organism (or a process) has existed.
      * If the element is present, it must have a value for at least one of the defined
@@ -333,8 +324,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    protected ?FHIRAge $abatementAge = null;
-
+    protected null|FHIRAge $abatementAge = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -347,8 +337,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $abatementPeriod = null;
-
+    protected null|FHIRPeriod $abatementPeriod = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -361,8 +350,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $abatementRange = null;
-
+    protected null|FHIRRange $abatementRange = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -373,10 +361,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $abatementString = null;
-
+    protected null|FHIRString $abatementString = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -388,10 +375,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * The recordedDate represents when this particular Condition record was created in
      * the system, which is often a system-generated date.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $recordedDate = null;
-
+    protected null|FHIRDateTime $recordedDate = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -401,8 +387,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $recorder = null;
-
+    protected null|FHIRReference $recorder = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -412,8 +397,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $asserter = null;
-
+    protected null|FHIRReference $asserter = null;
     /**
      * A clinical condition, problem, diagnosis, or other event, situation, issue, or
      * clinical concept that has risen to a level of concern.
@@ -422,8 +406,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionStage[]
      */
-    protected ?array $stage = [];
-
+    protected null|array $stage = [];
     /**
      * A clinical condition, problem, diagnosis, or other event, situation, issue, or
      * clinical concept that has risen to a level of concern.
@@ -433,8 +416,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionEvidence[]
      */
-    protected ?array $evidence = [];
-
+    protected null|array $evidence = [];
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -446,28 +428,23 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    protected ?array $note = [];
+    protected null|array $note = [];
 
     /**
      * Validation map for fields in type Condition
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRCondition Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRCondition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -753,6 +730,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
         }
     }
 
+
     /**
      * @return string
      */
@@ -761,17 +739,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Condition{$xmlns}></Condition>";
-    }
     /**
      * @return string
      */
@@ -793,7 +760,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -811,8 +778,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -831,7 +801,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -860,7 +830,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getClinicalStatus(): ?FHIRCodeableConcept
+    public function getClinicalStatus(): null|FHIRCodeableConcept
     {
         return $this->clinicalStatus;
     }
@@ -876,8 +846,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $clinicalStatus
      * @return static
      */
-    public function setClinicalStatus(?FHIRCodeableConcept $clinicalStatus = null): object
+    public function setClinicalStatus(null|FHIRCodeableConcept $clinicalStatus = null): self
     {
+        if (null === $clinicalStatus) {
+            $clinicalStatus = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->clinicalStatus, $clinicalStatus);
         $this->clinicalStatus = $clinicalStatus;
         return $this;
@@ -893,7 +866,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getVerificationStatus(): ?FHIRCodeableConcept
+    public function getVerificationStatus(): null|FHIRCodeableConcept
     {
         return $this->verificationStatus;
     }
@@ -909,8 +882,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $verificationStatus
      * @return static
      */
-    public function setVerificationStatus(?FHIRCodeableConcept $verificationStatus = null): object
+    public function setVerificationStatus(null|FHIRCodeableConcept $verificationStatus = null): self
     {
+        if (null === $verificationStatus) {
+            $verificationStatus = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->verificationStatus, $verificationStatus);
         $this->verificationStatus = $verificationStatus;
         return $this;
@@ -926,7 +902,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getCategory(): ?array
+    public function getCategory(): null|array
     {
         return $this->category;
     }
@@ -942,8 +918,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $category
      * @return static
      */
-    public function addCategory(?FHIRCodeableConcept $category = null): object
+    public function addCategory(null|FHIRCodeableConcept $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->category[] = $category;
         return $this;
@@ -960,7 +939,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $category
      * @return static
      */
-    public function setCategory(array $category = []): object
+    public function setCategory(array $category = []): self
     {
         if ([] !== $this->category) {
             $this->_trackValuesRemoved(count($this->category));
@@ -990,7 +969,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getSeverity(): ?FHIRCodeableConcept
+    public function getSeverity(): null|FHIRCodeableConcept
     {
         return $this->severity;
     }
@@ -1007,8 +986,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $severity
      * @return static
      */
-    public function setSeverity(?FHIRCodeableConcept $severity = null): object
+    public function setSeverity(null|FHIRCodeableConcept $severity = null): self
     {
+        if (null === $severity) {
+            $severity = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->severity, $severity);
         $this->severity = $severity;
         return $this;
@@ -1024,7 +1006,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getCode(): ?FHIRCodeableConcept
+    public function getCode(): null|FHIRCodeableConcept
     {
         return $this->code;
     }
@@ -1040,8 +1022,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $code
      * @return static
      */
-    public function setCode(?FHIRCodeableConcept $code = null): object
+    public function setCode(null|FHIRCodeableConcept $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->code, $code);
         $this->code = $code;
         return $this;
@@ -1057,7 +1042,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getBodySite(): ?array
+    public function getBodySite(): null|array
     {
         return $this->bodySite;
     }
@@ -1073,8 +1058,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $bodySite
      * @return static
      */
-    public function addBodySite(?FHIRCodeableConcept $bodySite = null): object
+    public function addBodySite(null|FHIRCodeableConcept $bodySite = null): self
     {
+        if (null === $bodySite) {
+            $bodySite = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->bodySite[] = $bodySite;
         return $this;
@@ -1091,7 +1079,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $bodySite
      * @return static
      */
-    public function setBodySite(array $bodySite = []): object
+    public function setBodySite(array $bodySite = []): self
     {
         if ([] !== $this->bodySite) {
             $this->_trackValuesRemoved(count($this->bodySite));
@@ -1119,7 +1107,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubject(): ?FHIRReference
+    public function getSubject(): null|FHIRReference
     {
         return $this->subject;
     }
@@ -1134,8 +1122,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $subject
      * @return static
      */
-    public function setSubject(?FHIRReference $subject = null): object
+    public function setSubject(null|FHIRReference $subject = null): self
     {
+        if (null === $subject) {
+            $subject = new FHIRReference();
+        }
         $this->_trackValueSet($this->subject, $subject);
         $this->subject = $subject;
         return $this;
@@ -1151,7 +1142,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getEncounter(): ?FHIRReference
+    public function getEncounter(): null|FHIRReference
     {
         return $this->encounter;
     }
@@ -1167,8 +1158,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $encounter
      * @return static
      */
-    public function setEncounter(?FHIRReference $encounter = null): object
+    public function setEncounter(null|FHIRReference $encounter = null): self
     {
+        if (null === $encounter) {
+            $encounter = new FHIRReference();
+        }
         $this->_trackValueSet($this->encounter, $encounter);
         $this->encounter = $encounter;
         return $this;
@@ -1185,9 +1179,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getOnsetDateTime(): ?FHIRDateTime
+    public function getOnsetDateTime(): null|FHIRDateTime
     {
         return $this->onsetDateTime;
     }
@@ -1203,10 +1197,10 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $onsetDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $onsetDateTime
      * @return static
      */
-    public function setOnsetDateTime($onsetDateTime = null): object
+    public function setOnsetDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $onsetDateTime = null): self
     {
         if (null !== $onsetDateTime && !($onsetDateTime instanceof FHIRDateTime)) {
             $onsetDateTime = new FHIRDateTime($onsetDateTime);
@@ -1226,7 +1220,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    public function getOnsetAge(): ?FHIRAge
+    public function getOnsetAge(): null|FHIRAge
     {
         return $this->onsetAge;
     }
@@ -1242,8 +1236,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge $onsetAge
      * @return static
      */
-    public function setOnsetAge(?FHIRAge $onsetAge = null): object
+    public function setOnsetAge(null|FHIRAge $onsetAge = null): self
     {
+        if (null === $onsetAge) {
+            $onsetAge = new FHIRAge();
+        }
         $this->_trackValueSet($this->onsetAge, $onsetAge);
         $this->onsetAge = $onsetAge;
         return $this;
@@ -1259,7 +1256,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getOnsetPeriod(): ?FHIRPeriod
+    public function getOnsetPeriod(): null|FHIRPeriod
     {
         return $this->onsetPeriod;
     }
@@ -1275,8 +1272,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $onsetPeriod
      * @return static
      */
-    public function setOnsetPeriod(?FHIRPeriod $onsetPeriod = null): object
+    public function setOnsetPeriod(null|FHIRPeriod $onsetPeriod = null): self
     {
+        if (null === $onsetPeriod) {
+            $onsetPeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->onsetPeriod, $onsetPeriod);
         $this->onsetPeriod = $onsetPeriod;
         return $this;
@@ -1292,7 +1292,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getOnsetRange(): ?FHIRRange
+    public function getOnsetRange(): null|FHIRRange
     {
         return $this->onsetRange;
     }
@@ -1308,8 +1308,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $onsetRange
      * @return static
      */
-    public function setOnsetRange(?FHIRRange $onsetRange = null): object
+    public function setOnsetRange(null|FHIRRange $onsetRange = null): self
     {
+        if (null === $onsetRange) {
+            $onsetRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->onsetRange, $onsetRange);
         $this->onsetRange = $onsetRange;
         return $this;
@@ -1323,9 +1326,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getOnsetString(): ?FHIRString
+    public function getOnsetString(): null|FHIRString
     {
         return $this->onsetString;
     }
@@ -1338,10 +1341,10 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $onsetString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $onsetString
      * @return static
      */
-    public function setOnsetString($onsetString = null): object
+    public function setOnsetString(null|string|FHIRStringPrimitive|FHIRString $onsetString = null): self
     {
         if (null !== $onsetString && !($onsetString instanceof FHIRString)) {
             $onsetString = new FHIRString($onsetString);
@@ -1364,9 +1367,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getAbatementDateTime(): ?FHIRDateTime
+    public function getAbatementDateTime(): null|FHIRDateTime
     {
         return $this->abatementDateTime;
     }
@@ -1384,10 +1387,10 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $abatementDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $abatementDateTime
      * @return static
      */
-    public function setAbatementDateTime($abatementDateTime = null): object
+    public function setAbatementDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $abatementDateTime = null): self
     {
         if (null !== $abatementDateTime && !($abatementDateTime instanceof FHIRDateTime)) {
             $abatementDateTime = new FHIRDateTime($abatementDateTime);
@@ -1409,7 +1412,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    public function getAbatementAge(): ?FHIRAge
+    public function getAbatementAge(): null|FHIRAge
     {
         return $this->abatementAge;
     }
@@ -1427,8 +1430,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge $abatementAge
      * @return static
      */
-    public function setAbatementAge(?FHIRAge $abatementAge = null): object
+    public function setAbatementAge(null|FHIRAge $abatementAge = null): self
     {
+        if (null === $abatementAge) {
+            $abatementAge = new FHIRAge();
+        }
         $this->_trackValueSet($this->abatementAge, $abatementAge);
         $this->abatementAge = $abatementAge;
         return $this;
@@ -1446,7 +1452,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getAbatementPeriod(): ?FHIRPeriod
+    public function getAbatementPeriod(): null|FHIRPeriod
     {
         return $this->abatementPeriod;
     }
@@ -1464,8 +1470,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $abatementPeriod
      * @return static
      */
-    public function setAbatementPeriod(?FHIRPeriod $abatementPeriod = null): object
+    public function setAbatementPeriod(null|FHIRPeriod $abatementPeriod = null): self
     {
+        if (null === $abatementPeriod) {
+            $abatementPeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->abatementPeriod, $abatementPeriod);
         $this->abatementPeriod = $abatementPeriod;
         return $this;
@@ -1483,7 +1492,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getAbatementRange(): ?FHIRRange
+    public function getAbatementRange(): null|FHIRRange
     {
         return $this->abatementRange;
     }
@@ -1501,8 +1510,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $abatementRange
      * @return static
      */
-    public function setAbatementRange(?FHIRRange $abatementRange = null): object
+    public function setAbatementRange(null|FHIRRange $abatementRange = null): self
     {
+        if (null === $abatementRange) {
+            $abatementRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->abatementRange, $abatementRange);
         $this->abatementRange = $abatementRange;
         return $this;
@@ -1518,9 +1530,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getAbatementString(): ?FHIRString
+    public function getAbatementString(): null|FHIRString
     {
         return $this->abatementString;
     }
@@ -1535,10 +1547,10 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $abatementString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $abatementString
      * @return static
      */
-    public function setAbatementString($abatementString = null): object
+    public function setAbatementString(null|string|FHIRStringPrimitive|FHIRString $abatementString = null): self
     {
         if (null !== $abatementString && !($abatementString instanceof FHIRString)) {
             $abatementString = new FHIRString($abatementString);
@@ -1559,9 +1571,9 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * The recordedDate represents when this particular Condition record was created in
      * the system, which is often a system-generated date.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getRecordedDate(): ?FHIRDateTime
+    public function getRecordedDate(): null|FHIRDateTime
     {
         return $this->recordedDate;
     }
@@ -1577,10 +1589,10 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * The recordedDate represents when this particular Condition record was created in
      * the system, which is often a system-generated date.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $recordedDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $recordedDate
      * @return static
      */
-    public function setRecordedDate($recordedDate = null): object
+    public function setRecordedDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $recordedDate = null): self
     {
         if (null !== $recordedDate && !($recordedDate instanceof FHIRDateTime)) {
             $recordedDate = new FHIRDateTime($recordedDate);
@@ -1599,7 +1611,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getRecorder(): ?FHIRReference
+    public function getRecorder(): null|FHIRReference
     {
         return $this->recorder;
     }
@@ -1614,8 +1626,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $recorder
      * @return static
      */
-    public function setRecorder(?FHIRReference $recorder = null): object
+    public function setRecorder(null|FHIRReference $recorder = null): self
     {
+        if (null === $recorder) {
+            $recorder = new FHIRReference();
+        }
         $this->_trackValueSet($this->recorder, $recorder);
         $this->recorder = $recorder;
         return $this;
@@ -1630,7 +1645,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getAsserter(): ?FHIRReference
+    public function getAsserter(): null|FHIRReference
     {
         return $this->asserter;
     }
@@ -1645,8 +1660,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $asserter
      * @return static
      */
-    public function setAsserter(?FHIRReference $asserter = null): object
+    public function setAsserter(null|FHIRReference $asserter = null): self
     {
+        if (null === $asserter) {
+            $asserter = new FHIRReference();
+        }
         $this->_trackValueSet($this->asserter, $asserter);
         $this->asserter = $asserter;
         return $this;
@@ -1660,7 +1678,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionStage[]
      */
-    public function getStage(): ?array
+    public function getStage(): null|array
     {
         return $this->stage;
     }
@@ -1674,8 +1692,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionStage $stage
      * @return static
      */
-    public function addStage(?FHIRConditionStage $stage = null): object
+    public function addStage(null|FHIRConditionStage $stage = null): self
     {
+        if (null === $stage) {
+            $stage = new FHIRConditionStage();
+        }
         $this->_trackValueAdded();
         $this->stage[] = $stage;
         return $this;
@@ -1690,7 +1711,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionStage[] $stage
      * @return static
      */
-    public function setStage(array $stage = []): object
+    public function setStage(array $stage = []): self
     {
         if ([] !== $this->stage) {
             $this->_trackValuesRemoved(count($this->stage));
@@ -1718,7 +1739,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionEvidence[]
      */
-    public function getEvidence(): ?array
+    public function getEvidence(): null|array
     {
         return $this->evidence;
     }
@@ -1733,8 +1754,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionEvidence $evidence
      * @return static
      */
-    public function addEvidence(?FHIRConditionEvidence $evidence = null): object
+    public function addEvidence(null|FHIRConditionEvidence $evidence = null): self
     {
+        if (null === $evidence) {
+            $evidence = new FHIRConditionEvidence();
+        }
         $this->_trackValueAdded();
         $this->evidence[] = $evidence;
         return $this;
@@ -1750,7 +1774,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionEvidence[] $evidence
      * @return static
      */
-    public function setEvidence(array $evidence = []): object
+    public function setEvidence(array $evidence = []): self
     {
         if ([] !== $this->evidence) {
             $this->_trackValuesRemoved(count($this->evidence));
@@ -1780,7 +1804,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    public function getNote(): ?array
+    public function getNote(): null|array
     {
         return $this->note;
     }
@@ -1797,8 +1821,11 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $note
      * @return static
      */
-    public function addNote(?FHIRAnnotation $note = null): object
+    public function addNote(null|FHIRAnnotation $note = null): self
     {
+        if (null === $note) {
+            $note = new FHIRAnnotation();
+        }
         $this->_trackValueAdded();
         $this->note[] = $note;
         return $this;
@@ -1816,7 +1843,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation[] $note
      * @return static
      */
-    public function setNote(array $note = []): object
+    public function setNote(array $note = []): self
     {
         if ([] !== $this->note) {
             $this->_trackValuesRemoved(count($this->note));
@@ -1843,7 +1870,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2395,36 +2422,48 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRCondition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRCondition
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRCondition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRCondition::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRCondition(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRCondition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRCondition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRCondition::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRCondition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -2581,17 +2620,25 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Condition'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2755,7 +2802,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2909,7 +2956,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
 
         return $out;
     }
-
 
     /**
      * @return string

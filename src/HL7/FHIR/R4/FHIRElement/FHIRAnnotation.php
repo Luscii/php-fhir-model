@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,10 +62,15 @@ namespace HL7\FHIR\R4\FHIRElement;
  * 
  */
 
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A text note which also contains information about who made the statement and
@@ -80,6 +85,7 @@ class FHIRAnnotation extends FHIRElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ANNOTATION;
+
     const FIELD_AUTHOR_REFERENCE = 'authorReference';
     const FIELD_AUTHOR_STRING = 'authorString';
     const FIELD_AUTHOR_STRING_EXT = '_authorString';
@@ -87,9 +93,6 @@ class FHIRAnnotation extends FHIRElement
     const FIELD_TIME_EXT = '_time';
     const FIELD_TEXT = 'text';
     const FIELD_TEXT_EXT = '_text';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A reference from one resource to another.
@@ -100,8 +103,7 @@ class FHIRAnnotation extends FHIRElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $authorReference = null;
-
+    protected null|FHIRReference $authorReference = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -109,10 +111,9 @@ class FHIRAnnotation extends FHIRElement
      *
      * The individual responsible for making the annotation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $authorString = null;
-
+    protected null|FHIRString $authorString = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -123,10 +124,9 @@ class FHIRAnnotation extends FHIRElement
      *
      * Indicates when this particular annotation was made.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $time = null;
-
+    protected null|FHIRDateTime $time = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -138,30 +138,25 @@ class FHIRAnnotation extends FHIRElement
      *
      * The text of the annotation in markdown format.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $text = null;
+    protected null|FHIRMarkdown $text = null;
 
     /**
      * Validation map for fields in type Annotation
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRAnnotation Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRAnnotation::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_AUTHOR_REFERENCE])) {
@@ -218,24 +213,13 @@ class FHIRAnnotation extends FHIRElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Annotation{$xmlns}></Annotation>";
     }
 
     /**
@@ -247,7 +231,7 @@ class FHIRAnnotation extends FHIRElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getAuthorReference(): ?FHIRReference
+    public function getAuthorReference(): null|FHIRReference
     {
         return $this->authorReference;
     }
@@ -262,8 +246,11 @@ class FHIRAnnotation extends FHIRElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $authorReference
      * @return static
      */
-    public function setAuthorReference(?FHIRReference $authorReference = null): object
+    public function setAuthorReference(null|FHIRReference $authorReference = null): self
     {
+        if (null === $authorReference) {
+            $authorReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->authorReference, $authorReference);
         $this->authorReference = $authorReference;
         return $this;
@@ -276,9 +263,9 @@ class FHIRAnnotation extends FHIRElement
      *
      * The individual responsible for making the annotation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getAuthorString(): ?FHIRString
+    public function getAuthorString(): null|FHIRString
     {
         return $this->authorString;
     }
@@ -290,10 +277,10 @@ class FHIRAnnotation extends FHIRElement
      *
      * The individual responsible for making the annotation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $authorString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $authorString
      * @return static
      */
-    public function setAuthorString($authorString = null): object
+    public function setAuthorString(null|string|FHIRStringPrimitive|FHIRString $authorString = null): self
     {
         if (null !== $authorString && !($authorString instanceof FHIRString)) {
             $authorString = new FHIRString($authorString);
@@ -313,9 +300,9 @@ class FHIRAnnotation extends FHIRElement
      *
      * Indicates when this particular annotation was made.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getTime(): ?FHIRDateTime
+    public function getTime(): null|FHIRDateTime
     {
         return $this->time;
     }
@@ -330,10 +317,10 @@ class FHIRAnnotation extends FHIRElement
      *
      * Indicates when this particular annotation was made.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $time
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $time
      * @return static
      */
-    public function setTime($time = null): object
+    public function setTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $time = null): self
     {
         if (null !== $time && !($time instanceof FHIRDateTime)) {
             $time = new FHIRDateTime($time);
@@ -354,9 +341,9 @@ class FHIRAnnotation extends FHIRElement
      *
      * The text of the annotation in markdown format.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getText(): ?FHIRMarkdown
+    public function getText(): null|FHIRMarkdown
     {
         return $this->text;
     }
@@ -372,10 +359,10 @@ class FHIRAnnotation extends FHIRElement
      *
      * The text of the annotation in markdown format.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $text
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $text
      * @return static
      */
-    public function setText($text = null): object
+    public function setText(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $text = null): self
     {
         if (null !== $text && !($text instanceof FHIRMarkdown)) {
             $text = new FHIRMarkdown($text);
@@ -393,7 +380,7 @@ class FHIRAnnotation extends FHIRElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -504,36 +491,48 @@ class FHIRAnnotation extends FHIRElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRAnnotation::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRAnnotation::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRAnnotation(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRAnnotation)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRAnnotation)) {
             throw new \RuntimeException(sprintf(
-                'FHIRAnnotation::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRAnnotation or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -595,17 +594,25 @@ class FHIRAnnotation extends FHIRElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Annotation'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getAuthorReference())) {
@@ -634,7 +641,7 @@ class FHIRAnnotation extends FHIRElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getAuthorReference())) {
@@ -673,7 +680,6 @@ class FHIRAnnotation extends FHIRElement
 
         return $out;
     }
-
 
     /**
      * @return string

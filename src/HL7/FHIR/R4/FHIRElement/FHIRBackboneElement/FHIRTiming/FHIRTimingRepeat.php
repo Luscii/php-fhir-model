@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
 use HL7\FHIR\R4\FHIRElement\FHIRDecimal;
@@ -74,9 +76,15 @@ use HL7\FHIR\R4\FHIRElement\FHIRRange;
 use HL7\FHIR\R4\FHIRElement\FHIRTime;
 use HL7\FHIR\R4\FHIRElement\FHIRUnitsOfTime;
 use HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt;
+use HL7\FHIR\R4\FHIRPositiveIntPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRTimePrimitive;
+use HL7\FHIR\R4\FHIRUnsignedIntPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Specifies an event that may occur multiple times. Timing schedules are used to
@@ -94,6 +102,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_TIMING_DOT_REPEAT;
+
     const FIELD_BOUNDS_DURATION = 'boundsDuration';
     const FIELD_BOUNDS_RANGE = 'boundsRange';
     const FIELD_BOUNDS_PERIOD = 'boundsPeriod';
@@ -126,9 +135,6 @@ class FHIRTimingRepeat extends FHIRBackboneElement
     const FIELD_OFFSET = 'offset';
     const FIELD_OFFSET_EXT = '_offset';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A length of time.
      * If the element is present, it must have a value for at least one of the defined
@@ -139,8 +145,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    protected ?FHIRDuration $boundsDuration = null;
-
+    protected null|FHIRDuration $boundsDuration = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -151,8 +156,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $boundsRange = null;
-
+    protected null|FHIRRange $boundsRange = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -163,8 +167,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $boundsPeriod = null;
-
+    protected null|FHIRPeriod $boundsPeriod = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -174,10 +177,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * entire timing specification. If countMax is present, this element indicates the
      * lower bound of the allowed range of count values.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $count = null;
-
+    protected null|FHIRPositiveInt $count = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -186,10 +188,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the count is a range - so to perform the action
      * between [count] and [countMax] times.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $countMax = null;
-
+    protected null|FHIRPositiveInt $countMax = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -199,10 +200,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * How long this thing happens for when it happens. If durationMax is present, this
      * element indicates the lower bound of the allowed range of the duration.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $duration = null;
-
+    protected null|FHIRDecimal $duration = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -212,10 +212,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the duration is a range - so to perform the action
      * between [duration] and [durationMax] time length.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $durationMax = null;
-
+    protected null|FHIRDecimal $durationMax = null;
     /**
      * A unit of time (units from UCUM).
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -224,8 +223,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnitsOfTime
      */
-    protected ?FHIRUnitsOfTime $durationUnit = null;
-
+    protected null|FHIRUnitsOfTime $durationUnit = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -235,10 +233,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * frequencyMax is present, this element indicates the lower bound of the allowed
      * range of the frequency.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $frequency = null;
-
+    protected null|FHIRPositiveInt $frequency = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -247,10 +244,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the frequency is a range - so to repeat between
      * [frequency] and [frequencyMax] times within the period or period range.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $frequencyMax = null;
-
+    protected null|FHIRPositiveInt $frequencyMax = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -262,10 +258,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * period. If periodMax is present, this element indicates the lower bound of the
      * allowed range of the period length.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $period = null;
-
+    protected null|FHIRDecimal $period = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -275,10 +270,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the period is a range from [period] to [periodMax],
      * allowing expressing concepts such as "do this once every 3-5 days.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $periodMax = null;
-
+    protected null|FHIRDecimal $periodMax = null;
     /**
      * A unit of time (units from UCUM).
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -287,8 +281,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnitsOfTime
      */
-    protected ?FHIRUnitsOfTime $periodUnit = null;
-
+    protected null|FHIRUnitsOfTime $periodUnit = null;
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -298,20 +291,18 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If one or more days of week is provided, then the action happens only on the
      * specified day(s).
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
      */
-    protected ?array $dayOfWeek = [];
-
+    protected null|array $dayOfWeek = [];
     /**
      * A time during the day, with no date specified
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Specified time of day for action to take place.
      *
-     * @var null|\HL7\FHIR\R4\FHIRTimePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRTime[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime[]
      */
-    protected ?array $timeOfDay = [];
-
+    protected null|array $timeOfDay = [];
     /**
      * Real world event relating to the schedule.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -321,8 +312,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIREventTiming[]
      */
-    protected ?array $when = [];
-
+    protected null|array $when = [];
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -332,30 +322,25 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * whether the minutes is before or after the event, then the offset is assumed to
      * be after the event.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    protected ?FHIRUnsignedInt $offset = null;
+    protected null|FHIRUnsignedInt $offset = null;
 
     /**
      * Validation map for fields in type Timing.Repeat
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRTimingRepeat Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRTimingRepeat::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_BOUNDS_DURATION])) {
@@ -636,24 +621,13 @@ class FHIRTimingRepeat extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<TimingRepeat{$xmlns}></TimingRepeat>";
     }
 
     /**
@@ -666,7 +640,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    public function getBoundsDuration(): ?FHIRDuration
+    public function getBoundsDuration(): null|FHIRDuration
     {
         return $this->boundsDuration;
     }
@@ -682,8 +656,11 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration $boundsDuration
      * @return static
      */
-    public function setBoundsDuration(?FHIRDuration $boundsDuration = null): object
+    public function setBoundsDuration(null|FHIRDuration $boundsDuration = null): self
     {
+        if (null === $boundsDuration) {
+            $boundsDuration = new FHIRDuration();
+        }
         $this->_trackValueSet($this->boundsDuration, $boundsDuration);
         $this->boundsDuration = $boundsDuration;
         return $this;
@@ -699,7 +676,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getBoundsRange(): ?FHIRRange
+    public function getBoundsRange(): null|FHIRRange
     {
         return $this->boundsRange;
     }
@@ -715,8 +692,11 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $boundsRange
      * @return static
      */
-    public function setBoundsRange(?FHIRRange $boundsRange = null): object
+    public function setBoundsRange(null|FHIRRange $boundsRange = null): self
     {
+        if (null === $boundsRange) {
+            $boundsRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->boundsRange, $boundsRange);
         $this->boundsRange = $boundsRange;
         return $this;
@@ -732,7 +712,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getBoundsPeriod(): ?FHIRPeriod
+    public function getBoundsPeriod(): null|FHIRPeriod
     {
         return $this->boundsPeriod;
     }
@@ -748,8 +728,11 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $boundsPeriod
      * @return static
      */
-    public function setBoundsPeriod(?FHIRPeriod $boundsPeriod = null): object
+    public function setBoundsPeriod(null|FHIRPeriod $boundsPeriod = null): self
     {
+        if (null === $boundsPeriod) {
+            $boundsPeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->boundsPeriod, $boundsPeriod);
         $this->boundsPeriod = $boundsPeriod;
         return $this;
@@ -764,9 +747,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * entire timing specification. If countMax is present, this element indicates the
      * lower bound of the allowed range of count values.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getCount(): ?FHIRPositiveInt
+    public function getCount(): null|FHIRPositiveInt
     {
         return $this->count;
     }
@@ -780,10 +763,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * entire timing specification. If countMax is present, this element indicates the
      * lower bound of the allowed range of count values.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $count
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $count
      * @return static
      */
-    public function setCount($count = null): object
+    public function setCount(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $count = null): self
     {
         if (null !== $count && !($count instanceof FHIRPositiveInt)) {
             $count = new FHIRPositiveInt($count);
@@ -801,9 +784,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the count is a range - so to perform the action
      * between [count] and [countMax] times.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getCountMax(): ?FHIRPositiveInt
+    public function getCountMax(): null|FHIRPositiveInt
     {
         return $this->countMax;
     }
@@ -816,10 +799,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the count is a range - so to perform the action
      * between [count] and [countMax] times.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $countMax
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $countMax
      * @return static
      */
-    public function setCountMax($countMax = null): object
+    public function setCountMax(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $countMax = null): self
     {
         if (null !== $countMax && !($countMax instanceof FHIRPositiveInt)) {
             $countMax = new FHIRPositiveInt($countMax);
@@ -838,9 +821,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * How long this thing happens for when it happens. If durationMax is present, this
      * element indicates the lower bound of the allowed range of the duration.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getDuration(): ?FHIRDecimal
+    public function getDuration(): null|FHIRDecimal
     {
         return $this->duration;
     }
@@ -854,10 +837,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * How long this thing happens for when it happens. If durationMax is present, this
      * element indicates the lower bound of the allowed range of the duration.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $duration
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $duration
      * @return static
      */
-    public function setDuration($duration = null): object
+    public function setDuration(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $duration = null): self
     {
         if (null !== $duration && !($duration instanceof FHIRDecimal)) {
             $duration = new FHIRDecimal($duration);
@@ -876,9 +859,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the duration is a range - so to perform the action
      * between [duration] and [durationMax] time length.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getDurationMax(): ?FHIRDecimal
+    public function getDurationMax(): null|FHIRDecimal
     {
         return $this->durationMax;
     }
@@ -892,10 +875,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the duration is a range - so to perform the action
      * between [duration] and [durationMax] time length.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $durationMax
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $durationMax
      * @return static
      */
-    public function setDurationMax($durationMax = null): object
+    public function setDurationMax(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $durationMax = null): self
     {
         if (null !== $durationMax && !($durationMax instanceof FHIRDecimal)) {
             $durationMax = new FHIRDecimal($durationMax);
@@ -913,7 +896,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnitsOfTime
      */
-    public function getDurationUnit(): ?FHIRUnitsOfTime
+    public function getDurationUnit(): null|FHIRUnitsOfTime
     {
         return $this->durationUnit;
     }
@@ -927,8 +910,11 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUnitsOfTime $durationUnit
      * @return static
      */
-    public function setDurationUnit(?FHIRUnitsOfTime $durationUnit = null): object
+    public function setDurationUnit(null|FHIRUnitsOfTime $durationUnit = null): self
     {
+        if (null === $durationUnit) {
+            $durationUnit = new FHIRUnitsOfTime();
+        }
         $this->_trackValueSet($this->durationUnit, $durationUnit);
         $this->durationUnit = $durationUnit;
         return $this;
@@ -943,9 +929,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * frequencyMax is present, this element indicates the lower bound of the allowed
      * range of the frequency.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getFrequency(): ?FHIRPositiveInt
+    public function getFrequency(): null|FHIRPositiveInt
     {
         return $this->frequency;
     }
@@ -959,10 +945,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * frequencyMax is present, this element indicates the lower bound of the allowed
      * range of the frequency.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $frequency
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $frequency
      * @return static
      */
-    public function setFrequency($frequency = null): object
+    public function setFrequency(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $frequency = null): self
     {
         if (null !== $frequency && !($frequency instanceof FHIRPositiveInt)) {
             $frequency = new FHIRPositiveInt($frequency);
@@ -980,9 +966,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the frequency is a range - so to repeat between
      * [frequency] and [frequencyMax] times within the period or period range.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getFrequencyMax(): ?FHIRPositiveInt
+    public function getFrequencyMax(): null|FHIRPositiveInt
     {
         return $this->frequencyMax;
     }
@@ -995,10 +981,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the frequency is a range - so to repeat between
      * [frequency] and [frequencyMax] times within the period or period range.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $frequencyMax
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $frequencyMax
      * @return static
      */
-    public function setFrequencyMax($frequencyMax = null): object
+    public function setFrequencyMax(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $frequencyMax = null): self
     {
         if (null !== $frequencyMax && !($frequencyMax instanceof FHIRPositiveInt)) {
             $frequencyMax = new FHIRPositiveInt($frequencyMax);
@@ -1019,9 +1005,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * period. If periodMax is present, this element indicates the lower bound of the
      * allowed range of the period length.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getPeriod(): ?FHIRDecimal
+    public function getPeriod(): null|FHIRDecimal
     {
         return $this->period;
     }
@@ -1037,10 +1023,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * period. If periodMax is present, this element indicates the lower bound of the
      * allowed range of the period length.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $period
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $period
      * @return static
      */
-    public function setPeriod($period = null): object
+    public function setPeriod(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $period = null): self
     {
         if (null !== $period && !($period instanceof FHIRDecimal)) {
             $period = new FHIRDecimal($period);
@@ -1059,9 +1045,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the period is a range from [period] to [periodMax],
      * allowing expressing concepts such as "do this once every 3-5 days.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getPeriodMax(): ?FHIRDecimal
+    public function getPeriodMax(): null|FHIRDecimal
     {
         return $this->periodMax;
     }
@@ -1075,10 +1061,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If present, indicates that the period is a range from [period] to [periodMax],
      * allowing expressing concepts such as "do this once every 3-5 days.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $periodMax
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $periodMax
      * @return static
      */
-    public function setPeriodMax($periodMax = null): object
+    public function setPeriodMax(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $periodMax = null): self
     {
         if (null !== $periodMax && !($periodMax instanceof FHIRDecimal)) {
             $periodMax = new FHIRDecimal($periodMax);
@@ -1096,7 +1082,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnitsOfTime
      */
-    public function getPeriodUnit(): ?FHIRUnitsOfTime
+    public function getPeriodUnit(): null|FHIRUnitsOfTime
     {
         return $this->periodUnit;
     }
@@ -1110,8 +1096,11 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUnitsOfTime $periodUnit
      * @return static
      */
-    public function setPeriodUnit(?FHIRUnitsOfTime $periodUnit = null): object
+    public function setPeriodUnit(null|FHIRUnitsOfTime $periodUnit = null): self
     {
+        if (null === $periodUnit) {
+            $periodUnit = new FHIRUnitsOfTime();
+        }
         $this->_trackValueSet($this->periodUnit, $periodUnit);
         $this->periodUnit = $periodUnit;
         return $this;
@@ -1126,9 +1115,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If one or more days of week is provided, then the action happens only on the
      * specified day(s).
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode[]
      */
-    public function getDayOfWeek(): ?array
+    public function getDayOfWeek(): null|array
     {
         return $this->dayOfWeek;
     }
@@ -1142,10 +1131,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * If one or more days of week is provided, then the action happens only on the
      * specified day(s).
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCode[] $dayOfWeek
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $dayOfWeek
      * @return static
      */
-    public function addDayOfWeek($dayOfWeek = null): object
+    public function addDayOfWeek(null|string|FHIRCodePrimitive|FHIRCode $dayOfWeek = null): self
     {
         if (null !== $dayOfWeek && !($dayOfWeek instanceof FHIRCode)) {
             $dayOfWeek = new FHIRCode($dayOfWeek);
@@ -1167,7 +1156,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCode[] $dayOfWeek
      * @return static
      */
-    public function setDayOfWeek(array $dayOfWeek = []): object
+    public function setDayOfWeek(array $dayOfWeek = []): self
     {
         if ([] !== $this->dayOfWeek) {
             $this->_trackValuesRemoved(count($this->dayOfWeek));
@@ -1192,9 +1181,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * Specified time of day for action to take place.
      *
-     * @return null|\HL7\FHIR\R4\FHIRTimePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRTime[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTime[]
      */
-    public function getTimeOfDay(): ?array
+    public function getTimeOfDay(): null|array
     {
         return $this->timeOfDay;
     }
@@ -1205,10 +1194,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * Specified time of day for action to take place.
      *
-     * @param null|\HL7\FHIR\R4\FHIRTimePrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRTime[] $timeOfDay
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $timeOfDay
      * @return static
      */
-    public function addTimeOfDay($timeOfDay = null): object
+    public function addTimeOfDay(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $timeOfDay = null): self
     {
         if (null !== $timeOfDay && !($timeOfDay instanceof FHIRTime)) {
             $timeOfDay = new FHIRTime($timeOfDay);
@@ -1227,7 +1216,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRTime[] $timeOfDay
      * @return static
      */
-    public function setTimeOfDay(array $timeOfDay = []): object
+    public function setTimeOfDay(array $timeOfDay = []): self
     {
         if ([] !== $this->timeOfDay) {
             $this->_trackValuesRemoved(count($this->timeOfDay));
@@ -1255,7 +1244,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIREventTiming[]
      */
-    public function getWhen(): ?array
+    public function getWhen(): null|array
     {
         return $this->when;
     }
@@ -1270,8 +1259,11 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIREventTiming $when
      * @return static
      */
-    public function addWhen(?FHIREventTiming $when = null): object
+    public function addWhen(null|FHIREventTiming $when = null): self
     {
+        if (null === $when) {
+            $when = new FHIREventTiming();
+        }
         $this->_trackValueAdded();
         $this->when[] = $when;
         return $this;
@@ -1287,7 +1279,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIREventTiming[] $when
      * @return static
      */
-    public function setWhen(array $when = []): object
+    public function setWhen(array $when = []): self
     {
         if ([] !== $this->when) {
             $this->_trackValuesRemoved(count($this->when));
@@ -1315,9 +1307,9 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * whether the minutes is before or after the event, then the offset is assumed to
      * be after the event.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    public function getOffset(): ?FHIRUnsignedInt
+    public function getOffset(): null|FHIRUnsignedInt
     {
         return $this->offset;
     }
@@ -1331,10 +1323,10 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      * whether the minutes is before or after the event, then the offset is assumed to
      * be after the event.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $offset
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $offset
      * @return static
      */
-    public function setOffset($offset = null): object
+    public function setOffset(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $offset = null): self
     {
         if (null !== $offset && !($offset instanceof FHIRUnsignedInt)) {
             $offset = new FHIRUnsignedInt($offset);
@@ -1352,7 +1344,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1702,36 +1694,48 @@ class FHIRTimingRepeat extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming\FHIRTimingRepeat $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming\FHIRTimingRepeat
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRTimingRepeat::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRTimingRepeat::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRTimingRepeat(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRTimingRepeat)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRTimingRepeat)) {
             throw new \RuntimeException(sprintf(
-                'FHIRTimingRepeat::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming\FHIRTimingRepeat or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1854,21 +1858,11 @@ class FHIRTimingRepeat extends FHIRBackboneElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_DAY_OF_WEEK);
         if (null !== $n) {
-            $pt = $type->getDayOfWeek();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addDayOfWeek($n->nodeValue);
-            }
+            $type->addDayOfWeek($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_TIME_OF_DAY);
         if (null !== $n) {
-            $pt = $type->getTimeOfDay();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addTimeOfDay($n->nodeValue);
-            }
+            $type->addTimeOfDay($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_OFFSET);
         if (null !== $n) {
@@ -1893,17 +1887,25 @@ class FHIRTimingRepeat extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('TimingRepeat'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getBoundsDuration())) {
@@ -2012,7 +2014,7 @@ class FHIRTimingRepeat extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getBoundsDuration())) {
@@ -2209,7 +2211,6 @@ class FHIRTimingRepeat extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

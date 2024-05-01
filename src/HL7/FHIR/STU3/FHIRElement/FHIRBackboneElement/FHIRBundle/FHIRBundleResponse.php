@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,13 +63,20 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle;
  */
 
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRInstant;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
 use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRInstantPrimitive;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeMap;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A container for a collection of resources.
@@ -81,63 +88,16 @@ class FHIRBundleResponse extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_RESPONSE;
+
+    const FIELD_STATUS = 'status';
+    const FIELD_STATUS_EXT = '_status';
+    const FIELD_LOCATION = 'location';
+    const FIELD_LOCATION_EXT = '_location';
     const FIELD_ETAG = 'etag';
     const FIELD_ETAG_EXT = '_etag';
     const FIELD_LAST_MODIFIED = 'lastModified';
     const FIELD_LAST_MODIFIED_EXT = '_lastModified';
-    const FIELD_LOCATION = 'location';
-    const FIELD_LOCATION_EXT = '_location';
     const FIELD_OUTCOME = 'outcome';
-    const FIELD_STATUS = 'status';
-    const FIELD_STATUS_EXT = '_status';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The etag for the resource, it the operation for the entry produced a versioned
-     * resource (see [Resource Metadata and Versioning](http.html#versioning) and
-     * [Managing Resource Contention](http.html#concurrency)).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $etag = null;
-
-    /**
-     * An instant in time - known at least to the second
-     * Note: This is intended for precisely observed times, typically system logs etc.,
-     * and not human-reported times - for them, see date and dateTime below. Time zone
-     * is always required
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The date/time that the resource was modified on the server.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
-     */
-    protected $lastModified = null;
-
-    /**
-     * String of characters used to identify a name or a resource
-     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The location header created by processing this operation.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
-     */
-    protected $location = null;
-
-    /**
-     * An OperationOutcome containing hints and warnings produced as part of processing
-     * this entry in a batch or transaction.
-     *
-     * @var null|\HL7\FHIR\STU3\PHPFHIRContainedTypeInterface
-     */
-    protected $outcome = null;
 
     /**
      * A sequence of Unicode characters
@@ -150,87 +110,84 @@ class FHIRBundleResponse extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $status = null;
+    protected null|FHIRString $status = null;
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The location header created by processing this operation.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
+     */
+    protected null|FHIRUri $location = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The etag for the resource, it the operation for the entry produced a versioned
+     * resource (see [Resource Metadata and Versioning](http.html#versioning) and
+     * [Managing Resource Contention](http.html#concurrency)).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $etag = null;
+    /**
+     * An instant in time - known at least to the second
+     * Note: This is intended for precisely observed times, typically system logs etc.,
+     * and not human-reported times - for them, see date and dateTime below. Time zone
+     * is always required
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The date/time that the resource was modified on the server.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
+     */
+    protected null|FHIRInstant $lastModified = null;
+    /**
+     * An OperationOutcome containing hints and warnings produced as part of processing
+     * this entry in a batch or transaction.
+     *
+     * @var null|\HL7\FHIR\STU3\|PHPFHIRContainedTypeInterface
+     */
+    protected null|PHPFHIRContainedTypeInterface $outcome = null;
 
     /**
      * Validation map for fields in type Bundle.Response
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRBundleResponse Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRBundleResponse::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_ETAG]) || isset($data[self::FIELD_ETAG_EXT])) {
-            if (isset($data[self::FIELD_ETAG])) {
-                $value = $data[self::FIELD_ETAG];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ETAG_EXT]) && is_array($data[self::FIELD_ETAG_EXT])) {
-                $ext = $data[self::FIELD_ETAG_EXT];
-            } else {
-                $ext = [];
-            }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            $value = $data[self::FIELD_STATUS] ?? null;
+            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) ? $data[self::FIELD_STATUS_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
-                    $this->setEtag($value);
+                    $this->setStatus($value);
                 } else if (is_array($value)) {
-                    $this->setEtag(new FHIRString(array_merge($ext, $value)));
+                    $this->setStatus(new FHIRString(array_merge($ext, $value)));
                 } else {
-                    $this->setEtag(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                    $this->setStatus(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
-                $this->setEtag(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_LAST_MODIFIED]) || isset($data[self::FIELD_LAST_MODIFIED_EXT])) {
-            if (isset($data[self::FIELD_LAST_MODIFIED])) {
-                $value = $data[self::FIELD_LAST_MODIFIED];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_LAST_MODIFIED_EXT]) && is_array($data[self::FIELD_LAST_MODIFIED_EXT])) {
-                $ext = $data[self::FIELD_LAST_MODIFIED_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRInstant) {
-                    $this->setLastModified($value);
-                } else if (is_array($value)) {
-                    $this->setLastModified(new FHIRInstant(array_merge($ext, $value)));
-                } else {
-                    $this->setLastModified(new FHIRInstant([FHIRInstant::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setLastModified(new FHIRInstant($ext));
+            } elseif ([] !== $ext) {
+                $this->setStatus(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_LOCATION]) || isset($data[self::FIELD_LOCATION_EXT])) {
-            if (isset($data[self::FIELD_LOCATION])) {
-                $value = $data[self::FIELD_LOCATION];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_LOCATION_EXT]) && is_array($data[self::FIELD_LOCATION_EXT])) {
-                $ext = $data[self::FIELD_LOCATION_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_LOCATION] ?? null;
+            $ext = (isset($data[self::FIELD_LOCATION_EXT]) && is_array($data[self::FIELD_LOCATION_EXT])) ? $data[self::FIELD_LOCATION_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRUri) {
                     $this->setLocation($value);
@@ -239,8 +196,38 @@ class FHIRBundleResponse extends FHIRBackboneElement
                 } else {
                     $this->setLocation(new FHIRUri([FHIRUri::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setLocation(new FHIRUri($ext));
+            }
+        }
+        if (isset($data[self::FIELD_ETAG]) || isset($data[self::FIELD_ETAG_EXT])) {
+            $value = $data[self::FIELD_ETAG] ?? null;
+            $ext = (isset($data[self::FIELD_ETAG_EXT]) && is_array($data[self::FIELD_ETAG_EXT])) ? $data[self::FIELD_ETAG_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setEtag($value);
+                } else if (is_array($value)) {
+                    $this->setEtag(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setEtag(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setEtag(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_LAST_MODIFIED]) || isset($data[self::FIELD_LAST_MODIFIED_EXT])) {
+            $value = $data[self::FIELD_LAST_MODIFIED] ?? null;
+            $ext = (isset($data[self::FIELD_LAST_MODIFIED_EXT]) && is_array($data[self::FIELD_LAST_MODIFIED_EXT])) ? $data[self::FIELD_LAST_MODIFIED_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRInstant) {
+                    $this->setLastModified($value);
+                } else if (is_array($value)) {
+                    $this->setLastModified(new FHIRInstant(array_merge($ext, $value)));
+                } else {
+                    $this->setLastModified(new FHIRInstant([FHIRInstant::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setLastModified(new FHIRInstant($ext));
             }
         }
         if (isset($data[self::FIELD_OUTCOME])) {
@@ -253,7 +240,7 @@ class FHIRBundleResponse extends FHIRBackboneElement
                         get_class($data[self::FIELD_OUTCOME])
                     ));
                 }
-            } else if (is_array($data[self::FIELD_OUTCOME])) {
+            } elseif (is_array($data[self::FIELD_OUTCOME])) {
                 $typeClass = PHPFHIRTypeMap::getContainedTypeFromArray($data[self::FIELD_OUTCOME]);
                 if (null === $typeClass) {
                     throw new \InvalidArgumentException(sprintf(
@@ -269,49 +256,87 @@ class FHIRBundleResponse extends FHIRBackboneElement
                 ));
             }
         }
-        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
-            if (isset($data[self::FIELD_STATUS])) {
-                $value = $data[self::FIELD_STATUS];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) {
-                $ext = $data[self::FIELD_STATUS_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setStatus($value);
-                } else if (is_array($value)) {
-                    $this->setStatus(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setStatus(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setStatus(new FHIRString($ext));
-            }
-        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * @return string
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The status code returned by processing this entry. The status SHALL start with a
+     * 3 digit HTTP code (e.g. 404) and may contain the standard HTTP description
+     * associated with the status code.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function _getFHIRXMLElementDefinition()
+    public function getStatus(): null|FHIRString
     {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
+        return $this->status;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The status code returned by processing this entry. The status SHALL start with a
+     * 3 digit HTTP code (e.g. 404) and may contain the standard HTTP description
+     * associated with the status code.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $status
+     * @return static
+     */
+    public function setStatus(null|string|FHIRStringPrimitive|FHIRString $status = null): self
+    {
+        if (null !== $status && !($status instanceof FHIRString)) {
+            $status = new FHIRString($status);
         }
-        return "<BundleResponse{$xmlns}></BundleResponse>";
+        $this->_trackValueSet($this->status, $status);
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The location header created by processing this operation.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
+     */
+    public function getLocation(): null|FHIRUri
+    {
+        return $this->location;
+    }
+
+    /**
+     * String of characters used to identify a name or a resource
+     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The location header created by processing this operation.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRUriPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRUri $location
+     * @return static
+     */
+    public function setLocation(null|string|FHIRUriPrimitive|FHIRUri $location = null): self
+    {
+        if (null !== $location && !($location instanceof FHIRUri)) {
+            $location = new FHIRUri($location);
+        }
+        $this->_trackValueSet($this->location, $location);
+        $this->location = $location;
+        return $this;
     }
 
     /**
@@ -325,7 +350,7 @@ class FHIRBundleResponse extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getEtag()
+    public function getEtag(): null|FHIRString
     {
         return $this->etag;
     }
@@ -339,20 +364,16 @@ class FHIRBundleResponse extends FHIRBackboneElement
      * resource (see [Resource Metadata and Versioning](http.html#versioning) and
      * [Managing Resource Contention](http.html#concurrency)).
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $etag
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $etag
      * @return static
      */
-    public function setEtag($etag = null)
+    public function setEtag(null|string|FHIRStringPrimitive|FHIRString $etag = null): self
     {
-        if (null === $etag) {
-            $this->etag = null;
-            return $this;
+        if (null !== $etag && !($etag instanceof FHIRString)) {
+            $etag = new FHIRString($etag);
         }
-        if ($etag instanceof FHIRString) {
-            $this->etag = $etag;
-            return $this;
-        }
-        $this->etag = new FHIRString($etag);
+        $this->_trackValueSet($this->etag, $etag);
+        $this->etag = $etag;
         return $this;
     }
 
@@ -367,7 +388,7 @@ class FHIRBundleResponse extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
      */
-    public function getLastModified()
+    public function getLastModified(): null|FHIRInstant
     {
         return $this->lastModified;
     }
@@ -381,58 +402,16 @@ class FHIRBundleResponse extends FHIRBackboneElement
      *
      * The date/time that the resource was modified on the server.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant $lastModified
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRInstantPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRInstant $lastModified
      * @return static
      */
-    public function setLastModified($lastModified = null)
+    public function setLastModified(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $lastModified = null): self
     {
-        if (null === $lastModified) {
-            $this->lastModified = null;
-            return $this;
+        if (null !== $lastModified && !($lastModified instanceof FHIRInstant)) {
+            $lastModified = new FHIRInstant($lastModified);
         }
-        if ($lastModified instanceof FHIRInstant) {
-            $this->lastModified = $lastModified;
-            return $this;
-        }
-        $this->lastModified = new FHIRInstant($lastModified);
-        return $this;
-    }
-
-    /**
-     * String of characters used to identify a name or a resource
-     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The location header created by processing this operation.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
-     * String of characters used to identify a name or a resource
-     * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The location header created by processing this operation.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUri $location
-     * @return static
-     */
-    public function setLocation($location = null)
-    {
-        if (null === $location) {
-            $this->location = null;
-            return $this;
-        }
-        if ($location instanceof FHIRUri) {
-            $this->location = $location;
-            return $this;
-        }
-        $this->location = new FHIRUri($location);
+        $this->_trackValueSet($this->lastModified, $lastModified);
+        $this->lastModified = $lastModified;
         return $this;
     }
 
@@ -440,9 +419,9 @@ class FHIRBundleResponse extends FHIRBackboneElement
      * An OperationOutcome containing hints and warnings produced as part of processing
      * this entry in a batch or transaction.
      *
-     * @return null|\HL7\FHIR\STU3\PHPFHIRContainedTypeInterface
+     * @return null|\HL7\FHIR\STU3\|PHPFHIRContainedTypeInterface
      */
-    public function getOutcome()
+    public function getOutcome(): null|PHPFHIRContainedTypeInterface
     {
         return $this->outcome;
     }
@@ -454,51 +433,10 @@ class FHIRBundleResponse extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\PHPFHIRContainedTypeInterface $outcome
      * @return static
      */
-    public function setOutcome(PHPFHIRContainedTypeInterface $outcome = null)
+    public function setOutcome(?PHPFHIRContainedTypeInterface $outcome = null): self
     {
+        $this->_trackValueSet($this->outcome, $outcome);
         $this->outcome = $outcome;
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The status code returned by processing this entry. The status SHALL start with a
-     * 3 digit HTTP code (e.g. 404) and may contain the standard HTTP description
-     * associated with the status code.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The status code returned by processing this entry. The status SHALL start with a
-     * 3 digit HTTP code (e.g. 404) and may contain the standard HTTP description
-     * associated with the status code.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $status
-     * @return static
-     */
-    public function setStatus($status = null)
-    {
-        if (null === $status) {
-            $this->status = null;
-            return $this;
-        }
-        if ($status instanceof FHIRString) {
-            $this->status = $status;
-            return $this;
-        }
-        $this->status = new FHIRString($status);
         return $this;
     }
 
@@ -508,9 +446,9 @@ class FHIRBundleResponse extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -519,10 +457,20 @@ class FHIRBundleResponse extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getStatus())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_STATUS] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getLocation())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_LOCATION] = $fieldErrs;
+            }
+        }
         if (null !== ($v = $this->getEtag())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_ETAG] = $fieldErrs;
@@ -533,19 +481,33 @@ class FHIRBundleResponse extends FHIRBackboneElement
                 $errs[self::FIELD_LAST_MODIFIED] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getLocation())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_LOCATION] = $fieldErrs;
-            }
-        }
         if (null !== ($v = $this->getOutcome())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_OUTCOME] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getStatus())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_STATUS] = $fieldErrs;
+        if (isset($validationRules[self::FIELD_STATUS])) {
+            $v = $this->getStatus();
+            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_RESPONSE, self::FIELD_STATUS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_STATUS])) {
+                        $errs[self::FIELD_STATUS] = [];
+                    }
+                    $errs[self::FIELD_STATUS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LOCATION])) {
+            $v = $this->getLocation();
+            foreach($validationRules[self::FIELD_LOCATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_RESPONSE, self::FIELD_LOCATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LOCATION])) {
+                        $errs[self::FIELD_LOCATION] = [];
+                    }
+                    $errs[self::FIELD_LOCATION][$rule] = $err;
+                }
             }
         }
         if (isset($validationRules[self::FIELD_ETAG])) {
@@ -572,18 +534,6 @@ class FHIRBundleResponse extends FHIRBackboneElement
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_LOCATION])) {
-            $v = $this->getLocation();
-            foreach($validationRules[self::FIELD_LOCATION] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_RESPONSE, self::FIELD_LOCATION, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_LOCATION])) {
-                        $errs[self::FIELD_LOCATION] = [];
-                    }
-                    $errs[self::FIELD_LOCATION][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_OUTCOME])) {
             $v = $this->getOutcome();
             foreach($validationRules[self::FIELD_OUTCOME] as $rule => $constraint) {
@@ -593,18 +543,6 @@ class FHIRBundleResponse extends FHIRBackboneElement
                         $errs[self::FIELD_OUTCOME] = [];
                     }
                     $errs[self::FIELD_OUTCOME][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_STATUS])) {
-            $v = $this->getStatus();
-            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_BUNDLE_DOT_RESPONSE, self::FIELD_STATUS, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_STATUS])) {
-                        $errs[self::FIELD_STATUS] = [];
-                    }
-                    $errs[self::FIELD_STATUS][$rule] = $err;
                 }
             }
         }
@@ -648,186 +586,237 @@ class FHIRBundleResponse extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleResponse $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleResponse
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRBundleResponse::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRBundleResponse::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRBundleResponse;
-        } elseif (!is_object($type) || !($type instanceof FHIRBundleResponse)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRBundleResponse)) {
             throw new \RuntimeException(sprintf(
-                'FHIRBundleResponse::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleResponse or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
             }
-        }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->etag)) {
-            $type->setEtag(FHIRString::xmlUnserialize($children->etag));
-        }
-        if (isset($attributes->etag)) {
-            $pt = $type->getEtag();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->etag);
-            } else {
-                $type->setEtag((string)$attributes->etag);
-            }
-        }
-        if (isset($children->lastModified)) {
-            $type->setLastModified(FHIRInstant::xmlUnserialize($children->lastModified));
-        }
-        if (isset($attributes->lastModified)) {
-            $pt = $type->getLastModified();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->lastModified);
-            } else {
-                $type->setLastModified((string)$attributes->lastModified);
-            }
-        }
-        if (isset($children->location)) {
-            $type->setLocation(FHIRUri::xmlUnserialize($children->location));
-        }
-        if (isset($attributes->location)) {
-            $pt = $type->getLocation();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->location);
-            } else {
-                $type->setLocation((string)$attributes->location);
-            }
-        }
-        if (isset($children->outcome)) {
-            foreach($children->outcome as $child) {
-                foreach($child->children() as $babe) {
-                    $type->setOutcome(PHPFHIRTypeMap::getContainedTypeFromXML($babe));
-                    break 2;
+            if (self::FIELD_STATUS === $n->nodeName) {
+                $type->setStatus(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_LOCATION === $n->nodeName) {
+                $type->setLocation(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_ETAG === $n->nodeName) {
+                $type->setEtag(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_LAST_MODIFIED === $n->nodeName) {
+                $type->setLastModified(FHIRInstant::xmlUnserialize($n));
+            } elseif (self::FIELD_OUTCOME === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->setOutcome(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
                 }
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        if (isset($children->status)) {
-            $type->setStatus(FHIRString::xmlUnserialize($children->status));
-        }
-        if (isset($attributes->status)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_STATUS);
+        if (null !== $n) {
             $pt = $type->getStatus();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->status);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setStatus((string)$attributes->status);
+                $type->setStatus($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_LOCATION);
+        if (null !== $n) {
+            $pt = $type->getLocation();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLocation($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ETAG);
+        if (null !== $n) {
+            $pt = $type->getEtag();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setEtag($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_LAST_MODIFIED);
+        if (null !== $n) {
+            $pt = $type->getLastModified();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLastModified($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getEtag())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ETAG, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('BundleResponse'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
-        if (null !== ($v = $this->getLastModified())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_LAST_MODIFIED, null, $v->_getFHIRXMLNamespace()));
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getStatus())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getLocation())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_LOCATION, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_LOCATION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getEtag())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ETAG);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getLastModified())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_LAST_MODIFIED);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getOutcome())) {
-            $tsxe = $sxe->addChild(self::FIELD_OUTCOME);
-            $v->xmlSerialize($tsxe->addChild($v->_getFHIRTypeName(), null, $v->_getFHIRXMLNamespace()));
+            $e2 = $element->ownerDocument->createElement(self::FIELD_OUTCOME);
+            $element->appendChild($e2);
+            $e3 = $element->ownerDocument->createElement($v->_getFHIRTypeName());
+            $e2->appendChild($e3);
+            $v->xmlSerialize($e3);
         }
-        if (null !== ($v = $this->getStatus())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_STATUS, null, $v->_getFHIRXMLNamespace()));
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getEtag())) {
-            $a[self::FIELD_ETAG] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_ETAG_EXT] = $enc;
+        $out = parent::jsonSerialize();
+        if (null !== ($v = $this->getStatus())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_STATUS} = $val;
             }
-        }
-        if (null !== ($v = $this->getLastModified())) {
-            $a[self::FIELD_LAST_MODIFIED] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRInstant::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRInstant::FIELD_VALUE]);
-                $a[self::FIELD_LAST_MODIFIED_EXT] = $enc;
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_STATUS_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getLocation())) {
-            $a[self::FIELD_LOCATION] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUri::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRUri::FIELD_VALUE]);
-                $a[self::FIELD_LOCATION_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_LOCATION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRUri::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_LOCATION_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getEtag())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ETAG} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ETAG_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getLastModified())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_LAST_MODIFIED} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRInstant::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_LAST_MODIFIED_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getOutcome())) {
-            $a[self::FIELD_OUTCOME] = $v;
+            $out->{self::FIELD_OUTCOME} = $v;
         }
-        if (null !== ($v = $this->getStatus())) {
-            $a[self::FIELD_STATUS] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_STATUS_EXT] = $enc;
-            }
-        }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return $a;
-    }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

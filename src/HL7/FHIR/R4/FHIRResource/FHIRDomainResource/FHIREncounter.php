@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterClassHistory;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterDiagnosis;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterHospitalization;
@@ -81,11 +82,16 @@ use HL7\FHIR\R4\FHIRElement\FHIRPeriod;
 use HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * An interaction between a patient and healthcare provider(s) for the purpose of
@@ -99,6 +105,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ENCOUNTER;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
@@ -124,9 +131,6 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     const FIELD_SERVICE_PROVIDER = 'serviceProvider';
     const FIELD_PART_OF = 'partOf';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -137,8 +141,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * Current state of the encounter.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -147,8 +150,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIREncounterStatus
      */
-    protected ?FHIREncounterStatus $status = null;
-
+    protected null|FHIREncounterStatus $status = null;
     /**
      * An interaction between a patient and healthcare provider(s) for the purpose of
      * providing healthcare service(s) or assessing the health status of a patient.
@@ -159,8 +161,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterStatusHistory[]
      */
-    protected ?array $statusHistory = [];
-
+    protected null|array $statusHistory = [];
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -172,8 +173,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    protected ?FHIRCoding $class = null;
-
+    protected null|FHIRCoding $class = null;
     /**
      * An interaction between a patient and healthcare provider(s) for the purpose of
      * providing healthcare service(s) or assessing the health status of a patient.
@@ -188,8 +188,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterClassHistory[]
      */
-    protected ?array $classHistory = [];
-
+    protected null|array $classHistory = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -201,8 +200,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $type = [];
-
+    protected null|array $type = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -213,8 +211,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $serviceType = null;
-
+    protected null|FHIRCodeableConcept $serviceType = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -225,8 +222,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $priority = null;
-
+    protected null|FHIRCodeableConcept $priority = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -236,8 +232,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $subject = null;
-
+    protected null|FHIRReference $subject = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -253,8 +248,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $episodeOfCare = [];
-
+    protected null|array $episodeOfCare = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -265,8 +259,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $basedOn = [];
-
+    protected null|array $basedOn = [];
     /**
      * An interaction between a patient and healthcare provider(s) for the purpose of
      * providing healthcare service(s) or assessing the health status of a patient.
@@ -275,8 +268,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterParticipant[]
      */
-    protected ?array $participant = [];
-
+    protected null|array $participant = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -286,8 +278,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $appointment = [];
-
+    protected null|array $appointment = [];
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -297,8 +288,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $period = null;
-
+    protected null|FHIRPeriod $period = null;
     /**
      * A length of time.
      * If the element is present, it must have a value for at least one of the defined
@@ -309,8 +299,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    protected ?FHIRDuration $length = null;
-
+    protected null|FHIRDuration $length = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -322,8 +311,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $reasonCode = [];
-
+    protected null|array $reasonCode = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -334,8 +322,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $reasonReference = [];
-
+    protected null|array $reasonReference = [];
     /**
      * An interaction between a patient and healthcare provider(s) for the purpose of
      * providing healthcare service(s) or assessing the health status of a patient.
@@ -344,8 +331,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterDiagnosis[]
      */
-    protected ?array $diagnosis = [];
-
+    protected null|array $diagnosis = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -355,8 +341,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $account = [];
-
+    protected null|array $account = [];
     /**
      * An interaction between a patient and healthcare provider(s) for the purpose of
      * providing healthcare service(s) or assessing the health status of a patient.
@@ -365,8 +350,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterHospitalization
      */
-    protected ?FHIREncounterHospitalization $hospitalization = null;
-
+    protected null|FHIREncounterHospitalization $hospitalization = null;
     /**
      * An interaction between a patient and healthcare provider(s) for the purpose of
      * providing healthcare service(s) or assessing the health status of a patient.
@@ -375,8 +359,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterLocation[]
      */
-    protected ?array $location = [];
-
+    protected null|array $location = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -391,8 +374,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $serviceProvider = null;
-
+    protected null|FHIRReference $serviceProvider = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -403,28 +385,23 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $partOf = null;
+    protected null|FHIRReference $partOf = null;
 
     /**
      * Validation map for fields in type Encounter
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIREncounter Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIREncounter::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -741,6 +718,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
         }
     }
 
+
     /**
      * @return string
      */
@@ -749,17 +727,6 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Encounter{$xmlns}></Encounter>";
-    }
     /**
      * @return string
      */
@@ -779,7 +746,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -795,8 +762,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -813,7 +783,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -840,7 +810,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIREncounterStatus
      */
-    public function getStatus(): ?FHIREncounterStatus
+    public function getStatus(): null|FHIREncounterStatus
     {
         return $this->status;
     }
@@ -854,8 +824,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIREncounterStatus $status
      * @return static
      */
-    public function setStatus(?FHIREncounterStatus $status = null): object
+    public function setStatus(null|FHIREncounterStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIREncounterStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -871,7 +844,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterStatusHistory[]
      */
-    public function getStatusHistory(): ?array
+    public function getStatusHistory(): null|array
     {
         return $this->statusHistory;
     }
@@ -887,8 +860,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterStatusHistory $statusHistory
      * @return static
      */
-    public function addStatusHistory(?FHIREncounterStatusHistory $statusHistory = null): object
+    public function addStatusHistory(null|FHIREncounterStatusHistory $statusHistory = null): self
     {
+        if (null === $statusHistory) {
+            $statusHistory = new FHIREncounterStatusHistory();
+        }
         $this->_trackValueAdded();
         $this->statusHistory[] = $statusHistory;
         return $this;
@@ -905,7 +881,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterStatusHistory[] $statusHistory
      * @return static
      */
-    public function setStatusHistory(array $statusHistory = []): object
+    public function setStatusHistory(array $statusHistory = []): self
     {
         if ([] !== $this->statusHistory) {
             $this->_trackValuesRemoved(count($this->statusHistory));
@@ -935,7 +911,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    public function getClass(): ?FHIRCoding
+    public function getClass(): null|FHIRCoding
     {
         return $this->class;
     }
@@ -952,8 +928,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $class
      * @return static
      */
-    public function setClass(?FHIRCoding $class = null): object
+    public function setClass(null|FHIRCoding $class = null): self
     {
+        if (null === $class) {
+            $class = new FHIRCoding();
+        }
         $this->_trackValueSet($this->class, $class);
         $this->class = $class;
         return $this;
@@ -973,7 +952,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterClassHistory[]
      */
-    public function getClassHistory(): ?array
+    public function getClassHistory(): null|array
     {
         return $this->classHistory;
     }
@@ -993,8 +972,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterClassHistory $classHistory
      * @return static
      */
-    public function addClassHistory(?FHIREncounterClassHistory $classHistory = null): object
+    public function addClassHistory(null|FHIREncounterClassHistory $classHistory = null): self
     {
+        if (null === $classHistory) {
+            $classHistory = new FHIREncounterClassHistory();
+        }
         $this->_trackValueAdded();
         $this->classHistory[] = $classHistory;
         return $this;
@@ -1015,7 +997,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterClassHistory[] $classHistory
      * @return static
      */
-    public function setClassHistory(array $classHistory = []): object
+    public function setClassHistory(array $classHistory = []): self
     {
         if ([] !== $this->classHistory) {
             $this->_trackValuesRemoved(count($this->classHistory));
@@ -1045,7 +1027,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getType(): ?array
+    public function getType(): null|array
     {
         return $this->type;
     }
@@ -1062,8 +1044,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function addType(?FHIRCodeableConcept $type = null): object
+    public function addType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->type[] = $type;
         return $this;
@@ -1081,7 +1066,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $type
      * @return static
      */
-    public function setType(array $type = []): object
+    public function setType(array $type = []): self
     {
         if ([] !== $this->type) {
             $this->_trackValuesRemoved(count($this->type));
@@ -1110,7 +1095,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getServiceType(): ?FHIRCodeableConcept
+    public function getServiceType(): null|FHIRCodeableConcept
     {
         return $this->serviceType;
     }
@@ -1126,8 +1111,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $serviceType
      * @return static
      */
-    public function setServiceType(?FHIRCodeableConcept $serviceType = null): object
+    public function setServiceType(null|FHIRCodeableConcept $serviceType = null): self
     {
+        if (null === $serviceType) {
+            $serviceType = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->serviceType, $serviceType);
         $this->serviceType = $serviceType;
         return $this;
@@ -1143,7 +1131,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getPriority(): ?FHIRCodeableConcept
+    public function getPriority(): null|FHIRCodeableConcept
     {
         return $this->priority;
     }
@@ -1159,8 +1147,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $priority
      * @return static
      */
-    public function setPriority(?FHIRCodeableConcept $priority = null): object
+    public function setPriority(null|FHIRCodeableConcept $priority = null): self
     {
+        if (null === $priority) {
+            $priority = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->priority, $priority);
         $this->priority = $priority;
         return $this;
@@ -1175,7 +1166,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubject(): ?FHIRReference
+    public function getSubject(): null|FHIRReference
     {
         return $this->subject;
     }
@@ -1190,8 +1181,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $subject
      * @return static
      */
-    public function setSubject(?FHIRReference $subject = null): object
+    public function setSubject(null|FHIRReference $subject = null): self
     {
+        if (null === $subject) {
+            $subject = new FHIRReference();
+        }
         $this->_trackValueSet($this->subject, $subject);
         $this->subject = $subject;
         return $this;
@@ -1212,7 +1206,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getEpisodeOfCare(): ?array
+    public function getEpisodeOfCare(): null|array
     {
         return $this->episodeOfCare;
     }
@@ -1233,8 +1227,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $episodeOfCare
      * @return static
      */
-    public function addEpisodeOfCare(?FHIRReference $episodeOfCare = null): object
+    public function addEpisodeOfCare(null|FHIRReference $episodeOfCare = null): self
     {
+        if (null === $episodeOfCare) {
+            $episodeOfCare = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->episodeOfCare[] = $episodeOfCare;
         return $this;
@@ -1256,7 +1253,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $episodeOfCare
      * @return static
      */
-    public function setEpisodeOfCare(array $episodeOfCare = []): object
+    public function setEpisodeOfCare(array $episodeOfCare = []): self
     {
         if ([] !== $this->episodeOfCare) {
             $this->_trackValuesRemoved(count($this->episodeOfCare));
@@ -1285,7 +1282,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getBasedOn(): ?array
+    public function getBasedOn(): null|array
     {
         return $this->basedOn;
     }
@@ -1301,8 +1298,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $basedOn
      * @return static
      */
-    public function addBasedOn(?FHIRReference $basedOn = null): object
+    public function addBasedOn(null|FHIRReference $basedOn = null): self
     {
+        if (null === $basedOn) {
+            $basedOn = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->basedOn[] = $basedOn;
         return $this;
@@ -1319,7 +1319,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $basedOn
      * @return static
      */
-    public function setBasedOn(array $basedOn = []): object
+    public function setBasedOn(array $basedOn = []): self
     {
         if ([] !== $this->basedOn) {
             $this->_trackValuesRemoved(count($this->basedOn));
@@ -1346,7 +1346,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterParticipant[]
      */
-    public function getParticipant(): ?array
+    public function getParticipant(): null|array
     {
         return $this->participant;
     }
@@ -1360,8 +1360,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterParticipant $participant
      * @return static
      */
-    public function addParticipant(?FHIREncounterParticipant $participant = null): object
+    public function addParticipant(null|FHIREncounterParticipant $participant = null): self
     {
+        if (null === $participant) {
+            $participant = new FHIREncounterParticipant();
+        }
         $this->_trackValueAdded();
         $this->participant[] = $participant;
         return $this;
@@ -1376,7 +1379,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterParticipant[] $participant
      * @return static
      */
-    public function setParticipant(array $participant = []): object
+    public function setParticipant(array $participant = []): self
     {
         if ([] !== $this->participant) {
             $this->_trackValuesRemoved(count($this->participant));
@@ -1404,7 +1407,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getAppointment(): ?array
+    public function getAppointment(): null|array
     {
         return $this->appointment;
     }
@@ -1419,8 +1422,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $appointment
      * @return static
      */
-    public function addAppointment(?FHIRReference $appointment = null): object
+    public function addAppointment(null|FHIRReference $appointment = null): self
     {
+        if (null === $appointment) {
+            $appointment = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->appointment[] = $appointment;
         return $this;
@@ -1436,7 +1442,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $appointment
      * @return static
      */
-    public function setAppointment(array $appointment = []): object
+    public function setAppointment(array $appointment = []): self
     {
         if ([] !== $this->appointment) {
             $this->_trackValuesRemoved(count($this->appointment));
@@ -1464,7 +1470,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getPeriod(): ?FHIRPeriod
+    public function getPeriod(): null|FHIRPeriod
     {
         return $this->period;
     }
@@ -1479,8 +1485,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $period
      * @return static
      */
-    public function setPeriod(?FHIRPeriod $period = null): object
+    public function setPeriod(null|FHIRPeriod $period = null): self
     {
+        if (null === $period) {
+            $period = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->period, $period);
         $this->period = $period;
         return $this;
@@ -1496,7 +1505,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    public function getLength(): ?FHIRDuration
+    public function getLength(): null|FHIRDuration
     {
         return $this->length;
     }
@@ -1512,8 +1521,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration $length
      * @return static
      */
-    public function setLength(?FHIRDuration $length = null): object
+    public function setLength(null|FHIRDuration $length = null): self
     {
+        if (null === $length) {
+            $length = new FHIRDuration();
+        }
         $this->_trackValueSet($this->length, $length);
         $this->length = $length;
         return $this;
@@ -1530,7 +1542,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getReasonCode(): ?array
+    public function getReasonCode(): null|array
     {
         return $this->reasonCode;
     }
@@ -1547,8 +1559,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $reasonCode
      * @return static
      */
-    public function addReasonCode(?FHIRCodeableConcept $reasonCode = null): object
+    public function addReasonCode(null|FHIRCodeableConcept $reasonCode = null): self
     {
+        if (null === $reasonCode) {
+            $reasonCode = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->reasonCode[] = $reasonCode;
         return $this;
@@ -1566,7 +1581,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $reasonCode
      * @return static
      */
-    public function setReasonCode(array $reasonCode = []): object
+    public function setReasonCode(array $reasonCode = []): self
     {
         if ([] !== $this->reasonCode) {
             $this->_trackValuesRemoved(count($this->reasonCode));
@@ -1595,7 +1610,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getReasonReference(): ?array
+    public function getReasonReference(): null|array
     {
         return $this->reasonReference;
     }
@@ -1611,8 +1626,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $reasonReference
      * @return static
      */
-    public function addReasonReference(?FHIRReference $reasonReference = null): object
+    public function addReasonReference(null|FHIRReference $reasonReference = null): self
     {
+        if (null === $reasonReference) {
+            $reasonReference = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->reasonReference[] = $reasonReference;
         return $this;
@@ -1629,7 +1647,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $reasonReference
      * @return static
      */
-    public function setReasonReference(array $reasonReference = []): object
+    public function setReasonReference(array $reasonReference = []): self
     {
         if ([] !== $this->reasonReference) {
             $this->_trackValuesRemoved(count($this->reasonReference));
@@ -1656,7 +1674,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterDiagnosis[]
      */
-    public function getDiagnosis(): ?array
+    public function getDiagnosis(): null|array
     {
         return $this->diagnosis;
     }
@@ -1670,8 +1688,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterDiagnosis $diagnosis
      * @return static
      */
-    public function addDiagnosis(?FHIREncounterDiagnosis $diagnosis = null): object
+    public function addDiagnosis(null|FHIREncounterDiagnosis $diagnosis = null): self
     {
+        if (null === $diagnosis) {
+            $diagnosis = new FHIREncounterDiagnosis();
+        }
         $this->_trackValueAdded();
         $this->diagnosis[] = $diagnosis;
         return $this;
@@ -1686,7 +1707,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterDiagnosis[] $diagnosis
      * @return static
      */
-    public function setDiagnosis(array $diagnosis = []): object
+    public function setDiagnosis(array $diagnosis = []): self
     {
         if ([] !== $this->diagnosis) {
             $this->_trackValuesRemoved(count($this->diagnosis));
@@ -1714,7 +1735,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getAccount(): ?array
+    public function getAccount(): null|array
     {
         return $this->account;
     }
@@ -1729,8 +1750,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $account
      * @return static
      */
-    public function addAccount(?FHIRReference $account = null): object
+    public function addAccount(null|FHIRReference $account = null): self
     {
+        if (null === $account) {
+            $account = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->account[] = $account;
         return $this;
@@ -1746,7 +1770,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $account
      * @return static
      */
-    public function setAccount(array $account = []): object
+    public function setAccount(array $account = []): self
     {
         if ([] !== $this->account) {
             $this->_trackValuesRemoved(count($this->account));
@@ -1773,7 +1797,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterHospitalization
      */
-    public function getHospitalization(): ?FHIREncounterHospitalization
+    public function getHospitalization(): null|FHIREncounterHospitalization
     {
         return $this->hospitalization;
     }
@@ -1787,8 +1811,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterHospitalization $hospitalization
      * @return static
      */
-    public function setHospitalization(?FHIREncounterHospitalization $hospitalization = null): object
+    public function setHospitalization(null|FHIREncounterHospitalization $hospitalization = null): self
     {
+        if (null === $hospitalization) {
+            $hospitalization = new FHIREncounterHospitalization();
+        }
         $this->_trackValueSet($this->hospitalization, $hospitalization);
         $this->hospitalization = $hospitalization;
         return $this;
@@ -1802,7 +1829,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterLocation[]
      */
-    public function getLocation(): ?array
+    public function getLocation(): null|array
     {
         return $this->location;
     }
@@ -1816,8 +1843,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterLocation $location
      * @return static
      */
-    public function addLocation(?FHIREncounterLocation $location = null): object
+    public function addLocation(null|FHIREncounterLocation $location = null): self
     {
+        if (null === $location) {
+            $location = new FHIREncounterLocation();
+        }
         $this->_trackValueAdded();
         $this->location[] = $location;
         return $this;
@@ -1832,7 +1862,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIREncounter\FHIREncounterLocation[] $location
      * @return static
      */
-    public function setLocation(array $location = []): object
+    public function setLocation(array $location = []): self
     {
         if ([] !== $this->location) {
             $this->_trackValuesRemoved(count($this->location));
@@ -1865,7 +1895,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getServiceProvider(): ?FHIRReference
+    public function getServiceProvider(): null|FHIRReference
     {
         return $this->serviceProvider;
     }
@@ -1885,8 +1915,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $serviceProvider
      * @return static
      */
-    public function setServiceProvider(?FHIRReference $serviceProvider = null): object
+    public function setServiceProvider(null|FHIRReference $serviceProvider = null): self
     {
+        if (null === $serviceProvider) {
+            $serviceProvider = new FHIRReference();
+        }
         $this->_trackValueSet($this->serviceProvider, $serviceProvider);
         $this->serviceProvider = $serviceProvider;
         return $this;
@@ -1902,7 +1935,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPartOf(): ?FHIRReference
+    public function getPartOf(): null|FHIRReference
     {
         return $this->partOf;
     }
@@ -1918,8 +1951,11 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $partOf
      * @return static
      */
-    public function setPartOf(?FHIRReference $partOf = null): object
+    public function setPartOf(null|FHIRReference $partOf = null): self
     {
+        if (null === $partOf) {
+            $partOf = new FHIRReference();
+        }
         $this->_trackValueSet($this->partOf, $partOf);
         $this->partOf = $partOf;
         return $this;
@@ -1933,7 +1969,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2465,36 +2501,48 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIREncounter $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIREncounter
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIREncounter::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIREncounter::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIREncounter(null);
-        } elseif (!is_object($type) || !($type instanceof FHIREncounter)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIREncounter)) {
             throw new \RuntimeException(sprintf(
-                'FHIREncounter::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIREncounter or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -2602,17 +2650,25 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Encounter'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2801,7 +2857,7 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2963,7 +3019,6 @@ class FHIREncounter extends FHIRDomainResource implements PHPFHIRContainedTypeIn
 
         return $out;
     }
-
 
     /**
      * @return string

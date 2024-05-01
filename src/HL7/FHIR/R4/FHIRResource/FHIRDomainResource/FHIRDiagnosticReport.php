@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAttachment;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportMedia;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
@@ -78,11 +80,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRPeriod;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRInstantPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The findings and interpretation of diagnostic tests performed on patients,
@@ -99,6 +108,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_BASED_ON = 'basedOn';
     const FIELD_STATUS = 'status';
@@ -123,9 +133,6 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
     const FIELD_CONCLUSION_CODE = 'conclusionCode';
     const FIELD_PRESENTED_FORM = 'presentedForm';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -136,8 +143,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -147,8 +153,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $basedOn = [];
-
+    protected null|array $basedOn = [];
     /**
      * The status of the diagnostic report.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -157,8 +162,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDiagnosticReportStatus
      */
-    protected ?FHIRDiagnosticReportStatus $status = null;
-
+    protected null|FHIRDiagnosticReportStatus $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -171,8 +175,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $category = [];
-
+    protected null|array $category = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -183,8 +186,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $code = null;
-
+    protected null|FHIRCodeableConcept $code = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -196,8 +198,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $subject = null;
-
+    protected null|FHIRReference $subject = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -208,8 +209,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $encounter = null;
-
+    protected null|FHIRReference $encounter = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -223,10 +223,9 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * specimen collection(s), but very often the source of the date/time is not known,
      * only the date/time itself.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $effectiveDateTime = null;
-
+    protected null|FHIRDateTime $effectiveDateTime = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -239,8 +238,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $effectivePeriod = null;
-
+    protected null|FHIRPeriod $effectivePeriod = null;
     /**
      * An instant in time - known at least to the second
      * Note: This is intended for where precisely observed times are required,
@@ -252,10 +250,9 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * The date and time that this version of the report was made available to
      * providers, typically after the report was reviewed and verified.
      *
-     * @var null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    protected ?FHIRInstant $issued = null;
-
+    protected null|FHIRInstant $issued = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -265,8 +262,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $performer = [];
-
+    protected null|array $performer = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -277,8 +273,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $resultsInterpreter = [];
-
+    protected null|array $resultsInterpreter = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -288,8 +283,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $specimen = [];
-
+    protected null|array $specimen = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -299,8 +293,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $result = [];
-
+    protected null|array $result = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -313,8 +306,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $imagingStudy = [];
-
+    protected null|array $imagingStudy = [];
     /**
      * The findings and interpretation of diagnostic tests performed on patients,
      * groups of patients, devices, and locations, and/or specimens derived from these.
@@ -328,8 +320,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportMedia[]
      */
-    protected ?array $media = [];
-
+    protected null|array $media = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -338,10 +329,9 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * Concise and clinically contextualized summary conclusion
      * (interpretation/impression) of the diagnostic report.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $conclusion = null;
-
+    protected null|FHIRString $conclusion = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -353,8 +343,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $conclusionCode = [];
-
+    protected null|array $conclusionCode = [];
     /**
      * For referring to data content defined in other formats.
      * If the element is present, it must have a value for at least one of the defined
@@ -365,28 +354,23 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment[]
      */
-    protected ?array $presentedForm = [];
+    protected null|array $presentedForm = [];
 
     /**
      * Validation map for fields in type DiagnosticReport
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRDiagnosticReport Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRDiagnosticReport::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -677,6 +661,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
         }
     }
 
+
     /**
      * @return string
      */
@@ -685,17 +670,6 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<DiagnosticReport{$xmlns}></DiagnosticReport>";
-    }
     /**
      * @return string
      */
@@ -715,7 +689,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -731,8 +705,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -749,7 +726,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -777,7 +754,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getBasedOn(): ?array
+    public function getBasedOn(): null|array
     {
         return $this->basedOn;
     }
@@ -792,8 +769,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $basedOn
      * @return static
      */
-    public function addBasedOn(?FHIRReference $basedOn = null): object
+    public function addBasedOn(null|FHIRReference $basedOn = null): self
     {
+        if (null === $basedOn) {
+            $basedOn = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->basedOn[] = $basedOn;
         return $this;
@@ -809,7 +789,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $basedOn
      * @return static
      */
-    public function setBasedOn(array $basedOn = []): object
+    public function setBasedOn(array $basedOn = []): self
     {
         if ([] !== $this->basedOn) {
             $this->_trackValuesRemoved(count($this->basedOn));
@@ -836,7 +816,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDiagnosticReportStatus
      */
-    public function getStatus(): ?FHIRDiagnosticReportStatus
+    public function getStatus(): null|FHIRDiagnosticReportStatus
     {
         return $this->status;
     }
@@ -850,8 +830,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRDiagnosticReportStatus $status
      * @return static
      */
-    public function setStatus(?FHIRDiagnosticReportStatus $status = null): object
+    public function setStatus(null|FHIRDiagnosticReportStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRDiagnosticReportStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -869,7 +852,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getCategory(): ?array
+    public function getCategory(): null|array
     {
         return $this->category;
     }
@@ -887,8 +870,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $category
      * @return static
      */
-    public function addCategory(?FHIRCodeableConcept $category = null): object
+    public function addCategory(null|FHIRCodeableConcept $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->category[] = $category;
         return $this;
@@ -907,7 +893,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $category
      * @return static
      */
-    public function setCategory(array $category = []): object
+    public function setCategory(array $category = []): self
     {
         if ([] !== $this->category) {
             $this->_trackValuesRemoved(count($this->category));
@@ -936,7 +922,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getCode(): ?FHIRCodeableConcept
+    public function getCode(): null|FHIRCodeableConcept
     {
         return $this->code;
     }
@@ -952,8 +938,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $code
      * @return static
      */
-    public function setCode(?FHIRCodeableConcept $code = null): object
+    public function setCode(null|FHIRCodeableConcept $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->code, $code);
         $this->code = $code;
         return $this;
@@ -970,7 +959,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubject(): ?FHIRReference
+    public function getSubject(): null|FHIRReference
     {
         return $this->subject;
     }
@@ -987,8 +976,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $subject
      * @return static
      */
-    public function setSubject(?FHIRReference $subject = null): object
+    public function setSubject(null|FHIRReference $subject = null): self
     {
+        if (null === $subject) {
+            $subject = new FHIRReference();
+        }
         $this->_trackValueSet($this->subject, $subject);
         $this->subject = $subject;
         return $this;
@@ -1004,7 +996,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getEncounter(): ?FHIRReference
+    public function getEncounter(): null|FHIRReference
     {
         return $this->encounter;
     }
@@ -1020,8 +1012,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $encounter
      * @return static
      */
-    public function setEncounter(?FHIRReference $encounter = null): object
+    public function setEncounter(null|FHIRReference $encounter = null): self
     {
+        if (null === $encounter) {
+            $encounter = new FHIRReference();
+        }
         $this->_trackValueSet($this->encounter, $encounter);
         $this->encounter = $encounter;
         return $this;
@@ -1040,9 +1035,9 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * specimen collection(s), but very often the source of the date/time is not known,
      * only the date/time itself.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getEffectiveDateTime(): ?FHIRDateTime
+    public function getEffectiveDateTime(): null|FHIRDateTime
     {
         return $this->effectiveDateTime;
     }
@@ -1060,10 +1055,10 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * specimen collection(s), but very often the source of the date/time is not known,
      * only the date/time itself.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $effectiveDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $effectiveDateTime
      * @return static
      */
-    public function setEffectiveDateTime($effectiveDateTime = null): object
+    public function setEffectiveDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $effectiveDateTime = null): self
     {
         if (null !== $effectiveDateTime && !($effectiveDateTime instanceof FHIRDateTime)) {
             $effectiveDateTime = new FHIRDateTime($effectiveDateTime);
@@ -1085,7 +1080,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getEffectivePeriod(): ?FHIRPeriod
+    public function getEffectivePeriod(): null|FHIRPeriod
     {
         return $this->effectivePeriod;
     }
@@ -1103,8 +1098,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $effectivePeriod
      * @return static
      */
-    public function setEffectivePeriod(?FHIRPeriod $effectivePeriod = null): object
+    public function setEffectivePeriod(null|FHIRPeriod $effectivePeriod = null): self
     {
+        if (null === $effectivePeriod) {
+            $effectivePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->effectivePeriod, $effectivePeriod);
         $this->effectivePeriod = $effectivePeriod;
         return $this;
@@ -1121,9 +1119,9 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * The date and time that this version of the report was made available to
      * providers, typically after the report was reviewed and verified.
      *
-     * @return null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    public function getIssued(): ?FHIRInstant
+    public function getIssued(): null|FHIRInstant
     {
         return $this->issued;
     }
@@ -1139,10 +1137,10 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * The date and time that this version of the report was made available to
      * providers, typically after the report was reviewed and verified.
      *
-     * @param null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $issued
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $issued
      * @return static
      */
-    public function setIssued($issued = null): object
+    public function setIssued(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $issued = null): self
     {
         if (null !== $issued && !($issued instanceof FHIRInstant)) {
             $issued = new FHIRInstant($issued);
@@ -1161,7 +1159,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getPerformer(): ?array
+    public function getPerformer(): null|array
     {
         return $this->performer;
     }
@@ -1176,8 +1174,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $performer
      * @return static
      */
-    public function addPerformer(?FHIRReference $performer = null): object
+    public function addPerformer(null|FHIRReference $performer = null): self
     {
+        if (null === $performer) {
+            $performer = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->performer[] = $performer;
         return $this;
@@ -1193,7 +1194,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $performer
      * @return static
      */
-    public function setPerformer(array $performer = []): object
+    public function setPerformer(array $performer = []): self
     {
         if ([] !== $this->performer) {
             $this->_trackValuesRemoved(count($this->performer));
@@ -1222,7 +1223,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getResultsInterpreter(): ?array
+    public function getResultsInterpreter(): null|array
     {
         return $this->resultsInterpreter;
     }
@@ -1238,8 +1239,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $resultsInterpreter
      * @return static
      */
-    public function addResultsInterpreter(?FHIRReference $resultsInterpreter = null): object
+    public function addResultsInterpreter(null|FHIRReference $resultsInterpreter = null): self
     {
+        if (null === $resultsInterpreter) {
+            $resultsInterpreter = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->resultsInterpreter[] = $resultsInterpreter;
         return $this;
@@ -1256,7 +1260,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $resultsInterpreter
      * @return static
      */
-    public function setResultsInterpreter(array $resultsInterpreter = []): object
+    public function setResultsInterpreter(array $resultsInterpreter = []): self
     {
         if ([] !== $this->resultsInterpreter) {
             $this->_trackValuesRemoved(count($this->resultsInterpreter));
@@ -1284,7 +1288,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getSpecimen(): ?array
+    public function getSpecimen(): null|array
     {
         return $this->specimen;
     }
@@ -1299,8 +1303,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $specimen
      * @return static
      */
-    public function addSpecimen(?FHIRReference $specimen = null): object
+    public function addSpecimen(null|FHIRReference $specimen = null): self
     {
+        if (null === $specimen) {
+            $specimen = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->specimen[] = $specimen;
         return $this;
@@ -1316,7 +1323,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $specimen
      * @return static
      */
-    public function setSpecimen(array $specimen = []): object
+    public function setSpecimen(array $specimen = []): self
     {
         if ([] !== $this->specimen) {
             $this->_trackValuesRemoved(count($this->specimen));
@@ -1344,7 +1351,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getResult(): ?array
+    public function getResult(): null|array
     {
         return $this->result;
     }
@@ -1359,8 +1366,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $result
      * @return static
      */
-    public function addResult(?FHIRReference $result = null): object
+    public function addResult(null|FHIRReference $result = null): self
     {
+        if (null === $result) {
+            $result = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->result[] = $result;
         return $this;
@@ -1376,7 +1386,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $result
      * @return static
      */
-    public function setResult(array $result = []): object
+    public function setResult(array $result = []): self
     {
         if ([] !== $this->result) {
             $this->_trackValuesRemoved(count($this->result));
@@ -1407,7 +1417,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getImagingStudy(): ?array
+    public function getImagingStudy(): null|array
     {
         return $this->imagingStudy;
     }
@@ -1425,8 +1435,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $imagingStudy
      * @return static
      */
-    public function addImagingStudy(?FHIRReference $imagingStudy = null): object
+    public function addImagingStudy(null|FHIRReference $imagingStudy = null): self
     {
+        if (null === $imagingStudy) {
+            $imagingStudy = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->imagingStudy[] = $imagingStudy;
         return $this;
@@ -1445,7 +1458,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $imagingStudy
      * @return static
      */
-    public function setImagingStudy(array $imagingStudy = []): object
+    public function setImagingStudy(array $imagingStudy = []): self
     {
         if ([] !== $this->imagingStudy) {
             $this->_trackValuesRemoved(count($this->imagingStudy));
@@ -1477,7 +1490,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportMedia[]
      */
-    public function getMedia(): ?array
+    public function getMedia(): null|array
     {
         return $this->media;
     }
@@ -1496,8 +1509,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportMedia $media
      * @return static
      */
-    public function addMedia(?FHIRDiagnosticReportMedia $media = null): object
+    public function addMedia(null|FHIRDiagnosticReportMedia $media = null): self
     {
+        if (null === $media) {
+            $media = new FHIRDiagnosticReportMedia();
+        }
         $this->_trackValueAdded();
         $this->media[] = $media;
         return $this;
@@ -1517,7 +1533,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportMedia[] $media
      * @return static
      */
-    public function setMedia(array $media = []): object
+    public function setMedia(array $media = []): self
     {
         if ([] !== $this->media) {
             $this->_trackValuesRemoved(count($this->media));
@@ -1544,9 +1560,9 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * Concise and clinically contextualized summary conclusion
      * (interpretation/impression) of the diagnostic report.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getConclusion(): ?FHIRString
+    public function getConclusion(): null|FHIRString
     {
         return $this->conclusion;
     }
@@ -1559,10 +1575,10 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * Concise and clinically contextualized summary conclusion
      * (interpretation/impression) of the diagnostic report.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $conclusion
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $conclusion
      * @return static
      */
-    public function setConclusion($conclusion = null): object
+    public function setConclusion(null|string|FHIRStringPrimitive|FHIRString $conclusion = null): self
     {
         if (null !== $conclusion && !($conclusion instanceof FHIRString)) {
             $conclusion = new FHIRString($conclusion);
@@ -1583,7 +1599,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getConclusionCode(): ?array
+    public function getConclusionCode(): null|array
     {
         return $this->conclusionCode;
     }
@@ -1600,8 +1616,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $conclusionCode
      * @return static
      */
-    public function addConclusionCode(?FHIRCodeableConcept $conclusionCode = null): object
+    public function addConclusionCode(null|FHIRCodeableConcept $conclusionCode = null): self
     {
+        if (null === $conclusionCode) {
+            $conclusionCode = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->conclusionCode[] = $conclusionCode;
         return $this;
@@ -1619,7 +1638,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $conclusionCode
      * @return static
      */
-    public function setConclusionCode(array $conclusionCode = []): object
+    public function setConclusionCode(array $conclusionCode = []): self
     {
         if ([] !== $this->conclusionCode) {
             $this->_trackValuesRemoved(count($this->conclusionCode));
@@ -1648,7 +1667,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment[]
      */
-    public function getPresentedForm(): ?array
+    public function getPresentedForm(): null|array
     {
         return $this->presentedForm;
     }
@@ -1664,8 +1683,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment $presentedForm
      * @return static
      */
-    public function addPresentedForm(?FHIRAttachment $presentedForm = null): object
+    public function addPresentedForm(null|FHIRAttachment $presentedForm = null): self
     {
+        if (null === $presentedForm) {
+            $presentedForm = new FHIRAttachment();
+        }
         $this->_trackValueAdded();
         $this->presentedForm[] = $presentedForm;
         return $this;
@@ -1682,7 +1704,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\FHIRElement\FHIRAttachment[] $presentedForm
      * @return static
      */
-    public function setPresentedForm(array $presentedForm = []): object
+    public function setPresentedForm(array $presentedForm = []): self
     {
         if ([] !== $this->presentedForm) {
             $this->_trackValuesRemoved(count($this->presentedForm));
@@ -1709,7 +1731,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2169,36 +2191,48 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRDiagnosticReport $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRDiagnosticReport
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRDiagnosticReport::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRDiagnosticReport::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRDiagnosticReport(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRDiagnosticReport)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRDiagnosticReport)) {
             throw new \RuntimeException(sprintf(
-                'FHIRDiagnosticReport::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRDiagnosticReport or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -2325,17 +2359,25 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('DiagnosticReport'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2494,7 +2536,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2653,7 +2695,6 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
 
         return $out;
     }
-
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,16 +62,23 @@ namespace HL7\FHIR\R4\FHIRResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBase64BinaryPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBase64Binary;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
 use HL7\FHIR\R4\FHIRElement\FHIRId;
 use HL7\FHIR\R4\FHIRElement\FHIRMeta;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A resource that represents the data of a single raw artifact as digital content
@@ -86,14 +93,12 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_BINARY;
+
     const FIELD_CONTENT_TYPE = 'contentType';
     const FIELD_CONTENT_TYPE_EXT = '_contentType';
     const FIELD_SECURITY_CONTEXT = 'securityContext';
     const FIELD_DATA = 'data';
     const FIELD_DATA_EXT = '_data';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A string which has at least one character and no leading or trailing whitespace
@@ -103,10 +108,9 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * MimeType of the binary content represented as a standard MimeType (BCP 13).
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    protected ?FHIRCode $contentType = null;
-
+    protected null|FHIRCode $contentType = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -124,8 +128,7 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $securityContext = null;
-
+    protected null|FHIRReference $securityContext = null;
     /**
      * A stream of bytes
      * A stream of bytes, base64 encoded
@@ -133,30 +136,25 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * The actual content, base64 encoded.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    protected ?FHIRBase64Binary $data = null;
+    protected null|FHIRBase64Binary $data = null;
 
     /**
      * Validation map for fields in type Binary
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRBinary Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRBinary::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_CONTENT_TYPE]) || isset($data[self::FIELD_CONTENT_TYPE_EXT])) {
@@ -198,6 +196,7 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
         }
     }
 
+
     /**
      * @return string
      */
@@ -206,17 +205,6 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Binary{$xmlns}></Binary>";
-    }
     /**
      * @return string
      */
@@ -234,9 +222,9 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * MimeType of the binary content represented as a standard MimeType (BCP 13).
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    public function getContentType(): ?FHIRCode
+    public function getContentType(): null|FHIRCode
     {
         return $this->contentType;
     }
@@ -249,10 +237,10 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * MimeType of the binary content represented as a standard MimeType (BCP 13).
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $contentType
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $contentType
      * @return static
      */
-    public function setContentType($contentType = null): object
+    public function setContentType(null|string|FHIRCodePrimitive|FHIRCode $contentType = null): self
     {
         if (null !== $contentType && !($contentType instanceof FHIRCode)) {
             $contentType = new FHIRCode($contentType);
@@ -279,7 +267,7 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSecurityContext(): ?FHIRReference
+    public function getSecurityContext(): null|FHIRReference
     {
         return $this->securityContext;
     }
@@ -302,8 +290,11 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $securityContext
      * @return static
      */
-    public function setSecurityContext(?FHIRReference $securityContext = null): object
+    public function setSecurityContext(null|FHIRReference $securityContext = null): self
     {
+        if (null === $securityContext) {
+            $securityContext = new FHIRReference();
+        }
         $this->_trackValueSet($this->securityContext, $securityContext);
         $this->securityContext = $securityContext;
         return $this;
@@ -316,9 +307,9 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * The actual content, base64 encoded.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    public function getData(): ?FHIRBase64Binary
+    public function getData(): null|FHIRBase64Binary
     {
         return $this->data;
     }
@@ -330,10 +321,10 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * The actual content, base64 encoded.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $data
+     * @param null|string|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $data
      * @return static
      */
-    public function setData($data = null): object
+    public function setData(null|string|FHIRBase64BinaryPrimitive|FHIRBase64Binary $data = null): self
     {
         if (null !== $data && !($data instanceof FHIRBase64Binary)) {
             $data = new FHIRBase64Binary($data);
@@ -351,7 +342,7 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -469,36 +460,48 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRBinary $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRBinary
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRBinary::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRBinary::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRBinary(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRBinary)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRBinary)) {
             throw new \RuntimeException(sprintf(
-                'FHIRBinary::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRBinary or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -571,17 +574,25 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Binary'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getContentType())) {
@@ -605,7 +616,7 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getContentType())) {
@@ -636,7 +647,6 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
 
         return $out;
     }
-
 
     /**
      * @return string

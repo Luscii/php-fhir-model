@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,9 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDatePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultAttestation;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultPrimarySource;
@@ -78,11 +81,17 @@ use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRStatus;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Describes validation requirements, source(s), status and dates for one or more
@@ -96,6 +105,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_VERIFICATION_RESULT;
+
     const FIELD_TARGET = 'target';
     const FIELD_TARGET_LOCATION = 'targetLocation';
     const FIELD_TARGET_LOCATION_EXT = '_targetLocation';
@@ -116,9 +126,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
     const FIELD_ATTESTATION = 'attestation';
     const FIELD_VALIDATOR = 'validator';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -128,8 +135,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $target = [];
-
+    protected null|array $target = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -137,10 +143,9 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The fhirpath location(s) within the resource that was validated.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $targetLocation = [];
-
+    protected null|array $targetLocation = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -151,8 +156,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $need = null;
-
+    protected null|FHIRCodeableConcept $need = null;
     /**
      * The validation status of the target.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -162,8 +166,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRStatus
      */
-    protected ?FHIRStatus $status = null;
-
+    protected null|FHIRStatus $status = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -174,10 +177,9 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * When the validation status was updated.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $statusDate = null;
-
+    protected null|FHIRDateTime $statusDate = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -189,8 +191,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $validationType = null;
-
+    protected null|FHIRCodeableConcept $validationType = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -202,8 +203,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $validationProcess = [];
-
+    protected null|array $validationProcess = [];
     /**
      * Specifies an event that may occur multiple times. Timing schedules are used to
      * record when things are planned, expected or requested to occur. The most common
@@ -217,8 +217,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    protected ?FHIRTiming $frequency = null;
-
+    protected null|FHIRTiming $frequency = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -229,10 +228,9 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The date/time validation was last completed (including failed validations).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $lastPerformed = null;
-
+    protected null|FHIRDateTime $lastPerformed = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -241,10 +239,9 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The date when target is next validated, if appropriate.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $nextScheduled = null;
-
+    protected null|FHIRDate $nextScheduled = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -255,8 +252,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $failureAction = null;
-
+    protected null|FHIRCodeableConcept $failureAction = null;
     /**
      * Describes validation requirements, source(s), status and dates for one or more
      * elements.
@@ -265,8 +261,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultPrimarySource[]
      */
-    protected ?array $primarySource = [];
-
+    protected null|array $primarySource = [];
     /**
      * Describes validation requirements, source(s), status and dates for one or more
      * elements.
@@ -275,8 +270,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultAttestation
      */
-    protected ?FHIRVerificationResultAttestation $attestation = null;
-
+    protected null|FHIRVerificationResultAttestation $attestation = null;
     /**
      * Describes validation requirements, source(s), status and dates for one or more
      * elements.
@@ -285,28 +279,23 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultValidator[]
      */
-    protected ?array $validator = [];
+    protected null|array $validator = [];
 
     /**
      * Validation map for fields in type VerificationResult
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRVerificationResult Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRVerificationResult::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_TARGET])) {
@@ -508,6 +497,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
         }
     }
 
+
     /**
      * @return string
      */
@@ -516,17 +506,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<VerificationResult{$xmlns}></VerificationResult>";
-    }
     /**
      * @return string
      */
@@ -545,7 +524,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getTarget(): ?array
+    public function getTarget(): null|array
     {
         return $this->target;
     }
@@ -560,8 +539,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $target
      * @return static
      */
-    public function addTarget(?FHIRReference $target = null): object
+    public function addTarget(null|FHIRReference $target = null): self
     {
+        if (null === $target) {
+            $target = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->target[] = $target;
         return $this;
@@ -577,7 +559,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $target
      * @return static
      */
-    public function setTarget(array $target = []): object
+    public function setTarget(array $target = []): self
     {
         if ([] !== $this->target) {
             $this->_trackValuesRemoved(count($this->target));
@@ -603,9 +585,9 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The fhirpath location(s) within the resource that was validated.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getTargetLocation(): ?array
+    public function getTargetLocation(): null|array
     {
         return $this->targetLocation;
     }
@@ -617,10 +599,10 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The fhirpath location(s) within the resource that was validated.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $targetLocation
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $targetLocation
      * @return static
      */
-    public function addTargetLocation($targetLocation = null): object
+    public function addTargetLocation(null|string|FHIRStringPrimitive|FHIRString $targetLocation = null): self
     {
         if (null !== $targetLocation && !($targetLocation instanceof FHIRString)) {
             $targetLocation = new FHIRString($targetLocation);
@@ -640,7 +622,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $targetLocation
      * @return static
      */
-    public function setTargetLocation(array $targetLocation = []): object
+    public function setTargetLocation(array $targetLocation = []): self
     {
         if ([] !== $this->targetLocation) {
             $this->_trackValuesRemoved(count($this->targetLocation));
@@ -669,7 +651,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getNeed(): ?FHIRCodeableConcept
+    public function getNeed(): null|FHIRCodeableConcept
     {
         return $this->need;
     }
@@ -685,8 +667,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $need
      * @return static
      */
-    public function setNeed(?FHIRCodeableConcept $need = null): object
+    public function setNeed(null|FHIRCodeableConcept $need = null): self
     {
+        if (null === $need) {
+            $need = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->need, $need);
         $this->need = $need;
         return $this;
@@ -701,7 +686,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRStatus
      */
-    public function getStatus(): ?FHIRStatus
+    public function getStatus(): null|FHIRStatus
     {
         return $this->status;
     }
@@ -716,8 +701,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRStatus $status
      * @return static
      */
-    public function setStatus(?FHIRStatus $status = null): object
+    public function setStatus(null|FHIRStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -733,9 +721,9 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * When the validation status was updated.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getStatusDate(): ?FHIRDateTime
+    public function getStatusDate(): null|FHIRDateTime
     {
         return $this->statusDate;
     }
@@ -750,10 +738,10 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * When the validation status was updated.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $statusDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $statusDate
      * @return static
      */
-    public function setStatusDate($statusDate = null): object
+    public function setStatusDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $statusDate = null): self
     {
         if (null !== $statusDate && !($statusDate instanceof FHIRDateTime)) {
             $statusDate = new FHIRDateTime($statusDate);
@@ -774,7 +762,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getValidationType(): ?FHIRCodeableConcept
+    public function getValidationType(): null|FHIRCodeableConcept
     {
         return $this->validationType;
     }
@@ -791,8 +779,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $validationType
      * @return static
      */
-    public function setValidationType(?FHIRCodeableConcept $validationType = null): object
+    public function setValidationType(null|FHIRCodeableConcept $validationType = null): self
     {
+        if (null === $validationType) {
+            $validationType = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->validationType, $validationType);
         $this->validationType = $validationType;
         return $this;
@@ -809,7 +800,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getValidationProcess(): ?array
+    public function getValidationProcess(): null|array
     {
         return $this->validationProcess;
     }
@@ -826,8 +817,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $validationProcess
      * @return static
      */
-    public function addValidationProcess(?FHIRCodeableConcept $validationProcess = null): object
+    public function addValidationProcess(null|FHIRCodeableConcept $validationProcess = null): self
     {
+        if (null === $validationProcess) {
+            $validationProcess = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->validationProcess[] = $validationProcess;
         return $this;
@@ -845,7 +839,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $validationProcess
      * @return static
      */
-    public function setValidationProcess(array $validationProcess = []): object
+    public function setValidationProcess(array $validationProcess = []): self
     {
         if ([] !== $this->validationProcess) {
             $this->_trackValuesRemoved(count($this->validationProcess));
@@ -877,7 +871,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    public function getFrequency(): ?FHIRTiming
+    public function getFrequency(): null|FHIRTiming
     {
         return $this->frequency;
     }
@@ -896,8 +890,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming $frequency
      * @return static
      */
-    public function setFrequency(?FHIRTiming $frequency = null): object
+    public function setFrequency(null|FHIRTiming $frequency = null): self
     {
+        if (null === $frequency) {
+            $frequency = new FHIRTiming();
+        }
         $this->_trackValueSet($this->frequency, $frequency);
         $this->frequency = $frequency;
         return $this;
@@ -913,9 +910,9 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The date/time validation was last completed (including failed validations).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getLastPerformed(): ?FHIRDateTime
+    public function getLastPerformed(): null|FHIRDateTime
     {
         return $this->lastPerformed;
     }
@@ -930,10 +927,10 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The date/time validation was last completed (including failed validations).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $lastPerformed
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $lastPerformed
      * @return static
      */
-    public function setLastPerformed($lastPerformed = null): object
+    public function setLastPerformed(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $lastPerformed = null): self
     {
         if (null !== $lastPerformed && !($lastPerformed instanceof FHIRDateTime)) {
             $lastPerformed = new FHIRDateTime($lastPerformed);
@@ -951,9 +948,9 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The date when target is next validated, if appropriate.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getNextScheduled(): ?FHIRDate
+    public function getNextScheduled(): null|FHIRDate
     {
         return $this->nextScheduled;
     }
@@ -966,10 +963,10 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The date when target is next validated, if appropriate.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $nextScheduled
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $nextScheduled
      * @return static
      */
-    public function setNextScheduled($nextScheduled = null): object
+    public function setNextScheduled(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $nextScheduled = null): self
     {
         if (null !== $nextScheduled && !($nextScheduled instanceof FHIRDate)) {
             $nextScheduled = new FHIRDate($nextScheduled);
@@ -989,7 +986,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getFailureAction(): ?FHIRCodeableConcept
+    public function getFailureAction(): null|FHIRCodeableConcept
     {
         return $this->failureAction;
     }
@@ -1005,8 +1002,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $failureAction
      * @return static
      */
-    public function setFailureAction(?FHIRCodeableConcept $failureAction = null): object
+    public function setFailureAction(null|FHIRCodeableConcept $failureAction = null): self
     {
+        if (null === $failureAction) {
+            $failureAction = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->failureAction, $failureAction);
         $this->failureAction = $failureAction;
         return $this;
@@ -1020,7 +1020,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultPrimarySource[]
      */
-    public function getPrimarySource(): ?array
+    public function getPrimarySource(): null|array
     {
         return $this->primarySource;
     }
@@ -1034,8 +1034,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultPrimarySource $primarySource
      * @return static
      */
-    public function addPrimarySource(?FHIRVerificationResultPrimarySource $primarySource = null): object
+    public function addPrimarySource(null|FHIRVerificationResultPrimarySource $primarySource = null): self
     {
+        if (null === $primarySource) {
+            $primarySource = new FHIRVerificationResultPrimarySource();
+        }
         $this->_trackValueAdded();
         $this->primarySource[] = $primarySource;
         return $this;
@@ -1050,7 +1053,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultPrimarySource[] $primarySource
      * @return static
      */
-    public function setPrimarySource(array $primarySource = []): object
+    public function setPrimarySource(array $primarySource = []): self
     {
         if ([] !== $this->primarySource) {
             $this->_trackValuesRemoved(count($this->primarySource));
@@ -1077,7 +1080,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultAttestation
      */
-    public function getAttestation(): ?FHIRVerificationResultAttestation
+    public function getAttestation(): null|FHIRVerificationResultAttestation
     {
         return $this->attestation;
     }
@@ -1091,8 +1094,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultAttestation $attestation
      * @return static
      */
-    public function setAttestation(?FHIRVerificationResultAttestation $attestation = null): object
+    public function setAttestation(null|FHIRVerificationResultAttestation $attestation = null): self
     {
+        if (null === $attestation) {
+            $attestation = new FHIRVerificationResultAttestation();
+        }
         $this->_trackValueSet($this->attestation, $attestation);
         $this->attestation = $attestation;
         return $this;
@@ -1106,7 +1112,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultValidator[]
      */
-    public function getValidator(): ?array
+    public function getValidator(): null|array
     {
         return $this->validator;
     }
@@ -1120,8 +1126,11 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultValidator $validator
      * @return static
      */
-    public function addValidator(?FHIRVerificationResultValidator $validator = null): object
+    public function addValidator(null|FHIRVerificationResultValidator $validator = null): self
     {
+        if (null === $validator) {
+            $validator = new FHIRVerificationResultValidator();
+        }
         $this->_trackValueAdded();
         $this->validator[] = $validator;
         return $this;
@@ -1136,7 +1145,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultValidator[] $validator
      * @return static
      */
-    public function setValidator(array $validator = []): object
+    public function setValidator(array $validator = []): self
     {
         if ([] !== $this->validator) {
             $this->_trackValuesRemoved(count($this->validator));
@@ -1163,7 +1172,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1526,36 +1535,48 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRVerificationResult $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRVerificationResult
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRVerificationResult::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRVerificationResult::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRVerificationResult(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRVerificationResult)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRVerificationResult)) {
             throw new \RuntimeException(sprintf(
-                'FHIRVerificationResult::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRVerificationResult or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1615,12 +1636,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
         }
         $n = $element->attributes->getNamedItem(self::FIELD_TARGET_LOCATION);
         if (null !== $n) {
-            $pt = $type->getTargetLocation();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addTargetLocation($n->nodeValue);
-            }
+            $type->addTargetLocation($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_STATUS_DATE);
         if (null !== $n) {
@@ -1681,17 +1697,25 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('VerificationResult'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getTarget())) {
@@ -1795,7 +1819,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getTarget())) {
@@ -1918,7 +1942,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
 
         return $out;
     }
-
 
     /**
      * @return string

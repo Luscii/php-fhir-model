@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,15 +62,30 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRCodePrimitive;
+use HL7\FHIR\STU3\FHIRDateTimePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingManifest\FHIRImagingManifestStudy;
+use HL7\FHIR\STU3\FHIRElement\FHIRCode;
 use HL7\FHIR\STU3\FHIRElement\FHIRDateTime;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
+use HL7\FHIR\STU3\FHIRElement\FHIRId;
 use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
+use HL7\FHIR\STU3\FHIRElement\FHIRMeta;
+use HL7\FHIR\STU3\FHIRElement\FHIRNarrative;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRIdPrimitive;
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRTypeMap;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A text description of the DICOM SOP instances selected in the ImagingManifest;
@@ -84,33 +99,38 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_IMAGING_MANIFEST;
-    const FIELD_AUTHOR = 'author';
-    const FIELD_AUTHORING_TIME = 'authoringTime';
-    const FIELD_AUTHORING_TIME_EXT = '_authoringTime';
-    const FIELD_DESCRIPTION = 'description';
-    const FIELD_DESCRIPTION_EXT = '_description';
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_PATIENT = 'patient';
+    const FIELD_AUTHORING_TIME = 'authoringTime';
+    const FIELD_AUTHORING_TIME_EXT = '_authoringTime';
+    const FIELD_AUTHOR = 'author';
+    const FIELD_DESCRIPTION = 'description';
+    const FIELD_DESCRIPTION_EXT = '_description';
     const FIELD_STUDY = 'study';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Unique identifier of the DICOM Key Object Selection (KOS) that this resource
+     * represents.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
+     */
+    protected null|FHIRIdentifier $identifier = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Author of ImagingManifest. It can be a human author or a device which made the
-     * decision of the SOP instances selected. For example, a radiologist selected a
-     * set of imaging SOP instances to attach in a diagnostic report, and a CAD
-     * application may author a selection to describe SOP instances it used to generate
-     * a detection conclusion.
+     * A patient resource reference which is the patient subject of all DICOM SOP
+     * Instances in this ImagingManifest.
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $author = null;
-
+    protected null|FHIRReference $patient = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -126,8 +146,21 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    protected $authoringTime = null;
-
+    protected null|FHIRDateTime $authoringTime = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Author of ImagingManifest. It can be a human author or a device which made the
+     * decision of the SOP instances selected. For example, a radiologist selected a
+     * set of imaging SOP instances to attach in a diagnostic report, and a CAD
+     * application may author a selection to describe SOP instances it used to generate
+     * a detection conclusion.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $author = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -142,32 +175,7 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $description = null;
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Unique identifier of the DICOM Key Object Selection (KOS) that this resource
-     * represents.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
-     */
-    protected $identifier = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A patient resource reference which is the patient subject of all DICOM SOP
-     * Instances in this ImagingManifest.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $patient = null;
-
+    protected null|FHIRString $description = null;
     /**
      * A text description of the DICOM SOP instances selected in the ImagingManifest;
      * or the reason for, or significance of, the selection.
@@ -177,13 +185,13 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingManifest\FHIRImagingManifestStudy[]
      */
-    protected $study = [];
+    protected null|array $study = [];
 
     /**
      * Validation map for fields in type ImagingManifest
      * @var array
      */
-    private static $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_STUDY => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -192,72 +200,14 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
     /**
      * FHIRImagingManifest Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRImagingManifest::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_AUTHOR])) {
-            if ($data[self::FIELD_AUTHOR] instanceof FHIRReference) {
-                $this->setAuthor($data[self::FIELD_AUTHOR]);
-            } else {
-                $this->setAuthor(new FHIRReference($data[self::FIELD_AUTHOR]));
-            }
-        }
-        if (isset($data[self::FIELD_AUTHORING_TIME]) || isset($data[self::FIELD_AUTHORING_TIME_EXT])) {
-            if (isset($data[self::FIELD_AUTHORING_TIME])) {
-                $value = $data[self::FIELD_AUTHORING_TIME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_AUTHORING_TIME_EXT]) && is_array($data[self::FIELD_AUTHORING_TIME_EXT])) {
-                $ext = $data[self::FIELD_AUTHORING_TIME_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRDateTime) {
-                    $this->setAuthoringTime($value);
-                } else if (is_array($value)) {
-                    $this->setAuthoringTime(new FHIRDateTime(array_merge($ext, $value)));
-                } else {
-                    $this->setAuthoringTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setAuthoringTime(new FHIRDateTime($ext));
-            }
-        }
-        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
-            if (isset($data[self::FIELD_DESCRIPTION])) {
-                $value = $data[self::FIELD_DESCRIPTION];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) {
-                $ext = $data[self::FIELD_DESCRIPTION_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setDescription($value);
-                } else if (is_array($value)) {
-                    $this->setDescription(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setDescription(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setDescription(new FHIRString($ext));
-            }
-        }
         if (isset($data[self::FIELD_IDENTIFIER])) {
             if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
                 $this->setIdentifier($data[self::FIELD_IDENTIFIER]);
@@ -272,6 +222,43 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
                 $this->setPatient(new FHIRReference($data[self::FIELD_PATIENT]));
             }
         }
+        if (isset($data[self::FIELD_AUTHORING_TIME]) || isset($data[self::FIELD_AUTHORING_TIME_EXT])) {
+            $value = $data[self::FIELD_AUTHORING_TIME] ?? null;
+            $ext = (isset($data[self::FIELD_AUTHORING_TIME_EXT]) && is_array($data[self::FIELD_AUTHORING_TIME_EXT])) ? $data[self::FIELD_AUTHORING_TIME_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDateTime) {
+                    $this->setAuthoringTime($value);
+                } else if (is_array($value)) {
+                    $this->setAuthoringTime(new FHIRDateTime(array_merge($ext, $value)));
+                } else {
+                    $this->setAuthoringTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setAuthoringTime(new FHIRDateTime($ext));
+            }
+        }
+        if (isset($data[self::FIELD_AUTHOR])) {
+            if ($data[self::FIELD_AUTHOR] instanceof FHIRReference) {
+                $this->setAuthor($data[self::FIELD_AUTHOR]);
+            } else {
+                $this->setAuthor(new FHIRReference($data[self::FIELD_AUTHOR]));
+            }
+        }
+        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
+            $value = $data[self::FIELD_DESCRIPTION] ?? null;
+            $ext = (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) ? $data[self::FIELD_DESCRIPTION_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setDescription($value);
+                } else if (is_array($value)) {
+                    $this->setDescription(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setDescription(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setDescription(new FHIRString($ext));
+            }
+        }
         if (isset($data[self::FIELD_STUDY])) {
             if (is_array($data[self::FIELD_STUDY])) {
                 foreach($data[self::FIELD_STUDY] as $v) {
@@ -284,7 +271,7 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
                         $this->addStudy(new FHIRImagingManifestStudy($v));
                     }
                 }
-            } else if ($data[self::FIELD_STUDY] instanceof FHIRImagingManifestStudy) {
+            } elseif ($data[self::FIELD_STUDY] instanceof FHIRImagingManifestStudy) {
                 $this->addStudy($data[self::FIELD_STUDY]);
             } else {
                 $this->addStudy(new FHIRImagingManifestStudy($data[self::FIELD_STUDY]));
@@ -292,10 +279,11 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -303,39 +291,46 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ImagingManifest{$xmlns}></ImagingManifest>";
-    }
-    /**
-     * @return string
-     */
-    public function _getResourceType()
+    public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
 
 
     /**
-     * A reference from one resource to another.
+     * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Author of ImagingManifest. It can be a human author or a device which made the
-     * decision of the SOP instances selected. For example, a radiologist selected a
-     * set of imaging SOP instances to attach in a diagnostic report, and a CAD
-     * application may author a selection to describe SOP instances it used to generate
-     * a detection conclusion.
+     * Unique identifier of the DICOM Key Object Selection (KOS) that this resource
+     * represents.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
-    public function getAuthor()
+    public function getIdentifier(): null|FHIRIdentifier
     {
-        return $this->author;
+        return $this->identifier;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Unique identifier of the DICOM Key Object Selection (KOS) that this resource
+     * represents.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
+     * @return static
+     */
+    public function setIdentifier(null|FHIRIdentifier $identifier = null): self
+    {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
+        $this->_trackValueSet($this->identifier, $identifier);
+        $this->identifier = $identifier;
+        return $this;
     }
 
     /**
@@ -343,18 +338,34 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Author of ImagingManifest. It can be a human author or a device which made the
-     * decision of the SOP instances selected. For example, a radiologist selected a
-     * set of imaging SOP instances to attach in a diagnostic report, and a CAD
-     * application may author a selection to describe SOP instances it used to generate
-     * a detection conclusion.
+     * A patient resource reference which is the patient subject of all DICOM SOP
+     * Instances in this ImagingManifest.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $author
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getPatient(): null|FHIRReference
+    {
+        return $this->patient;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A patient resource reference which is the patient subject of all DICOM SOP
+     * Instances in this ImagingManifest.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $patient
      * @return static
      */
-    public function setAuthor(FHIRReference $author = null)
+    public function setPatient(null|FHIRReference $patient = null): self
     {
-        $this->author = $author;
+        if (null === $patient) {
+            $patient = new FHIRReference();
+        }
+        $this->_trackValueSet($this->patient, $patient);
+        $this->patient = $patient;
         return $this;
     }
 
@@ -373,7 +384,7 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    public function getAuthoringTime()
+    public function getAuthoringTime(): null|FHIRDateTime
     {
         return $this->authoringTime;
     }
@@ -391,20 +402,58 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * dates associated with the referenced instances (e.g. capture time of the
      * referenced image).
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $authoringTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRDateTimePrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $authoringTime
      * @return static
      */
-    public function setAuthoringTime($authoringTime = null)
+    public function setAuthoringTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authoringTime = null): self
     {
-        if (null === $authoringTime) {
-            $this->authoringTime = null;
-            return $this;
+        if (null !== $authoringTime && !($authoringTime instanceof FHIRDateTime)) {
+            $authoringTime = new FHIRDateTime($authoringTime);
         }
-        if ($authoringTime instanceof FHIRDateTime) {
-            $this->authoringTime = $authoringTime;
-            return $this;
+        $this->_trackValueSet($this->authoringTime, $authoringTime);
+        $this->authoringTime = $authoringTime;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Author of ImagingManifest. It can be a human author or a device which made the
+     * decision of the SOP instances selected. For example, a radiologist selected a
+     * set of imaging SOP instances to attach in a diagnostic report, and a CAD
+     * application may author a selection to describe SOP instances it used to generate
+     * a detection conclusion.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getAuthor(): null|FHIRReference
+    {
+        return $this->author;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Author of ImagingManifest. It can be a human author or a device which made the
+     * decision of the SOP instances selected. For example, a radiologist selected a
+     * set of imaging SOP instances to attach in a diagnostic report, and a CAD
+     * application may author a selection to describe SOP instances it used to generate
+     * a detection conclusion.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $author
+     * @return static
+     */
+    public function setAuthor(null|FHIRReference $author = null): self
+    {
+        if (null === $author) {
+            $author = new FHIRReference();
         }
-        $this->authoringTime = new FHIRDateTime($authoringTime);
+        $this->_trackValueSet($this->author, $author);
+        $this->author = $author;
         return $this;
     }
 
@@ -422,7 +471,7 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getDescription()
+    public function getDescription(): null|FHIRString
     {
         return $this->description;
     }
@@ -439,84 +488,16 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * ImagingManifest. Specifically, there is no expected behavior associated with
      * descriptions that suggest referenced images be removed or not used.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $description
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $description
      * @return static
      */
-    public function setDescription($description = null)
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null): self
     {
-        if (null === $description) {
-            $this->description = null;
-            return $this;
+        if (null !== $description && !($description instanceof FHIRString)) {
+            $description = new FHIRString($description);
         }
-        if ($description instanceof FHIRString) {
-            $this->description = $description;
-            return $this;
-        }
-        $this->description = new FHIRString($description);
-        return $this;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Unique identifier of the DICOM Key Object Selection (KOS) that this resource
-     * represents.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Unique identifier of the DICOM Key Object Selection (KOS) that this resource
-     * represents.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
-     * @return static
-     */
-    public function setIdentifier(FHIRIdentifier $identifier = null)
-    {
-        $this->identifier = $identifier;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A patient resource reference which is the patient subject of all DICOM SOP
-     * Instances in this ImagingManifest.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getPatient()
-    {
-        return $this->patient;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A patient resource reference which is the patient subject of all DICOM SOP
-     * Instances in this ImagingManifest.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $patient
-     * @return static
-     */
-    public function setPatient(FHIRReference $patient = null)
-    {
-        $this->patient = $patient;
+        $this->_trackValueSet($this->description, $description);
+        $this->description = $description;
         return $this;
     }
 
@@ -529,7 +510,7 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingManifest\FHIRImagingManifestStudy[]
      */
-    public function getStudy()
+    public function getStudy(): null|array
     {
         return $this->study;
     }
@@ -544,8 +525,12 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingManifest\FHIRImagingManifestStudy $study
      * @return static
      */
-    public function addStudy(FHIRImagingManifestStudy $study = null)
+    public function addStudy(null|FHIRImagingManifestStudy $study = null): self
     {
+        if (null === $study) {
+            $study = new FHIRImagingManifestStudy();
+        }
+        $this->_trackValueAdded();
         $this->study[] = $study;
         return $this;
     }
@@ -560,9 +545,12 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingManifest\FHIRImagingManifestStudy[] $study
      * @return static
      */
-    public function setStudy(array $study = [])
+    public function setStudy(array $study = []): self
     {
-        $this->study = [];
+        if ([] !== $this->study) {
+            $this->_trackValuesRemoved(count($this->study));
+            $this->study = [];
+        }
         if ([] === $study) {
             return $this;
         }
@@ -582,9 +570,9 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -593,25 +581,10 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (null !== ($v = $this->getAuthor())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_AUTHOR] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getAuthoringTime())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_AUTHORING_TIME] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getDescription())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_DESCRIPTION] = $fieldErrs;
-            }
-        }
         if (null !== ($v = $this->getIdentifier())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_IDENTIFIER] = $fieldErrs;
@@ -622,46 +595,25 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
                 $errs[self::FIELD_PATIENT] = $fieldErrs;
             }
         }
+        if (null !== ($v = $this->getAuthoringTime())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_AUTHORING_TIME] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getAuthor())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_AUTHOR] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getDescription())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DESCRIPTION] = $fieldErrs;
+            }
+        }
         if ([] !== ($vs = $this->getStudy())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                     $errs[sprintf('%s.%d', self::FIELD_STUDY, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_AUTHOR])) {
-            $v = $this->getAuthor();
-            foreach($validationRules[self::FIELD_AUTHOR] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_MANIFEST, self::FIELD_AUTHOR, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_AUTHOR])) {
-                        $errs[self::FIELD_AUTHOR] = [];
-                    }
-                    $errs[self::FIELD_AUTHOR][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_AUTHORING_TIME])) {
-            $v = $this->getAuthoringTime();
-            foreach($validationRules[self::FIELD_AUTHORING_TIME] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_MANIFEST, self::FIELD_AUTHORING_TIME, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_AUTHORING_TIME])) {
-                        $errs[self::FIELD_AUTHORING_TIME] = [];
-                    }
-                    $errs[self::FIELD_AUTHORING_TIME][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_DESCRIPTION])) {
-            $v = $this->getDescription();
-            foreach($validationRules[self::FIELD_DESCRIPTION] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_MANIFEST, self::FIELD_DESCRIPTION, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_DESCRIPTION])) {
-                        $errs[self::FIELD_DESCRIPTION] = [];
-                    }
-                    $errs[self::FIELD_DESCRIPTION][$rule] = $err;
                 }
             }
         }
@@ -689,6 +641,42 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
                 }
             }
         }
+        if (isset($validationRules[self::FIELD_AUTHORING_TIME])) {
+            $v = $this->getAuthoringTime();
+            foreach($validationRules[self::FIELD_AUTHORING_TIME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_MANIFEST, self::FIELD_AUTHORING_TIME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_AUTHORING_TIME])) {
+                        $errs[self::FIELD_AUTHORING_TIME] = [];
+                    }
+                    $errs[self::FIELD_AUTHORING_TIME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_AUTHOR])) {
+            $v = $this->getAuthor();
+            foreach($validationRules[self::FIELD_AUTHOR] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_MANIFEST, self::FIELD_AUTHOR, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_AUTHOR])) {
+                        $errs[self::FIELD_AUTHOR] = [];
+                    }
+                    $errs[self::FIELD_AUTHOR][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DESCRIPTION])) {
+            $v = $this->getDescription();
+            foreach($validationRules[self::FIELD_DESCRIPTION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_IMAGING_MANIFEST, self::FIELD_DESCRIPTION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DESCRIPTION])) {
+                        $errs[self::FIELD_DESCRIPTION] = [];
+                    }
+                    $errs[self::FIELD_DESCRIPTION][$rule] = $err;
+                }
+            }
+        }
         if (isset($validationRules[self::FIELD_STUDY])) {
             $v = $this->getStudy();
             foreach($validationRules[self::FIELD_STUDY] as $rule => $constraint) {
@@ -698,6 +686,18 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
                         $errs[self::FIELD_STUDY] = [];
                     }
                     $errs[self::FIELD_STUDY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
                 }
             }
         }
@@ -737,18 +737,6 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TEXT])) {
-            $v = $this->getText();
-            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TEXT])) {
-                        $errs[self::FIELD_TEXT] = [];
-                    }
-                    $errs[self::FIELD_TEXT][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_ID])) {
             $v = $this->getId();
             foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
@@ -758,6 +746,18 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
                         $errs[self::FIELD_ID] = [];
                     }
                     $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
                 }
             }
         }
@@ -785,190 +785,258 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_META])) {
-            $v = $this->getMeta();
-            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_META])) {
-                        $errs[self::FIELD_META] = [];
-                    }
-                    $errs[self::FIELD_META][$rule] = $err;
-                }
-            }
-        }
         return $errs;
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRImagingManifest $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRImagingManifest
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRImagingManifest::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRImagingManifest::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRImagingManifest;
-        } elseif (!is_object($type) || !($type instanceof FHIRImagingManifest)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRImagingManifest)) {
             throw new \RuntimeException(sprintf(
-                'FHIRImagingManifest::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRImagingManifest or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRDomainResource::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_IDENTIFIER === $n->nodeName) {
+                $type->setIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_PATIENT === $n->nodeName) {
+                $type->setPatient(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_AUTHORING_TIME === $n->nodeName) {
+                $type->setAuthoringTime(FHIRDateTime::xmlUnserialize($n));
+            } elseif (self::FIELD_AUTHOR === $n->nodeName) {
+                $type->setAuthor(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_DESCRIPTION === $n->nodeName) {
+                $type->setDescription(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_STUDY === $n->nodeName) {
+                $type->addStudy(FHIRImagingManifestStudy::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_META === $n->nodeName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n));
+            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->author)) {
-            $type->setAuthor(FHIRReference::xmlUnserialize($children->author));
-        }
-        if (isset($children->authoringTime)) {
-            $type->setAuthoringTime(FHIRDateTime::xmlUnserialize($children->authoringTime));
-        }
-        if (isset($attributes->authoringTime)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_AUTHORING_TIME);
+        if (null !== $n) {
             $pt = $type->getAuthoringTime();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->authoringTime);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setAuthoringTime((string)$attributes->authoringTime);
+                $type->setAuthoringTime($n->nodeValue);
             }
         }
-        if (isset($children->description)) {
-            $type->setDescription(FHIRString::xmlUnserialize($children->description));
-        }
-        if (isset($attributes->description)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_DESCRIPTION);
+        if (null !== $n) {
             $pt = $type->getDescription();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->description);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setDescription((string)$attributes->description);
+                $type->setDescription($n->nodeValue);
             }
         }
-        if (isset($children->identifier)) {
-            $type->setIdentifier(FHIRIdentifier::xmlUnserialize($children->identifier));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
         }
-        if (isset($children->patient)) {
-            $type->setPatient(FHIRReference::xmlUnserialize($children->patient));
+        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
+        if (null !== $n) {
+            $pt = $type->getImplicitRules();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setImplicitRules($n->nodeValue);
+            }
         }
-        if (isset($children->study)) {
-            foreach($children->study as $child) {
-                $type->addStudy(FHIRImagingManifestStudy::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
+        if (null !== $n) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLanguage($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getAuthor())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_AUTHOR, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ImagingManifest'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
-        if (null !== ($v = $this->getAuthoringTime())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_AUTHORING_TIME, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getDescription())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_DESCRIPTION, null, $v->_getFHIRXMLNamespace()));
-        }
+        parent::xmlSerialize($element);
         if (null !== ($v = $this->getIdentifier())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getPatient())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PATIENT, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_PATIENT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getAuthoringTime())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_AUTHORING_TIME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getAuthor())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_AUTHOR);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getDescription())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_DESCRIPTION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getStudy())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_STUDY, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_STUDY);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getAuthor())) {
-            $a[self::FIELD_AUTHOR] = $v;
-        }
-        if (null !== ($v = $this->getAuthoringTime())) {
-            $a[self::FIELD_AUTHORING_TIME] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDateTime::FIELD_VALUE]);
-                $a[self::FIELD_AUTHORING_TIME_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getDescription())) {
-            $a[self::FIELD_DESCRIPTION] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_DESCRIPTION_EXT] = $enc;
-            }
-        }
+        $out = parent::jsonSerialize();
         if (null !== ($v = $this->getIdentifier())) {
-            $a[self::FIELD_IDENTIFIER] = $v;
+            $out->{self::FIELD_IDENTIFIER} = $v;
         }
         if (null !== ($v = $this->getPatient())) {
-            $a[self::FIELD_PATIENT] = $v;
+            $out->{self::FIELD_PATIENT} = $v;
+        }
+        if (null !== ($v = $this->getAuthoringTime())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_AUTHORING_TIME} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDateTime::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_AUTHORING_TIME_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getAuthor())) {
+            $out->{self::FIELD_AUTHOR} = $v;
+        }
+        if (null !== ($v = $this->getDescription())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DESCRIPTION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DESCRIPTION_EXT} = $ext;
+            }
         }
         if ([] !== ($vs = $this->getStudy())) {
-            $a[self::FIELD_STUDY] = [];
+            $out->{self::FIELD_STUDY} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_STUDY][] = $v;
+                $out->{self::FIELD_STUDY}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
-    }
 
+        $out->{PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE} = $this->_getResourceType();
+
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

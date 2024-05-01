@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceReferenceSeq;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository;
@@ -79,11 +80,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRSequenceType;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Raw data describing a biological sequence.
@@ -96,6 +104,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MOLECULAR_SEQUENCE;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_TYPE = 'type';
     const FIELD_TYPE_EXT = '_type';
@@ -117,9 +126,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     const FIELD_POINTER = 'pointer';
     const FIELD_STRUCTURE_VARIANT = 'structureVariant';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -131,8 +137,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * Type if a sequence -- DNA, RNA, or amino acid sequence.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -141,8 +146,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSequenceType
      */
-    protected ?FHIRSequenceType $type = null;
-
+    protected null|FHIRSequenceType $type = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -152,10 +156,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * inclusive start, exclusive end) or starting at 1 (1-based numbering, inclusive
      * start and inclusive end).
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $coordinateSystem = null;
-
+    protected null|FHIRInteger $coordinateSystem = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -165,8 +168,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $patient = null;
-
+    protected null|FHIRReference $patient = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -176,8 +178,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $specimen = null;
-
+    protected null|FHIRReference $specimen = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -187,8 +188,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $device = null;
-
+    protected null|FHIRReference $device = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -198,8 +198,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $performer = null;
-
+    protected null|FHIRReference $performer = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -211,8 +210,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $quantity = null;
-
+    protected null|FHIRQuantity $quantity = null;
     /**
      * Raw data describing a biological sequence.
      *
@@ -221,8 +219,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceReferenceSeq
      */
-    protected ?FHIRMolecularSequenceReferenceSeq $referenceSeq = null;
-
+    protected null|FHIRMolecularSequenceReferenceSeq $referenceSeq = null;
     /**
      * Raw data describing a biological sequence.
      *
@@ -234,8 +231,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant[]
      */
-    protected ?array $variant = [];
-
+    protected null|array $variant = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -245,10 +241,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * variant records on referenceSeq. This shall start from referenceSeq.windowStart
      * and end by referenceSeq.windowEnd.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $observedSeq = null;
-
+    protected null|FHIRString $observedSeq = null;
     /**
      * Raw data describing a biological sequence.
      *
@@ -258,8 +253,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality[]
      */
-    protected ?array $quality = [];
-
+    protected null|array $quality = [];
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -268,10 +262,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Coverage (read depth or depth) is the average number of reads representing a
      * given nucleotide in the reconstructed sequence.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $readCoverage = null;
-
+    protected null|FHIRInteger $readCoverage = null;
     /**
      * Raw data describing a biological sequence.
      *
@@ -280,8 +273,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository[]
      */
-    protected ?array $repository = [];
-
+    protected null|array $repository = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -291,8 +283,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $pointer = [];
-
+    protected null|array $pointer = [];
     /**
      * Raw data describing a biological sequence.
      *
@@ -300,28 +291,23 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant[]
      */
-    protected ?array $structureVariant = [];
+    protected null|array $structureVariant = [];
 
     /**
      * Validation map for fields in type MolecularSequence
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRMolecularSequence Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMolecularSequence::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -536,6 +522,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
         }
     }
 
+
     /**
      * @return string
      */
@@ -544,17 +531,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<MolecularSequence{$xmlns}></MolecularSequence>";
-    }
     /**
      * @return string
      */
@@ -575,7 +551,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -592,8 +568,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -611,7 +590,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -638,7 +617,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSequenceType
      */
-    public function getType(): ?FHIRSequenceType
+    public function getType(): null|FHIRSequenceType
     {
         return $this->type;
     }
@@ -652,8 +631,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSequenceType $type
      * @return static
      */
-    public function setType(?FHIRSequenceType $type = null): object
+    public function setType(null|FHIRSequenceType $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRSequenceType();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -668,9 +650,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * inclusive start, exclusive end) or starting at 1 (1-based numbering, inclusive
      * start and inclusive end).
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getCoordinateSystem(): ?FHIRInteger
+    public function getCoordinateSystem(): null|FHIRInteger
     {
         return $this->coordinateSystem;
     }
@@ -684,10 +666,10 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * inclusive start, exclusive end) or starting at 1 (1-based numbering, inclusive
      * start and inclusive end).
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $coordinateSystem
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $coordinateSystem
      * @return static
      */
-    public function setCoordinateSystem($coordinateSystem = null): object
+    public function setCoordinateSystem(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $coordinateSystem = null): self
     {
         if (null !== $coordinateSystem && !($coordinateSystem instanceof FHIRInteger)) {
             $coordinateSystem = new FHIRInteger($coordinateSystem);
@@ -706,7 +688,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPatient(): ?FHIRReference
+    public function getPatient(): null|FHIRReference
     {
         return $this->patient;
     }
@@ -721,8 +703,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $patient
      * @return static
      */
-    public function setPatient(?FHIRReference $patient = null): object
+    public function setPatient(null|FHIRReference $patient = null): self
     {
+        if (null === $patient) {
+            $patient = new FHIRReference();
+        }
         $this->_trackValueSet($this->patient, $patient);
         $this->patient = $patient;
         return $this;
@@ -737,7 +722,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSpecimen(): ?FHIRReference
+    public function getSpecimen(): null|FHIRReference
     {
         return $this->specimen;
     }
@@ -752,8 +737,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $specimen
      * @return static
      */
-    public function setSpecimen(?FHIRReference $specimen = null): object
+    public function setSpecimen(null|FHIRReference $specimen = null): self
     {
+        if (null === $specimen) {
+            $specimen = new FHIRReference();
+        }
         $this->_trackValueSet($this->specimen, $specimen);
         $this->specimen = $specimen;
         return $this;
@@ -768,7 +756,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getDevice(): ?FHIRReference
+    public function getDevice(): null|FHIRReference
     {
         return $this->device;
     }
@@ -783,8 +771,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $device
      * @return static
      */
-    public function setDevice(?FHIRReference $device = null): object
+    public function setDevice(null|FHIRReference $device = null): self
     {
+        if (null === $device) {
+            $device = new FHIRReference();
+        }
         $this->_trackValueSet($this->device, $device);
         $this->device = $device;
         return $this;
@@ -799,7 +790,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPerformer(): ?FHIRReference
+    public function getPerformer(): null|FHIRReference
     {
         return $this->performer;
     }
@@ -814,8 +805,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $performer
      * @return static
      */
-    public function setPerformer(?FHIRReference $performer = null): object
+    public function setPerformer(null|FHIRReference $performer = null): self
     {
+        if (null === $performer) {
+            $performer = new FHIRReference();
+        }
         $this->_trackValueSet($this->performer, $performer);
         $this->performer = $performer;
         return $this;
@@ -832,7 +826,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getQuantity(): ?FHIRQuantity
+    public function getQuantity(): null|FHIRQuantity
     {
         return $this->quantity;
     }
@@ -849,8 +843,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $quantity
      * @return static
      */
-    public function setQuantity(?FHIRQuantity $quantity = null): object
+    public function setQuantity(null|FHIRQuantity $quantity = null): self
     {
+        if (null === $quantity) {
+            $quantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->quantity, $quantity);
         $this->quantity = $quantity;
         return $this;
@@ -864,7 +861,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceReferenceSeq
      */
-    public function getReferenceSeq(): ?FHIRMolecularSequenceReferenceSeq
+    public function getReferenceSeq(): null|FHIRMolecularSequenceReferenceSeq
     {
         return $this->referenceSeq;
     }
@@ -878,8 +875,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceReferenceSeq $referenceSeq
      * @return static
      */
-    public function setReferenceSeq(?FHIRMolecularSequenceReferenceSeq $referenceSeq = null): object
+    public function setReferenceSeq(null|FHIRMolecularSequenceReferenceSeq $referenceSeq = null): self
     {
+        if (null === $referenceSeq) {
+            $referenceSeq = new FHIRMolecularSequenceReferenceSeq();
+        }
         $this->_trackValueSet($this->referenceSeq, $referenceSeq);
         $this->referenceSeq = $referenceSeq;
         return $this;
@@ -896,7 +896,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant[]
      */
-    public function getVariant(): ?array
+    public function getVariant(): null|array
     {
         return $this->variant;
     }
@@ -913,8 +913,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant $variant
      * @return static
      */
-    public function addVariant(?FHIRMolecularSequenceVariant $variant = null): object
+    public function addVariant(null|FHIRMolecularSequenceVariant $variant = null): self
     {
+        if (null === $variant) {
+            $variant = new FHIRMolecularSequenceVariant();
+        }
         $this->_trackValueAdded();
         $this->variant[] = $variant;
         return $this;
@@ -932,7 +935,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant[] $variant
      * @return static
      */
-    public function setVariant(array $variant = []): object
+    public function setVariant(array $variant = []): self
     {
         if ([] !== $this->variant) {
             $this->_trackValuesRemoved(count($this->variant));
@@ -960,9 +963,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * variant records on referenceSeq. This shall start from referenceSeq.windowStart
      * and end by referenceSeq.windowEnd.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getObservedSeq(): ?FHIRString
+    public function getObservedSeq(): null|FHIRString
     {
         return $this->observedSeq;
     }
@@ -976,10 +979,10 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * variant records on referenceSeq. This shall start from referenceSeq.windowStart
      * and end by referenceSeq.windowEnd.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $observedSeq
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $observedSeq
      * @return static
      */
-    public function setObservedSeq($observedSeq = null): object
+    public function setObservedSeq(null|string|FHIRStringPrimitive|FHIRString $observedSeq = null): self
     {
         if (null !== $observedSeq && !($observedSeq instanceof FHIRString)) {
             $observedSeq = new FHIRString($observedSeq);
@@ -998,7 +1001,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality[]
      */
-    public function getQuality(): ?array
+    public function getQuality(): null|array
     {
         return $this->quality;
     }
@@ -1013,8 +1016,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality $quality
      * @return static
      */
-    public function addQuality(?FHIRMolecularSequenceQuality $quality = null): object
+    public function addQuality(null|FHIRMolecularSequenceQuality $quality = null): self
     {
+        if (null === $quality) {
+            $quality = new FHIRMolecularSequenceQuality();
+        }
         $this->_trackValueAdded();
         $this->quality[] = $quality;
         return $this;
@@ -1030,7 +1036,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality[] $quality
      * @return static
      */
-    public function setQuality(array $quality = []): object
+    public function setQuality(array $quality = []): self
     {
         if ([] !== $this->quality) {
             $this->_trackValuesRemoved(count($this->quality));
@@ -1057,9 +1063,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Coverage (read depth or depth) is the average number of reads representing a
      * given nucleotide in the reconstructed sequence.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getReadCoverage(): ?FHIRInteger
+    public function getReadCoverage(): null|FHIRInteger
     {
         return $this->readCoverage;
     }
@@ -1072,10 +1078,10 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Coverage (read depth or depth) is the average number of reads representing a
      * given nucleotide in the reconstructed sequence.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $readCoverage
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $readCoverage
      * @return static
      */
-    public function setReadCoverage($readCoverage = null): object
+    public function setReadCoverage(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $readCoverage = null): self
     {
         if (null !== $readCoverage && !($readCoverage instanceof FHIRInteger)) {
             $readCoverage = new FHIRInteger($readCoverage);
@@ -1093,7 +1099,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository[]
      */
-    public function getRepository(): ?array
+    public function getRepository(): null|array
     {
         return $this->repository;
     }
@@ -1107,8 +1113,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository $repository
      * @return static
      */
-    public function addRepository(?FHIRMolecularSequenceRepository $repository = null): object
+    public function addRepository(null|FHIRMolecularSequenceRepository $repository = null): self
     {
+        if (null === $repository) {
+            $repository = new FHIRMolecularSequenceRepository();
+        }
         $this->_trackValueAdded();
         $this->repository[] = $repository;
         return $this;
@@ -1123,7 +1132,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository[] $repository
      * @return static
      */
-    public function setRepository(array $repository = []): object
+    public function setRepository(array $repository = []): self
     {
         if ([] !== $this->repository) {
             $this->_trackValuesRemoved(count($this->repository));
@@ -1151,7 +1160,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getPointer(): ?array
+    public function getPointer(): null|array
     {
         return $this->pointer;
     }
@@ -1166,8 +1175,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $pointer
      * @return static
      */
-    public function addPointer(?FHIRReference $pointer = null): object
+    public function addPointer(null|FHIRReference $pointer = null): self
     {
+        if (null === $pointer) {
+            $pointer = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->pointer[] = $pointer;
         return $this;
@@ -1183,7 +1195,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $pointer
      * @return static
      */
-    public function setPointer(array $pointer = []): object
+    public function setPointer(array $pointer = []): self
     {
         if ([] !== $this->pointer) {
             $this->_trackValuesRemoved(count($this->pointer));
@@ -1209,7 +1221,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant[]
      */
-    public function getStructureVariant(): ?array
+    public function getStructureVariant(): null|array
     {
         return $this->structureVariant;
     }
@@ -1222,8 +1234,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant $structureVariant
      * @return static
      */
-    public function addStructureVariant(?FHIRMolecularSequenceStructureVariant $structureVariant = null): object
+    public function addStructureVariant(null|FHIRMolecularSequenceStructureVariant $structureVariant = null): self
     {
+        if (null === $structureVariant) {
+            $structureVariant = new FHIRMolecularSequenceStructureVariant();
+        }
         $this->_trackValueAdded();
         $this->structureVariant[] = $structureVariant;
         return $this;
@@ -1237,7 +1252,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant[] $structureVariant
      * @return static
      */
-    public function setStructureVariant(array $structureVariant = []): object
+    public function setStructureVariant(array $structureVariant = []): self
     {
         if ([] !== $this->structureVariant) {
             $this->_trackValuesRemoved(count($this->structureVariant));
@@ -1264,7 +1279,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1663,36 +1678,48 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMolecularSequence $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMolecularSequence
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMolecularSequence::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMolecularSequence::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRMolecularSequence(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMolecularSequence)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMolecularSequence)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMolecularSequence::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMolecularSequence or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1813,17 +1840,25 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('MolecularSequence'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1942,7 +1977,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -2062,7 +2097,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
 
         return $out;
     }
-
 
     /**
      * @return string

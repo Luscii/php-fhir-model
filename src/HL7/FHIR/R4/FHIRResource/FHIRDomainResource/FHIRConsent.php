@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAttachment;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentPolicy;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentProvision;
@@ -77,11 +79,16 @@ use HL7\FHIR\R4\FHIRElement\FHIRMeta;
 use HL7\FHIR\R4\FHIRElement\FHIRNarrative;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A record of a healthcare consumer’s choices, which permits or denies
@@ -96,6 +103,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CONSENT;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
@@ -113,9 +121,6 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     const FIELD_VERIFICATION = 'verification';
     const FIELD_PROVISION = 'provision';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -126,8 +131,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * Indicates the state of the consent.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -136,8 +140,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRConsentState
      */
-    protected ?FHIRConsentState $status = null;
-
+    protected null|FHIRConsentState $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -149,8 +152,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $scope = null;
-
+    protected null|FHIRCodeableConcept $scope = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -162,8 +164,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $category = [];
-
+    protected null|array $category = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -173,8 +174,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $patient = null;
-
+    protected null|FHIRReference $patient = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -185,10 +185,9 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * When this Consent was issued / created / indexed.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $dateTime = null;
-
+    protected null|FHIRDateTime $dateTime = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -201,8 +200,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $performer = [];
-
+    protected null|array $performer = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -213,8 +211,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $organization = [];
-
+    protected null|array $organization = [];
     /**
      * For referring to data content defined in other formats.
      * If the element is present, it must have a value for at least one of the defined
@@ -227,8 +224,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    protected ?FHIRAttachment $sourceAttachment = null;
-
+    protected null|FHIRAttachment $sourceAttachment = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -241,8 +237,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $sourceReference = null;
-
+    protected null|FHIRReference $sourceReference = null;
     /**
      * A record of a healthcare consumer’s choices, which permits or denies
      * identified recipient(s) or recipient role(s) to perform one or more actions
@@ -253,8 +248,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentPolicy[]
      */
-    protected ?array $policy = [];
-
+    protected null|array $policy = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -265,8 +259,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $policyRule = null;
-
+    protected null|FHIRCodeableConcept $policyRule = null;
     /**
      * A record of a healthcare consumer’s choices, which permits or denies
      * identified recipient(s) or recipient role(s) to perform one or more actions
@@ -277,8 +270,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentVerification[]
      */
-    protected ?array $verification = [];
-
+    protected null|array $verification = [];
     /**
      * A record of a healthcare consumer’s choices, which permits or denies
      * identified recipient(s) or recipient role(s) to perform one or more actions
@@ -289,13 +281,13 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentProvision
      */
-    protected ?FHIRConsentProvision $provision = null;
+    protected null|FHIRConsentProvision $provision = null;
 
     /**
      * Validation map for fields in type Consent
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_CATEGORY => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -304,17 +296,12 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     /**
      * FHIRConsent Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRConsent::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -499,6 +486,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
     }
 
+
     /**
      * @return string
      */
@@ -507,17 +495,6 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Consent{$xmlns}></Consent>";
-    }
     /**
      * @return string
      */
@@ -537,7 +514,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -553,8 +530,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -571,7 +551,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -598,7 +578,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRConsentState
      */
-    public function getStatus(): ?FHIRConsentState
+    public function getStatus(): null|FHIRConsentState
     {
         return $this->status;
     }
@@ -612,8 +592,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRConsentState $status
      * @return static
      */
-    public function setStatus(?FHIRConsentState $status = null): object
+    public function setStatus(null|FHIRConsentState $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRConsentState();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -630,7 +613,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getScope(): ?FHIRCodeableConcept
+    public function getScope(): null|FHIRCodeableConcept
     {
         return $this->scope;
     }
@@ -647,8 +630,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $scope
      * @return static
      */
-    public function setScope(?FHIRCodeableConcept $scope = null): object
+    public function setScope(null|FHIRCodeableConcept $scope = null): self
     {
+        if (null === $scope) {
+            $scope = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->scope, $scope);
         $this->scope = $scope;
         return $this;
@@ -665,7 +651,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getCategory(): ?array
+    public function getCategory(): null|array
     {
         return $this->category;
     }
@@ -682,8 +668,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $category
      * @return static
      */
-    public function addCategory(?FHIRCodeableConcept $category = null): object
+    public function addCategory(null|FHIRCodeableConcept $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->category[] = $category;
         return $this;
@@ -701,7 +690,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $category
      * @return static
      */
-    public function setCategory(array $category = []): object
+    public function setCategory(array $category = []): self
     {
         if ([] !== $this->category) {
             $this->_trackValuesRemoved(count($this->category));
@@ -729,7 +718,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPatient(): ?FHIRReference
+    public function getPatient(): null|FHIRReference
     {
         return $this->patient;
     }
@@ -744,8 +733,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $patient
      * @return static
      */
-    public function setPatient(?FHIRReference $patient = null): object
+    public function setPatient(null|FHIRReference $patient = null): self
     {
+        if (null === $patient) {
+            $patient = new FHIRReference();
+        }
         $this->_trackValueSet($this->patient, $patient);
         $this->patient = $patient;
         return $this;
@@ -761,9 +753,9 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * When this Consent was issued / created / indexed.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDateTime(): ?FHIRDateTime
+    public function getDateTime(): null|FHIRDateTime
     {
         return $this->dateTime;
     }
@@ -778,10 +770,10 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * When this Consent was issued / created / indexed.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $dateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $dateTime
      * @return static
      */
-    public function setDateTime($dateTime = null): object
+    public function setDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $dateTime = null): self
     {
         if (null !== $dateTime && !($dateTime instanceof FHIRDateTime)) {
             $dateTime = new FHIRDateTime($dateTime);
@@ -803,7 +795,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getPerformer(): ?array
+    public function getPerformer(): null|array
     {
         return $this->performer;
     }
@@ -821,8 +813,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $performer
      * @return static
      */
-    public function addPerformer(?FHIRReference $performer = null): object
+    public function addPerformer(null|FHIRReference $performer = null): self
     {
+        if (null === $performer) {
+            $performer = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->performer[] = $performer;
         return $this;
@@ -841,7 +836,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $performer
      * @return static
      */
-    public function setPerformer(array $performer = []): object
+    public function setPerformer(array $performer = []): self
     {
         if ([] !== $this->performer) {
             $this->_trackValuesRemoved(count($this->performer));
@@ -870,7 +865,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getOrganization(): ?array
+    public function getOrganization(): null|array
     {
         return $this->organization;
     }
@@ -886,8 +881,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $organization
      * @return static
      */
-    public function addOrganization(?FHIRReference $organization = null): object
+    public function addOrganization(null|FHIRReference $organization = null): self
     {
+        if (null === $organization) {
+            $organization = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->organization[] = $organization;
         return $this;
@@ -904,7 +902,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $organization
      * @return static
      */
-    public function setOrganization(array $organization = []): object
+    public function setOrganization(array $organization = []): self
     {
         if ([] !== $this->organization) {
             $this->_trackValuesRemoved(count($this->organization));
@@ -935,7 +933,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    public function getSourceAttachment(): ?FHIRAttachment
+    public function getSourceAttachment(): null|FHIRAttachment
     {
         return $this->sourceAttachment;
     }
@@ -953,8 +951,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment $sourceAttachment
      * @return static
      */
-    public function setSourceAttachment(?FHIRAttachment $sourceAttachment = null): object
+    public function setSourceAttachment(null|FHIRAttachment $sourceAttachment = null): self
     {
+        if (null === $sourceAttachment) {
+            $sourceAttachment = new FHIRAttachment();
+        }
         $this->_trackValueSet($this->sourceAttachment, $sourceAttachment);
         $this->sourceAttachment = $sourceAttachment;
         return $this;
@@ -972,7 +973,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSourceReference(): ?FHIRReference
+    public function getSourceReference(): null|FHIRReference
     {
         return $this->sourceReference;
     }
@@ -990,8 +991,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $sourceReference
      * @return static
      */
-    public function setSourceReference(?FHIRReference $sourceReference = null): object
+    public function setSourceReference(null|FHIRReference $sourceReference = null): self
     {
+        if (null === $sourceReference) {
+            $sourceReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->sourceReference, $sourceReference);
         $this->sourceReference = $sourceReference;
         return $this;
@@ -1007,7 +1011,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentPolicy[]
      */
-    public function getPolicy(): ?array
+    public function getPolicy(): null|array
     {
         return $this->policy;
     }
@@ -1023,8 +1027,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentPolicy $policy
      * @return static
      */
-    public function addPolicy(?FHIRConsentPolicy $policy = null): object
+    public function addPolicy(null|FHIRConsentPolicy $policy = null): self
     {
+        if (null === $policy) {
+            $policy = new FHIRConsentPolicy();
+        }
         $this->_trackValueAdded();
         $this->policy[] = $policy;
         return $this;
@@ -1041,7 +1048,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentPolicy[] $policy
      * @return static
      */
-    public function setPolicy(array $policy = []): object
+    public function setPolicy(array $policy = []): self
     {
         if ([] !== $this->policy) {
             $this->_trackValuesRemoved(count($this->policy));
@@ -1070,7 +1077,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getPolicyRule(): ?FHIRCodeableConcept
+    public function getPolicyRule(): null|FHIRCodeableConcept
     {
         return $this->policyRule;
     }
@@ -1086,8 +1093,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $policyRule
      * @return static
      */
-    public function setPolicyRule(?FHIRCodeableConcept $policyRule = null): object
+    public function setPolicyRule(null|FHIRCodeableConcept $policyRule = null): self
     {
+        if (null === $policyRule) {
+            $policyRule = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->policyRule, $policyRule);
         $this->policyRule = $policyRule;
         return $this;
@@ -1103,7 +1113,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentVerification[]
      */
-    public function getVerification(): ?array
+    public function getVerification(): null|array
     {
         return $this->verification;
     }
@@ -1119,8 +1129,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentVerification $verification
      * @return static
      */
-    public function addVerification(?FHIRConsentVerification $verification = null): object
+    public function addVerification(null|FHIRConsentVerification $verification = null): self
     {
+        if (null === $verification) {
+            $verification = new FHIRConsentVerification();
+        }
         $this->_trackValueAdded();
         $this->verification[] = $verification;
         return $this;
@@ -1137,7 +1150,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentVerification[] $verification
      * @return static
      */
-    public function setVerification(array $verification = []): object
+    public function setVerification(array $verification = []): self
     {
         if ([] !== $this->verification) {
             $this->_trackValuesRemoved(count($this->verification));
@@ -1166,7 +1179,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentProvision
      */
-    public function getProvision(): ?FHIRConsentProvision
+    public function getProvision(): null|FHIRConsentProvision
     {
         return $this->provision;
     }
@@ -1182,8 +1195,11 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent\FHIRConsentProvision $provision
      * @return static
      */
-    public function setProvision(?FHIRConsentProvision $provision = null): object
+    public function setProvision(null|FHIRConsentProvision $provision = null): self
     {
+        if (null === $provision) {
+            $provision = new FHIRConsentProvision();
+        }
         $this->_trackValueSet($this->provision, $provision);
         $this->provision = $provision;
         return $this;
@@ -1197,7 +1213,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1562,36 +1578,48 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRConsent $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRConsent
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRConsent::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRConsent::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRConsent(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRConsent)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRConsent)) {
             throw new \RuntimeException(sprintf(
-                'FHIRConsent::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRConsent or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1690,17 +1718,25 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Consent'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1809,7 +1845,7 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1909,7 +1945,6 @@ class FHIRConsent extends FHIRDomainResource implements PHPFHIRContainedTypeInte
 
         return $out;
     }
-
 
     /**
      * @return string

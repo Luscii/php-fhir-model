@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCanonical;
@@ -72,9 +74,14 @@ use HL7\FHIR\R4\FHIRElement\FHIRInteger;
 use HL7\FHIR\R4\FHIRElement\FHIRQuestionnaireItemType;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A structured set of questions intended to guide the collection of answers from
@@ -88,6 +95,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_QUESTIONNAIRE_DOT_ITEM;
+
     const FIELD_LINK_ID = 'linkId';
     const FIELD_LINK_ID_EXT = '_linkId';
     const FIELD_DEFINITION = 'definition';
@@ -116,9 +124,6 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
     const FIELD_INITIAL = 'initial';
     const FIELD_ITEM = 'item';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -127,10 +132,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * An identifier that is unique within the Questionnaire allowing linkage to the
      * equivalent item in a QuestionnaireResponse resource.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $linkId = null;
-
+    protected null|FHIRString $linkId = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -147,10 +151,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * (ElementDefinition.maxLength) * answerValueSet (ElementDefinition.binding) *
      * options (ElementDefinition.binding).
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $definition = null;
-
+    protected null|FHIRUri $definition = null;
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -161,8 +164,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
-    protected ?array $code = [];
-
+    protected null|array $code = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -171,10 +173,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * A short label for a particular group, question or set of display text within the
      * questionnaire used for reference by the individual completing the questionnaire.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $prefix = null;
-
+    protected null|FHIRString $prefix = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -183,10 +184,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * The name of a section, the text of a question or text content for a display
      * item.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $text = null;
-
+    protected null|FHIRString $text = null;
     /**
      * Distinguishes groups from questions and display text and indicates data type for
      * questions.
@@ -198,8 +198,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuestionnaireItemType
      */
-    protected ?FHIRQuestionnaireItemType $type = null;
-
+    protected null|FHIRQuestionnaireItemType $type = null;
     /**
      * A structured set of questions intended to guide the collection of answers from
      * end-users. Questionnaires provide detailed control over order, presentation,
@@ -210,8 +209,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireEnableWhen[]
      */
-    protected ?array $enableWhen = [];
-
+    protected null|array $enableWhen = [];
     /**
      * Controls how multiple enableWhen values are interpreted - whether all or any
      * must be true.
@@ -222,8 +220,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIREnableWhenBehavior
      */
-    protected ?FHIREnableWhenBehavior $enableBehavior = null;
-
+    protected null|FHIREnableWhenBehavior $enableBehavior = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -232,10 +229,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * QuestionnaireResponse. If false, the item may be skipped when answering the
      * questionnaire.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $required = null;
-
+    protected null|FHIRBoolean $required = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -244,10 +240,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * collecting multiple answers for questions or multiple sets of answers for
      * groups.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $repeats = null;
-
+    protected null|FHIRBoolean $repeats = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -255,10 +250,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * An indication, when true, that the value cannot be changed by a human respondent
      * to the Questionnaire.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $readOnly = null;
-
+    protected null|FHIRBoolean $readOnly = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -267,10 +261,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * The maximum number of characters that are permitted in the answer to be
      * considered a "valid" QuestionnaireResponse.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $maxLength = null;
-
+    protected null|FHIRInteger $maxLength = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -280,10 +273,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * A reference to a value set containing a list of codes representing permitted
      * answers for a "choice" or "open-choice" question.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $answerValueSet = null;
-
+    protected null|FHIRCanonical $answerValueSet = null;
     /**
      * A structured set of questions intended to guide the collection of answers from
      * end-users. Questionnaires provide detailed control over order, presentation,
@@ -293,8 +285,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireAnswerOption[]
      */
-    protected ?array $answerOption = [];
-
+    protected null|array $answerOption = [];
     /**
      * A structured set of questions intended to guide the collection of answers from
      * end-users. Questionnaires provide detailed control over order, presentation,
@@ -305,8 +296,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireInitial[]
      */
-    protected ?array $initial = [];
-
+    protected null|array $initial = [];
     /**
      * A structured set of questions intended to guide the collection of answers from
      * end-users. Questionnaires provide detailed control over order, presentation,
@@ -316,28 +306,23 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireItem[]
      */
-    protected ?array $item = [];
+    protected null|array $item = [];
 
     /**
      * Validation map for fields in type Questionnaire.Item
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRQuestionnaireItem Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRQuestionnaireItem::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_LINK_ID]) || isset($data[self::FIELD_LINK_ID_EXT])) {
@@ -597,24 +582,13 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<QuestionnaireItem{$xmlns}></QuestionnaireItem>";
     }
 
     /**
@@ -625,9 +599,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * An identifier that is unique within the Questionnaire allowing linkage to the
      * equivalent item in a QuestionnaireResponse resource.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getLinkId(): ?FHIRString
+    public function getLinkId(): null|FHIRString
     {
         return $this->linkId;
     }
@@ -640,10 +614,10 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * An identifier that is unique within the Questionnaire allowing linkage to the
      * equivalent item in a QuestionnaireResponse resource.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $linkId
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $linkId
      * @return static
      */
-    public function setLinkId($linkId = null): object
+    public function setLinkId(null|string|FHIRStringPrimitive|FHIRString $linkId = null): self
     {
         if (null !== $linkId && !($linkId instanceof FHIRString)) {
             $linkId = new FHIRString($linkId);
@@ -669,9 +643,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * (ElementDefinition.maxLength) * answerValueSet (ElementDefinition.binding) *
      * options (ElementDefinition.binding).
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getDefinition(): ?FHIRUri
+    public function getDefinition(): null|FHIRUri
     {
         return $this->definition;
     }
@@ -692,10 +666,10 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * (ElementDefinition.maxLength) * answerValueSet (ElementDefinition.binding) *
      * options (ElementDefinition.binding).
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $definition
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $definition
      * @return static
      */
-    public function setDefinition($definition = null): object
+    public function setDefinition(null|string|FHIRUriPrimitive|FHIRUri $definition = null): self
     {
         if (null !== $definition && !($definition instanceof FHIRUri)) {
             $definition = new FHIRUri($definition);
@@ -715,7 +689,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
-    public function getCode(): ?array
+    public function getCode(): null|array
     {
         return $this->code;
     }
@@ -731,8 +705,11 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $code
      * @return static
      */
-    public function addCode(?FHIRCoding $code = null): object
+    public function addCode(null|FHIRCoding $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCoding();
+        }
         $this->_trackValueAdded();
         $this->code[] = $code;
         return $this;
@@ -749,7 +726,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCoding[] $code
      * @return static
      */
-    public function setCode(array $code = []): object
+    public function setCode(array $code = []): self
     {
         if ([] !== $this->code) {
             $this->_trackValuesRemoved(count($this->code));
@@ -776,9 +753,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * A short label for a particular group, question or set of display text within the
      * questionnaire used for reference by the individual completing the questionnaire.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPrefix(): ?FHIRString
+    public function getPrefix(): null|FHIRString
     {
         return $this->prefix;
     }
@@ -791,10 +768,10 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * A short label for a particular group, question or set of display text within the
      * questionnaire used for reference by the individual completing the questionnaire.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $prefix
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $prefix
      * @return static
      */
-    public function setPrefix($prefix = null): object
+    public function setPrefix(null|string|FHIRStringPrimitive|FHIRString $prefix = null): self
     {
         if (null !== $prefix && !($prefix instanceof FHIRString)) {
             $prefix = new FHIRString($prefix);
@@ -812,9 +789,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * The name of a section, the text of a question or text content for a display
      * item.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getText(): ?FHIRString
+    public function getText(): null|FHIRString
     {
         return $this->text;
     }
@@ -827,10 +804,10 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * The name of a section, the text of a question or text content for a display
      * item.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $text
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $text
      * @return static
      */
-    public function setText($text = null): object
+    public function setText(null|string|FHIRStringPrimitive|FHIRString $text = null): self
     {
         if (null !== $text && !($text instanceof FHIRString)) {
             $text = new FHIRString($text);
@@ -851,7 +828,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuestionnaireItemType
      */
-    public function getType(): ?FHIRQuestionnaireItemType
+    public function getType(): null|FHIRQuestionnaireItemType
     {
         return $this->type;
     }
@@ -868,8 +845,11 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuestionnaireItemType $type
      * @return static
      */
-    public function setType(?FHIRQuestionnaireItemType $type = null): object
+    public function setType(null|FHIRQuestionnaireItemType $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRQuestionnaireItemType();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -885,7 +865,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireEnableWhen[]
      */
-    public function getEnableWhen(): ?array
+    public function getEnableWhen(): null|array
     {
         return $this->enableWhen;
     }
@@ -901,8 +881,11 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireEnableWhen $enableWhen
      * @return static
      */
-    public function addEnableWhen(?FHIRQuestionnaireEnableWhen $enableWhen = null): object
+    public function addEnableWhen(null|FHIRQuestionnaireEnableWhen $enableWhen = null): self
     {
+        if (null === $enableWhen) {
+            $enableWhen = new FHIRQuestionnaireEnableWhen();
+        }
         $this->_trackValueAdded();
         $this->enableWhen[] = $enableWhen;
         return $this;
@@ -919,7 +902,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireEnableWhen[] $enableWhen
      * @return static
      */
-    public function setEnableWhen(array $enableWhen = []): object
+    public function setEnableWhen(array $enableWhen = []): self
     {
         if ([] !== $this->enableWhen) {
             $this->_trackValuesRemoved(count($this->enableWhen));
@@ -948,7 +931,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIREnableWhenBehavior
      */
-    public function getEnableBehavior(): ?FHIREnableWhenBehavior
+    public function getEnableBehavior(): null|FHIREnableWhenBehavior
     {
         return $this->enableBehavior;
     }
@@ -964,8 +947,11 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIREnableWhenBehavior $enableBehavior
      * @return static
      */
-    public function setEnableBehavior(?FHIREnableWhenBehavior $enableBehavior = null): object
+    public function setEnableBehavior(null|FHIREnableWhenBehavior $enableBehavior = null): self
     {
+        if (null === $enableBehavior) {
+            $enableBehavior = new FHIREnableWhenBehavior();
+        }
         $this->_trackValueSet($this->enableBehavior, $enableBehavior);
         $this->enableBehavior = $enableBehavior;
         return $this;
@@ -979,9 +965,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * QuestionnaireResponse. If false, the item may be skipped when answering the
      * questionnaire.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getRequired(): ?FHIRBoolean
+    public function getRequired(): null|FHIRBoolean
     {
         return $this->required;
     }
@@ -994,10 +980,10 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * QuestionnaireResponse. If false, the item may be skipped when answering the
      * questionnaire.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $required
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $required
      * @return static
      */
-    public function setRequired($required = null): object
+    public function setRequired(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $required = null): self
     {
         if (null !== $required && !($required instanceof FHIRBoolean)) {
             $required = new FHIRBoolean($required);
@@ -1015,9 +1001,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * collecting multiple answers for questions or multiple sets of answers for
      * groups.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getRepeats(): ?FHIRBoolean
+    public function getRepeats(): null|FHIRBoolean
     {
         return $this->repeats;
     }
@@ -1030,10 +1016,10 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * collecting multiple answers for questions or multiple sets of answers for
      * groups.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $repeats
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $repeats
      * @return static
      */
-    public function setRepeats($repeats = null): object
+    public function setRepeats(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $repeats = null): self
     {
         if (null !== $repeats && !($repeats instanceof FHIRBoolean)) {
             $repeats = new FHIRBoolean($repeats);
@@ -1050,9 +1036,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * An indication, when true, that the value cannot be changed by a human respondent
      * to the Questionnaire.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getReadOnly(): ?FHIRBoolean
+    public function getReadOnly(): null|FHIRBoolean
     {
         return $this->readOnly;
     }
@@ -1064,10 +1050,10 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * An indication, when true, that the value cannot be changed by a human respondent
      * to the Questionnaire.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $readOnly
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $readOnly
      * @return static
      */
-    public function setReadOnly($readOnly = null): object
+    public function setReadOnly(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $readOnly = null): self
     {
         if (null !== $readOnly && !($readOnly instanceof FHIRBoolean)) {
             $readOnly = new FHIRBoolean($readOnly);
@@ -1085,9 +1071,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * The maximum number of characters that are permitted in the answer to be
      * considered a "valid" QuestionnaireResponse.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getMaxLength(): ?FHIRInteger
+    public function getMaxLength(): null|FHIRInteger
     {
         return $this->maxLength;
     }
@@ -1100,10 +1086,10 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * The maximum number of characters that are permitted in the answer to be
      * considered a "valid" QuestionnaireResponse.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $maxLength
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $maxLength
      * @return static
      */
-    public function setMaxLength($maxLength = null): object
+    public function setMaxLength(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $maxLength = null): self
     {
         if (null !== $maxLength && !($maxLength instanceof FHIRInteger)) {
             $maxLength = new FHIRInteger($maxLength);
@@ -1122,9 +1108,9 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * A reference to a value set containing a list of codes representing permitted
      * answers for a "choice" or "open-choice" question.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getAnswerValueSet(): ?FHIRCanonical
+    public function getAnswerValueSet(): null|FHIRCanonical
     {
         return $this->answerValueSet;
     }
@@ -1138,10 +1124,10 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * A reference to a value set containing a list of codes representing permitted
      * answers for a "choice" or "open-choice" question.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $answerValueSet
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $answerValueSet
      * @return static
      */
-    public function setAnswerValueSet($answerValueSet = null): object
+    public function setAnswerValueSet(null|string|FHIRCanonicalPrimitive|FHIRCanonical $answerValueSet = null): self
     {
         if (null !== $answerValueSet && !($answerValueSet instanceof FHIRCanonical)) {
             $answerValueSet = new FHIRCanonical($answerValueSet);
@@ -1160,7 +1146,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireAnswerOption[]
      */
-    public function getAnswerOption(): ?array
+    public function getAnswerOption(): null|array
     {
         return $this->answerOption;
     }
@@ -1175,8 +1161,11 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireAnswerOption $answerOption
      * @return static
      */
-    public function addAnswerOption(?FHIRQuestionnaireAnswerOption $answerOption = null): object
+    public function addAnswerOption(null|FHIRQuestionnaireAnswerOption $answerOption = null): self
     {
+        if (null === $answerOption) {
+            $answerOption = new FHIRQuestionnaireAnswerOption();
+        }
         $this->_trackValueAdded();
         $this->answerOption[] = $answerOption;
         return $this;
@@ -1192,7 +1181,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireAnswerOption[] $answerOption
      * @return static
      */
-    public function setAnswerOption(array $answerOption = []): object
+    public function setAnswerOption(array $answerOption = []): self
     {
         if ([] !== $this->answerOption) {
             $this->_trackValuesRemoved(count($this->answerOption));
@@ -1221,7 +1210,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireInitial[]
      */
-    public function getInitial(): ?array
+    public function getInitial(): null|array
     {
         return $this->initial;
     }
@@ -1237,8 +1226,11 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireInitial $initial
      * @return static
      */
-    public function addInitial(?FHIRQuestionnaireInitial $initial = null): object
+    public function addInitial(null|FHIRQuestionnaireInitial $initial = null): self
     {
+        if (null === $initial) {
+            $initial = new FHIRQuestionnaireInitial();
+        }
         $this->_trackValueAdded();
         $this->initial[] = $initial;
         return $this;
@@ -1255,7 +1247,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireInitial[] $initial
      * @return static
      */
-    public function setInitial(array $initial = []): object
+    public function setInitial(array $initial = []): self
     {
         if ([] !== $this->initial) {
             $this->_trackValuesRemoved(count($this->initial));
@@ -1283,7 +1275,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireItem[]
      */
-    public function getItem(): ?array
+    public function getItem(): null|array
     {
         return $this->item;
     }
@@ -1298,8 +1290,11 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireItem $item
      * @return static
      */
-    public function addItem(?FHIRQuestionnaireItem $item = null): object
+    public function addItem(null|FHIRQuestionnaireItem $item = null): self
     {
+        if (null === $item) {
+            $item = new FHIRQuestionnaireItem();
+        }
         $this->_trackValueAdded();
         $this->item[] = $item;
         return $this;
@@ -1315,7 +1310,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireItem[] $item
      * @return static
      */
-    public function setItem(array $item = []): object
+    public function setItem(array $item = []): self
     {
         if ([] !== $this->item) {
             $this->_trackValuesRemoved(count($this->item));
@@ -1342,7 +1337,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1679,36 +1674,48 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireItem $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireItem
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRQuestionnaireItem::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRQuestionnaireItem::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRQuestionnaireItem(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRQuestionnaireItem)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRQuestionnaireItem)) {
             throw new \RuntimeException(sprintf(
-                'FHIRQuestionnaireItem::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaire\FHIRQuestionnaireItem or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1850,17 +1857,25 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('QuestionnaireItem'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getLinkId())) {
@@ -1974,7 +1989,7 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getLinkId())) {
@@ -2135,7 +2150,6 @@ class FHIRQuestionnaireItem extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

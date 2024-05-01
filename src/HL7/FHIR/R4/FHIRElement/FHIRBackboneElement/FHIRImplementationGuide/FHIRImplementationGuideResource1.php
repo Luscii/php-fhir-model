@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCanonical;
@@ -69,8 +71,12 @@ use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRUrl;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUrlPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A set of rules of how a particular interoperability or standards problem is
@@ -85,6 +91,7 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_IMPLEMENTATION_GUIDE_DOT_RESOURCE_1;
+
     const FIELD_REFERENCE = 'reference';
     const FIELD_EXAMPLE_BOOLEAN = 'exampleBoolean';
     const FIELD_EXAMPLE_BOOLEAN_EXT = '_exampleBoolean';
@@ -92,9 +99,6 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
     const FIELD_EXAMPLE_CANONICAL_EXT = '_exampleCanonical';
     const FIELD_RELATIVE_PATH = 'relativePath';
     const FIELD_RELATIVE_PATH_EXT = '_relativePath';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A reference from one resource to another.
@@ -105,8 +109,7 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $reference = null;
-
+    protected null|FHIRReference $reference = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -115,10 +118,9 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      * reference is present, indicates that the example is an example of the specified
      * profile.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $exampleBoolean = null;
-
+    protected null|FHIRBoolean $exampleBoolean = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -129,10 +131,9 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      * reference is present, indicates that the example is an example of the specified
      * profile.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $exampleCanonical = null;
-
+    protected null|FHIRCanonical $exampleCanonical = null;
     /**
      * A URI that is a literal reference
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -140,30 +141,25 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      *
      * The relative path for primary page for this resource within the IG.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    protected ?FHIRUrl $relativePath = null;
+    protected null|FHIRUrl $relativePath = null;
 
     /**
      * Validation map for fields in type ImplementationGuide.Resource1
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRImplementationGuideResource1 Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRImplementationGuideResource1::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_REFERENCE])) {
@@ -220,24 +216,13 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ImplementationGuideResource1{$xmlns}></ImplementationGuideResource1>";
     }
 
     /**
@@ -249,7 +234,7 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getReference(): ?FHIRReference
+    public function getReference(): null|FHIRReference
     {
         return $this->reference;
     }
@@ -264,8 +249,11 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $reference
      * @return static
      */
-    public function setReference(?FHIRReference $reference = null): object
+    public function setReference(null|FHIRReference $reference = null): self
     {
+        if (null === $reference) {
+            $reference = new FHIRReference();
+        }
         $this->_trackValueSet($this->reference, $reference);
         $this->reference = $reference;
         return $this;
@@ -279,9 +267,9 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      * reference is present, indicates that the example is an example of the specified
      * profile.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getExampleBoolean(): ?FHIRBoolean
+    public function getExampleBoolean(): null|FHIRBoolean
     {
         return $this->exampleBoolean;
     }
@@ -294,10 +282,10 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      * reference is present, indicates that the example is an example of the specified
      * profile.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $exampleBoolean
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $exampleBoolean
      * @return static
      */
-    public function setExampleBoolean($exampleBoolean = null): object
+    public function setExampleBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $exampleBoolean = null): self
     {
         if (null !== $exampleBoolean && !($exampleBoolean instanceof FHIRBoolean)) {
             $exampleBoolean = new FHIRBoolean($exampleBoolean);
@@ -317,9 +305,9 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      * reference is present, indicates that the example is an example of the specified
      * profile.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getExampleCanonical(): ?FHIRCanonical
+    public function getExampleCanonical(): null|FHIRCanonical
     {
         return $this->exampleCanonical;
     }
@@ -334,10 +322,10 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      * reference is present, indicates that the example is an example of the specified
      * profile.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $exampleCanonical
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $exampleCanonical
      * @return static
      */
-    public function setExampleCanonical($exampleCanonical = null): object
+    public function setExampleCanonical(null|string|FHIRCanonicalPrimitive|FHIRCanonical $exampleCanonical = null): self
     {
         if (null !== $exampleCanonical && !($exampleCanonical instanceof FHIRCanonical)) {
             $exampleCanonical = new FHIRCanonical($exampleCanonical);
@@ -354,9 +342,9 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      *
      * The relative path for primary page for this resource within the IG.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    public function getRelativePath(): ?FHIRUrl
+    public function getRelativePath(): null|FHIRUrl
     {
         return $this->relativePath;
     }
@@ -368,10 +356,10 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      *
      * The relative path for primary page for this resource within the IG.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $relativePath
+     * @param null|string|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $relativePath
      * @return static
      */
-    public function setRelativePath($relativePath = null): object
+    public function setRelativePath(null|string|FHIRUrlPrimitive|FHIRUrl $relativePath = null): self
     {
         if (null !== $relativePath && !($relativePath instanceof FHIRUrl)) {
             $relativePath = new FHIRUrl($relativePath);
@@ -389,7 +377,7 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -512,36 +500,48 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuideResource1 $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuideResource1
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRImplementationGuideResource1::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRImplementationGuideResource1::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRImplementationGuideResource1(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRImplementationGuideResource1)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRImplementationGuideResource1)) {
             throw new \RuntimeException(sprintf(
-                'FHIRImplementationGuideResource1::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuideResource1 or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -605,17 +605,25 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ImplementationGuideResource1'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getReference())) {
@@ -644,7 +652,7 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getReference())) {
@@ -683,7 +691,6 @@ class FHIRImplementationGuideResource1 extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

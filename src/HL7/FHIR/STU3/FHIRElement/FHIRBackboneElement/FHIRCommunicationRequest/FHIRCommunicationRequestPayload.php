@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCommunicationRequest;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCommunicationRequest
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,10 +64,15 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCommunicationRequest
 
 use HL7\FHIR\STU3\FHIRElement\FHIRAttachment;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * A request to convey information; e.g. the CDS system proposes that an alert be
@@ -81,37 +86,11 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_COMMUNICATION_REQUEST_DOT_PAYLOAD;
-    const FIELD_CONTENT_ATTACHMENT = 'contentAttachment';
-    const FIELD_CONTENT_REFERENCE = 'contentReference';
+
     const FIELD_CONTENT_STRING = 'contentString';
     const FIELD_CONTENT_STRING_EXT = '_contentString';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * For referring to data content defined in other formats.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The communicated content (or for multi-part communications, one portion of the
-     * communication).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment
-     */
-    protected $contentAttachment = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The communicated content (or for multi-part communications, one portion of the
-     * communication).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $contentReference = null;
+    const FIELD_CONTENT_ATTACHMENT = 'contentAttachment';
+    const FIELD_CONTENT_REFERENCE = 'contentReference';
 
     /**
      * A sequence of Unicode characters
@@ -123,30 +102,62 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $contentString = null;
+    protected null|FHIRString $contentString = null;
+    /**
+     * For referring to data content defined in other formats.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The communicated content (or for multi-part communications, one portion of the
+     * communication).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment
+     */
+    protected null|FHIRAttachment $contentAttachment = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The communicated content (or for multi-part communications, one portion of the
+     * communication).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $contentReference = null;
 
     /**
      * Validation map for fields in type CommunicationRequest.Payload
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRCommunicationRequestPayload Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRCommunicationRequestPayload::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_CONTENT_STRING]) || isset($data[self::FIELD_CONTENT_STRING_EXT])) {
+            $value = $data[self::FIELD_CONTENT_STRING] ?? null;
+            $ext = (isset($data[self::FIELD_CONTENT_STRING_EXT]) && is_array($data[self::FIELD_CONTENT_STRING_EXT])) ? $data[self::FIELD_CONTENT_STRING_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setContentString($value);
+                } else if (is_array($value)) {
+                    $this->setContentString(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setContentString(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setContentString(new FHIRString($ext));
+            }
+        }
         if (isset($data[self::FIELD_CONTENT_ATTACHMENT])) {
             if ($data[self::FIELD_CONTENT_ATTACHMENT] instanceof FHIRAttachment) {
                 $this->setContentAttachment($data[self::FIELD_CONTENT_ATTACHMENT]);
@@ -161,49 +172,51 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
                 $this->setContentReference(new FHIRReference($data[self::FIELD_CONTENT_REFERENCE]));
             }
         }
-        if (isset($data[self::FIELD_CONTENT_STRING]) || isset($data[self::FIELD_CONTENT_STRING_EXT])) {
-            if (isset($data[self::FIELD_CONTENT_STRING])) {
-                $value = $data[self::FIELD_CONTENT_STRING];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_CONTENT_STRING_EXT]) && is_array($data[self::FIELD_CONTENT_STRING_EXT])) {
-                $ext = $data[self::FIELD_CONTENT_STRING_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setContentString($value);
-                } else if (is_array($value)) {
-                    $this->setContentString(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setContentString(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setContentString(new FHIRString($ext));
-            }
-        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * @return string
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The communicated content (or for multi-part communications, one portion of the
+     * communication).
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function _getFHIRXMLElementDefinition()
+    public function getContentString(): null|FHIRString
     {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
+        return $this->contentString;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The communicated content (or for multi-part communications, one portion of the
+     * communication).
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $contentString
+     * @return static
+     */
+    public function setContentString(null|string|FHIRStringPrimitive|FHIRString $contentString = null): self
+    {
+        if (null !== $contentString && !($contentString instanceof FHIRString)) {
+            $contentString = new FHIRString($contentString);
         }
-        return "<CommunicationRequestPayload{$xmlns}></CommunicationRequestPayload>";
+        $this->_trackValueSet($this->contentString, $contentString);
+        $this->contentString = $contentString;
+        return $this;
     }
 
     /**
@@ -216,7 +229,7 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment
      */
-    public function getContentAttachment()
+    public function getContentAttachment(): null|FHIRAttachment
     {
         return $this->contentAttachment;
     }
@@ -232,8 +245,12 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment $contentAttachment
      * @return static
      */
-    public function setContentAttachment(FHIRAttachment $contentAttachment = null)
+    public function setContentAttachment(null|FHIRAttachment $contentAttachment = null): self
     {
+        if (null === $contentAttachment) {
+            $contentAttachment = new FHIRAttachment();
+        }
+        $this->_trackValueSet($this->contentAttachment, $contentAttachment);
         $this->contentAttachment = $contentAttachment;
         return $this;
     }
@@ -248,7 +265,7 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getContentReference()
+    public function getContentReference(): null|FHIRReference
     {
         return $this->contentReference;
     }
@@ -264,49 +281,13 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $contentReference
      * @return static
      */
-    public function setContentReference(FHIRReference $contentReference = null)
+    public function setContentReference(null|FHIRReference $contentReference = null): self
     {
+        if (null === $contentReference) {
+            $contentReference = new FHIRReference();
+        }
+        $this->_trackValueSet($this->contentReference, $contentReference);
         $this->contentReference = $contentReference;
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The communicated content (or for multi-part communications, one portion of the
-     * communication).
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getContentString()
-    {
-        return $this->contentString;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The communicated content (or for multi-part communications, one portion of the
-     * communication).
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $contentString
-     * @return static
-     */
-    public function setContentString($contentString = null)
-    {
-        if (null === $contentString) {
-            $this->contentString = null;
-            return $this;
-        }
-        if ($contentString instanceof FHIRString) {
-            $this->contentString = $contentString;
-            return $this;
-        }
-        $this->contentString = new FHIRString($contentString);
         return $this;
     }
 
@@ -316,9 +297,9 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -327,10 +308,15 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if (null !== ($v = $this->getContentString())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CONTENT_STRING] = $fieldErrs;
+            }
+        }
         if (null !== ($v = $this->getContentAttachment())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_CONTENT_ATTACHMENT] = $fieldErrs;
@@ -341,9 +327,16 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
                 $errs[self::FIELD_CONTENT_REFERENCE] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getContentString())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_CONTENT_STRING] = $fieldErrs;
+        if (isset($validationRules[self::FIELD_CONTENT_STRING])) {
+            $v = $this->getContentString();
+            foreach($validationRules[self::FIELD_CONTENT_STRING] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COMMUNICATION_REQUEST_DOT_PAYLOAD, self::FIELD_CONTENT_STRING, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTENT_STRING])) {
+                        $errs[self::FIELD_CONTENT_STRING] = [];
+                    }
+                    $errs[self::FIELD_CONTENT_STRING][$rule] = $err;
+                }
             }
         }
         if (isset($validationRules[self::FIELD_CONTENT_ATTACHMENT])) {
@@ -367,18 +360,6 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
                         $errs[self::FIELD_CONTENT_REFERENCE] = [];
                     }
                     $errs[self::FIELD_CONTENT_REFERENCE][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_CONTENT_STRING])) {
-            $v = $this->getContentString();
-            foreach($validationRules[self::FIELD_CONTENT_STRING] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COMMUNICATION_REQUEST_DOT_PAYLOAD, self::FIELD_CONTENT_STRING, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CONTENT_STRING])) {
-                        $errs[self::FIELD_CONTENT_STRING] = [];
-                    }
-                    $errs[self::FIELD_CONTENT_STRING][$rule] = $err;
                 }
             }
         }
@@ -422,120 +403,162 @@ class FHIRCommunicationRequestPayload extends FHIRBackboneElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCommunicationRequest\FHIRCommunicationRequestPayload $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCommunicationRequest\FHIRCommunicationRequestPayload
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRCommunicationRequestPayload::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRCommunicationRequestPayload::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRCommunicationRequestPayload;
-        } elseif (!is_object($type) || !($type instanceof FHIRCommunicationRequestPayload)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRCommunicationRequestPayload)) {
             throw new \RuntimeException(sprintf(
-                'FHIRCommunicationRequestPayload::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCommunicationRequest\FHIRCommunicationRequestPayload or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRBackboneElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_CONTENT_STRING === $n->nodeName) {
+                $type->setContentString(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTENT_ATTACHMENT === $n->nodeName) {
+                $type->setContentAttachment(FHIRAttachment::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTENT_REFERENCE === $n->nodeName) {
+                $type->setContentReference(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->contentAttachment)) {
-            $type->setContentAttachment(FHIRAttachment::xmlUnserialize($children->contentAttachment));
-        }
-        if (isset($children->contentReference)) {
-            $type->setContentReference(FHIRReference::xmlUnserialize($children->contentReference));
-        }
-        if (isset($children->contentString)) {
-            $type->setContentString(FHIRString::xmlUnserialize($children->contentString));
-        }
-        if (isset($attributes->contentString)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_CONTENT_STRING);
+        if (null !== $n) {
             $pt = $type->getContentString();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->contentString);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setContentString((string)$attributes->contentString);
+                $type->setContentString($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('CommunicationRequestPayload'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getContentString())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CONTENT_STRING);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if (null !== ($v = $this->getContentAttachment())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CONTENT_ATTACHMENT, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_CONTENT_ATTACHMENT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getContentReference())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CONTENT_REFERENCE, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_CONTENT_REFERENCE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getContentString())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CONTENT_STRING, null, $v->_getFHIRXMLNamespace()));
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getContentAttachment())) {
-            $a[self::FIELD_CONTENT_ATTACHMENT] = $v;
-        }
-        if (null !== ($v = $this->getContentReference())) {
-            $a[self::FIELD_CONTENT_REFERENCE] = $v;
-        }
+        $out = parent::jsonSerialize();
         if (null !== ($v = $this->getContentString())) {
-            $a[self::FIELD_CONTENT_STRING] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_CONTENT_STRING_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_CONTENT_STRING} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_CONTENT_STRING_EXT} = $ext;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if (null !== ($v = $this->getContentAttachment())) {
+            $out->{self::FIELD_CONTENT_ATTACHMENT} = $v;
         }
-        return $a;
-    }
+        if (null !== ($v = $this->getContentReference())) {
+            $out->{self::FIELD_CONTENT_REFERENCE} = $v;
+        }
 
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

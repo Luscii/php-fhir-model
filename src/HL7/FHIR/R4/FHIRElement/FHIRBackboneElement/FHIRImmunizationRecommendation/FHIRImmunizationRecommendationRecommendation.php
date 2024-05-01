@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommenda
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,9 +68,13 @@ use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRPositiveInt;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
+use HL7\FHIR\R4\FHIRPositiveIntPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A patient's point-in-time set of recommendations (i.e. forecasting) according to
@@ -83,6 +87,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_IMMUNIZATION_RECOMMENDATION_DOT_RECOMMENDATION;
+
     const FIELD_VACCINE_CODE = 'vaccineCode';
     const FIELD_TARGET_DISEASE = 'targetDisease';
     const FIELD_CONTRAINDICATED_VACCINE_CODE = 'contraindicatedVaccineCode';
@@ -104,9 +109,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
     const FIELD_SUPPORTING_IMMUNIZATION = 'supportingImmunization';
     const FIELD_SUPPORTING_PATIENT_INFORMATION = 'supportingPatientInformation';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -117,8 +119,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $vaccineCode = [];
-
+    protected null|array $vaccineCode = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -129,8 +130,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $targetDisease = null;
-
+    protected null|FHIRCodeableConcept $targetDisease = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -141,8 +141,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $contraindicatedVaccineCode = [];
-
+    protected null|array $contraindicatedVaccineCode = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -154,8 +153,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $forecastStatus = null;
-
+    protected null|FHIRCodeableConcept $forecastStatus = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -166,8 +164,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $forecastReason = [];
-
+    protected null|array $forecastReason = [];
     /**
      * A patient's point-in-time set of recommendations (i.e. forecasting) according to
      * a published schedule with optional supporting justification.
@@ -177,8 +174,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationDateCriterion[]
      */
-    protected ?array $dateCriterion = [];
-
+    protected null|array $dateCriterion = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -187,10 +183,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Contains the description about the protocol under which the vaccine was
      * administered.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $description = null;
-
+    protected null|FHIRString $description = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -199,10 +194,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * One possible path to achieve presumed immunity against a disease - within the
      * context of an authority.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $series = null;
-
+    protected null|FHIRString $series = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -211,10 +205,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Nominal position of the recommended dose in a series (e.g. dose 2 is the next
      * recommended dose).
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $doseNumberPositiveInt = null;
-
+    protected null|FHIRPositiveInt $doseNumberPositiveInt = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -223,10 +216,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Nominal position of the recommended dose in a series (e.g. dose 2 is the next
      * recommended dose).
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $doseNumberString = null;
-
+    protected null|FHIRString $doseNumberString = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -234,10 +226,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $seriesDosesPositiveInt = null;
-
+    protected null|FHIRPositiveInt $seriesDosesPositiveInt = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -245,10 +236,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $seriesDosesString = null;
-
+    protected null|FHIRString $seriesDosesString = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -259,8 +249,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $supportingImmunization = [];
-
+    protected null|array $supportingImmunization = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -271,28 +260,23 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $supportingPatientInformation = [];
+    protected null|array $supportingPatientInformation = [];
 
     /**
      * Validation map for fields in type ImmunizationRecommendation.Recommendation
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRImmunizationRecommendationRecommendation Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRImmunizationRecommendationRecommendation::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_VACCINE_CODE])) {
@@ -509,24 +493,13 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ImmunizationRecommendationRecommendation{$xmlns}></ImmunizationRecommendationRecommendation>";
     }
 
     /**
@@ -539,7 +512,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getVaccineCode(): ?array
+    public function getVaccineCode(): null|array
     {
         return $this->vaccineCode;
     }
@@ -555,8 +528,11 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $vaccineCode
      * @return static
      */
-    public function addVaccineCode(?FHIRCodeableConcept $vaccineCode = null): object
+    public function addVaccineCode(null|FHIRCodeableConcept $vaccineCode = null): self
     {
+        if (null === $vaccineCode) {
+            $vaccineCode = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->vaccineCode[] = $vaccineCode;
         return $this;
@@ -573,7 +549,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $vaccineCode
      * @return static
      */
-    public function setVaccineCode(array $vaccineCode = []): object
+    public function setVaccineCode(array $vaccineCode = []): self
     {
         if ([] !== $this->vaccineCode) {
             $this->_trackValuesRemoved(count($this->vaccineCode));
@@ -602,7 +578,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getTargetDisease(): ?FHIRCodeableConcept
+    public function getTargetDisease(): null|FHIRCodeableConcept
     {
         return $this->targetDisease;
     }
@@ -618,8 +594,11 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $targetDisease
      * @return static
      */
-    public function setTargetDisease(?FHIRCodeableConcept $targetDisease = null): object
+    public function setTargetDisease(null|FHIRCodeableConcept $targetDisease = null): self
     {
+        if (null === $targetDisease) {
+            $targetDisease = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->targetDisease, $targetDisease);
         $this->targetDisease = $targetDisease;
         return $this;
@@ -635,7 +614,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getContraindicatedVaccineCode(): ?array
+    public function getContraindicatedVaccineCode(): null|array
     {
         return $this->contraindicatedVaccineCode;
     }
@@ -651,8 +630,11 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $contraindicatedVaccineCode
      * @return static
      */
-    public function addContraindicatedVaccineCode(?FHIRCodeableConcept $contraindicatedVaccineCode = null): object
+    public function addContraindicatedVaccineCode(null|FHIRCodeableConcept $contraindicatedVaccineCode = null): self
     {
+        if (null === $contraindicatedVaccineCode) {
+            $contraindicatedVaccineCode = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->contraindicatedVaccineCode[] = $contraindicatedVaccineCode;
         return $this;
@@ -669,7 +651,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $contraindicatedVaccineCode
      * @return static
      */
-    public function setContraindicatedVaccineCode(array $contraindicatedVaccineCode = []): object
+    public function setContraindicatedVaccineCode(array $contraindicatedVaccineCode = []): self
     {
         if ([] !== $this->contraindicatedVaccineCode) {
             $this->_trackValuesRemoved(count($this->contraindicatedVaccineCode));
@@ -699,7 +681,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getForecastStatus(): ?FHIRCodeableConcept
+    public function getForecastStatus(): null|FHIRCodeableConcept
     {
         return $this->forecastStatus;
     }
@@ -716,8 +698,11 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $forecastStatus
      * @return static
      */
-    public function setForecastStatus(?FHIRCodeableConcept $forecastStatus = null): object
+    public function setForecastStatus(null|FHIRCodeableConcept $forecastStatus = null): self
     {
+        if (null === $forecastStatus) {
+            $forecastStatus = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->forecastStatus, $forecastStatus);
         $this->forecastStatus = $forecastStatus;
         return $this;
@@ -733,7 +718,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getForecastReason(): ?array
+    public function getForecastReason(): null|array
     {
         return $this->forecastReason;
     }
@@ -749,8 +734,11 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $forecastReason
      * @return static
      */
-    public function addForecastReason(?FHIRCodeableConcept $forecastReason = null): object
+    public function addForecastReason(null|FHIRCodeableConcept $forecastReason = null): self
     {
+        if (null === $forecastReason) {
+            $forecastReason = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->forecastReason[] = $forecastReason;
         return $this;
@@ -767,7 +755,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $forecastReason
      * @return static
      */
-    public function setForecastReason(array $forecastReason = []): object
+    public function setForecastReason(array $forecastReason = []): self
     {
         if ([] !== $this->forecastReason) {
             $this->_trackValuesRemoved(count($this->forecastReason));
@@ -795,7 +783,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationDateCriterion[]
      */
-    public function getDateCriterion(): ?array
+    public function getDateCriterion(): null|array
     {
         return $this->dateCriterion;
     }
@@ -810,8 +798,11 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationDateCriterion $dateCriterion
      * @return static
      */
-    public function addDateCriterion(?FHIRImmunizationRecommendationDateCriterion $dateCriterion = null): object
+    public function addDateCriterion(null|FHIRImmunizationRecommendationDateCriterion $dateCriterion = null): self
     {
+        if (null === $dateCriterion) {
+            $dateCriterion = new FHIRImmunizationRecommendationDateCriterion();
+        }
         $this->_trackValueAdded();
         $this->dateCriterion[] = $dateCriterion;
         return $this;
@@ -827,7 +818,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationDateCriterion[] $dateCriterion
      * @return static
      */
-    public function setDateCriterion(array $dateCriterion = []): object
+    public function setDateCriterion(array $dateCriterion = []): self
     {
         if ([] !== $this->dateCriterion) {
             $this->_trackValuesRemoved(count($this->dateCriterion));
@@ -854,9 +845,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Contains the description about the protocol under which the vaccine was
      * administered.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDescription(): ?FHIRString
+    public function getDescription(): null|FHIRString
     {
         return $this->description;
     }
@@ -869,10 +860,10 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Contains the description about the protocol under which the vaccine was
      * administered.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $description
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
@@ -890,9 +881,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * One possible path to achieve presumed immunity against a disease - within the
      * context of an authority.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getSeries(): ?FHIRString
+    public function getSeries(): null|FHIRString
     {
         return $this->series;
     }
@@ -905,10 +896,10 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * One possible path to achieve presumed immunity against a disease - within the
      * context of an authority.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $series
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $series
      * @return static
      */
-    public function setSeries($series = null): object
+    public function setSeries(null|string|FHIRStringPrimitive|FHIRString $series = null): self
     {
         if (null !== $series && !($series instanceof FHIRString)) {
             $series = new FHIRString($series);
@@ -926,9 +917,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Nominal position of the recommended dose in a series (e.g. dose 2 is the next
      * recommended dose).
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getDoseNumberPositiveInt(): ?FHIRPositiveInt
+    public function getDoseNumberPositiveInt(): null|FHIRPositiveInt
     {
         return $this->doseNumberPositiveInt;
     }
@@ -941,10 +932,10 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Nominal position of the recommended dose in a series (e.g. dose 2 is the next
      * recommended dose).
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $doseNumberPositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $doseNumberPositiveInt
      * @return static
      */
-    public function setDoseNumberPositiveInt($doseNumberPositiveInt = null): object
+    public function setDoseNumberPositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $doseNumberPositiveInt = null): self
     {
         if (null !== $doseNumberPositiveInt && !($doseNumberPositiveInt instanceof FHIRPositiveInt)) {
             $doseNumberPositiveInt = new FHIRPositiveInt($doseNumberPositiveInt);
@@ -962,9 +953,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Nominal position of the recommended dose in a series (e.g. dose 2 is the next
      * recommended dose).
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDoseNumberString(): ?FHIRString
+    public function getDoseNumberString(): null|FHIRString
     {
         return $this->doseNumberString;
     }
@@ -977,10 +968,10 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Nominal position of the recommended dose in a series (e.g. dose 2 is the next
      * recommended dose).
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $doseNumberString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $doseNumberString
      * @return static
      */
-    public function setDoseNumberString($doseNumberString = null): object
+    public function setDoseNumberString(null|string|FHIRStringPrimitive|FHIRString $doseNumberString = null): self
     {
         if (null !== $doseNumberString && !($doseNumberString instanceof FHIRString)) {
             $doseNumberString = new FHIRString($doseNumberString);
@@ -997,9 +988,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getSeriesDosesPositiveInt(): ?FHIRPositiveInt
+    public function getSeriesDosesPositiveInt(): null|FHIRPositiveInt
     {
         return $this->seriesDosesPositiveInt;
     }
@@ -1011,10 +1002,10 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $seriesDosesPositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $seriesDosesPositiveInt
      * @return static
      */
-    public function setSeriesDosesPositiveInt($seriesDosesPositiveInt = null): object
+    public function setSeriesDosesPositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $seriesDosesPositiveInt = null): self
     {
         if (null !== $seriesDosesPositiveInt && !($seriesDosesPositiveInt instanceof FHIRPositiveInt)) {
             $seriesDosesPositiveInt = new FHIRPositiveInt($seriesDosesPositiveInt);
@@ -1031,9 +1022,9 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getSeriesDosesString(): ?FHIRString
+    public function getSeriesDosesString(): null|FHIRString
     {
         return $this->seriesDosesString;
     }
@@ -1045,10 +1036,10 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * The recommended number of doses to achieve immunity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $seriesDosesString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $seriesDosesString
      * @return static
      */
-    public function setSeriesDosesString($seriesDosesString = null): object
+    public function setSeriesDosesString(null|string|FHIRStringPrimitive|FHIRString $seriesDosesString = null): self
     {
         if (null !== $seriesDosesString && !($seriesDosesString instanceof FHIRString)) {
             $seriesDosesString = new FHIRString($seriesDosesString);
@@ -1068,7 +1059,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getSupportingImmunization(): ?array
+    public function getSupportingImmunization(): null|array
     {
         return $this->supportingImmunization;
     }
@@ -1084,8 +1075,11 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $supportingImmunization
      * @return static
      */
-    public function addSupportingImmunization(?FHIRReference $supportingImmunization = null): object
+    public function addSupportingImmunization(null|FHIRReference $supportingImmunization = null): self
     {
+        if (null === $supportingImmunization) {
+            $supportingImmunization = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->supportingImmunization[] = $supportingImmunization;
         return $this;
@@ -1102,7 +1096,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $supportingImmunization
      * @return static
      */
-    public function setSupportingImmunization(array $supportingImmunization = []): object
+    public function setSupportingImmunization(array $supportingImmunization = []): self
     {
         if ([] !== $this->supportingImmunization) {
             $this->_trackValuesRemoved(count($this->supportingImmunization));
@@ -1131,7 +1125,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getSupportingPatientInformation(): ?array
+    public function getSupportingPatientInformation(): null|array
     {
         return $this->supportingPatientInformation;
     }
@@ -1147,8 +1141,11 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $supportingPatientInformation
      * @return static
      */
-    public function addSupportingPatientInformation(?FHIRReference $supportingPatientInformation = null): object
+    public function addSupportingPatientInformation(null|FHIRReference $supportingPatientInformation = null): self
     {
+        if (null === $supportingPatientInformation) {
+            $supportingPatientInformation = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->supportingPatientInformation[] = $supportingPatientInformation;
         return $this;
@@ -1165,7 +1162,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $supportingPatientInformation
      * @return static
      */
-    public function setSupportingPatientInformation(array $supportingPatientInformation = []): object
+    public function setSupportingPatientInformation(array $supportingPatientInformation = []): self
     {
         if ([] !== $this->supportingPatientInformation) {
             $this->_trackValuesRemoved(count($this->supportingPatientInformation));
@@ -1192,7 +1189,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1497,36 +1494,48 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationRecommendation $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationRecommendation
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRImmunizationRecommendationRecommendation::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRImmunizationRecommendationRecommendation::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRImmunizationRecommendationRecommendation(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRImmunizationRecommendationRecommendation)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRImmunizationRecommendationRecommendation)) {
             throw new \RuntimeException(sprintf(
-                'FHIRImmunizationRecommendationRecommendation::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationRecommendation or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1637,17 +1646,25 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ImmunizationRecommendationRecommendation'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getVaccineCode())) {
@@ -1756,7 +1773,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getVaccineCode())) {
@@ -1882,7 +1899,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

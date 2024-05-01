@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,21 +62,37 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRCodePrimitive;
+use HL7\FHIR\STU3\FHIRDateTimePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRAttachment;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportImage;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportPerformer;
+use HL7\FHIR\STU3\FHIRElement\FHIRCode;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\STU3\FHIRElement\FHIRDateTime;
 use HL7\FHIR\STU3\FHIRElement\FHIRDiagnosticReportStatus;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
+use HL7\FHIR\STU3\FHIRElement\FHIRId;
 use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
 use HL7\FHIR\STU3\FHIRElement\FHIRInstant;
+use HL7\FHIR\STU3\FHIRElement\FHIRMeta;
+use HL7\FHIR\STU3\FHIRElement\FHIRNarrative;
 use HL7\FHIR\STU3\FHIRElement\FHIRPeriod;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRIdPrimitive;
+use HL7\FHIR\STU3\FHIRInstantPrimitive;
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRTypeMap;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * The findings and interpretation of diagnostic tests performed on patients,
@@ -93,32 +109,40 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT;
+
+    const FIELD_IDENTIFIER = 'identifier';
     const FIELD_BASED_ON = 'basedOn';
+    const FIELD_STATUS = 'status';
+    const FIELD_STATUS_EXT = '_status';
     const FIELD_CATEGORY = 'category';
     const FIELD_CODE = 'code';
-    const FIELD_CODED_DIAGNOSIS = 'codedDiagnosis';
-    const FIELD_CONCLUSION = 'conclusion';
-    const FIELD_CONCLUSION_EXT = '_conclusion';
+    const FIELD_SUBJECT = 'subject';
     const FIELD_CONTEXT = 'context';
     const FIELD_EFFECTIVE_DATE_TIME = 'effectiveDateTime';
     const FIELD_EFFECTIVE_DATE_TIME_EXT = '_effectiveDateTime';
     const FIELD_EFFECTIVE_PERIOD = 'effectivePeriod';
-    const FIELD_IDENTIFIER = 'identifier';
-    const FIELD_IMAGE = 'image';
-    const FIELD_IMAGING_STUDY = 'imagingStudy';
     const FIELD_ISSUED = 'issued';
     const FIELD_ISSUED_EXT = '_issued';
     const FIELD_PERFORMER = 'performer';
-    const FIELD_PRESENTED_FORM = 'presentedForm';
-    const FIELD_RESULT = 'result';
     const FIELD_SPECIMEN = 'specimen';
-    const FIELD_STATUS = 'status';
-    const FIELD_STATUS_EXT = '_status';
-    const FIELD_SUBJECT = 'subject';
+    const FIELD_RESULT = 'result';
+    const FIELD_IMAGING_STUDY = 'imagingStudy';
+    const FIELD_IMAGE = 'image';
+    const FIELD_CONCLUSION = 'conclusion';
+    const FIELD_CONCLUSION_EXT = '_conclusion';
+    const FIELD_CODED_DIAGNOSIS = 'codedDiagnosis';
+    const FIELD_PRESENTED_FORM = 'presentedForm';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifiers assigned to this report by the performer or other systems.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     */
+    protected null|array $identifier = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -128,8 +152,16 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $basedOn = [];
-
+    protected null|array $basedOn = [];
+    /**
+     * The status of the diagnostic report as a whole.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The status of the diagnostic report as a whole.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDiagnosticReportStatus
+     */
+    protected null|FHIRDiagnosticReportStatus $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -142,8 +174,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    protected $category = null;
-
+    protected null|FHIRCodeableConcept $category = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -154,32 +185,19 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    protected $code = null;
-
+    protected null|FHIRCodeableConcept $code = null;
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Codes for the conclusion.
+     * The subject of the report. Usually, but not always, this is a patient. However
+     * diagnostic services also perform analyses on specimens collected from a variety
+     * of other sources.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $codedDiagnosis = [];
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Concise and clinically contextualized impression / summary of the diagnostic
-     * report.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $conclusion = null;
-
+    protected null|FHIRReference $subject = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -190,8 +208,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $context = null;
-
+    protected null|FHIRReference $context = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -207,8 +224,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    protected $effectiveDateTime = null;
-
+    protected null|FHIRDateTime $effectiveDateTime = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -221,19 +237,67 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    protected $effectivePeriod = null;
-
+    protected null|FHIRPeriod $effectivePeriod = null;
     /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * An instant in time - known at least to the second
+     * Note: This is intended for precisely observed times, typically system logs etc.,
+     * and not human-reported times - for them, see date and dateTime below. Time zone
+     * is always required
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The date and time that this version of the report was released from the source
+     * diagnostic service.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
+     */
+    protected null|FHIRInstant $issued = null;
+    /**
+     * The findings and interpretation of diagnostic tests performed on patients,
+     * groups of patients, devices, and locations, and/or specimens derived from these.
+     * The report includes clinical context such as requesting and provider
+     * information, and some mix of atomic results, images, textual and coded
+     * interpretations, and formatted representation of diagnostic reports.
+     *
+     * Indicates who or what participated in producing the report.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportPerformer[]
+     */
+    protected null|array $performer = [];
+    /**
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Identifiers assigned to this report by the performer or other systems.
+     * Details about the specimens on which this diagnostic report is based.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $identifier = [];
-
+    protected null|array $specimen = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Observations that are part of this diagnostic report. Observations can be simple
+     * name/value pairs (e.g. "atomic" results), or they can be grouping observations
+     * that include references to other members of the group (e.g. "panels").
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $result = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * One or more links to full details of any imaging performed during the diagnostic
+     * investigation. Typically, this is imaging performed by DICOM enabled modalities,
+     * but this is not required. A fully enabled PACS viewer can use this information
+     * to provide views of the source images.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $imagingStudy = [];
     /**
      * The findings and interpretation of diagnostic tests performed on patients,
      * groups of patients, devices, and locations, and/or specimens derived from these.
@@ -247,49 +311,29 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportImage[]
      */
-    protected $image = [];
-
+    protected null|array $image = [];
     /**
-     * A reference from one resource to another.
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Concise and clinically contextualized impression / summary of the diagnostic
+     * report.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $conclusion = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * One or more links to full details of any imaging performed during the diagnostic
-     * investigation. Typically, this is imaging performed by DICOM enabled modalities,
-     * but this is not required. A fully enabled PACS viewer can use this information
-     * to provide views of the source images.
+     * Codes for the conclusion.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    protected $imagingStudy = [];
-
-    /**
-     * An instant in time - known at least to the second
-     * Note: This is intended for precisely observed times, typically system logs etc.,
-     * and not human-reported times - for them, see date and dateTime below. Time zone
-     * is always required
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The date and time that this version of the report was released from the source
-     * diagnostic service.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
-     */
-    protected $issued = null;
-
-    /**
-     * The findings and interpretation of diagnostic tests performed on patients,
-     * groups of patients, devices, and locations, and/or specimens derived from these.
-     * The report includes clinical context such as requesting and provider
-     * information, and some mix of atomic results, images, textual and coded
-     * interpretations, and formatted representation of diagnostic reports.
-     *
-     * Indicates who or what participated in producing the report.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportPerformer[]
-     */
-    protected $performer = [];
-
+    protected null|array $codedDiagnosis = [];
     /**
      * For referring to data content defined in other formats.
      * If the element is present, it must have a value for at least one of the defined
@@ -300,77 +344,43 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment[]
      */
-    protected $presentedForm = [];
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Observations that are part of this diagnostic report. Observations can be simple
-     * name/value pairs (e.g. "atomic" results), or they can be grouping observations
-     * that include references to other members of the group (e.g. "panels").
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $result = [];
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Details about the specimens on which this diagnostic report is based.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $specimen = [];
-
-    /**
-     * The status of the diagnostic report as a whole.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The status of the diagnostic report as a whole.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDiagnosticReportStatus
-     */
-    protected $status = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The subject of the report. Usually, but not always, this is a patient. However
-     * diagnostic services also perform analyses on specimens collected from a variety
-     * of other sources.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $subject = null;
+    protected null|array $presentedForm = [];
 
     /**
      * Validation map for fields in type DiagnosticReport
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRDiagnosticReport Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRDiagnosticReport::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_IDENTIFIER])) {
+            if (is_array($data[self::FIELD_IDENTIFIER])) {
+                foreach($data[self::FIELD_IDENTIFIER] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRIdentifier) {
+                        $this->addIdentifier($v);
+                    } else {
+                        $this->addIdentifier(new FHIRIdentifier($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+                $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
+            } else {
+                $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+            }
+        }
         if (isset($data[self::FIELD_BASED_ON])) {
             if (is_array($data[self::FIELD_BASED_ON])) {
                 foreach($data[self::FIELD_BASED_ON] as $v) {
@@ -383,10 +393,25 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                         $this->addBasedOn(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_BASED_ON] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_BASED_ON] instanceof FHIRReference) {
                 $this->addBasedOn($data[self::FIELD_BASED_ON]);
             } else {
                 $this->addBasedOn(new FHIRReference($data[self::FIELD_BASED_ON]));
+            }
+        }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            $value = $data[self::FIELD_STATUS] ?? null;
+            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) ? $data[self::FIELD_STATUS_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRDiagnosticReportStatus) {
+                    $this->setStatus($value);
+                } else if (is_array($value)) {
+                    $this->setStatus(new FHIRDiagnosticReportStatus(array_merge($ext, $value)));
+                } else {
+                    $this->setStatus(new FHIRDiagnosticReportStatus([FHIRDiagnosticReportStatus::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setStatus(new FHIRDiagnosticReportStatus($ext));
             }
         }
         if (isset($data[self::FIELD_CATEGORY])) {
@@ -403,45 +428,11 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 $this->setCode(new FHIRCodeableConcept($data[self::FIELD_CODE]));
             }
         }
-        if (isset($data[self::FIELD_CODED_DIAGNOSIS])) {
-            if (is_array($data[self::FIELD_CODED_DIAGNOSIS])) {
-                foreach($data[self::FIELD_CODED_DIAGNOSIS] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRCodeableConcept) {
-                        $this->addCodedDiagnosis($v);
-                    } else {
-                        $this->addCodedDiagnosis(new FHIRCodeableConcept($v));
-                    }
-                }
-            } else if ($data[self::FIELD_CODED_DIAGNOSIS] instanceof FHIRCodeableConcept) {
-                $this->addCodedDiagnosis($data[self::FIELD_CODED_DIAGNOSIS]);
+        if (isset($data[self::FIELD_SUBJECT])) {
+            if ($data[self::FIELD_SUBJECT] instanceof FHIRReference) {
+                $this->setSubject($data[self::FIELD_SUBJECT]);
             } else {
-                $this->addCodedDiagnosis(new FHIRCodeableConcept($data[self::FIELD_CODED_DIAGNOSIS]));
-            }
-        }
-        if (isset($data[self::FIELD_CONCLUSION]) || isset($data[self::FIELD_CONCLUSION_EXT])) {
-            if (isset($data[self::FIELD_CONCLUSION])) {
-                $value = $data[self::FIELD_CONCLUSION];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_CONCLUSION_EXT]) && is_array($data[self::FIELD_CONCLUSION_EXT])) {
-                $ext = $data[self::FIELD_CONCLUSION_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setConclusion($value);
-                } else if (is_array($value)) {
-                    $this->setConclusion(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setConclusion(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setConclusion(new FHIRString($ext));
+                $this->setSubject(new FHIRReference($data[self::FIELD_SUBJECT]));
             }
         }
         if (isset($data[self::FIELD_CONTEXT])) {
@@ -452,16 +443,8 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
             }
         }
         if (isset($data[self::FIELD_EFFECTIVE_DATE_TIME]) || isset($data[self::FIELD_EFFECTIVE_DATE_TIME_EXT])) {
-            if (isset($data[self::FIELD_EFFECTIVE_DATE_TIME])) {
-                $value = $data[self::FIELD_EFFECTIVE_DATE_TIME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_EFFECTIVE_DATE_TIME_EXT]) && is_array($data[self::FIELD_EFFECTIVE_DATE_TIME_EXT])) {
-                $ext = $data[self::FIELD_EFFECTIVE_DATE_TIME_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_EFFECTIVE_DATE_TIME] ?? null;
+            $ext = (isset($data[self::FIELD_EFFECTIVE_DATE_TIME_EXT]) && is_array($data[self::FIELD_EFFECTIVE_DATE_TIME_EXT])) ? $data[self::FIELD_EFFECTIVE_DATE_TIME_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRDateTime) {
                     $this->setEffectiveDateTime($value);
@@ -470,7 +453,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 } else {
                     $this->setEffectiveDateTime(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setEffectiveDateTime(new FHIRDateTime($ext));
             }
         }
@@ -481,71 +464,9 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 $this->setEffectivePeriod(new FHIRPeriod($data[self::FIELD_EFFECTIVE_PERIOD]));
             }
         }
-        if (isset($data[self::FIELD_IDENTIFIER])) {
-            if (is_array($data[self::FIELD_IDENTIFIER])) {
-                foreach($data[self::FIELD_IDENTIFIER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRIdentifier) {
-                        $this->addIdentifier($v);
-                    } else {
-                        $this->addIdentifier(new FHIRIdentifier($v));
-                    }
-                }
-            } else if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
-                $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
-            }
-        }
-        if (isset($data[self::FIELD_IMAGE])) {
-            if (is_array($data[self::FIELD_IMAGE])) {
-                foreach($data[self::FIELD_IMAGE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRDiagnosticReportImage) {
-                        $this->addImage($v);
-                    } else {
-                        $this->addImage(new FHIRDiagnosticReportImage($v));
-                    }
-                }
-            } else if ($data[self::FIELD_IMAGE] instanceof FHIRDiagnosticReportImage) {
-                $this->addImage($data[self::FIELD_IMAGE]);
-            } else {
-                $this->addImage(new FHIRDiagnosticReportImage($data[self::FIELD_IMAGE]));
-            }
-        }
-        if (isset($data[self::FIELD_IMAGING_STUDY])) {
-            if (is_array($data[self::FIELD_IMAGING_STUDY])) {
-                foreach($data[self::FIELD_IMAGING_STUDY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addImagingStudy($v);
-                    } else {
-                        $this->addImagingStudy(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_IMAGING_STUDY] instanceof FHIRReference) {
-                $this->addImagingStudy($data[self::FIELD_IMAGING_STUDY]);
-            } else {
-                $this->addImagingStudy(new FHIRReference($data[self::FIELD_IMAGING_STUDY]));
-            }
-        }
         if (isset($data[self::FIELD_ISSUED]) || isset($data[self::FIELD_ISSUED_EXT])) {
-            if (isset($data[self::FIELD_ISSUED])) {
-                $value = $data[self::FIELD_ISSUED];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ISSUED_EXT]) && is_array($data[self::FIELD_ISSUED_EXT])) {
-                $ext = $data[self::FIELD_ISSUED_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_ISSUED] ?? null;
+            $ext = (isset($data[self::FIELD_ISSUED_EXT]) && is_array($data[self::FIELD_ISSUED_EXT])) ? $data[self::FIELD_ISSUED_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRInstant) {
                     $this->setIssued($value);
@@ -554,7 +475,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 } else {
                     $this->setIssued(new FHIRInstant([FHIRInstant::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setIssued(new FHIRInstant($ext));
             }
         }
@@ -570,46 +491,10 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                         $this->addPerformer(new FHIRDiagnosticReportPerformer($v));
                     }
                 }
-            } else if ($data[self::FIELD_PERFORMER] instanceof FHIRDiagnosticReportPerformer) {
+            } elseif ($data[self::FIELD_PERFORMER] instanceof FHIRDiagnosticReportPerformer) {
                 $this->addPerformer($data[self::FIELD_PERFORMER]);
             } else {
                 $this->addPerformer(new FHIRDiagnosticReportPerformer($data[self::FIELD_PERFORMER]));
-            }
-        }
-        if (isset($data[self::FIELD_PRESENTED_FORM])) {
-            if (is_array($data[self::FIELD_PRESENTED_FORM])) {
-                foreach($data[self::FIELD_PRESENTED_FORM] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRAttachment) {
-                        $this->addPresentedForm($v);
-                    } else {
-                        $this->addPresentedForm(new FHIRAttachment($v));
-                    }
-                }
-            } else if ($data[self::FIELD_PRESENTED_FORM] instanceof FHIRAttachment) {
-                $this->addPresentedForm($data[self::FIELD_PRESENTED_FORM]);
-            } else {
-                $this->addPresentedForm(new FHIRAttachment($data[self::FIELD_PRESENTED_FORM]));
-            }
-        }
-        if (isset($data[self::FIELD_RESULT])) {
-            if (is_array($data[self::FIELD_RESULT])) {
-                foreach($data[self::FIELD_RESULT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addResult($v);
-                    } else {
-                        $this->addResult(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_RESULT] instanceof FHIRReference) {
-                $this->addResult($data[self::FIELD_RESULT]);
-            } else {
-                $this->addResult(new FHIRReference($data[self::FIELD_RESULT]));
             }
         }
         if (isset($data[self::FIELD_SPECIMEN])) {
@@ -624,48 +509,124 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                         $this->addSpecimen(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_SPECIMEN] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_SPECIMEN] instanceof FHIRReference) {
                 $this->addSpecimen($data[self::FIELD_SPECIMEN]);
             } else {
                 $this->addSpecimen(new FHIRReference($data[self::FIELD_SPECIMEN]));
             }
         }
-        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
-            if (isset($data[self::FIELD_STATUS])) {
-                $value = $data[self::FIELD_STATUS];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) {
-                $ext = $data[self::FIELD_STATUS_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRDiagnosticReportStatus) {
-                    $this->setStatus($value);
-                } else if (is_array($value)) {
-                    $this->setStatus(new FHIRDiagnosticReportStatus(array_merge($ext, $value)));
-                } else {
-                    $this->setStatus(new FHIRDiagnosticReportStatus([FHIRDiagnosticReportStatus::FIELD_VALUE => $value] + $ext));
+        if (isset($data[self::FIELD_RESULT])) {
+            if (is_array($data[self::FIELD_RESULT])) {
+                foreach($data[self::FIELD_RESULT] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addResult($v);
+                    } else {
+                        $this->addResult(new FHIRReference($v));
+                    }
                 }
-            } else if ([] !== $ext) {
-                $this->setStatus(new FHIRDiagnosticReportStatus($ext));
+            } elseif ($data[self::FIELD_RESULT] instanceof FHIRReference) {
+                $this->addResult($data[self::FIELD_RESULT]);
+            } else {
+                $this->addResult(new FHIRReference($data[self::FIELD_RESULT]));
             }
         }
-        if (isset($data[self::FIELD_SUBJECT])) {
-            if ($data[self::FIELD_SUBJECT] instanceof FHIRReference) {
-                $this->setSubject($data[self::FIELD_SUBJECT]);
+        if (isset($data[self::FIELD_IMAGING_STUDY])) {
+            if (is_array($data[self::FIELD_IMAGING_STUDY])) {
+                foreach($data[self::FIELD_IMAGING_STUDY] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addImagingStudy($v);
+                    } else {
+                        $this->addImagingStudy(new FHIRReference($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_IMAGING_STUDY] instanceof FHIRReference) {
+                $this->addImagingStudy($data[self::FIELD_IMAGING_STUDY]);
             } else {
-                $this->setSubject(new FHIRReference($data[self::FIELD_SUBJECT]));
+                $this->addImagingStudy(new FHIRReference($data[self::FIELD_IMAGING_STUDY]));
+            }
+        }
+        if (isset($data[self::FIELD_IMAGE])) {
+            if (is_array($data[self::FIELD_IMAGE])) {
+                foreach($data[self::FIELD_IMAGE] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRDiagnosticReportImage) {
+                        $this->addImage($v);
+                    } else {
+                        $this->addImage(new FHIRDiagnosticReportImage($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_IMAGE] instanceof FHIRDiagnosticReportImage) {
+                $this->addImage($data[self::FIELD_IMAGE]);
+            } else {
+                $this->addImage(new FHIRDiagnosticReportImage($data[self::FIELD_IMAGE]));
+            }
+        }
+        if (isset($data[self::FIELD_CONCLUSION]) || isset($data[self::FIELD_CONCLUSION_EXT])) {
+            $value = $data[self::FIELD_CONCLUSION] ?? null;
+            $ext = (isset($data[self::FIELD_CONCLUSION_EXT]) && is_array($data[self::FIELD_CONCLUSION_EXT])) ? $data[self::FIELD_CONCLUSION_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setConclusion($value);
+                } else if (is_array($value)) {
+                    $this->setConclusion(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setConclusion(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setConclusion(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_CODED_DIAGNOSIS])) {
+            if (is_array($data[self::FIELD_CODED_DIAGNOSIS])) {
+                foreach($data[self::FIELD_CODED_DIAGNOSIS] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRCodeableConcept) {
+                        $this->addCodedDiagnosis($v);
+                    } else {
+                        $this->addCodedDiagnosis(new FHIRCodeableConcept($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_CODED_DIAGNOSIS] instanceof FHIRCodeableConcept) {
+                $this->addCodedDiagnosis($data[self::FIELD_CODED_DIAGNOSIS]);
+            } else {
+                $this->addCodedDiagnosis(new FHIRCodeableConcept($data[self::FIELD_CODED_DIAGNOSIS]));
+            }
+        }
+        if (isset($data[self::FIELD_PRESENTED_FORM])) {
+            if (is_array($data[self::FIELD_PRESENTED_FORM])) {
+                foreach($data[self::FIELD_PRESENTED_FORM] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRAttachment) {
+                        $this->addPresentedForm($v);
+                    } else {
+                        $this->addPresentedForm(new FHIRAttachment($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_PRESENTED_FORM] instanceof FHIRAttachment) {
+                $this->addPresentedForm($data[self::FIELD_PRESENTED_FORM]);
+            } else {
+                $this->addPresentedForm(new FHIRAttachment($data[self::FIELD_PRESENTED_FORM]));
             }
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -673,22 +634,74 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<DiagnosticReport{$xmlns}></DiagnosticReport>";
-    }
-    /**
-     * @return string
-     */
-    public function _getResourceType()
+    public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
 
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifiers assigned to this report by the performer or other systems.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     */
+    public function getIdentifier(): null|array
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifiers assigned to this report by the performer or other systems.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
+     * @return static
+     */
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
+    {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
+        $this->_trackValueAdded();
+        $this->identifier[] = $identifier;
+        return $this;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifiers assigned to this report by the performer or other systems.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
+     * @return static
+     */
+    public function setIdentifier(array $identifier = []): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            if ($v instanceof FHIRIdentifier) {
+                $this->addIdentifier($v);
+            } else {
+                $this->addIdentifier(new FHIRIdentifier($v));
+            }
+        }
+        return $this;
+    }
 
     /**
      * A reference from one resource to another.
@@ -699,7 +712,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getBasedOn()
+    public function getBasedOn(): null|array
     {
         return $this->basedOn;
     }
@@ -714,8 +727,12 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $basedOn
      * @return static
      */
-    public function addBasedOn(FHIRReference $basedOn = null)
+    public function addBasedOn(null|FHIRReference $basedOn = null): self
     {
+        if (null === $basedOn) {
+            $basedOn = new FHIRReference();
+        }
+        $this->_trackValueAdded();
         $this->basedOn[] = $basedOn;
         return $this;
     }
@@ -730,9 +747,12 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $basedOn
      * @return static
      */
-    public function setBasedOn(array $basedOn = [])
+    public function setBasedOn(array $basedOn = []): self
     {
-        $this->basedOn = [];
+        if ([] !== $this->basedOn) {
+            $this->_trackValuesRemoved(count($this->basedOn));
+            $this->basedOn = [];
+        }
         if ([] === $basedOn) {
             return $this;
         }
@@ -743,6 +763,38 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 $this->addBasedOn(new FHIRReference($v));
             }
         }
+        return $this;
+    }
+
+    /**
+     * The status of the diagnostic report as a whole.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The status of the diagnostic report as a whole.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDiagnosticReportStatus
+     */
+    public function getStatus(): null|FHIRDiagnosticReportStatus
+    {
+        return $this->status;
+    }
+
+    /**
+     * The status of the diagnostic report as a whole.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The status of the diagnostic report as a whole.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDiagnosticReportStatus $status
+     * @return static
+     */
+    public function setStatus(null|FHIRDiagnosticReportStatus $status = null): self
+    {
+        if (null === $status) {
+            $status = new FHIRDiagnosticReportStatus();
+        }
+        $this->_trackValueSet($this->status, $status);
+        $this->status = $status;
         return $this;
     }
 
@@ -758,7 +810,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getCategory()
+    public function getCategory(): null|FHIRCodeableConcept
     {
         return $this->category;
     }
@@ -776,8 +828,12 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $category
      * @return static
      */
-    public function setCategory(FHIRCodeableConcept $category = null)
+    public function setCategory(null|FHIRCodeableConcept $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->category, $category);
         $this->category = $category;
         return $this;
     }
@@ -792,7 +848,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getCode()
+    public function getCode(): null|FHIRCodeableConcept
     {
         return $this->code;
     }
@@ -808,108 +864,51 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $code
      * @return static
      */
-    public function setCode(FHIRCodeableConcept $code = null)
+    public function setCode(null|FHIRCodeableConcept $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->code, $code);
         $this->code = $code;
         return $this;
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Codes for the conclusion.
+     * The subject of the report. Usually, but not always, this is a patient. However
+     * diagnostic services also perform analyses on specimens collected from a variety
+     * of other sources.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getCodedDiagnosis()
+    public function getSubject(): null|FHIRReference
     {
-        return $this->codedDiagnosis;
+        return $this->subject;
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Codes for the conclusion.
+     * The subject of the report. Usually, but not always, this is a patient. However
+     * diagnostic services also perform analyses on specimens collected from a variety
+     * of other sources.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $codedDiagnosis
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subject
      * @return static
      */
-    public function addCodedDiagnosis(FHIRCodeableConcept $codedDiagnosis = null)
+    public function setSubject(null|FHIRReference $subject = null): self
     {
-        $this->codedDiagnosis[] = $codedDiagnosis;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Codes for the conclusion.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $codedDiagnosis
-     * @return static
-     */
-    public function setCodedDiagnosis(array $codedDiagnosis = [])
-    {
-        $this->codedDiagnosis = [];
-        if ([] === $codedDiagnosis) {
-            return $this;
+        if (null === $subject) {
+            $subject = new FHIRReference();
         }
-        foreach($codedDiagnosis as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addCodedDiagnosis($v);
-            } else {
-                $this->addCodedDiagnosis(new FHIRCodeableConcept($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Concise and clinically contextualized impression / summary of the diagnostic
-     * report.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getConclusion()
-    {
-        return $this->conclusion;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Concise and clinically contextualized impression / summary of the diagnostic
-     * report.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $conclusion
-     * @return static
-     */
-    public function setConclusion($conclusion = null)
-    {
-        if (null === $conclusion) {
-            $this->conclusion = null;
-            return $this;
-        }
-        if ($conclusion instanceof FHIRString) {
-            $this->conclusion = $conclusion;
-            return $this;
-        }
-        $this->conclusion = new FHIRString($conclusion);
+        $this->_trackValueSet($this->subject, $subject);
+        $this->subject = $subject;
         return $this;
     }
 
@@ -923,7 +922,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getContext()
+    public function getContext(): null|FHIRReference
     {
         return $this->context;
     }
@@ -939,8 +938,12 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $context
      * @return static
      */
-    public function setContext(FHIRReference $context = null)
+    public function setContext(null|FHIRReference $context = null): self
     {
+        if (null === $context) {
+            $context = new FHIRReference();
+        }
+        $this->_trackValueSet($this->context, $context);
         $this->context = $context;
         return $this;
     }
@@ -960,7 +963,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    public function getEffectiveDateTime()
+    public function getEffectiveDateTime(): null|FHIRDateTime
     {
         return $this->effectiveDateTime;
     }
@@ -978,20 +981,16 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * specimen collection(s), but very often the source of the date/time is not known,
      * only the date/time itself.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $effectiveDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRDateTimePrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $effectiveDateTime
      * @return static
      */
-    public function setEffectiveDateTime($effectiveDateTime = null)
+    public function setEffectiveDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $effectiveDateTime = null): self
     {
-        if (null === $effectiveDateTime) {
-            $this->effectiveDateTime = null;
-            return $this;
+        if (null !== $effectiveDateTime && !($effectiveDateTime instanceof FHIRDateTime)) {
+            $effectiveDateTime = new FHIRDateTime($effectiveDateTime);
         }
-        if ($effectiveDateTime instanceof FHIRDateTime) {
-            $this->effectiveDateTime = $effectiveDateTime;
-            return $this;
-        }
-        $this->effectiveDateTime = new FHIRDateTime($effectiveDateTime);
+        $this->_trackValueSet($this->effectiveDateTime, $effectiveDateTime);
+        $this->effectiveDateTime = $effectiveDateTime;
         return $this;
     }
 
@@ -1007,7 +1006,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
-    public function getEffectivePeriod()
+    public function getEffectivePeriod(): null|FHIRPeriod
     {
         return $this->effectivePeriod;
     }
@@ -1025,198 +1024,13 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $effectivePeriod
      * @return static
      */
-    public function setEffectivePeriod(FHIRPeriod $effectivePeriod = null)
+    public function setEffectivePeriod(null|FHIRPeriod $effectivePeriod = null): self
     {
+        if (null === $effectivePeriod) {
+            $effectivePeriod = new FHIRPeriod();
+        }
+        $this->_trackValueSet($this->effectivePeriod, $effectivePeriod);
         $this->effectivePeriod = $effectivePeriod;
-        return $this;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifiers assigned to this report by the performer or other systems.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifiers assigned to this report by the performer or other systems.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
-     * @return static
-     */
-    public function addIdentifier(FHIRIdentifier $identifier = null)
-    {
-        $this->identifier[] = $identifier;
-        return $this;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifiers assigned to this report by the performer or other systems.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
-     * @return static
-     */
-    public function setIdentifier(array $identifier = [])
-    {
-        $this->identifier = [];
-        if ([] === $identifier) {
-            return $this;
-        }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * The findings and interpretation of diagnostic tests performed on patients,
-     * groups of patients, devices, and locations, and/or specimens derived from these.
-     * The report includes clinical context such as requesting and provider
-     * information, and some mix of atomic results, images, textual and coded
-     * interpretations, and formatted representation of diagnostic reports.
-     *
-     * A list of key images associated with this report. The images are generally
-     * created during the diagnostic process, and may be directly of the patient, or of
-     * treated specimens (i.e. slides of interest).
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportImage[]
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * The findings and interpretation of diagnostic tests performed on patients,
-     * groups of patients, devices, and locations, and/or specimens derived from these.
-     * The report includes clinical context such as requesting and provider
-     * information, and some mix of atomic results, images, textual and coded
-     * interpretations, and formatted representation of diagnostic reports.
-     *
-     * A list of key images associated with this report. The images are generally
-     * created during the diagnostic process, and may be directly of the patient, or of
-     * treated specimens (i.e. slides of interest).
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportImage $image
-     * @return static
-     */
-    public function addImage(FHIRDiagnosticReportImage $image = null)
-    {
-        $this->image[] = $image;
-        return $this;
-    }
-
-    /**
-     * The findings and interpretation of diagnostic tests performed on patients,
-     * groups of patients, devices, and locations, and/or specimens derived from these.
-     * The report includes clinical context such as requesting and provider
-     * information, and some mix of atomic results, images, textual and coded
-     * interpretations, and formatted representation of diagnostic reports.
-     *
-     * A list of key images associated with this report. The images are generally
-     * created during the diagnostic process, and may be directly of the patient, or of
-     * treated specimens (i.e. slides of interest).
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportImage[] $image
-     * @return static
-     */
-    public function setImage(array $image = [])
-    {
-        $this->image = [];
-        if ([] === $image) {
-            return $this;
-        }
-        foreach($image as $v) {
-            if ($v instanceof FHIRDiagnosticReportImage) {
-                $this->addImage($v);
-            } else {
-                $this->addImage(new FHIRDiagnosticReportImage($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * One or more links to full details of any imaging performed during the diagnostic
-     * investigation. Typically, this is imaging performed by DICOM enabled modalities,
-     * but this is not required. A fully enabled PACS viewer can use this information
-     * to provide views of the source images.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    public function getImagingStudy()
-    {
-        return $this->imagingStudy;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * One or more links to full details of any imaging performed during the diagnostic
-     * investigation. Typically, this is imaging performed by DICOM enabled modalities,
-     * but this is not required. A fully enabled PACS viewer can use this information
-     * to provide views of the source images.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $imagingStudy
-     * @return static
-     */
-    public function addImagingStudy(FHIRReference $imagingStudy = null)
-    {
-        $this->imagingStudy[] = $imagingStudy;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * One or more links to full details of any imaging performed during the diagnostic
-     * investigation. Typically, this is imaging performed by DICOM enabled modalities,
-     * but this is not required. A fully enabled PACS viewer can use this information
-     * to provide views of the source images.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $imagingStudy
-     * @return static
-     */
-    public function setImagingStudy(array $imagingStudy = [])
-    {
-        $this->imagingStudy = [];
-        if ([] === $imagingStudy) {
-            return $this;
-        }
-        foreach($imagingStudy as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addImagingStudy($v);
-            } else {
-                $this->addImagingStudy(new FHIRReference($v));
-            }
-        }
         return $this;
     }
 
@@ -1232,7 +1046,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
      */
-    public function getIssued()
+    public function getIssued(): null|FHIRInstant
     {
         return $this->issued;
     }
@@ -1247,20 +1061,16 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * The date and time that this version of the report was released from the source
      * diagnostic service.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant $issued
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRInstantPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRInstant $issued
      * @return static
      */
-    public function setIssued($issued = null)
+    public function setIssued(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $issued = null): self
     {
-        if (null === $issued) {
-            $this->issued = null;
-            return $this;
+        if (null !== $issued && !($issued instanceof FHIRInstant)) {
+            $issued = new FHIRInstant($issued);
         }
-        if ($issued instanceof FHIRInstant) {
-            $this->issued = $issued;
-            return $this;
-        }
-        $this->issued = new FHIRInstant($issued);
+        $this->_trackValueSet($this->issued, $issued);
+        $this->issued = $issued;
         return $this;
     }
 
@@ -1275,7 +1085,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportPerformer[]
      */
-    public function getPerformer()
+    public function getPerformer(): null|array
     {
         return $this->performer;
     }
@@ -1292,8 +1102,12 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportPerformer $performer
      * @return static
      */
-    public function addPerformer(FHIRDiagnosticReportPerformer $performer = null)
+    public function addPerformer(null|FHIRDiagnosticReportPerformer $performer = null): self
     {
+        if (null === $performer) {
+            $performer = new FHIRDiagnosticReportPerformer();
+        }
+        $this->_trackValueAdded();
         $this->performer[] = $performer;
         return $this;
     }
@@ -1310,9 +1124,12 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportPerformer[] $performer
      * @return static
      */
-    public function setPerformer(array $performer = [])
+    public function setPerformer(array $performer = []): self
     {
-        $this->performer = [];
+        if ([] !== $this->performer) {
+            $this->_trackValuesRemoved(count($this->performer));
+            $this->performer = [];
+        }
         if ([] === $performer) {
             return $this;
         }
@@ -1327,59 +1144,63 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
     }
 
     /**
-     * For referring to data content defined in other formats.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Rich text representation of the entire result as issued by the diagnostic
-     * service. Multiple formats are allowed but they SHALL be semantically equivalent.
+     * Details about the specimens on which this diagnostic report is based.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getPresentedForm()
+    public function getSpecimen(): null|array
     {
-        return $this->presentedForm;
+        return $this->specimen;
     }
 
     /**
-     * For referring to data content defined in other formats.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Rich text representation of the entire result as issued by the diagnostic
-     * service. Multiple formats are allowed but they SHALL be semantically equivalent.
+     * Details about the specimens on which this diagnostic report is based.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment $presentedForm
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $specimen
      * @return static
      */
-    public function addPresentedForm(FHIRAttachment $presentedForm = null)
+    public function addSpecimen(null|FHIRReference $specimen = null): self
     {
-        $this->presentedForm[] = $presentedForm;
+        if (null === $specimen) {
+            $specimen = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->specimen[] = $specimen;
         return $this;
     }
 
     /**
-     * For referring to data content defined in other formats.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Rich text representation of the entire result as issued by the diagnostic
-     * service. Multiple formats are allowed but they SHALL be semantically equivalent.
+     * Details about the specimens on which this diagnostic report is based.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAttachment[] $presentedForm
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $specimen
      * @return static
      */
-    public function setPresentedForm(array $presentedForm = [])
+    public function setSpecimen(array $specimen = []): self
     {
-        $this->presentedForm = [];
-        if ([] === $presentedForm) {
+        if ([] !== $this->specimen) {
+            $this->_trackValuesRemoved(count($this->specimen));
+            $this->specimen = [];
+        }
+        if ([] === $specimen) {
             return $this;
         }
-        foreach($presentedForm as $v) {
-            if ($v instanceof FHIRAttachment) {
-                $this->addPresentedForm($v);
+        foreach($specimen as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addSpecimen($v);
             } else {
-                $this->addPresentedForm(new FHIRAttachment($v));
+                $this->addSpecimen(new FHIRReference($v));
             }
         }
         return $this;
@@ -1396,7 +1217,7 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getResult()
+    public function getResult(): null|array
     {
         return $this->result;
     }
@@ -1413,8 +1234,12 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $result
      * @return static
      */
-    public function addResult(FHIRReference $result = null)
+    public function addResult(null|FHIRReference $result = null): self
     {
+        if (null === $result) {
+            $result = new FHIRReference();
+        }
+        $this->_trackValueAdded();
         $this->result[] = $result;
         return $this;
     }
@@ -1431,9 +1256,12 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $result
      * @return static
      */
-    public function setResult(array $result = [])
+    public function setResult(array $result = []): self
     {
-        $this->result = [];
+        if ([] !== $this->result) {
+            $this->_trackValuesRemoved(count($this->result));
+            $this->result = [];
+        }
         if ([] === $result) {
             return $this;
         }
@@ -1452,13 +1280,16 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Details about the specimens on which this diagnostic report is based.
+     * One or more links to full details of any imaging performed during the diagnostic
+     * investigation. Typically, this is imaging performed by DICOM enabled modalities,
+     * but this is not required. A fully enabled PACS viewer can use this information
+     * to provide views of the source images.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getSpecimen()
+    public function getImagingStudy(): null|array
     {
-        return $this->specimen;
+        return $this->imagingStudy;
     }
 
     /**
@@ -1466,14 +1297,21 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Details about the specimens on which this diagnostic report is based.
+     * One or more links to full details of any imaging performed during the diagnostic
+     * investigation. Typically, this is imaging performed by DICOM enabled modalities,
+     * but this is not required. A fully enabled PACS viewer can use this information
+     * to provide views of the source images.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $specimen
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $imagingStudy
      * @return static
      */
-    public function addSpecimen(FHIRReference $specimen = null)
+    public function addImagingStudy(null|FHIRReference $imagingStudy = null): self
     {
-        $this->specimen[] = $specimen;
+        if (null === $imagingStudy) {
+            $imagingStudy = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->imagingStudy[] = $imagingStudy;
         return $this;
     }
 
@@ -1482,86 +1320,273 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Details about the specimens on which this diagnostic report is based.
+     * One or more links to full details of any imaging performed during the diagnostic
+     * investigation. Typically, this is imaging performed by DICOM enabled modalities,
+     * but this is not required. A fully enabled PACS viewer can use this information
+     * to provide views of the source images.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $specimen
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $imagingStudy
      * @return static
      */
-    public function setSpecimen(array $specimen = [])
+    public function setImagingStudy(array $imagingStudy = []): self
     {
-        $this->specimen = [];
-        if ([] === $specimen) {
+        if ([] !== $this->imagingStudy) {
+            $this->_trackValuesRemoved(count($this->imagingStudy));
+            $this->imagingStudy = [];
+        }
+        if ([] === $imagingStudy) {
             return $this;
         }
-        foreach($specimen as $v) {
+        foreach($imagingStudy as $v) {
             if ($v instanceof FHIRReference) {
-                $this->addSpecimen($v);
+                $this->addImagingStudy($v);
             } else {
-                $this->addSpecimen(new FHIRReference($v));
+                $this->addImagingStudy(new FHIRReference($v));
             }
         }
         return $this;
     }
 
     /**
-     * The status of the diagnostic report as a whole.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * The findings and interpretation of diagnostic tests performed on patients,
+     * groups of patients, devices, and locations, and/or specimens derived from these.
+     * The report includes clinical context such as requesting and provider
+     * information, and some mix of atomic results, images, textual and coded
+     * interpretations, and formatted representation of diagnostic reports.
      *
-     * The status of the diagnostic report as a whole.
+     * A list of key images associated with this report. The images are generally
+     * created during the diagnostic process, and may be directly of the patient, or of
+     * treated specimens (i.e. slides of interest).
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDiagnosticReportStatus
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportImage[]
      */
-    public function getStatus()
+    public function getImage(): null|array
     {
-        return $this->status;
+        return $this->image;
     }
 
     /**
-     * The status of the diagnostic report as a whole.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * The findings and interpretation of diagnostic tests performed on patients,
+     * groups of patients, devices, and locations, and/or specimens derived from these.
+     * The report includes clinical context such as requesting and provider
+     * information, and some mix of atomic results, images, textual and coded
+     * interpretations, and formatted representation of diagnostic reports.
      *
-     * The status of the diagnostic report as a whole.
+     * A list of key images associated with this report. The images are generally
+     * created during the diagnostic process, and may be directly of the patient, or of
+     * treated specimens (i.e. slides of interest).
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDiagnosticReportStatus $status
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportImage $image
      * @return static
      */
-    public function setStatus(FHIRDiagnosticReportStatus $status = null)
+    public function addImage(null|FHIRDiagnosticReportImage $image = null): self
     {
-        $this->status = $status;
+        if (null === $image) {
+            $image = new FHIRDiagnosticReportImage();
+        }
+        $this->_trackValueAdded();
+        $this->image[] = $image;
         return $this;
     }
 
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * The findings and interpretation of diagnostic tests performed on patients,
+     * groups of patients, devices, and locations, and/or specimens derived from these.
+     * The report includes clinical context such as requesting and provider
+     * information, and some mix of atomic results, images, textual and coded
+     * interpretations, and formatted representation of diagnostic reports.
      *
-     * The subject of the report. Usually, but not always, this is a patient. However
-     * diagnostic services also perform analyses on specimens collected from a variety
-     * of other sources.
+     * A list of key images associated with this report. The images are generally
+     * created during the diagnostic process, and may be directly of the patient, or of
+     * treated specimens (i.e. slides of interest).
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDiagnosticReport\FHIRDiagnosticReportImage[] $image
+     * @return static
      */
-    public function getSubject()
+    public function setImage(array $image = []): self
     {
-        return $this->subject;
+        if ([] !== $this->image) {
+            $this->_trackValuesRemoved(count($this->image));
+            $this->image = [];
+        }
+        if ([] === $image) {
+            return $this;
+        }
+        foreach($image as $v) {
+            if ($v instanceof FHIRDiagnosticReportImage) {
+                $this->addImage($v);
+            } else {
+                $this->addImage(new FHIRDiagnosticReportImage($v));
+            }
+        }
+        return $this;
     }
 
     /**
-     * A reference from one resource to another.
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Concise and clinically contextualized impression / summary of the diagnostic
+     * report.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getConclusion(): null|FHIRString
+    {
+        return $this->conclusion;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Concise and clinically contextualized impression / summary of the diagnostic
+     * report.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $conclusion
+     * @return static
+     */
+    public function setConclusion(null|string|FHIRStringPrimitive|FHIRString $conclusion = null): self
+    {
+        if (null !== $conclusion && !($conclusion instanceof FHIRString)) {
+            $conclusion = new FHIRString($conclusion);
+        }
+        $this->_trackValueSet($this->conclusion, $conclusion);
+        $this->conclusion = $conclusion;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The subject of the report. Usually, but not always, this is a patient. However
-     * diagnostic services also perform analyses on specimens collected from a variety
-     * of other sources.
+     * Codes for the conclusion.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subject
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     */
+    public function getCodedDiagnosis(): null|array
+    {
+        return $this->codedDiagnosis;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Codes for the conclusion.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $codedDiagnosis
      * @return static
      */
-    public function setSubject(FHIRReference $subject = null)
+    public function addCodedDiagnosis(null|FHIRCodeableConcept $codedDiagnosis = null): self
     {
-        $this->subject = $subject;
+        if (null === $codedDiagnosis) {
+            $codedDiagnosis = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
+        $this->codedDiagnosis[] = $codedDiagnosis;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Codes for the conclusion.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $codedDiagnosis
+     * @return static
+     */
+    public function setCodedDiagnosis(array $codedDiagnosis = []): self
+    {
+        if ([] !== $this->codedDiagnosis) {
+            $this->_trackValuesRemoved(count($this->codedDiagnosis));
+            $this->codedDiagnosis = [];
+        }
+        if ([] === $codedDiagnosis) {
+            return $this;
+        }
+        foreach($codedDiagnosis as $v) {
+            if ($v instanceof FHIRCodeableConcept) {
+                $this->addCodedDiagnosis($v);
+            } else {
+                $this->addCodedDiagnosis(new FHIRCodeableConcept($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * For referring to data content defined in other formats.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Rich text representation of the entire result as issued by the diagnostic
+     * service. Multiple formats are allowed but they SHALL be semantically equivalent.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment[]
+     */
+    public function getPresentedForm(): null|array
+    {
+        return $this->presentedForm;
+    }
+
+    /**
+     * For referring to data content defined in other formats.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Rich text representation of the entire result as issued by the diagnostic
+     * service. Multiple formats are allowed but they SHALL be semantically equivalent.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment $presentedForm
+     * @return static
+     */
+    public function addPresentedForm(null|FHIRAttachment $presentedForm = null): self
+    {
+        if (null === $presentedForm) {
+            $presentedForm = new FHIRAttachment();
+        }
+        $this->_trackValueAdded();
+        $this->presentedForm[] = $presentedForm;
+        return $this;
+    }
+
+    /**
+     * For referring to data content defined in other formats.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Rich text representation of the entire result as issued by the diagnostic
+     * service. Multiple formats are allowed but they SHALL be semantically equivalent.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAttachment[] $presentedForm
+     * @return static
+     */
+    public function setPresentedForm(array $presentedForm = []): self
+    {
+        if ([] !== $this->presentedForm) {
+            $this->_trackValuesRemoved(count($this->presentedForm));
+            $this->presentedForm = [];
+        }
+        if ([] === $presentedForm) {
+            return $this;
+        }
+        foreach($presentedForm as $v) {
+            if ($v instanceof FHIRAttachment) {
+                $this->addPresentedForm($v);
+            } else {
+                $this->addPresentedForm(new FHIRAttachment($v));
+            }
+        }
         return $this;
     }
 
@@ -1571,9 +1596,9 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1582,15 +1607,27 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getIdentifier())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
+                }
+            }
+        }
         if ([] !== ($vs = $this->getBasedOn())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                     $errs[sprintf('%s.%d', self::FIELD_BASED_ON, $i)] = $fieldErrs;
                 }
+            }
+        }
+        if (null !== ($v = $this->getStatus())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_STATUS] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getCategory())) {
@@ -1603,16 +1640,9 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 $errs[self::FIELD_CODE] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getCodedDiagnosis())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_CODED_DIAGNOSIS, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getConclusion())) {
+        if (null !== ($v = $this->getSubject())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_CONCLUSION] = $fieldErrs;
+                $errs[self::FIELD_SUBJECT] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getContext())) {
@@ -1630,27 +1660,6 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 $errs[self::FIELD_EFFECTIVE_PERIOD] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getIdentifier())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if ([] !== ($vs = $this->getImage())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_IMAGE, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if ([] !== ($vs = $this->getImagingStudy())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_IMAGING_STUDY, $i)] = $fieldErrs;
-                }
-            }
-        }
         if (null !== ($v = $this->getIssued())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_ISSUED] = $fieldErrs;
@@ -1663,10 +1672,10 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 }
             }
         }
-        if ([] !== ($vs = $this->getPresentedForm())) {
+        if ([] !== ($vs = $this->getSpecimen())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_PRESENTED_FORM, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_SPECIMEN, $i)] = $fieldErrs;
                 }
             }
         }
@@ -1677,21 +1686,49 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 }
             }
         }
-        if ([] !== ($vs = $this->getSpecimen())) {
+        if ([] !== ($vs = $this->getImagingStudy())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_SPECIMEN, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_IMAGING_STUDY, $i)] = $fieldErrs;
                 }
             }
         }
-        if (null !== ($v = $this->getStatus())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_STATUS] = $fieldErrs;
+        if ([] !== ($vs = $this->getImage())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_IMAGE, $i)] = $fieldErrs;
+                }
             }
         }
-        if (null !== ($v = $this->getSubject())) {
+        if (null !== ($v = $this->getConclusion())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_SUBJECT] = $fieldErrs;
+                $errs[self::FIELD_CONCLUSION] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getCodedDiagnosis())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_CODED_DIAGNOSIS, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if ([] !== ($vs = $this->getPresentedForm())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_PRESENTED_FORM, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IDENTIFIER])) {
+            $v = $this->getIdentifier();
+            foreach($validationRules[self::FIELD_IDENTIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_IDENTIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IDENTIFIER])) {
+                        $errs[self::FIELD_IDENTIFIER] = [];
+                    }
+                    $errs[self::FIELD_IDENTIFIER][$rule] = $err;
+                }
             }
         }
         if (isset($validationRules[self::FIELD_BASED_ON])) {
@@ -1703,6 +1740,18 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                         $errs[self::FIELD_BASED_ON] = [];
                     }
                     $errs[self::FIELD_BASED_ON][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_STATUS])) {
+            $v = $this->getStatus();
+            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_STATUS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_STATUS])) {
+                        $errs[self::FIELD_STATUS] = [];
+                    }
+                    $errs[self::FIELD_STATUS][$rule] = $err;
                 }
             }
         }
@@ -1730,27 +1779,15 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_CODED_DIAGNOSIS])) {
-            $v = $this->getCodedDiagnosis();
-            foreach($validationRules[self::FIELD_CODED_DIAGNOSIS] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_CODED_DIAGNOSIS, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_SUBJECT])) {
+            $v = $this->getSubject();
+            foreach($validationRules[self::FIELD_SUBJECT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_SUBJECT, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CODED_DIAGNOSIS])) {
-                        $errs[self::FIELD_CODED_DIAGNOSIS] = [];
+                    if (!isset($errs[self::FIELD_SUBJECT])) {
+                        $errs[self::FIELD_SUBJECT] = [];
                     }
-                    $errs[self::FIELD_CODED_DIAGNOSIS][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_CONCLUSION])) {
-            $v = $this->getConclusion();
-            foreach($validationRules[self::FIELD_CONCLUSION] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_CONCLUSION, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CONCLUSION])) {
-                        $errs[self::FIELD_CONCLUSION] = [];
-                    }
-                    $errs[self::FIELD_CONCLUSION][$rule] = $err;
+                    $errs[self::FIELD_SUBJECT][$rule] = $err;
                 }
             }
         }
@@ -1790,42 +1827,6 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_IDENTIFIER])) {
-            $v = $this->getIdentifier();
-            foreach($validationRules[self::FIELD_IDENTIFIER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_IDENTIFIER, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_IDENTIFIER])) {
-                        $errs[self::FIELD_IDENTIFIER] = [];
-                    }
-                    $errs[self::FIELD_IDENTIFIER][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_IMAGE])) {
-            $v = $this->getImage();
-            foreach($validationRules[self::FIELD_IMAGE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_IMAGE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_IMAGE])) {
-                        $errs[self::FIELD_IMAGE] = [];
-                    }
-                    $errs[self::FIELD_IMAGE][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_IMAGING_STUDY])) {
-            $v = $this->getImagingStudy();
-            foreach($validationRules[self::FIELD_IMAGING_STUDY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_IMAGING_STUDY, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_IMAGING_STUDY])) {
-                        $errs[self::FIELD_IMAGING_STUDY] = [];
-                    }
-                    $errs[self::FIELD_IMAGING_STUDY][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_ISSUED])) {
             $v = $this->getIssued();
             foreach($validationRules[self::FIELD_ISSUED] as $rule => $constraint) {
@@ -1850,15 +1851,15 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_PRESENTED_FORM])) {
-            $v = $this->getPresentedForm();
-            foreach($validationRules[self::FIELD_PRESENTED_FORM] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_PRESENTED_FORM, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_SPECIMEN])) {
+            $v = $this->getSpecimen();
+            foreach($validationRules[self::FIELD_SPECIMEN] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_SPECIMEN, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PRESENTED_FORM])) {
-                        $errs[self::FIELD_PRESENTED_FORM] = [];
+                    if (!isset($errs[self::FIELD_SPECIMEN])) {
+                        $errs[self::FIELD_SPECIMEN] = [];
                     }
-                    $errs[self::FIELD_PRESENTED_FORM][$rule] = $err;
+                    $errs[self::FIELD_SPECIMEN][$rule] = $err;
                 }
             }
         }
@@ -1874,39 +1875,75 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_SPECIMEN])) {
-            $v = $this->getSpecimen();
-            foreach($validationRules[self::FIELD_SPECIMEN] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_SPECIMEN, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_IMAGING_STUDY])) {
+            $v = $this->getImagingStudy();
+            foreach($validationRules[self::FIELD_IMAGING_STUDY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_IMAGING_STUDY, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_SPECIMEN])) {
-                        $errs[self::FIELD_SPECIMEN] = [];
+                    if (!isset($errs[self::FIELD_IMAGING_STUDY])) {
+                        $errs[self::FIELD_IMAGING_STUDY] = [];
                     }
-                    $errs[self::FIELD_SPECIMEN][$rule] = $err;
+                    $errs[self::FIELD_IMAGING_STUDY][$rule] = $err;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_STATUS])) {
-            $v = $this->getStatus();
-            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_STATUS, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_IMAGE])) {
+            $v = $this->getImage();
+            foreach($validationRules[self::FIELD_IMAGE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_IMAGE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_STATUS])) {
-                        $errs[self::FIELD_STATUS] = [];
+                    if (!isset($errs[self::FIELD_IMAGE])) {
+                        $errs[self::FIELD_IMAGE] = [];
                     }
-                    $errs[self::FIELD_STATUS][$rule] = $err;
+                    $errs[self::FIELD_IMAGE][$rule] = $err;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_SUBJECT])) {
-            $v = $this->getSubject();
-            foreach($validationRules[self::FIELD_SUBJECT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_SUBJECT, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_CONCLUSION])) {
+            $v = $this->getConclusion();
+            foreach($validationRules[self::FIELD_CONCLUSION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_CONCLUSION, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_SUBJECT])) {
-                        $errs[self::FIELD_SUBJECT] = [];
+                    if (!isset($errs[self::FIELD_CONCLUSION])) {
+                        $errs[self::FIELD_CONCLUSION] = [];
                     }
-                    $errs[self::FIELD_SUBJECT][$rule] = $err;
+                    $errs[self::FIELD_CONCLUSION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CODED_DIAGNOSIS])) {
+            $v = $this->getCodedDiagnosis();
+            foreach($validationRules[self::FIELD_CODED_DIAGNOSIS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_CODED_DIAGNOSIS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CODED_DIAGNOSIS])) {
+                        $errs[self::FIELD_CODED_DIAGNOSIS] = [];
+                    }
+                    $errs[self::FIELD_CODED_DIAGNOSIS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PRESENTED_FORM])) {
+            $v = $this->getPresentedForm();
+            foreach($validationRules[self::FIELD_PRESENTED_FORM] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DIAGNOSTIC_REPORT, self::FIELD_PRESENTED_FORM, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PRESENTED_FORM])) {
+                        $errs[self::FIELD_PRESENTED_FORM] = [];
+                    }
+                    $errs[self::FIELD_PRESENTED_FORM][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
                 }
             }
         }
@@ -1946,18 +1983,6 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TEXT])) {
-            $v = $this->getText();
-            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TEXT])) {
-                        $errs[self::FIELD_TEXT] = [];
-                    }
-                    $errs[self::FIELD_TEXT][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_ID])) {
             $v = $this->getId();
             foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
@@ -1967,6 +1992,18 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                         $errs[self::FIELD_ID] = [];
                     }
                     $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
                 }
             }
         }
@@ -1994,254 +2031,267 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_META])) {
-            $v = $this->getMeta();
-            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_META])) {
-                        $errs[self::FIELD_META] = [];
-                    }
-                    $errs[self::FIELD_META][$rule] = $err;
-                }
-            }
-        }
         return $errs;
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRDiagnosticReport $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRDiagnosticReport
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRDiagnosticReport::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRDiagnosticReport::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRDiagnosticReport;
-        } elseif (!is_object($type) || !($type instanceof FHIRDiagnosticReport)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRDiagnosticReport)) {
             throw new \RuntimeException(sprintf(
-                'FHIRDiagnosticReport::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRDiagnosticReport or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRDomainResource::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_IDENTIFIER === $n->nodeName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_BASED_ON === $n->nodeName) {
+                $type->addBasedOn(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_STATUS === $n->nodeName) {
+                $type->setStatus(FHIRDiagnosticReportStatus::xmlUnserialize($n));
+            } elseif (self::FIELD_CATEGORY === $n->nodeName) {
+                $type->setCategory(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_CODE === $n->nodeName) {
+                $type->setCode(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_SUBJECT === $n->nodeName) {
+                $type->setSubject(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTEXT === $n->nodeName) {
+                $type->setContext(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_EFFECTIVE_DATE_TIME === $n->nodeName) {
+                $type->setEffectiveDateTime(FHIRDateTime::xmlUnserialize($n));
+            } elseif (self::FIELD_EFFECTIVE_PERIOD === $n->nodeName) {
+                $type->setEffectivePeriod(FHIRPeriod::xmlUnserialize($n));
+            } elseif (self::FIELD_ISSUED === $n->nodeName) {
+                $type->setIssued(FHIRInstant::xmlUnserialize($n));
+            } elseif (self::FIELD_PERFORMER === $n->nodeName) {
+                $type->addPerformer(FHIRDiagnosticReportPerformer::xmlUnserialize($n));
+            } elseif (self::FIELD_SPECIMEN === $n->nodeName) {
+                $type->addSpecimen(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_RESULT === $n->nodeName) {
+                $type->addResult(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_IMAGING_STUDY === $n->nodeName) {
+                $type->addImagingStudy(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_IMAGE === $n->nodeName) {
+                $type->addImage(FHIRDiagnosticReportImage::xmlUnserialize($n));
+            } elseif (self::FIELD_CONCLUSION === $n->nodeName) {
+                $type->setConclusion(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_CODED_DIAGNOSIS === $n->nodeName) {
+                $type->addCodedDiagnosis(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_PRESENTED_FORM === $n->nodeName) {
+                $type->addPresentedForm(FHIRAttachment::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_META === $n->nodeName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n));
+            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->basedOn)) {
-            foreach($children->basedOn as $child) {
-                $type->addBasedOn(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->category)) {
-            $type->setCategory(FHIRCodeableConcept::xmlUnserialize($children->category));
-        }
-        if (isset($children->code)) {
-            $type->setCode(FHIRCodeableConcept::xmlUnserialize($children->code));
-        }
-        if (isset($children->codedDiagnosis)) {
-            foreach($children->codedDiagnosis as $child) {
-                $type->addCodedDiagnosis(FHIRCodeableConcept::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->conclusion)) {
-            $type->setConclusion(FHIRString::xmlUnserialize($children->conclusion));
-        }
-        if (isset($attributes->conclusion)) {
-            $pt = $type->getConclusion();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->conclusion);
-            } else {
-                $type->setConclusion((string)$attributes->conclusion);
-            }
-        }
-        if (isset($children->context)) {
-            $type->setContext(FHIRReference::xmlUnserialize($children->context));
-        }
-        if (isset($children->effectiveDateTime)) {
-            $type->setEffectiveDateTime(FHIRDateTime::xmlUnserialize($children->effectiveDateTime));
-        }
-        if (isset($attributes->effectiveDateTime)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_EFFECTIVE_DATE_TIME);
+        if (null !== $n) {
             $pt = $type->getEffectiveDateTime();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->effectiveDateTime);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setEffectiveDateTime((string)$attributes->effectiveDateTime);
+                $type->setEffectiveDateTime($n->nodeValue);
             }
         }
-        if (isset($children->effectivePeriod)) {
-            $type->setEffectivePeriod(FHIRPeriod::xmlUnserialize($children->effectivePeriod));
-        }
-        if (isset($children->identifier)) {
-            foreach($children->identifier as $child) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->image)) {
-            foreach($children->image as $child) {
-                $type->addImage(FHIRDiagnosticReportImage::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->imagingStudy)) {
-            foreach($children->imagingStudy as $child) {
-                $type->addImagingStudy(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->issued)) {
-            $type->setIssued(FHIRInstant::xmlUnserialize($children->issued));
-        }
-        if (isset($attributes->issued)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_ISSUED);
+        if (null !== $n) {
             $pt = $type->getIssued();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->issued);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setIssued((string)$attributes->issued);
+                $type->setIssued($n->nodeValue);
             }
         }
-        if (isset($children->performer)) {
-            foreach($children->performer as $child) {
-                $type->addPerformer(FHIRDiagnosticReportPerformer::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_CONCLUSION);
+        if (null !== $n) {
+            $pt = $type->getConclusion();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setConclusion($n->nodeValue);
             }
         }
-        if (isset($children->presentedForm)) {
-            foreach($children->presentedForm as $child) {
-                $type->addPresentedForm(FHIRAttachment::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
-        if (isset($children->result)) {
-            foreach($children->result as $child) {
-                $type->addResult(FHIRReference::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
+        if (null !== $n) {
+            $pt = $type->getImplicitRules();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setImplicitRules($n->nodeValue);
             }
         }
-        if (isset($children->specimen)) {
-            foreach($children->specimen as $child) {
-                $type->addSpecimen(FHIRReference::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
+        if (null !== $n) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLanguage($n->nodeValue);
             }
-        }
-        if (isset($children->status)) {
-            $type->setStatus(FHIRDiagnosticReportStatus::xmlUnserialize($children->status));
-        }
-        if (isset($children->subject)) {
-            $type->setSubject(FHIRReference::xmlUnserialize($children->subject));
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if ([] !== ($vs = $this->getBasedOn())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_BASED_ON, null, $v->_getFHIRXMLNamespace()));
-            }
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('DiagnosticReport'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
-        if (null !== ($v = $this->getCategory())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CATEGORY, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getCode())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CODE, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getCodedDiagnosis())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_CODED_DIAGNOSIS, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getConclusion())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CONCLUSION, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getContext())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CONTEXT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getEffectiveDateTime())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_EFFECTIVE_DATE_TIME, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getEffectivePeriod())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_EFFECTIVE_PERIOD, null, $v->_getFHIRXMLNamespace()));
-        }
+        parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if ([] !== ($vs = $this->getImage())) {
+        if ([] !== ($vs = $this->getBasedOn())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_IMAGE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_BASED_ON);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if ([] !== ($vs = $this->getImagingStudy())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_IMAGING_STUDY, null, $v->_getFHIRXMLNamespace()));
-            }
+        if (null !== ($v = $this->getStatus())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getCategory())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CATEGORY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getCode())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CODE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getSubject())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_SUBJECT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getContext())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CONTEXT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getEffectiveDateTime())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_EFFECTIVE_DATE_TIME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getEffectivePeriod())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_EFFECTIVE_PERIOD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getIssued())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ISSUED, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_ISSUED);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getPerformer())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_PERFORMER, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if ([] !== ($vs = $this->getPresentedForm())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_PRESENTED_FORM, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if ([] !== ($vs = $this->getResult())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_RESULT, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_PERFORMER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getSpecimen())) {
@@ -2249,167 +2299,221 @@ class FHIRDiagnosticReport extends FHIRDomainResource implements PHPFHIRContaine
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SPECIMEN, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_SPECIMEN);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getStatus())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_STATUS, null, $v->_getFHIRXMLNamespace()));
+        if ([] !== ($vs = $this->getResult())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_RESULT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
         }
-        if (null !== ($v = $this->getSubject())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_SUBJECT, null, $v->_getFHIRXMLNamespace()));
+        if ([] !== ($vs = $this->getImagingStudy())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_IMAGING_STUDY);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
         }
-        return $sxe;
+        if ([] !== ($vs = $this->getImage())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_IMAGE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if (null !== ($v = $this->getConclusion())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CONCLUSION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if ([] !== ($vs = $this->getCodedDiagnosis())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_CODED_DIAGNOSIS);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if ([] !== ($vs = $this->getPresentedForm())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_PRESENTED_FORM);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if ([] !== ($vs = $this->getBasedOn())) {
-            $a[self::FIELD_BASED_ON] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_BASED_ON][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getCategory())) {
-            $a[self::FIELD_CATEGORY] = $v;
-        }
-        if (null !== ($v = $this->getCode())) {
-            $a[self::FIELD_CODE] = $v;
-        }
-        if ([] !== ($vs = $this->getCodedDiagnosis())) {
-            $a[self::FIELD_CODED_DIAGNOSIS] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_CODED_DIAGNOSIS][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getConclusion())) {
-            $a[self::FIELD_CONCLUSION] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_CONCLUSION_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getContext())) {
-            $a[self::FIELD_CONTEXT] = $v;
-        }
-        if (null !== ($v = $this->getEffectiveDateTime())) {
-            $a[self::FIELD_EFFECTIVE_DATE_TIME] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDateTime::FIELD_VALUE]);
-                $a[self::FIELD_EFFECTIVE_DATE_TIME_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getEffectivePeriod())) {
-            $a[self::FIELD_EFFECTIVE_PERIOD] = $v;
-        }
+        $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
-            $a[self::FIELD_IDENTIFIER] = [];
+            $out->{self::FIELD_IDENTIFIER} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_IDENTIFIER][] = $v;
+                $out->{self::FIELD_IDENTIFIER}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->getImage())) {
-            $a[self::FIELD_IMAGE] = [];
+        if ([] !== ($vs = $this->getBasedOn())) {
+            $out->{self::FIELD_BASED_ON} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_IMAGE][] = $v;
-            }
-        }
-        if ([] !== ($vs = $this->getImagingStudy())) {
-            $a[self::FIELD_IMAGING_STUDY] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_IMAGING_STUDY][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getIssued())) {
-            $a[self::FIELD_ISSUED] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRInstant::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRInstant::FIELD_VALUE]);
-                $a[self::FIELD_ISSUED_EXT] = $enc;
-            }
-        }
-        if ([] !== ($vs = $this->getPerformer())) {
-            $a[self::FIELD_PERFORMER] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_PERFORMER][] = $v;
-            }
-        }
-        if ([] !== ($vs = $this->getPresentedForm())) {
-            $a[self::FIELD_PRESENTED_FORM] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_PRESENTED_FORM][] = $v;
-            }
-        }
-        if ([] !== ($vs = $this->getResult())) {
-            $a[self::FIELD_RESULT] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_RESULT][] = $v;
-            }
-        }
-        if ([] !== ($vs = $this->getSpecimen())) {
-            $a[self::FIELD_SPECIMEN] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_SPECIMEN][] = $v;
+                $out->{self::FIELD_BASED_ON}[] = $v;
             }
         }
         if (null !== ($v = $this->getStatus())) {
-            $a[self::FIELD_STATUS] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDiagnosticReportStatus::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDiagnosticReportStatus::FIELD_VALUE]);
-                $a[self::FIELD_STATUS_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_STATUS} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDiagnosticReportStatus::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_STATUS_EXT} = $ext;
             }
         }
+        if (null !== ($v = $this->getCategory())) {
+            $out->{self::FIELD_CATEGORY} = $v;
+        }
+        if (null !== ($v = $this->getCode())) {
+            $out->{self::FIELD_CODE} = $v;
+        }
         if (null !== ($v = $this->getSubject())) {
-            $a[self::FIELD_SUBJECT] = $v;
+            $out->{self::FIELD_SUBJECT} = $v;
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if (null !== ($v = $this->getContext())) {
+            $out->{self::FIELD_CONTEXT} = $v;
         }
-        return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
-    }
+        if (null !== ($v = $this->getEffectiveDateTime())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_EFFECTIVE_DATE_TIME} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDateTime::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_EFFECTIVE_DATE_TIME_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getEffectivePeriod())) {
+            $out->{self::FIELD_EFFECTIVE_PERIOD} = $v;
+        }
+        if (null !== ($v = $this->getIssued())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ISSUED} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRInstant::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ISSUED_EXT} = $ext;
+            }
+        }
+        if ([] !== ($vs = $this->getPerformer())) {
+            $out->{self::FIELD_PERFORMER} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_PERFORMER}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getSpecimen())) {
+            $out->{self::FIELD_SPECIMEN} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_SPECIMEN}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getResult())) {
+            $out->{self::FIELD_RESULT} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_RESULT}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getImagingStudy())) {
+            $out->{self::FIELD_IMAGING_STUDY} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_IMAGING_STUDY}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getImage())) {
+            $out->{self::FIELD_IMAGE} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_IMAGE}[] = $v;
+            }
+        }
+        if (null !== ($v = $this->getConclusion())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_CONCLUSION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_CONCLUSION_EXT} = $ext;
+            }
+        }
+        if ([] !== ($vs = $this->getCodedDiagnosis())) {
+            $out->{self::FIELD_CODED_DIAGNOSIS} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_CODED_DIAGNOSIS}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getPresentedForm())) {
+            $out->{self::FIELD_PRESENTED_FORM} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_PRESENTED_FORM}[] = $v;
+            }
+        }
 
+        $out->{PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE} = $this->_getResourceType();
+
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

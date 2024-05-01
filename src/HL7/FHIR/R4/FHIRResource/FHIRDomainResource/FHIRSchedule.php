@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
@@ -74,11 +76,17 @@ use HL7\FHIR\R4\FHIRElement\FHIRPeriod;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A container for slots of time that may be available for booking appointments.
@@ -91,6 +99,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SCHEDULE;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_ACTIVE = 'active';
     const FIELD_ACTIVE_EXT = '_active';
@@ -102,9 +111,6 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     const FIELD_COMMENT = 'comment';
     const FIELD_COMMENT_EXT = '_comment';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -115,8 +121,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -124,10 +129,9 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Whether this schedule record is in active use or should not be used (such as was
      * entered in error).
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $active = null;
-
+    protected null|FHIRBoolean $active = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -139,8 +143,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $serviceCategory = [];
-
+    protected null|array $serviceCategory = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -151,8 +154,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $serviceType = [];
-
+    protected null|array $serviceType = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -164,8 +166,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $specialty = [];
-
+    protected null|array $specialty = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -176,8 +177,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $actor = [];
-
+    protected null|array $actor = [];
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -191,8 +191,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $planningHorizon = null;
-
+    protected null|FHIRPeriod $planningHorizon = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -201,15 +200,15 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Comments on the availability to describe any extended information. Such as
      * custom constraints on the slots that may be associated.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $comment = null;
+    protected null|FHIRString $comment = null;
 
     /**
      * Validation map for fields in type Schedule
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_ACTOR => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -218,17 +217,12 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * FHIRSchedule Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRSchedule::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -360,6 +354,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         }
     }
 
+
     /**
      * @return string
      */
@@ -368,17 +363,6 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Schedule{$xmlns}></Schedule>";
-    }
     /**
      * @return string
      */
@@ -398,7 +382,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -414,8 +398,11 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -432,7 +419,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -458,9 +445,9 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Whether this schedule record is in active use or should not be used (such as was
      * entered in error).
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getActive(): ?FHIRBoolean
+    public function getActive(): null|FHIRBoolean
     {
         return $this->active;
     }
@@ -472,10 +459,10 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Whether this schedule record is in active use or should not be used (such as was
      * entered in error).
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $active
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $active
      * @return static
      */
-    public function setActive($active = null): object
+    public function setActive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $active = null): self
     {
         if (null !== $active && !($active instanceof FHIRBoolean)) {
             $active = new FHIRBoolean($active);
@@ -496,7 +483,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getServiceCategory(): ?array
+    public function getServiceCategory(): null|array
     {
         return $this->serviceCategory;
     }
@@ -513,8 +500,11 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $serviceCategory
      * @return static
      */
-    public function addServiceCategory(?FHIRCodeableConcept $serviceCategory = null): object
+    public function addServiceCategory(null|FHIRCodeableConcept $serviceCategory = null): self
     {
+        if (null === $serviceCategory) {
+            $serviceCategory = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->serviceCategory[] = $serviceCategory;
         return $this;
@@ -532,7 +522,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $serviceCategory
      * @return static
      */
-    public function setServiceCategory(array $serviceCategory = []): object
+    public function setServiceCategory(array $serviceCategory = []): self
     {
         if ([] !== $this->serviceCategory) {
             $this->_trackValuesRemoved(count($this->serviceCategory));
@@ -561,7 +551,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getServiceType(): ?array
+    public function getServiceType(): null|array
     {
         return $this->serviceType;
     }
@@ -577,8 +567,11 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $serviceType
      * @return static
      */
-    public function addServiceType(?FHIRCodeableConcept $serviceType = null): object
+    public function addServiceType(null|FHIRCodeableConcept $serviceType = null): self
     {
+        if (null === $serviceType) {
+            $serviceType = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->serviceType[] = $serviceType;
         return $this;
@@ -595,7 +588,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $serviceType
      * @return static
      */
-    public function setServiceType(array $serviceType = []): object
+    public function setServiceType(array $serviceType = []): self
     {
         if ([] !== $this->serviceType) {
             $this->_trackValuesRemoved(count($this->serviceType));
@@ -625,7 +618,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getSpecialty(): ?array
+    public function getSpecialty(): null|array
     {
         return $this->specialty;
     }
@@ -642,8 +635,11 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $specialty
      * @return static
      */
-    public function addSpecialty(?FHIRCodeableConcept $specialty = null): object
+    public function addSpecialty(null|FHIRCodeableConcept $specialty = null): self
     {
+        if (null === $specialty) {
+            $specialty = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->specialty[] = $specialty;
         return $this;
@@ -661,7 +657,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $specialty
      * @return static
      */
-    public function setSpecialty(array $specialty = []): object
+    public function setSpecialty(array $specialty = []): self
     {
         if ([] !== $this->specialty) {
             $this->_trackValuesRemoved(count($this->specialty));
@@ -690,7 +686,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getActor(): ?array
+    public function getActor(): null|array
     {
         return $this->actor;
     }
@@ -706,8 +702,11 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $actor
      * @return static
      */
-    public function addActor(?FHIRReference $actor = null): object
+    public function addActor(null|FHIRReference $actor = null): self
     {
+        if (null === $actor) {
+            $actor = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->actor[] = $actor;
         return $this;
@@ -724,7 +723,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $actor
      * @return static
      */
-    public function setActor(array $actor = []): object
+    public function setActor(array $actor = []): self
     {
         if ([] !== $this->actor) {
             $this->_trackValuesRemoved(count($this->actor));
@@ -756,7 +755,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getPlanningHorizon(): ?FHIRPeriod
+    public function getPlanningHorizon(): null|FHIRPeriod
     {
         return $this->planningHorizon;
     }
@@ -775,8 +774,11 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $planningHorizon
      * @return static
      */
-    public function setPlanningHorizon(?FHIRPeriod $planningHorizon = null): object
+    public function setPlanningHorizon(null|FHIRPeriod $planningHorizon = null): self
     {
+        if (null === $planningHorizon) {
+            $planningHorizon = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->planningHorizon, $planningHorizon);
         $this->planningHorizon = $planningHorizon;
         return $this;
@@ -790,9 +792,9 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Comments on the availability to describe any extended information. Such as
      * custom constraints on the slots that may be associated.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getComment(): ?FHIRString
+    public function getComment(): null|FHIRString
     {
         return $this->comment;
     }
@@ -805,10 +807,10 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Comments on the availability to describe any extended information. Such as
      * custom constraints on the slots that may be associated.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $comment
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $comment
      * @return static
      */
-    public function setComment($comment = null): object
+    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null): self
     {
         if (null !== $comment && !($comment instanceof FHIRString)) {
             $comment = new FHIRString($comment);
@@ -826,7 +828,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1087,36 +1089,48 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSchedule $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSchedule
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRSchedule::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRSchedule::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRSchedule(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRSchedule)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRSchedule)) {
             throw new \RuntimeException(sprintf(
-                'FHIRSchedule::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSchedule or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1212,17 +1226,25 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Schedule'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1296,7 +1318,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1372,7 +1394,6 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
 
         return $out;
     }
-
 
     /**
      * @return string

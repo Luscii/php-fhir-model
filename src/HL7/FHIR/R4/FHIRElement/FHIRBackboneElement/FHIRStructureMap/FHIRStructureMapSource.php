@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,13 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBase64BinaryPrimitive;
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDatePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAddress;
 use HL7\FHIR\R4\FHIRElement\FHIRAnnotation;
 use HL7\FHIR\R4\FHIRElement\FHIRAttachment;
@@ -115,9 +122,23 @@ use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUrl;
 use HL7\FHIR\R4\FHIRElement\FHIRUsageContext;
 use HL7\FHIR\R4\FHIRElement\FHIRUuid;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRInstantPrimitive;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
+use HL7\FHIR\R4\FHIROidPrimitive;
+use HL7\FHIR\R4\FHIRPositiveIntPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRTimePrimitive;
+use HL7\FHIR\R4\FHIRUnsignedIntPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\FHIRUrlPrimitive;
+use HL7\FHIR\R4\FHIRUuidPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A Map of relationships between 2 structures that can be used to transform data.
@@ -129,6 +150,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_STRUCTURE_MAP_DOT_SOURCE;
+
     const FIELD_CONTEXT = 'context';
     const FIELD_CONTEXT_EXT = '_context';
     const FIELD_MIN = 'min';
@@ -219,9 +241,6 @@ class FHIRStructureMapSource extends FHIRBackboneElement
     const FIELD_LOG_MESSAGE = 'logMessage';
     const FIELD_LOG_MESSAGE_EXT = '_logMessage';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -232,10 +251,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * Type or variable this rule applies to.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    protected ?FHIRId $context = null;
-
+    protected null|FHIRId $context = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -244,10 +262,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * Specified minimum cardinality for the element. This is optional; if present, it
      * acts an implicit check on the input content.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $min = null;
-
+    protected null|FHIRInteger $min = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -257,10 +274,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * optional; if present, it acts an implicit check on the input content (* just
      * serves as documentation; it's the default value).
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $max = null;
-
+    protected null|FHIRString $max = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -269,10 +285,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * Specified type for the element. This works as a condition on the mapping - use
      * for polymorphic elements.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $type = null;
-
+    protected null|FHIRString $type = null;
     /**
      * A stream of bytes
      * A stream of bytes, base64 encoded
@@ -280,20 +295,18 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    protected ?FHIRBase64Binary $defaultValueBase64Binary = null;
-
+    protected null|FHIRBase64Binary $defaultValueBase64Binary = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $defaultValueBoolean = null;
-
+    protected null|FHIRBoolean $defaultValueBoolean = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -302,10 +315,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $defaultValueCanonical = null;
-
+    protected null|FHIRCanonical $defaultValueCanonical = null;
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -314,10 +326,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    protected ?FHIRCode $defaultValueCode = null;
-
+    protected null|FHIRCode $defaultValueCode = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -326,10 +337,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $defaultValueDate = null;
-
+    protected null|FHIRDate $defaultValueDate = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -340,10 +350,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $defaultValueDateTime = null;
-
+    protected null|FHIRDateTime $defaultValueDateTime = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -352,10 +361,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $defaultValueDecimal = null;
-
+    protected null|FHIRDecimal $defaultValueDecimal = null;
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -366,10 +374,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    protected ?FHIRId $defaultValueId = null;
-
+    protected null|FHIRId $defaultValueId = null;
     /**
      * An instant in time - known at least to the second
      * Note: This is intended for where precisely observed times are required,
@@ -380,10 +387,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    protected ?FHIRInstant $defaultValueInstant = null;
-
+    protected null|FHIRInstant $defaultValueInstant = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -391,10 +397,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $defaultValueInteger = null;
-
+    protected null|FHIRInteger $defaultValueInteger = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -406,10 +411,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $defaultValueMarkdown = null;
-
+    protected null|FHIRMarkdown $defaultValueMarkdown = null;
     /**
      * An OID represented as a URI
      * RFC 3001. See also ISO/IEC 8824:1990 €
@@ -418,10 +422,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIROid
      */
-    protected ?FHIROid $defaultValueOid = null;
-
+    protected null|FHIROid $defaultValueOid = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -429,10 +432,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $defaultValuePositiveInt = null;
-
+    protected null|FHIRPositiveInt $defaultValuePositiveInt = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -440,20 +442,18 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $defaultValueString = null;
-
+    protected null|FHIRString $defaultValueString = null;
     /**
      * A time during the day, with no date specified
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    protected ?FHIRTime $defaultValueTime = null;
-
+    protected null|FHIRTime $defaultValueTime = null;
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -461,10 +461,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    protected ?FHIRUnsignedInt $defaultValueUnsignedInt = null;
-
+    protected null|FHIRUnsignedInt $defaultValueUnsignedInt = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -472,10 +471,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $defaultValueUri = null;
-
+    protected null|FHIRUri $defaultValueUri = null;
     /**
      * A URI that is a literal reference
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -483,10 +481,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    protected ?FHIRUrl $defaultValueUrl = null;
-
+    protected null|FHIRUrl $defaultValueUrl = null;
     /**
      * A UUID, represented as a URI
      * See The Open Group, CDE 1.1 Remote Procedure Call specification, Appendix A.
@@ -495,10 +492,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUuid
      */
-    protected ?FHIRUuid $defaultValueUuid = null;
-
+    protected null|FHIRUuid $defaultValueUuid = null;
     /**
      * An address expressed using postal conventions (as opposed to GPS or other
      * location definition formats). This data type may be used to convey addresses for
@@ -512,8 +508,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
-    protected ?FHIRAddress $defaultValueAddress = null;
-
+    protected null|FHIRAddress $defaultValueAddress = null;
     /**
      * A duration of time during which an organism (or a process) has existed.
      * If the element is present, it must have a value for at least one of the defined
@@ -523,8 +518,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    protected ?FHIRAge $defaultValueAge = null;
-
+    protected null|FHIRAge $defaultValueAge = null;
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -535,8 +529,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation
      */
-    protected ?FHIRAnnotation $defaultValueAnnotation = null;
-
+    protected null|FHIRAnnotation $defaultValueAnnotation = null;
     /**
      * For referring to data content defined in other formats.
      * If the element is present, it must have a value for at least one of the defined
@@ -546,8 +539,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    protected ?FHIRAttachment $defaultValueAttachment = null;
-
+    protected null|FHIRAttachment $defaultValueAttachment = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -558,8 +550,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $defaultValueCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $defaultValueCodeableConcept = null;
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -569,8 +560,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    protected ?FHIRCoding $defaultValueCoding = null;
-
+    protected null|FHIRCoding $defaultValueCoding = null;
     /**
      * Details for all kinds of technology mediated contact points for a person or
      * organization, including telephone, email, etc.
@@ -581,8 +571,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint
      */
-    protected ?FHIRContactPoint $defaultValueContactPoint = null;
-
+    protected null|FHIRContactPoint $defaultValueContactPoint = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -594,8 +583,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount
      */
-    protected ?FHIRCount $defaultValueCount = null;
-
+    protected null|FHIRCount $defaultValueCount = null;
     /**
      * A length - a value with a unit that is a physical distance.
      * If the element is present, it must have a value for at least one of the defined
@@ -605,8 +593,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance
      */
-    protected ?FHIRDistance $defaultValueDistance = null;
-
+    protected null|FHIRDistance $defaultValueDistance = null;
     /**
      * A length of time.
      * If the element is present, it must have a value for at least one of the defined
@@ -616,8 +603,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    protected ?FHIRDuration $defaultValueDuration = null;
-
+    protected null|FHIRDuration $defaultValueDuration = null;
     /**
      * A human's name with the ability to identify parts and usage.
      * If the element is present, it must have a value for at least one of the defined
@@ -627,8 +613,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
-    protected ?FHIRHumanName $defaultValueHumanName = null;
-
+    protected null|FHIRHumanName $defaultValueHumanName = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -639,8 +624,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $defaultValueIdentifier = null;
-
+    protected null|FHIRIdentifier $defaultValueIdentifier = null;
     /**
      * An amount of economic utility in some recognized currency.
      * If the element is present, it must have a value for at least one of the defined
@@ -650,8 +634,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    protected ?FHIRMoney $defaultValueMoney = null;
-
+    protected null|FHIRMoney $defaultValueMoney = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -661,8 +644,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $defaultValuePeriod = null;
-
+    protected null|FHIRPeriod $defaultValuePeriod = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -674,8 +656,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $defaultValueQuantity = null;
-
+    protected null|FHIRQuantity $defaultValueQuantity = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -685,8 +666,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $defaultValueRange = null;
-
+    protected null|FHIRRange $defaultValueRange = null;
     /**
      * A relationship of two Quantity values - expressed as a numerator and a
      * denominator.
@@ -697,8 +677,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    protected ?FHIRRatio $defaultValueRatio = null;
-
+    protected null|FHIRRatio $defaultValueRatio = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -708,8 +687,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $defaultValueReference = null;
-
+    protected null|FHIRReference $defaultValueReference = null;
     /**
      * A series of measurements taken by a device, with upper and lower limits. There
      * may be more than one dimension in the data.
@@ -720,8 +698,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    protected ?FHIRSampledData $defaultValueSampledData = null;
-
+    protected null|FHIRSampledData $defaultValueSampledData = null;
     /**
      * A signature along with supporting context. The signature may be a digital
      * signature that is cryptographic in nature, or some other signature acceptable to
@@ -735,8 +712,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSignature
      */
-    protected ?FHIRSignature $defaultValueSignature = null;
-
+    protected null|FHIRSignature $defaultValueSignature = null;
     /**
      * Specifies an event that may occur multiple times. Timing schedules are used to
      * record when things are planned, expected or requested to occur. The most common
@@ -750,8 +726,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    protected ?FHIRTiming $defaultValueTiming = null;
-
+    protected null|FHIRTiming $defaultValueTiming = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -761,8 +736,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail
      */
-    protected ?FHIRContactDetail $defaultValueContactDetail = null;
-
+    protected null|FHIRContactDetail $defaultValueContactDetail = null;
     /**
      * A contributor to the content of a knowledge asset, including authors, editors,
      * reviewers, and endorsers.
@@ -773,8 +747,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContributor
      */
-    protected ?FHIRContributor $defaultValueContributor = null;
-
+    protected null|FHIRContributor $defaultValueContributor = null;
     /**
      * Describes a required data item for evaluation in terms of the type of data, and
      * optional code or date-based filters of the data.
@@ -785,8 +758,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement
      */
-    protected ?FHIRDataRequirement $defaultValueDataRequirement = null;
-
+    protected null|FHIRDataRequirement $defaultValueDataRequirement = null;
     /**
      * A expression that is evaluated in a specified context and returns a value. The
      * context of use of the expression must specify the context in which the
@@ -798,8 +770,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRExpression
      */
-    protected ?FHIRExpression $defaultValueExpression = null;
-
+    protected null|FHIRExpression $defaultValueExpression = null;
     /**
      * The parameters to the module. This collection specifies both the input and
      * output parameters. Input parameters are provided by the caller as part of the
@@ -811,8 +782,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition
      */
-    protected ?FHIRParameterDefinition $defaultValueParameterDefinition = null;
-
+    protected null|FHIRParameterDefinition $defaultValueParameterDefinition = null;
     /**
      * Related artifacts such as additional documentation, justification, or
      * bibliographic references.
@@ -823,8 +793,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact
      */
-    protected ?FHIRRelatedArtifact $defaultValueRelatedArtifact = null;
-
+    protected null|FHIRRelatedArtifact $defaultValueRelatedArtifact = null;
     /**
      * A description of a triggering event. Triggering events can be named events, data
      * events, or periodic, as determined by the type element.
@@ -835,8 +804,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition
      */
-    protected ?FHIRTriggerDefinition $defaultValueTriggerDefinition = null;
-
+    protected null|FHIRTriggerDefinition $defaultValueTriggerDefinition = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -849,8 +817,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext
      */
-    protected ?FHIRUsageContext $defaultValueUsageContext = null;
-
+    protected null|FHIRUsageContext $defaultValueUsageContext = null;
     /**
      * Indicates how the medication is/was taken or should be taken by the patient.
      * If the element is present, it must have a value for at least one of the defined
@@ -860,8 +827,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage
      */
-    protected ?FHIRDosage $defaultValueDosage = null;
-
+    protected null|FHIRDosage $defaultValueDosage = null;
     /**
      * The metadata about a resource. This is content in the resource that is
      * maintained by the infrastructure. Changes to the content might not always be
@@ -873,8 +839,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMeta
      */
-    protected ?FHIRMeta $defaultValueMeta = null;
-
+    protected null|FHIRMeta $defaultValueMeta = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -882,10 +847,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * Optional field for this source.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $element = null;
-
+    protected null|FHIRString $element = null;
     /**
      * If field is a list, how to manage the source.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -894,8 +858,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapSourceListMode
      */
-    protected ?FHIRStructureMapSourceListMode $listMode = null;
-
+    protected null|FHIRStructureMapSourceListMode $listMode = null;
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -906,10 +869,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * Named context for field, if a field is specified.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    protected ?FHIRId $variable = null;
-
+    protected null|FHIRId $variable = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -917,10 +879,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * FHIRPath expression - must be true or the rule does not apply.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $condition = null;
-
+    protected null|FHIRString $condition = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -929,10 +890,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * FHIRPath expression - must be true or the mapping engine throws an error instead
      * of completing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $check = null;
-
+    protected null|FHIRString $check = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -941,30 +901,25 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * A FHIRPath expression which specifies a message to put in the transform log when
      * content matching the source rule is found.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $logMessage = null;
+    protected null|FHIRString $logMessage = null;
 
     /**
      * Validation map for fields in type StructureMap.Source
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRStructureMapSource Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRStructureMapSource::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_CONTEXT]) || isset($data[self::FIELD_CONTEXT_EXT])) {
@@ -1621,24 +1576,13 @@ class FHIRStructureMapSource extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<StructureMapSource{$xmlns}></StructureMapSource>";
     }
 
     /**
@@ -1651,9 +1595,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * Type or variable this rule applies to.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    public function getContext(): ?FHIRId
+    public function getContext(): null|FHIRId
     {
         return $this->context;
     }
@@ -1668,10 +1612,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * Type or variable this rule applies to.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $context
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $context
      * @return static
      */
-    public function setContext($context = null): object
+    public function setContext(null|string|FHIRIdPrimitive|FHIRId $context = null): self
     {
         if (null !== $context && !($context instanceof FHIRId)) {
             $context = new FHIRId($context);
@@ -1689,9 +1633,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * Specified minimum cardinality for the element. This is optional; if present, it
      * acts an implicit check on the input content.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getMin(): ?FHIRInteger
+    public function getMin(): null|FHIRInteger
     {
         return $this->min;
     }
@@ -1704,10 +1648,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * Specified minimum cardinality for the element. This is optional; if present, it
      * acts an implicit check on the input content.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $min
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $min
      * @return static
      */
-    public function setMin($min = null): object
+    public function setMin(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $min = null): self
     {
         if (null !== $min && !($min instanceof FHIRInteger)) {
             $min = new FHIRInteger($min);
@@ -1726,9 +1670,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * optional; if present, it acts an implicit check on the input content (* just
      * serves as documentation; it's the default value).
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getMax(): ?FHIRString
+    public function getMax(): null|FHIRString
     {
         return $this->max;
     }
@@ -1742,10 +1686,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * optional; if present, it acts an implicit check on the input content (* just
      * serves as documentation; it's the default value).
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $max
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $max
      * @return static
      */
-    public function setMax($max = null): object
+    public function setMax(null|string|FHIRStringPrimitive|FHIRString $max = null): self
     {
         if (null !== $max && !($max instanceof FHIRString)) {
             $max = new FHIRString($max);
@@ -1763,9 +1707,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * Specified type for the element. This works as a condition on the mapping - use
      * for polymorphic elements.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getType(): ?FHIRString
+    public function getType(): null|FHIRString
     {
         return $this->type;
     }
@@ -1778,10 +1722,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * Specified type for the element. This works as a condition on the mapping - use
      * for polymorphic elements.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $type
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $type
      * @return static
      */
-    public function setType($type = null): object
+    public function setType(null|string|FHIRStringPrimitive|FHIRString $type = null): self
     {
         if (null !== $type && !($type instanceof FHIRString)) {
             $type = new FHIRString($type);
@@ -1798,9 +1742,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    public function getDefaultValueBase64Binary(): ?FHIRBase64Binary
+    public function getDefaultValueBase64Binary(): null|FHIRBase64Binary
     {
         return $this->defaultValueBase64Binary;
     }
@@ -1812,10 +1756,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $defaultValueBase64Binary
+     * @param null|string|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $defaultValueBase64Binary
      * @return static
      */
-    public function setDefaultValueBase64Binary($defaultValueBase64Binary = null): object
+    public function setDefaultValueBase64Binary(null|string|FHIRBase64BinaryPrimitive|FHIRBase64Binary $defaultValueBase64Binary = null): self
     {
         if (null !== $defaultValueBase64Binary && !($defaultValueBase64Binary instanceof FHIRBase64Binary)) {
             $defaultValueBase64Binary = new FHIRBase64Binary($defaultValueBase64Binary);
@@ -1831,9 +1775,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getDefaultValueBoolean(): ?FHIRBoolean
+    public function getDefaultValueBoolean(): null|FHIRBoolean
     {
         return $this->defaultValueBoolean;
     }
@@ -1844,10 +1788,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $defaultValueBoolean
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $defaultValueBoolean
      * @return static
      */
-    public function setDefaultValueBoolean($defaultValueBoolean = null): object
+    public function setDefaultValueBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $defaultValueBoolean = null): self
     {
         if (null !== $defaultValueBoolean && !($defaultValueBoolean instanceof FHIRBoolean)) {
             $defaultValueBoolean = new FHIRBoolean($defaultValueBoolean);
@@ -1865,9 +1809,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getDefaultValueCanonical(): ?FHIRCanonical
+    public function getDefaultValueCanonical(): null|FHIRCanonical
     {
         return $this->defaultValueCanonical;
     }
@@ -1880,10 +1824,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $defaultValueCanonical
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $defaultValueCanonical
      * @return static
      */
-    public function setDefaultValueCanonical($defaultValueCanonical = null): object
+    public function setDefaultValueCanonical(null|string|FHIRCanonicalPrimitive|FHIRCanonical $defaultValueCanonical = null): self
     {
         if (null !== $defaultValueCanonical && !($defaultValueCanonical instanceof FHIRCanonical)) {
             $defaultValueCanonical = new FHIRCanonical($defaultValueCanonical);
@@ -1901,9 +1845,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    public function getDefaultValueCode(): ?FHIRCode
+    public function getDefaultValueCode(): null|FHIRCode
     {
         return $this->defaultValueCode;
     }
@@ -1916,10 +1860,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $defaultValueCode
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $defaultValueCode
      * @return static
      */
-    public function setDefaultValueCode($defaultValueCode = null): object
+    public function setDefaultValueCode(null|string|FHIRCodePrimitive|FHIRCode $defaultValueCode = null): self
     {
         if (null !== $defaultValueCode && !($defaultValueCode instanceof FHIRCode)) {
             $defaultValueCode = new FHIRCode($defaultValueCode);
@@ -1937,9 +1881,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getDefaultValueDate(): ?FHIRDate
+    public function getDefaultValueDate(): null|FHIRDate
     {
         return $this->defaultValueDate;
     }
@@ -1952,10 +1896,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $defaultValueDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $defaultValueDate
      * @return static
      */
-    public function setDefaultValueDate($defaultValueDate = null): object
+    public function setDefaultValueDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $defaultValueDate = null): self
     {
         if (null !== $defaultValueDate && !($defaultValueDate instanceof FHIRDate)) {
             $defaultValueDate = new FHIRDate($defaultValueDate);
@@ -1975,9 +1919,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDefaultValueDateTime(): ?FHIRDateTime
+    public function getDefaultValueDateTime(): null|FHIRDateTime
     {
         return $this->defaultValueDateTime;
     }
@@ -1992,10 +1936,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $defaultValueDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $defaultValueDateTime
      * @return static
      */
-    public function setDefaultValueDateTime($defaultValueDateTime = null): object
+    public function setDefaultValueDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $defaultValueDateTime = null): self
     {
         if (null !== $defaultValueDateTime && !($defaultValueDateTime instanceof FHIRDateTime)) {
             $defaultValueDateTime = new FHIRDateTime($defaultValueDateTime);
@@ -2013,9 +1957,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getDefaultValueDecimal(): ?FHIRDecimal
+    public function getDefaultValueDecimal(): null|FHIRDecimal
     {
         return $this->defaultValueDecimal;
     }
@@ -2028,10 +1972,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $defaultValueDecimal
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $defaultValueDecimal
      * @return static
      */
-    public function setDefaultValueDecimal($defaultValueDecimal = null): object
+    public function setDefaultValueDecimal(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $defaultValueDecimal = null): self
     {
         if (null !== $defaultValueDecimal && !($defaultValueDecimal instanceof FHIRDecimal)) {
             $defaultValueDecimal = new FHIRDecimal($defaultValueDecimal);
@@ -2051,9 +1995,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    public function getDefaultValueId(): ?FHIRId
+    public function getDefaultValueId(): null|FHIRId
     {
         return $this->defaultValueId;
     }
@@ -2068,10 +2012,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $defaultValueId
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $defaultValueId
      * @return static
      */
-    public function setDefaultValueId($defaultValueId = null): object
+    public function setDefaultValueId(null|string|FHIRIdPrimitive|FHIRId $defaultValueId = null): self
     {
         if (null !== $defaultValueId && !($defaultValueId instanceof FHIRId)) {
             $defaultValueId = new FHIRId($defaultValueId);
@@ -2091,9 +2035,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    public function getDefaultValueInstant(): ?FHIRInstant
+    public function getDefaultValueInstant(): null|FHIRInstant
     {
         return $this->defaultValueInstant;
     }
@@ -2108,10 +2052,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $defaultValueInstant
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $defaultValueInstant
      * @return static
      */
-    public function setDefaultValueInstant($defaultValueInstant = null): object
+    public function setDefaultValueInstant(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $defaultValueInstant = null): self
     {
         if (null !== $defaultValueInstant && !($defaultValueInstant instanceof FHIRInstant)) {
             $defaultValueInstant = new FHIRInstant($defaultValueInstant);
@@ -2128,9 +2072,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getDefaultValueInteger(): ?FHIRInteger
+    public function getDefaultValueInteger(): null|FHIRInteger
     {
         return $this->defaultValueInteger;
     }
@@ -2142,10 +2086,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $defaultValueInteger
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $defaultValueInteger
      * @return static
      */
-    public function setDefaultValueInteger($defaultValueInteger = null): object
+    public function setDefaultValueInteger(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $defaultValueInteger = null): self
     {
         if (null !== $defaultValueInteger && !($defaultValueInteger instanceof FHIRInteger)) {
             $defaultValueInteger = new FHIRInteger($defaultValueInteger);
@@ -2166,9 +2110,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDefaultValueMarkdown(): ?FHIRMarkdown
+    public function getDefaultValueMarkdown(): null|FHIRMarkdown
     {
         return $this->defaultValueMarkdown;
     }
@@ -2184,10 +2128,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $defaultValueMarkdown
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $defaultValueMarkdown
      * @return static
      */
-    public function setDefaultValueMarkdown($defaultValueMarkdown = null): object
+    public function setDefaultValueMarkdown(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $defaultValueMarkdown = null): self
     {
         if (null !== $defaultValueMarkdown && !($defaultValueMarkdown instanceof FHIRMarkdown)) {
             $defaultValueMarkdown = new FHIRMarkdown($defaultValueMarkdown);
@@ -2205,9 +2149,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIROid
      */
-    public function getDefaultValueOid(): ?FHIROid
+    public function getDefaultValueOid(): null|FHIROid
     {
         return $this->defaultValueOid;
     }
@@ -2220,10 +2164,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid $defaultValueOid
+     * @param null|string|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid $defaultValueOid
      * @return static
      */
-    public function setDefaultValueOid($defaultValueOid = null): object
+    public function setDefaultValueOid(null|string|FHIROidPrimitive|FHIROid $defaultValueOid = null): self
     {
         if (null !== $defaultValueOid && !($defaultValueOid instanceof FHIROid)) {
             $defaultValueOid = new FHIROid($defaultValueOid);
@@ -2240,9 +2184,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getDefaultValuePositiveInt(): ?FHIRPositiveInt
+    public function getDefaultValuePositiveInt(): null|FHIRPositiveInt
     {
         return $this->defaultValuePositiveInt;
     }
@@ -2254,10 +2198,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $defaultValuePositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $defaultValuePositiveInt
      * @return static
      */
-    public function setDefaultValuePositiveInt($defaultValuePositiveInt = null): object
+    public function setDefaultValuePositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $defaultValuePositiveInt = null): self
     {
         if (null !== $defaultValuePositiveInt && !($defaultValuePositiveInt instanceof FHIRPositiveInt)) {
             $defaultValuePositiveInt = new FHIRPositiveInt($defaultValuePositiveInt);
@@ -2274,9 +2218,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDefaultValueString(): ?FHIRString
+    public function getDefaultValueString(): null|FHIRString
     {
         return $this->defaultValueString;
     }
@@ -2288,10 +2232,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $defaultValueString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $defaultValueString
      * @return static
      */
-    public function setDefaultValueString($defaultValueString = null): object
+    public function setDefaultValueString(null|string|FHIRStringPrimitive|FHIRString $defaultValueString = null): self
     {
         if (null !== $defaultValueString && !($defaultValueString instanceof FHIRString)) {
             $defaultValueString = new FHIRString($defaultValueString);
@@ -2307,9 +2251,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    public function getDefaultValueTime(): ?FHIRTime
+    public function getDefaultValueTime(): null|FHIRTime
     {
         return $this->defaultValueTime;
     }
@@ -2320,10 +2264,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $defaultValueTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $defaultValueTime
      * @return static
      */
-    public function setDefaultValueTime($defaultValueTime = null): object
+    public function setDefaultValueTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $defaultValueTime = null): self
     {
         if (null !== $defaultValueTime && !($defaultValueTime instanceof FHIRTime)) {
             $defaultValueTime = new FHIRTime($defaultValueTime);
@@ -2340,9 +2284,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    public function getDefaultValueUnsignedInt(): ?FHIRUnsignedInt
+    public function getDefaultValueUnsignedInt(): null|FHIRUnsignedInt
     {
         return $this->defaultValueUnsignedInt;
     }
@@ -2354,10 +2298,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $defaultValueUnsignedInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $defaultValueUnsignedInt
      * @return static
      */
-    public function setDefaultValueUnsignedInt($defaultValueUnsignedInt = null): object
+    public function setDefaultValueUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $defaultValueUnsignedInt = null): self
     {
         if (null !== $defaultValueUnsignedInt && !($defaultValueUnsignedInt instanceof FHIRUnsignedInt)) {
             $defaultValueUnsignedInt = new FHIRUnsignedInt($defaultValueUnsignedInt);
@@ -2374,9 +2318,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getDefaultValueUri(): ?FHIRUri
+    public function getDefaultValueUri(): null|FHIRUri
     {
         return $this->defaultValueUri;
     }
@@ -2388,10 +2332,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $defaultValueUri
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $defaultValueUri
      * @return static
      */
-    public function setDefaultValueUri($defaultValueUri = null): object
+    public function setDefaultValueUri(null|string|FHIRUriPrimitive|FHIRUri $defaultValueUri = null): self
     {
         if (null !== $defaultValueUri && !($defaultValueUri instanceof FHIRUri)) {
             $defaultValueUri = new FHIRUri($defaultValueUri);
@@ -2408,9 +2352,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    public function getDefaultValueUrl(): ?FHIRUrl
+    public function getDefaultValueUrl(): null|FHIRUrl
     {
         return $this->defaultValueUrl;
     }
@@ -2422,10 +2366,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $defaultValueUrl
+     * @param null|string|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $defaultValueUrl
      * @return static
      */
-    public function setDefaultValueUrl($defaultValueUrl = null): object
+    public function setDefaultValueUrl(null|string|FHIRUrlPrimitive|FHIRUrl $defaultValueUrl = null): self
     {
         if (null !== $defaultValueUrl && !($defaultValueUrl instanceof FHIRUrl)) {
             $defaultValueUrl = new FHIRUrl($defaultValueUrl);
@@ -2443,9 +2387,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUuid
      */
-    public function getDefaultValueUuid(): ?FHIRUuid
+    public function getDefaultValueUuid(): null|FHIRUuid
     {
         return $this->defaultValueUuid;
     }
@@ -2458,10 +2402,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * A value to use if there is no existing value in the source object.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid $defaultValueUuid
+     * @param null|string|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid $defaultValueUuid
      * @return static
      */
-    public function setDefaultValueUuid($defaultValueUuid = null): object
+    public function setDefaultValueUuid(null|string|FHIRUuidPrimitive|FHIRUuid $defaultValueUuid = null): self
     {
         if (null !== $defaultValueUuid && !($defaultValueUuid instanceof FHIRUuid)) {
             $defaultValueUuid = new FHIRUuid($defaultValueUuid);
@@ -2484,7 +2428,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
-    public function getDefaultValueAddress(): ?FHIRAddress
+    public function getDefaultValueAddress(): null|FHIRAddress
     {
         return $this->defaultValueAddress;
     }
@@ -2503,8 +2447,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAddress $defaultValueAddress
      * @return static
      */
-    public function setDefaultValueAddress(?FHIRAddress $defaultValueAddress = null): object
+    public function setDefaultValueAddress(null|FHIRAddress $defaultValueAddress = null): self
     {
+        if (null === $defaultValueAddress) {
+            $defaultValueAddress = new FHIRAddress();
+        }
         $this->_trackValueSet($this->defaultValueAddress, $defaultValueAddress);
         $this->defaultValueAddress = $defaultValueAddress;
         return $this;
@@ -2519,7 +2466,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    public function getDefaultValueAge(): ?FHIRAge
+    public function getDefaultValueAge(): null|FHIRAge
     {
         return $this->defaultValueAge;
     }
@@ -2534,8 +2481,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge $defaultValueAge
      * @return static
      */
-    public function setDefaultValueAge(?FHIRAge $defaultValueAge = null): object
+    public function setDefaultValueAge(null|FHIRAge $defaultValueAge = null): self
     {
+        if (null === $defaultValueAge) {
+            $defaultValueAge = new FHIRAge();
+        }
         $this->_trackValueSet($this->defaultValueAge, $defaultValueAge);
         $this->defaultValueAge = $defaultValueAge;
         return $this;
@@ -2551,7 +2501,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation
      */
-    public function getDefaultValueAnnotation(): ?FHIRAnnotation
+    public function getDefaultValueAnnotation(): null|FHIRAnnotation
     {
         return $this->defaultValueAnnotation;
     }
@@ -2567,8 +2517,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $defaultValueAnnotation
      * @return static
      */
-    public function setDefaultValueAnnotation(?FHIRAnnotation $defaultValueAnnotation = null): object
+    public function setDefaultValueAnnotation(null|FHIRAnnotation $defaultValueAnnotation = null): self
     {
+        if (null === $defaultValueAnnotation) {
+            $defaultValueAnnotation = new FHIRAnnotation();
+        }
         $this->_trackValueSet($this->defaultValueAnnotation, $defaultValueAnnotation);
         $this->defaultValueAnnotation = $defaultValueAnnotation;
         return $this;
@@ -2583,7 +2536,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    public function getDefaultValueAttachment(): ?FHIRAttachment
+    public function getDefaultValueAttachment(): null|FHIRAttachment
     {
         return $this->defaultValueAttachment;
     }
@@ -2598,8 +2551,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment $defaultValueAttachment
      * @return static
      */
-    public function setDefaultValueAttachment(?FHIRAttachment $defaultValueAttachment = null): object
+    public function setDefaultValueAttachment(null|FHIRAttachment $defaultValueAttachment = null): self
     {
+        if (null === $defaultValueAttachment) {
+            $defaultValueAttachment = new FHIRAttachment();
+        }
         $this->_trackValueSet($this->defaultValueAttachment, $defaultValueAttachment);
         $this->defaultValueAttachment = $defaultValueAttachment;
         return $this;
@@ -2615,7 +2571,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getDefaultValueCodeableConcept(): ?FHIRCodeableConcept
+    public function getDefaultValueCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->defaultValueCodeableConcept;
     }
@@ -2631,8 +2587,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $defaultValueCodeableConcept
      * @return static
      */
-    public function setDefaultValueCodeableConcept(?FHIRCodeableConcept $defaultValueCodeableConcept = null): object
+    public function setDefaultValueCodeableConcept(null|FHIRCodeableConcept $defaultValueCodeableConcept = null): self
     {
+        if (null === $defaultValueCodeableConcept) {
+            $defaultValueCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->defaultValueCodeableConcept, $defaultValueCodeableConcept);
         $this->defaultValueCodeableConcept = $defaultValueCodeableConcept;
         return $this;
@@ -2647,7 +2606,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    public function getDefaultValueCoding(): ?FHIRCoding
+    public function getDefaultValueCoding(): null|FHIRCoding
     {
         return $this->defaultValueCoding;
     }
@@ -2662,8 +2621,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $defaultValueCoding
      * @return static
      */
-    public function setDefaultValueCoding(?FHIRCoding $defaultValueCoding = null): object
+    public function setDefaultValueCoding(null|FHIRCoding $defaultValueCoding = null): self
     {
+        if (null === $defaultValueCoding) {
+            $defaultValueCoding = new FHIRCoding();
+        }
         $this->_trackValueSet($this->defaultValueCoding, $defaultValueCoding);
         $this->defaultValueCoding = $defaultValueCoding;
         return $this;
@@ -2679,7 +2641,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint
      */
-    public function getDefaultValueContactPoint(): ?FHIRContactPoint
+    public function getDefaultValueContactPoint(): null|FHIRContactPoint
     {
         return $this->defaultValueContactPoint;
     }
@@ -2695,8 +2657,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint $defaultValueContactPoint
      * @return static
      */
-    public function setDefaultValueContactPoint(?FHIRContactPoint $defaultValueContactPoint = null): object
+    public function setDefaultValueContactPoint(null|FHIRContactPoint $defaultValueContactPoint = null): self
     {
+        if (null === $defaultValueContactPoint) {
+            $defaultValueContactPoint = new FHIRContactPoint();
+        }
         $this->_trackValueSet($this->defaultValueContactPoint, $defaultValueContactPoint);
         $this->defaultValueContactPoint = $defaultValueContactPoint;
         return $this;
@@ -2713,7 +2678,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount
      */
-    public function getDefaultValueCount(): ?FHIRCount
+    public function getDefaultValueCount(): null|FHIRCount
     {
         return $this->defaultValueCount;
     }
@@ -2730,8 +2695,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount $defaultValueCount
      * @return static
      */
-    public function setDefaultValueCount(?FHIRCount $defaultValueCount = null): object
+    public function setDefaultValueCount(null|FHIRCount $defaultValueCount = null): self
     {
+        if (null === $defaultValueCount) {
+            $defaultValueCount = new FHIRCount();
+        }
         $this->_trackValueSet($this->defaultValueCount, $defaultValueCount);
         $this->defaultValueCount = $defaultValueCount;
         return $this;
@@ -2746,7 +2714,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance
      */
-    public function getDefaultValueDistance(): ?FHIRDistance
+    public function getDefaultValueDistance(): null|FHIRDistance
     {
         return $this->defaultValueDistance;
     }
@@ -2761,8 +2729,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance $defaultValueDistance
      * @return static
      */
-    public function setDefaultValueDistance(?FHIRDistance $defaultValueDistance = null): object
+    public function setDefaultValueDistance(null|FHIRDistance $defaultValueDistance = null): self
     {
+        if (null === $defaultValueDistance) {
+            $defaultValueDistance = new FHIRDistance();
+        }
         $this->_trackValueSet($this->defaultValueDistance, $defaultValueDistance);
         $this->defaultValueDistance = $defaultValueDistance;
         return $this;
@@ -2777,7 +2748,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    public function getDefaultValueDuration(): ?FHIRDuration
+    public function getDefaultValueDuration(): null|FHIRDuration
     {
         return $this->defaultValueDuration;
     }
@@ -2792,8 +2763,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration $defaultValueDuration
      * @return static
      */
-    public function setDefaultValueDuration(?FHIRDuration $defaultValueDuration = null): object
+    public function setDefaultValueDuration(null|FHIRDuration $defaultValueDuration = null): self
     {
+        if (null === $defaultValueDuration) {
+            $defaultValueDuration = new FHIRDuration();
+        }
         $this->_trackValueSet($this->defaultValueDuration, $defaultValueDuration);
         $this->defaultValueDuration = $defaultValueDuration;
         return $this;
@@ -2808,7 +2782,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
-    public function getDefaultValueHumanName(): ?FHIRHumanName
+    public function getDefaultValueHumanName(): null|FHIRHumanName
     {
         return $this->defaultValueHumanName;
     }
@@ -2823,8 +2797,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName $defaultValueHumanName
      * @return static
      */
-    public function setDefaultValueHumanName(?FHIRHumanName $defaultValueHumanName = null): object
+    public function setDefaultValueHumanName(null|FHIRHumanName $defaultValueHumanName = null): self
     {
+        if (null === $defaultValueHumanName) {
+            $defaultValueHumanName = new FHIRHumanName();
+        }
         $this->_trackValueSet($this->defaultValueHumanName, $defaultValueHumanName);
         $this->defaultValueHumanName = $defaultValueHumanName;
         return $this;
@@ -2840,7 +2817,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getDefaultValueIdentifier(): ?FHIRIdentifier
+    public function getDefaultValueIdentifier(): null|FHIRIdentifier
     {
         return $this->defaultValueIdentifier;
     }
@@ -2856,8 +2833,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $defaultValueIdentifier
      * @return static
      */
-    public function setDefaultValueIdentifier(?FHIRIdentifier $defaultValueIdentifier = null): object
+    public function setDefaultValueIdentifier(null|FHIRIdentifier $defaultValueIdentifier = null): self
     {
+        if (null === $defaultValueIdentifier) {
+            $defaultValueIdentifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->defaultValueIdentifier, $defaultValueIdentifier);
         $this->defaultValueIdentifier = $defaultValueIdentifier;
         return $this;
@@ -2872,7 +2852,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    public function getDefaultValueMoney(): ?FHIRMoney
+    public function getDefaultValueMoney(): null|FHIRMoney
     {
         return $this->defaultValueMoney;
     }
@@ -2887,8 +2867,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMoney $defaultValueMoney
      * @return static
      */
-    public function setDefaultValueMoney(?FHIRMoney $defaultValueMoney = null): object
+    public function setDefaultValueMoney(null|FHIRMoney $defaultValueMoney = null): self
     {
+        if (null === $defaultValueMoney) {
+            $defaultValueMoney = new FHIRMoney();
+        }
         $this->_trackValueSet($this->defaultValueMoney, $defaultValueMoney);
         $this->defaultValueMoney = $defaultValueMoney;
         return $this;
@@ -2903,7 +2886,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getDefaultValuePeriod(): ?FHIRPeriod
+    public function getDefaultValuePeriod(): null|FHIRPeriod
     {
         return $this->defaultValuePeriod;
     }
@@ -2918,8 +2901,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $defaultValuePeriod
      * @return static
      */
-    public function setDefaultValuePeriod(?FHIRPeriod $defaultValuePeriod = null): object
+    public function setDefaultValuePeriod(null|FHIRPeriod $defaultValuePeriod = null): self
     {
+        if (null === $defaultValuePeriod) {
+            $defaultValuePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->defaultValuePeriod, $defaultValuePeriod);
         $this->defaultValuePeriod = $defaultValuePeriod;
         return $this;
@@ -2936,7 +2922,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getDefaultValueQuantity(): ?FHIRQuantity
+    public function getDefaultValueQuantity(): null|FHIRQuantity
     {
         return $this->defaultValueQuantity;
     }
@@ -2953,8 +2939,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $defaultValueQuantity
      * @return static
      */
-    public function setDefaultValueQuantity(?FHIRQuantity $defaultValueQuantity = null): object
+    public function setDefaultValueQuantity(null|FHIRQuantity $defaultValueQuantity = null): self
     {
+        if (null === $defaultValueQuantity) {
+            $defaultValueQuantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->defaultValueQuantity, $defaultValueQuantity);
         $this->defaultValueQuantity = $defaultValueQuantity;
         return $this;
@@ -2969,7 +2958,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getDefaultValueRange(): ?FHIRRange
+    public function getDefaultValueRange(): null|FHIRRange
     {
         return $this->defaultValueRange;
     }
@@ -2984,8 +2973,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $defaultValueRange
      * @return static
      */
-    public function setDefaultValueRange(?FHIRRange $defaultValueRange = null): object
+    public function setDefaultValueRange(null|FHIRRange $defaultValueRange = null): self
     {
+        if (null === $defaultValueRange) {
+            $defaultValueRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->defaultValueRange, $defaultValueRange);
         $this->defaultValueRange = $defaultValueRange;
         return $this;
@@ -3001,7 +2993,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    public function getDefaultValueRatio(): ?FHIRRatio
+    public function getDefaultValueRatio(): null|FHIRRatio
     {
         return $this->defaultValueRatio;
     }
@@ -3017,8 +3009,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRatio $defaultValueRatio
      * @return static
      */
-    public function setDefaultValueRatio(?FHIRRatio $defaultValueRatio = null): object
+    public function setDefaultValueRatio(null|FHIRRatio $defaultValueRatio = null): self
     {
+        if (null === $defaultValueRatio) {
+            $defaultValueRatio = new FHIRRatio();
+        }
         $this->_trackValueSet($this->defaultValueRatio, $defaultValueRatio);
         $this->defaultValueRatio = $defaultValueRatio;
         return $this;
@@ -3033,7 +3028,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getDefaultValueReference(): ?FHIRReference
+    public function getDefaultValueReference(): null|FHIRReference
     {
         return $this->defaultValueReference;
     }
@@ -3048,8 +3043,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $defaultValueReference
      * @return static
      */
-    public function setDefaultValueReference(?FHIRReference $defaultValueReference = null): object
+    public function setDefaultValueReference(null|FHIRReference $defaultValueReference = null): self
     {
+        if (null === $defaultValueReference) {
+            $defaultValueReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->defaultValueReference, $defaultValueReference);
         $this->defaultValueReference = $defaultValueReference;
         return $this;
@@ -3065,7 +3063,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    public function getDefaultValueSampledData(): ?FHIRSampledData
+    public function getDefaultValueSampledData(): null|FHIRSampledData
     {
         return $this->defaultValueSampledData;
     }
@@ -3081,8 +3079,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData $defaultValueSampledData
      * @return static
      */
-    public function setDefaultValueSampledData(?FHIRSampledData $defaultValueSampledData = null): object
+    public function setDefaultValueSampledData(null|FHIRSampledData $defaultValueSampledData = null): self
     {
+        if (null === $defaultValueSampledData) {
+            $defaultValueSampledData = new FHIRSampledData();
+        }
         $this->_trackValueSet($this->defaultValueSampledData, $defaultValueSampledData);
         $this->defaultValueSampledData = $defaultValueSampledData;
         return $this;
@@ -3101,7 +3102,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSignature
      */
-    public function getDefaultValueSignature(): ?FHIRSignature
+    public function getDefaultValueSignature(): null|FHIRSignature
     {
         return $this->defaultValueSignature;
     }
@@ -3120,8 +3121,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSignature $defaultValueSignature
      * @return static
      */
-    public function setDefaultValueSignature(?FHIRSignature $defaultValueSignature = null): object
+    public function setDefaultValueSignature(null|FHIRSignature $defaultValueSignature = null): self
     {
+        if (null === $defaultValueSignature) {
+            $defaultValueSignature = new FHIRSignature();
+        }
         $this->_trackValueSet($this->defaultValueSignature, $defaultValueSignature);
         $this->defaultValueSignature = $defaultValueSignature;
         return $this;
@@ -3140,7 +3144,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    public function getDefaultValueTiming(): ?FHIRTiming
+    public function getDefaultValueTiming(): null|FHIRTiming
     {
         return $this->defaultValueTiming;
     }
@@ -3159,8 +3163,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming $defaultValueTiming
      * @return static
      */
-    public function setDefaultValueTiming(?FHIRTiming $defaultValueTiming = null): object
+    public function setDefaultValueTiming(null|FHIRTiming $defaultValueTiming = null): self
     {
+        if (null === $defaultValueTiming) {
+            $defaultValueTiming = new FHIRTiming();
+        }
         $this->_trackValueSet($this->defaultValueTiming, $defaultValueTiming);
         $this->defaultValueTiming = $defaultValueTiming;
         return $this;
@@ -3175,7 +3182,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail
      */
-    public function getDefaultValueContactDetail(): ?FHIRContactDetail
+    public function getDefaultValueContactDetail(): null|FHIRContactDetail
     {
         return $this->defaultValueContactDetail;
     }
@@ -3190,8 +3197,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $defaultValueContactDetail
      * @return static
      */
-    public function setDefaultValueContactDetail(?FHIRContactDetail $defaultValueContactDetail = null): object
+    public function setDefaultValueContactDetail(null|FHIRContactDetail $defaultValueContactDetail = null): self
     {
+        if (null === $defaultValueContactDetail) {
+            $defaultValueContactDetail = new FHIRContactDetail();
+        }
         $this->_trackValueSet($this->defaultValueContactDetail, $defaultValueContactDetail);
         $this->defaultValueContactDetail = $defaultValueContactDetail;
         return $this;
@@ -3207,7 +3217,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContributor
      */
-    public function getDefaultValueContributor(): ?FHIRContributor
+    public function getDefaultValueContributor(): null|FHIRContributor
     {
         return $this->defaultValueContributor;
     }
@@ -3223,8 +3233,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContributor $defaultValueContributor
      * @return static
      */
-    public function setDefaultValueContributor(?FHIRContributor $defaultValueContributor = null): object
+    public function setDefaultValueContributor(null|FHIRContributor $defaultValueContributor = null): self
     {
+        if (null === $defaultValueContributor) {
+            $defaultValueContributor = new FHIRContributor();
+        }
         $this->_trackValueSet($this->defaultValueContributor, $defaultValueContributor);
         $this->defaultValueContributor = $defaultValueContributor;
         return $this;
@@ -3240,7 +3253,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement
      */
-    public function getDefaultValueDataRequirement(): ?FHIRDataRequirement
+    public function getDefaultValueDataRequirement(): null|FHIRDataRequirement
     {
         return $this->defaultValueDataRequirement;
     }
@@ -3256,8 +3269,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement $defaultValueDataRequirement
      * @return static
      */
-    public function setDefaultValueDataRequirement(?FHIRDataRequirement $defaultValueDataRequirement = null): object
+    public function setDefaultValueDataRequirement(null|FHIRDataRequirement $defaultValueDataRequirement = null): self
     {
+        if (null === $defaultValueDataRequirement) {
+            $defaultValueDataRequirement = new FHIRDataRequirement();
+        }
         $this->_trackValueSet($this->defaultValueDataRequirement, $defaultValueDataRequirement);
         $this->defaultValueDataRequirement = $defaultValueDataRequirement;
         return $this;
@@ -3274,7 +3290,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRExpression
      */
-    public function getDefaultValueExpression(): ?FHIRExpression
+    public function getDefaultValueExpression(): null|FHIRExpression
     {
         return $this->defaultValueExpression;
     }
@@ -3291,8 +3307,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRExpression $defaultValueExpression
      * @return static
      */
-    public function setDefaultValueExpression(?FHIRExpression $defaultValueExpression = null): object
+    public function setDefaultValueExpression(null|FHIRExpression $defaultValueExpression = null): self
     {
+        if (null === $defaultValueExpression) {
+            $defaultValueExpression = new FHIRExpression();
+        }
         $this->_trackValueSet($this->defaultValueExpression, $defaultValueExpression);
         $this->defaultValueExpression = $defaultValueExpression;
         return $this;
@@ -3309,7 +3328,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition
      */
-    public function getDefaultValueParameterDefinition(): ?FHIRParameterDefinition
+    public function getDefaultValueParameterDefinition(): null|FHIRParameterDefinition
     {
         return $this->defaultValueParameterDefinition;
     }
@@ -3326,8 +3345,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition $defaultValueParameterDefinition
      * @return static
      */
-    public function setDefaultValueParameterDefinition(?FHIRParameterDefinition $defaultValueParameterDefinition = null): object
+    public function setDefaultValueParameterDefinition(null|FHIRParameterDefinition $defaultValueParameterDefinition = null): self
     {
+        if (null === $defaultValueParameterDefinition) {
+            $defaultValueParameterDefinition = new FHIRParameterDefinition();
+        }
         $this->_trackValueSet($this->defaultValueParameterDefinition, $defaultValueParameterDefinition);
         $this->defaultValueParameterDefinition = $defaultValueParameterDefinition;
         return $this;
@@ -3343,7 +3365,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact
      */
-    public function getDefaultValueRelatedArtifact(): ?FHIRRelatedArtifact
+    public function getDefaultValueRelatedArtifact(): null|FHIRRelatedArtifact
     {
         return $this->defaultValueRelatedArtifact;
     }
@@ -3359,8 +3381,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact $defaultValueRelatedArtifact
      * @return static
      */
-    public function setDefaultValueRelatedArtifact(?FHIRRelatedArtifact $defaultValueRelatedArtifact = null): object
+    public function setDefaultValueRelatedArtifact(null|FHIRRelatedArtifact $defaultValueRelatedArtifact = null): self
     {
+        if (null === $defaultValueRelatedArtifact) {
+            $defaultValueRelatedArtifact = new FHIRRelatedArtifact();
+        }
         $this->_trackValueSet($this->defaultValueRelatedArtifact, $defaultValueRelatedArtifact);
         $this->defaultValueRelatedArtifact = $defaultValueRelatedArtifact;
         return $this;
@@ -3376,7 +3401,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition
      */
-    public function getDefaultValueTriggerDefinition(): ?FHIRTriggerDefinition
+    public function getDefaultValueTriggerDefinition(): null|FHIRTriggerDefinition
     {
         return $this->defaultValueTriggerDefinition;
     }
@@ -3392,8 +3417,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition $defaultValueTriggerDefinition
      * @return static
      */
-    public function setDefaultValueTriggerDefinition(?FHIRTriggerDefinition $defaultValueTriggerDefinition = null): object
+    public function setDefaultValueTriggerDefinition(null|FHIRTriggerDefinition $defaultValueTriggerDefinition = null): self
     {
+        if (null === $defaultValueTriggerDefinition) {
+            $defaultValueTriggerDefinition = new FHIRTriggerDefinition();
+        }
         $this->_trackValueSet($this->defaultValueTriggerDefinition, $defaultValueTriggerDefinition);
         $this->defaultValueTriggerDefinition = $defaultValueTriggerDefinition;
         return $this;
@@ -3411,7 +3439,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext
      */
-    public function getDefaultValueUsageContext(): ?FHIRUsageContext
+    public function getDefaultValueUsageContext(): null|FHIRUsageContext
     {
         return $this->defaultValueUsageContext;
     }
@@ -3429,8 +3457,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $defaultValueUsageContext
      * @return static
      */
-    public function setDefaultValueUsageContext(?FHIRUsageContext $defaultValueUsageContext = null): object
+    public function setDefaultValueUsageContext(null|FHIRUsageContext $defaultValueUsageContext = null): self
     {
+        if (null === $defaultValueUsageContext) {
+            $defaultValueUsageContext = new FHIRUsageContext();
+        }
         $this->_trackValueSet($this->defaultValueUsageContext, $defaultValueUsageContext);
         $this->defaultValueUsageContext = $defaultValueUsageContext;
         return $this;
@@ -3445,7 +3476,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage
      */
-    public function getDefaultValueDosage(): ?FHIRDosage
+    public function getDefaultValueDosage(): null|FHIRDosage
     {
         return $this->defaultValueDosage;
     }
@@ -3460,8 +3491,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage $defaultValueDosage
      * @return static
      */
-    public function setDefaultValueDosage(?FHIRDosage $defaultValueDosage = null): object
+    public function setDefaultValueDosage(null|FHIRDosage $defaultValueDosage = null): self
     {
+        if (null === $defaultValueDosage) {
+            $defaultValueDosage = new FHIRDosage();
+        }
         $this->_trackValueSet($this->defaultValueDosage, $defaultValueDosage);
         $this->defaultValueDosage = $defaultValueDosage;
         return $this;
@@ -3478,7 +3512,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMeta
      */
-    public function getDefaultValueMeta(): ?FHIRMeta
+    public function getDefaultValueMeta(): null|FHIRMeta
     {
         return $this->defaultValueMeta;
     }
@@ -3495,8 +3529,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMeta $defaultValueMeta
      * @return static
      */
-    public function setDefaultValueMeta(?FHIRMeta $defaultValueMeta = null): object
+    public function setDefaultValueMeta(null|FHIRMeta $defaultValueMeta = null): self
     {
+        if (null === $defaultValueMeta) {
+            $defaultValueMeta = new FHIRMeta();
+        }
         $this->_trackValueSet($this->defaultValueMeta, $defaultValueMeta);
         $this->defaultValueMeta = $defaultValueMeta;
         return $this;
@@ -3509,9 +3546,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * Optional field for this source.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getElement(): ?FHIRString
+    public function getElement(): null|FHIRString
     {
         return $this->element;
     }
@@ -3523,10 +3560,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * Optional field for this source.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $element
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $element
      * @return static
      */
-    public function setElement($element = null): object
+    public function setElement(null|string|FHIRStringPrimitive|FHIRString $element = null): self
     {
         if (null !== $element && !($element instanceof FHIRString)) {
             $element = new FHIRString($element);
@@ -3544,7 +3581,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapSourceListMode
      */
-    public function getListMode(): ?FHIRStructureMapSourceListMode
+    public function getListMode(): null|FHIRStructureMapSourceListMode
     {
         return $this->listMode;
     }
@@ -3558,8 +3595,11 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapSourceListMode $listMode
      * @return static
      */
-    public function setListMode(?FHIRStructureMapSourceListMode $listMode = null): object
+    public function setListMode(null|FHIRStructureMapSourceListMode $listMode = null): self
     {
+        if (null === $listMode) {
+            $listMode = new FHIRStructureMapSourceListMode();
+        }
         $this->_trackValueSet($this->listMode, $listMode);
         $this->listMode = $listMode;
         return $this;
@@ -3575,9 +3615,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * Named context for field, if a field is specified.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    public function getVariable(): ?FHIRId
+    public function getVariable(): null|FHIRId
     {
         return $this->variable;
     }
@@ -3592,10 +3632,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * Named context for field, if a field is specified.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $variable
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $variable
      * @return static
      */
-    public function setVariable($variable = null): object
+    public function setVariable(null|string|FHIRIdPrimitive|FHIRId $variable = null): self
     {
         if (null !== $variable && !($variable instanceof FHIRId)) {
             $variable = new FHIRId($variable);
@@ -3612,9 +3652,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * FHIRPath expression - must be true or the rule does not apply.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getCondition(): ?FHIRString
+    public function getCondition(): null|FHIRString
     {
         return $this->condition;
     }
@@ -3626,10 +3666,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      *
      * FHIRPath expression - must be true or the rule does not apply.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $condition
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $condition
      * @return static
      */
-    public function setCondition($condition = null): object
+    public function setCondition(null|string|FHIRStringPrimitive|FHIRString $condition = null): self
     {
         if (null !== $condition && !($condition instanceof FHIRString)) {
             $condition = new FHIRString($condition);
@@ -3647,9 +3687,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * FHIRPath expression - must be true or the mapping engine throws an error instead
      * of completing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getCheck(): ?FHIRString
+    public function getCheck(): null|FHIRString
     {
         return $this->check;
     }
@@ -3662,10 +3702,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * FHIRPath expression - must be true or the mapping engine throws an error instead
      * of completing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $check
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $check
      * @return static
      */
-    public function setCheck($check = null): object
+    public function setCheck(null|string|FHIRStringPrimitive|FHIRString $check = null): self
     {
         if (null !== $check && !($check instanceof FHIRString)) {
             $check = new FHIRString($check);
@@ -3683,9 +3723,9 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * A FHIRPath expression which specifies a message to put in the transform log when
      * content matching the source rule is found.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getLogMessage(): ?FHIRString
+    public function getLogMessage(): null|FHIRString
     {
         return $this->logMessage;
     }
@@ -3698,10 +3738,10 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      * A FHIRPath expression which specifies a message to put in the transform log when
      * content matching the source rule is found.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $logMessage
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $logMessage
      * @return static
      */
-    public function setLogMessage($logMessage = null): object
+    public function setLogMessage(null|string|FHIRStringPrimitive|FHIRString $logMessage = null): self
     {
         if (null !== $logMessage && !($logMessage instanceof FHIRString)) {
             $logMessage = new FHIRString($logMessage);
@@ -3719,7 +3759,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -4794,36 +4834,48 @@ class FHIRStructureMapSource extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapSource $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapSource
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRStructureMapSource::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRStructureMapSource::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRStructureMapSource(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRStructureMapSource)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRStructureMapSource)) {
             throw new \RuntimeException(sprintf(
-                'FHIRStructureMapSource::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapSource or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -5224,17 +5276,25 @@ class FHIRStructureMapSource extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('StructureMapSource'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getContext())) {
@@ -5543,7 +5603,7 @@ class FHIRStructureMapSource extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getContext())) {
@@ -5932,7 +5992,6 @@ class FHIRStructureMapSource extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

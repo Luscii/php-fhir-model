@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,19 +62,34 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRBooleanPrimitive;
+use HL7\FHIR\STU3\FHIRCodePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRAttachment;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceAvailableTime;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceNotAvailable;
 use HL7\FHIR\STU3\FHIRElement\FHIRBoolean;
+use HL7\FHIR\STU3\FHIRElement\FHIRCode;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\STU3\FHIRElement\FHIRContactPoint;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
+use HL7\FHIR\STU3\FHIRElement\FHIRId;
 use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
+use HL7\FHIR\STU3\FHIRElement\FHIRMeta;
+use HL7\FHIR\STU3\FHIRElement\FHIRNarrative;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRIdPrimitive;
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRTypeMap;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * The details of a healthcare service available at a location.
@@ -87,181 +102,39 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE;
+
+    const FIELD_IDENTIFIER = 'identifier';
     const FIELD_ACTIVE = 'active';
     const FIELD_ACTIVE_EXT = '_active';
-    const FIELD_APPOINTMENT_REQUIRED = 'appointmentRequired';
-    const FIELD_APPOINTMENT_REQUIRED_EXT = '_appointmentRequired';
-    const FIELD_AVAILABILITY_EXCEPTIONS = 'availabilityExceptions';
-    const FIELD_AVAILABILITY_EXCEPTIONS_EXT = '_availabilityExceptions';
-    const FIELD_AVAILABLE_TIME = 'availableTime';
+    const FIELD_PROVIDED_BY = 'providedBy';
     const FIELD_CATEGORY = 'category';
-    const FIELD_CHARACTERISTIC = 'characteristic';
-    const FIELD_COMMENT = 'comment';
-    const FIELD_COMMENT_EXT = '_comment';
-    const FIELD_COVERAGE_AREA = 'coverageArea';
-    const FIELD_ELIGIBILITY = 'eligibility';
-    const FIELD_ELIGIBILITY_NOTE = 'eligibilityNote';
-    const FIELD_ELIGIBILITY_NOTE_EXT = '_eligibilityNote';
-    const FIELD_ENDPOINT = 'endpoint';
-    const FIELD_EXTRA_DETAILS = 'extraDetails';
-    const FIELD_EXTRA_DETAILS_EXT = '_extraDetails';
-    const FIELD_IDENTIFIER = 'identifier';
+    const FIELD_TYPE = 'type';
+    const FIELD_SPECIALTY = 'specialty';
     const FIELD_LOCATION = 'location';
     const FIELD_NAME = 'name';
     const FIELD_NAME_EXT = '_name';
-    const FIELD_NOT_AVAILABLE = 'notAvailable';
+    const FIELD_COMMENT = 'comment';
+    const FIELD_COMMENT_EXT = '_comment';
+    const FIELD_EXTRA_DETAILS = 'extraDetails';
+    const FIELD_EXTRA_DETAILS_EXT = '_extraDetails';
     const FIELD_PHOTO = 'photo';
+    const FIELD_TELECOM = 'telecom';
+    const FIELD_COVERAGE_AREA = 'coverageArea';
+    const FIELD_SERVICE_PROVISION_CODE = 'serviceProvisionCode';
+    const FIELD_ELIGIBILITY = 'eligibility';
+    const FIELD_ELIGIBILITY_NOTE = 'eligibilityNote';
+    const FIELD_ELIGIBILITY_NOTE_EXT = '_eligibilityNote';
     const FIELD_PROGRAM_NAME = 'programName';
     const FIELD_PROGRAM_NAME_EXT = '_programName';
-    const FIELD_PROVIDED_BY = 'providedBy';
+    const FIELD_CHARACTERISTIC = 'characteristic';
     const FIELD_REFERRAL_METHOD = 'referralMethod';
-    const FIELD_SERVICE_PROVISION_CODE = 'serviceProvisionCode';
-    const FIELD_SPECIALTY = 'specialty';
-    const FIELD_TELECOM = 'telecom';
-    const FIELD_TYPE = 'type';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Whether this healthcareservice record is in active use.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
-     */
-    protected $active = null;
-
-    /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Indicates whether or not a prospective consumer will require an appointment for
-     * a particular service at a site to be provided by the Organization. Indicates if
-     * an appointment is required for access to this service.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
-     */
-    protected $appointmentRequired = null;
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A description of site availability exceptions, e.g. public holiday availability.
-     * Succinctly describing all possible exceptions to normal site availability as
-     * details in the available Times and not available Times.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $availabilityExceptions = null;
-
-    /**
-     * The details of a healthcare service available at a location.
-     *
-     * A collection of times that the Service Site is available.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceAvailableTime[]
-     */
-    protected $availableTime = [];
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifies the broad category of service being performed or delivered.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    protected $category = null;
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Collection of characteristics (attributes).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
-     */
-    protected $characteristic = [];
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Any additional description of the service and/or any specific issues not covered
-     * by the other attributes, which can be displayed as further detail under the
-     * serviceName.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $comment = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The location(s) that this service is available to (not where the service is
-     * provided).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $coverageArea = [];
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Does this service have specific eligibility requirements that need to be met in
-     * order to use the service?
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    protected $eligibility = null;
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Describes the eligibility conditions for the service.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $eligibilityNote = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Technical endpoints providing access to services operated for the specific
-     * healthcare services defined at this resource.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $endpoint = [];
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Extra details about the service that can't be placed in the other fields.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $extraDetails = null;
+    const FIELD_APPOINTMENT_REQUIRED = 'appointmentRequired';
+    const FIELD_APPOINTMENT_REQUIRED_EXT = '_appointmentRequired';
+    const FIELD_AVAILABLE_TIME = 'availableTime';
+    const FIELD_NOT_AVAILABLE = 'notAvailable';
+    const FIELD_AVAILABILITY_EXCEPTIONS = 'availabilityExceptions';
+    const FIELD_AVAILABILITY_EXCEPTIONS_EXT = '_availabilityExceptions';
+    const FIELD_ENDPOINT = 'endpoint';
 
     /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
@@ -272,64 +145,16 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
-    protected $identifier = [];
-
+    protected null|array $identifier = [];
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The location(s) where this healthcare service may be provided.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $location = [];
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
+     * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Further description of the service as it would be presented to a consumer while
-     * searching.
+     * Whether this healthcareservice record is in active use.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
-    protected $name = null;
-
-    /**
-     * The details of a healthcare service available at a location.
-     *
-     * The HealthcareService is not available during this period of time due to the
-     * provided reason.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceNotAvailable[]
-     */
-    protected $notAvailable = [];
-
-    /**
-     * For referring to data content defined in other formats.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * If there is a photo/symbol associated with this HealthcareService, it may be
-     * included here to facilitate quick identification of the service in a list.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment
-     */
-    protected $photo = null;
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Program Names that can be used to categorize the service.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
-     */
-    protected $programName = [];
-
+    protected null|FHIRBoolean $active = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -339,34 +164,29 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $providedBy = null;
-
+    protected null|FHIRReference $providedBy = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Ways that the service accepts referrals, if this is not provided then it is
-     * implied that no referral is required.
+     * Identifies the broad category of service being performed or delivered.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    protected $referralMethod = [];
-
+    protected null|FHIRCodeableConcept $category = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The code(s) that detail the conditions under which the healthcare service is
-     * available/offered.
+     * The specific type of service that may be delivered or performed.
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    protected $serviceProvisionCode = [];
-
+    protected null|array $type = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -378,8 +198,61 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    protected $specialty = [];
-
+    protected null|array $specialty = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The location(s) where this healthcare service may be provided.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $location = [];
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Further description of the service as it would be presented to a consumer while
+     * searching.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $name = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Any additional description of the service and/or any specific issues not covered
+     * by the other attributes, which can be displayed as further detail under the
+     * serviceName.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $comment = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Extra details about the service that can't be placed in the other fields.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $extraDetails = null;
+    /**
+     * For referring to data content defined in other formats.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * If there is a photo/symbol associated with this HealthcareService, it may be
+     * included here to facilitate quick identification of the service in a list.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment
+     */
+    protected null|FHIRAttachment $photo = null;
     /**
      * Details for all kinds of technology mediated contact points for a person or
      * organization, including telephone, email, etc.
@@ -390,266 +263,154 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPoint[]
      */
-    protected $telecom = [];
-
+    protected null|array $telecom = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The location(s) that this service is available to (not where the service is
+     * provided).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $coverageArea = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The specific type of service that may be delivered or performed.
+     * The code(s) that detail the conditions under which the healthcare service is
+     * available/offered.
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    protected $type = [];
+    protected null|array $serviceProvisionCode = [];
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Does this service have specific eligibility requirements that need to be met in
+     * order to use the service?
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected null|FHIRCodeableConcept $eligibility = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Describes the eligibility conditions for the service.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $eligibilityNote = null;
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Program Names that can be used to categorize the service.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
+     */
+    protected null|array $programName = [];
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Collection of characteristics (attributes).
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     */
+    protected null|array $characteristic = [];
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Ways that the service accepts referrals, if this is not provided then it is
+     * implied that no referral is required.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     */
+    protected null|array $referralMethod = [];
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates whether or not a prospective consumer will require an appointment for
+     * a particular service at a site to be provided by the Organization. Indicates if
+     * an appointment is required for access to this service.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     */
+    protected null|FHIRBoolean $appointmentRequired = null;
+    /**
+     * The details of a healthcare service available at a location.
+     *
+     * A collection of times that the Service Site is available.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceAvailableTime[]
+     */
+    protected null|array $availableTime = [];
+    /**
+     * The details of a healthcare service available at a location.
+     *
+     * The HealthcareService is not available during this period of time due to the
+     * provided reason.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceNotAvailable[]
+     */
+    protected null|array $notAvailable = [];
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A description of site availability exceptions, e.g. public holiday availability.
+     * Succinctly describing all possible exceptions to normal site availability as
+     * details in the available Times and not available Times.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    protected null|FHIRString $availabilityExceptions = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Technical endpoints providing access to services operated for the specific
+     * healthcare services defined at this resource.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $endpoint = [];
 
     /**
      * Validation map for fields in type HealthcareService
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRHealthcareService Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRHealthcareService::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_ACTIVE]) || isset($data[self::FIELD_ACTIVE_EXT])) {
-            if (isset($data[self::FIELD_ACTIVE])) {
-                $value = $data[self::FIELD_ACTIVE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ACTIVE_EXT]) && is_array($data[self::FIELD_ACTIVE_EXT])) {
-                $ext = $data[self::FIELD_ACTIVE_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRBoolean) {
-                    $this->setActive($value);
-                } else if (is_array($value)) {
-                    $this->setActive(new FHIRBoolean(array_merge($ext, $value)));
-                } else {
-                    $this->setActive(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setActive(new FHIRBoolean($ext));
-            }
-        }
-        if (isset($data[self::FIELD_APPOINTMENT_REQUIRED]) || isset($data[self::FIELD_APPOINTMENT_REQUIRED_EXT])) {
-            if (isset($data[self::FIELD_APPOINTMENT_REQUIRED])) {
-                $value = $data[self::FIELD_APPOINTMENT_REQUIRED];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_APPOINTMENT_REQUIRED_EXT]) && is_array($data[self::FIELD_APPOINTMENT_REQUIRED_EXT])) {
-                $ext = $data[self::FIELD_APPOINTMENT_REQUIRED_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRBoolean) {
-                    $this->setAppointmentRequired($value);
-                } else if (is_array($value)) {
-                    $this->setAppointmentRequired(new FHIRBoolean(array_merge($ext, $value)));
-                } else {
-                    $this->setAppointmentRequired(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setAppointmentRequired(new FHIRBoolean($ext));
-            }
-        }
-        if (isset($data[self::FIELD_AVAILABILITY_EXCEPTIONS]) || isset($data[self::FIELD_AVAILABILITY_EXCEPTIONS_EXT])) {
-            if (isset($data[self::FIELD_AVAILABILITY_EXCEPTIONS])) {
-                $value = $data[self::FIELD_AVAILABILITY_EXCEPTIONS];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_AVAILABILITY_EXCEPTIONS_EXT]) && is_array($data[self::FIELD_AVAILABILITY_EXCEPTIONS_EXT])) {
-                $ext = $data[self::FIELD_AVAILABILITY_EXCEPTIONS_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setAvailabilityExceptions($value);
-                } else if (is_array($value)) {
-                    $this->setAvailabilityExceptions(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setAvailabilityExceptions(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setAvailabilityExceptions(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_AVAILABLE_TIME])) {
-            if (is_array($data[self::FIELD_AVAILABLE_TIME])) {
-                foreach($data[self::FIELD_AVAILABLE_TIME] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRHealthcareServiceAvailableTime) {
-                        $this->addAvailableTime($v);
-                    } else {
-                        $this->addAvailableTime(new FHIRHealthcareServiceAvailableTime($v));
-                    }
-                }
-            } else if ($data[self::FIELD_AVAILABLE_TIME] instanceof FHIRHealthcareServiceAvailableTime) {
-                $this->addAvailableTime($data[self::FIELD_AVAILABLE_TIME]);
-            } else {
-                $this->addAvailableTime(new FHIRHealthcareServiceAvailableTime($data[self::FIELD_AVAILABLE_TIME]));
-            }
-        }
-        if (isset($data[self::FIELD_CATEGORY])) {
-            if ($data[self::FIELD_CATEGORY] instanceof FHIRCodeableConcept) {
-                $this->setCategory($data[self::FIELD_CATEGORY]);
-            } else {
-                $this->setCategory(new FHIRCodeableConcept($data[self::FIELD_CATEGORY]));
-            }
-        }
-        if (isset($data[self::FIELD_CHARACTERISTIC])) {
-            if (is_array($data[self::FIELD_CHARACTERISTIC])) {
-                foreach($data[self::FIELD_CHARACTERISTIC] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRCodeableConcept) {
-                        $this->addCharacteristic($v);
-                    } else {
-                        $this->addCharacteristic(new FHIRCodeableConcept($v));
-                    }
-                }
-            } else if ($data[self::FIELD_CHARACTERISTIC] instanceof FHIRCodeableConcept) {
-                $this->addCharacteristic($data[self::FIELD_CHARACTERISTIC]);
-            } else {
-                $this->addCharacteristic(new FHIRCodeableConcept($data[self::FIELD_CHARACTERISTIC]));
-            }
-        }
-        if (isset($data[self::FIELD_COMMENT]) || isset($data[self::FIELD_COMMENT_EXT])) {
-            if (isset($data[self::FIELD_COMMENT])) {
-                $value = $data[self::FIELD_COMMENT];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_COMMENT_EXT]) && is_array($data[self::FIELD_COMMENT_EXT])) {
-                $ext = $data[self::FIELD_COMMENT_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setComment($value);
-                } else if (is_array($value)) {
-                    $this->setComment(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setComment(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setComment(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_COVERAGE_AREA])) {
-            if (is_array($data[self::FIELD_COVERAGE_AREA])) {
-                foreach($data[self::FIELD_COVERAGE_AREA] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addCoverageArea($v);
-                    } else {
-                        $this->addCoverageArea(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_COVERAGE_AREA] instanceof FHIRReference) {
-                $this->addCoverageArea($data[self::FIELD_COVERAGE_AREA]);
-            } else {
-                $this->addCoverageArea(new FHIRReference($data[self::FIELD_COVERAGE_AREA]));
-            }
-        }
-        if (isset($data[self::FIELD_ELIGIBILITY])) {
-            if ($data[self::FIELD_ELIGIBILITY] instanceof FHIRCodeableConcept) {
-                $this->setEligibility($data[self::FIELD_ELIGIBILITY]);
-            } else {
-                $this->setEligibility(new FHIRCodeableConcept($data[self::FIELD_ELIGIBILITY]));
-            }
-        }
-        if (isset($data[self::FIELD_ELIGIBILITY_NOTE]) || isset($data[self::FIELD_ELIGIBILITY_NOTE_EXT])) {
-            if (isset($data[self::FIELD_ELIGIBILITY_NOTE])) {
-                $value = $data[self::FIELD_ELIGIBILITY_NOTE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ELIGIBILITY_NOTE_EXT]) && is_array($data[self::FIELD_ELIGIBILITY_NOTE_EXT])) {
-                $ext = $data[self::FIELD_ELIGIBILITY_NOTE_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setEligibilityNote($value);
-                } else if (is_array($value)) {
-                    $this->setEligibilityNote(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setEligibilityNote(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setEligibilityNote(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_ENDPOINT])) {
-            if (is_array($data[self::FIELD_ENDPOINT])) {
-                foreach($data[self::FIELD_ENDPOINT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addEndpoint($v);
-                    } else {
-                        $this->addEndpoint(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_ENDPOINT] instanceof FHIRReference) {
-                $this->addEndpoint($data[self::FIELD_ENDPOINT]);
-            } else {
-                $this->addEndpoint(new FHIRReference($data[self::FIELD_ENDPOINT]));
-            }
-        }
-        if (isset($data[self::FIELD_EXTRA_DETAILS]) || isset($data[self::FIELD_EXTRA_DETAILS_EXT])) {
-            if (isset($data[self::FIELD_EXTRA_DETAILS])) {
-                $value = $data[self::FIELD_EXTRA_DETAILS];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_EXTRA_DETAILS_EXT]) && is_array($data[self::FIELD_EXTRA_DETAILS_EXT])) {
-                $ext = $data[self::FIELD_EXTRA_DETAILS_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setExtraDetails($value);
-                } else if (is_array($value)) {
-                    $this->setExtraDetails(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setExtraDetails(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setExtraDetails(new FHIRString($ext));
-            }
-        }
         if (isset($data[self::FIELD_IDENTIFIER])) {
             if (is_array($data[self::FIELD_IDENTIFIER])) {
                 foreach($data[self::FIELD_IDENTIFIER] as $v) {
@@ -662,10 +423,75 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                         $this->addIdentifier(new FHIRIdentifier($v));
                     }
                 }
-            } else if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+            } elseif ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
                 $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
             } else {
                 $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+            }
+        }
+        if (isset($data[self::FIELD_ACTIVE]) || isset($data[self::FIELD_ACTIVE_EXT])) {
+            $value = $data[self::FIELD_ACTIVE] ?? null;
+            $ext = (isset($data[self::FIELD_ACTIVE_EXT]) && is_array($data[self::FIELD_ACTIVE_EXT])) ? $data[self::FIELD_ACTIVE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRBoolean) {
+                    $this->setActive($value);
+                } else if (is_array($value)) {
+                    $this->setActive(new FHIRBoolean(array_merge($ext, $value)));
+                } else {
+                    $this->setActive(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setActive(new FHIRBoolean($ext));
+            }
+        }
+        if (isset($data[self::FIELD_PROVIDED_BY])) {
+            if ($data[self::FIELD_PROVIDED_BY] instanceof FHIRReference) {
+                $this->setProvidedBy($data[self::FIELD_PROVIDED_BY]);
+            } else {
+                $this->setProvidedBy(new FHIRReference($data[self::FIELD_PROVIDED_BY]));
+            }
+        }
+        if (isset($data[self::FIELD_CATEGORY])) {
+            if ($data[self::FIELD_CATEGORY] instanceof FHIRCodeableConcept) {
+                $this->setCategory($data[self::FIELD_CATEGORY]);
+            } else {
+                $this->setCategory(new FHIRCodeableConcept($data[self::FIELD_CATEGORY]));
+            }
+        }
+        if (isset($data[self::FIELD_TYPE])) {
+            if (is_array($data[self::FIELD_TYPE])) {
+                foreach($data[self::FIELD_TYPE] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRCodeableConcept) {
+                        $this->addType($v);
+                    } else {
+                        $this->addType(new FHIRCodeableConcept($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
+                $this->addType($data[self::FIELD_TYPE]);
+            } else {
+                $this->addType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
+            }
+        }
+        if (isset($data[self::FIELD_SPECIALTY])) {
+            if (is_array($data[self::FIELD_SPECIALTY])) {
+                foreach($data[self::FIELD_SPECIALTY] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRCodeableConcept) {
+                        $this->addSpecialty($v);
+                    } else {
+                        $this->addSpecialty(new FHIRCodeableConcept($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_SPECIALTY] instanceof FHIRCodeableConcept) {
+                $this->addSpecialty($data[self::FIELD_SPECIALTY]);
+            } else {
+                $this->addSpecialty(new FHIRCodeableConcept($data[self::FIELD_SPECIALTY]));
             }
         }
         if (isset($data[self::FIELD_LOCATION])) {
@@ -680,23 +506,15 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                         $this->addLocation(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_LOCATION] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_LOCATION] instanceof FHIRReference) {
                 $this->addLocation($data[self::FIELD_LOCATION]);
             } else {
                 $this->addLocation(new FHIRReference($data[self::FIELD_LOCATION]));
             }
         }
         if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
-            if (isset($data[self::FIELD_NAME])) {
-                $value = $data[self::FIELD_NAME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) {
-                $ext = $data[self::FIELD_NAME_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_NAME] ?? null;
+            $ext = (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) ? $data[self::FIELD_NAME_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->setName($value);
@@ -705,26 +523,38 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 } else {
                     $this->setName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setName(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_NOT_AVAILABLE])) {
-            if (is_array($data[self::FIELD_NOT_AVAILABLE])) {
-                foreach($data[self::FIELD_NOT_AVAILABLE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRHealthcareServiceNotAvailable) {
-                        $this->addNotAvailable($v);
-                    } else {
-                        $this->addNotAvailable(new FHIRHealthcareServiceNotAvailable($v));
-                    }
+        if (isset($data[self::FIELD_COMMENT]) || isset($data[self::FIELD_COMMENT_EXT])) {
+            $value = $data[self::FIELD_COMMENT] ?? null;
+            $ext = (isset($data[self::FIELD_COMMENT_EXT]) && is_array($data[self::FIELD_COMMENT_EXT])) ? $data[self::FIELD_COMMENT_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setComment($value);
+                } else if (is_array($value)) {
+                    $this->setComment(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setComment(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ($data[self::FIELD_NOT_AVAILABLE] instanceof FHIRHealthcareServiceNotAvailable) {
-                $this->addNotAvailable($data[self::FIELD_NOT_AVAILABLE]);
-            } else {
-                $this->addNotAvailable(new FHIRHealthcareServiceNotAvailable($data[self::FIELD_NOT_AVAILABLE]));
+            } elseif ([] !== $ext) {
+                $this->setComment(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_EXTRA_DETAILS]) || isset($data[self::FIELD_EXTRA_DETAILS_EXT])) {
+            $value = $data[self::FIELD_EXTRA_DETAILS] ?? null;
+            $ext = (isset($data[self::FIELD_EXTRA_DETAILS_EXT]) && is_array($data[self::FIELD_EXTRA_DETAILS_EXT])) ? $data[self::FIELD_EXTRA_DETAILS_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setExtraDetails($value);
+                } else if (is_array($value)) {
+                    $this->setExtraDetails(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setExtraDetails(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setExtraDetails(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_PHOTO])) {
@@ -734,17 +564,85 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 $this->setPhoto(new FHIRAttachment($data[self::FIELD_PHOTO]));
             }
         }
+        if (isset($data[self::FIELD_TELECOM])) {
+            if (is_array($data[self::FIELD_TELECOM])) {
+                foreach($data[self::FIELD_TELECOM] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRContactPoint) {
+                        $this->addTelecom($v);
+                    } else {
+                        $this->addTelecom(new FHIRContactPoint($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_TELECOM] instanceof FHIRContactPoint) {
+                $this->addTelecom($data[self::FIELD_TELECOM]);
+            } else {
+                $this->addTelecom(new FHIRContactPoint($data[self::FIELD_TELECOM]));
+            }
+        }
+        if (isset($data[self::FIELD_COVERAGE_AREA])) {
+            if (is_array($data[self::FIELD_COVERAGE_AREA])) {
+                foreach($data[self::FIELD_COVERAGE_AREA] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addCoverageArea($v);
+                    } else {
+                        $this->addCoverageArea(new FHIRReference($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_COVERAGE_AREA] instanceof FHIRReference) {
+                $this->addCoverageArea($data[self::FIELD_COVERAGE_AREA]);
+            } else {
+                $this->addCoverageArea(new FHIRReference($data[self::FIELD_COVERAGE_AREA]));
+            }
+        }
+        if (isset($data[self::FIELD_SERVICE_PROVISION_CODE])) {
+            if (is_array($data[self::FIELD_SERVICE_PROVISION_CODE])) {
+                foreach($data[self::FIELD_SERVICE_PROVISION_CODE] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRCodeableConcept) {
+                        $this->addServiceProvisionCode($v);
+                    } else {
+                        $this->addServiceProvisionCode(new FHIRCodeableConcept($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_SERVICE_PROVISION_CODE] instanceof FHIRCodeableConcept) {
+                $this->addServiceProvisionCode($data[self::FIELD_SERVICE_PROVISION_CODE]);
+            } else {
+                $this->addServiceProvisionCode(new FHIRCodeableConcept($data[self::FIELD_SERVICE_PROVISION_CODE]));
+            }
+        }
+        if (isset($data[self::FIELD_ELIGIBILITY])) {
+            if ($data[self::FIELD_ELIGIBILITY] instanceof FHIRCodeableConcept) {
+                $this->setEligibility($data[self::FIELD_ELIGIBILITY]);
+            } else {
+                $this->setEligibility(new FHIRCodeableConcept($data[self::FIELD_ELIGIBILITY]));
+            }
+        }
+        if (isset($data[self::FIELD_ELIGIBILITY_NOTE]) || isset($data[self::FIELD_ELIGIBILITY_NOTE_EXT])) {
+            $value = $data[self::FIELD_ELIGIBILITY_NOTE] ?? null;
+            $ext = (isset($data[self::FIELD_ELIGIBILITY_NOTE_EXT]) && is_array($data[self::FIELD_ELIGIBILITY_NOTE_EXT])) ? $data[self::FIELD_ELIGIBILITY_NOTE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setEligibilityNote($value);
+                } else if (is_array($value)) {
+                    $this->setEligibilityNote(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setEligibilityNote(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setEligibilityNote(new FHIRString($ext));
+            }
+        }
         if (isset($data[self::FIELD_PROGRAM_NAME]) || isset($data[self::FIELD_PROGRAM_NAME_EXT])) {
-            if (isset($data[self::FIELD_PROGRAM_NAME])) {
-                $value = $data[self::FIELD_PROGRAM_NAME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_PROGRAM_NAME_EXT]) && is_array($data[self::FIELD_PROGRAM_NAME_EXT])) {
-                $ext = $data[self::FIELD_PROGRAM_NAME_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_PROGRAM_NAME] ?? null;
+            $ext = (isset($data[self::FIELD_PROGRAM_NAME_EXT]) && is_array($data[self::FIELD_PROGRAM_NAME_EXT])) ? $data[self::FIELD_PROGRAM_NAME_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->addProgramName($value);
@@ -766,17 +664,28 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 } else {
                     $this->addProgramName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 foreach($ext as $iext) {
                     $this->addProgramName(new FHIRString($iext));
                 }
             }
         }
-        if (isset($data[self::FIELD_PROVIDED_BY])) {
-            if ($data[self::FIELD_PROVIDED_BY] instanceof FHIRReference) {
-                $this->setProvidedBy($data[self::FIELD_PROVIDED_BY]);
+        if (isset($data[self::FIELD_CHARACTERISTIC])) {
+            if (is_array($data[self::FIELD_CHARACTERISTIC])) {
+                foreach($data[self::FIELD_CHARACTERISTIC] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRCodeableConcept) {
+                        $this->addCharacteristic($v);
+                    } else {
+                        $this->addCharacteristic(new FHIRCodeableConcept($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_CHARACTERISTIC] instanceof FHIRCodeableConcept) {
+                $this->addCharacteristic($data[self::FIELD_CHARACTERISTIC]);
             } else {
-                $this->setProvidedBy(new FHIRReference($data[self::FIELD_PROVIDED_BY]));
+                $this->addCharacteristic(new FHIRCodeableConcept($data[self::FIELD_CHARACTERISTIC]));
             }
         }
         if (isset($data[self::FIELD_REFERRAL_METHOD])) {
@@ -791,90 +700,103 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                         $this->addReferralMethod(new FHIRCodeableConcept($v));
                     }
                 }
-            } else if ($data[self::FIELD_REFERRAL_METHOD] instanceof FHIRCodeableConcept) {
+            } elseif ($data[self::FIELD_REFERRAL_METHOD] instanceof FHIRCodeableConcept) {
                 $this->addReferralMethod($data[self::FIELD_REFERRAL_METHOD]);
             } else {
                 $this->addReferralMethod(new FHIRCodeableConcept($data[self::FIELD_REFERRAL_METHOD]));
             }
         }
-        if (isset($data[self::FIELD_SERVICE_PROVISION_CODE])) {
-            if (is_array($data[self::FIELD_SERVICE_PROVISION_CODE])) {
-                foreach($data[self::FIELD_SERVICE_PROVISION_CODE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRCodeableConcept) {
-                        $this->addServiceProvisionCode($v);
-                    } else {
-                        $this->addServiceProvisionCode(new FHIRCodeableConcept($v));
-                    }
+        if (isset($data[self::FIELD_APPOINTMENT_REQUIRED]) || isset($data[self::FIELD_APPOINTMENT_REQUIRED_EXT])) {
+            $value = $data[self::FIELD_APPOINTMENT_REQUIRED] ?? null;
+            $ext = (isset($data[self::FIELD_APPOINTMENT_REQUIRED_EXT]) && is_array($data[self::FIELD_APPOINTMENT_REQUIRED_EXT])) ? $data[self::FIELD_APPOINTMENT_REQUIRED_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRBoolean) {
+                    $this->setAppointmentRequired($value);
+                } else if (is_array($value)) {
+                    $this->setAppointmentRequired(new FHIRBoolean(array_merge($ext, $value)));
+                } else {
+                    $this->setAppointmentRequired(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ($data[self::FIELD_SERVICE_PROVISION_CODE] instanceof FHIRCodeableConcept) {
-                $this->addServiceProvisionCode($data[self::FIELD_SERVICE_PROVISION_CODE]);
-            } else {
-                $this->addServiceProvisionCode(new FHIRCodeableConcept($data[self::FIELD_SERVICE_PROVISION_CODE]));
+            } elseif ([] !== $ext) {
+                $this->setAppointmentRequired(new FHIRBoolean($ext));
             }
         }
-        if (isset($data[self::FIELD_SPECIALTY])) {
-            if (is_array($data[self::FIELD_SPECIALTY])) {
-                foreach($data[self::FIELD_SPECIALTY] as $v) {
+        if (isset($data[self::FIELD_AVAILABLE_TIME])) {
+            if (is_array($data[self::FIELD_AVAILABLE_TIME])) {
+                foreach($data[self::FIELD_AVAILABLE_TIME] as $v) {
                     if (null === $v) {
                         continue;
                     }
-                    if ($v instanceof FHIRCodeableConcept) {
-                        $this->addSpecialty($v);
+                    if ($v instanceof FHIRHealthcareServiceAvailableTime) {
+                        $this->addAvailableTime($v);
                     } else {
-                        $this->addSpecialty(new FHIRCodeableConcept($v));
+                        $this->addAvailableTime(new FHIRHealthcareServiceAvailableTime($v));
                     }
                 }
-            } else if ($data[self::FIELD_SPECIALTY] instanceof FHIRCodeableConcept) {
-                $this->addSpecialty($data[self::FIELD_SPECIALTY]);
+            } elseif ($data[self::FIELD_AVAILABLE_TIME] instanceof FHIRHealthcareServiceAvailableTime) {
+                $this->addAvailableTime($data[self::FIELD_AVAILABLE_TIME]);
             } else {
-                $this->addSpecialty(new FHIRCodeableConcept($data[self::FIELD_SPECIALTY]));
+                $this->addAvailableTime(new FHIRHealthcareServiceAvailableTime($data[self::FIELD_AVAILABLE_TIME]));
             }
         }
-        if (isset($data[self::FIELD_TELECOM])) {
-            if (is_array($data[self::FIELD_TELECOM])) {
-                foreach($data[self::FIELD_TELECOM] as $v) {
+        if (isset($data[self::FIELD_NOT_AVAILABLE])) {
+            if (is_array($data[self::FIELD_NOT_AVAILABLE])) {
+                foreach($data[self::FIELD_NOT_AVAILABLE] as $v) {
                     if (null === $v) {
                         continue;
                     }
-                    if ($v instanceof FHIRContactPoint) {
-                        $this->addTelecom($v);
+                    if ($v instanceof FHIRHealthcareServiceNotAvailable) {
+                        $this->addNotAvailable($v);
                     } else {
-                        $this->addTelecom(new FHIRContactPoint($v));
+                        $this->addNotAvailable(new FHIRHealthcareServiceNotAvailable($v));
                     }
                 }
-            } else if ($data[self::FIELD_TELECOM] instanceof FHIRContactPoint) {
-                $this->addTelecom($data[self::FIELD_TELECOM]);
+            } elseif ($data[self::FIELD_NOT_AVAILABLE] instanceof FHIRHealthcareServiceNotAvailable) {
+                $this->addNotAvailable($data[self::FIELD_NOT_AVAILABLE]);
             } else {
-                $this->addTelecom(new FHIRContactPoint($data[self::FIELD_TELECOM]));
+                $this->addNotAvailable(new FHIRHealthcareServiceNotAvailable($data[self::FIELD_NOT_AVAILABLE]));
             }
         }
-        if (isset($data[self::FIELD_TYPE])) {
-            if (is_array($data[self::FIELD_TYPE])) {
-                foreach($data[self::FIELD_TYPE] as $v) {
+        if (isset($data[self::FIELD_AVAILABILITY_EXCEPTIONS]) || isset($data[self::FIELD_AVAILABILITY_EXCEPTIONS_EXT])) {
+            $value = $data[self::FIELD_AVAILABILITY_EXCEPTIONS] ?? null;
+            $ext = (isset($data[self::FIELD_AVAILABILITY_EXCEPTIONS_EXT]) && is_array($data[self::FIELD_AVAILABILITY_EXCEPTIONS_EXT])) ? $data[self::FIELD_AVAILABILITY_EXCEPTIONS_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setAvailabilityExceptions($value);
+                } else if (is_array($value)) {
+                    $this->setAvailabilityExceptions(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setAvailabilityExceptions(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setAvailabilityExceptions(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_ENDPOINT])) {
+            if (is_array($data[self::FIELD_ENDPOINT])) {
+                foreach($data[self::FIELD_ENDPOINT] as $v) {
                     if (null === $v) {
                         continue;
                     }
-                    if ($v instanceof FHIRCodeableConcept) {
-                        $this->addType($v);
+                    if ($v instanceof FHIRReference) {
+                        $this->addEndpoint($v);
                     } else {
-                        $this->addType(new FHIRCodeableConcept($v));
+                        $this->addEndpoint(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
-                $this->addType($data[self::FIELD_TYPE]);
+            } elseif ($data[self::FIELD_ENDPOINT] instanceof FHIRReference) {
+                $this->addEndpoint($data[self::FIELD_ENDPOINT]);
             } else {
-                $this->addType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
+                $this->addEndpoint(new FHIRReference($data[self::FIELD_ENDPOINT]));
             }
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -882,22 +804,74 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<HealthcareService{$xmlns}></HealthcareService>";
-    }
-    /**
-     * @return string
-     */
-    public function _getResourceType()
+    public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
 
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * External identifiers for this item.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     */
+    public function getIdentifier(): null|array
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * External identifiers for this item.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
+     * @return static
+     */
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
+    {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
+        $this->_trackValueAdded();
+        $this->identifier[] = $identifier;
+        return $this;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * External identifiers for this item.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
+     * @return static
+     */
+    public function setIdentifier(array $identifier = []): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            if ($v instanceof FHIRIdentifier) {
+                $this->addIdentifier($v);
+            } else {
+                $this->addIdentifier(new FHIRIdentifier($v));
+            }
+        }
+        return $this;
+    }
 
     /**
      * Value of "true" or "false"
@@ -907,7 +881,7 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
-    public function getActive()
+    public function getActive(): null|FHIRBoolean
     {
         return $this->active;
     }
@@ -918,152 +892,50 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * Whether this healthcareservice record is in active use.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $active
+     * @param null|string|bool|\HL7\FHIR\STU3\FHIRBooleanPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $active
      * @return static
      */
-    public function setActive($active = null)
+    public function setActive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $active = null): self
     {
-        if (null === $active) {
-            $this->active = null;
-            return $this;
+        if (null !== $active && !($active instanceof FHIRBoolean)) {
+            $active = new FHIRBoolean($active);
         }
-        if ($active instanceof FHIRBoolean) {
-            $this->active = $active;
-            return $this;
-        }
-        $this->active = new FHIRBoolean($active);
+        $this->_trackValueSet($this->active, $active);
+        $this->active = $active;
         return $this;
     }
 
     /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Indicates whether or not a prospective consumer will require an appointment for
-     * a particular service at a site to be provided by the Organization. Indicates if
-     * an appointment is required for access to this service.
+     * The organization that provides this healthcare service.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getAppointmentRequired()
+    public function getProvidedBy(): null|FHIRReference
     {
-        return $this->appointmentRequired;
+        return $this->providedBy;
     }
 
     /**
-     * Value of "true" or "false"
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Indicates whether or not a prospective consumer will require an appointment for
-     * a particular service at a site to be provided by the Organization. Indicates if
-     * an appointment is required for access to this service.
+     * The organization that provides this healthcare service.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $appointmentRequired
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $providedBy
      * @return static
      */
-    public function setAppointmentRequired($appointmentRequired = null)
+    public function setProvidedBy(null|FHIRReference $providedBy = null): self
     {
-        if (null === $appointmentRequired) {
-            $this->appointmentRequired = null;
-            return $this;
+        if (null === $providedBy) {
+            $providedBy = new FHIRReference();
         }
-        if ($appointmentRequired instanceof FHIRBoolean) {
-            $this->appointmentRequired = $appointmentRequired;
-            return $this;
-        }
-        $this->appointmentRequired = new FHIRBoolean($appointmentRequired);
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A description of site availability exceptions, e.g. public holiday availability.
-     * Succinctly describing all possible exceptions to normal site availability as
-     * details in the available Times and not available Times.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getAvailabilityExceptions()
-    {
-        return $this->availabilityExceptions;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A description of site availability exceptions, e.g. public holiday availability.
-     * Succinctly describing all possible exceptions to normal site availability as
-     * details in the available Times and not available Times.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $availabilityExceptions
-     * @return static
-     */
-    public function setAvailabilityExceptions($availabilityExceptions = null)
-    {
-        if (null === $availabilityExceptions) {
-            $this->availabilityExceptions = null;
-            return $this;
-        }
-        if ($availabilityExceptions instanceof FHIRString) {
-            $this->availabilityExceptions = $availabilityExceptions;
-            return $this;
-        }
-        $this->availabilityExceptions = new FHIRString($availabilityExceptions);
-        return $this;
-    }
-
-    /**
-     * The details of a healthcare service available at a location.
-     *
-     * A collection of times that the Service Site is available.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceAvailableTime[]
-     */
-    public function getAvailableTime()
-    {
-        return $this->availableTime;
-    }
-
-    /**
-     * The details of a healthcare service available at a location.
-     *
-     * A collection of times that the Service Site is available.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceAvailableTime $availableTime
-     * @return static
-     */
-    public function addAvailableTime(FHIRHealthcareServiceAvailableTime $availableTime = null)
-    {
-        $this->availableTime[] = $availableTime;
-        return $this;
-    }
-
-    /**
-     * The details of a healthcare service available at a location.
-     *
-     * A collection of times that the Service Site is available.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceAvailableTime[] $availableTime
-     * @return static
-     */
-    public function setAvailableTime(array $availableTime = [])
-    {
-        $this->availableTime = [];
-        if ([] === $availableTime) {
-            return $this;
-        }
-        foreach($availableTime as $v) {
-            if ($v instanceof FHIRHealthcareServiceAvailableTime) {
-                $this->addAvailableTime($v);
-            } else {
-                $this->addAvailableTime(new FHIRHealthcareServiceAvailableTime($v));
-            }
-        }
+        $this->_trackValueSet($this->providedBy, $providedBy);
+        $this->providedBy = $providedBy;
         return $this;
     }
 
@@ -1077,7 +949,7 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getCategory()
+    public function getCategory(): null|FHIRCodeableConcept
     {
         return $this->category;
     }
@@ -1093,8 +965,12 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $category
      * @return static
      */
-    public function setCategory(FHIRCodeableConcept $category = null)
+    public function setCategory(null|FHIRCodeableConcept $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->category, $category);
         $this->category = $category;
         return $this;
     }
@@ -1105,13 +981,13 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Collection of characteristics (attributes).
+     * The specific type of service that may be delivered or performed.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getCharacteristic()
+    public function getType(): null|array
     {
-        return $this->characteristic;
+        return $this->type;
     }
 
     /**
@@ -1120,14 +996,18 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Collection of characteristics (attributes).
+     * The specific type of service that may be delivered or performed.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $characteristic
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function addCharacteristic(FHIRCodeableConcept $characteristic = null)
+    public function addType(null|FHIRCodeableConcept $type = null): self
     {
-        $this->characteristic[] = $characteristic;
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
+        $this->type[] = $type;
         return $this;
     }
 
@@ -1137,123 +1017,25 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Collection of characteristics (attributes).
+     * The specific type of service that may be delivered or performed.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $characteristic
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $type
      * @return static
      */
-    public function setCharacteristic(array $characteristic = [])
+    public function setType(array $type = []): self
     {
-        $this->characteristic = [];
-        if ([] === $characteristic) {
+        if ([] !== $this->type) {
+            $this->_trackValuesRemoved(count($this->type));
+            $this->type = [];
+        }
+        if ([] === $type) {
             return $this;
         }
-        foreach($characteristic as $v) {
+        foreach($type as $v) {
             if ($v instanceof FHIRCodeableConcept) {
-                $this->addCharacteristic($v);
+                $this->addType($v);
             } else {
-                $this->addCharacteristic(new FHIRCodeableConcept($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Any additional description of the service and/or any specific issues not covered
-     * by the other attributes, which can be displayed as further detail under the
-     * serviceName.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Any additional description of the service and/or any specific issues not covered
-     * by the other attributes, which can be displayed as further detail under the
-     * serviceName.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $comment
-     * @return static
-     */
-    public function setComment($comment = null)
-    {
-        if (null === $comment) {
-            $this->comment = null;
-            return $this;
-        }
-        if ($comment instanceof FHIRString) {
-            $this->comment = $comment;
-            return $this;
-        }
-        $this->comment = new FHIRString($comment);
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The location(s) that this service is available to (not where the service is
-     * provided).
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    public function getCoverageArea()
-    {
-        return $this->coverageArea;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The location(s) that this service is available to (not where the service is
-     * provided).
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $coverageArea
-     * @return static
-     */
-    public function addCoverageArea(FHIRReference $coverageArea = null)
-    {
-        $this->coverageArea[] = $coverageArea;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The location(s) that this service is available to (not where the service is
-     * provided).
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $coverageArea
-     * @return static
-     */
-    public function setCoverageArea(array $coverageArea = [])
-    {
-        $this->coverageArea = [];
-        if ([] === $coverageArea) {
-            return $this;
-        }
-        foreach($coverageArea as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addCoverageArea($v);
-            } else {
-                $this->addCoverageArea(new FHIRReference($v));
+                $this->addType(new FHIRCodeableConcept($v));
             }
         }
         return $this;
@@ -1265,14 +1047,14 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Does this service have specific eligibility requirements that need to be met in
-     * order to use the service?
+     * Collection of specialties handled by the service site. This is more of a medical
+     * term.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getEligibility()
+    public function getSpecialty(): null|array
     {
-        return $this->eligibility;
+        return $this->specialty;
     }
 
     /**
@@ -1281,204 +1063,48 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Does this service have specific eligibility requirements that need to be met in
-     * order to use the service?
+     * Collection of specialties handled by the service site. This is more of a medical
+     * term.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $eligibility
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $specialty
      * @return static
      */
-    public function setEligibility(FHIRCodeableConcept $eligibility = null)
+    public function addSpecialty(null|FHIRCodeableConcept $specialty = null): self
     {
-        $this->eligibility = $eligibility;
+        if (null === $specialty) {
+            $specialty = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
+        $this->specialty[] = $specialty;
         return $this;
     }
 
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Describes the eligibility conditions for the service.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getEligibilityNote()
-    {
-        return $this->eligibilityNote;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Describes the eligibility conditions for the service.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $eligibilityNote
-     * @return static
-     */
-    public function setEligibilityNote($eligibilityNote = null)
-    {
-        if (null === $eligibilityNote) {
-            $this->eligibilityNote = null;
-            return $this;
-        }
-        if ($eligibilityNote instanceof FHIRString) {
-            $this->eligibilityNote = $eligibilityNote;
-            return $this;
-        }
-        $this->eligibilityNote = new FHIRString($eligibilityNote);
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Technical endpoints providing access to services operated for the specific
-     * healthcare services defined at this resource.
+     * Collection of specialties handled by the service site. This is more of a medical
+     * term.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    public function getEndpoint()
-    {
-        return $this->endpoint;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Technical endpoints providing access to services operated for the specific
-     * healthcare services defined at this resource.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $endpoint
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $specialty
      * @return static
      */
-    public function addEndpoint(FHIRReference $endpoint = null)
+    public function setSpecialty(array $specialty = []): self
     {
-        $this->endpoint[] = $endpoint;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Technical endpoints providing access to services operated for the specific
-     * healthcare services defined at this resource.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $endpoint
-     * @return static
-     */
-    public function setEndpoint(array $endpoint = [])
-    {
-        $this->endpoint = [];
-        if ([] === $endpoint) {
+        if ([] !== $this->specialty) {
+            $this->_trackValuesRemoved(count($this->specialty));
+            $this->specialty = [];
+        }
+        if ([] === $specialty) {
             return $this;
         }
-        foreach($endpoint as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addEndpoint($v);
+        foreach($specialty as $v) {
+            if ($v instanceof FHIRCodeableConcept) {
+                $this->addSpecialty($v);
             } else {
-                $this->addEndpoint(new FHIRReference($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Extra details about the service that can't be placed in the other fields.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getExtraDetails()
-    {
-        return $this->extraDetails;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Extra details about the service that can't be placed in the other fields.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $extraDetails
-     * @return static
-     */
-    public function setExtraDetails($extraDetails = null)
-    {
-        if (null === $extraDetails) {
-            $this->extraDetails = null;
-            return $this;
-        }
-        if ($extraDetails instanceof FHIRString) {
-            $this->extraDetails = $extraDetails;
-            return $this;
-        }
-        $this->extraDetails = new FHIRString($extraDetails);
-        return $this;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * External identifiers for this item.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * External identifiers for this item.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
-     * @return static
-     */
-    public function addIdentifier(FHIRIdentifier $identifier = null)
-    {
-        $this->identifier[] = $identifier;
-        return $this;
-    }
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * External identifiers for this item.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
-     * @return static
-     */
-    public function setIdentifier(array $identifier = [])
-    {
-        $this->identifier = [];
-        if ([] === $identifier) {
-            return $this;
-        }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
+                $this->addSpecialty(new FHIRCodeableConcept($v));
             }
         }
         return $this;
@@ -1493,7 +1119,7 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getLocation()
+    public function getLocation(): null|array
     {
         return $this->location;
     }
@@ -1508,8 +1134,12 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $location
      * @return static
      */
-    public function addLocation(FHIRReference $location = null)
+    public function addLocation(null|FHIRReference $location = null): self
     {
+        if (null === $location) {
+            $location = new FHIRReference();
+        }
+        $this->_trackValueAdded();
         $this->location[] = $location;
         return $this;
     }
@@ -1524,9 +1154,12 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $location
      * @return static
      */
-    public function setLocation(array $location = [])
+    public function setLocation(array $location = []): self
     {
-        $this->location = [];
+        if ([] !== $this->location) {
+            $this->_trackValuesRemoved(count($this->location));
+            $this->location = [];
+        }
         if ([] === $location) {
             return $this;
         }
@@ -1550,7 +1183,7 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getName()
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -1563,73 +1196,88 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * Further description of the service as it would be presented to a consumer while
      * searching.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null)
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
-        if (null === $name) {
-            $this->name = null;
-            return $this;
+        if (null !== $name && !($name instanceof FHIRString)) {
+            $name = new FHIRString($name);
         }
-        if ($name instanceof FHIRString) {
-            $this->name = $name;
-            return $this;
-        }
-        $this->name = new FHIRString($name);
+        $this->_trackValueSet($this->name, $name);
+        $this->name = $name;
         return $this;
     }
 
     /**
-     * The details of a healthcare service available at a location.
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The HealthcareService is not available during this period of time due to the
-     * provided reason.
+     * Any additional description of the service and/or any specific issues not covered
+     * by the other attributes, which can be displayed as further detail under the
+     * serviceName.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceNotAvailable[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getNotAvailable()
+    public function getComment(): null|FHIRString
     {
-        return $this->notAvailable;
+        return $this->comment;
     }
 
     /**
-     * The details of a healthcare service available at a location.
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The HealthcareService is not available during this period of time due to the
-     * provided reason.
+     * Any additional description of the service and/or any specific issues not covered
+     * by the other attributes, which can be displayed as further detail under the
+     * serviceName.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceNotAvailable $notAvailable
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $comment
      * @return static
      */
-    public function addNotAvailable(FHIRHealthcareServiceNotAvailable $notAvailable = null)
+    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null): self
     {
-        $this->notAvailable[] = $notAvailable;
+        if (null !== $comment && !($comment instanceof FHIRString)) {
+            $comment = new FHIRString($comment);
+        }
+        $this->_trackValueSet($this->comment, $comment);
+        $this->comment = $comment;
         return $this;
     }
 
     /**
-     * The details of a healthcare service available at a location.
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The HealthcareService is not available during this period of time due to the
-     * provided reason.
+     * Extra details about the service that can't be placed in the other fields.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceNotAvailable[] $notAvailable
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getExtraDetails(): null|FHIRString
+    {
+        return $this->extraDetails;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Extra details about the service that can't be placed in the other fields.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $extraDetails
      * @return static
      */
-    public function setNotAvailable(array $notAvailable = [])
+    public function setExtraDetails(null|string|FHIRStringPrimitive|FHIRString $extraDetails = null): self
     {
-        $this->notAvailable = [];
-        if ([] === $notAvailable) {
-            return $this;
+        if (null !== $extraDetails && !($extraDetails instanceof FHIRString)) {
+            $extraDetails = new FHIRString($extraDetails);
         }
-        foreach($notAvailable as $v) {
-            if ($v instanceof FHIRHealthcareServiceNotAvailable) {
-                $this->addNotAvailable($v);
-            } else {
-                $this->addNotAvailable(new FHIRHealthcareServiceNotAvailable($v));
-            }
-        }
+        $this->_trackValueSet($this->extraDetails, $extraDetails);
+        $this->extraDetails = $extraDetails;
         return $this;
     }
 
@@ -1643,7 +1291,7 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment
      */
-    public function getPhoto()
+    public function getPhoto(): null|FHIRAttachment
     {
         return $this->photo;
     }
@@ -1659,71 +1307,77 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment $photo
      * @return static
      */
-    public function setPhoto(FHIRAttachment $photo = null)
+    public function setPhoto(null|FHIRAttachment $photo = null): self
     {
+        if (null === $photo) {
+            $photo = new FHIRAttachment();
+        }
+        $this->_trackValueSet($this->photo, $photo);
         $this->photo = $photo;
         return $this;
     }
 
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * Details for all kinds of technology mediated contact points for a person or
+     * organization, including telephone, email, etc.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Program Names that can be used to categorize the service.
+     * List of contacts related to this specific healthcare service.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPoint[]
      */
-    public function getProgramName()
+    public function getTelecom(): null|array
     {
-        return $this->programName;
+        return $this->telecom;
     }
 
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * Details for all kinds of technology mediated contact points for a person or
+     * organization, including telephone, email, etc.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Program Names that can be used to categorize the service.
+     * List of contacts related to this specific healthcare service.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $programName
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPoint $telecom
      * @return static
      */
-    public function addProgramName($programName = null)
+    public function addTelecom(null|FHIRContactPoint $telecom = null): self
     {
-        if (null === $programName) {
-            $this->programName = [];
-            return $this;
+        if (null === $telecom) {
+            $telecom = new FHIRContactPoint();
         }
-        if ($programName instanceof FHIRString) {
-            $this->programName[] = $programName;
-            return $this;
-        }
-        $this->programName[] = new FHIRString($programName);
+        $this->_trackValueAdded();
+        $this->telecom[] = $telecom;
         return $this;
     }
 
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * Details for all kinds of technology mediated contact points for a person or
+     * organization, including telephone, email, etc.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Program Names that can be used to categorize the service.
+     * List of contacts related to this specific healthcare service.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $programName
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactPoint[] $telecom
      * @return static
      */
-    public function setProgramName(array $programName = [])
+    public function setTelecom(array $telecom = []): self
     {
-        $this->programName = [];
-        if ([] === $programName) {
+        if ([] !== $this->telecom) {
+            $this->_trackValuesRemoved(count($this->telecom));
+            $this->telecom = [];
+        }
+        if ([] === $telecom) {
             return $this;
         }
-        foreach($programName as $v) {
-            if ($v instanceof FHIRString) {
-                $this->addProgramName($v);
+        foreach($telecom as $v) {
+            if ($v instanceof FHIRContactPoint) {
+                $this->addTelecom($v);
             } else {
-                $this->addProgramName(new FHIRString($v));
+                $this->addTelecom(new FHIRContactPoint($v));
             }
         }
         return $this;
@@ -1734,13 +1388,14 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The organization that provides this healthcare service.
+     * The location(s) that this service is available to (not where the service is
+     * provided).
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getProvidedBy()
+    public function getCoverageArea(): null|array
     {
-        return $this->providedBy;
+        return $this->coverageArea;
     }
 
     /**
@@ -1748,74 +1403,47 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The organization that provides this healthcare service.
+     * The location(s) that this service is available to (not where the service is
+     * provided).
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $providedBy
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $coverageArea
      * @return static
      */
-    public function setProvidedBy(FHIRReference $providedBy = null)
+    public function addCoverageArea(null|FHIRReference $coverageArea = null): self
     {
-        $this->providedBy = $providedBy;
+        if (null === $coverageArea) {
+            $coverageArea = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->coverageArea[] = $coverageArea;
         return $this;
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Ways that the service accepts referrals, if this is not provided then it is
-     * implied that no referral is required.
+     * The location(s) that this service is available to (not where the service is
+     * provided).
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
-     */
-    public function getReferralMethod()
-    {
-        return $this->referralMethod;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Ways that the service accepts referrals, if this is not provided then it is
-     * implied that no referral is required.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $referralMethod
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $coverageArea
      * @return static
      */
-    public function addReferralMethod(FHIRCodeableConcept $referralMethod = null)
+    public function setCoverageArea(array $coverageArea = []): self
     {
-        $this->referralMethod[] = $referralMethod;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Ways that the service accepts referrals, if this is not provided then it is
-     * implied that no referral is required.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $referralMethod
-     * @return static
-     */
-    public function setReferralMethod(array $referralMethod = [])
-    {
-        $this->referralMethod = [];
-        if ([] === $referralMethod) {
+        if ([] !== $this->coverageArea) {
+            $this->_trackValuesRemoved(count($this->coverageArea));
+            $this->coverageArea = [];
+        }
+        if ([] === $coverageArea) {
             return $this;
         }
-        foreach($referralMethod as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addReferralMethod($v);
+        foreach($coverageArea as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addCoverageArea($v);
             } else {
-                $this->addReferralMethod(new FHIRCodeableConcept($v));
+                $this->addCoverageArea(new FHIRReference($v));
             }
         }
         return $this;
@@ -1832,7 +1460,7 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getServiceProvisionCode()
+    public function getServiceProvisionCode(): null|array
     {
         return $this->serviceProvisionCode;
     }
@@ -1849,8 +1477,12 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $serviceProvisionCode
      * @return static
      */
-    public function addServiceProvisionCode(FHIRCodeableConcept $serviceProvisionCode = null)
+    public function addServiceProvisionCode(null|FHIRCodeableConcept $serviceProvisionCode = null): self
     {
+        if (null === $serviceProvisionCode) {
+            $serviceProvisionCode = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
         $this->serviceProvisionCode[] = $serviceProvisionCode;
         return $this;
     }
@@ -1867,9 +1499,12 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $serviceProvisionCode
      * @return static
      */
-    public function setServiceProvisionCode(array $serviceProvisionCode = [])
+    public function setServiceProvisionCode(array $serviceProvisionCode = []): self
     {
-        $this->serviceProvisionCode = [];
+        if ([] !== $this->serviceProvisionCode) {
+            $this->_trackValuesRemoved(count($this->serviceProvisionCode));
+            $this->serviceProvisionCode = [];
+        }
         if ([] === $serviceProvisionCode) {
             return $this;
         }
@@ -1889,14 +1524,14 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Collection of specialties handled by the service site. This is more of a medical
-     * term.
+     * Does this service have specific eligibility requirements that need to be met in
+     * order to use the service?
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getSpecialty()
+    public function getEligibility(): null|FHIRCodeableConcept
     {
-        return $this->specialty;
+        return $this->eligibility;
     }
 
     /**
@@ -1905,100 +1540,180 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Collection of specialties handled by the service site. This is more of a medical
-     * term.
+     * Does this service have specific eligibility requirements that need to be met in
+     * order to use the service?
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $specialty
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $eligibility
      * @return static
      */
-    public function addSpecialty(FHIRCodeableConcept $specialty = null)
+    public function setEligibility(null|FHIRCodeableConcept $eligibility = null): self
     {
-        $this->specialty[] = $specialty;
+        if (null === $eligibility) {
+            $eligibility = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->eligibility, $eligibility);
+        $this->eligibility = $eligibility;
         return $this;
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * Collection of specialties handled by the service site. This is more of a medical
-     * term.
+     * Describes the eligibility conditions for the service.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $specialty
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getEligibilityNote(): null|FHIRString
+    {
+        return $this->eligibilityNote;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Describes the eligibility conditions for the service.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $eligibilityNote
      * @return static
      */
-    public function setSpecialty(array $specialty = [])
+    public function setEligibilityNote(null|string|FHIRStringPrimitive|FHIRString $eligibilityNote = null): self
     {
-        $this->specialty = [];
-        if ([] === $specialty) {
+        if (null !== $eligibilityNote && !($eligibilityNote instanceof FHIRString)) {
+            $eligibilityNote = new FHIRString($eligibilityNote);
+        }
+        $this->_trackValueSet($this->eligibilityNote, $eligibilityNote);
+        $this->eligibilityNote = $eligibilityNote;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Program Names that can be used to categorize the service.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
+     */
+    public function getProgramName(): null|array
+    {
+        return $this->programName;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Program Names that can be used to categorize the service.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $programName
+     * @return static
+     */
+    public function addProgramName(null|string|FHIRStringPrimitive|FHIRString $programName = null): self
+    {
+        if (null !== $programName && !($programName instanceof FHIRString)) {
+            $programName = new FHIRString($programName);
+        }
+        $this->_trackValueAdded();
+        $this->programName[] = $programName;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Program Names that can be used to categorize the service.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRString[] $programName
+     * @return static
+     */
+    public function setProgramName(array $programName = []): self
+    {
+        if ([] !== $this->programName) {
+            $this->_trackValuesRemoved(count($this->programName));
+            $this->programName = [];
+        }
+        if ([] === $programName) {
             return $this;
         }
-        foreach($specialty as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addSpecialty($v);
+        foreach($programName as $v) {
+            if ($v instanceof FHIRString) {
+                $this->addProgramName($v);
             } else {
-                $this->addSpecialty(new FHIRCodeableConcept($v));
+                $this->addProgramName(new FHIRString($v));
             }
         }
         return $this;
     }
 
     /**
-     * Details for all kinds of technology mediated contact points for a person or
-     * organization, including telephone, email, etc.
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * List of contacts related to this specific healthcare service.
+     * Collection of characteristics (attributes).
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPoint[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getTelecom()
+    public function getCharacteristic(): null|array
     {
-        return $this->telecom;
+        return $this->characteristic;
     }
 
     /**
-     * Details for all kinds of technology mediated contact points for a person or
-     * organization, including telephone, email, etc.
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * List of contacts related to this specific healthcare service.
+     * Collection of characteristics (attributes).
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPoint $telecom
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $characteristic
      * @return static
      */
-    public function addTelecom(FHIRContactPoint $telecom = null)
+    public function addCharacteristic(null|FHIRCodeableConcept $characteristic = null): self
     {
-        $this->telecom[] = $telecom;
+        if (null === $characteristic) {
+            $characteristic = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
+        $this->characteristic[] = $characteristic;
         return $this;
     }
 
     /**
-     * Details for all kinds of technology mediated contact points for a person or
-     * organization, including telephone, email, etc.
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * List of contacts related to this specific healthcare service.
+     * Collection of characteristics (attributes).
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactPoint[] $telecom
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $characteristic
      * @return static
      */
-    public function setTelecom(array $telecom = [])
+    public function setCharacteristic(array $characteristic = []): self
     {
-        $this->telecom = [];
-        if ([] === $telecom) {
+        if ([] !== $this->characteristic) {
+            $this->_trackValuesRemoved(count($this->characteristic));
+            $this->characteristic = [];
+        }
+        if ([] === $characteristic) {
             return $this;
         }
-        foreach($telecom as $v) {
-            if ($v instanceof FHIRContactPoint) {
-                $this->addTelecom($v);
+        foreach($characteristic as $v) {
+            if ($v instanceof FHIRCodeableConcept) {
+                $this->addCharacteristic($v);
             } else {
-                $this->addTelecom(new FHIRContactPoint($v));
+                $this->addCharacteristic(new FHIRCodeableConcept($v));
             }
         }
         return $this;
@@ -2010,13 +1725,14 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The specific type of service that may be delivered or performed.
+     * Ways that the service accepts referrals, if this is not provided then it is
+     * implied that no referral is required.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getType()
+    public function getReferralMethod(): null|array
     {
-        return $this->type;
+        return $this->referralMethod;
     }
 
     /**
@@ -2025,14 +1741,19 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The specific type of service that may be delivered or performed.
+     * Ways that the service accepts referrals, if this is not provided then it is
+     * implied that no referral is required.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $referralMethod
      * @return static
      */
-    public function addType(FHIRCodeableConcept $type = null)
+    public function addReferralMethod(null|FHIRCodeableConcept $referralMethod = null): self
     {
-        $this->type[] = $type;
+        if (null === $referralMethod) {
+            $referralMethod = new FHIRCodeableConcept();
+        }
+        $this->_trackValueAdded();
+        $this->referralMethod[] = $referralMethod;
         return $this;
     }
 
@@ -2042,22 +1763,283 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The specific type of service that may be delivered or performed.
+     * Ways that the service accepts referrals, if this is not provided then it is
+     * implied that no referral is required.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $type
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[] $referralMethod
      * @return static
      */
-    public function setType(array $type = [])
+    public function setReferralMethod(array $referralMethod = []): self
     {
-        $this->type = [];
-        if ([] === $type) {
+        if ([] !== $this->referralMethod) {
+            $this->_trackValuesRemoved(count($this->referralMethod));
+            $this->referralMethod = [];
+        }
+        if ([] === $referralMethod) {
             return $this;
         }
-        foreach($type as $v) {
+        foreach($referralMethod as $v) {
             if ($v instanceof FHIRCodeableConcept) {
-                $this->addType($v);
+                $this->addReferralMethod($v);
             } else {
-                $this->addType(new FHIRCodeableConcept($v));
+                $this->addReferralMethod(new FHIRCodeableConcept($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates whether or not a prospective consumer will require an appointment for
+     * a particular service at a site to be provided by the Organization. Indicates if
+     * an appointment is required for access to this service.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
+     */
+    public function getAppointmentRequired(): null|FHIRBoolean
+    {
+        return $this->appointmentRequired;
+    }
+
+    /**
+     * Value of "true" or "false"
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates whether or not a prospective consumer will require an appointment for
+     * a particular service at a site to be provided by the Organization. Indicates if
+     * an appointment is required for access to this service.
+     *
+     * @param null|string|bool|\HL7\FHIR\STU3\FHIRBooleanPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $appointmentRequired
+     * @return static
+     */
+    public function setAppointmentRequired(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $appointmentRequired = null): self
+    {
+        if (null !== $appointmentRequired && !($appointmentRequired instanceof FHIRBoolean)) {
+            $appointmentRequired = new FHIRBoolean($appointmentRequired);
+        }
+        $this->_trackValueSet($this->appointmentRequired, $appointmentRequired);
+        $this->appointmentRequired = $appointmentRequired;
+        return $this;
+    }
+
+    /**
+     * The details of a healthcare service available at a location.
+     *
+     * A collection of times that the Service Site is available.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceAvailableTime[]
+     */
+    public function getAvailableTime(): null|array
+    {
+        return $this->availableTime;
+    }
+
+    /**
+     * The details of a healthcare service available at a location.
+     *
+     * A collection of times that the Service Site is available.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceAvailableTime $availableTime
+     * @return static
+     */
+    public function addAvailableTime(null|FHIRHealthcareServiceAvailableTime $availableTime = null): self
+    {
+        if (null === $availableTime) {
+            $availableTime = new FHIRHealthcareServiceAvailableTime();
+        }
+        $this->_trackValueAdded();
+        $this->availableTime[] = $availableTime;
+        return $this;
+    }
+
+    /**
+     * The details of a healthcare service available at a location.
+     *
+     * A collection of times that the Service Site is available.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceAvailableTime[] $availableTime
+     * @return static
+     */
+    public function setAvailableTime(array $availableTime = []): self
+    {
+        if ([] !== $this->availableTime) {
+            $this->_trackValuesRemoved(count($this->availableTime));
+            $this->availableTime = [];
+        }
+        if ([] === $availableTime) {
+            return $this;
+        }
+        foreach($availableTime as $v) {
+            if ($v instanceof FHIRHealthcareServiceAvailableTime) {
+                $this->addAvailableTime($v);
+            } else {
+                $this->addAvailableTime(new FHIRHealthcareServiceAvailableTime($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * The details of a healthcare service available at a location.
+     *
+     * The HealthcareService is not available during this period of time due to the
+     * provided reason.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceNotAvailable[]
+     */
+    public function getNotAvailable(): null|array
+    {
+        return $this->notAvailable;
+    }
+
+    /**
+     * The details of a healthcare service available at a location.
+     *
+     * The HealthcareService is not available during this period of time due to the
+     * provided reason.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceNotAvailable $notAvailable
+     * @return static
+     */
+    public function addNotAvailable(null|FHIRHealthcareServiceNotAvailable $notAvailable = null): self
+    {
+        if (null === $notAvailable) {
+            $notAvailable = new FHIRHealthcareServiceNotAvailable();
+        }
+        $this->_trackValueAdded();
+        $this->notAvailable[] = $notAvailable;
+        return $this;
+    }
+
+    /**
+     * The details of a healthcare service available at a location.
+     *
+     * The HealthcareService is not available during this period of time due to the
+     * provided reason.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRHealthcareService\FHIRHealthcareServiceNotAvailable[] $notAvailable
+     * @return static
+     */
+    public function setNotAvailable(array $notAvailable = []): self
+    {
+        if ([] !== $this->notAvailable) {
+            $this->_trackValuesRemoved(count($this->notAvailable));
+            $this->notAvailable = [];
+        }
+        if ([] === $notAvailable) {
+            return $this;
+        }
+        foreach($notAvailable as $v) {
+            if ($v instanceof FHIRHealthcareServiceNotAvailable) {
+                $this->addNotAvailable($v);
+            } else {
+                $this->addNotAvailable(new FHIRHealthcareServiceNotAvailable($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A description of site availability exceptions, e.g. public holiday availability.
+     * Succinctly describing all possible exceptions to normal site availability as
+     * details in the available Times and not available Times.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getAvailabilityExceptions(): null|FHIRString
+    {
+        return $this->availabilityExceptions;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A description of site availability exceptions, e.g. public holiday availability.
+     * Succinctly describing all possible exceptions to normal site availability as
+     * details in the available Times and not available Times.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $availabilityExceptions
+     * @return static
+     */
+    public function setAvailabilityExceptions(null|string|FHIRStringPrimitive|FHIRString $availabilityExceptions = null): self
+    {
+        if (null !== $availabilityExceptions && !($availabilityExceptions instanceof FHIRString)) {
+            $availabilityExceptions = new FHIRString($availabilityExceptions);
+        }
+        $this->_trackValueSet($this->availabilityExceptions, $availabilityExceptions);
+        $this->availabilityExceptions = $availabilityExceptions;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Technical endpoints providing access to services operated for the specific
+     * healthcare services defined at this resource.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    public function getEndpoint(): null|array
+    {
+        return $this->endpoint;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Technical endpoints providing access to services operated for the specific
+     * healthcare services defined at this resource.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $endpoint
+     * @return static
+     */
+    public function addEndpoint(null|FHIRReference $endpoint = null): self
+    {
+        if (null === $endpoint) {
+            $endpoint = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->endpoint[] = $endpoint;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Technical endpoints providing access to services operated for the specific
+     * healthcare services defined at this resource.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $endpoint
+     * @return static
+     */
+    public function setEndpoint(array $endpoint = []): self
+    {
+        if ([] !== $this->endpoint) {
+            $this->_trackValuesRemoved(count($this->endpoint));
+            $this->endpoint = [];
+        }
+        if ([] === $endpoint) {
+            return $this;
+        }
+        foreach($endpoint as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addEndpoint($v);
+            } else {
+                $this->addEndpoint(new FHIRReference($v));
             }
         }
         return $this;
@@ -2069,9 +2051,9 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2080,30 +2062,25 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
+        if ([] !== ($vs = $this->getIdentifier())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
+                }
+            }
+        }
         if (null !== ($v = $this->getActive())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_ACTIVE] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getAppointmentRequired())) {
+        if (null !== ($v = $this->getProvidedBy())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_APPOINTMENT_REQUIRED] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getAvailabilityExceptions())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_AVAILABILITY_EXCEPTIONS] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getAvailableTime())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_AVAILABLE_TIME, $i)] = $fieldErrs;
-                }
+                $errs[self::FIELD_PROVIDED_BY] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getCategory())) {
@@ -2111,51 +2088,17 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 $errs[self::FIELD_CATEGORY] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getCharacteristic())) {
+        if ([] !== ($vs = $this->getType())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_CHARACTERISTIC, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_TYPE, $i)] = $fieldErrs;
                 }
             }
         }
-        if (null !== ($v = $this->getComment())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_COMMENT] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getCoverageArea())) {
+        if ([] !== ($vs = $this->getSpecialty())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_COVERAGE_AREA, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getEligibility())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_ELIGIBILITY] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getEligibilityNote())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_ELIGIBILITY_NOTE] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getEndpoint())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_ENDPOINT, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getExtraDetails())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_EXTRA_DETAILS] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getIdentifier())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_IDENTIFIER, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_SPECIALTY, $i)] = $fieldErrs;
                 }
             }
         }
@@ -2171,11 +2114,14 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 $errs[self::FIELD_NAME] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getNotAvailable())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_NOT_AVAILABLE, $i)] = $fieldErrs;
-                }
+        if (null !== ($v = $this->getComment())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_COMMENT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getExtraDetails())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EXTRA_DETAILS] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getPhoto())) {
@@ -2183,22 +2129,17 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 $errs[self::FIELD_PHOTO] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getProgramName())) {
+        if ([] !== ($vs = $this->getTelecom())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_PROGRAM_NAME, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_TELECOM, $i)] = $fieldErrs;
                 }
             }
         }
-        if (null !== ($v = $this->getProvidedBy())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_PROVIDED_BY] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getReferralMethod())) {
+        if ([] !== ($vs = $this->getCoverageArea())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_REFERRAL_METHOD, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_COVERAGE_AREA, $i)] = $fieldErrs;
                 }
             }
         }
@@ -2209,24 +2150,77 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 }
             }
         }
-        if ([] !== ($vs = $this->getSpecialty())) {
+        if (null !== ($v = $this->getEligibility())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ELIGIBILITY] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEligibilityNote())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ELIGIBILITY_NOTE] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getProgramName())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_SPECIALTY, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_PROGRAM_NAME, $i)] = $fieldErrs;
                 }
             }
         }
-        if ([] !== ($vs = $this->getTelecom())) {
+        if ([] !== ($vs = $this->getCharacteristic())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_TELECOM, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_CHARACTERISTIC, $i)] = $fieldErrs;
                 }
             }
         }
-        if ([] !== ($vs = $this->getType())) {
+        if ([] !== ($vs = $this->getReferralMethod())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_TYPE, $i)] = $fieldErrs;
+                    $errs[sprintf('%s.%d', self::FIELD_REFERRAL_METHOD, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getAppointmentRequired())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_APPOINTMENT_REQUIRED] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getAvailableTime())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_AVAILABLE_TIME, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if ([] !== ($vs = $this->getNotAvailable())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_NOT_AVAILABLE, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (null !== ($v = $this->getAvailabilityExceptions())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_AVAILABILITY_EXCEPTIONS] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getEndpoint())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_ENDPOINT, $i)] = $fieldErrs;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_IDENTIFIER])) {
+            $v = $this->getIdentifier();
+            foreach($validationRules[self::FIELD_IDENTIFIER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_IDENTIFIER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_IDENTIFIER])) {
+                        $errs[self::FIELD_IDENTIFIER] = [];
+                    }
+                    $errs[self::FIELD_IDENTIFIER][$rule] = $err;
                 }
             }
         }
@@ -2242,39 +2236,15 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_APPOINTMENT_REQUIRED])) {
-            $v = $this->getAppointmentRequired();
-            foreach($validationRules[self::FIELD_APPOINTMENT_REQUIRED] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_APPOINTMENT_REQUIRED, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_PROVIDED_BY])) {
+            $v = $this->getProvidedBy();
+            foreach($validationRules[self::FIELD_PROVIDED_BY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_PROVIDED_BY, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_APPOINTMENT_REQUIRED])) {
-                        $errs[self::FIELD_APPOINTMENT_REQUIRED] = [];
+                    if (!isset($errs[self::FIELD_PROVIDED_BY])) {
+                        $errs[self::FIELD_PROVIDED_BY] = [];
                     }
-                    $errs[self::FIELD_APPOINTMENT_REQUIRED][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_AVAILABILITY_EXCEPTIONS])) {
-            $v = $this->getAvailabilityExceptions();
-            foreach($validationRules[self::FIELD_AVAILABILITY_EXCEPTIONS] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_AVAILABILITY_EXCEPTIONS, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_AVAILABILITY_EXCEPTIONS])) {
-                        $errs[self::FIELD_AVAILABILITY_EXCEPTIONS] = [];
-                    }
-                    $errs[self::FIELD_AVAILABILITY_EXCEPTIONS][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_AVAILABLE_TIME])) {
-            $v = $this->getAvailableTime();
-            foreach($validationRules[self::FIELD_AVAILABLE_TIME] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_AVAILABLE_TIME, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_AVAILABLE_TIME])) {
-                        $errs[self::FIELD_AVAILABLE_TIME] = [];
-                    }
-                    $errs[self::FIELD_AVAILABLE_TIME][$rule] = $err;
+                    $errs[self::FIELD_PROVIDED_BY][$rule] = $err;
                 }
             }
         }
@@ -2290,99 +2260,27 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_CHARACTERISTIC])) {
-            $v = $this->getCharacteristic();
-            foreach($validationRules[self::FIELD_CHARACTERISTIC] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_CHARACTERISTIC, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_TYPE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CHARACTERISTIC])) {
-                        $errs[self::FIELD_CHARACTERISTIC] = [];
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
                     }
-                    $errs[self::FIELD_CHARACTERISTIC][$rule] = $err;
+                    $errs[self::FIELD_TYPE][$rule] = $err;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_COMMENT])) {
-            $v = $this->getComment();
-            foreach($validationRules[self::FIELD_COMMENT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_COMMENT, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_SPECIALTY])) {
+            $v = $this->getSpecialty();
+            foreach($validationRules[self::FIELD_SPECIALTY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_SPECIALTY, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_COMMENT])) {
-                        $errs[self::FIELD_COMMENT] = [];
+                    if (!isset($errs[self::FIELD_SPECIALTY])) {
+                        $errs[self::FIELD_SPECIALTY] = [];
                     }
-                    $errs[self::FIELD_COMMENT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_COVERAGE_AREA])) {
-            $v = $this->getCoverageArea();
-            foreach($validationRules[self::FIELD_COVERAGE_AREA] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_COVERAGE_AREA, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_COVERAGE_AREA])) {
-                        $errs[self::FIELD_COVERAGE_AREA] = [];
-                    }
-                    $errs[self::FIELD_COVERAGE_AREA][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_ELIGIBILITY])) {
-            $v = $this->getEligibility();
-            foreach($validationRules[self::FIELD_ELIGIBILITY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_ELIGIBILITY, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ELIGIBILITY])) {
-                        $errs[self::FIELD_ELIGIBILITY] = [];
-                    }
-                    $errs[self::FIELD_ELIGIBILITY][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_ELIGIBILITY_NOTE])) {
-            $v = $this->getEligibilityNote();
-            foreach($validationRules[self::FIELD_ELIGIBILITY_NOTE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_ELIGIBILITY_NOTE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ELIGIBILITY_NOTE])) {
-                        $errs[self::FIELD_ELIGIBILITY_NOTE] = [];
-                    }
-                    $errs[self::FIELD_ELIGIBILITY_NOTE][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_ENDPOINT])) {
-            $v = $this->getEndpoint();
-            foreach($validationRules[self::FIELD_ENDPOINT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_ENDPOINT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ENDPOINT])) {
-                        $errs[self::FIELD_ENDPOINT] = [];
-                    }
-                    $errs[self::FIELD_ENDPOINT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_EXTRA_DETAILS])) {
-            $v = $this->getExtraDetails();
-            foreach($validationRules[self::FIELD_EXTRA_DETAILS] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_EXTRA_DETAILS, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_EXTRA_DETAILS])) {
-                        $errs[self::FIELD_EXTRA_DETAILS] = [];
-                    }
-                    $errs[self::FIELD_EXTRA_DETAILS][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_IDENTIFIER])) {
-            $v = $this->getIdentifier();
-            foreach($validationRules[self::FIELD_IDENTIFIER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_IDENTIFIER, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_IDENTIFIER])) {
-                        $errs[self::FIELD_IDENTIFIER] = [];
-                    }
-                    $errs[self::FIELD_IDENTIFIER][$rule] = $err;
+                    $errs[self::FIELD_SPECIALTY][$rule] = $err;
                 }
             }
         }
@@ -2410,15 +2308,27 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_NOT_AVAILABLE])) {
-            $v = $this->getNotAvailable();
-            foreach($validationRules[self::FIELD_NOT_AVAILABLE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_NOT_AVAILABLE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_COMMENT])) {
+            $v = $this->getComment();
+            foreach($validationRules[self::FIELD_COMMENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_COMMENT, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_NOT_AVAILABLE])) {
-                        $errs[self::FIELD_NOT_AVAILABLE] = [];
+                    if (!isset($errs[self::FIELD_COMMENT])) {
+                        $errs[self::FIELD_COMMENT] = [];
                     }
-                    $errs[self::FIELD_NOT_AVAILABLE][$rule] = $err;
+                    $errs[self::FIELD_COMMENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EXTRA_DETAILS])) {
+            $v = $this->getExtraDetails();
+            foreach($validationRules[self::FIELD_EXTRA_DETAILS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_EXTRA_DETAILS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EXTRA_DETAILS])) {
+                        $errs[self::FIELD_EXTRA_DETAILS] = [];
+                    }
+                    $errs[self::FIELD_EXTRA_DETAILS][$rule] = $err;
                 }
             }
         }
@@ -2434,39 +2344,27 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_PROGRAM_NAME])) {
-            $v = $this->getProgramName();
-            foreach($validationRules[self::FIELD_PROGRAM_NAME] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_PROGRAM_NAME, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_TELECOM])) {
+            $v = $this->getTelecom();
+            foreach($validationRules[self::FIELD_TELECOM] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_TELECOM, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PROGRAM_NAME])) {
-                        $errs[self::FIELD_PROGRAM_NAME] = [];
+                    if (!isset($errs[self::FIELD_TELECOM])) {
+                        $errs[self::FIELD_TELECOM] = [];
                     }
-                    $errs[self::FIELD_PROGRAM_NAME][$rule] = $err;
+                    $errs[self::FIELD_TELECOM][$rule] = $err;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_PROVIDED_BY])) {
-            $v = $this->getProvidedBy();
-            foreach($validationRules[self::FIELD_PROVIDED_BY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_PROVIDED_BY, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_COVERAGE_AREA])) {
+            $v = $this->getCoverageArea();
+            foreach($validationRules[self::FIELD_COVERAGE_AREA] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_COVERAGE_AREA, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PROVIDED_BY])) {
-                        $errs[self::FIELD_PROVIDED_BY] = [];
+                    if (!isset($errs[self::FIELD_COVERAGE_AREA])) {
+                        $errs[self::FIELD_COVERAGE_AREA] = [];
                     }
-                    $errs[self::FIELD_PROVIDED_BY][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_REFERRAL_METHOD])) {
-            $v = $this->getReferralMethod();
-            foreach($validationRules[self::FIELD_REFERRAL_METHOD] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_REFERRAL_METHOD, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_REFERRAL_METHOD])) {
-                        $errs[self::FIELD_REFERRAL_METHOD] = [];
-                    }
-                    $errs[self::FIELD_REFERRAL_METHOD][$rule] = $err;
+                    $errs[self::FIELD_COVERAGE_AREA][$rule] = $err;
                 }
             }
         }
@@ -2482,39 +2380,135 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_SPECIALTY])) {
-            $v = $this->getSpecialty();
-            foreach($validationRules[self::FIELD_SPECIALTY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_SPECIALTY, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_ELIGIBILITY])) {
+            $v = $this->getEligibility();
+            foreach($validationRules[self::FIELD_ELIGIBILITY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_ELIGIBILITY, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_SPECIALTY])) {
-                        $errs[self::FIELD_SPECIALTY] = [];
+                    if (!isset($errs[self::FIELD_ELIGIBILITY])) {
+                        $errs[self::FIELD_ELIGIBILITY] = [];
                     }
-                    $errs[self::FIELD_SPECIALTY][$rule] = $err;
+                    $errs[self::FIELD_ELIGIBILITY][$rule] = $err;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TELECOM])) {
-            $v = $this->getTelecom();
-            foreach($validationRules[self::FIELD_TELECOM] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_TELECOM, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_ELIGIBILITY_NOTE])) {
+            $v = $this->getEligibilityNote();
+            foreach($validationRules[self::FIELD_ELIGIBILITY_NOTE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_ELIGIBILITY_NOTE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TELECOM])) {
-                        $errs[self::FIELD_TELECOM] = [];
+                    if (!isset($errs[self::FIELD_ELIGIBILITY_NOTE])) {
+                        $errs[self::FIELD_ELIGIBILITY_NOTE] = [];
                     }
-                    $errs[self::FIELD_TELECOM][$rule] = $err;
+                    $errs[self::FIELD_ELIGIBILITY_NOTE][$rule] = $err;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TYPE])) {
-            $v = $this->getType();
-            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_TYPE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_PROGRAM_NAME])) {
+            $v = $this->getProgramName();
+            foreach($validationRules[self::FIELD_PROGRAM_NAME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_PROGRAM_NAME, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TYPE])) {
-                        $errs[self::FIELD_TYPE] = [];
+                    if (!isset($errs[self::FIELD_PROGRAM_NAME])) {
+                        $errs[self::FIELD_PROGRAM_NAME] = [];
                     }
-                    $errs[self::FIELD_TYPE][$rule] = $err;
+                    $errs[self::FIELD_PROGRAM_NAME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CHARACTERISTIC])) {
+            $v = $this->getCharacteristic();
+            foreach($validationRules[self::FIELD_CHARACTERISTIC] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_CHARACTERISTIC, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CHARACTERISTIC])) {
+                        $errs[self::FIELD_CHARACTERISTIC] = [];
+                    }
+                    $errs[self::FIELD_CHARACTERISTIC][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REFERRAL_METHOD])) {
+            $v = $this->getReferralMethod();
+            foreach($validationRules[self::FIELD_REFERRAL_METHOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_REFERRAL_METHOD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REFERRAL_METHOD])) {
+                        $errs[self::FIELD_REFERRAL_METHOD] = [];
+                    }
+                    $errs[self::FIELD_REFERRAL_METHOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_APPOINTMENT_REQUIRED])) {
+            $v = $this->getAppointmentRequired();
+            foreach($validationRules[self::FIELD_APPOINTMENT_REQUIRED] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_APPOINTMENT_REQUIRED, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_APPOINTMENT_REQUIRED])) {
+                        $errs[self::FIELD_APPOINTMENT_REQUIRED] = [];
+                    }
+                    $errs[self::FIELD_APPOINTMENT_REQUIRED][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_AVAILABLE_TIME])) {
+            $v = $this->getAvailableTime();
+            foreach($validationRules[self::FIELD_AVAILABLE_TIME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_AVAILABLE_TIME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_AVAILABLE_TIME])) {
+                        $errs[self::FIELD_AVAILABLE_TIME] = [];
+                    }
+                    $errs[self::FIELD_AVAILABLE_TIME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NOT_AVAILABLE])) {
+            $v = $this->getNotAvailable();
+            foreach($validationRules[self::FIELD_NOT_AVAILABLE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_NOT_AVAILABLE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NOT_AVAILABLE])) {
+                        $errs[self::FIELD_NOT_AVAILABLE] = [];
+                    }
+                    $errs[self::FIELD_NOT_AVAILABLE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_AVAILABILITY_EXCEPTIONS])) {
+            $v = $this->getAvailabilityExceptions();
+            foreach($validationRules[self::FIELD_AVAILABILITY_EXCEPTIONS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_AVAILABILITY_EXCEPTIONS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_AVAILABILITY_EXCEPTIONS])) {
+                        $errs[self::FIELD_AVAILABILITY_EXCEPTIONS] = [];
+                    }
+                    $errs[self::FIELD_AVAILABILITY_EXCEPTIONS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ENDPOINT])) {
+            $v = $this->getEndpoint();
+            foreach($validationRules[self::FIELD_ENDPOINT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_HEALTHCARE_SERVICE, self::FIELD_ENDPOINT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ENDPOINT])) {
+                        $errs[self::FIELD_ENDPOINT] = [];
+                    }
+                    $errs[self::FIELD_ENDPOINT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
                 }
             }
         }
@@ -2554,18 +2548,6 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TEXT])) {
-            $v = $this->getText();
-            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TEXT])) {
-                        $errs[self::FIELD_TEXT] = [];
-                    }
-                    $errs[self::FIELD_TEXT][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_ID])) {
             $v = $this->getId();
             foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
@@ -2575,6 +2557,18 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                         $errs[self::FIELD_ID] = [];
                     }
                     $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
                 }
             }
         }
@@ -2602,340 +2596,284 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_META])) {
-            $v = $this->getMeta();
-            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_META])) {
-                        $errs[self::FIELD_META] = [];
-                    }
-                    $errs[self::FIELD_META][$rule] = $err;
-                }
-            }
-        }
         return $errs;
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRHealthcareService $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRHealthcareService
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRHealthcareService::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRHealthcareService::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRHealthcareService;
-        } elseif (!is_object($type) || !($type instanceof FHIRHealthcareService)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRHealthcareService)) {
             throw new \RuntimeException(sprintf(
-                'FHIRHealthcareService::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRHealthcareService or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRDomainResource::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_IDENTIFIER === $n->nodeName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_ACTIVE === $n->nodeName) {
+                $type->setActive(FHIRBoolean::xmlUnserialize($n));
+            } elseif (self::FIELD_PROVIDED_BY === $n->nodeName) {
+                $type->setProvidedBy(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_CATEGORY === $n->nodeName) {
+                $type->setCategory(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_TYPE === $n->nodeName) {
+                $type->addType(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_SPECIALTY === $n->nodeName) {
+                $type->addSpecialty(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_LOCATION === $n->nodeName) {
+                $type->addLocation(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_NAME === $n->nodeName) {
+                $type->setName(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_COMMENT === $n->nodeName) {
+                $type->setComment(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTRA_DETAILS === $n->nodeName) {
+                $type->setExtraDetails(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_PHOTO === $n->nodeName) {
+                $type->setPhoto(FHIRAttachment::xmlUnserialize($n));
+            } elseif (self::FIELD_TELECOM === $n->nodeName) {
+                $type->addTelecom(FHIRContactPoint::xmlUnserialize($n));
+            } elseif (self::FIELD_COVERAGE_AREA === $n->nodeName) {
+                $type->addCoverageArea(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_SERVICE_PROVISION_CODE === $n->nodeName) {
+                $type->addServiceProvisionCode(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_ELIGIBILITY === $n->nodeName) {
+                $type->setEligibility(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_ELIGIBILITY_NOTE === $n->nodeName) {
+                $type->setEligibilityNote(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_PROGRAM_NAME === $n->nodeName) {
+                $type->addProgramName(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_CHARACTERISTIC === $n->nodeName) {
+                $type->addCharacteristic(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_REFERRAL_METHOD === $n->nodeName) {
+                $type->addReferralMethod(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_APPOINTMENT_REQUIRED === $n->nodeName) {
+                $type->setAppointmentRequired(FHIRBoolean::xmlUnserialize($n));
+            } elseif (self::FIELD_AVAILABLE_TIME === $n->nodeName) {
+                $type->addAvailableTime(FHIRHealthcareServiceAvailableTime::xmlUnserialize($n));
+            } elseif (self::FIELD_NOT_AVAILABLE === $n->nodeName) {
+                $type->addNotAvailable(FHIRHealthcareServiceNotAvailable::xmlUnserialize($n));
+            } elseif (self::FIELD_AVAILABILITY_EXCEPTIONS === $n->nodeName) {
+                $type->setAvailabilityExceptions(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_ENDPOINT === $n->nodeName) {
+                $type->addEndpoint(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_META === $n->nodeName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n));
+            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->active)) {
-            $type->setActive(FHIRBoolean::xmlUnserialize($children->active));
-        }
-        if (isset($attributes->active)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_ACTIVE);
+        if (null !== $n) {
             $pt = $type->getActive();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->active);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setActive((string)$attributes->active);
+                $type->setActive($n->nodeValue);
             }
         }
-        if (isset($children->appointmentRequired)) {
-            $type->setAppointmentRequired(FHIRBoolean::xmlUnserialize($children->appointmentRequired));
-        }
-        if (isset($attributes->appointmentRequired)) {
-            $pt = $type->getAppointmentRequired();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->appointmentRequired);
-            } else {
-                $type->setAppointmentRequired((string)$attributes->appointmentRequired);
-            }
-        }
-        if (isset($children->availabilityExceptions)) {
-            $type->setAvailabilityExceptions(FHIRString::xmlUnserialize($children->availabilityExceptions));
-        }
-        if (isset($attributes->availabilityExceptions)) {
-            $pt = $type->getAvailabilityExceptions();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->availabilityExceptions);
-            } else {
-                $type->setAvailabilityExceptions((string)$attributes->availabilityExceptions);
-            }
-        }
-        if (isset($children->availableTime)) {
-            foreach($children->availableTime as $child) {
-                $type->addAvailableTime(FHIRHealthcareServiceAvailableTime::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->category)) {
-            $type->setCategory(FHIRCodeableConcept::xmlUnserialize($children->category));
-        }
-        if (isset($children->characteristic)) {
-            foreach($children->characteristic as $child) {
-                $type->addCharacteristic(FHIRCodeableConcept::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->comment)) {
-            $type->setComment(FHIRString::xmlUnserialize($children->comment));
-        }
-        if (isset($attributes->comment)) {
-            $pt = $type->getComment();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->comment);
-            } else {
-                $type->setComment((string)$attributes->comment);
-            }
-        }
-        if (isset($children->coverageArea)) {
-            foreach($children->coverageArea as $child) {
-                $type->addCoverageArea(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->eligibility)) {
-            $type->setEligibility(FHIRCodeableConcept::xmlUnserialize($children->eligibility));
-        }
-        if (isset($children->eligibilityNote)) {
-            $type->setEligibilityNote(FHIRString::xmlUnserialize($children->eligibilityNote));
-        }
-        if (isset($attributes->eligibilityNote)) {
-            $pt = $type->getEligibilityNote();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->eligibilityNote);
-            } else {
-                $type->setEligibilityNote((string)$attributes->eligibilityNote);
-            }
-        }
-        if (isset($children->endpoint)) {
-            foreach($children->endpoint as $child) {
-                $type->addEndpoint(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->extraDetails)) {
-            $type->setExtraDetails(FHIRString::xmlUnserialize($children->extraDetails));
-        }
-        if (isset($attributes->extraDetails)) {
-            $pt = $type->getExtraDetails();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->extraDetails);
-            } else {
-                $type->setExtraDetails((string)$attributes->extraDetails);
-            }
-        }
-        if (isset($children->identifier)) {
-            foreach($children->identifier as $child) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->location)) {
-            foreach($children->location as $child) {
-                $type->addLocation(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->name)) {
-            $type->setName(FHIRString::xmlUnserialize($children->name));
-        }
-        if (isset($attributes->name)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_NAME);
+        if (null !== $n) {
             $pt = $type->getName();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->name);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setName((string)$attributes->name);
+                $type->setName($n->nodeValue);
             }
         }
-        if (isset($children->notAvailable)) {
-            foreach($children->notAvailable as $child) {
-                $type->addNotAvailable(FHIRHealthcareServiceNotAvailable::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_COMMENT);
+        if (null !== $n) {
+            $pt = $type->getComment();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setComment($n->nodeValue);
             }
         }
-        if (isset($children->photo)) {
-            $type->setPhoto(FHIRAttachment::xmlUnserialize($children->photo));
-        }
-        if (isset($children->programName)) {
-            foreach($children->programName as $child) {
-                $type->addProgramName(FHIRString::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_EXTRA_DETAILS);
+        if (null !== $n) {
+            $pt = $type->getExtraDetails();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setExtraDetails($n->nodeValue);
             }
         }
-        if (isset($children->providedBy)) {
-            $type->setProvidedBy(FHIRReference::xmlUnserialize($children->providedBy));
-        }
-        if (isset($children->referralMethod)) {
-            foreach($children->referralMethod as $child) {
-                $type->addReferralMethod(FHIRCodeableConcept::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ELIGIBILITY_NOTE);
+        if (null !== $n) {
+            $pt = $type->getEligibilityNote();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setEligibilityNote($n->nodeValue);
             }
         }
-        if (isset($children->serviceProvisionCode)) {
-            foreach($children->serviceProvisionCode as $child) {
-                $type->addServiceProvisionCode(FHIRCodeableConcept::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_PROGRAM_NAME);
+        if (null !== $n) {
+            $type->addProgramName($n->nodeValue);
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_APPOINTMENT_REQUIRED);
+        if (null !== $n) {
+            $pt = $type->getAppointmentRequired();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setAppointmentRequired($n->nodeValue);
             }
         }
-        if (isset($children->specialty)) {
-            foreach($children->specialty as $child) {
-                $type->addSpecialty(FHIRCodeableConcept::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_AVAILABILITY_EXCEPTIONS);
+        if (null !== $n) {
+            $pt = $type->getAvailabilityExceptions();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setAvailabilityExceptions($n->nodeValue);
             }
         }
-        if (isset($children->telecom)) {
-            foreach($children->telecom as $child) {
-                $type->addTelecom(FHIRContactPoint::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
-        if (isset($children->type)) {
-            foreach($children->type as $child) {
-                $type->addType(FHIRCodeableConcept::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
+        if (null !== $n) {
+            $pt = $type->getImplicitRules();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setImplicitRules($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
+        if (null !== $n) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLanguage($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getActive())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ACTIVE, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('HealthcareService'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
-        if (null !== ($v = $this->getAppointmentRequired())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_APPOINTMENT_REQUIRED, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getAvailabilityExceptions())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_AVAILABILITY_EXCEPTIONS, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getAvailableTime())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_AVAILABLE_TIME, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getCategory())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CATEGORY, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getCharacteristic())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_CHARACTERISTIC, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getComment())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_COMMENT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getCoverageArea())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_COVERAGE_AREA, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getEligibility())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ELIGIBILITY, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getEligibilityNote())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ELIGIBILITY_NOTE, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getEndpoint())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_ENDPOINT, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getExtraDetails())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_EXTRA_DETAILS, null, $v->_getFHIRXMLNamespace()));
-        }
+        parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if ([] !== ($vs = $this->getLocation())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_LOCATION, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getName())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_NAME, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getNotAvailable())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_NOT_AVAILABLE, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getPhoto())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PHOTO, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getProgramName())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_PROGRAM_NAME, null, $v->_getFHIRXMLNamespace()));
-            }
+        if (null !== ($v = $this->getActive())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ACTIVE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getProvidedBy())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PROVIDED_BY, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_PROVIDED_BY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if ([] !== ($vs = $this->getReferralMethod())) {
+        if (null !== ($v = $this->getCategory())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CATEGORY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if ([] !== ($vs = $this->getType())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_REFERRAL_METHOD, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if ([] !== ($vs = $this->getServiceProvisionCode())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SERVICE_PROVISION_CODE, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getSpecialty())) {
@@ -2943,251 +2881,384 @@ class FHIRHealthcareService extends FHIRDomainResource implements PHPFHIRContain
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SPECIALTY, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_SPECIALTY);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
+        }
+        if ([] !== ($vs = $this->getLocation())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_LOCATION);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if (null !== ($v = $this->getName())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_NAME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getComment())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_COMMENT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getExtraDetails())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_EXTRA_DETAILS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPhoto())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PHOTO);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getTelecom())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_TELECOM, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if ([] !== ($vs = $this->getType())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        return $sxe;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getActive())) {
-            $a[self::FIELD_ACTIVE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRBoolean::FIELD_VALUE]);
-                $a[self::FIELD_ACTIVE_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getAppointmentRequired())) {
-            $a[self::FIELD_APPOINTMENT_REQUIRED] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRBoolean::FIELD_VALUE]);
-                $a[self::FIELD_APPOINTMENT_REQUIRED_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getAvailabilityExceptions())) {
-            $a[self::FIELD_AVAILABILITY_EXCEPTIONS] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_AVAILABILITY_EXCEPTIONS_EXT] = $enc;
-            }
-        }
-        if ([] !== ($vs = $this->getAvailableTime())) {
-            $a[self::FIELD_AVAILABLE_TIME] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_AVAILABLE_TIME][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getCategory())) {
-            $a[self::FIELD_CATEGORY] = $v;
-        }
-        if ([] !== ($vs = $this->getCharacteristic())) {
-            $a[self::FIELD_CHARACTERISTIC] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_CHARACTERISTIC][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getComment())) {
-            $a[self::FIELD_COMMENT] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_COMMENT_EXT] = $enc;
+                $telement = $element->ownerDocument->createElement(self::FIELD_TELECOM);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getCoverageArea())) {
-            $a[self::FIELD_COVERAGE_AREA] = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_COVERAGE_AREA][] = $v;
+                $telement = $element->ownerDocument->createElement(self::FIELD_COVERAGE_AREA);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if ([] !== ($vs = $this->getServiceProvisionCode())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_SERVICE_PROVISION_CODE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if (null !== ($v = $this->getEligibility())) {
-            $a[self::FIELD_ELIGIBILITY] = $v;
+            $telement = $element->ownerDocument->createElement(self::FIELD_ELIGIBILITY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getEligibilityNote())) {
-            $a[self::FIELD_ELIGIBILITY_NOTE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_ELIGIBILITY_NOTE_EXT] = $enc;
-            }
+            $telement = $element->ownerDocument->createElement(self::FIELD_ELIGIBILITY_NOTE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if ([] !== ($vs = $this->getEndpoint())) {
-            $a[self::FIELD_ENDPOINT] = [];
+        if ([] !== ($vs = $this->getProgramName())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_ENDPOINT][] = $v;
+                $telement = $element->ownerDocument->createElement(self::FIELD_PROGRAM_NAME);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getExtraDetails())) {
-            $a[self::FIELD_EXTRA_DETAILS] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_EXTRA_DETAILS_EXT] = $enc;
-            }
-        }
-        if ([] !== ($vs = $this->getIdentifier())) {
-            $a[self::FIELD_IDENTIFIER] = [];
+        if ([] !== ($vs = $this->getCharacteristic())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_IDENTIFIER][] = $v;
+                $telement = $element->ownerDocument->createElement(self::FIELD_CHARACTERISTIC);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if ([] !== ($vs = $this->getLocation())) {
-            $a[self::FIELD_LOCATION] = [];
+        if ([] !== ($vs = $this->getReferralMethod())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_LOCATION][] = $v;
+                $telement = $element->ownerDocument->createElement(self::FIELD_REFERRAL_METHOD);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getName())) {
-            $a[self::FIELD_NAME] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_NAME_EXT] = $enc;
+        if (null !== ($v = $this->getAppointmentRequired())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_APPOINTMENT_REQUIRED);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if ([] !== ($vs = $this->getAvailableTime())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_AVAILABLE_TIME);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getNotAvailable())) {
-            $a[self::FIELD_NOT_AVAILABLE] = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_NOT_AVAILABLE][] = $v;
+                $telement = $element->ownerDocument->createElement(self::FIELD_NOT_AVAILABLE);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if (null !== ($v = $this->getAvailabilityExceptions())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_AVAILABILITY_EXCEPTIONS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if ([] !== ($vs = $this->getEndpoint())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_ENDPOINT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        return $element;
+    }
+
+    /**
+     * @return \stdClass
+     */
+    public function jsonSerialize(): mixed
+    {
+        $out = parent::jsonSerialize();
+        if ([] !== ($vs = $this->getIdentifier())) {
+            $out->{self::FIELD_IDENTIFIER} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_IDENTIFIER}[] = $v;
+            }
+        }
+        if (null !== ($v = $this->getActive())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ACTIVE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRBoolean::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ACTIVE_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getProvidedBy())) {
+            $out->{self::FIELD_PROVIDED_BY} = $v;
+        }
+        if (null !== ($v = $this->getCategory())) {
+            $out->{self::FIELD_CATEGORY} = $v;
+        }
+        if ([] !== ($vs = $this->getType())) {
+            $out->{self::FIELD_TYPE} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_TYPE}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getSpecialty())) {
+            $out->{self::FIELD_SPECIALTY} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_SPECIALTY}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getLocation())) {
+            $out->{self::FIELD_LOCATION} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_LOCATION}[] = $v;
+            }
+        }
+        if (null !== ($v = $this->getName())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_NAME} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_NAME_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getComment())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_COMMENT} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_COMMENT_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getExtraDetails())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_EXTRA_DETAILS} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_EXTRA_DETAILS_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getPhoto())) {
-            $a[self::FIELD_PHOTO] = $v;
+            $out->{self::FIELD_PHOTO} = $v;
+        }
+        if ([] !== ($vs = $this->getTelecom())) {
+            $out->{self::FIELD_TELECOM} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_TELECOM}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getCoverageArea())) {
+            $out->{self::FIELD_COVERAGE_AREA} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_COVERAGE_AREA}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getServiceProvisionCode())) {
+            $out->{self::FIELD_SERVICE_PROVISION_CODE} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_SERVICE_PROVISION_CODE}[] = $v;
+            }
+        }
+        if (null !== ($v = $this->getEligibility())) {
+            $out->{self::FIELD_ELIGIBILITY} = $v;
+        }
+        if (null !== ($v = $this->getEligibilityNote())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ELIGIBILITY_NOTE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ELIGIBILITY_NOTE_EXT} = $ext;
+            }
         }
         if ([] !== ($vs = $this->getProgramName())) {
-            $a[self::FIELD_PROGRAM_NAME] = [];
-            $encs = [];
-            $encValued = false;
+            $vals = [];
+            $exts = [];
             foreach ($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_PROGRAM_NAME][] = $v->getValue();
-                $enc = $v->jsonSerialize();
-                $cnt = count($enc);
-                if (0 === $cnt || (1 === $cnt && (isset($enc[FHIRString::FIELD_VALUE]) || array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                    $encs[] = null;
-                } else {
-                    unset($enc[FHIRString::FIELD_VALUE]);
-                    $encs[] = $enc;
-                    $encValued = true;
+                $val = $v->getValue();
+                $ext = $v->jsonSerialize();
+                unset($ext->{FHIRString::FIELD_VALUE});
+                if (null !== $val) {
+                    $vals[] = $val;
+                }
+                if ([] !== $ext) {
+                    $exts[] = $ext;
                 }
             }
-            if ($encValued) {
-                $a[self::FIELD_PROGRAM_NAME_EXT] = $encs;
+            if ([] !== $vals) {
+                $out->{self::FIELD_PROGRAM_NAME} = $vals;
+            }
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_PROGRAM_NAME_EXT} = $exts;
             }
         }
-        if (null !== ($v = $this->getProvidedBy())) {
-            $a[self::FIELD_PROVIDED_BY] = $v;
+        if ([] !== ($vs = $this->getCharacteristic())) {
+            $out->{self::FIELD_CHARACTERISTIC} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_CHARACTERISTIC}[] = $v;
+            }
         }
         if ([] !== ($vs = $this->getReferralMethod())) {
-            $a[self::FIELD_REFERRAL_METHOD] = [];
+            $out->{self::FIELD_REFERRAL_METHOD} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_REFERRAL_METHOD][] = $v;
+                $out->{self::FIELD_REFERRAL_METHOD}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->getServiceProvisionCode())) {
-            $a[self::FIELD_SERVICE_PROVISION_CODE] = [];
+        if (null !== ($v = $this->getAppointmentRequired())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_APPOINTMENT_REQUIRED} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRBoolean::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_APPOINTMENT_REQUIRED_EXT} = $ext;
+            }
+        }
+        if ([] !== ($vs = $this->getAvailableTime())) {
+            $out->{self::FIELD_AVAILABLE_TIME} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_SERVICE_PROVISION_CODE][] = $v;
+                $out->{self::FIELD_AVAILABLE_TIME}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->getSpecialty())) {
-            $a[self::FIELD_SPECIALTY] = [];
+        if ([] !== ($vs = $this->getNotAvailable())) {
+            $out->{self::FIELD_NOT_AVAILABLE} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_SPECIALTY][] = $v;
+                $out->{self::FIELD_NOT_AVAILABLE}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->getTelecom())) {
-            $a[self::FIELD_TELECOM] = [];
+        if (null !== ($v = $this->getAvailabilityExceptions())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_AVAILABILITY_EXCEPTIONS} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_AVAILABILITY_EXCEPTIONS_EXT} = $ext;
+            }
+        }
+        if ([] !== ($vs = $this->getEndpoint())) {
+            $out->{self::FIELD_ENDPOINT} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_TELECOM][] = $v;
+                $out->{self::FIELD_ENDPOINT}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->getType())) {
-            $a[self::FIELD_TYPE] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_TYPE][] = $v;
-            }
-        }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
-        }
-        return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
-    }
 
+        $out->{PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE} = $this->_getResourceType();
+
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

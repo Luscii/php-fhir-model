@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionAttester;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionEvent;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionRelatesTo;
@@ -79,11 +81,17 @@ use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRVConfidentialityClassification;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A set of healthcare-related information that is assembled together into a single
@@ -104,6 +112,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_COMPOSITION;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
@@ -124,9 +133,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
     const FIELD_EVENT = 'event';
     const FIELD_SECTION = 'section';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -138,8 +144,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $identifier = null;
-
+    protected null|FHIRIdentifier $identifier = null;
     /**
      * The workflow/clinical status of the composition.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -149,8 +154,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCompositionStatus
      */
-    protected ?FHIRCompositionStatus $status = null;
-
+    protected null|FHIRCompositionStatus $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -163,8 +167,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -177,8 +180,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $category = [];
-
+    protected null|array $category = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -191,8 +193,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $subject = null;
-
+    protected null|FHIRReference $subject = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -203,8 +204,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $encounter = null;
-
+    protected null|FHIRReference $encounter = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -216,10 +216,9 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * The composition editing time, when the composition was last logically changed by
      * the author.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -230,8 +229,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $author = [];
-
+    protected null|array $author = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -239,10 +237,9 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * Official human-readable label for the composition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $title = null;
-
+    protected null|FHIRString $title = null;
     /**
      * Codes specifying the level of confidentiality of the composition.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -251,8 +248,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRVConfidentialityClassification
      */
-    protected ?FHIRVConfidentialityClassification $confidentiality = null;
-
+    protected null|FHIRVConfidentialityClassification $confidentiality = null;
     /**
      * A set of healthcare-related information that is assembled together into a single
      * logical package that provides a single coherent statement of meaning,
@@ -268,8 +264,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionAttester[]
      */
-    protected ?array $attester = [];
-
+    protected null|array $attester = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -280,8 +275,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $custodian = null;
-
+    protected null|FHIRReference $custodian = null;
     /**
      * A set of healthcare-related information that is assembled together into a single
      * logical package that provides a single coherent statement of meaning,
@@ -298,8 +292,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionRelatesTo[]
      */
-    protected ?array $relatesTo = [];
-
+    protected null|array $relatesTo = [];
     /**
      * A set of healthcare-related information that is assembled together into a single
      * logical package that provides a single coherent statement of meaning,
@@ -316,8 +309,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionEvent[]
      */
-    protected ?array $event = [];
-
+    protected null|array $event = [];
     /**
      * A set of healthcare-related information that is assembled together into a single
      * logical package that provides a single coherent statement of meaning,
@@ -333,13 +325,13 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionSection[]
      */
-    protected ?array $section = [];
+    protected null|array $section = [];
 
     /**
      * Validation map for fields in type Composition
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_AUTHOR => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -348,17 +340,12 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
     /**
      * FHIRComposition Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRComposition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -566,6 +553,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
         }
     }
 
+
     /**
      * @return string
      */
@@ -574,17 +562,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Composition{$xmlns}></Composition>";
-    }
     /**
      * @return string
      */
@@ -605,7 +582,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getIdentifier(): ?FHIRIdentifier
+    public function getIdentifier(): null|FHIRIdentifier
     {
         return $this->identifier;
     }
@@ -622,8 +599,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function setIdentifier(?FHIRIdentifier $identifier = null): object
+    public function setIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->identifier, $identifier);
         $this->identifier = $identifier;
         return $this;
@@ -638,7 +618,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCompositionStatus
      */
-    public function getStatus(): ?FHIRCompositionStatus
+    public function getStatus(): null|FHIRCompositionStatus
     {
         return $this->status;
     }
@@ -653,8 +633,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCompositionStatus $status
      * @return static
      */
-    public function setStatus(?FHIRCompositionStatus $status = null): object
+    public function setStatus(null|FHIRCompositionStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRCompositionStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -672,7 +655,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -690,8 +673,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -709,7 +695,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getCategory(): ?array
+    public function getCategory(): null|array
     {
         return $this->category;
     }
@@ -727,8 +713,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $category
      * @return static
      */
-    public function addCategory(?FHIRCodeableConcept $category = null): object
+    public function addCategory(null|FHIRCodeableConcept $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->category[] = $category;
         return $this;
@@ -747,7 +736,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $category
      * @return static
      */
-    public function setCategory(array $category = []): object
+    public function setCategory(array $category = []): self
     {
         if ([] !== $this->category) {
             $this->_trackValuesRemoved(count($this->category));
@@ -778,7 +767,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubject(): ?FHIRReference
+    public function getSubject(): null|FHIRReference
     {
         return $this->subject;
     }
@@ -796,8 +785,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $subject
      * @return static
      */
-    public function setSubject(?FHIRReference $subject = null): object
+    public function setSubject(null|FHIRReference $subject = null): self
     {
+        if (null === $subject) {
+            $subject = new FHIRReference();
+        }
         $this->_trackValueSet($this->subject, $subject);
         $this->subject = $subject;
         return $this;
@@ -813,7 +805,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getEncounter(): ?FHIRReference
+    public function getEncounter(): null|FHIRReference
     {
         return $this->encounter;
     }
@@ -829,8 +821,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $encounter
      * @return static
      */
-    public function setEncounter(?FHIRReference $encounter = null): object
+    public function setEncounter(null|FHIRReference $encounter = null): self
     {
+        if (null === $encounter) {
+            $encounter = new FHIRReference();
+        }
         $this->_trackValueSet($this->encounter, $encounter);
         $this->encounter = $encounter;
         return $this;
@@ -847,9 +842,9 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * The composition editing time, when the composition was last logically changed by
      * the author.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDate(): ?FHIRDateTime
+    public function getDate(): null|FHIRDateTime
     {
         return $this->date;
     }
@@ -865,10 +860,10 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * The composition editing time, when the composition was last logically changed by
      * the author.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
      * @return static
      */
-    public function setDate($date = null): object
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
@@ -888,7 +883,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getAuthor(): ?array
+    public function getAuthor(): null|array
     {
         return $this->author;
     }
@@ -904,8 +899,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $author
      * @return static
      */
-    public function addAuthor(?FHIRReference $author = null): object
+    public function addAuthor(null|FHIRReference $author = null): self
     {
+        if (null === $author) {
+            $author = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->author[] = $author;
         return $this;
@@ -922,7 +920,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $author
      * @return static
      */
-    public function setAuthor(array $author = []): object
+    public function setAuthor(array $author = []): self
     {
         if ([] !== $this->author) {
             $this->_trackValuesRemoved(count($this->author));
@@ -948,9 +946,9 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * Official human-readable label for the composition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTitle(): ?FHIRString
+    public function getTitle(): null|FHIRString
     {
         return $this->title;
     }
@@ -962,10 +960,10 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * Official human-readable label for the composition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
      * @return static
      */
-    public function setTitle($title = null): object
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
@@ -983,7 +981,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRVConfidentialityClassification
      */
-    public function getConfidentiality(): ?FHIRVConfidentialityClassification
+    public function getConfidentiality(): null|FHIRVConfidentialityClassification
     {
         return $this->confidentiality;
     }
@@ -997,8 +995,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRVConfidentialityClassification $confidentiality
      * @return static
      */
-    public function setConfidentiality(?FHIRVConfidentialityClassification $confidentiality = null): object
+    public function setConfidentiality(null|FHIRVConfidentialityClassification $confidentiality = null): self
     {
+        if (null === $confidentiality) {
+            $confidentiality = new FHIRVConfidentialityClassification();
+        }
         $this->_trackValueSet($this->confidentiality, $confidentiality);
         $this->confidentiality = $confidentiality;
         return $this;
@@ -1019,7 +1020,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionAttester[]
      */
-    public function getAttester(): ?array
+    public function getAttester(): null|array
     {
         return $this->attester;
     }
@@ -1040,8 +1041,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionAttester $attester
      * @return static
      */
-    public function addAttester(?FHIRCompositionAttester $attester = null): object
+    public function addAttester(null|FHIRCompositionAttester $attester = null): self
     {
+        if (null === $attester) {
+            $attester = new FHIRCompositionAttester();
+        }
         $this->_trackValueAdded();
         $this->attester[] = $attester;
         return $this;
@@ -1063,7 +1067,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionAttester[] $attester
      * @return static
      */
-    public function setAttester(array $attester = []): object
+    public function setAttester(array $attester = []): self
     {
         if ([] !== $this->attester) {
             $this->_trackValuesRemoved(count($this->attester));
@@ -1092,7 +1096,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getCustodian(): ?FHIRReference
+    public function getCustodian(): null|FHIRReference
     {
         return $this->custodian;
     }
@@ -1108,8 +1112,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $custodian
      * @return static
      */
-    public function setCustodian(?FHIRReference $custodian = null): object
+    public function setCustodian(null|FHIRReference $custodian = null): self
     {
+        if (null === $custodian) {
+            $custodian = new FHIRReference();
+        }
         $this->_trackValueSet($this->custodian, $custodian);
         $this->custodian = $custodian;
         return $this;
@@ -1131,7 +1138,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionRelatesTo[]
      */
-    public function getRelatesTo(): ?array
+    public function getRelatesTo(): null|array
     {
         return $this->relatesTo;
     }
@@ -1153,8 +1160,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionRelatesTo $relatesTo
      * @return static
      */
-    public function addRelatesTo(?FHIRCompositionRelatesTo $relatesTo = null): object
+    public function addRelatesTo(null|FHIRCompositionRelatesTo $relatesTo = null): self
     {
+        if (null === $relatesTo) {
+            $relatesTo = new FHIRCompositionRelatesTo();
+        }
         $this->_trackValueAdded();
         $this->relatesTo[] = $relatesTo;
         return $this;
@@ -1177,7 +1187,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionRelatesTo[] $relatesTo
      * @return static
      */
-    public function setRelatesTo(array $relatesTo = []): object
+    public function setRelatesTo(array $relatesTo = []): self
     {
         if ([] !== $this->relatesTo) {
             $this->_trackValuesRemoved(count($this->relatesTo));
@@ -1212,7 +1222,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionEvent[]
      */
-    public function getEvent(): ?array
+    public function getEvent(): null|array
     {
         return $this->event;
     }
@@ -1234,8 +1244,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionEvent $event
      * @return static
      */
-    public function addEvent(?FHIRCompositionEvent $event = null): object
+    public function addEvent(null|FHIRCompositionEvent $event = null): self
     {
+        if (null === $event) {
+            $event = new FHIRCompositionEvent();
+        }
         $this->_trackValueAdded();
         $this->event[] = $event;
         return $this;
@@ -1258,7 +1271,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionEvent[] $event
      * @return static
      */
-    public function setEvent(array $event = []): object
+    public function setEvent(array $event = []): self
     {
         if ([] !== $this->event) {
             $this->_trackValuesRemoved(count($this->event));
@@ -1292,7 +1305,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionSection[]
      */
-    public function getSection(): ?array
+    public function getSection(): null|array
     {
         return $this->section;
     }
@@ -1313,8 +1326,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionSection $section
      * @return static
      */
-    public function addSection(?FHIRCompositionSection $section = null): object
+    public function addSection(null|FHIRCompositionSection $section = null): self
     {
+        if (null === $section) {
+            $section = new FHIRCompositionSection();
+        }
         $this->_trackValueAdded();
         $this->section[] = $section;
         return $this;
@@ -1336,7 +1352,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionSection[] $section
      * @return static
      */
-    public function setSection(array $section = []): object
+    public function setSection(array $section = []): self
     {
         if ([] !== $this->section) {
             $this->_trackValuesRemoved(count($this->section));
@@ -1363,7 +1379,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1745,36 +1761,48 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRComposition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRComposition
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRComposition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRComposition::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRComposition(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRComposition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRComposition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRComposition::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRComposition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1884,17 +1912,25 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Composition'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getIdentifier())) {
@@ -2008,7 +2044,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getIdentifier())) {
@@ -2125,7 +2161,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
 
         return $out;
     }
-
 
     /**
      * @return string

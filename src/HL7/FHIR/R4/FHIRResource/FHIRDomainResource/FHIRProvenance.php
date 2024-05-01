@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceAgent;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceEntity;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
@@ -76,11 +78,17 @@ use HL7\FHIR\R4\FHIRElement\FHIRPeriod;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRSignature;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRInstantPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * Provenance of a resource is a record that describes entities and processes
@@ -101,6 +109,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_PROVENANCE;
+
     const FIELD_TARGET = 'target';
     const FIELD_OCCURRED_PERIOD = 'occurredPeriod';
     const FIELD_OCCURRED_DATE_TIME = 'occurredDateTime';
@@ -116,9 +125,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
     const FIELD_ENTITY = 'entity';
     const FIELD_SIGNATURE = 'signature';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -130,8 +136,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $target = [];
-
+    protected null|array $target = [];
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -141,8 +146,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $occurredPeriod = null;
-
+    protected null|FHIRPeriod $occurredPeriod = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -153,10 +157,9 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The period during which the activity occurred.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $occurredDateTime = null;
-
+    protected null|FHIRDateTime $occurredDateTime = null;
     /**
      * An instant in time - known at least to the second
      * Note: This is intended for where precisely observed times are required,
@@ -167,10 +170,9 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The instant of time at which the activity was recorded.
      *
-     * @var null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    protected ?FHIRInstant $recorded = null;
-
+    protected null|FHIRInstant $recorded = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -180,10 +182,9 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * have multiple applicable policy documents, such as patient consent, guarantor
      * funding, etc.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
      */
-    protected ?array $policy = [];
-
+    protected null|array $policy = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -193,8 +194,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $location = null;
-
+    protected null|FHIRReference $location = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -205,8 +205,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $reason = [];
-
+    protected null|array $reason = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -219,8 +218,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $activity = null;
-
+    protected null|FHIRCodeableConcept $activity = null;
     /**
      * Provenance of a resource is a record that describes entities and processes
      * involved in producing and delivering or otherwise influencing that resource.
@@ -237,8 +235,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceAgent[]
      */
-    protected ?array $agent = [];
-
+    protected null|array $agent = [];
     /**
      * Provenance of a resource is a record that describes entities and processes
      * involved in producing and delivering or otherwise influencing that resource.
@@ -254,8 +251,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceEntity[]
      */
-    protected ?array $entity = [];
-
+    protected null|array $entity = [];
     /**
      * A signature along with supporting context. The signature may be a digital
      * signature that is cryptographic in nature, or some other signature acceptable to
@@ -270,13 +266,13 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSignature[]
      */
-    protected ?array $signature = [];
+    protected null|array $signature = [];
 
     /**
      * Validation map for fields in type Provenance
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_AGENT => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -289,17 +285,12 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
     /**
      * FHIRProvenance Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRProvenance::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_TARGET])) {
@@ -475,6 +466,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
         }
     }
 
+
     /**
      * @return string
      */
@@ -483,17 +475,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Provenance{$xmlns}></Provenance>";
-    }
     /**
      * @return string
      */
@@ -514,7 +495,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getTarget(): ?array
+    public function getTarget(): null|array
     {
         return $this->target;
     }
@@ -531,8 +512,11 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $target
      * @return static
      */
-    public function addTarget(?FHIRReference $target = null): object
+    public function addTarget(null|FHIRReference $target = null): self
     {
+        if (null === $target) {
+            $target = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->target[] = $target;
         return $this;
@@ -550,7 +534,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $target
      * @return static
      */
-    public function setTarget(array $target = []): object
+    public function setTarget(array $target = []): self
     {
         if ([] !== $this->target) {
             $this->_trackValuesRemoved(count($this->target));
@@ -578,7 +562,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getOccurredPeriod(): ?FHIRPeriod
+    public function getOccurredPeriod(): null|FHIRPeriod
     {
         return $this->occurredPeriod;
     }
@@ -593,8 +577,11 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $occurredPeriod
      * @return static
      */
-    public function setOccurredPeriod(?FHIRPeriod $occurredPeriod = null): object
+    public function setOccurredPeriod(null|FHIRPeriod $occurredPeriod = null): self
     {
+        if (null === $occurredPeriod) {
+            $occurredPeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->occurredPeriod, $occurredPeriod);
         $this->occurredPeriod = $occurredPeriod;
         return $this;
@@ -610,9 +597,9 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The period during which the activity occurred.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getOccurredDateTime(): ?FHIRDateTime
+    public function getOccurredDateTime(): null|FHIRDateTime
     {
         return $this->occurredDateTime;
     }
@@ -627,10 +614,10 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The period during which the activity occurred.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $occurredDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $occurredDateTime
      * @return static
      */
-    public function setOccurredDateTime($occurredDateTime = null): object
+    public function setOccurredDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $occurredDateTime = null): self
     {
         if (null !== $occurredDateTime && !($occurredDateTime instanceof FHIRDateTime)) {
             $occurredDateTime = new FHIRDateTime($occurredDateTime);
@@ -650,9 +637,9 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The instant of time at which the activity was recorded.
      *
-     * @return null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    public function getRecorded(): ?FHIRInstant
+    public function getRecorded(): null|FHIRInstant
     {
         return $this->recorded;
     }
@@ -667,10 +654,10 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * The instant of time at which the activity was recorded.
      *
-     * @param null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $recorded
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $recorded
      * @return static
      */
-    public function setRecorded($recorded = null): object
+    public function setRecorded(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $recorded = null): self
     {
         if (null !== $recorded && !($recorded instanceof FHIRInstant)) {
             $recorded = new FHIRInstant($recorded);
@@ -689,9 +676,9 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * have multiple applicable policy documents, such as patient consent, guarantor
      * funding, etc.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
      */
-    public function getPolicy(): ?array
+    public function getPolicy(): null|array
     {
         return $this->policy;
     }
@@ -705,10 +692,10 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * have multiple applicable policy documents, such as patient consent, guarantor
      * funding, etc.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[] $policy
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $policy
      * @return static
      */
-    public function addPolicy($policy = null): object
+    public function addPolicy(null|string|FHIRUriPrimitive|FHIRUri $policy = null): self
     {
         if (null !== $policy && !($policy instanceof FHIRUri)) {
             $policy = new FHIRUri($policy);
@@ -730,7 +717,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUri[] $policy
      * @return static
      */
-    public function setPolicy(array $policy = []): object
+    public function setPolicy(array $policy = []): self
     {
         if ([] !== $this->policy) {
             $this->_trackValuesRemoved(count($this->policy));
@@ -758,7 +745,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getLocation(): ?FHIRReference
+    public function getLocation(): null|FHIRReference
     {
         return $this->location;
     }
@@ -773,8 +760,11 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $location
      * @return static
      */
-    public function setLocation(?FHIRReference $location = null): object
+    public function setLocation(null|FHIRReference $location = null): self
     {
+        if (null === $location) {
+            $location = new FHIRReference();
+        }
         $this->_trackValueSet($this->location, $location);
         $this->location = $location;
         return $this;
@@ -790,7 +780,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getReason(): ?array
+    public function getReason(): null|array
     {
         return $this->reason;
     }
@@ -806,8 +796,11 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $reason
      * @return static
      */
-    public function addReason(?FHIRCodeableConcept $reason = null): object
+    public function addReason(null|FHIRCodeableConcept $reason = null): self
     {
+        if (null === $reason) {
+            $reason = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->reason[] = $reason;
         return $this;
@@ -824,7 +817,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $reason
      * @return static
      */
-    public function setReason(array $reason = []): object
+    public function setReason(array $reason = []): self
     {
         if ([] !== $this->reason) {
             $this->_trackValuesRemoved(count($this->reason));
@@ -855,7 +848,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getActivity(): ?FHIRCodeableConcept
+    public function getActivity(): null|FHIRCodeableConcept
     {
         return $this->activity;
     }
@@ -873,8 +866,11 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $activity
      * @return static
      */
-    public function setActivity(?FHIRCodeableConcept $activity = null): object
+    public function setActivity(null|FHIRCodeableConcept $activity = null): self
     {
+        if (null === $activity) {
+            $activity = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->activity, $activity);
         $this->activity = $activity;
         return $this;
@@ -896,7 +892,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceAgent[]
      */
-    public function getAgent(): ?array
+    public function getAgent(): null|array
     {
         return $this->agent;
     }
@@ -918,8 +914,11 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceAgent $agent
      * @return static
      */
-    public function addAgent(?FHIRProvenanceAgent $agent = null): object
+    public function addAgent(null|FHIRProvenanceAgent $agent = null): self
     {
+        if (null === $agent) {
+            $agent = new FHIRProvenanceAgent();
+        }
         $this->_trackValueAdded();
         $this->agent[] = $agent;
         return $this;
@@ -942,7 +941,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceAgent[] $agent
      * @return static
      */
-    public function setAgent(array $agent = []): object
+    public function setAgent(array $agent = []): self
     {
         if ([] !== $this->agent) {
             $this->_trackValuesRemoved(count($this->agent));
@@ -976,7 +975,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceEntity[]
      */
-    public function getEntity(): ?array
+    public function getEntity(): null|array
     {
         return $this->entity;
     }
@@ -997,8 +996,11 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceEntity $entity
      * @return static
      */
-    public function addEntity(?FHIRProvenanceEntity $entity = null): object
+    public function addEntity(null|FHIRProvenanceEntity $entity = null): self
     {
+        if (null === $entity) {
+            $entity = new FHIRProvenanceEntity();
+        }
         $this->_trackValueAdded();
         $this->entity[] = $entity;
         return $this;
@@ -1020,7 +1022,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceEntity[] $entity
      * @return static
      */
-    public function setEntity(array $entity = []): object
+    public function setEntity(array $entity = []): self
     {
         if ([] !== $this->entity) {
             $this->_trackValuesRemoved(count($this->entity));
@@ -1053,7 +1055,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSignature[]
      */
-    public function getSignature(): ?array
+    public function getSignature(): null|array
     {
         return $this->signature;
     }
@@ -1073,8 +1075,11 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSignature $signature
      * @return static
      */
-    public function addSignature(?FHIRSignature $signature = null): object
+    public function addSignature(null|FHIRSignature $signature = null): self
     {
+        if (null === $signature) {
+            $signature = new FHIRSignature();
+        }
         $this->_trackValueAdded();
         $this->signature[] = $signature;
         return $this;
@@ -1095,7 +1100,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRSignature[] $signature
      * @return static
      */
-    public function setSignature(array $signature = []): object
+    public function setSignature(array $signature = []): self
     {
         if ([] !== $this->signature) {
             $this->_trackValuesRemoved(count($this->signature));
@@ -1122,7 +1127,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1436,36 +1441,48 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRProvenance $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRProvenance
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRProvenance::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRProvenance::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRProvenance(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRProvenance)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRProvenance)) {
             throw new \RuntimeException(sprintf(
-                'FHIRProvenance::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRProvenance or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1537,12 +1554,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
         }
         $n = $element->attributes->getNamedItem(self::FIELD_POLICY);
         if (null !== $n) {
-            $pt = $type->getPolicy();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addPolicy($n->nodeValue);
-            }
+            $type->addPolicy($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -1576,17 +1588,25 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Provenance'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getTarget())) {
@@ -1680,7 +1700,7 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getTarget())) {
@@ -1786,7 +1806,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
 
         return $out;
     }
-
 
     /**
      * @return string

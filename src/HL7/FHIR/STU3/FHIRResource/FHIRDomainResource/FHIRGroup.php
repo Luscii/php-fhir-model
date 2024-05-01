@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,18 +62,34 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRBooleanPrimitive;
+use HL7\FHIR\STU3\FHIRCodePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupCharacteristic;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupMember;
 use HL7\FHIR\STU3\FHIRElement\FHIRBoolean;
+use HL7\FHIR\STU3\FHIRElement\FHIRCode;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRGroupType;
+use HL7\FHIR\STU3\FHIRElement\FHIRId;
 use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
+use HL7\FHIR\STU3\FHIRElement\FHIRMeta;
+use HL7\FHIR\STU3\FHIRElement\FHIRNarrative;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
 use HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRIdPrimitive;
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUnsignedIntPrimitive;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRTypeMap;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * Represents a defined collection of entities that may be discussed or acted upon
@@ -88,24 +104,32 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_GROUP;
+
+    const FIELD_IDENTIFIER = 'identifier';
     const FIELD_ACTIVE = 'active';
     const FIELD_ACTIVE_EXT = '_active';
+    const FIELD_TYPE = 'type';
+    const FIELD_TYPE_EXT = '_type';
     const FIELD_ACTUAL = 'actual';
     const FIELD_ACTUAL_EXT = '_actual';
-    const FIELD_CHARACTERISTIC = 'characteristic';
     const FIELD_CODE = 'code';
-    const FIELD_IDENTIFIER = 'identifier';
-    const FIELD_MEMBER = 'member';
     const FIELD_NAME = 'name';
     const FIELD_NAME_EXT = '_name';
     const FIELD_QUANTITY = 'quantity';
     const FIELD_QUANTITY_EXT = '_quantity';
-    const FIELD_TYPE = 'type';
-    const FIELD_TYPE_EXT = '_type';
+    const FIELD_CHARACTERISTIC = 'characteristic';
+    const FIELD_MEMBER = 'member';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A unique business identifier for this group.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     */
+    protected null|array $identifier = [];
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -115,8 +139,16 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
-    protected $active = null;
-
+    protected null|FHIRBoolean $active = null;
+    /**
+     * Types of resources that are part of group
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies the broad classification of the kind of resources the group includes.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRGroupType
+     */
+    protected null|FHIRGroupType $type = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -126,19 +158,7 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
-    protected $actual = null;
-
-    /**
-     * Represents a defined collection of entities that may be discussed or acted upon
-     * collectively but which are not expected to act collectively and are not formally
-     * or legally recognized; i.e. a collection of entities that isn't an Organization.
-     *
-     * Identifies the traits shared by members of the group.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupCharacteristic[]
-     */
-    protected $characteristic = [];
-
+    protected null|FHIRBoolean $actual = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -150,30 +170,7 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    protected $code = null;
-
-    /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A unique business identifier for this group.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
-     */
-    protected $identifier = [];
-
-    /**
-     * Represents a defined collection of entities that may be discussed or acted upon
-     * collectively but which are not expected to act collectively and are not formally
-     * or legally recognized; i.e. a collection of entities that isn't an Organization.
-     *
-     * Identifies the resource instances that are members of the group.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupMember[]
-     */
-    protected $member = [];
-
+    protected null|FHIRCodeableConcept $code = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -183,8 +180,7 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -194,51 +190,66 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
-    protected $quantity = null;
-
+    protected null|FHIRUnsignedInt $quantity = null;
     /**
-     * Types of resources that are part of group
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * Represents a defined collection of entities that may be discussed or acted upon
+     * collectively but which are not expected to act collectively and are not formally
+     * or legally recognized; i.e. a collection of entities that isn't an Organization.
      *
-     * Identifies the broad classification of the kind of resources the group includes.
+     * Identifies the traits shared by members of the group.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRGroupType
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupCharacteristic[]
      */
-    protected $type = null;
+    protected null|array $characteristic = [];
+    /**
+     * Represents a defined collection of entities that may be discussed or acted upon
+     * collectively but which are not expected to act collectively and are not formally
+     * or legally recognized; i.e. a collection of entities that isn't an Organization.
+     *
+     * Identifies the resource instances that are members of the group.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupMember[]
+     */
+    protected null|array $member = [];
 
     /**
      * Validation map for fields in type Group
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRGroup Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRGroup::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_IDENTIFIER])) {
+            if (is_array($data[self::FIELD_IDENTIFIER])) {
+                foreach($data[self::FIELD_IDENTIFIER] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRIdentifier) {
+                        $this->addIdentifier($v);
+                    } else {
+                        $this->addIdentifier(new FHIRIdentifier($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+                $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
+            } else {
+                $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+            }
+        }
         if (isset($data[self::FIELD_ACTIVE]) || isset($data[self::FIELD_ACTIVE_EXT])) {
-            if (isset($data[self::FIELD_ACTIVE])) {
-                $value = $data[self::FIELD_ACTIVE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ACTIVE_EXT]) && is_array($data[self::FIELD_ACTIVE_EXT])) {
-                $ext = $data[self::FIELD_ACTIVE_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_ACTIVE] ?? null;
+            $ext = (isset($data[self::FIELD_ACTIVE_EXT]) && is_array($data[self::FIELD_ACTIVE_EXT])) ? $data[self::FIELD_ACTIVE_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRBoolean) {
                     $this->setActive($value);
@@ -247,21 +258,28 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 } else {
                     $this->setActive(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setActive(new FHIRBoolean($ext));
             }
         }
+        if (isset($data[self::FIELD_TYPE]) || isset($data[self::FIELD_TYPE_EXT])) {
+            $value = $data[self::FIELD_TYPE] ?? null;
+            $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT])) ? $data[self::FIELD_TYPE_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRGroupType) {
+                    $this->setType($value);
+                } else if (is_array($value)) {
+                    $this->setType(new FHIRGroupType(array_merge($ext, $value)));
+                } else {
+                    $this->setType(new FHIRGroupType([FHIRGroupType::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setType(new FHIRGroupType($ext));
+            }
+        }
         if (isset($data[self::FIELD_ACTUAL]) || isset($data[self::FIELD_ACTUAL_EXT])) {
-            if (isset($data[self::FIELD_ACTUAL])) {
-                $value = $data[self::FIELD_ACTUAL];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_ACTUAL_EXT]) && is_array($data[self::FIELD_ACTUAL_EXT])) {
-                $ext = $data[self::FIELD_ACTUAL_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_ACTUAL] ?? null;
+            $ext = (isset($data[self::FIELD_ACTUAL_EXT]) && is_array($data[self::FIELD_ACTUAL_EXT])) ? $data[self::FIELD_ACTUAL_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRBoolean) {
                     $this->setActual($value);
@@ -270,8 +288,45 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 } else {
                     $this->setActual(new FHIRBoolean([FHIRBoolean::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setActual(new FHIRBoolean($ext));
+            }
+        }
+        if (isset($data[self::FIELD_CODE])) {
+            if ($data[self::FIELD_CODE] instanceof FHIRCodeableConcept) {
+                $this->setCode($data[self::FIELD_CODE]);
+            } else {
+                $this->setCode(new FHIRCodeableConcept($data[self::FIELD_CODE]));
+            }
+        }
+        if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
+            $value = $data[self::FIELD_NAME] ?? null;
+            $ext = (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) ? $data[self::FIELD_NAME_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setName($value);
+                } else if (is_array($value)) {
+                    $this->setName(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setName(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_QUANTITY]) || isset($data[self::FIELD_QUANTITY_EXT])) {
+            $value = $data[self::FIELD_QUANTITY] ?? null;
+            $ext = (isset($data[self::FIELD_QUANTITY_EXT]) && is_array($data[self::FIELD_QUANTITY_EXT])) ? $data[self::FIELD_QUANTITY_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRUnsignedInt) {
+                    $this->setQuantity($value);
+                } else if (is_array($value)) {
+                    $this->setQuantity(new FHIRUnsignedInt(array_merge($ext, $value)));
+                } else {
+                    $this->setQuantity(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setQuantity(new FHIRUnsignedInt($ext));
             }
         }
         if (isset($data[self::FIELD_CHARACTERISTIC])) {
@@ -286,35 +341,10 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                         $this->addCharacteristic(new FHIRGroupCharacteristic($v));
                     }
                 }
-            } else if ($data[self::FIELD_CHARACTERISTIC] instanceof FHIRGroupCharacteristic) {
+            } elseif ($data[self::FIELD_CHARACTERISTIC] instanceof FHIRGroupCharacteristic) {
                 $this->addCharacteristic($data[self::FIELD_CHARACTERISTIC]);
             } else {
                 $this->addCharacteristic(new FHIRGroupCharacteristic($data[self::FIELD_CHARACTERISTIC]));
-            }
-        }
-        if (isset($data[self::FIELD_CODE])) {
-            if ($data[self::FIELD_CODE] instanceof FHIRCodeableConcept) {
-                $this->setCode($data[self::FIELD_CODE]);
-            } else {
-                $this->setCode(new FHIRCodeableConcept($data[self::FIELD_CODE]));
-            }
-        }
-        if (isset($data[self::FIELD_IDENTIFIER])) {
-            if (is_array($data[self::FIELD_IDENTIFIER])) {
-                foreach($data[self::FIELD_IDENTIFIER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRIdentifier) {
-                        $this->addIdentifier($v);
-                    } else {
-                        $this->addIdentifier(new FHIRIdentifier($v));
-                    }
-                }
-            } else if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
-                $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
         }
         if (isset($data[self::FIELD_MEMBER])) {
@@ -329,87 +359,19 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                         $this->addMember(new FHIRGroupMember($v));
                     }
                 }
-            } else if ($data[self::FIELD_MEMBER] instanceof FHIRGroupMember) {
+            } elseif ($data[self::FIELD_MEMBER] instanceof FHIRGroupMember) {
                 $this->addMember($data[self::FIELD_MEMBER]);
             } else {
                 $this->addMember(new FHIRGroupMember($data[self::FIELD_MEMBER]));
             }
         }
-        if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
-            if (isset($data[self::FIELD_NAME])) {
-                $value = $data[self::FIELD_NAME];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) {
-                $ext = $data[self::FIELD_NAME_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setName($value);
-                } else if (is_array($value)) {
-                    $this->setName(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setName(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setName(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_QUANTITY]) || isset($data[self::FIELD_QUANTITY_EXT])) {
-            if (isset($data[self::FIELD_QUANTITY])) {
-                $value = $data[self::FIELD_QUANTITY];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_QUANTITY_EXT]) && is_array($data[self::FIELD_QUANTITY_EXT])) {
-                $ext = $data[self::FIELD_QUANTITY_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRUnsignedInt) {
-                    $this->setQuantity($value);
-                } else if (is_array($value)) {
-                    $this->setQuantity(new FHIRUnsignedInt(array_merge($ext, $value)));
-                } else {
-                    $this->setQuantity(new FHIRUnsignedInt([FHIRUnsignedInt::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setQuantity(new FHIRUnsignedInt($ext));
-            }
-        }
-        if (isset($data[self::FIELD_TYPE]) || isset($data[self::FIELD_TYPE_EXT])) {
-            if (isset($data[self::FIELD_TYPE])) {
-                $value = $data[self::FIELD_TYPE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT])) {
-                $ext = $data[self::FIELD_TYPE_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRGroupType) {
-                    $this->setType($value);
-                } else if (is_array($value)) {
-                    $this->setType(new FHIRGroupType(array_merge($ext, $value)));
-                } else {
-                    $this->setType(new FHIRGroupType([FHIRGroupType::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setType(new FHIRGroupType($ext));
-            }
-        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -417,22 +379,74 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Group{$xmlns}></Group>";
-    }
-    /**
-     * @return string
-     */
-    public function _getResourceType()
+    public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
 
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A unique business identifier for this group.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     */
+    public function getIdentifier(): null|array
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A unique business identifier for this group.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
+     * @return static
+     */
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
+    {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
+        $this->_trackValueAdded();
+        $this->identifier[] = $identifier;
+        return $this;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A unique business identifier for this group.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
+     * @return static
+     */
+    public function setIdentifier(array $identifier = []): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            if ($v instanceof FHIRIdentifier) {
+                $this->addIdentifier($v);
+            } else {
+                $this->addIdentifier(new FHIRIdentifier($v));
+            }
+        }
+        return $this;
+    }
 
     /**
      * Value of "true" or "false"
@@ -443,7 +457,7 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
-    public function getActive()
+    public function getActive(): null|FHIRBoolean
     {
         return $this->active;
     }
@@ -455,20 +469,48 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * Indicates whether the record for the group is available for use or is merely
      * being retained for historical purposes.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $active
+     * @param null|string|bool|\HL7\FHIR\STU3\FHIRBooleanPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $active
      * @return static
      */
-    public function setActive($active = null)
+    public function setActive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $active = null): self
     {
-        if (null === $active) {
-            $this->active = null;
-            return $this;
+        if (null !== $active && !($active instanceof FHIRBoolean)) {
+            $active = new FHIRBoolean($active);
         }
-        if ($active instanceof FHIRBoolean) {
-            $this->active = $active;
-            return $this;
+        $this->_trackValueSet($this->active, $active);
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * Types of resources that are part of group
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies the broad classification of the kind of resources the group includes.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRGroupType
+     */
+    public function getType(): null|FHIRGroupType
+    {
+        return $this->type;
+    }
+
+    /**
+     * Types of resources that are part of group
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Identifies the broad classification of the kind of resources the group includes.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRGroupType $type
+     * @return static
+     */
+    public function setType(null|FHIRGroupType $type = null): self
+    {
+        if (null === $type) {
+            $type = new FHIRGroupType();
         }
-        $this->active = new FHIRBoolean($active);
+        $this->_trackValueSet($this->type, $type);
+        $this->type = $type;
         return $this;
     }
 
@@ -481,7 +523,7 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
-    public function getActual()
+    public function getActual(): null|FHIRBoolean
     {
         return $this->actual;
     }
@@ -493,76 +535,16 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * If true, indicates that the resource refers to a specific group of real
      * individuals. If false, the group defines a set of intended individuals.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $actual
+     * @param null|string|bool|\HL7\FHIR\STU3\FHIRBooleanPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean $actual
      * @return static
      */
-    public function setActual($actual = null)
+    public function setActual(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $actual = null): self
     {
-        if (null === $actual) {
-            $this->actual = null;
-            return $this;
+        if (null !== $actual && !($actual instanceof FHIRBoolean)) {
+            $actual = new FHIRBoolean($actual);
         }
-        if ($actual instanceof FHIRBoolean) {
-            $this->actual = $actual;
-            return $this;
-        }
-        $this->actual = new FHIRBoolean($actual);
-        return $this;
-    }
-
-    /**
-     * Represents a defined collection of entities that may be discussed or acted upon
-     * collectively but which are not expected to act collectively and are not formally
-     * or legally recognized; i.e. a collection of entities that isn't an Organization.
-     *
-     * Identifies the traits shared by members of the group.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupCharacteristic[]
-     */
-    public function getCharacteristic()
-    {
-        return $this->characteristic;
-    }
-
-    /**
-     * Represents a defined collection of entities that may be discussed or acted upon
-     * collectively but which are not expected to act collectively and are not formally
-     * or legally recognized; i.e. a collection of entities that isn't an Organization.
-     *
-     * Identifies the traits shared by members of the group.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupCharacteristic $characteristic
-     * @return static
-     */
-    public function addCharacteristic(FHIRGroupCharacteristic $characteristic = null)
-    {
-        $this->characteristic[] = $characteristic;
-        return $this;
-    }
-
-    /**
-     * Represents a defined collection of entities that may be discussed or acted upon
-     * collectively but which are not expected to act collectively and are not formally
-     * or legally recognized; i.e. a collection of entities that isn't an Organization.
-     *
-     * Identifies the traits shared by members of the group.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupCharacteristic[] $characteristic
-     * @return static
-     */
-    public function setCharacteristic(array $characteristic = [])
-    {
-        $this->characteristic = [];
-        if ([] === $characteristic) {
-            return $this;
-        }
-        foreach($characteristic as $v) {
-            if ($v instanceof FHIRGroupCharacteristic) {
-                $this->addCharacteristic($v);
-            } else {
-                $this->addCharacteristic(new FHIRGroupCharacteristic($v));
-            }
-        }
+        $this->_trackValueSet($this->actual, $actual);
+        $this->actual = $actual;
         return $this;
     }
 
@@ -577,7 +559,7 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getCode()
+    public function getCode(): null|FHIRCodeableConcept
     {
         return $this->code;
     }
@@ -594,63 +576,142 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $code
      * @return static
      */
-    public function setCode(FHIRCodeableConcept $code = null)
+    public function setCode(null|FHIRCodeableConcept $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->code, $code);
         $this->code = $code;
         return $this;
     }
 
     /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * A unique business identifier for this group.
+     * A label assigned to the group for human identification and communication.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getIdentifier()
+    public function getName(): null|FHIRString
     {
-        return $this->identifier;
+        return $this->name;
     }
 
     /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * A unique business identifier for this group.
+     * A label assigned to the group for human identification and communication.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $name
      * @return static
      */
-    public function addIdentifier(FHIRIdentifier $identifier = null)
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
-        $this->identifier[] = $identifier;
+        if (null !== $name && !($name instanceof FHIRString)) {
+            $name = new FHIRString($name);
+        }
+        $this->_trackValueSet($this->name, $name);
+        $this->name = $name;
         return $this;
     }
 
     /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * An integer with a value that is not negative (e.g. >= 0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
      *
-     * A unique business identifier for this group.
+     * A count of the number of resource instances that are part of the group.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
+     */
+    public function getQuantity(): null|FHIRUnsignedInt
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * An integer with a value that is not negative (e.g. >= 0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
+     *
+     * A count of the number of resource instances that are part of the group.
+     *
+     * @param null|string|int|float|\HL7\FHIR\STU3\FHIRUnsignedIntPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt $quantity
      * @return static
      */
-    public function setIdentifier(array $identifier = [])
+    public function setQuantity(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $quantity = null): self
     {
-        $this->identifier = [];
-        if ([] === $identifier) {
+        if (null !== $quantity && !($quantity instanceof FHIRUnsignedInt)) {
+            $quantity = new FHIRUnsignedInt($quantity);
+        }
+        $this->_trackValueSet($this->quantity, $quantity);
+        $this->quantity = $quantity;
+        return $this;
+    }
+
+    /**
+     * Represents a defined collection of entities that may be discussed or acted upon
+     * collectively but which are not expected to act collectively and are not formally
+     * or legally recognized; i.e. a collection of entities that isn't an Organization.
+     *
+     * Identifies the traits shared by members of the group.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupCharacteristic[]
+     */
+    public function getCharacteristic(): null|array
+    {
+        return $this->characteristic;
+    }
+
+    /**
+     * Represents a defined collection of entities that may be discussed or acted upon
+     * collectively but which are not expected to act collectively and are not formally
+     * or legally recognized; i.e. a collection of entities that isn't an Organization.
+     *
+     * Identifies the traits shared by members of the group.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupCharacteristic $characteristic
+     * @return static
+     */
+    public function addCharacteristic(null|FHIRGroupCharacteristic $characteristic = null): self
+    {
+        if (null === $characteristic) {
+            $characteristic = new FHIRGroupCharacteristic();
+        }
+        $this->_trackValueAdded();
+        $this->characteristic[] = $characteristic;
+        return $this;
+    }
+
+    /**
+     * Represents a defined collection of entities that may be discussed or acted upon
+     * collectively but which are not expected to act collectively and are not formally
+     * or legally recognized; i.e. a collection of entities that isn't an Organization.
+     *
+     * Identifies the traits shared by members of the group.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupCharacteristic[] $characteristic
+     * @return static
+     */
+    public function setCharacteristic(array $characteristic = []): self
+    {
+        if ([] !== $this->characteristic) {
+            $this->_trackValuesRemoved(count($this->characteristic));
+            $this->characteristic = [];
+        }
+        if ([] === $characteristic) {
             return $this;
         }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
+        foreach($characteristic as $v) {
+            if ($v instanceof FHIRGroupCharacteristic) {
+                $this->addCharacteristic($v);
             } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
+                $this->addCharacteristic(new FHIRGroupCharacteristic($v));
             }
         }
         return $this;
@@ -665,7 +726,7 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupMember[]
      */
-    public function getMember()
+    public function getMember(): null|array
     {
         return $this->member;
     }
@@ -680,8 +741,12 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupMember $member
      * @return static
      */
-    public function addMember(FHIRGroupMember $member = null)
+    public function addMember(null|FHIRGroupMember $member = null): self
     {
+        if (null === $member) {
+            $member = new FHIRGroupMember();
+        }
+        $this->_trackValueAdded();
         $this->member[] = $member;
         return $this;
     }
@@ -696,9 +761,12 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGroup\FHIRGroupMember[] $member
      * @return static
      */
-    public function setMember(array $member = [])
+    public function setMember(array $member = []): self
     {
-        $this->member = [];
+        if ([] !== $this->member) {
+            $this->_trackValuesRemoved(count($this->member));
+            $this->member = [];
+        }
         if ([] === $member) {
             return $this;
         }
@@ -713,118 +781,14 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     }
 
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A label assigned to the group for human identification and communication.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A label assigned to the group for human identification and communication.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $name
-     * @return static
-     */
-    public function setName($name = null)
-    {
-        if (null === $name) {
-            $this->name = null;
-            return $this;
-        }
-        if ($name instanceof FHIRString) {
-            $this->name = $name;
-            return $this;
-        }
-        $this->name = new FHIRString($name);
-        return $this;
-    }
-
-    /**
-     * An integer with a value that is not negative (e.g. >= 0)
-     * If the element is present, it must have either a \@value, an \@id referenced from
-     * the Narrative, or extensions
-     *
-     * A count of the number of resource instances that are part of the group.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * An integer with a value that is not negative (e.g. >= 0)
-     * If the element is present, it must have either a \@value, an \@id referenced from
-     * the Narrative, or extensions
-     *
-     * A count of the number of resource instances that are part of the group.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt $quantity
-     * @return static
-     */
-    public function setQuantity($quantity = null)
-    {
-        if (null === $quantity) {
-            $this->quantity = null;
-            return $this;
-        }
-        if ($quantity instanceof FHIRUnsignedInt) {
-            $this->quantity = $quantity;
-            return $this;
-        }
-        $this->quantity = new FHIRUnsignedInt($quantity);
-        return $this;
-    }
-
-    /**
-     * Types of resources that are part of group
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Identifies the broad classification of the kind of resources the group includes.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRGroupType
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Types of resources that are part of group
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Identifies the broad classification of the kind of resources the group includes.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRGroupType $type
-     * @return static
-     */
-    public function setType(FHIRGroupType $type = null)
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
      * Returns the validation rules that this type's fields must comply with to be considered "valid"
      * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -833,32 +797,10 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (null !== ($v = $this->getActive())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_ACTIVE] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getActual())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_ACTUAL] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getCharacteristic())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_CHARACTERISTIC, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getCode())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_CODE] = $fieldErrs;
-            }
-        }
         if ([] !== ($vs = $this->getIdentifier())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
@@ -866,11 +808,24 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             }
         }
-        if ([] !== ($vs = $this->getMember())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_MEMBER, $i)] = $fieldErrs;
-                }
+        if (null !== ($v = $this->getActive())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ACTIVE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getType())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getActual())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ACTUAL] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getCode())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_CODE] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getName())) {
@@ -883,56 +838,17 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 $errs[self::FIELD_QUANTITY] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getType())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_TYPE] = $fieldErrs;
-            }
-        }
-        if (isset($validationRules[self::FIELD_ACTIVE])) {
-            $v = $this->getActive();
-            foreach($validationRules[self::FIELD_ACTIVE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_ACTIVE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ACTIVE])) {
-                        $errs[self::FIELD_ACTIVE] = [];
-                    }
-                    $errs[self::FIELD_ACTIVE][$rule] = $err;
+        if ([] !== ($vs = $this->getCharacteristic())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_CHARACTERISTIC, $i)] = $fieldErrs;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_ACTUAL])) {
-            $v = $this->getActual();
-            foreach($validationRules[self::FIELD_ACTUAL] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_ACTUAL, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ACTUAL])) {
-                        $errs[self::FIELD_ACTUAL] = [];
-                    }
-                    $errs[self::FIELD_ACTUAL][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_CHARACTERISTIC])) {
-            $v = $this->getCharacteristic();
-            foreach($validationRules[self::FIELD_CHARACTERISTIC] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_CHARACTERISTIC, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CHARACTERISTIC])) {
-                        $errs[self::FIELD_CHARACTERISTIC] = [];
-                    }
-                    $errs[self::FIELD_CHARACTERISTIC][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_CODE])) {
-            $v = $this->getCode();
-            foreach($validationRules[self::FIELD_CODE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_CODE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CODE])) {
-                        $errs[self::FIELD_CODE] = [];
-                    }
-                    $errs[self::FIELD_CODE][$rule] = $err;
+        if ([] !== ($vs = $this->getMember())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_MEMBER, $i)] = $fieldErrs;
                 }
             }
         }
@@ -948,15 +864,51 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_MEMBER])) {
-            $v = $this->getMember();
-            foreach($validationRules[self::FIELD_MEMBER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_MEMBER, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_ACTIVE])) {
+            $v = $this->getActive();
+            foreach($validationRules[self::FIELD_ACTIVE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_ACTIVE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_MEMBER])) {
-                        $errs[self::FIELD_MEMBER] = [];
+                    if (!isset($errs[self::FIELD_ACTIVE])) {
+                        $errs[self::FIELD_ACTIVE] = [];
                     }
-                    $errs[self::FIELD_MEMBER][$rule] = $err;
+                    $errs[self::FIELD_ACTIVE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_TYPE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
+                    }
+                    $errs[self::FIELD_TYPE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ACTUAL])) {
+            $v = $this->getActual();
+            foreach($validationRules[self::FIELD_ACTUAL] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_ACTUAL, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ACTUAL])) {
+                        $errs[self::FIELD_ACTUAL] = [];
+                    }
+                    $errs[self::FIELD_ACTUAL][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CODE])) {
+            $v = $this->getCode();
+            foreach($validationRules[self::FIELD_CODE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_CODE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CODE])) {
+                        $errs[self::FIELD_CODE] = [];
+                    }
+                    $errs[self::FIELD_CODE][$rule] = $err;
                 }
             }
         }
@@ -984,15 +936,39 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TYPE])) {
-            $v = $this->getType();
-            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_TYPE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_CHARACTERISTIC])) {
+            $v = $this->getCharacteristic();
+            foreach($validationRules[self::FIELD_CHARACTERISTIC] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_CHARACTERISTIC, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TYPE])) {
-                        $errs[self::FIELD_TYPE] = [];
+                    if (!isset($errs[self::FIELD_CHARACTERISTIC])) {
+                        $errs[self::FIELD_CHARACTERISTIC] = [];
                     }
-                    $errs[self::FIELD_TYPE][$rule] = $err;
+                    $errs[self::FIELD_CHARACTERISTIC][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_MEMBER])) {
+            $v = $this->getMember();
+            foreach($validationRules[self::FIELD_MEMBER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_GROUP, self::FIELD_MEMBER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_MEMBER])) {
+                        $errs[self::FIELD_MEMBER] = [];
+                    }
+                    $errs[self::FIELD_MEMBER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
                 }
             }
         }
@@ -1032,18 +1008,6 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TEXT])) {
-            $v = $this->getText();
-            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TEXT])) {
-                        $errs[self::FIELD_TEXT] = [];
-                    }
-                    $errs[self::FIELD_TEXT][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_ID])) {
             $v = $this->getId();
             foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
@@ -1053,6 +1017,18 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                         $errs[self::FIELD_ID] = [];
                     }
                     $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
                 }
             }
         }
@@ -1080,163 +1056,238 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_META])) {
-            $v = $this->getMeta();
-            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_META])) {
-                        $errs[self::FIELD_META] = [];
-                    }
-                    $errs[self::FIELD_META][$rule] = $err;
-                }
-            }
-        }
         return $errs;
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRGroup $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRGroup
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRGroup::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRGroup::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRGroup;
-        } elseif (!is_object($type) || !($type instanceof FHIRGroup)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRGroup)) {
             throw new \RuntimeException(sprintf(
-                'FHIRGroup::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRGroup or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRDomainResource::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_IDENTIFIER === $n->nodeName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_ACTIVE === $n->nodeName) {
+                $type->setActive(FHIRBoolean::xmlUnserialize($n));
+            } elseif (self::FIELD_TYPE === $n->nodeName) {
+                $type->setType(FHIRGroupType::xmlUnserialize($n));
+            } elseif (self::FIELD_ACTUAL === $n->nodeName) {
+                $type->setActual(FHIRBoolean::xmlUnserialize($n));
+            } elseif (self::FIELD_CODE === $n->nodeName) {
+                $type->setCode(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_NAME === $n->nodeName) {
+                $type->setName(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_QUANTITY === $n->nodeName) {
+                $type->setQuantity(FHIRUnsignedInt::xmlUnserialize($n));
+            } elseif (self::FIELD_CHARACTERISTIC === $n->nodeName) {
+                $type->addCharacteristic(FHIRGroupCharacteristic::xmlUnserialize($n));
+            } elseif (self::FIELD_MEMBER === $n->nodeName) {
+                $type->addMember(FHIRGroupMember::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_META === $n->nodeName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n));
+            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->active)) {
-            $type->setActive(FHIRBoolean::xmlUnserialize($children->active));
-        }
-        if (isset($attributes->active)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_ACTIVE);
+        if (null !== $n) {
             $pt = $type->getActive();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->active);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setActive((string)$attributes->active);
+                $type->setActive($n->nodeValue);
             }
         }
-        if (isset($children->actual)) {
-            $type->setActual(FHIRBoolean::xmlUnserialize($children->actual));
-        }
-        if (isset($attributes->actual)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_ACTUAL);
+        if (null !== $n) {
             $pt = $type->getActual();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->actual);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setActual((string)$attributes->actual);
+                $type->setActual($n->nodeValue);
             }
         }
-        if (isset($children->characteristic)) {
-            foreach($children->characteristic as $child) {
-                $type->addCharacteristic(FHIRGroupCharacteristic::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->code)) {
-            $type->setCode(FHIRCodeableConcept::xmlUnserialize($children->code));
-        }
-        if (isset($children->identifier)) {
-            foreach($children->identifier as $child) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->member)) {
-            foreach($children->member as $child) {
-                $type->addMember(FHIRGroupMember::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->name)) {
-            $type->setName(FHIRString::xmlUnserialize($children->name));
-        }
-        if (isset($attributes->name)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_NAME);
+        if (null !== $n) {
             $pt = $type->getName();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->name);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setName((string)$attributes->name);
+                $type->setName($n->nodeValue);
             }
         }
-        if (isset($children->quantity)) {
-            $type->setQuantity(FHIRUnsignedInt::xmlUnserialize($children->quantity));
-        }
-        if (isset($attributes->quantity)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_QUANTITY);
+        if (null !== $n) {
             $pt = $type->getQuantity();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->quantity);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setQuantity((string)$attributes->quantity);
+                $type->setQuantity($n->nodeValue);
             }
         }
-        if (isset($children->type)) {
-            $type->setType(FHIRGroupType::xmlUnserialize($children->type));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
+        if (null !== $n) {
+            $pt = $type->getImplicitRules();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setImplicitRules($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
+        if (null !== $n) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLanguage($n->nodeValue);
+            }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Group'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if ([] !== ($vs = $this->getIdentifier())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
         if (null !== ($v = $this->getActive())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ACTIVE, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_ACTIVE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getType())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getActual())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ACTUAL, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_ACTUAL);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getCode())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_CODE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getName())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_NAME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getQuantity())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_QUANTITY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getCharacteristic())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_CHARACTERISTIC, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getCode())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CODE, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getIdentifier())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_CHARACTERISTIC);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
         if ([] !== ($vs = $this->getMember())) {
@@ -1244,113 +1295,110 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_MEMBER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_MEMBER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getName())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_NAME, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getQuantity())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_QUANTITY, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getType())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getActive())) {
-            $a[self::FIELD_ACTIVE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRBoolean::FIELD_VALUE]);
-                $a[self::FIELD_ACTIVE_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getActual())) {
-            $a[self::FIELD_ACTUAL] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRBoolean::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRBoolean::FIELD_VALUE]);
-                $a[self::FIELD_ACTUAL_EXT] = $enc;
-            }
-        }
-        if ([] !== ($vs = $this->getCharacteristic())) {
-            $a[self::FIELD_CHARACTERISTIC] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_CHARACTERISTIC][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getCode())) {
-            $a[self::FIELD_CODE] = $v;
-        }
+        $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
-            $a[self::FIELD_IDENTIFIER] = [];
+            $out->{self::FIELD_IDENTIFIER} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_IDENTIFIER][] = $v;
+                $out->{self::FIELD_IDENTIFIER}[] = $v;
             }
         }
-        if ([] !== ($vs = $this->getMember())) {
-            $a[self::FIELD_MEMBER] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_MEMBER][] = $v;
+        if (null !== ($v = $this->getActive())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ACTIVE} = $val;
             }
-        }
-        if (null !== ($v = $this->getName())) {
-            $a[self::FIELD_NAME] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_NAME_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getQuantity())) {
-            $a[self::FIELD_QUANTITY] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRUnsignedInt::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRUnsignedInt::FIELD_VALUE]);
-                $a[self::FIELD_QUANTITY_EXT] = $enc;
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRBoolean::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ACTIVE_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getType())) {
-            $a[self::FIELD_TYPE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRGroupType::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRGroupType::FIELD_VALUE]);
-                $a[self::FIELD_TYPE_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_TYPE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRGroupType::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_TYPE_EXT} = $ext;
             }
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if (null !== ($v = $this->getActual())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ACTUAL} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRBoolean::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ACTUAL_EXT} = $ext;
+            }
         }
-        return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
-    }
+        if (null !== ($v = $this->getCode())) {
+            $out->{self::FIELD_CODE} = $v;
+        }
+        if (null !== ($v = $this->getName())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_NAME} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_NAME_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getQuantity())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_QUANTITY} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRUnsignedInt::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_QUANTITY_EXT} = $ext;
+            }
+        }
+        if ([] !== ($vs = $this->getCharacteristic())) {
+            $out->{self::FIELD_CHARACTERISTIC} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_CHARACTERISTIC}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getMember())) {
+            $out->{self::FIELD_MEMBER} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_MEMBER}[] = $v;
+            }
+        }
 
+        $out->{PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE} = $this->_getResourceType();
+
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

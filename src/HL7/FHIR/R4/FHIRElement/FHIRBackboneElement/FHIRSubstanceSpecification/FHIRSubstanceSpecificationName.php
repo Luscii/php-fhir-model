@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
@@ -69,8 +70,11 @@ use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The detailed description of a substance, typically at a level beyond what is
@@ -83,6 +87,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SUBSTANCE_SPECIFICATION_DOT_NAME;
+
     const FIELD_NAME = 'name';
     const FIELD_NAME_EXT = '_name';
     const FIELD_TYPE = 'type';
@@ -97,9 +102,6 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
     const FIELD_OFFICIAL = 'official';
     const FIELD_SOURCE = 'source';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -107,10 +109,9 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * The actual name.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -121,8 +122,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -133,18 +133,16 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $status = null;
-
+    protected null|FHIRCodeableConcept $status = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * If this is the preferred name for this substance.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $preferred = null;
-
+    protected null|FHIRBoolean $preferred = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -155,8 +153,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $language = [];
-
+    protected null|array $language = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -168,8 +165,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $domain = [];
-
+    protected null|array $domain = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -180,8 +176,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $jurisdiction = [];
-
+    protected null|array $jurisdiction = [];
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -190,8 +185,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[]
      */
-    protected ?array $synonym = [];
-
+    protected null|array $synonym = [];
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -200,8 +194,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[]
      */
-    protected ?array $translation = [];
-
+    protected null|array $translation = [];
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -210,8 +203,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationOfficial[]
      */
-    protected ?array $official = [];
-
+    protected null|array $official = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -221,28 +213,23 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $source = [];
+    protected null|array $source = [];
 
     /**
      * Validation map for fields in type SubstanceSpecification.Name
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRSubstanceSpecificationName Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRSubstanceSpecificationName::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
@@ -417,6 +404,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
@@ -426,27 +414,15 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
     }
 
     /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<SubstanceSpecificationName{$xmlns}></SubstanceSpecificationName>";
-    }
-
-    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The actual name.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -458,10 +434,10 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * The actual name.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -481,7 +457,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -497,8 +473,11 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -514,7 +493,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getStatus(): ?FHIRCodeableConcept
+    public function getStatus(): null|FHIRCodeableConcept
     {
         return $this->status;
     }
@@ -530,8 +509,11 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $status
      * @return static
      */
-    public function setStatus(?FHIRCodeableConcept $status = null): object
+    public function setStatus(null|FHIRCodeableConcept $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -543,9 +525,9 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * If this is the preferred name for this substance.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getPreferred(): ?FHIRBoolean
+    public function getPreferred(): null|FHIRBoolean
     {
         return $this->preferred;
     }
@@ -556,10 +538,10 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * If this is the preferred name for this substance.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $preferred
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $preferred
      * @return static
      */
-    public function setPreferred($preferred = null): object
+    public function setPreferred(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $preferred = null): self
     {
         if (null !== $preferred && !($preferred instanceof FHIRBoolean)) {
             $preferred = new FHIRBoolean($preferred);
@@ -579,7 +561,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getLanguage(): ?array
+    public function getLanguage(): null|array
     {
         return $this->language;
     }
@@ -595,8 +577,11 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $language
      * @return static
      */
-    public function addLanguage(?FHIRCodeableConcept $language = null): object
+    public function addLanguage(null|FHIRCodeableConcept $language = null): self
     {
+        if (null === $language) {
+            $language = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->language[] = $language;
         return $this;
@@ -613,7 +598,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $language
      * @return static
      */
-    public function setLanguage(array $language = []): object
+    public function setLanguage(array $language = []): self
     {
         if ([] !== $this->language) {
             $this->_trackValuesRemoved(count($this->language));
@@ -643,7 +628,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getDomain(): ?array
+    public function getDomain(): null|array
     {
         return $this->domain;
     }
@@ -660,8 +645,11 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $domain
      * @return static
      */
-    public function addDomain(?FHIRCodeableConcept $domain = null): object
+    public function addDomain(null|FHIRCodeableConcept $domain = null): self
     {
+        if (null === $domain) {
+            $domain = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->domain[] = $domain;
         return $this;
@@ -679,7 +667,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $domain
      * @return static
      */
-    public function setDomain(array $domain = []): object
+    public function setDomain(array $domain = []): self
     {
         if ([] !== $this->domain) {
             $this->_trackValuesRemoved(count($this->domain));
@@ -708,7 +696,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getJurisdiction(): ?array
+    public function getJurisdiction(): null|array
     {
         return $this->jurisdiction;
     }
@@ -724,8 +712,11 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $jurisdiction
      * @return static
      */
-    public function addJurisdiction(?FHIRCodeableConcept $jurisdiction = null): object
+    public function addJurisdiction(null|FHIRCodeableConcept $jurisdiction = null): self
     {
+        if (null === $jurisdiction) {
+            $jurisdiction = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
         return $this;
@@ -742,7 +733,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $jurisdiction
      * @return static
      */
-    public function setJurisdiction(array $jurisdiction = []): object
+    public function setJurisdiction(array $jurisdiction = []): self
     {
         if ([] !== $this->jurisdiction) {
             $this->_trackValuesRemoved(count($this->jurisdiction));
@@ -769,7 +760,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[]
      */
-    public function getSynonym(): ?array
+    public function getSynonym(): null|array
     {
         return $this->synonym;
     }
@@ -783,8 +774,11 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName $synonym
      * @return static
      */
-    public function addSynonym(?FHIRSubstanceSpecificationName $synonym = null): object
+    public function addSynonym(null|FHIRSubstanceSpecificationName $synonym = null): self
     {
+        if (null === $synonym) {
+            $synonym = new FHIRSubstanceSpecificationName();
+        }
         $this->_trackValueAdded();
         $this->synonym[] = $synonym;
         return $this;
@@ -799,7 +793,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[] $synonym
      * @return static
      */
-    public function setSynonym(array $synonym = []): object
+    public function setSynonym(array $synonym = []): self
     {
         if ([] !== $this->synonym) {
             $this->_trackValuesRemoved(count($this->synonym));
@@ -826,7 +820,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[]
      */
-    public function getTranslation(): ?array
+    public function getTranslation(): null|array
     {
         return $this->translation;
     }
@@ -840,8 +834,11 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName $translation
      * @return static
      */
-    public function addTranslation(?FHIRSubstanceSpecificationName $translation = null): object
+    public function addTranslation(null|FHIRSubstanceSpecificationName $translation = null): self
     {
+        if (null === $translation) {
+            $translation = new FHIRSubstanceSpecificationName();
+        }
         $this->_trackValueAdded();
         $this->translation[] = $translation;
         return $this;
@@ -856,7 +853,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[] $translation
      * @return static
      */
-    public function setTranslation(array $translation = []): object
+    public function setTranslation(array $translation = []): self
     {
         if ([] !== $this->translation) {
             $this->_trackValuesRemoved(count($this->translation));
@@ -883,7 +880,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationOfficial[]
      */
-    public function getOfficial(): ?array
+    public function getOfficial(): null|array
     {
         return $this->official;
     }
@@ -897,8 +894,11 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationOfficial $official
      * @return static
      */
-    public function addOfficial(?FHIRSubstanceSpecificationOfficial $official = null): object
+    public function addOfficial(null|FHIRSubstanceSpecificationOfficial $official = null): self
     {
+        if (null === $official) {
+            $official = new FHIRSubstanceSpecificationOfficial();
+        }
         $this->_trackValueAdded();
         $this->official[] = $official;
         return $this;
@@ -913,7 +913,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationOfficial[] $official
      * @return static
      */
-    public function setOfficial(array $official = []): object
+    public function setOfficial(array $official = []): self
     {
         if ([] !== $this->official) {
             $this->_trackValuesRemoved(count($this->official));
@@ -941,7 +941,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getSource(): ?array
+    public function getSource(): null|array
     {
         return $this->source;
     }
@@ -956,8 +956,11 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $source
      * @return static
      */
-    public function addSource(?FHIRReference $source = null): object
+    public function addSource(null|FHIRReference $source = null): self
     {
+        if (null === $source) {
+            $source = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->source[] = $source;
         return $this;
@@ -973,7 +976,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $source
      * @return static
      */
-    public function setSource(array $source = []): object
+    public function setSource(array $source = []): self
     {
         if ([] !== $this->source) {
             $this->_trackValuesRemoved(count($this->source));
@@ -1000,7 +1003,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1256,36 +1259,48 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRSubstanceSpecificationName::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRSubstanceSpecificationName::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRSubstanceSpecificationName(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRSubstanceSpecificationName)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRSubstanceSpecificationName)) {
             throw new \RuntimeException(sprintf(
-                'FHIRSubstanceSpecificationName::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1354,17 +1369,25 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('SubstanceSpecificationName'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getName())) {
@@ -1463,7 +1486,7 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getName())) {
@@ -1558,7 +1581,6 @@ class FHIRSubstanceSpecificationName extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

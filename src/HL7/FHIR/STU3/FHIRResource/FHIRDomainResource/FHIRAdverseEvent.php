@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,17 +62,32 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRCodePrimitive;
+use HL7\FHIR\STU3\FHIRDateTimePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRAdverseEventCategory;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAdverseEvent\FHIRAdverseEventSuspectEntity;
+use HL7\FHIR\STU3\FHIRElement\FHIRCode;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\STU3\FHIRElement\FHIRDateTime;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
+use HL7\FHIR\STU3\FHIRElement\FHIRId;
 use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
+use HL7\FHIR\STU3\FHIRElement\FHIRMeta;
+use HL7\FHIR\STU3\FHIRElement\FHIRNarrative;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRIdPrimitive;
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRTypeMap;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * Actual or potential/avoided event causing unintended physical injury resulting
@@ -88,29 +103,39 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT;
+
+    const FIELD_IDENTIFIER = 'identifier';
     const FIELD_CATEGORY = 'category';
     const FIELD_CATEGORY_EXT = '_category';
+    const FIELD_TYPE = 'type';
+    const FIELD_SUBJECT = 'subject';
     const FIELD_DATE = 'date';
     const FIELD_DATE_EXT = '_date';
+    const FIELD_REACTION = 'reaction';
+    const FIELD_LOCATION = 'location';
+    const FIELD_SERIOUSNESS = 'seriousness';
+    const FIELD_OUTCOME = 'outcome';
+    const FIELD_RECORDER = 'recorder';
+    const FIELD_EVENT_PARTICIPANT = 'eventParticipant';
     const FIELD_DESCRIPTION = 'description';
     const FIELD_DESCRIPTION_EXT = '_description';
-    const FIELD_EVENT_PARTICIPANT = 'eventParticipant';
-    const FIELD_IDENTIFIER = 'identifier';
-    const FIELD_LOCATION = 'location';
-    const FIELD_OUTCOME = 'outcome';
-    const FIELD_REACTION = 'reaction';
-    const FIELD_RECORDER = 'recorder';
-    const FIELD_REFERENCE_DOCUMENT = 'referenceDocument';
-    const FIELD_SERIOUSNESS = 'seriousness';
-    const FIELD_STUDY = 'study';
-    const FIELD_SUBJECT = 'subject';
-    const FIELD_SUBJECT_MEDICAL_HISTORY = 'subjectMedicalHistory';
     const FIELD_SUSPECT_ENTITY = 'suspectEntity';
-    const FIELD_TYPE = 'type';
+    const FIELD_SUBJECT_MEDICAL_HISTORY = 'subjectMedicalHistory';
+    const FIELD_REFERENCE_DOCUMENT = 'referenceDocument';
+    const FIELD_STUDY = 'study';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The identifier(s) of this adverse event that are assigned by business processes
+     * and/or used to refer to it when a direct URL reference to the resource itsefl is
+     * not appropriate.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
+     */
+    protected null|FHIRIdentifier $identifier = null;
     /**
      * Overall categorization of the event, e.g. real or potential
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -120,8 +145,30 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAdverseEventCategory
      */
-    protected $category = null;
-
+    protected null|FHIRAdverseEventCategory $category = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This element defines the specific type of event that occurred or that was
+     * prevented from occurring.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected null|FHIRCodeableConcept $type = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This subject or group impacted by the event. With a prospective adverse event,
+     * there will be no subject as the adverse event was prevented.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $subject = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -134,19 +181,61 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
-    protected $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Describes the adverse event in text.
+     * Includes information about the reaction that occurred as a result of exposure to
+     * a substance (for example, a drug or a chemical).
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $description = null;
-
+    protected null|array $reaction = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The information about where the adverse event occurred.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $location = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Describes the seriousness or severity of the adverse event.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected null|FHIRCodeableConcept $seriousness = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Describes the type of outcome from the adverse event.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected null|FHIRCodeableConcept $outcome = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Information on who recorded the adverse event. May be the patient or a
+     * practitioner.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $recorder = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -160,125 +249,17 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $eventParticipant = null;
-
+    protected null|FHIRReference $eventParticipant = null;
     /**
-     * A technical identifier - identifies some entity uniquely and unambiguously.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The identifier(s) of this adverse event that are assigned by business processes
-     * and/or used to refer to it when a direct URL reference to the resource itsefl is
-     * not appropriate.
+     * Describes the adverse event in text.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $identifier = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The information about where the adverse event occurred.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $location = null;
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Describes the type of outcome from the adverse event.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    protected $outcome = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Includes information about the reaction that occurred as a result of exposure to
-     * a substance (for example, a drug or a chemical).
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $reaction = [];
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Information on who recorded the adverse event. May be the patient or a
-     * practitioner.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $recorder = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * AdverseEvent.referenceDocument.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $referenceDocument = [];
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Describes the seriousness or severity of the adverse event.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    protected $seriousness = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * AdverseEvent.study.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $study = [];
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * This subject or group impacted by the event. With a prospective adverse event,
-     * there will be no subject as the adverse event was prevented.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $subject = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * AdverseEvent.subjectMedicalHistory.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $subjectMedicalHistory = [];
-
+    protected null|FHIRString $description = null;
     /**
      * Actual or potential/avoided event causing unintended physical injury resulting
      * from or contributed to by medical care, a research study or other healthcare
@@ -289,54 +270,65 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAdverseEvent\FHIRAdverseEventSuspectEntity[]
      */
-    protected $suspectEntity = [];
-
+    protected null|array $suspectEntity = [];
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * This element defines the specific type of event that occurred or that was
-     * prevented from occurring.
+     * AdverseEvent.subjectMedicalHistory.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $type = null;
+    protected null|array $subjectMedicalHistory = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * AdverseEvent.referenceDocument.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $referenceDocument = [];
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * AdverseEvent.study.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    protected null|array $study = [];
 
     /**
      * Validation map for fields in type AdverseEvent
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRAdverseEvent Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRAdverseEvent::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
+        if (isset($data[self::FIELD_IDENTIFIER])) {
+            if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+                $this->setIdentifier($data[self::FIELD_IDENTIFIER]);
+            } else {
+                $this->setIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
+            }
+        }
         if (isset($data[self::FIELD_CATEGORY]) || isset($data[self::FIELD_CATEGORY_EXT])) {
-            if (isset($data[self::FIELD_CATEGORY])) {
-                $value = $data[self::FIELD_CATEGORY];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_CATEGORY_EXT]) && is_array($data[self::FIELD_CATEGORY_EXT])) {
-                $ext = $data[self::FIELD_CATEGORY_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_CATEGORY] ?? null;
+            $ext = (isset($data[self::FIELD_CATEGORY_EXT]) && is_array($data[self::FIELD_CATEGORY_EXT])) ? $data[self::FIELD_CATEGORY_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRAdverseEventCategory) {
                     $this->setCategory($value);
@@ -345,21 +337,27 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 } else {
                     $this->setCategory(new FHIRAdverseEventCategory([FHIRAdverseEventCategory::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setCategory(new FHIRAdverseEventCategory($ext));
             }
         }
+        if (isset($data[self::FIELD_TYPE])) {
+            if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
+                $this->setType($data[self::FIELD_TYPE]);
+            } else {
+                $this->setType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
+            }
+        }
+        if (isset($data[self::FIELD_SUBJECT])) {
+            if ($data[self::FIELD_SUBJECT] instanceof FHIRReference) {
+                $this->setSubject($data[self::FIELD_SUBJECT]);
+            } else {
+                $this->setSubject(new FHIRReference($data[self::FIELD_SUBJECT]));
+            }
+        }
         if (isset($data[self::FIELD_DATE]) || isset($data[self::FIELD_DATE_EXT])) {
-            if (isset($data[self::FIELD_DATE])) {
-                $value = $data[self::FIELD_DATE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_DATE_EXT]) && is_array($data[self::FIELD_DATE_EXT])) {
-                $ext = $data[self::FIELD_DATE_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_DATE] ?? null;
+            $ext = (isset($data[self::FIELD_DATE_EXT]) && is_array($data[self::FIELD_DATE_EXT])) ? $data[self::FIELD_DATE_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRDateTime) {
                     $this->setDate($value);
@@ -368,59 +366,8 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 } else {
                     $this->setDate(new FHIRDateTime([FHIRDateTime::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setDate(new FHIRDateTime($ext));
-            }
-        }
-        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
-            if (isset($data[self::FIELD_DESCRIPTION])) {
-                $value = $data[self::FIELD_DESCRIPTION];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) {
-                $ext = $data[self::FIELD_DESCRIPTION_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setDescription($value);
-                } else if (is_array($value)) {
-                    $this->setDescription(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setDescription(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setDescription(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_EVENT_PARTICIPANT])) {
-            if ($data[self::FIELD_EVENT_PARTICIPANT] instanceof FHIRReference) {
-                $this->setEventParticipant($data[self::FIELD_EVENT_PARTICIPANT]);
-            } else {
-                $this->setEventParticipant(new FHIRReference($data[self::FIELD_EVENT_PARTICIPANT]));
-            }
-        }
-        if (isset($data[self::FIELD_IDENTIFIER])) {
-            if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
-                $this->setIdentifier($data[self::FIELD_IDENTIFIER]);
-            } else {
-                $this->setIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
-            }
-        }
-        if (isset($data[self::FIELD_LOCATION])) {
-            if ($data[self::FIELD_LOCATION] instanceof FHIRReference) {
-                $this->setLocation($data[self::FIELD_LOCATION]);
-            } else {
-                $this->setLocation(new FHIRReference($data[self::FIELD_LOCATION]));
-            }
-        }
-        if (isset($data[self::FIELD_OUTCOME])) {
-            if ($data[self::FIELD_OUTCOME] instanceof FHIRCodeableConcept) {
-                $this->setOutcome($data[self::FIELD_OUTCOME]);
-            } else {
-                $this->setOutcome(new FHIRCodeableConcept($data[self::FIELD_OUTCOME]));
             }
         }
         if (isset($data[self::FIELD_REACTION])) {
@@ -435,35 +382,17 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                         $this->addReaction(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_REACTION] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_REACTION] instanceof FHIRReference) {
                 $this->addReaction($data[self::FIELD_REACTION]);
             } else {
                 $this->addReaction(new FHIRReference($data[self::FIELD_REACTION]));
             }
         }
-        if (isset($data[self::FIELD_RECORDER])) {
-            if ($data[self::FIELD_RECORDER] instanceof FHIRReference) {
-                $this->setRecorder($data[self::FIELD_RECORDER]);
+        if (isset($data[self::FIELD_LOCATION])) {
+            if ($data[self::FIELD_LOCATION] instanceof FHIRReference) {
+                $this->setLocation($data[self::FIELD_LOCATION]);
             } else {
-                $this->setRecorder(new FHIRReference($data[self::FIELD_RECORDER]));
-            }
-        }
-        if (isset($data[self::FIELD_REFERENCE_DOCUMENT])) {
-            if (is_array($data[self::FIELD_REFERENCE_DOCUMENT])) {
-                foreach($data[self::FIELD_REFERENCE_DOCUMENT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addReferenceDocument($v);
-                    } else {
-                        $this->addReferenceDocument(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_REFERENCE_DOCUMENT] instanceof FHIRReference) {
-                $this->addReferenceDocument($data[self::FIELD_REFERENCE_DOCUMENT]);
-            } else {
-                $this->addReferenceDocument(new FHIRReference($data[self::FIELD_REFERENCE_DOCUMENT]));
+                $this->setLocation(new FHIRReference($data[self::FIELD_LOCATION]));
             }
         }
         if (isset($data[self::FIELD_SERIOUSNESS])) {
@@ -473,47 +402,40 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 $this->setSeriousness(new FHIRCodeableConcept($data[self::FIELD_SERIOUSNESS]));
             }
         }
-        if (isset($data[self::FIELD_STUDY])) {
-            if (is_array($data[self::FIELD_STUDY])) {
-                foreach($data[self::FIELD_STUDY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addStudy($v);
-                    } else {
-                        $this->addStudy(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_STUDY] instanceof FHIRReference) {
-                $this->addStudy($data[self::FIELD_STUDY]);
+        if (isset($data[self::FIELD_OUTCOME])) {
+            if ($data[self::FIELD_OUTCOME] instanceof FHIRCodeableConcept) {
+                $this->setOutcome($data[self::FIELD_OUTCOME]);
             } else {
-                $this->addStudy(new FHIRReference($data[self::FIELD_STUDY]));
+                $this->setOutcome(new FHIRCodeableConcept($data[self::FIELD_OUTCOME]));
             }
         }
-        if (isset($data[self::FIELD_SUBJECT])) {
-            if ($data[self::FIELD_SUBJECT] instanceof FHIRReference) {
-                $this->setSubject($data[self::FIELD_SUBJECT]);
+        if (isset($data[self::FIELD_RECORDER])) {
+            if ($data[self::FIELD_RECORDER] instanceof FHIRReference) {
+                $this->setRecorder($data[self::FIELD_RECORDER]);
             } else {
-                $this->setSubject(new FHIRReference($data[self::FIELD_SUBJECT]));
+                $this->setRecorder(new FHIRReference($data[self::FIELD_RECORDER]));
             }
         }
-        if (isset($data[self::FIELD_SUBJECT_MEDICAL_HISTORY])) {
-            if (is_array($data[self::FIELD_SUBJECT_MEDICAL_HISTORY])) {
-                foreach($data[self::FIELD_SUBJECT_MEDICAL_HISTORY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addSubjectMedicalHistory($v);
-                    } else {
-                        $this->addSubjectMedicalHistory(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_SUBJECT_MEDICAL_HISTORY] instanceof FHIRReference) {
-                $this->addSubjectMedicalHistory($data[self::FIELD_SUBJECT_MEDICAL_HISTORY]);
+        if (isset($data[self::FIELD_EVENT_PARTICIPANT])) {
+            if ($data[self::FIELD_EVENT_PARTICIPANT] instanceof FHIRReference) {
+                $this->setEventParticipant($data[self::FIELD_EVENT_PARTICIPANT]);
             } else {
-                $this->addSubjectMedicalHistory(new FHIRReference($data[self::FIELD_SUBJECT_MEDICAL_HISTORY]));
+                $this->setEventParticipant(new FHIRReference($data[self::FIELD_EVENT_PARTICIPANT]));
+            }
+        }
+        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
+            $value = $data[self::FIELD_DESCRIPTION] ?? null;
+            $ext = (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) ? $data[self::FIELD_DESCRIPTION_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setDescription($value);
+                } else if (is_array($value)) {
+                    $this->setDescription(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setDescription(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setDescription(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_SUSPECT_ENTITY])) {
@@ -528,25 +450,73 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                         $this->addSuspectEntity(new FHIRAdverseEventSuspectEntity($v));
                     }
                 }
-            } else if ($data[self::FIELD_SUSPECT_ENTITY] instanceof FHIRAdverseEventSuspectEntity) {
+            } elseif ($data[self::FIELD_SUSPECT_ENTITY] instanceof FHIRAdverseEventSuspectEntity) {
                 $this->addSuspectEntity($data[self::FIELD_SUSPECT_ENTITY]);
             } else {
                 $this->addSuspectEntity(new FHIRAdverseEventSuspectEntity($data[self::FIELD_SUSPECT_ENTITY]));
             }
         }
-        if (isset($data[self::FIELD_TYPE])) {
-            if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
-                $this->setType($data[self::FIELD_TYPE]);
+        if (isset($data[self::FIELD_SUBJECT_MEDICAL_HISTORY])) {
+            if (is_array($data[self::FIELD_SUBJECT_MEDICAL_HISTORY])) {
+                foreach($data[self::FIELD_SUBJECT_MEDICAL_HISTORY] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addSubjectMedicalHistory($v);
+                    } else {
+                        $this->addSubjectMedicalHistory(new FHIRReference($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_SUBJECT_MEDICAL_HISTORY] instanceof FHIRReference) {
+                $this->addSubjectMedicalHistory($data[self::FIELD_SUBJECT_MEDICAL_HISTORY]);
             } else {
-                $this->setType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
+                $this->addSubjectMedicalHistory(new FHIRReference($data[self::FIELD_SUBJECT_MEDICAL_HISTORY]));
+            }
+        }
+        if (isset($data[self::FIELD_REFERENCE_DOCUMENT])) {
+            if (is_array($data[self::FIELD_REFERENCE_DOCUMENT])) {
+                foreach($data[self::FIELD_REFERENCE_DOCUMENT] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addReferenceDocument($v);
+                    } else {
+                        $this->addReferenceDocument(new FHIRReference($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_REFERENCE_DOCUMENT] instanceof FHIRReference) {
+                $this->addReferenceDocument($data[self::FIELD_REFERENCE_DOCUMENT]);
+            } else {
+                $this->addReferenceDocument(new FHIRReference($data[self::FIELD_REFERENCE_DOCUMENT]));
+            }
+        }
+        if (isset($data[self::FIELD_STUDY])) {
+            if (is_array($data[self::FIELD_STUDY])) {
+                foreach($data[self::FIELD_STUDY] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addStudy($v);
+                    } else {
+                        $this->addStudy(new FHIRReference($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_STUDY] instanceof FHIRReference) {
+                $this->addStudy($data[self::FIELD_STUDY]);
+            } else {
+                $this->addStudy(new FHIRReference($data[self::FIELD_STUDY]));
             }
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -554,172 +524,11 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<AdverseEvent{$xmlns}></AdverseEvent>";
-    }
-    /**
-     * @return string
-     */
-    public function _getResourceType()
+    public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
 
-
-    /**
-     * Overall categorization of the event, e.g. real or potential
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The type of event which is important to characterize what occurred and caused
-     * harm to the subject, or had the potential to cause harm to the subject.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAdverseEventCategory
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * Overall categorization of the event, e.g. real or potential
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The type of event which is important to characterize what occurred and caused
-     * harm to the subject, or had the potential to cause harm to the subject.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAdverseEventCategory $category
-     * @return static
-     */
-    public function setCategory(FHIRAdverseEventCategory $category = null)
-    {
-        $this->category = $category;
-        return $this;
-    }
-
-    /**
-     * A date, date-time or partial date (e.g. just year or year + month). If hours and
-     * minutes are specified, a time zone SHALL be populated. The format is a union of
-     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
-     * due to schema type constraints but may be zero-filled and may be ignored. Dates
-     * SHALL be valid dates.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The date (and perhaps time) when the adverse event occurred.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * A date, date-time or partial date (e.g. just year or year + month). If hours and
-     * minutes are specified, a time zone SHALL be populated. The format is a union of
-     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
-     * due to schema type constraints but may be zero-filled and may be ignored. Dates
-     * SHALL be valid dates.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * The date (and perhaps time) when the adverse event occurred.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $date
-     * @return static
-     */
-    public function setDate($date = null)
-    {
-        if (null === $date) {
-            $this->date = null;
-            return $this;
-        }
-        if ($date instanceof FHIRDateTime) {
-            $this->date = $date;
-            return $this;
-        }
-        $this->date = new FHIRDateTime($date);
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Describes the adverse event in text.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Describes the adverse event in text.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $description
-     * @return static
-     */
-    public function setDescription($description = null)
-    {
-        if (null === $description) {
-            $this->description = null;
-            return $this;
-        }
-        if ($description instanceof FHIRString) {
-            $this->description = $description;
-            return $this;
-        }
-        $this->description = new FHIRString($description);
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Parties that may or should contribute or have contributed information to the
-     * Act. Such information includes information leading to the decision to perform
-     * the Act and how to perform the Act (e.g. consultant), information that the Act
-     * itself seeks to reveal (e.g. informant of clinical history), or information
-     * about what Act was performed (e.g. informant witness).
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getEventParticipant()
-    {
-        return $this->eventParticipant;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Parties that may or should contribute or have contributed information to the
-     * Act. Such information includes information leading to the decision to perform
-     * the Act and how to perform the Act (e.g. consultant), information that the Act
-     * itself seeks to reveal (e.g. informant of clinical history), or information
-     * about what Act was performed (e.g. informant witness).
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $eventParticipant
-     * @return static
-     */
-    public function setEventParticipant(FHIRReference $eventParticipant = null)
-    {
-        $this->eventParticipant = $eventParticipant;
-        return $this;
-    }
 
     /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
@@ -732,7 +541,7 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
-    public function getIdentifier()
+    public function getIdentifier(): null|FHIRIdentifier
     {
         return $this->identifier;
     }
@@ -749,39 +558,47 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function setIdentifier(FHIRIdentifier $identifier = null)
+    public function setIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
+        $this->_trackValueSet($this->identifier, $identifier);
         $this->identifier = $identifier;
         return $this;
     }
 
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * Overall categorization of the event, e.g. real or potential
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The information about where the adverse event occurred.
+     * The type of event which is important to characterize what occurred and caused
+     * harm to the subject, or had the potential to cause harm to the subject.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRAdverseEventCategory
      */
-    public function getLocation()
+    public function getCategory(): null|FHIRAdverseEventCategory
     {
-        return $this->location;
+        return $this->category;
     }
 
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * Overall categorization of the event, e.g. real or potential
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The information about where the adverse event occurred.
+     * The type of event which is important to characterize what occurred and caused
+     * harm to the subject, or had the potential to cause harm to the subject.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $location
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRAdverseEventCategory $category
      * @return static
      */
-    public function setLocation(FHIRReference $location = null)
+    public function setCategory(null|FHIRAdverseEventCategory $category = null): self
     {
-        $this->location = $location;
+        if (null === $category) {
+            $category = new FHIRAdverseEventCategory();
+        }
+        $this->_trackValueSet($this->category, $category);
+        $this->category = $category;
         return $this;
     }
 
@@ -791,13 +608,14 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Describes the type of outcome from the adverse event.
+     * This element defines the specific type of event that occurred or that was
+     * prevented from occurring.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getOutcome()
+    public function getType(): null|FHIRCodeableConcept
     {
-        return $this->outcome;
+        return $this->type;
     }
 
     /**
@@ -806,14 +624,95 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Describes the type of outcome from the adverse event.
+     * This element defines the specific type of event that occurred or that was
+     * prevented from occurring.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $outcome
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setOutcome(FHIRCodeableConcept $outcome = null)
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
-        $this->outcome = $outcome;
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->type, $type);
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This subject or group impacted by the event. With a prospective adverse event,
+     * there will be no subject as the adverse event was prevented.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getSubject(): null|FHIRReference
+    {
+        return $this->subject;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This subject or group impacted by the event. With a prospective adverse event,
+     * there will be no subject as the adverse event was prevented.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subject
+     * @return static
+     */
+    public function setSubject(null|FHIRReference $subject = null): self
+    {
+        if (null === $subject) {
+            $subject = new FHIRReference();
+        }
+        $this->_trackValueSet($this->subject, $subject);
+        $this->subject = $subject;
+        return $this;
+    }
+
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The date (and perhaps time) when the adverse event occurred.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
+     */
+    public function getDate(): null|FHIRDateTime
+    {
+        return $this->date;
+    }
+
+    /**
+     * A date, date-time or partial date (e.g. just year or year + month). If hours and
+     * minutes are specified, a time zone SHALL be populated. The format is a union of
+     * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
+     * due to schema type constraints but may be zero-filled and may be ignored. Dates
+     * SHALL be valid dates.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The date (and perhaps time) when the adverse event occurred.
+     *
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\STU3\FHIRDateTimePrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime $date
+     * @return static
+     */
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
+    {
+        if (null !== $date && !($date instanceof FHIRDateTime)) {
+            $date = new FHIRDateTime($date);
+        }
+        $this->_trackValueSet($this->date, $date);
+        $this->date = $date;
         return $this;
     }
 
@@ -827,7 +726,7 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getReaction()
+    public function getReaction(): null|array
     {
         return $this->reaction;
     }
@@ -843,8 +742,12 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $reaction
      * @return static
      */
-    public function addReaction(FHIRReference $reaction = null)
+    public function addReaction(null|FHIRReference $reaction = null): self
     {
+        if (null === $reaction) {
+            $reaction = new FHIRReference();
+        }
+        $this->_trackValueAdded();
         $this->reaction[] = $reaction;
         return $this;
     }
@@ -860,9 +763,12 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $reaction
      * @return static
      */
-    public function setReaction(array $reaction = [])
+    public function setReaction(array $reaction = []): self
     {
-        $this->reaction = [];
+        if ([] !== $this->reaction) {
+            $this->_trackValuesRemoved(count($this->reaction));
+            $this->reaction = [];
+        }
         if ([] === $reaction) {
             return $this;
         }
@@ -881,14 +787,13 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Information on who recorded the adverse event. May be the patient or a
-     * practitioner.
+     * The information about where the adverse event occurred.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getRecorder()
+    public function getLocation(): null|FHIRReference
     {
-        return $this->recorder;
+        return $this->location;
     }
 
     /**
@@ -896,71 +801,18 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * Information on who recorded the adverse event. May be the patient or a
-     * practitioner.
+     * The information about where the adverse event occurred.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $recorder
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $location
      * @return static
      */
-    public function setRecorder(FHIRReference $recorder = null)
+    public function setLocation(null|FHIRReference $location = null): self
     {
-        $this->recorder = $recorder;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * AdverseEvent.referenceDocument.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    public function getReferenceDocument()
-    {
-        return $this->referenceDocument;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * AdverseEvent.referenceDocument.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $referenceDocument
-     * @return static
-     */
-    public function addReferenceDocument(FHIRReference $referenceDocument = null)
-    {
-        $this->referenceDocument[] = $referenceDocument;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * AdverseEvent.referenceDocument.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $referenceDocument
-     * @return static
-     */
-    public function setReferenceDocument(array $referenceDocument = [])
-    {
-        $this->referenceDocument = [];
-        if ([] === $referenceDocument) {
-            return $this;
+        if (null === $location) {
+            $location = new FHIRReference();
         }
-        foreach($referenceDocument as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addReferenceDocument($v);
-            } else {
-                $this->addReferenceDocument(new FHIRReference($v));
-            }
-        }
+        $this->_trackValueSet($this->location, $location);
+        $this->location = $location;
         return $this;
     }
 
@@ -974,7 +826,7 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getSeriousness()
+    public function getSeriousness(): null|FHIRCodeableConcept
     {
         return $this->seriousness;
     }
@@ -990,39 +842,49 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $seriousness
      * @return static
      */
-    public function setSeriousness(FHIRCodeableConcept $seriousness = null)
+    public function setSeriousness(null|FHIRCodeableConcept $seriousness = null): self
     {
+        if (null === $seriousness) {
+            $seriousness = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->seriousness, $seriousness);
         $this->seriousness = $seriousness;
         return $this;
     }
 
     /**
-     * A reference from one resource to another.
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * AdverseEvent.study.
+     * Describes the type of outcome from the adverse event.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getStudy()
+    public function getOutcome(): null|FHIRCodeableConcept
     {
-        return $this->study;
+        return $this->outcome;
     }
 
     /**
-     * A reference from one resource to another.
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * AdverseEvent.study.
+     * Describes the type of outcome from the adverse event.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $study
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $outcome
      * @return static
      */
-    public function addStudy(FHIRReference $study = null)
+    public function setOutcome(null|FHIRCodeableConcept $outcome = null): self
     {
-        $this->study[] = $study;
+        if (null === $outcome) {
+            $outcome = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->outcome, $outcome);
+        $this->outcome = $outcome;
         return $this;
     }
 
@@ -1031,40 +893,14 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * AdverseEvent.study.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $study
-     * @return static
-     */
-    public function setStudy(array $study = [])
-    {
-        $this->study = [];
-        if ([] === $study) {
-            return $this;
-        }
-        foreach($study as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addStudy($v);
-            } else {
-                $this->addStudy(new FHIRReference($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * This subject or group impacted by the event. With a prospective adverse event,
-     * there will be no subject as the adverse event was prevented.
+     * Information on who recorded the adverse event. May be the patient or a
+     * practitioner.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getSubject()
+    public function getRecorder(): null|FHIRReference
     {
-        return $this->subject;
+        return $this->recorder;
     }
 
     /**
@@ -1072,15 +908,19 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * This subject or group impacted by the event. With a prospective adverse event,
-     * there will be no subject as the adverse event was prevented.
+     * Information on who recorded the adverse event. May be the patient or a
+     * practitioner.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subject
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $recorder
      * @return static
      */
-    public function setSubject(FHIRReference $subject = null)
+    public function setRecorder(null|FHIRReference $recorder = null): self
     {
-        $this->subject = $subject;
+        if (null === $recorder) {
+            $recorder = new FHIRReference();
+        }
+        $this->_trackValueSet($this->recorder, $recorder);
+        $this->recorder = $recorder;
         return $this;
     }
 
@@ -1089,13 +929,17 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * AdverseEvent.subjectMedicalHistory.
+     * Parties that may or should contribute or have contributed information to the
+     * Act. Such information includes information leading to the decision to perform
+     * the Act and how to perform the Act (e.g. consultant), information that the Act
+     * itself seeks to reveal (e.g. informant of clinical history), or information
+     * about what Act was performed (e.g. informant witness).
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    public function getSubjectMedicalHistory()
+    public function getEventParticipant(): null|FHIRReference
     {
-        return $this->subjectMedicalHistory;
+        return $this->eventParticipant;
     }
 
     /**
@@ -1103,40 +947,56 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * AdverseEvent.subjectMedicalHistory.
+     * Parties that may or should contribute or have contributed information to the
+     * Act. Such information includes information leading to the decision to perform
+     * the Act and how to perform the Act (e.g. consultant), information that the Act
+     * itself seeks to reveal (e.g. informant of clinical history), or information
+     * about what Act was performed (e.g. informant witness).
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subjectMedicalHistory
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $eventParticipant
      * @return static
      */
-    public function addSubjectMedicalHistory(FHIRReference $subjectMedicalHistory = null)
+    public function setEventParticipant(null|FHIRReference $eventParticipant = null): self
     {
-        $this->subjectMedicalHistory[] = $subjectMedicalHistory;
+        if (null === $eventParticipant) {
+            $eventParticipant = new FHIRReference();
+        }
+        $this->_trackValueSet($this->eventParticipant, $eventParticipant);
+        $this->eventParticipant = $eventParticipant;
         return $this;
     }
 
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * AdverseEvent.subjectMedicalHistory.
+     * Describes the adverse event in text.
      *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $subjectMedicalHistory
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getDescription(): null|FHIRString
+    {
+        return $this->description;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Describes the adverse event in text.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $description
      * @return static
      */
-    public function setSubjectMedicalHistory(array $subjectMedicalHistory = [])
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null): self
     {
-        $this->subjectMedicalHistory = [];
-        if ([] === $subjectMedicalHistory) {
-            return $this;
+        if (null !== $description && !($description instanceof FHIRString)) {
+            $description = new FHIRString($description);
         }
-        foreach($subjectMedicalHistory as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addSubjectMedicalHistory($v);
-            } else {
-                $this->addSubjectMedicalHistory(new FHIRReference($v));
-            }
-        }
+        $this->_trackValueSet($this->description, $description);
+        $this->description = $description;
         return $this;
     }
 
@@ -1150,7 +1010,7 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAdverseEvent\FHIRAdverseEventSuspectEntity[]
      */
-    public function getSuspectEntity()
+    public function getSuspectEntity(): null|array
     {
         return $this->suspectEntity;
     }
@@ -1166,8 +1026,12 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAdverseEvent\FHIRAdverseEventSuspectEntity $suspectEntity
      * @return static
      */
-    public function addSuspectEntity(FHIRAdverseEventSuspectEntity $suspectEntity = null)
+    public function addSuspectEntity(null|FHIRAdverseEventSuspectEntity $suspectEntity = null): self
     {
+        if (null === $suspectEntity) {
+            $suspectEntity = new FHIRAdverseEventSuspectEntity();
+        }
+        $this->_trackValueAdded();
         $this->suspectEntity[] = $suspectEntity;
         return $this;
     }
@@ -1183,9 +1047,12 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAdverseEvent\FHIRAdverseEventSuspectEntity[] $suspectEntity
      * @return static
      */
-    public function setSuspectEntity(array $suspectEntity = [])
+    public function setSuspectEntity(array $suspectEntity = []): self
     {
-        $this->suspectEntity = [];
+        if ([] !== $this->suspectEntity) {
+            $this->_trackValuesRemoved(count($this->suspectEntity));
+            $this->suspectEntity = [];
+        }
         if ([] === $suspectEntity) {
             return $this;
         }
@@ -1200,36 +1067,191 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * This element defines the specific type of event that occurred or that was
-     * prevented from occurring.
+     * AdverseEvent.subjectMedicalHistory.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getType()
+    public function getSubjectMedicalHistory(): null|array
     {
-        return $this->type;
+        return $this->subjectMedicalHistory;
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * This element defines the specific type of event that occurred or that was
-     * prevented from occurring.
+     * AdverseEvent.subjectMedicalHistory.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subjectMedicalHistory
      * @return static
      */
-    public function setType(FHIRCodeableConcept $type = null)
+    public function addSubjectMedicalHistory(null|FHIRReference $subjectMedicalHistory = null): self
     {
-        $this->type = $type;
+        if (null === $subjectMedicalHistory) {
+            $subjectMedicalHistory = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->subjectMedicalHistory[] = $subjectMedicalHistory;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * AdverseEvent.subjectMedicalHistory.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $subjectMedicalHistory
+     * @return static
+     */
+    public function setSubjectMedicalHistory(array $subjectMedicalHistory = []): self
+    {
+        if ([] !== $this->subjectMedicalHistory) {
+            $this->_trackValuesRemoved(count($this->subjectMedicalHistory));
+            $this->subjectMedicalHistory = [];
+        }
+        if ([] === $subjectMedicalHistory) {
+            return $this;
+        }
+        foreach($subjectMedicalHistory as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addSubjectMedicalHistory($v);
+            } else {
+                $this->addSubjectMedicalHistory(new FHIRReference($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * AdverseEvent.referenceDocument.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    public function getReferenceDocument(): null|array
+    {
+        return $this->referenceDocument;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * AdverseEvent.referenceDocument.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $referenceDocument
+     * @return static
+     */
+    public function addReferenceDocument(null|FHIRReference $referenceDocument = null): self
+    {
+        if (null === $referenceDocument) {
+            $referenceDocument = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->referenceDocument[] = $referenceDocument;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * AdverseEvent.referenceDocument.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $referenceDocument
+     * @return static
+     */
+    public function setReferenceDocument(array $referenceDocument = []): self
+    {
+        if ([] !== $this->referenceDocument) {
+            $this->_trackValuesRemoved(count($this->referenceDocument));
+            $this->referenceDocument = [];
+        }
+        if ([] === $referenceDocument) {
+            return $this;
+        }
+        foreach($referenceDocument as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addReferenceDocument($v);
+            } else {
+                $this->addReferenceDocument(new FHIRReference($v));
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * AdverseEvent.study.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
+     */
+    public function getStudy(): null|array
+    {
+        return $this->study;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * AdverseEvent.study.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $study
+     * @return static
+     */
+    public function addStudy(null|FHIRReference $study = null): self
+    {
+        if (null === $study) {
+            $study = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->study[] = $study;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * AdverseEvent.study.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $study
+     * @return static
+     */
+    public function setStudy(array $study = []): self
+    {
+        if ([] !== $this->study) {
+            $this->_trackValuesRemoved(count($this->study));
+            $this->study = [];
+        }
+        if ([] === $study) {
+            return $this;
+        }
+        foreach($study as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addStudy($v);
+            } else {
+                $this->addStudy(new FHIRReference($v));
+            }
+        }
         return $this;
     }
 
@@ -1239,9 +1261,9 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1250,43 +1272,33 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (null !== ($v = $this->getCategory())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_CATEGORY] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getDate())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_DATE] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getDescription())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_DESCRIPTION] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getEventParticipant())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_EVENT_PARTICIPANT] = $fieldErrs;
-            }
-        }
         if (null !== ($v = $this->getIdentifier())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_IDENTIFIER] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getLocation())) {
+        if (null !== ($v = $this->getCategory())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_LOCATION] = $fieldErrs;
+                $errs[self::FIELD_CATEGORY] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getOutcome())) {
+        if (null !== ($v = $this->getType())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_OUTCOME] = $fieldErrs;
+                $errs[self::FIELD_TYPE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getSubject())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SUBJECT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getDate())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DATE] = $fieldErrs;
             }
         }
         if ([] !== ($vs = $this->getReaction())) {
@@ -1296,16 +1308,9 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 }
             }
         }
-        if (null !== ($v = $this->getRecorder())) {
+        if (null !== ($v = $this->getLocation())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_RECORDER] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getReferenceDocument())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_REFERENCE_DOCUMENT, $i)] = $fieldErrs;
-                }
+                $errs[self::FIELD_LOCATION] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getSeriousness())) {
@@ -1313,23 +1318,24 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 $errs[self::FIELD_SERIOUSNESS] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getStudy())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_STUDY, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getSubject())) {
+        if (null !== ($v = $this->getOutcome())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_SUBJECT] = $fieldErrs;
+                $errs[self::FIELD_OUTCOME] = $fieldErrs;
             }
         }
-        if ([] !== ($vs = $this->getSubjectMedicalHistory())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_SUBJECT_MEDICAL_HISTORY, $i)] = $fieldErrs;
-                }
+        if (null !== ($v = $this->getRecorder())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RECORDER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getEventParticipant())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_EVENT_PARTICIPANT] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getDescription())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DESCRIPTION] = $fieldErrs;
             }
         }
         if ([] !== ($vs = $this->getSuspectEntity())) {
@@ -1339,56 +1345,24 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 }
             }
         }
-        if (null !== ($v = $this->getType())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_TYPE] = $fieldErrs;
-            }
-        }
-        if (isset($validationRules[self::FIELD_CATEGORY])) {
-            $v = $this->getCategory();
-            foreach($validationRules[self::FIELD_CATEGORY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_CATEGORY, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CATEGORY])) {
-                        $errs[self::FIELD_CATEGORY] = [];
-                    }
-                    $errs[self::FIELD_CATEGORY][$rule] = $err;
+        if ([] !== ($vs = $this->getSubjectMedicalHistory())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_SUBJECT_MEDICAL_HISTORY, $i)] = $fieldErrs;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_DATE])) {
-            $v = $this->getDate();
-            foreach($validationRules[self::FIELD_DATE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_DATE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_DATE])) {
-                        $errs[self::FIELD_DATE] = [];
-                    }
-                    $errs[self::FIELD_DATE][$rule] = $err;
+        if ([] !== ($vs = $this->getReferenceDocument())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_REFERENCE_DOCUMENT, $i)] = $fieldErrs;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_DESCRIPTION])) {
-            $v = $this->getDescription();
-            foreach($validationRules[self::FIELD_DESCRIPTION] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_DESCRIPTION, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_DESCRIPTION])) {
-                        $errs[self::FIELD_DESCRIPTION] = [];
-                    }
-                    $errs[self::FIELD_DESCRIPTION][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_EVENT_PARTICIPANT])) {
-            $v = $this->getEventParticipant();
-            foreach($validationRules[self::FIELD_EVENT_PARTICIPANT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_EVENT_PARTICIPANT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_EVENT_PARTICIPANT])) {
-                        $errs[self::FIELD_EVENT_PARTICIPANT] = [];
-                    }
-                    $errs[self::FIELD_EVENT_PARTICIPANT][$rule] = $err;
+        if ([] !== ($vs = $this->getStudy())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_STUDY, $i)] = $fieldErrs;
                 }
             }
         }
@@ -1404,87 +1378,27 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_LOCATION])) {
-            $v = $this->getLocation();
-            foreach($validationRules[self::FIELD_LOCATION] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_LOCATION, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_CATEGORY])) {
+            $v = $this->getCategory();
+            foreach($validationRules[self::FIELD_CATEGORY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_CATEGORY, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_LOCATION])) {
-                        $errs[self::FIELD_LOCATION] = [];
+                    if (!isset($errs[self::FIELD_CATEGORY])) {
+                        $errs[self::FIELD_CATEGORY] = [];
                     }
-                    $errs[self::FIELD_LOCATION][$rule] = $err;
+                    $errs[self::FIELD_CATEGORY][$rule] = $err;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_OUTCOME])) {
-            $v = $this->getOutcome();
-            foreach($validationRules[self::FIELD_OUTCOME] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_OUTCOME, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_TYPE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_OUTCOME])) {
-                        $errs[self::FIELD_OUTCOME] = [];
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
                     }
-                    $errs[self::FIELD_OUTCOME][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_REACTION])) {
-            $v = $this->getReaction();
-            foreach($validationRules[self::FIELD_REACTION] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_REACTION, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_REACTION])) {
-                        $errs[self::FIELD_REACTION] = [];
-                    }
-                    $errs[self::FIELD_REACTION][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_RECORDER])) {
-            $v = $this->getRecorder();
-            foreach($validationRules[self::FIELD_RECORDER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_RECORDER, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_RECORDER])) {
-                        $errs[self::FIELD_RECORDER] = [];
-                    }
-                    $errs[self::FIELD_RECORDER][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_REFERENCE_DOCUMENT])) {
-            $v = $this->getReferenceDocument();
-            foreach($validationRules[self::FIELD_REFERENCE_DOCUMENT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_REFERENCE_DOCUMENT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_REFERENCE_DOCUMENT])) {
-                        $errs[self::FIELD_REFERENCE_DOCUMENT] = [];
-                    }
-                    $errs[self::FIELD_REFERENCE_DOCUMENT][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_SERIOUSNESS])) {
-            $v = $this->getSeriousness();
-            foreach($validationRules[self::FIELD_SERIOUSNESS] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_SERIOUSNESS, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_SERIOUSNESS])) {
-                        $errs[self::FIELD_SERIOUSNESS] = [];
-                    }
-                    $errs[self::FIELD_SERIOUSNESS][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_STUDY])) {
-            $v = $this->getStudy();
-            foreach($validationRules[self::FIELD_STUDY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_STUDY, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_STUDY])) {
-                        $errs[self::FIELD_STUDY] = [];
-                    }
-                    $errs[self::FIELD_STUDY][$rule] = $err;
+                    $errs[self::FIELD_TYPE][$rule] = $err;
                 }
             }
         }
@@ -1500,15 +1414,99 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_SUBJECT_MEDICAL_HISTORY])) {
-            $v = $this->getSubjectMedicalHistory();
-            foreach($validationRules[self::FIELD_SUBJECT_MEDICAL_HISTORY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_SUBJECT_MEDICAL_HISTORY, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_DATE])) {
+            $v = $this->getDate();
+            foreach($validationRules[self::FIELD_DATE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_DATE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_SUBJECT_MEDICAL_HISTORY])) {
-                        $errs[self::FIELD_SUBJECT_MEDICAL_HISTORY] = [];
+                    if (!isset($errs[self::FIELD_DATE])) {
+                        $errs[self::FIELD_DATE] = [];
                     }
-                    $errs[self::FIELD_SUBJECT_MEDICAL_HISTORY][$rule] = $err;
+                    $errs[self::FIELD_DATE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REACTION])) {
+            $v = $this->getReaction();
+            foreach($validationRules[self::FIELD_REACTION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_REACTION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REACTION])) {
+                        $errs[self::FIELD_REACTION] = [];
+                    }
+                    $errs[self::FIELD_REACTION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_LOCATION])) {
+            $v = $this->getLocation();
+            foreach($validationRules[self::FIELD_LOCATION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_LOCATION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_LOCATION])) {
+                        $errs[self::FIELD_LOCATION] = [];
+                    }
+                    $errs[self::FIELD_LOCATION][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SERIOUSNESS])) {
+            $v = $this->getSeriousness();
+            foreach($validationRules[self::FIELD_SERIOUSNESS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_SERIOUSNESS, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SERIOUSNESS])) {
+                        $errs[self::FIELD_SERIOUSNESS] = [];
+                    }
+                    $errs[self::FIELD_SERIOUSNESS][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_OUTCOME])) {
+            $v = $this->getOutcome();
+            foreach($validationRules[self::FIELD_OUTCOME] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_OUTCOME, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_OUTCOME])) {
+                        $errs[self::FIELD_OUTCOME] = [];
+                    }
+                    $errs[self::FIELD_OUTCOME][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RECORDER])) {
+            $v = $this->getRecorder();
+            foreach($validationRules[self::FIELD_RECORDER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_RECORDER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RECORDER])) {
+                        $errs[self::FIELD_RECORDER] = [];
+                    }
+                    $errs[self::FIELD_RECORDER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_EVENT_PARTICIPANT])) {
+            $v = $this->getEventParticipant();
+            foreach($validationRules[self::FIELD_EVENT_PARTICIPANT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_EVENT_PARTICIPANT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_EVENT_PARTICIPANT])) {
+                        $errs[self::FIELD_EVENT_PARTICIPANT] = [];
+                    }
+                    $errs[self::FIELD_EVENT_PARTICIPANT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DESCRIPTION])) {
+            $v = $this->getDescription();
+            foreach($validationRules[self::FIELD_DESCRIPTION] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_DESCRIPTION, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DESCRIPTION])) {
+                        $errs[self::FIELD_DESCRIPTION] = [];
+                    }
+                    $errs[self::FIELD_DESCRIPTION][$rule] = $err;
                 }
             }
         }
@@ -1524,15 +1522,51 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TYPE])) {
-            $v = $this->getType();
-            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_TYPE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_SUBJECT_MEDICAL_HISTORY])) {
+            $v = $this->getSubjectMedicalHistory();
+            foreach($validationRules[self::FIELD_SUBJECT_MEDICAL_HISTORY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_SUBJECT_MEDICAL_HISTORY, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TYPE])) {
-                        $errs[self::FIELD_TYPE] = [];
+                    if (!isset($errs[self::FIELD_SUBJECT_MEDICAL_HISTORY])) {
+                        $errs[self::FIELD_SUBJECT_MEDICAL_HISTORY] = [];
                     }
-                    $errs[self::FIELD_TYPE][$rule] = $err;
+                    $errs[self::FIELD_SUBJECT_MEDICAL_HISTORY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_REFERENCE_DOCUMENT])) {
+            $v = $this->getReferenceDocument();
+            foreach($validationRules[self::FIELD_REFERENCE_DOCUMENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_REFERENCE_DOCUMENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_REFERENCE_DOCUMENT])) {
+                        $errs[self::FIELD_REFERENCE_DOCUMENT] = [];
+                    }
+                    $errs[self::FIELD_REFERENCE_DOCUMENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_STUDY])) {
+            $v = $this->getStudy();
+            foreach($validationRules[self::FIELD_STUDY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_ADVERSE_EVENT, self::FIELD_STUDY, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_STUDY])) {
+                        $errs[self::FIELD_STUDY] = [];
+                    }
+                    $errs[self::FIELD_STUDY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
                 }
             }
         }
@@ -1572,18 +1606,6 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TEXT])) {
-            $v = $this->getText();
-            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TEXT])) {
-                        $errs[self::FIELD_TEXT] = [];
-                    }
-                    $errs[self::FIELD_TEXT][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_ID])) {
             $v = $this->getId();
             foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
@@ -1593,6 +1615,18 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                         $errs[self::FIELD_ID] = [];
                     }
                     $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
                 }
             }
         }
@@ -1620,338 +1654,409 @@ class FHIRAdverseEvent extends FHIRDomainResource implements PHPFHIRContainedTyp
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_META])) {
-            $v = $this->getMeta();
-            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_META])) {
-                        $errs[self::FIELD_META] = [];
-                    }
-                    $errs[self::FIELD_META][$rule] = $err;
-                }
-            }
-        }
         return $errs;
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRAdverseEvent $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRAdverseEvent
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRAdverseEvent::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRAdverseEvent::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRAdverseEvent;
-        } elseif (!is_object($type) || !($type instanceof FHIRAdverseEvent)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRAdverseEvent)) {
             throw new \RuntimeException(sprintf(
-                'FHIRAdverseEvent::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRAdverseEvent or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRDomainResource::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_IDENTIFIER === $n->nodeName) {
+                $type->setIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_CATEGORY === $n->nodeName) {
+                $type->setCategory(FHIRAdverseEventCategory::xmlUnserialize($n));
+            } elseif (self::FIELD_TYPE === $n->nodeName) {
+                $type->setType(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_SUBJECT === $n->nodeName) {
+                $type->setSubject(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_DATE === $n->nodeName) {
+                $type->setDate(FHIRDateTime::xmlUnserialize($n));
+            } elseif (self::FIELD_REACTION === $n->nodeName) {
+                $type->addReaction(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_LOCATION === $n->nodeName) {
+                $type->setLocation(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_SERIOUSNESS === $n->nodeName) {
+                $type->setSeriousness(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_OUTCOME === $n->nodeName) {
+                $type->setOutcome(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_RECORDER === $n->nodeName) {
+                $type->setRecorder(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_EVENT_PARTICIPANT === $n->nodeName) {
+                $type->setEventParticipant(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_DESCRIPTION === $n->nodeName) {
+                $type->setDescription(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_SUSPECT_ENTITY === $n->nodeName) {
+                $type->addSuspectEntity(FHIRAdverseEventSuspectEntity::xmlUnserialize($n));
+            } elseif (self::FIELD_SUBJECT_MEDICAL_HISTORY === $n->nodeName) {
+                $type->addSubjectMedicalHistory(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_REFERENCE_DOCUMENT === $n->nodeName) {
+                $type->addReferenceDocument(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_STUDY === $n->nodeName) {
+                $type->addStudy(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_META === $n->nodeName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n));
+            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->category)) {
-            $type->setCategory(FHIRAdverseEventCategory::xmlUnserialize($children->category));
-        }
-        if (isset($children->date)) {
-            $type->setDate(FHIRDateTime::xmlUnserialize($children->date));
-        }
-        if (isset($attributes->date)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_DATE);
+        if (null !== $n) {
             $pt = $type->getDate();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->date);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setDate((string)$attributes->date);
+                $type->setDate($n->nodeValue);
             }
         }
-        if (isset($children->description)) {
-            $type->setDescription(FHIRString::xmlUnserialize($children->description));
-        }
-        if (isset($attributes->description)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_DESCRIPTION);
+        if (null !== $n) {
             $pt = $type->getDescription();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->description);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setDescription((string)$attributes->description);
+                $type->setDescription($n->nodeValue);
             }
         }
-        if (isset($children->eventParticipant)) {
-            $type->setEventParticipant(FHIRReference::xmlUnserialize($children->eventParticipant));
-        }
-        if (isset($children->identifier)) {
-            $type->setIdentifier(FHIRIdentifier::xmlUnserialize($children->identifier));
-        }
-        if (isset($children->location)) {
-            $type->setLocation(FHIRReference::xmlUnserialize($children->location));
-        }
-        if (isset($children->outcome)) {
-            $type->setOutcome(FHIRCodeableConcept::xmlUnserialize($children->outcome));
-        }
-        if (isset($children->reaction)) {
-            foreach($children->reaction as $child) {
-                $type->addReaction(FHIRReference::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
             }
         }
-        if (isset($children->recorder)) {
-            $type->setRecorder(FHIRReference::xmlUnserialize($children->recorder));
-        }
-        if (isset($children->referenceDocument)) {
-            foreach($children->referenceDocument as $child) {
-                $type->addReferenceDocument(FHIRReference::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
+        if (null !== $n) {
+            $pt = $type->getImplicitRules();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setImplicitRules($n->nodeValue);
             }
         }
-        if (isset($children->seriousness)) {
-            $type->setSeriousness(FHIRCodeableConcept::xmlUnserialize($children->seriousness));
-        }
-        if (isset($children->study)) {
-            foreach($children->study as $child) {
-                $type->addStudy(FHIRReference::xmlUnserialize($child));
+        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
+        if (null !== $n) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLanguage($n->nodeValue);
             }
-        }
-        if (isset($children->subject)) {
-            $type->setSubject(FHIRReference::xmlUnserialize($children->subject));
-        }
-        if (isset($children->subjectMedicalHistory)) {
-            foreach($children->subjectMedicalHistory as $child) {
-                $type->addSubjectMedicalHistory(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->suspectEntity)) {
-            foreach($children->suspectEntity as $child) {
-                $type->addSuspectEntity(FHIRAdverseEventSuspectEntity::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->type)) {
-            $type->setType(FHIRCodeableConcept::xmlUnserialize($children->type));
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('AdverseEvent'), $libxmlOpts);
+            $element = $dom->documentElement;
+        }
+        parent::xmlSerialize($element);
+        if (null !== ($v = $this->getIdentifier())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
         if (null !== ($v = $this->getCategory())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_CATEGORY, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_CATEGORY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getType())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getSubject())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_SUBJECT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getDate())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_DATE, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getDescription())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_DESCRIPTION, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getEventParticipant())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_EVENT_PARTICIPANT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getIdentifier())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getLocation())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_LOCATION, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getOutcome())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_OUTCOME, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_DATE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getReaction())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_REACTION, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_REACTION);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getRecorder())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_RECORDER, null, $v->_getFHIRXMLNamespace()));
-        }
-        if ([] !== ($vs = $this->getReferenceDocument())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_REFERENCE_DOCUMENT, null, $v->_getFHIRXMLNamespace()));
-            }
+        if (null !== ($v = $this->getLocation())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_LOCATION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getSeriousness())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_SERIOUSNESS, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_SERIOUSNESS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if ([] !== ($vs = $this->getStudy())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_STUDY, null, $v->_getFHIRXMLNamespace()));
-            }
+        if (null !== ($v = $this->getOutcome())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_OUTCOME);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getSubject())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_SUBJECT, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getRecorder())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_RECORDER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if ([] !== ($vs = $this->getSubjectMedicalHistory())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SUBJECT_MEDICAL_HISTORY, null, $v->_getFHIRXMLNamespace()));
-            }
+        if (null !== ($v = $this->getEventParticipant())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_EVENT_PARTICIPANT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getDescription())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_DESCRIPTION);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getSuspectEntity())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_SUSPECT_ENTITY, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_SUSPECT_ENTITY);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getType())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
+        if ([] !== ($vs = $this->getSubjectMedicalHistory())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_SUBJECT_MEDICAL_HISTORY);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
         }
-        return $sxe;
+        if ([] !== ($vs = $this->getReferenceDocument())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_REFERENCE_DOCUMENT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        if ([] !== ($vs = $this->getStudy())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_STUDY);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
+        }
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getCategory())) {
-            $a[self::FIELD_CATEGORY] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRAdverseEventCategory::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRAdverseEventCategory::FIELD_VALUE]);
-                $a[self::FIELD_CATEGORY_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getDate())) {
-            $a[self::FIELD_DATE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRDateTime::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRDateTime::FIELD_VALUE]);
-                $a[self::FIELD_DATE_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getDescription())) {
-            $a[self::FIELD_DESCRIPTION] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_DESCRIPTION_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getEventParticipant())) {
-            $a[self::FIELD_EVENT_PARTICIPANT] = $v;
-        }
+        $out = parent::jsonSerialize();
         if (null !== ($v = $this->getIdentifier())) {
-            $a[self::FIELD_IDENTIFIER] = $v;
+            $out->{self::FIELD_IDENTIFIER} = $v;
         }
-        if (null !== ($v = $this->getLocation())) {
-            $a[self::FIELD_LOCATION] = $v;
-        }
-        if (null !== ($v = $this->getOutcome())) {
-            $a[self::FIELD_OUTCOME] = $v;
-        }
-        if ([] !== ($vs = $this->getReaction())) {
-            $a[self::FIELD_REACTION] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_REACTION][] = $v;
+        if (null !== ($v = $this->getCategory())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_CATEGORY} = $val;
             }
-        }
-        if (null !== ($v = $this->getRecorder())) {
-            $a[self::FIELD_RECORDER] = $v;
-        }
-        if ([] !== ($vs = $this->getReferenceDocument())) {
-            $a[self::FIELD_REFERENCE_DOCUMENT] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_REFERENCE_DOCUMENT][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getSeriousness())) {
-            $a[self::FIELD_SERIOUSNESS] = $v;
-        }
-        if ([] !== ($vs = $this->getStudy())) {
-            $a[self::FIELD_STUDY] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_STUDY][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getSubject())) {
-            $a[self::FIELD_SUBJECT] = $v;
-        }
-        if ([] !== ($vs = $this->getSubjectMedicalHistory())) {
-            $a[self::FIELD_SUBJECT_MEDICAL_HISTORY] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_SUBJECT_MEDICAL_HISTORY][] = $v;
-            }
-        }
-        if ([] !== ($vs = $this->getSuspectEntity())) {
-            $a[self::FIELD_SUSPECT_ENTITY] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_SUSPECT_ENTITY][] = $v;
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRAdverseEventCategory::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_CATEGORY_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getType())) {
-            $a[self::FIELD_TYPE] = $v;
+            $out->{self::FIELD_TYPE} = $v;
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if (null !== ($v = $this->getSubject())) {
+            $out->{self::FIELD_SUBJECT} = $v;
         }
-        return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
-    }
+        if (null !== ($v = $this->getDate())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DATE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRDateTime::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DATE_EXT} = $ext;
+            }
+        }
+        if ([] !== ($vs = $this->getReaction())) {
+            $out->{self::FIELD_REACTION} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_REACTION}[] = $v;
+            }
+        }
+        if (null !== ($v = $this->getLocation())) {
+            $out->{self::FIELD_LOCATION} = $v;
+        }
+        if (null !== ($v = $this->getSeriousness())) {
+            $out->{self::FIELD_SERIOUSNESS} = $v;
+        }
+        if (null !== ($v = $this->getOutcome())) {
+            $out->{self::FIELD_OUTCOME} = $v;
+        }
+        if (null !== ($v = $this->getRecorder())) {
+            $out->{self::FIELD_RECORDER} = $v;
+        }
+        if (null !== ($v = $this->getEventParticipant())) {
+            $out->{self::FIELD_EVENT_PARTICIPANT} = $v;
+        }
+        if (null !== ($v = $this->getDescription())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DESCRIPTION} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DESCRIPTION_EXT} = $ext;
+            }
+        }
+        if ([] !== ($vs = $this->getSuspectEntity())) {
+            $out->{self::FIELD_SUSPECT_ENTITY} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_SUSPECT_ENTITY}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getSubjectMedicalHistory())) {
+            $out->{self::FIELD_SUBJECT_MEDICAL_HISTORY} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_SUBJECT_MEDICAL_HISTORY}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getReferenceDocument())) {
+            $out->{self::FIELD_REFERENCE_DOCUMENT} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_REFERENCE_DOCUMENT}[] = $v;
+            }
+        }
+        if ([] !== ($vs = $this->getStudy())) {
+            $out->{self::FIELD_STUDY} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_STUDY}[] = $v;
+            }
+        }
 
+        $out->{PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE} = $this->_getResourceType();
+
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

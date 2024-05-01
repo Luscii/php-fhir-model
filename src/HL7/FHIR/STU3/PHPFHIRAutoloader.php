@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,11 +68,20 @@ namespace HL7\FHIR\STU3;
 if (!interface_exists('\HL7\FHIR\STU3\PHPFHIRTypeInterface', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRTypeInterface.php';
 }
+if (!interface_exists('\HL7\FHIR\STU3\PHPFHIRPrimitiveTypeInterface', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRPrimitiveTypeInterface.php';
+}
 if (!interface_exists('\HL7\FHIR\STU3\PHPFHIRContainedTypeInterface', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRContainedTypeInterface.php';
 }
 if (!interface_exists('\HL7\FHIR\STU3\PHPFHIRCommentContainerInterface', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRCommentContainerInterface.php';
+}
+if (!interface_exists('\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRXmlSerializableConfigInterface.php';
+}
+if (!interface_exists('\HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRXmlSerializableInterface.php';
 }
 
 // traits
@@ -82,19 +91,45 @@ if (!trait_exists('\HL7\FHIR\STU3\PHPFHIRCommentContainerTrait', false)) {
 if (!trait_exists('\HL7\FHIR\STU3\PHPFHIRValidationAssertionsTrait', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRValidationAssertionsTrait.php';
 }
+if (!trait_exists('\HL7\FHIR\STU3\PHPFHIRChangeTrackingTrait', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRChangeTrackingTrait.php';
+}
+if (!trait_exists('\HL7\FHIR\STU3\PHPFHIRXmlNamespaceTrait', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRXmlNamespaceTrait.php';
+}
+if (!trait_exists('\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigTrait', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRXmlSerializableConfigTrait.php';
+}
 
-// common classes
+// enums
+if (!enum_exists('\HL7\FHIR\STU3\PHPFHIRConfigKeyEnum', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRConfigKeyEnum.php';
+}
+if (!enum_exists('\HL7\FHIR\STU3\PHPFHIRTypeEnum', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRTypeEnum.php';
+}
+if (!enum_exists('\HL7\FHIR\STU3\PHPFHIRApiFormatEnum', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRApiFormatEnum.php';
+}
+
+// classes
 if (!class_exists('\HL7\FHIR\STU3\PHPFHIRConstants', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRConstants.php';
 }
 if (!class_exists('\HL7\FHIR\STU3\PHPFHIRTypeMap', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRTypeMap.php';
 }
-if (!class_exists('\HL7\FHIR\STU3\PHPFHIRResponseParserConfig', false)) {
-    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRResponseParserConfig.php';
+if (!class_exists('\HL7\FHIR\STU3\PHPFHIRConfig', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRConfig.php';
 }
 if (!class_exists('\HL7\FHIR\STU3\PHPFHIRResponseParser', false)) {
     require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRResponseParser.php';
+}
+if (!class_exists('\HL7\FHIR\STU3\PHPFHIRDebugClientResponse', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRDebugClientResponse.php';
+}
+if (!class_exists('\HL7\FHIR\STU3\PHPFHIRDebugClient', false)) {
+    require __DIR__ . DIRECTORY_SEPARATOR . 'PHPFHIRDebugClient.php';
 }
 
 /**
@@ -103,13 +138,8 @@ if (!class_exists('\HL7\FHIR\STU3\PHPFHIRResponseParser', false)) {
  */
 abstract class PHPFHIRAutoloader
 {
-    const ROOT_DIR = __DIR__;
-
-    /** @var bool */
-    private static $_registered = false;
-
     /** @var array */
-    private static $_classMap = [
+    private const _CLASS_MAP = [
         'HL7\FHIR\STU3\FHIRBase64BinaryPrimitive' => 'FHIRBase64BinaryPrimitive.php',
         'HL7\FHIR\STU3\FHIRBooleanPrimitive' => 'FHIRBooleanPrimitive.php',
         'HL7\FHIR\STU3\FHIRCodePrimitive' => 'FHIRCodePrimitive.php',
@@ -1022,27 +1052,31 @@ abstract class PHPFHIRAutoloader
         'HL7\FHIR\STU3\FHIRUnsignedIntPrimitive' => 'FHIRUnsignedIntPrimitive.php',
         'HL7\FHIR\STU3\FHIRUriPrimitive' => 'FHIRUriPrimitive.php',
         'HL7\FHIR\STU3\FHIRUuidPrimitive' => 'FHIRUuidPrimitive.php',
+        'HL7\FHIR\STU3\FHIRXhtml' => 'FHIRXhtml.php',
     ];
+
+    /** @var bool */
+    private static bool $_registered = false;
 
     /**
      * @return bool
      * @throws \Exception
      */
-    public static function register()
+    public static function register(): bool
     {
-        if (self::$_registered) {
-            return self::$_registered;
+        if (!self::$_registered) {
+            self::$_registered = spl_autoload_register(__CLASS__ . '::loadClass', true);
         }
-        return self::$_registered = spl_autoload_register(array(__CLASS__, 'loadClass'), true);
+        return self::$_registered;
     }
 
     /**
      * @return bool
      */
-    public static function unregister()
+    public static function unregister(): bool
     {
         if (self::$_registered) {
-            if (spl_autoload_unregister(array(__CLASS__, 'loadClass'))) {
+            if (spl_autoload_unregister(__CLASS__ . '::loadClass')) {
                 self::$_registered = false;
                 return true;
             }
@@ -1056,10 +1090,10 @@ abstract class PHPFHIRAutoloader
      * @param string $class
      * @return bool|null
      */
-    public static function loadClass($class)
+    public static function loadClass(string $class): null|bool
     {
-        if (isset(self::$_classMap[$class])) {
-            return (bool)require sprintf('%s/%s', self::ROOT_DIR, self::$_classMap[$class]);
+        if (isset(self::_CLASS_MAP[$class])) {
+            return (bool)require __DIR__ . DIRECTORY_SEPARATOR . self::_CLASS_MAP[$class];
         }
         return null;
     }

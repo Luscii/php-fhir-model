@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,9 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCanonical;
@@ -73,9 +76,13 @@ use HL7\FHIR\R4\FHIRElement\FHIRMarkdown;
 use HL7\FHIR\R4\FHIRElement\FHIRReferenceHandlingPolicy;
 use HL7\FHIR\R4\FHIRElement\FHIRResourceVersionPolicy;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
@@ -90,6 +97,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CAPABILITY_STATEMENT_DOT_RESOURCE;
+
     const FIELD_TYPE = 'type';
     const FIELD_TYPE_EXT = '_type';
     const FIELD_PROFILE = 'profile';
@@ -122,9 +130,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
     const FIELD_SEARCH_PARAM = 'searchParam';
     const FIELD_OPERATION = 'operation';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -133,10 +138,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A type of resource exposed via the restful interface.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    protected ?FHIRCode $type = null;
-
+    protected null|FHIRCode $type = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -148,10 +152,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * other limitations. See further discussion in [Using
      * Profiles](profiling.html#profile-uses).
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $profile = null;
-
+    protected null|FHIRCanonical $profile = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -166,10 +169,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * according to the guidance implicit in the profile. See further discussion in
      * [Using Profiles](profiling.html#profile-uses).
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $supportedProfile = [];
-
+    protected null|array $supportedProfile = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -181,10 +183,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * Additional information about the resource type used by the system.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $documentation = null;
-
+    protected null|FHIRMarkdown $documentation = null;
     /**
      * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
      * Server for a particular version of FHIR that may be used as a statement of
@@ -195,8 +196,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementInteraction[]
      */
-    protected ?array $interaction = [];
-
+    protected null|array $interaction = [];
     /**
      * How the system supports versioning for a resource.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -210,8 +210,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRResourceVersionPolicy
      */
-    protected ?FHIRResourceVersionPolicy $versioning = null;
-
+    protected null|FHIRResourceVersionPolicy $versioning = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -219,10 +218,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * A flag for whether the server is able to return past versions as part of the
      * vRead operation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $readHistory = null;
-
+    protected null|FHIRBoolean $readHistory = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -232,20 +230,18 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * is no existing resource). Allowing this operation means that the server allows
      * the client to create new identities on the server.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $updateCreate = null;
-
+    protected null|FHIRBoolean $updateCreate = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A flag that indicates that the server supports conditional create.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $conditionalCreate = null;
-
+    protected null|FHIRBoolean $conditionalCreate = null;
     /**
      * A code that indicates how the server supports conditional read.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -254,18 +250,16 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRConditionalReadStatus
      */
-    protected ?FHIRConditionalReadStatus $conditionalRead = null;
-
+    protected null|FHIRConditionalReadStatus $conditionalRead = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A flag that indicates that the server supports conditional update.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $conditionalUpdate = null;
-
+    protected null|FHIRBoolean $conditionalUpdate = null;
     /**
      * A code that indicates how the server supports conditional delete.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -274,8 +268,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRConditionalDeleteStatus
      */
-    protected ?FHIRConditionalDeleteStatus $conditionalDelete = null;
-
+    protected null|FHIRConditionalDeleteStatus $conditionalDelete = null;
     /**
      * A set of flags that defines how references are supported.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -284,8 +277,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReferenceHandlingPolicy[]
      */
-    protected ?array $referencePolicy = [];
-
+    protected null|array $referencePolicy = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -293,10 +285,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A list of _include values supported by the server.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $searchInclude = [];
-
+    protected null|array $searchInclude = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -304,10 +295,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A list of _revinclude (reverse include) values supported by the server.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $searchRevInclude = [];
-
+    protected null|array $searchRevInclude = [];
     /**
      * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
      * Server for a particular version of FHIR that may be used as a statement of
@@ -320,8 +310,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSearchParam[]
      */
-    protected ?array $searchParam = [];
-
+    protected null|array $searchParam = [];
     /**
      * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
      * Server for a particular version of FHIR that may be used as a statement of
@@ -334,28 +323,23 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementOperation[]
      */
-    protected ?array $operation = [];
+    protected null|array $operation = [];
 
     /**
      * Validation map for fields in type CapabilityStatement.Resource
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRCapabilityStatementResource Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRCapabilityStatementResource::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_TYPE]) || isset($data[self::FIELD_TYPE_EXT])) {
@@ -684,24 +668,13 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<CapabilityStatementResource{$xmlns}></CapabilityStatementResource>";
     }
 
     /**
@@ -712,9 +685,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A type of resource exposed via the restful interface.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    public function getType(): ?FHIRCode
+    public function getType(): null|FHIRCode
     {
         return $this->type;
     }
@@ -727,10 +700,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A type of resource exposed via the restful interface.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $type
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $type
      * @return static
      */
-    public function setType($type = null): object
+    public function setType(null|string|FHIRCodePrimitive|FHIRCode $type = null): self
     {
         if (null !== $type && !($type instanceof FHIRCode)) {
             $type = new FHIRCode($type);
@@ -751,9 +724,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * other limitations. See further discussion in [Using
      * Profiles](profiling.html#profile-uses).
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getProfile(): ?FHIRCanonical
+    public function getProfile(): null|FHIRCanonical
     {
         return $this->profile;
     }
@@ -769,10 +742,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * other limitations. See further discussion in [Using
      * Profiles](profiling.html#profile-uses).
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $profile
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $profile
      * @return static
      */
-    public function setProfile($profile = null): object
+    public function setProfile(null|string|FHIRCanonicalPrimitive|FHIRCanonical $profile = null): self
     {
         if (null !== $profile && !($profile instanceof FHIRCanonical)) {
             $profile = new FHIRCanonical($profile);
@@ -796,9 +769,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * according to the guidance implicit in the profile. See further discussion in
      * [Using Profiles](profiling.html#profile-uses).
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getSupportedProfile(): ?array
+    public function getSupportedProfile(): null|array
     {
         return $this->supportedProfile;
     }
@@ -817,10 +790,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * according to the guidance implicit in the profile. See further discussion in
      * [Using Profiles](profiling.html#profile-uses).
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $supportedProfile
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $supportedProfile
      * @return static
      */
-    public function addSupportedProfile($supportedProfile = null): object
+    public function addSupportedProfile(null|string|FHIRCanonicalPrimitive|FHIRCanonical $supportedProfile = null): self
     {
         if (null !== $supportedProfile && !($supportedProfile instanceof FHIRCanonical)) {
             $supportedProfile = new FHIRCanonical($supportedProfile);
@@ -847,7 +820,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $supportedProfile
      * @return static
      */
-    public function setSupportedProfile(array $supportedProfile = []): object
+    public function setSupportedProfile(array $supportedProfile = []): self
     {
         if ([] !== $this->supportedProfile) {
             $this->_trackValuesRemoved(count($this->supportedProfile));
@@ -877,9 +850,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * Additional information about the resource type used by the system.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDocumentation(): ?FHIRMarkdown
+    public function getDocumentation(): null|FHIRMarkdown
     {
         return $this->documentation;
     }
@@ -895,10 +868,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * Additional information about the resource type used by the system.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $documentation
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $documentation
      * @return static
      */
-    public function setDocumentation($documentation = null): object
+    public function setDocumentation(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $documentation = null): self
     {
         if (null !== $documentation && !($documentation instanceof FHIRMarkdown)) {
             $documentation = new FHIRMarkdown($documentation);
@@ -918,7 +891,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementInteraction[]
      */
-    public function getInteraction(): ?array
+    public function getInteraction(): null|array
     {
         return $this->interaction;
     }
@@ -934,8 +907,11 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementInteraction $interaction
      * @return static
      */
-    public function addInteraction(?FHIRCapabilityStatementInteraction $interaction = null): object
+    public function addInteraction(null|FHIRCapabilityStatementInteraction $interaction = null): self
     {
+        if (null === $interaction) {
+            $interaction = new FHIRCapabilityStatementInteraction();
+        }
         $this->_trackValueAdded();
         $this->interaction[] = $interaction;
         return $this;
@@ -952,7 +928,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementInteraction[] $interaction
      * @return static
      */
-    public function setInteraction(array $interaction = []): object
+    public function setInteraction(array $interaction = []): self
     {
         if ([] !== $this->interaction) {
             $this->_trackValuesRemoved(count($this->interaction));
@@ -984,7 +960,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRResourceVersionPolicy
      */
-    public function getVersioning(): ?FHIRResourceVersionPolicy
+    public function getVersioning(): null|FHIRResourceVersionPolicy
     {
         return $this->versioning;
     }
@@ -1003,8 +979,11 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRResourceVersionPolicy $versioning
      * @return static
      */
-    public function setVersioning(?FHIRResourceVersionPolicy $versioning = null): object
+    public function setVersioning(null|FHIRResourceVersionPolicy $versioning = null): self
     {
+        if (null === $versioning) {
+            $versioning = new FHIRResourceVersionPolicy();
+        }
         $this->_trackValueSet($this->versioning, $versioning);
         $this->versioning = $versioning;
         return $this;
@@ -1017,9 +996,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * A flag for whether the server is able to return past versions as part of the
      * vRead operation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getReadHistory(): ?FHIRBoolean
+    public function getReadHistory(): null|FHIRBoolean
     {
         return $this->readHistory;
     }
@@ -1031,10 +1010,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * A flag for whether the server is able to return past versions as part of the
      * vRead operation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $readHistory
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $readHistory
      * @return static
      */
-    public function setReadHistory($readHistory = null): object
+    public function setReadHistory(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $readHistory = null): self
     {
         if (null !== $readHistory && !($readHistory instanceof FHIRBoolean)) {
             $readHistory = new FHIRBoolean($readHistory);
@@ -1053,9 +1032,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * is no existing resource). Allowing this operation means that the server allows
      * the client to create new identities on the server.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getUpdateCreate(): ?FHIRBoolean
+    public function getUpdateCreate(): null|FHIRBoolean
     {
         return $this->updateCreate;
     }
@@ -1069,10 +1048,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * is no existing resource). Allowing this operation means that the server allows
      * the client to create new identities on the server.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $updateCreate
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $updateCreate
      * @return static
      */
-    public function setUpdateCreate($updateCreate = null): object
+    public function setUpdateCreate(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $updateCreate = null): self
     {
         if (null !== $updateCreate && !($updateCreate instanceof FHIRBoolean)) {
             $updateCreate = new FHIRBoolean($updateCreate);
@@ -1088,9 +1067,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A flag that indicates that the server supports conditional create.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getConditionalCreate(): ?FHIRBoolean
+    public function getConditionalCreate(): null|FHIRBoolean
     {
         return $this->conditionalCreate;
     }
@@ -1101,10 +1080,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A flag that indicates that the server supports conditional create.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $conditionalCreate
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $conditionalCreate
      * @return static
      */
-    public function setConditionalCreate($conditionalCreate = null): object
+    public function setConditionalCreate(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $conditionalCreate = null): self
     {
         if (null !== $conditionalCreate && !($conditionalCreate instanceof FHIRBoolean)) {
             $conditionalCreate = new FHIRBoolean($conditionalCreate);
@@ -1122,7 +1101,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRConditionalReadStatus
      */
-    public function getConditionalRead(): ?FHIRConditionalReadStatus
+    public function getConditionalRead(): null|FHIRConditionalReadStatus
     {
         return $this->conditionalRead;
     }
@@ -1136,8 +1115,11 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRConditionalReadStatus $conditionalRead
      * @return static
      */
-    public function setConditionalRead(?FHIRConditionalReadStatus $conditionalRead = null): object
+    public function setConditionalRead(null|FHIRConditionalReadStatus $conditionalRead = null): self
     {
+        if (null === $conditionalRead) {
+            $conditionalRead = new FHIRConditionalReadStatus();
+        }
         $this->_trackValueSet($this->conditionalRead, $conditionalRead);
         $this->conditionalRead = $conditionalRead;
         return $this;
@@ -1149,9 +1131,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A flag that indicates that the server supports conditional update.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getConditionalUpdate(): ?FHIRBoolean
+    public function getConditionalUpdate(): null|FHIRBoolean
     {
         return $this->conditionalUpdate;
     }
@@ -1162,10 +1144,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A flag that indicates that the server supports conditional update.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $conditionalUpdate
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $conditionalUpdate
      * @return static
      */
-    public function setConditionalUpdate($conditionalUpdate = null): object
+    public function setConditionalUpdate(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $conditionalUpdate = null): self
     {
         if (null !== $conditionalUpdate && !($conditionalUpdate instanceof FHIRBoolean)) {
             $conditionalUpdate = new FHIRBoolean($conditionalUpdate);
@@ -1183,7 +1165,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRConditionalDeleteStatus
      */
-    public function getConditionalDelete(): ?FHIRConditionalDeleteStatus
+    public function getConditionalDelete(): null|FHIRConditionalDeleteStatus
     {
         return $this->conditionalDelete;
     }
@@ -1197,8 +1179,11 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRConditionalDeleteStatus $conditionalDelete
      * @return static
      */
-    public function setConditionalDelete(?FHIRConditionalDeleteStatus $conditionalDelete = null): object
+    public function setConditionalDelete(null|FHIRConditionalDeleteStatus $conditionalDelete = null): self
     {
+        if (null === $conditionalDelete) {
+            $conditionalDelete = new FHIRConditionalDeleteStatus();
+        }
         $this->_trackValueSet($this->conditionalDelete, $conditionalDelete);
         $this->conditionalDelete = $conditionalDelete;
         return $this;
@@ -1212,7 +1197,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReferenceHandlingPolicy[]
      */
-    public function getReferencePolicy(): ?array
+    public function getReferencePolicy(): null|array
     {
         return $this->referencePolicy;
     }
@@ -1226,8 +1211,11 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReferenceHandlingPolicy $referencePolicy
      * @return static
      */
-    public function addReferencePolicy(?FHIRReferenceHandlingPolicy $referencePolicy = null): object
+    public function addReferencePolicy(null|FHIRReferenceHandlingPolicy $referencePolicy = null): self
     {
+        if (null === $referencePolicy) {
+            $referencePolicy = new FHIRReferenceHandlingPolicy();
+        }
         $this->_trackValueAdded();
         $this->referencePolicy[] = $referencePolicy;
         return $this;
@@ -1242,7 +1230,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReferenceHandlingPolicy[] $referencePolicy
      * @return static
      */
-    public function setReferencePolicy(array $referencePolicy = []): object
+    public function setReferencePolicy(array $referencePolicy = []): self
     {
         if ([] !== $this->referencePolicy) {
             $this->_trackValuesRemoved(count($this->referencePolicy));
@@ -1268,9 +1256,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A list of _include values supported by the server.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getSearchInclude(): ?array
+    public function getSearchInclude(): null|array
     {
         return $this->searchInclude;
     }
@@ -1282,10 +1270,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A list of _include values supported by the server.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $searchInclude
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $searchInclude
      * @return static
      */
-    public function addSearchInclude($searchInclude = null): object
+    public function addSearchInclude(null|string|FHIRStringPrimitive|FHIRString $searchInclude = null): self
     {
         if (null !== $searchInclude && !($searchInclude instanceof FHIRString)) {
             $searchInclude = new FHIRString($searchInclude);
@@ -1305,7 +1293,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $searchInclude
      * @return static
      */
-    public function setSearchInclude(array $searchInclude = []): object
+    public function setSearchInclude(array $searchInclude = []): self
     {
         if ([] !== $this->searchInclude) {
             $this->_trackValuesRemoved(count($this->searchInclude));
@@ -1331,9 +1319,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A list of _revinclude (reverse include) values supported by the server.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getSearchRevInclude(): ?array
+    public function getSearchRevInclude(): null|array
     {
         return $this->searchRevInclude;
     }
@@ -1345,10 +1333,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A list of _revinclude (reverse include) values supported by the server.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $searchRevInclude
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $searchRevInclude
      * @return static
      */
-    public function addSearchRevInclude($searchRevInclude = null): object
+    public function addSearchRevInclude(null|string|FHIRStringPrimitive|FHIRString $searchRevInclude = null): self
     {
         if (null !== $searchRevInclude && !($searchRevInclude instanceof FHIRString)) {
             $searchRevInclude = new FHIRString($searchRevInclude);
@@ -1368,7 +1356,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $searchRevInclude
      * @return static
      */
-    public function setSearchRevInclude(array $searchRevInclude = []): object
+    public function setSearchRevInclude(array $searchRevInclude = []): self
     {
         if ([] !== $this->searchRevInclude) {
             $this->_trackValuesRemoved(count($this->searchRevInclude));
@@ -1399,7 +1387,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSearchParam[]
      */
-    public function getSearchParam(): ?array
+    public function getSearchParam(): null|array
     {
         return $this->searchParam;
     }
@@ -1417,8 +1405,11 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSearchParam $searchParam
      * @return static
      */
-    public function addSearchParam(?FHIRCapabilityStatementSearchParam $searchParam = null): object
+    public function addSearchParam(null|FHIRCapabilityStatementSearchParam $searchParam = null): self
     {
+        if (null === $searchParam) {
+            $searchParam = new FHIRCapabilityStatementSearchParam();
+        }
         $this->_trackValueAdded();
         $this->searchParam[] = $searchParam;
         return $this;
@@ -1437,7 +1428,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSearchParam[] $searchParam
      * @return static
      */
-    public function setSearchParam(array $searchParam = []): object
+    public function setSearchParam(array $searchParam = []): self
     {
         if ([] !== $this->searchParam) {
             $this->_trackValuesRemoved(count($this->searchParam));
@@ -1468,7 +1459,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementOperation[]
      */
-    public function getOperation(): ?array
+    public function getOperation(): null|array
     {
         return $this->operation;
     }
@@ -1486,8 +1477,11 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementOperation $operation
      * @return static
      */
-    public function addOperation(?FHIRCapabilityStatementOperation $operation = null): object
+    public function addOperation(null|FHIRCapabilityStatementOperation $operation = null): self
     {
+        if (null === $operation) {
+            $operation = new FHIRCapabilityStatementOperation();
+        }
         $this->_trackValueAdded();
         $this->operation[] = $operation;
         return $this;
@@ -1506,7 +1500,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementOperation[] $operation
      * @return static
      */
-    public function setOperation(array $operation = []): object
+    public function setOperation(array $operation = []): self
     {
         if ([] !== $this->operation) {
             $this->_trackValuesRemoved(count($this->operation));
@@ -1533,7 +1527,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1891,36 +1885,48 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementResource $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementResource
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRCapabilityStatementResource::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRCapabilityStatementResource::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRCapabilityStatementResource(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRCapabilityStatementResource)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRCapabilityStatementResource)) {
             throw new \RuntimeException(sprintf(
-                'FHIRCapabilityStatementResource::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementResource or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1989,12 +1995,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_SUPPORTED_PROFILE);
         if (null !== $n) {
-            $pt = $type->getSupportedProfile();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addSupportedProfile($n->nodeValue);
-            }
+            $type->addSupportedProfile($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_DOCUMENTATION);
         if (null !== $n) {
@@ -2043,21 +2044,11 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_SEARCH_INCLUDE);
         if (null !== $n) {
-            $pt = $type->getSearchInclude();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addSearchInclude($n->nodeValue);
-            }
+            $type->addSearchInclude($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_SEARCH_REV_INCLUDE);
         if (null !== $n) {
-            $pt = $type->getSearchRevInclude();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addSearchRevInclude($n->nodeValue);
-            }
+            $type->addSearchRevInclude($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -2073,17 +2064,25 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('CapabilityStatementResource'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getType())) {
@@ -2212,7 +2211,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getType())) {
@@ -2441,7 +2440,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

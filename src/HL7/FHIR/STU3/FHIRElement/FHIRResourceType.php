@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRElement;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,10 +62,13 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * 
  */
 
-use HL7\FHIR\STU3\FHIRCodePrimitive\FHIRResourceTypeList;
 use HL7\FHIR\STU3\FHIRElement;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * The kind of activity the definition is describing
@@ -78,91 +81,81 @@ class FHIRResourceType extends FHIRElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_RESOURCE_TYPE;
+
     const FIELD_VALUE = 'value';
 
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
     /**
-     * @var null|\HL7\FHIR\STU3\FHIRCodePrimitive\FHIRResourceTypeList
+     * @var null|string
      */
-    protected $value = null;
+    protected null|string $value = null;
 
     /**
      * Validation map for fields in type ResourceType
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRResourceType Constructor
-     * @param null|array $data
+     * @param null|string|array $value
      */
-    public function __construct($data = null)
+    public function __construct(null|string|array $value = null)
     {
-        if (null === $data || [] === $data) {
-            return;
-        }
-        if (is_scalar($data)) {
-            $this->setValue(new FHIRResourceTypeList($data));
-            return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRResourceType::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
+        if (null === $value) {
+            parent::__construct();
+        } elseif (is_scalar($value)) {
+            parent::__construct();
+            $this->setValue($value);
+        } elseif (is_array($value)) {
+            parent::__construct($value);
+            if (isset($value[self::FIELD_VALUE])) {
+                $this->setValue($value[self::FIELD_VALUE]);
+            }
+        } else {
+             throw new \InvalidArgumentException(sprintf(
+                'FHIRResourceType::__construct - $data expected to be null, string, or array, %s seen',
+                gettype($value)
             ));
         }
-        parent::__construct($data);
-        if (isset($data[self::FIELD_VALUE])) {
-            $this->setValue($data[self::FIELD_VALUE]);
-        }
     }
+
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ResourceType{$xmlns}></ResourceType>";
-    }
-
-    /**
-     * @return null|\HL7\FHIR\STU3\FHIRCodePrimitive\FHIRResourceTypeList
-     */
-    public function getValue()
+    public function getValue(): null|string
     {
         return $this->value;
     }
 
     /**
-     * @param null|\HL7\FHIR\STU3\FHIRCodePrimitive\FHIRResourceTypeList $value
+     * @param null|string $value
      * @return static
      */
-    public function setValue($value = null)
+    public function setValue(null|string $value): self
     {
         if (null === $value) {
             $this->value = null;
-            return $this;
-        }
-        if ($value instanceof FHIRResourceTypeList) {
+        } else {
             $this->value = $value;
-            return $this;
         }
-        $this->value = new FHIRResourceTypeList($value);
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormattedValue(): string
+    {
+        return (string)$this->getValue();
     }
 
     /**
@@ -171,9 +164,9 @@ class FHIRResourceType extends FHIRElement
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -182,13 +175,19 @@ class FHIRResourceType extends FHIRElement
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (null !== ($v = $this->getValue())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_VALUE] = $fieldErrs;
+        if (isset($validationRules[self::FIELD_VALUE]) && null !== ($v = $this->getValue())) {
+            foreach($validationRules[self::FIELD_VALUE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE_TYPE, self::FIELD_VALUE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_VALUE])) {
+                        $errs[self::FIELD_VALUE] = [];
+                    }
+                    $errs[self::FIELD_VALUE][$rule] = $err;
+                }
             }
         }
         if (isset($validationRules[self::FIELD_VALUE])) {
@@ -231,95 +230,127 @@ class FHIRResourceType extends FHIRElement
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRResourceType $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRResourceType
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRResourceType::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRResourceType::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRResourceType;
-        } elseif (!is_object($type) || !($type instanceof FHIRResourceType)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRResourceType)) {
             throw new \RuntimeException(sprintf(
-                'FHIRResourceType::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRElement\FHIRResourceType or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRElement::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_VALUE === $n->nodeName) {
+                $valueAttr = $n->attributes->getNamedItem('value');
+                if (null !== $valueAttr) {
+                    $type->setValue($valueAttr->nodeValue);
+                } elseif ($n->hasChildNodes()) {
+                    $type->setValue($n->ownerDocument->saveXML($n));
+                } else {
+                    $type->setValue($n->textContent);
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->value)) {
-            $type->setValue(FHIRResourceTypeList::xmlUnserialize($children->value));
+        $n = $element->attributes->getNamedItem(self::FIELD_VALUE);
+        if (null !== $n) {
+            $type->setValue($n->nodeValue);
         }
-        if (isset($attributes->value)) {
-            $pt = $type->getValue();
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->value);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setValue((string)$attributes->value);
+                $type->setId($n->nodeValue);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getValue())) {
-            $sxe->addAttribute(self::FIELD_VALUE, (string)$v);
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ResourceType'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
-        return $sxe;
+        parent::xmlSerialize($element);
+        $element->setAttribute(self::FIELD_VALUE, (string)$this);
+        return $element;
     }
 
     /**
-     * @return array
+     * @return null|string
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getValue())) {
-            $a[self::FIELD_VALUE] = $v;
-        }
-
-        return $a;
+        return $this->getValue();
     }
-
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return self::FHIR_TYPE_NAME;
+        return $this->getFormattedValue();
     }
 }

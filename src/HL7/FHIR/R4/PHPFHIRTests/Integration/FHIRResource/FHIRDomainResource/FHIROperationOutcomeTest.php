@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\PHPFHIRTests\Integration\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,10 +62,12 @@ namespace HL7\FHIR\R4\PHPFHIRTests\Integration\FHIRResource\FHIRDomainResource;
  * 
  */
 
-use PHPUnit\Framework\TestCase;
-use HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIROperationOutcome;
-use PHPUnit\Framework\AssertionFailedError;
 use HL7\FHIR\R4\FHIRResource\FHIRBundle;
+use HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIROperationOutcome;
+use HL7\FHIR\R4\PHPFHIRDebugClient;
+use HL7\FHIR\R4\PHPFHIRTypeEnum;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class FHIROperationOutcomeTest
@@ -73,54 +75,15 @@ use HL7\FHIR\R4\FHIRResource\FHIRBundle;
  */
 class FHIROperationOutcomeTest extends TestCase
 {
+    /** @var \HL7\FHIR\R4\PHPFHIRDebugClient */
+    private PHPFHIRDebugClient $client;
 
     /** @var array */
     private array $_fetchedResources = [];
 
-    /** @var array */
-    private const IGNORE_ERRS = [
-        'Unable to provide support for code system',
-        ' minimum required =',
-        ' Unable to resolve resource',
-        'Identifier.system must be an absolute reference',
-        ' Unknown Code System ',
-        ' URL value ',
-        ' None of the codes provided are in the value set ',
-        'and a code is required from this value set',
-        'fhir_comments',
-        'None of the codings provided are in the value set',
-        ' is not valid in the value set ',
-    ];
-
-    /**
-     * @var string $filename
-     * @return array
-     */
-    protected function _runFHIRValidationJAR(string $filename): array
+    protected function setUp(): void
     {
-        $output = [];
-        $code = -1;
-        $cmd = sprintf(
-            'java -jar %s %s -version 4.0.1',
-            PHPFHIR_FHIR_VALIDATION_JAR,
-            $filename
-        );
-
-        exec($cmd, $output, $code);
-
-        $onlyWarn = false;
-        if (0 !== $code) {
-            foreach($output as $line) {
-                foreach(self::IGNORE_ERRS as $ignoreMe) {
-                    if (false !== strpos($line, $ignoreMe)) {
-                        $onlyWarn = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        return [$code, $output, $onlyWarn];
+        $this->client = new PHPFHIRDebugClient('https://hapi.fhir.org/baseR4');
     }
 
     /**
@@ -132,21 +95,14 @@ class FHIROperationOutcomeTest extends TestCase
         if (isset($this->_fetchedResources[$format])) {
             return $this->_fetchedResources[$format];
         }
-        $url = sprintf('http://hapi.fhir.org/baseR4/OperationOutcome/?_count=1&_format=%s', $format);
-        $ch = curl_init($url);
-        curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-        ]);
-        $res = curl_exec($ch);
-        $err = curl_error($ch);
-        curl_close($ch);
-        $this->assertEmpty($err, sprintf('curl error seen: %s', $err));
-        $this->assertIsString($res);
-        $this->_fetchedResources[$format] = $res;
-        $fname = sprintf('%s/OperationOutcome-v4.0.1-source.%s', PHPFHIR_OUTPUT_TMP_DIR, $format);
-        file_put_contents($fname, $res);
-        return $res;
+        $rc = $this->client->get(sprintf('/%s', PHPFHIRTypeEnum::OPERATION_OUTCOME->value), ['_count' => '1', '_format' => $format]);
+        $this->assertEmpty($rc->err, sprintf('curl error seen: %s', $rc->err));
+        $this->assertEquals(200, $rc->code, 'Expected 200 OK');
+        $this->assertIsString($rc->resp);
+        $this->_fetchedResources[$format] = $rc->resp;
+        $fname = sprintf('%s%sOperationOutcome-v4.0.1-source.%s', PHPFHIR_OUTPUT_TMP_DIR, DIRECTORY_SEPARATOR, $format);
+        file_put_contents($fname, $rc->resp);
+        return $rc->resp;
     }
 
     /**
@@ -154,7 +110,7 @@ class FHIROperationOutcomeTest extends TestCase
      * @param bool $asArray
      * @return mixed
      */
-    protected function decodeJSON(string $sourceJSON, bool $asArray)
+    protected function decodeJson(string $sourceJSON, bool $asArray): mixed
     {
         $this->assertJson($sourceJSON);
         $decoded = json_decode($sourceJSON, $asArray);
@@ -184,14 +140,13 @@ class FHIROperationOutcomeTest extends TestCase
                 $e
             );
         }
-        $this->assertInstanceOf('\HL7\FHIR\R4\FHIRResource\FHIRBundle', $bundle);
+        $this->assertInstanceOf(FHIRBundle::class, $bundle);
         $entry = $bundle->getEntry();
         if (0 === count($entry)) {
             $this->markTestSkipped(sprintf(
-                'Provided test endpoint "http://hapi.fhir.org/baseR4" does not have any "OperationOutcome" entries to test against (returned xml: %s)',
+                'Provided test endpoint "https://hapi.fhir.org/baseR4" does not have any "OperationOutcome" entries to test against (returned xml: %s)',
                 $sourceXML
             ));
-            return;
         }
         $this->assertCount(1, $entry);
         $resource = $entry[0]->getResource();
@@ -210,7 +165,7 @@ class FHIROperationOutcomeTest extends TestCase
                 $e
             );
         }
-        $this->assertInstanceOf('\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIROperationOutcome', $type);
+        $this->assertInstanceOf(FHIROperationOutcome::class, $type);
         $typeElement = $type->xmlSerialize();
         $this->assertEquals($resourceXML, $typeElement->ownerDocument->saveXML($typeElement));
         $bundleElement = $bundle->xmlSerialize();
@@ -220,7 +175,7 @@ class FHIROperationOutcomeTest extends TestCase
     public function testJSON(): void
     {
         $sourceJSON = $this->fetchResource('json');
-        $decoded = $this->decodeJSON($sourceJSON, true);
+        $decoded = $this->decodeJson($sourceJSON, true);
         try {
             $bundle = new FHIRBundle($decoded);
         } catch(\Exception $e) {
@@ -237,15 +192,14 @@ class FHIROperationOutcomeTest extends TestCase
         $entry = $bundle->getEntry();
         if (0 === count($entry)) {
             $this->markTestSkipped(sprintf(
-                'Provided test endpoint "http://hapi.fhir.org/baseR4" does not have any OperationOutcome" entries to test against (returned json: %s)',
+                'Provided test endpoint "https://hapi.fhir.org/baseR4" does not have any OperationOutcome" entries to test against (returned json: %s)',
                 $sourceJSON
             ));
-            return;
         }
 
         $reEncoded = json_encode($bundle);
         try {
-            $this->assertEquals($decoded, $this->decodeJSON($reEncoded, true));
+            $this->assertEquals($decoded, $this->decodeJson($reEncoded, true));
         } catch (\Exception $e) {
             throw new AssertionFailedError(
                 sprintf(
@@ -279,10 +233,9 @@ class FHIROperationOutcomeTest extends TestCase
         $entry = $bundle->getEntry();
         if (0 === count($entry)) {
             $this->markTestSkipped(sprintf(
-                'Provided test endpoint "http://hapi.fhir.org/baseR4" does not have any OperationOutcome" entries to test against (returned XML: %s)',
+                'Provided test endpoint "https://hapi.fhir.org/baseR4" does not have any OperationOutcome" entries to test against (returned XML: %s)',
                 $sourceXML
             ));
-            return;
         }
         $errs = $bundle->_getValidationErrors();
         try {
@@ -295,7 +248,7 @@ class FHIROperationOutcomeTest extends TestCase
     public function testValidationJSON(): void
     {
         $sourceJSON = $this->fetchResource('json');
-        $decoded = $this->decodeJSON($sourceJSON, true);
+        $decoded = $this->decodeJson($sourceJSON, true);
         try {
             $bundle = new FHIRBundle($decoded);
         } catch(\Exception $e) {
@@ -312,115 +265,15 @@ class FHIROperationOutcomeTest extends TestCase
         $entry = $bundle->getEntry();
         if (0 === count($entry)) {
             $this->markTestSkipped(sprintf(
-                'Provided test endpoint "http://hapi.fhir.org/baseR4" does not have any OperationOutcome" entries to test against (returned json: %s)',
+                'Provided test endpoint "https://hapi.fhir.org/baseR4" does not have any OperationOutcome" entries to test against (returned json: %s)',
                 $sourceJSON
             ));
-            return;
         }
         $errs = $bundle->_getValidationErrors();
         try {
             $this->assertCount(0, $errs);
         } catch (\Exception $e) {
             $this->markTestSkipped(sprintf('Validation errors seen: %s', json_encode($errs, JSON_PRETTY_PRINT)));
-        }
-    }
-
-    public function testFHIRValidationXML(): void
-    {
-        $sourceXML = $this->fetchResource('xml');
-        try {
-            $bundle = FHIRBundle::xmlUnserialize($sourceXML);
-        } catch(\Exception $e) {
-            throw new AssertionFailedError(
-                sprintf(
-                    'Error building type "Bundle" from XML: %s; Returned XML: %s',
-                    $e->getMessage(),
-                    $sourceXML
-                ),
-                $e->getCode(),
-                $e
-            );
-        }
-        $entry = $bundle->getEntry();
-        if (0 === count($entry)) {
-            $this->markTestSkipped(sprintf(
-                'Provided test endpoint "http://hapi.fhir.org/baseR4" does not have any OperationOutcome" entries to test against (returned xml: %s)',
-                $sourceXML
-            ));
-            return;
-        }
-        $resource = $entry[0]->getResource();
-        $fname = PHPFHIR_OUTPUT_TMP_DIR . '/' . $resource->_getFHIRTypeName() . '-v4.0.1.xml';
-        file_put_contents($fname, $bundle->xmlSerialize()->ownerDocument->saveXML());
-        $this->assertFileExists($fname);
-
-        [$code, $output, $onlyWarn] = $this->_runFHIRValidationJAR($fname);
-
-        if ($onlyWarn) {
-            $this->markTestSkipped(sprintf(
-                'FHIR validation failed with nonsense code error: %s',
-                implode("\n", $output)
-            ));
-        } else {
-            $this->assertEquals(
-                0,
-                $code,
-                sprintf(
-                    "Expected exit code 0, saw %d:\n%s",
-                    $code,
-                    implode("\n", $output)
-                )
-            );
-        }
-    }
-
-    public function testFHIRValidationJSON()
-    {
-        $sourceJSON = $this->fetchResource('json');
-        $decoded = $this->decodeJSON($sourceJSON, true);
-        try {
-            $bundle = new FHIRBundle($decoded);
-        } catch(\Exception $e) {
-            throw new AssertionFailedError(
-                sprintf(
-                    'Error building type "Bundle" from JSON: %s; Returned JSON: %s',
-                    $e->getMessage(),
-                    $sourceJSON
-                ),
-                $e->getCode(),
-                $e
-            );
-        }
-        $entry = $bundle->getEntry();
-        if (0 === count($entry)) {
-            $this->markTestSkipped(sprintf(
-                'Provided test endpoint "http://hapi.fhir.org/baseR4" does not have any OperationOutcome" entries to test against (returned json: %s)',
-                $sourceJSON
-            ));
-            return;
-        }
-        $resource = $entry[0]->getResource();
-        $fname = PHPFHIR_OUTPUT_TMP_DIR . '/' . $resource->_getFHIRTypeName() . '-v4.0.1.json';
-        file_put_contents($fname, json_encode($bundle));
-        $this->assertFileExists($fname);
-
-        [$code, $output, $onlyWarn] = $this->_runFHIRValidationJAR($fname);
-
-        if ($onlyWarn) {
-            $this->markTestSkipped(sprintf(
-                'FHIR validation failed with nonsense code error: %s',
-                implode("\n", $output)
-            ));
-        } else {
-            $this->assertEquals(
-                0,
-                $code,
-                sprintf(
-                    "Expected exit code 0, saw %d:\n%s",
-                    $code,
-                    implode("\n", $output)
-                )
-            );
         }
     }
 }

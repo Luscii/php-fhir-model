@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRExtension;
@@ -69,9 +70,13 @@ use HL7\FHIR\R4\FHIRElement\FHIRIdentifier;
 use HL7\FHIR\R4\FHIRElement\FHIRPositiveInt;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
+use HL7\FHIR\R4\FHIRPositiveIntPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A provider issued list of professional services and products which have been
@@ -85,6 +90,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CLAIM_DOT_INSURANCE;
+
     const FIELD_SEQUENCE = 'sequence';
     const FIELD_SEQUENCE_EXT = '_sequence';
     const FIELD_FOCAL = 'focal';
@@ -97,9 +103,6 @@ class FHIRClaimInsurance extends FHIRBackboneElement
     const FIELD_PRE_AUTH_REF_EXT = '_preAuthRef';
     const FIELD_CLAIM_RESPONSE = 'claimResponse';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -108,10 +111,9 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * A number to uniquely identify insurance entries and provide a sequence of
      * coverages to convey coordination of benefit order.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $sequence = null;
-
+    protected null|FHIRPositiveInt $sequence = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -119,10 +121,9 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * A flag to indicate that this Coverage is to be used for adjudication of this
      * claim when set to true.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $focal = null;
-
+    protected null|FHIRBoolean $focal = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -134,8 +135,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $identifier = null;
-
+    protected null|FHIRIdentifier $identifier = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -147,8 +147,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $coverage = null;
-
+    protected null|FHIRReference $coverage = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -157,10 +156,9 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * A business agreement number established between the provider and the insurer for
      * special business processing purposes.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $businessArrangement = null;
-
+    protected null|FHIRString $businessArrangement = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -170,10 +168,9 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * quoted on subsequent claims containing services or products related to the prior
      * authorization.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $preAuthRef = [];
-
+    protected null|array $preAuthRef = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -184,28 +181,23 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $claimResponse = null;
+    protected null|FHIRReference $claimResponse = null;
 
     /**
      * Validation map for fields in type Claim.Insurance
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRClaimInsurance Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRClaimInsurance::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_SEQUENCE]) || isset($data[self::FIELD_SEQUENCE_EXT])) {
@@ -306,24 +298,13 @@ class FHIRClaimInsurance extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ClaimInsurance{$xmlns}></ClaimInsurance>";
     }
 
     /**
@@ -334,9 +315,9 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * A number to uniquely identify insurance entries and provide a sequence of
      * coverages to convey coordination of benefit order.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getSequence(): ?FHIRPositiveInt
+    public function getSequence(): null|FHIRPositiveInt
     {
         return $this->sequence;
     }
@@ -349,10 +330,10 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * A number to uniquely identify insurance entries and provide a sequence of
      * coverages to convey coordination of benefit order.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $sequence
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $sequence
      * @return static
      */
-    public function setSequence($sequence = null): object
+    public function setSequence(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $sequence = null): self
     {
         if (null !== $sequence && !($sequence instanceof FHIRPositiveInt)) {
             $sequence = new FHIRPositiveInt($sequence);
@@ -369,9 +350,9 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * A flag to indicate that this Coverage is to be used for adjudication of this
      * claim when set to true.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getFocal(): ?FHIRBoolean
+    public function getFocal(): null|FHIRBoolean
     {
         return $this->focal;
     }
@@ -383,10 +364,10 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * A flag to indicate that this Coverage is to be used for adjudication of this
      * claim when set to true.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $focal
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $focal
      * @return static
      */
-    public function setFocal($focal = null): object
+    public function setFocal(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $focal = null): self
     {
         if (null !== $focal && !($focal instanceof FHIRBoolean)) {
             $focal = new FHIRBoolean($focal);
@@ -407,7 +388,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getIdentifier(): ?FHIRIdentifier
+    public function getIdentifier(): null|FHIRIdentifier
     {
         return $this->identifier;
     }
@@ -424,8 +405,11 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function setIdentifier(?FHIRIdentifier $identifier = null): object
+    public function setIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->identifier, $identifier);
         $this->identifier = $identifier;
         return $this;
@@ -442,7 +426,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getCoverage(): ?FHIRReference
+    public function getCoverage(): null|FHIRReference
     {
         return $this->coverage;
     }
@@ -459,8 +443,11 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $coverage
      * @return static
      */
-    public function setCoverage(?FHIRReference $coverage = null): object
+    public function setCoverage(null|FHIRReference $coverage = null): self
     {
+        if (null === $coverage) {
+            $coverage = new FHIRReference();
+        }
         $this->_trackValueSet($this->coverage, $coverage);
         $this->coverage = $coverage;
         return $this;
@@ -474,9 +461,9 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * A business agreement number established between the provider and the insurer for
      * special business processing purposes.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getBusinessArrangement(): ?FHIRString
+    public function getBusinessArrangement(): null|FHIRString
     {
         return $this->businessArrangement;
     }
@@ -489,10 +476,10 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * A business agreement number established between the provider and the insurer for
      * special business processing purposes.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $businessArrangement
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $businessArrangement
      * @return static
      */
-    public function setBusinessArrangement($businessArrangement = null): object
+    public function setBusinessArrangement(null|string|FHIRStringPrimitive|FHIRString $businessArrangement = null): self
     {
         if (null !== $businessArrangement && !($businessArrangement instanceof FHIRString)) {
             $businessArrangement = new FHIRString($businessArrangement);
@@ -511,9 +498,9 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * quoted on subsequent claims containing services or products related to the prior
      * authorization.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getPreAuthRef(): ?array
+    public function getPreAuthRef(): null|array
     {
         return $this->preAuthRef;
     }
@@ -527,10 +514,10 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * quoted on subsequent claims containing services or products related to the prior
      * authorization.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $preAuthRef
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $preAuthRef
      * @return static
      */
-    public function addPreAuthRef($preAuthRef = null): object
+    public function addPreAuthRef(null|string|FHIRStringPrimitive|FHIRString $preAuthRef = null): self
     {
         if (null !== $preAuthRef && !($preAuthRef instanceof FHIRString)) {
             $preAuthRef = new FHIRString($preAuthRef);
@@ -552,7 +539,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $preAuthRef
      * @return static
      */
-    public function setPreAuthRef(array $preAuthRef = []): object
+    public function setPreAuthRef(array $preAuthRef = []): self
     {
         if ([] !== $this->preAuthRef) {
             $this->_trackValuesRemoved(count($this->preAuthRef));
@@ -581,7 +568,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getClaimResponse(): ?FHIRReference
+    public function getClaimResponse(): null|FHIRReference
     {
         return $this->claimResponse;
     }
@@ -597,8 +584,11 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $claimResponse
      * @return static
      */
-    public function setClaimResponse(?FHIRReference $claimResponse = null): object
+    public function setClaimResponse(null|FHIRReference $claimResponse = null): self
     {
+        if (null === $claimResponse) {
+            $claimResponse = new FHIRReference();
+        }
         $this->_trackValueSet($this->claimResponse, $claimResponse);
         $this->claimResponse = $claimResponse;
         return $this;
@@ -612,7 +602,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -788,36 +778,48 @@ class FHIRClaimInsurance extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimInsurance $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimInsurance
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRClaimInsurance::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRClaimInsurance::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRClaimInsurance(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRClaimInsurance)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRClaimInsurance)) {
             throw new \RuntimeException(sprintf(
-                'FHIRClaimInsurance::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim\FHIRClaimInsurance or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -875,12 +877,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_PRE_AUTH_REF);
         if (null !== $n) {
-            $pt = $type->getPreAuthRef();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addPreAuthRef($n->nodeValue);
-            }
+            $type->addPreAuthRef($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -896,17 +893,25 @@ class FHIRClaimInsurance extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ClaimInsurance'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getSequence())) {
@@ -955,7 +960,7 @@ class FHIRClaimInsurance extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getSequence())) {
@@ -1024,7 +1029,6 @@ class FHIRClaimInsurance extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

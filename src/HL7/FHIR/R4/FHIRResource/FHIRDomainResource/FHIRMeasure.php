@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDatePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureGroup;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureSupplementalData;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
@@ -84,11 +89,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUsageContext;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The Measure resource provides the definition of a quality measure.
@@ -101,6 +113,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MEASURE;
+
     const FIELD_URL = 'url';
     const FIELD_URL_EXT = '_url';
     const FIELD_IDENTIFIER = 'identifier';
@@ -167,9 +180,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     const FIELD_GROUP = 'group';
     const FIELD_SUPPLEMENTAL_DATA = 'supplementalData';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -182,10 +192,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * published. This URL can be the target of a canonical reference. It SHALL remain
      * the same when the measure is stored on different servers.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $url = null;
-
+    protected null|FHIRUri $url = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -198,8 +207,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -216,10 +224,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Support Service specification. Note that a version is required for
      * non-experimental active artifacts.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $version = null;
-
+    protected null|FHIRString $version = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -229,10 +236,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * an identifier for the module by machine processing applications such as code
      * generation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -240,10 +246,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A short, descriptive, user-friendly title for the measure.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $title = null;
-
+    protected null|FHIRString $title = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -252,10 +257,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * An explanatory or alternate title for the measure giving additional information
      * about its content.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $subtitle = null;
-
+    protected null|FHIRString $subtitle = null;
     /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -263,8 +267,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    protected ?FHIRPublicationStatus $status = null;
-
+    protected null|FHIRPublicationStatus $status = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -273,10 +276,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * (or education/evaluation/marketing) and is not intended to be used for genuine
      * usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $experimental = null;
-
+    protected null|FHIRBoolean $experimental = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -288,8 +290,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $subjectCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $subjectCodeableConcept = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -300,8 +301,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $subjectReference = null;
-
+    protected null|FHIRReference $subjectReference = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -315,10 +315,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * changes. In addition, it should change when the substantive content of the
      * measure changes.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -326,10 +325,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * The name of the organization or individual that published the measure.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $publisher = null;
-
+    protected null|FHIRString $publisher = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -340,8 +338,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $contact = [];
-
+    protected null|array $contact = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -354,10 +351,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A free text natural language description of the measure from a consumer's
      * perspective.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $description = null;
-
+    protected null|FHIRMarkdown $description = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -373,8 +369,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    protected ?array $useContext = [];
-
+    protected null|array $useContext = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -385,8 +380,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $jurisdiction = [];
-
+    protected null|array $jurisdiction = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -399,10 +393,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Explanation of why this measure is needed and why it has been designed as it
      * has.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $purpose = null;
-
+    protected null|FHIRMarkdown $purpose = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -410,10 +403,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A detailed description, from a clinical perspective, of how the measure is used.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $usage = null;
-
+    protected null|FHIRString $usage = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -427,10 +419,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * statements are generally legal restrictions on the use and publishing of the
      * measure.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $copyright = null;
-
+    protected null|FHIRMarkdown $copyright = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -440,10 +431,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $approvalDate = null;
-
+    protected null|FHIRDate $approvalDate = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -453,10 +443,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $lastReviewDate = null;
-
+    protected null|FHIRDate $lastReviewDate = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -467,8 +456,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $effectivePeriod = null;
-
+    protected null|FHIRPeriod $effectivePeriod = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -481,8 +469,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $topic = [];
-
+    protected null|array $topic = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -493,8 +480,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $author = [];
-
+    protected null|array $author = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -505,8 +491,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $editor = [];
-
+    protected null|array $editor = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -517,8 +502,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $reviewer = [];
-
+    protected null|array $reviewer = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -529,8 +513,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $endorser = [];
-
+    protected null|array $endorser = [];
     /**
      * Related artifacts such as additional documentation, justification, or
      * bibliographic references.
@@ -542,8 +525,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact[]
      */
-    protected ?array $relatedArtifact = [];
-
+    protected null|array $relatedArtifact = [];
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -553,10 +535,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A reference to a Library resource containing the formal logic used by the
      * measure.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $library = [];
-
+    protected null|array $library = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -569,10 +550,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Notices and disclaimers regarding the use of the measure or related to
      * intellectual property (such as code systems) referenced by the measure.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $disclaimer = null;
-
+    protected null|FHIRMarkdown $disclaimer = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -585,8 +565,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $scoring = null;
-
+    protected null|FHIRCodeableConcept $scoring = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -598,8 +577,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $compositeScoring = null;
-
+    protected null|FHIRCodeableConcept $compositeScoring = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -611,8 +589,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $type = [];
-
+    protected null|array $type = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -622,10 +599,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * for the measure and how they may be accounted for when computing and reporting
      * measure results.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $riskAdjustment = null;
-
+    protected null|FHIRString $riskAdjustment = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -634,10 +610,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Describes how to combine the information calculated, based on logic in each of
      * several populations, into one summarized result.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $rateAggregation = null;
-
+    protected null|FHIRString $rateAggregation = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -651,10 +626,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * statements pertaining to importance criterion: impact, gap in care, and
      * evidence.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $rationale = null;
-
+    protected null|FHIRMarkdown $rationale = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -667,10 +641,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Provides a summary of relevant clinical guidelines or other clinical
      * recommendations supporting the measure.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $clinicalRecommendationStatement = null;
-
+    protected null|FHIRMarkdown $clinicalRecommendationStatement = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -683,8 +656,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $improvementNotation = null;
-
+    protected null|FHIRCodeableConcept $improvementNotation = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -696,10 +668,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Provides a description of an individual term used within the measure.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown[]
      */
-    protected ?array $definition = [];
-
+    protected null|array $definition = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -712,10 +683,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Additional guidance for the measure including how it can be used in a clinical
      * context, and the intent of the measure.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $guidance = null;
-
+    protected null|FHIRMarkdown $guidance = null;
     /**
      * The Measure resource provides the definition of a quality measure.
      *
@@ -723,8 +693,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureGroup[]
      */
-    protected ?array $group = [];
-
+    protected null|array $group = [];
     /**
      * The Measure resource provides the definition of a quality measure.
      *
@@ -734,28 +703,23 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureSupplementalData[]
      */
-    protected ?array $supplementalData = [];
+    protected null|array $supplementalData = [];
 
     /**
      * Validation map for fields in type Measure
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRMeasure Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMeasure::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_URL]) || isset($data[self::FIELD_URL_EXT])) {
@@ -1411,6 +1375,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
     }
 
+
     /**
      * @return string
      */
@@ -1419,17 +1384,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Measure{$xmlns}></Measure>";
-    }
     /**
      * @return string
      */
@@ -1451,9 +1405,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * published. This URL can be the target of a canonical reference. It SHALL remain
      * the same when the measure is stored on different servers.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getUrl(): ?FHIRUri
+    public function getUrl(): null|FHIRUri
     {
         return $this->url;
     }
@@ -1470,10 +1424,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * published. This URL can be the target of a canonical reference. It SHALL remain
      * the same when the measure is stored on different servers.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
      * @return static
      */
-    public function setUrl($url = null): object
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
@@ -1495,7 +1449,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -1513,8 +1467,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -1533,7 +1490,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -1568,9 +1525,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Support Service specification. Note that a version is required for
      * non-experimental active artifacts.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getVersion(): ?FHIRString
+    public function getVersion(): null|FHIRString
     {
         return $this->version;
     }
@@ -1591,10 +1548,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Support Service specification. Note that a version is required for
      * non-experimental active artifacts.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
      * @return static
      */
-    public function setVersion($version = null): object
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
@@ -1613,9 +1570,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * an identifier for the module by machine processing applications such as code
      * generation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -1629,10 +1586,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * an identifier for the module by machine processing applications such as code
      * generation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -1649,9 +1606,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A short, descriptive, user-friendly title for the measure.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTitle(): ?FHIRString
+    public function getTitle(): null|FHIRString
     {
         return $this->title;
     }
@@ -1663,10 +1620,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A short, descriptive, user-friendly title for the measure.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
      * @return static
      */
-    public function setTitle($title = null): object
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
@@ -1684,9 +1641,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * An explanatory or alternate title for the measure giving additional information
      * about its content.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getSubtitle(): ?FHIRString
+    public function getSubtitle(): null|FHIRString
     {
         return $this->subtitle;
     }
@@ -1699,10 +1656,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * An explanatory or alternate title for the measure giving additional information
      * about its content.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $subtitle
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $subtitle
      * @return static
      */
-    public function setSubtitle($subtitle = null): object
+    public function setSubtitle(null|string|FHIRStringPrimitive|FHIRString $subtitle = null): self
     {
         if (null !== $subtitle && !($subtitle instanceof FHIRString)) {
             $subtitle = new FHIRString($subtitle);
@@ -1719,7 +1676,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    public function getStatus(): ?FHIRPublicationStatus
+    public function getStatus(): null|FHIRPublicationStatus
     {
         return $this->status;
     }
@@ -1732,8 +1689,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus $status
      * @return static
      */
-    public function setStatus(?FHIRPublicationStatus $status = null): object
+    public function setStatus(null|FHIRPublicationStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRPublicationStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -1747,9 +1707,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * (or education/evaluation/marketing) and is not intended to be used for genuine
      * usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getExperimental(): ?FHIRBoolean
+    public function getExperimental(): null|FHIRBoolean
     {
         return $this->experimental;
     }
@@ -1762,10 +1722,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * (or education/evaluation/marketing) and is not intended to be used for genuine
      * usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
      * @return static
      */
-    public function setExperimental($experimental = null): object
+    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null): self
     {
         if (null !== $experimental && !($experimental instanceof FHIRBoolean)) {
             $experimental = new FHIRBoolean($experimental);
@@ -1786,7 +1746,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getSubjectCodeableConcept(): ?FHIRCodeableConcept
+    public function getSubjectCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->subjectCodeableConcept;
     }
@@ -1803,8 +1763,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $subjectCodeableConcept
      * @return static
      */
-    public function setSubjectCodeableConcept(?FHIRCodeableConcept $subjectCodeableConcept = null): object
+    public function setSubjectCodeableConcept(null|FHIRCodeableConcept $subjectCodeableConcept = null): self
     {
+        if (null === $subjectCodeableConcept) {
+            $subjectCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->subjectCodeableConcept, $subjectCodeableConcept);
         $this->subjectCodeableConcept = $subjectCodeableConcept;
         return $this;
@@ -1820,7 +1783,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubjectReference(): ?FHIRReference
+    public function getSubjectReference(): null|FHIRReference
     {
         return $this->subjectReference;
     }
@@ -1836,8 +1799,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $subjectReference
      * @return static
      */
-    public function setSubjectReference(?FHIRReference $subjectReference = null): object
+    public function setSubjectReference(null|FHIRReference $subjectReference = null): self
     {
+        if (null === $subjectReference) {
+            $subjectReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->subjectReference, $subjectReference);
         $this->subjectReference = $subjectReference;
         return $this;
@@ -1856,9 +1822,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * changes. In addition, it should change when the substantive content of the
      * measure changes.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDate(): ?FHIRDateTime
+    public function getDate(): null|FHIRDateTime
     {
         return $this->date;
     }
@@ -1876,10 +1842,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * changes. In addition, it should change when the substantive content of the
      * measure changes.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
      * @return static
      */
-    public function setDate($date = null): object
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
@@ -1896,9 +1862,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * The name of the organization or individual that published the measure.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPublisher(): ?FHIRString
+    public function getPublisher(): null|FHIRString
     {
         return $this->publisher;
     }
@@ -1910,10 +1876,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * The name of the organization or individual that published the measure.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
      * @return static
      */
-    public function setPublisher($publisher = null): object
+    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null): self
     {
         if (null !== $publisher && !($publisher instanceof FHIRString)) {
             $publisher = new FHIRString($publisher);
@@ -1933,7 +1899,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getContact(): ?array
+    public function getContact(): null|array
     {
         return $this->contact;
     }
@@ -1949,8 +1915,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $contact
      * @return static
      */
-    public function addContact(?FHIRContactDetail $contact = null): object
+    public function addContact(null|FHIRContactDetail $contact = null): self
     {
+        if (null === $contact) {
+            $contact = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
         return $this;
@@ -1967,7 +1936,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $contact
      * @return static
      */
-    public function setContact(array $contact = []): object
+    public function setContact(array $contact = []): self
     {
         if ([] !== $this->contact) {
             $this->_trackValuesRemoved(count($this->contact));
@@ -1998,9 +1967,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A free text natural language description of the measure from a consumer's
      * perspective.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDescription(): ?FHIRMarkdown
+    public function getDescription(): null|FHIRMarkdown
     {
         return $this->description;
     }
@@ -2017,10 +1986,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A free text natural language description of the measure from a consumer's
      * perspective.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
@@ -2045,7 +2014,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    public function getUseContext(): ?array
+    public function getUseContext(): null|array
     {
         return $this->useContext;
     }
@@ -2066,8 +2035,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $useContext
      * @return static
      */
-    public function addUseContext(?FHIRUsageContext $useContext = null): object
+    public function addUseContext(null|FHIRUsageContext $useContext = null): self
     {
+        if (null === $useContext) {
+            $useContext = new FHIRUsageContext();
+        }
         $this->_trackValueAdded();
         $this->useContext[] = $useContext;
         return $this;
@@ -2089,7 +2061,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUsageContext[] $useContext
      * @return static
      */
-    public function setUseContext(array $useContext = []): object
+    public function setUseContext(array $useContext = []): self
     {
         if ([] !== $this->useContext) {
             $this->_trackValuesRemoved(count($this->useContext));
@@ -2118,7 +2090,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getJurisdiction(): ?array
+    public function getJurisdiction(): null|array
     {
         return $this->jurisdiction;
     }
@@ -2134,8 +2106,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $jurisdiction
      * @return static
      */
-    public function addJurisdiction(?FHIRCodeableConcept $jurisdiction = null): object
+    public function addJurisdiction(null|FHIRCodeableConcept $jurisdiction = null): self
     {
+        if (null === $jurisdiction) {
+            $jurisdiction = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
         return $this;
@@ -2152,7 +2127,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $jurisdiction
      * @return static
      */
-    public function setJurisdiction(array $jurisdiction = []): object
+    public function setJurisdiction(array $jurisdiction = []): self
     {
         if ([] !== $this->jurisdiction) {
             $this->_trackValuesRemoved(count($this->jurisdiction));
@@ -2183,9 +2158,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Explanation of why this measure is needed and why it has been designed as it
      * has.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getPurpose(): ?FHIRMarkdown
+    public function getPurpose(): null|FHIRMarkdown
     {
         return $this->purpose;
     }
@@ -2202,10 +2177,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Explanation of why this measure is needed and why it has been designed as it
      * has.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
      * @return static
      */
-    public function setPurpose($purpose = null): object
+    public function setPurpose(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $purpose = null): self
     {
         if (null !== $purpose && !($purpose instanceof FHIRMarkdown)) {
             $purpose = new FHIRMarkdown($purpose);
@@ -2222,9 +2197,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A detailed description, from a clinical perspective, of how the measure is used.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getUsage(): ?FHIRString
+    public function getUsage(): null|FHIRString
     {
         return $this->usage;
     }
@@ -2236,10 +2211,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A detailed description, from a clinical perspective, of how the measure is used.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $usage
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $usage
      * @return static
      */
-    public function setUsage($usage = null): object
+    public function setUsage(null|string|FHIRStringPrimitive|FHIRString $usage = null): self
     {
         if (null !== $usage && !($usage instanceof FHIRString)) {
             $usage = new FHIRString($usage);
@@ -2262,9 +2237,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * statements are generally legal restrictions on the use and publishing of the
      * measure.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getCopyright(): ?FHIRMarkdown
+    public function getCopyright(): null|FHIRMarkdown
     {
         return $this->copyright;
     }
@@ -2282,10 +2257,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * statements are generally legal restrictions on the use and publishing of the
      * measure.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
      * @return static
      */
-    public function setCopyright($copyright = null): object
+    public function setCopyright(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $copyright = null): self
     {
         if (null !== $copyright && !($copyright instanceof FHIRMarkdown)) {
             $copyright = new FHIRMarkdown($copyright);
@@ -2304,9 +2279,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getApprovalDate(): ?FHIRDate
+    public function getApprovalDate(): null|FHIRDate
     {
         return $this->approvalDate;
     }
@@ -2320,10 +2295,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $approvalDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $approvalDate
      * @return static
      */
-    public function setApprovalDate($approvalDate = null): object
+    public function setApprovalDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $approvalDate = null): self
     {
         if (null !== $approvalDate && !($approvalDate instanceof FHIRDate)) {
             $approvalDate = new FHIRDate($approvalDate);
@@ -2342,9 +2317,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getLastReviewDate(): ?FHIRDate
+    public function getLastReviewDate(): null|FHIRDate
     {
         return $this->lastReviewDate;
     }
@@ -2358,10 +2333,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $lastReviewDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $lastReviewDate
      * @return static
      */
-    public function setLastReviewDate($lastReviewDate = null): object
+    public function setLastReviewDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $lastReviewDate = null): self
     {
         if (null !== $lastReviewDate && !($lastReviewDate instanceof FHIRDate)) {
             $lastReviewDate = new FHIRDate($lastReviewDate);
@@ -2381,7 +2356,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getEffectivePeriod(): ?FHIRPeriod
+    public function getEffectivePeriod(): null|FHIRPeriod
     {
         return $this->effectivePeriod;
     }
@@ -2397,8 +2372,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $effectivePeriod
      * @return static
      */
-    public function setEffectivePeriod(?FHIRPeriod $effectivePeriod = null): object
+    public function setEffectivePeriod(null|FHIRPeriod $effectivePeriod = null): self
     {
+        if (null === $effectivePeriod) {
+            $effectivePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->effectivePeriod, $effectivePeriod);
         $this->effectivePeriod = $effectivePeriod;
         return $this;
@@ -2416,7 +2394,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getTopic(): ?array
+    public function getTopic(): null|array
     {
         return $this->topic;
     }
@@ -2434,8 +2412,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $topic
      * @return static
      */
-    public function addTopic(?FHIRCodeableConcept $topic = null): object
+    public function addTopic(null|FHIRCodeableConcept $topic = null): self
     {
+        if (null === $topic) {
+            $topic = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->topic[] = $topic;
         return $this;
@@ -2454,7 +2435,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $topic
      * @return static
      */
-    public function setTopic(array $topic = []): object
+    public function setTopic(array $topic = []): self
     {
         if ([] !== $this->topic) {
             $this->_trackValuesRemoved(count($this->topic));
@@ -2483,7 +2464,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getAuthor(): ?array
+    public function getAuthor(): null|array
     {
         return $this->author;
     }
@@ -2499,8 +2480,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $author
      * @return static
      */
-    public function addAuthor(?FHIRContactDetail $author = null): object
+    public function addAuthor(null|FHIRContactDetail $author = null): self
     {
+        if (null === $author) {
+            $author = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->author[] = $author;
         return $this;
@@ -2517,7 +2501,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $author
      * @return static
      */
-    public function setAuthor(array $author = []): object
+    public function setAuthor(array $author = []): self
     {
         if ([] !== $this->author) {
             $this->_trackValuesRemoved(count($this->author));
@@ -2546,7 +2530,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getEditor(): ?array
+    public function getEditor(): null|array
     {
         return $this->editor;
     }
@@ -2562,8 +2546,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $editor
      * @return static
      */
-    public function addEditor(?FHIRContactDetail $editor = null): object
+    public function addEditor(null|FHIRContactDetail $editor = null): self
     {
+        if (null === $editor) {
+            $editor = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->editor[] = $editor;
         return $this;
@@ -2580,7 +2567,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $editor
      * @return static
      */
-    public function setEditor(array $editor = []): object
+    public function setEditor(array $editor = []): self
     {
         if ([] !== $this->editor) {
             $this->_trackValuesRemoved(count($this->editor));
@@ -2609,7 +2596,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getReviewer(): ?array
+    public function getReviewer(): null|array
     {
         return $this->reviewer;
     }
@@ -2625,8 +2612,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $reviewer
      * @return static
      */
-    public function addReviewer(?FHIRContactDetail $reviewer = null): object
+    public function addReviewer(null|FHIRContactDetail $reviewer = null): self
     {
+        if (null === $reviewer) {
+            $reviewer = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->reviewer[] = $reviewer;
         return $this;
@@ -2643,7 +2633,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $reviewer
      * @return static
      */
-    public function setReviewer(array $reviewer = []): object
+    public function setReviewer(array $reviewer = []): self
     {
         if ([] !== $this->reviewer) {
             $this->_trackValuesRemoved(count($this->reviewer));
@@ -2672,7 +2662,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getEndorser(): ?array
+    public function getEndorser(): null|array
     {
         return $this->endorser;
     }
@@ -2688,8 +2678,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $endorser
      * @return static
      */
-    public function addEndorser(?FHIRContactDetail $endorser = null): object
+    public function addEndorser(null|FHIRContactDetail $endorser = null): self
     {
+        if (null === $endorser) {
+            $endorser = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->endorser[] = $endorser;
         return $this;
@@ -2706,7 +2699,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $endorser
      * @return static
      */
-    public function setEndorser(array $endorser = []): object
+    public function setEndorser(array $endorser = []): self
     {
         if ([] !== $this->endorser) {
             $this->_trackValuesRemoved(count($this->endorser));
@@ -2736,7 +2729,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact[]
      */
-    public function getRelatedArtifact(): ?array
+    public function getRelatedArtifact(): null|array
     {
         return $this->relatedArtifact;
     }
@@ -2753,8 +2746,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact $relatedArtifact
      * @return static
      */
-    public function addRelatedArtifact(?FHIRRelatedArtifact $relatedArtifact = null): object
+    public function addRelatedArtifact(null|FHIRRelatedArtifact $relatedArtifact = null): self
     {
+        if (null === $relatedArtifact) {
+            $relatedArtifact = new FHIRRelatedArtifact();
+        }
         $this->_trackValueAdded();
         $this->relatedArtifact[] = $relatedArtifact;
         return $this;
@@ -2772,7 +2768,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact[] $relatedArtifact
      * @return static
      */
-    public function setRelatedArtifact(array $relatedArtifact = []): object
+    public function setRelatedArtifact(array $relatedArtifact = []): self
     {
         if ([] !== $this->relatedArtifact) {
             $this->_trackValuesRemoved(count($this->relatedArtifact));
@@ -2800,9 +2796,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A reference to a Library resource containing the formal logic used by the
      * measure.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getLibrary(): ?array
+    public function getLibrary(): null|array
     {
         return $this->library;
     }
@@ -2816,10 +2812,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A reference to a Library resource containing the formal logic used by the
      * measure.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $library
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $library
      * @return static
      */
-    public function addLibrary($library = null): object
+    public function addLibrary(null|string|FHIRCanonicalPrimitive|FHIRCanonical $library = null): self
     {
         if (null !== $library && !($library instanceof FHIRCanonical)) {
             $library = new FHIRCanonical($library);
@@ -2841,7 +2837,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $library
      * @return static
      */
-    public function setLibrary(array $library = []): object
+    public function setLibrary(array $library = []): self
     {
         if ([] !== $this->library) {
             $this->_trackValuesRemoved(count($this->library));
@@ -2872,9 +2868,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Notices and disclaimers regarding the use of the measure or related to
      * intellectual property (such as code systems) referenced by the measure.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDisclaimer(): ?FHIRMarkdown
+    public function getDisclaimer(): null|FHIRMarkdown
     {
         return $this->disclaimer;
     }
@@ -2891,10 +2887,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Notices and disclaimers regarding the use of the measure or related to
      * intellectual property (such as code systems) referenced by the measure.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $disclaimer
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $disclaimer
      * @return static
      */
-    public function setDisclaimer($disclaimer = null): object
+    public function setDisclaimer(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $disclaimer = null): self
     {
         if (null !== $disclaimer && !($disclaimer instanceof FHIRMarkdown)) {
             $disclaimer = new FHIRMarkdown($disclaimer);
@@ -2916,7 +2912,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getScoring(): ?FHIRCodeableConcept
+    public function getScoring(): null|FHIRCodeableConcept
     {
         return $this->scoring;
     }
@@ -2934,8 +2930,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $scoring
      * @return static
      */
-    public function setScoring(?FHIRCodeableConcept $scoring = null): object
+    public function setScoring(null|FHIRCodeableConcept $scoring = null): self
     {
+        if (null === $scoring) {
+            $scoring = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->scoring, $scoring);
         $this->scoring = $scoring;
         return $this;
@@ -2952,7 +2951,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getCompositeScoring(): ?FHIRCodeableConcept
+    public function getCompositeScoring(): null|FHIRCodeableConcept
     {
         return $this->compositeScoring;
     }
@@ -2969,8 +2968,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $compositeScoring
      * @return static
      */
-    public function setCompositeScoring(?FHIRCodeableConcept $compositeScoring = null): object
+    public function setCompositeScoring(null|FHIRCodeableConcept $compositeScoring = null): self
     {
+        if (null === $compositeScoring) {
+            $compositeScoring = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->compositeScoring, $compositeScoring);
         $this->compositeScoring = $compositeScoring;
         return $this;
@@ -2987,7 +2989,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getType(): ?array
+    public function getType(): null|array
     {
         return $this->type;
     }
@@ -3004,8 +3006,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function addType(?FHIRCodeableConcept $type = null): object
+    public function addType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->type[] = $type;
         return $this;
@@ -3023,7 +3028,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $type
      * @return static
      */
-    public function setType(array $type = []): object
+    public function setType(array $type = []): self
     {
         if ([] !== $this->type) {
             $this->_trackValuesRemoved(count($this->type));
@@ -3051,9 +3056,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * for the measure and how they may be accounted for when computing and reporting
      * measure results.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getRiskAdjustment(): ?FHIRString
+    public function getRiskAdjustment(): null|FHIRString
     {
         return $this->riskAdjustment;
     }
@@ -3067,10 +3072,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * for the measure and how they may be accounted for when computing and reporting
      * measure results.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $riskAdjustment
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $riskAdjustment
      * @return static
      */
-    public function setRiskAdjustment($riskAdjustment = null): object
+    public function setRiskAdjustment(null|string|FHIRStringPrimitive|FHIRString $riskAdjustment = null): self
     {
         if (null !== $riskAdjustment && !($riskAdjustment instanceof FHIRString)) {
             $riskAdjustment = new FHIRString($riskAdjustment);
@@ -3088,9 +3093,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Describes how to combine the information calculated, based on logic in each of
      * several populations, into one summarized result.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getRateAggregation(): ?FHIRString
+    public function getRateAggregation(): null|FHIRString
     {
         return $this->rateAggregation;
     }
@@ -3103,10 +3108,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Describes how to combine the information calculated, based on logic in each of
      * several populations, into one summarized result.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $rateAggregation
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $rateAggregation
      * @return static
      */
-    public function setRateAggregation($rateAggregation = null): object
+    public function setRateAggregation(null|string|FHIRStringPrimitive|FHIRString $rateAggregation = null): self
     {
         if (null !== $rateAggregation && !($rateAggregation instanceof FHIRString)) {
             $rateAggregation = new FHIRString($rateAggregation);
@@ -3129,9 +3134,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * statements pertaining to importance criterion: impact, gap in care, and
      * evidence.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getRationale(): ?FHIRMarkdown
+    public function getRationale(): null|FHIRMarkdown
     {
         return $this->rationale;
     }
@@ -3149,10 +3154,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * statements pertaining to importance criterion: impact, gap in care, and
      * evidence.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $rationale
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $rationale
      * @return static
      */
-    public function setRationale($rationale = null): object
+    public function setRationale(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $rationale = null): self
     {
         if (null !== $rationale && !($rationale instanceof FHIRMarkdown)) {
             $rationale = new FHIRMarkdown($rationale);
@@ -3174,9 +3179,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Provides a summary of relevant clinical guidelines or other clinical
      * recommendations supporting the measure.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getClinicalRecommendationStatement(): ?FHIRMarkdown
+    public function getClinicalRecommendationStatement(): null|FHIRMarkdown
     {
         return $this->clinicalRecommendationStatement;
     }
@@ -3193,10 +3198,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Provides a summary of relevant clinical guidelines or other clinical
      * recommendations supporting the measure.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $clinicalRecommendationStatement
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $clinicalRecommendationStatement
      * @return static
      */
-    public function setClinicalRecommendationStatement($clinicalRecommendationStatement = null): object
+    public function setClinicalRecommendationStatement(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $clinicalRecommendationStatement = null): self
     {
         if (null !== $clinicalRecommendationStatement && !($clinicalRecommendationStatement instanceof FHIRMarkdown)) {
             $clinicalRecommendationStatement = new FHIRMarkdown($clinicalRecommendationStatement);
@@ -3218,7 +3223,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getImprovementNotation(): ?FHIRCodeableConcept
+    public function getImprovementNotation(): null|FHIRCodeableConcept
     {
         return $this->improvementNotation;
     }
@@ -3236,8 +3241,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $improvementNotation
      * @return static
      */
-    public function setImprovementNotation(?FHIRCodeableConcept $improvementNotation = null): object
+    public function setImprovementNotation(null|FHIRCodeableConcept $improvementNotation = null): self
     {
+        if (null === $improvementNotation) {
+            $improvementNotation = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->improvementNotation, $improvementNotation);
         $this->improvementNotation = $improvementNotation;
         return $this;
@@ -3254,9 +3262,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Provides a description of an individual term used within the measure.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown[]
      */
-    public function getDefinition(): ?array
+    public function getDefinition(): null|array
     {
         return $this->definition;
     }
@@ -3272,10 +3280,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Provides a description of an individual term used within the measure.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown[] $definition
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $definition
      * @return static
      */
-    public function addDefinition($definition = null): object
+    public function addDefinition(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $definition = null): self
     {
         if (null !== $definition && !($definition instanceof FHIRMarkdown)) {
             $definition = new FHIRMarkdown($definition);
@@ -3299,7 +3307,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRMarkdown[] $definition
      * @return static
      */
-    public function setDefinition(array $definition = []): object
+    public function setDefinition(array $definition = []): self
     {
         if ([] !== $this->definition) {
             $this->_trackValuesRemoved(count($this->definition));
@@ -3330,9 +3338,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Additional guidance for the measure including how it can be used in a clinical
      * context, and the intent of the measure.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getGuidance(): ?FHIRMarkdown
+    public function getGuidance(): null|FHIRMarkdown
     {
         return $this->guidance;
     }
@@ -3349,10 +3357,10 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Additional guidance for the measure including how it can be used in a clinical
      * context, and the intent of the measure.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $guidance
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $guidance
      * @return static
      */
-    public function setGuidance($guidance = null): object
+    public function setGuidance(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $guidance = null): self
     {
         if (null !== $guidance && !($guidance instanceof FHIRMarkdown)) {
             $guidance = new FHIRMarkdown($guidance);
@@ -3369,7 +3377,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureGroup[]
      */
-    public function getGroup(): ?array
+    public function getGroup(): null|array
     {
         return $this->group;
     }
@@ -3382,8 +3390,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureGroup $group
      * @return static
      */
-    public function addGroup(?FHIRMeasureGroup $group = null): object
+    public function addGroup(null|FHIRMeasureGroup $group = null): self
     {
+        if (null === $group) {
+            $group = new FHIRMeasureGroup();
+        }
         $this->_trackValueAdded();
         $this->group[] = $group;
         return $this;
@@ -3397,7 +3408,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureGroup[] $group
      * @return static
      */
-    public function setGroup(array $group = []): object
+    public function setGroup(array $group = []): self
     {
         if ([] !== $this->group) {
             $this->_trackValuesRemoved(count($this->group));
@@ -3425,7 +3436,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureSupplementalData[]
      */
-    public function getSupplementalData(): ?array
+    public function getSupplementalData(): null|array
     {
         return $this->supplementalData;
     }
@@ -3440,8 +3451,11 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureSupplementalData $supplementalData
      * @return static
      */
-    public function addSupplementalData(?FHIRMeasureSupplementalData $supplementalData = null): object
+    public function addSupplementalData(null|FHIRMeasureSupplementalData $supplementalData = null): self
     {
+        if (null === $supplementalData) {
+            $supplementalData = new FHIRMeasureSupplementalData();
+        }
         $this->_trackValueAdded();
         $this->supplementalData[] = $supplementalData;
         return $this;
@@ -3457,7 +3471,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureSupplementalData[] $supplementalData
      * @return static
      */
-    public function setSupplementalData(array $supplementalData = []): object
+    public function setSupplementalData(array $supplementalData = []): self
     {
         if ([] !== $this->supplementalData) {
             $this->_trackValuesRemoved(count($this->supplementalData));
@@ -3484,7 +3498,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -4343,36 +4357,48 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMeasure $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMeasure
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMeasure::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMeasure::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRMeasure(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMeasure)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMeasure)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMeasure::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMeasure or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -4614,12 +4640,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $n = $element->attributes->getNamedItem(self::FIELD_LIBRARY);
         if (null !== $n) {
-            $pt = $type->getLibrary();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addLibrary($n->nodeValue);
-            }
+            $type->addLibrary($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_DISCLAIMER);
         if (null !== $n) {
@@ -4668,12 +4689,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $n = $element->attributes->getNamedItem(self::FIELD_DEFINITION);
         if (null !== $n) {
-            $pt = $type->getDefinition();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addDefinition($n->nodeValue);
-            }
+            $type->addDefinition($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_GUIDANCE);
         if (null !== $n) {
@@ -4716,17 +4732,25 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Measure'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getUrl())) {
@@ -5020,7 +5044,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getUrl())) {
@@ -5421,7 +5445,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
 
         return $out;
     }
-
 
     /**
      * @return string

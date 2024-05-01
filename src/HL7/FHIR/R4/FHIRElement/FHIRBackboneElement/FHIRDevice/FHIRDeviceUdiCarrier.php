@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDevice;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDevice;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBase64BinaryPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRBase64Binary;
 use HL7\FHIR\R4\FHIRElement\FHIRExtension;
@@ -69,8 +70,12 @@ use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUDIEntryType;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A type of a manufactured item that is used in the provision of healthcare
@@ -84,6 +89,7 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_DEVICE_DOT_UDI_CARRIER;
+
     const FIELD_DEVICE_IDENTIFIER = 'deviceIdentifier';
     const FIELD_DEVICE_IDENTIFIER_EXT = '_deviceIdentifier';
     const FIELD_ISSUER = 'issuer';
@@ -97,9 +103,6 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
     const FIELD_ENTRY_TYPE = 'entryType';
     const FIELD_ENTRY_TYPE_EXT = '_entryType';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -108,10 +111,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * The device identifier (DI) is a mandatory, fixed portion of a UDI that
      * identifies the labeler and the specific version or model of a device.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $deviceIdentifier = null;
-
+    protected null|FHIRString $deviceIdentifier = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -123,10 +125,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * http://hl7.org/fhir/NamingSystem/iccbba-blood-di, 4) ICCBA for other devices:
      * http://hl7.org/fhir/NamingSystem/iccbba-other-di.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $issuer = null;
-
+    protected null|FHIRUri $issuer = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -137,10 +138,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * appropriate repository uri as the system. For example, UDIs of devices managed
      * in the U.S. by the FDA, the value is http://hl7.org/fhir/NamingSystem/fda-udi.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $jurisdiction = null;
-
+    protected null|FHIRUri $jurisdiction = null;
     /**
      * A stream of bytes
      * A stream of bytes, base64 encoded
@@ -152,10 +152,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * in XML and the need to round-trip JSON data through XML, AIDC Formats *SHALL* be
      * base64 encoded.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    protected ?FHIRBase64Binary $carrierAIDC = null;
-
+    protected null|FHIRBase64Binary $carrierAIDC = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -164,10 +163,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * The full UDI carrier as the human readable form (HRF) representation of the
      * barcode string as printed on the packaging of the device.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $carrierHRF = null;
-
+    protected null|FHIRString $carrierHRF = null;
     /**
      * Codes to identify how UDI data was entered.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -176,28 +174,23 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUDIEntryType
      */
-    protected ?FHIRUDIEntryType $entryType = null;
+    protected null|FHIRUDIEntryType $entryType = null;
 
     /**
      * Validation map for fields in type Device.UdiCarrier
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRDeviceUdiCarrier Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRDeviceUdiCarrier::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_DEVICE_IDENTIFIER]) || isset($data[self::FIELD_DEVICE_IDENTIFIER_EXT])) {
@@ -292,24 +285,13 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<DeviceUdiCarrier{$xmlns}></DeviceUdiCarrier>";
     }
 
     /**
@@ -320,9 +302,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * The device identifier (DI) is a mandatory, fixed portion of a UDI that
      * identifies the labeler and the specific version or model of a device.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDeviceIdentifier(): ?FHIRString
+    public function getDeviceIdentifier(): null|FHIRString
     {
         return $this->deviceIdentifier;
     }
@@ -335,10 +317,10 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * The device identifier (DI) is a mandatory, fixed portion of a UDI that
      * identifies the labeler and the specific version or model of a device.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $deviceIdentifier
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $deviceIdentifier
      * @return static
      */
-    public function setDeviceIdentifier($deviceIdentifier = null): object
+    public function setDeviceIdentifier(null|string|FHIRStringPrimitive|FHIRString $deviceIdentifier = null): self
     {
         if (null !== $deviceIdentifier && !($deviceIdentifier instanceof FHIRString)) {
             $deviceIdentifier = new FHIRString($deviceIdentifier);
@@ -359,9 +341,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * http://hl7.org/fhir/NamingSystem/iccbba-blood-di, 4) ICCBA for other devices:
      * http://hl7.org/fhir/NamingSystem/iccbba-other-di.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getIssuer(): ?FHIRUri
+    public function getIssuer(): null|FHIRUri
     {
         return $this->issuer;
     }
@@ -377,10 +359,10 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * http://hl7.org/fhir/NamingSystem/iccbba-blood-di, 4) ICCBA for other devices:
      * http://hl7.org/fhir/NamingSystem/iccbba-other-di.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $issuer
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $issuer
      * @return static
      */
-    public function setIssuer($issuer = null): object
+    public function setIssuer(null|string|FHIRUriPrimitive|FHIRUri $issuer = null): self
     {
         if (null !== $issuer && !($issuer instanceof FHIRUri)) {
             $issuer = new FHIRUri($issuer);
@@ -400,9 +382,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * appropriate repository uri as the system. For example, UDIs of devices managed
      * in the U.S. by the FDA, the value is http://hl7.org/fhir/NamingSystem/fda-udi.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getJurisdiction(): ?FHIRUri
+    public function getJurisdiction(): null|FHIRUri
     {
         return $this->jurisdiction;
     }
@@ -417,10 +399,10 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * appropriate repository uri as the system. For example, UDIs of devices managed
      * in the U.S. by the FDA, the value is http://hl7.org/fhir/NamingSystem/fda-udi.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $jurisdiction
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $jurisdiction
      * @return static
      */
-    public function setJurisdiction($jurisdiction = null): object
+    public function setJurisdiction(null|string|FHIRUriPrimitive|FHIRUri $jurisdiction = null): self
     {
         if (null !== $jurisdiction && !($jurisdiction instanceof FHIRUri)) {
             $jurisdiction = new FHIRUri($jurisdiction);
@@ -441,9 +423,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * in XML and the need to round-trip JSON data through XML, AIDC Formats *SHALL* be
      * base64 encoded.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    public function getCarrierAIDC(): ?FHIRBase64Binary
+    public function getCarrierAIDC(): null|FHIRBase64Binary
     {
         return $this->carrierAIDC;
     }
@@ -459,10 +441,10 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * in XML and the need to round-trip JSON data through XML, AIDC Formats *SHALL* be
      * base64 encoded.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $carrierAIDC
+     * @param null|string|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $carrierAIDC
      * @return static
      */
-    public function setCarrierAIDC($carrierAIDC = null): object
+    public function setCarrierAIDC(null|string|FHIRBase64BinaryPrimitive|FHIRBase64Binary $carrierAIDC = null): self
     {
         if (null !== $carrierAIDC && !($carrierAIDC instanceof FHIRBase64Binary)) {
             $carrierAIDC = new FHIRBase64Binary($carrierAIDC);
@@ -480,9 +462,9 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * The full UDI carrier as the human readable form (HRF) representation of the
      * barcode string as printed on the packaging of the device.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getCarrierHRF(): ?FHIRString
+    public function getCarrierHRF(): null|FHIRString
     {
         return $this->carrierHRF;
     }
@@ -495,10 +477,10 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * The full UDI carrier as the human readable form (HRF) representation of the
      * barcode string as printed on the packaging of the device.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $carrierHRF
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $carrierHRF
      * @return static
      */
-    public function setCarrierHRF($carrierHRF = null): object
+    public function setCarrierHRF(null|string|FHIRStringPrimitive|FHIRString $carrierHRF = null): self
     {
         if (null !== $carrierHRF && !($carrierHRF instanceof FHIRString)) {
             $carrierHRF = new FHIRString($carrierHRF);
@@ -516,7 +498,7 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUDIEntryType
      */
-    public function getEntryType(): ?FHIRUDIEntryType
+    public function getEntryType(): null|FHIRUDIEntryType
     {
         return $this->entryType;
     }
@@ -530,8 +512,11 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUDIEntryType $entryType
      * @return static
      */
-    public function setEntryType(?FHIRUDIEntryType $entryType = null): object
+    public function setEntryType(null|FHIRUDIEntryType $entryType = null): self
     {
+        if (null === $entryType) {
+            $entryType = new FHIRUDIEntryType();
+        }
         $this->_trackValueSet($this->entryType, $entryType);
         $this->entryType = $entryType;
         return $this;
@@ -545,7 +530,7 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -702,36 +687,48 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDevice\FHIRDeviceUdiCarrier $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDevice\FHIRDeviceUdiCarrier
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRDeviceUdiCarrier::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRDeviceUdiCarrier::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRDeviceUdiCarrier(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRDeviceUdiCarrier)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRDeviceUdiCarrier)) {
             throw new \RuntimeException(sprintf(
-                'FHIRDeviceUdiCarrier::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDevice\FHIRDeviceUdiCarrier or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -817,17 +814,25 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('DeviceUdiCarrier'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getDeviceIdentifier())) {
@@ -866,7 +871,7 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getDeviceIdentifier())) {
@@ -932,7 +937,6 @@ class FHIRDeviceUdiCarrier extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

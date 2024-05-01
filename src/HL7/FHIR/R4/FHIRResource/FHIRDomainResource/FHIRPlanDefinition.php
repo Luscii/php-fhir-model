@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDatePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionAction;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionGoal;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
@@ -84,11 +89,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUsageContext;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * This resource allows for the definition of various types of plans as a sharable,
@@ -104,6 +116,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_PLAN_DEFINITION;
+
     const FIELD_URL = 'url';
     const FIELD_URL_EXT = '_url';
     const FIELD_IDENTIFIER = 'identifier';
@@ -153,9 +166,6 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
     const FIELD_GOAL = 'goal';
     const FIELD_ACTION = 'action';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -168,10 +178,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * (or will be) published. This URL can be the target of a canonical reference. It
      * SHALL remain the same when the plan definition is stored on different servers.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $url = null;
-
+    protected null|FHIRUri $url = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -184,8 +193,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -202,10 +210,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * Decision Support Service specification. Note that a version is required for
      * non-experimental active artifacts.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $version = null;
-
+    protected null|FHIRString $version = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -215,10 +222,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -226,10 +232,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * A short, descriptive, user-friendly title for the plan definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $title = null;
-
+    protected null|FHIRString $title = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -238,10 +243,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * An explanatory or alternate title for the plan definition giving additional
      * information about its content.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $subtitle = null;
-
+    protected null|FHIRString $subtitle = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -253,8 +257,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -263,8 +266,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    protected ?FHIRPublicationStatus $status = null;
-
+    protected null|FHIRPublicationStatus $status = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -273,10 +275,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $experimental = null;
-
+    protected null|FHIRBoolean $experimental = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -288,8 +289,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $subjectCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $subjectCodeableConcept = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -300,8 +300,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $subjectReference = null;
-
+    protected null|FHIRReference $subjectReference = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -315,10 +314,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * code changes. In addition, it should change when the substantive content of the
      * plan definition changes.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -326,10 +324,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * The name of the organization or individual that published the plan definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $publisher = null;
-
+    protected null|FHIRString $publisher = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -340,8 +337,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $contact = [];
-
+    protected null|array $contact = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -354,10 +350,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * A free text natural language description of the plan definition from a
      * consumer's perspective.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $description = null;
-
+    protected null|FHIRMarkdown $description = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -374,8 +369,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    protected ?array $useContext = [];
-
+    protected null|array $useContext = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -387,8 +381,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $jurisdiction = [];
-
+    protected null|array $jurisdiction = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -401,10 +394,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * Explanation of why this plan definition is needed and why it has been designed
      * as it has.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $purpose = null;
-
+    protected null|FHIRMarkdown $purpose = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -413,10 +405,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * A detailed description of how the plan definition is used from a clinical
      * perspective.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $usage = null;
-
+    protected null|FHIRString $usage = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -430,10 +421,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * Copyright statements are generally legal restrictions on the use and publishing
      * of the plan definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $copyright = null;
-
+    protected null|FHIRMarkdown $copyright = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -443,10 +433,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $approvalDate = null;
-
+    protected null|FHIRDate $approvalDate = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -456,10 +445,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $lastReviewDate = null;
-
+    protected null|FHIRDate $lastReviewDate = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -470,8 +458,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $effectivePeriod = null;
-
+    protected null|FHIRPeriod $effectivePeriod = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -484,8 +471,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $topic = [];
-
+    protected null|array $topic = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -496,8 +482,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $author = [];
-
+    protected null|array $author = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -508,8 +493,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $editor = [];
-
+    protected null|array $editor = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -520,8 +504,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $reviewer = [];
-
+    protected null|array $reviewer = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -532,8 +515,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $endorser = [];
-
+    protected null|array $endorser = [];
     /**
      * Related artifacts such as additional documentation, justification, or
      * bibliographic references.
@@ -545,8 +527,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact[]
      */
-    protected ?array $relatedArtifact = [];
-
+    protected null|array $relatedArtifact = [];
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -556,10 +537,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * A reference to a Library resource containing any formal logic used by the plan
      * definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $library = [];
-
+    protected null|array $library = [];
     /**
      * This resource allows for the definition of various types of plans as a sharable,
      * consumable, and executable artifact. The resource is general enough to support
@@ -572,8 +552,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionGoal[]
      */
-    protected ?array $goal = [];
-
+    protected null|array $goal = [];
     /**
      * This resource allows for the definition of various types of plans as a sharable,
      * consumable, and executable artifact. The resource is general enough to support
@@ -584,28 +563,23 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionAction[]
      */
-    protected ?array $action = [];
+    protected null|array $action = [];
 
     /**
      * Validation map for fields in type PlanDefinition
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRPlanDefinition Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRPlanDefinition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_URL]) || isset($data[self::FIELD_URL_EXT])) {
@@ -1109,6 +1083,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
         }
     }
 
+
     /**
      * @return string
      */
@@ -1117,17 +1092,6 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<PlanDefinition{$xmlns}></PlanDefinition>";
-    }
     /**
      * @return string
      */
@@ -1149,9 +1113,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * (or will be) published. This URL can be the target of a canonical reference. It
      * SHALL remain the same when the plan definition is stored on different servers.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getUrl(): ?FHIRUri
+    public function getUrl(): null|FHIRUri
     {
         return $this->url;
     }
@@ -1168,10 +1132,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * (or will be) published. This URL can be the target of a canonical reference. It
      * SHALL remain the same when the plan definition is stored on different servers.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
      * @return static
      */
-    public function setUrl($url = null): object
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
@@ -1193,7 +1157,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -1211,8 +1175,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -1231,7 +1198,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -1266,9 +1233,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * Decision Support Service specification. Note that a version is required for
      * non-experimental active artifacts.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getVersion(): ?FHIRString
+    public function getVersion(): null|FHIRString
     {
         return $this->version;
     }
@@ -1289,10 +1256,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * Decision Support Service specification. Note that a version is required for
      * non-experimental active artifacts.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
      * @return static
      */
-    public function setVersion($version = null): object
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
@@ -1311,9 +1278,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -1327,10 +1294,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -1347,9 +1314,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * A short, descriptive, user-friendly title for the plan definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTitle(): ?FHIRString
+    public function getTitle(): null|FHIRString
     {
         return $this->title;
     }
@@ -1361,10 +1328,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * A short, descriptive, user-friendly title for the plan definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
      * @return static
      */
-    public function setTitle($title = null): object
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
@@ -1382,9 +1349,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * An explanatory or alternate title for the plan definition giving additional
      * information about its content.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getSubtitle(): ?FHIRString
+    public function getSubtitle(): null|FHIRString
     {
         return $this->subtitle;
     }
@@ -1397,10 +1364,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * An explanatory or alternate title for the plan definition giving additional
      * information about its content.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $subtitle
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $subtitle
      * @return static
      */
-    public function setSubtitle($subtitle = null): object
+    public function setSubtitle(null|string|FHIRStringPrimitive|FHIRString $subtitle = null): self
     {
         if (null !== $subtitle && !($subtitle instanceof FHIRString)) {
             $subtitle = new FHIRString($subtitle);
@@ -1421,7 +1388,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -1438,8 +1405,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -1453,7 +1423,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    public function getStatus(): ?FHIRPublicationStatus
+    public function getStatus(): null|FHIRPublicationStatus
     {
         return $this->status;
     }
@@ -1467,8 +1437,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus $status
      * @return static
      */
-    public function setStatus(?FHIRPublicationStatus $status = null): object
+    public function setStatus(null|FHIRPublicationStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRPublicationStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -1482,9 +1455,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getExperimental(): ?FHIRBoolean
+    public function getExperimental(): null|FHIRBoolean
     {
         return $this->experimental;
     }
@@ -1497,10 +1470,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
      * @return static
      */
-    public function setExperimental($experimental = null): object
+    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null): self
     {
         if (null !== $experimental && !($experimental instanceof FHIRBoolean)) {
             $experimental = new FHIRBoolean($experimental);
@@ -1521,7 +1494,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getSubjectCodeableConcept(): ?FHIRCodeableConcept
+    public function getSubjectCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->subjectCodeableConcept;
     }
@@ -1538,8 +1511,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $subjectCodeableConcept
      * @return static
      */
-    public function setSubjectCodeableConcept(?FHIRCodeableConcept $subjectCodeableConcept = null): object
+    public function setSubjectCodeableConcept(null|FHIRCodeableConcept $subjectCodeableConcept = null): self
     {
+        if (null === $subjectCodeableConcept) {
+            $subjectCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->subjectCodeableConcept, $subjectCodeableConcept);
         $this->subjectCodeableConcept = $subjectCodeableConcept;
         return $this;
@@ -1555,7 +1531,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubjectReference(): ?FHIRReference
+    public function getSubjectReference(): null|FHIRReference
     {
         return $this->subjectReference;
     }
@@ -1571,8 +1547,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $subjectReference
      * @return static
      */
-    public function setSubjectReference(?FHIRReference $subjectReference = null): object
+    public function setSubjectReference(null|FHIRReference $subjectReference = null): self
     {
+        if (null === $subjectReference) {
+            $subjectReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->subjectReference, $subjectReference);
         $this->subjectReference = $subjectReference;
         return $this;
@@ -1591,9 +1570,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * code changes. In addition, it should change when the substantive content of the
      * plan definition changes.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDate(): ?FHIRDateTime
+    public function getDate(): null|FHIRDateTime
     {
         return $this->date;
     }
@@ -1611,10 +1590,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * code changes. In addition, it should change when the substantive content of the
      * plan definition changes.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
      * @return static
      */
-    public function setDate($date = null): object
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
@@ -1631,9 +1610,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * The name of the organization or individual that published the plan definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPublisher(): ?FHIRString
+    public function getPublisher(): null|FHIRString
     {
         return $this->publisher;
     }
@@ -1645,10 +1624,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * The name of the organization or individual that published the plan definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
      * @return static
      */
-    public function setPublisher($publisher = null): object
+    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null): self
     {
         if (null !== $publisher && !($publisher instanceof FHIRString)) {
             $publisher = new FHIRString($publisher);
@@ -1668,7 +1647,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getContact(): ?array
+    public function getContact(): null|array
     {
         return $this->contact;
     }
@@ -1684,8 +1663,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $contact
      * @return static
      */
-    public function addContact(?FHIRContactDetail $contact = null): object
+    public function addContact(null|FHIRContactDetail $contact = null): self
     {
+        if (null === $contact) {
+            $contact = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
         return $this;
@@ -1702,7 +1684,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $contact
      * @return static
      */
-    public function setContact(array $contact = []): object
+    public function setContact(array $contact = []): self
     {
         if ([] !== $this->contact) {
             $this->_trackValuesRemoved(count($this->contact));
@@ -1733,9 +1715,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * A free text natural language description of the plan definition from a
      * consumer's perspective.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDescription(): ?FHIRMarkdown
+    public function getDescription(): null|FHIRMarkdown
     {
         return $this->description;
     }
@@ -1752,10 +1734,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * A free text natural language description of the plan definition from a
      * consumer's perspective.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
@@ -1781,7 +1763,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    public function getUseContext(): ?array
+    public function getUseContext(): null|array
     {
         return $this->useContext;
     }
@@ -1803,8 +1785,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $useContext
      * @return static
      */
-    public function addUseContext(?FHIRUsageContext $useContext = null): object
+    public function addUseContext(null|FHIRUsageContext $useContext = null): self
     {
+        if (null === $useContext) {
+            $useContext = new FHIRUsageContext();
+        }
         $this->_trackValueAdded();
         $this->useContext[] = $useContext;
         return $this;
@@ -1827,7 +1812,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUsageContext[] $useContext
      * @return static
      */
-    public function setUseContext(array $useContext = []): object
+    public function setUseContext(array $useContext = []): self
     {
         if ([] !== $this->useContext) {
             $this->_trackValuesRemoved(count($this->useContext));
@@ -1857,7 +1842,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getJurisdiction(): ?array
+    public function getJurisdiction(): null|array
     {
         return $this->jurisdiction;
     }
@@ -1874,8 +1859,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $jurisdiction
      * @return static
      */
-    public function addJurisdiction(?FHIRCodeableConcept $jurisdiction = null): object
+    public function addJurisdiction(null|FHIRCodeableConcept $jurisdiction = null): self
     {
+        if (null === $jurisdiction) {
+            $jurisdiction = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
         return $this;
@@ -1893,7 +1881,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $jurisdiction
      * @return static
      */
-    public function setJurisdiction(array $jurisdiction = []): object
+    public function setJurisdiction(array $jurisdiction = []): self
     {
         if ([] !== $this->jurisdiction) {
             $this->_trackValuesRemoved(count($this->jurisdiction));
@@ -1924,9 +1912,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * Explanation of why this plan definition is needed and why it has been designed
      * as it has.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getPurpose(): ?FHIRMarkdown
+    public function getPurpose(): null|FHIRMarkdown
     {
         return $this->purpose;
     }
@@ -1943,10 +1931,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * Explanation of why this plan definition is needed and why it has been designed
      * as it has.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
      * @return static
      */
-    public function setPurpose($purpose = null): object
+    public function setPurpose(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $purpose = null): self
     {
         if (null !== $purpose && !($purpose instanceof FHIRMarkdown)) {
             $purpose = new FHIRMarkdown($purpose);
@@ -1964,9 +1952,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * A detailed description of how the plan definition is used from a clinical
      * perspective.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getUsage(): ?FHIRString
+    public function getUsage(): null|FHIRString
     {
         return $this->usage;
     }
@@ -1979,10 +1967,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * A detailed description of how the plan definition is used from a clinical
      * perspective.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $usage
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $usage
      * @return static
      */
-    public function setUsage($usage = null): object
+    public function setUsage(null|string|FHIRStringPrimitive|FHIRString $usage = null): self
     {
         if (null !== $usage && !($usage instanceof FHIRString)) {
             $usage = new FHIRString($usage);
@@ -2005,9 +1993,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * Copyright statements are generally legal restrictions on the use and publishing
      * of the plan definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getCopyright(): ?FHIRMarkdown
+    public function getCopyright(): null|FHIRMarkdown
     {
         return $this->copyright;
     }
@@ -2025,10 +2013,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * Copyright statements are generally legal restrictions on the use and publishing
      * of the plan definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
      * @return static
      */
-    public function setCopyright($copyright = null): object
+    public function setCopyright(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $copyright = null): self
     {
         if (null !== $copyright && !($copyright instanceof FHIRMarkdown)) {
             $copyright = new FHIRMarkdown($copyright);
@@ -2047,9 +2035,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getApprovalDate(): ?FHIRDate
+    public function getApprovalDate(): null|FHIRDate
     {
         return $this->approvalDate;
     }
@@ -2063,10 +2051,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $approvalDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $approvalDate
      * @return static
      */
-    public function setApprovalDate($approvalDate = null): object
+    public function setApprovalDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $approvalDate = null): self
     {
         if (null !== $approvalDate && !($approvalDate instanceof FHIRDate)) {
             $approvalDate = new FHIRDate($approvalDate);
@@ -2085,9 +2073,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getLastReviewDate(): ?FHIRDate
+    public function getLastReviewDate(): null|FHIRDate
     {
         return $this->lastReviewDate;
     }
@@ -2101,10 +2089,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $lastReviewDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $lastReviewDate
      * @return static
      */
-    public function setLastReviewDate($lastReviewDate = null): object
+    public function setLastReviewDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $lastReviewDate = null): self
     {
         if (null !== $lastReviewDate && !($lastReviewDate instanceof FHIRDate)) {
             $lastReviewDate = new FHIRDate($lastReviewDate);
@@ -2124,7 +2112,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getEffectivePeriod(): ?FHIRPeriod
+    public function getEffectivePeriod(): null|FHIRPeriod
     {
         return $this->effectivePeriod;
     }
@@ -2140,8 +2128,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $effectivePeriod
      * @return static
      */
-    public function setEffectivePeriod(?FHIRPeriod $effectivePeriod = null): object
+    public function setEffectivePeriod(null|FHIRPeriod $effectivePeriod = null): self
     {
+        if (null === $effectivePeriod) {
+            $effectivePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->effectivePeriod, $effectivePeriod);
         $this->effectivePeriod = $effectivePeriod;
         return $this;
@@ -2159,7 +2150,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getTopic(): ?array
+    public function getTopic(): null|array
     {
         return $this->topic;
     }
@@ -2177,8 +2168,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $topic
      * @return static
      */
-    public function addTopic(?FHIRCodeableConcept $topic = null): object
+    public function addTopic(null|FHIRCodeableConcept $topic = null): self
     {
+        if (null === $topic) {
+            $topic = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->topic[] = $topic;
         return $this;
@@ -2197,7 +2191,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $topic
      * @return static
      */
-    public function setTopic(array $topic = []): object
+    public function setTopic(array $topic = []): self
     {
         if ([] !== $this->topic) {
             $this->_trackValuesRemoved(count($this->topic));
@@ -2226,7 +2220,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getAuthor(): ?array
+    public function getAuthor(): null|array
     {
         return $this->author;
     }
@@ -2242,8 +2236,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $author
      * @return static
      */
-    public function addAuthor(?FHIRContactDetail $author = null): object
+    public function addAuthor(null|FHIRContactDetail $author = null): self
     {
+        if (null === $author) {
+            $author = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->author[] = $author;
         return $this;
@@ -2260,7 +2257,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $author
      * @return static
      */
-    public function setAuthor(array $author = []): object
+    public function setAuthor(array $author = []): self
     {
         if ([] !== $this->author) {
             $this->_trackValuesRemoved(count($this->author));
@@ -2289,7 +2286,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getEditor(): ?array
+    public function getEditor(): null|array
     {
         return $this->editor;
     }
@@ -2305,8 +2302,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $editor
      * @return static
      */
-    public function addEditor(?FHIRContactDetail $editor = null): object
+    public function addEditor(null|FHIRContactDetail $editor = null): self
     {
+        if (null === $editor) {
+            $editor = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->editor[] = $editor;
         return $this;
@@ -2323,7 +2323,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $editor
      * @return static
      */
-    public function setEditor(array $editor = []): object
+    public function setEditor(array $editor = []): self
     {
         if ([] !== $this->editor) {
             $this->_trackValuesRemoved(count($this->editor));
@@ -2352,7 +2352,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getReviewer(): ?array
+    public function getReviewer(): null|array
     {
         return $this->reviewer;
     }
@@ -2368,8 +2368,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $reviewer
      * @return static
      */
-    public function addReviewer(?FHIRContactDetail $reviewer = null): object
+    public function addReviewer(null|FHIRContactDetail $reviewer = null): self
     {
+        if (null === $reviewer) {
+            $reviewer = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->reviewer[] = $reviewer;
         return $this;
@@ -2386,7 +2389,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $reviewer
      * @return static
      */
-    public function setReviewer(array $reviewer = []): object
+    public function setReviewer(array $reviewer = []): self
     {
         if ([] !== $this->reviewer) {
             $this->_trackValuesRemoved(count($this->reviewer));
@@ -2415,7 +2418,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getEndorser(): ?array
+    public function getEndorser(): null|array
     {
         return $this->endorser;
     }
@@ -2431,8 +2434,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $endorser
      * @return static
      */
-    public function addEndorser(?FHIRContactDetail $endorser = null): object
+    public function addEndorser(null|FHIRContactDetail $endorser = null): self
     {
+        if (null === $endorser) {
+            $endorser = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->endorser[] = $endorser;
         return $this;
@@ -2449,7 +2455,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $endorser
      * @return static
      */
-    public function setEndorser(array $endorser = []): object
+    public function setEndorser(array $endorser = []): self
     {
         if ([] !== $this->endorser) {
             $this->_trackValuesRemoved(count($this->endorser));
@@ -2479,7 +2485,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact[]
      */
-    public function getRelatedArtifact(): ?array
+    public function getRelatedArtifact(): null|array
     {
         return $this->relatedArtifact;
     }
@@ -2496,8 +2502,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact $relatedArtifact
      * @return static
      */
-    public function addRelatedArtifact(?FHIRRelatedArtifact $relatedArtifact = null): object
+    public function addRelatedArtifact(null|FHIRRelatedArtifact $relatedArtifact = null): self
     {
+        if (null === $relatedArtifact) {
+            $relatedArtifact = new FHIRRelatedArtifact();
+        }
         $this->_trackValueAdded();
         $this->relatedArtifact[] = $relatedArtifact;
         return $this;
@@ -2515,7 +2524,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact[] $relatedArtifact
      * @return static
      */
-    public function setRelatedArtifact(array $relatedArtifact = []): object
+    public function setRelatedArtifact(array $relatedArtifact = []): self
     {
         if ([] !== $this->relatedArtifact) {
             $this->_trackValuesRemoved(count($this->relatedArtifact));
@@ -2543,9 +2552,9 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * A reference to a Library resource containing any formal logic used by the plan
      * definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getLibrary(): ?array
+    public function getLibrary(): null|array
     {
         return $this->library;
     }
@@ -2559,10 +2568,10 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * A reference to a Library resource containing any formal logic used by the plan
      * definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $library
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $library
      * @return static
      */
-    public function addLibrary($library = null): object
+    public function addLibrary(null|string|FHIRCanonicalPrimitive|FHIRCanonical $library = null): self
     {
         if (null !== $library && !($library instanceof FHIRCanonical)) {
             $library = new FHIRCanonical($library);
@@ -2584,7 +2593,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $library
      * @return static
      */
-    public function setLibrary(array $library = []): object
+    public function setLibrary(array $library = []): self
     {
         if ([] !== $this->library) {
             $this->_trackValuesRemoved(count($this->library));
@@ -2615,7 +2624,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionGoal[]
      */
-    public function getGoal(): ?array
+    public function getGoal(): null|array
     {
         return $this->goal;
     }
@@ -2633,8 +2642,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionGoal $goal
      * @return static
      */
-    public function addGoal(?FHIRPlanDefinitionGoal $goal = null): object
+    public function addGoal(null|FHIRPlanDefinitionGoal $goal = null): self
     {
+        if (null === $goal) {
+            $goal = new FHIRPlanDefinitionGoal();
+        }
         $this->_trackValueAdded();
         $this->goal[] = $goal;
         return $this;
@@ -2653,7 +2665,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionGoal[] $goal
      * @return static
      */
-    public function setGoal(array $goal = []): object
+    public function setGoal(array $goal = []): self
     {
         if ([] !== $this->goal) {
             $this->_trackValuesRemoved(count($this->goal));
@@ -2682,7 +2694,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionAction[]
      */
-    public function getAction(): ?array
+    public function getAction(): null|array
     {
         return $this->action;
     }
@@ -2698,8 +2710,11 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionAction $action
      * @return static
      */
-    public function addAction(?FHIRPlanDefinitionAction $action = null): object
+    public function addAction(null|FHIRPlanDefinitionAction $action = null): self
     {
+        if (null === $action) {
+            $action = new FHIRPlanDefinitionAction();
+        }
         $this->_trackValueAdded();
         $this->action[] = $action;
         return $this;
@@ -2716,7 +2731,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionAction[] $action
      * @return static
      */
-    public function setAction(array $action = []): object
+    public function setAction(array $action = []): self
     {
         if ([] !== $this->action) {
             $this->_trackValuesRemoved(count($this->action));
@@ -2743,7 +2758,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -3428,36 +3443,48 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRPlanDefinition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRPlanDefinition::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRPlanDefinition(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRPlanDefinition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRPlanDefinition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRPlanDefinition::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -3679,12 +3706,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
         }
         $n = $element->attributes->getNamedItem(self::FIELD_LIBRARY);
         if (null !== $n) {
-            $pt = $type->getLibrary();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addLibrary($n->nodeValue);
-            }
+            $type->addLibrary($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -3718,17 +3740,25 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('PlanDefinition'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getUrl())) {
@@ -3962,7 +3992,7 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getUrl())) {
@@ -4264,7 +4294,6 @@ class FHIRPlanDefinition extends FHIRDomainResource implements PHPFHIRContainedT
 
         return $out;
     }
-
 
     /**
      * @return string

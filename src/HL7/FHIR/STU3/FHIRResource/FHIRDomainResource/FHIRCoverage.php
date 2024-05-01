@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,18 +62,33 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\STU3\FHIRCodePrimitive;
 use HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage\FHIRCoverageGrouping;
+use HL7\FHIR\STU3\FHIRElement\FHIRCode;
 use HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept;
+use HL7\FHIR\STU3\FHIRElement\FHIRExtension;
 use HL7\FHIR\STU3\FHIRElement\FHIRFinancialResourceStatusCodes;
+use HL7\FHIR\STU3\FHIRElement\FHIRId;
 use HL7\FHIR\STU3\FHIRElement\FHIRIdentifier;
+use HL7\FHIR\STU3\FHIRElement\FHIRMeta;
+use HL7\FHIR\STU3\FHIRElement\FHIRNarrative;
 use HL7\FHIR\STU3\FHIRElement\FHIRPeriod;
 use HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt;
 use HL7\FHIR\STU3\FHIRElement\FHIRReference;
 use HL7\FHIR\STU3\FHIRElement\FHIRString;
+use HL7\FHIR\STU3\FHIRElement\FHIRUri;
+use HL7\FHIR\STU3\FHIRIdPrimitive;
+use HL7\FHIR\STU3\FHIRPositiveIntPrimitive;
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\STU3\FHIRStringPrimitive;
+use HL7\FHIR\STU3\FHIRUriPrimitive;
+use HL7\FHIR\STU3\PHPFHIRConfig;
 use HL7\FHIR\STU3\PHPFHIRConstants;
 use HL7\FHIR\STU3\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\STU3\PHPFHIRTypeInterface;
+use HL7\FHIR\STU3\PHPFHIRTypeMap;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\STU3\PHPFHIRXmlSerializableInterface;
 
 /**
  * Financial instrument which may be used to reimburse or pay for health care
@@ -87,76 +102,29 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_COVERAGE;
-    const FIELD_BENEFICIARY = 'beneficiary';
-    const FIELD_CONTRACT = 'contract';
-    const FIELD_DEPENDENT = 'dependent';
-    const FIELD_DEPENDENT_EXT = '_dependent';
-    const FIELD_GROUPING = 'grouping';
+
     const FIELD_IDENTIFIER = 'identifier';
-    const FIELD_NETWORK = 'network';
-    const FIELD_NETWORK_EXT = '_network';
-    const FIELD_ORDER = 'order';
-    const FIELD_ORDER_EXT = '_order';
-    const FIELD_PAYOR = 'payor';
-    const FIELD_PERIOD = 'period';
-    const FIELD_POLICY_HOLDER = 'policyHolder';
-    const FIELD_RELATIONSHIP = 'relationship';
-    const FIELD_SEQUENCE = 'sequence';
-    const FIELD_SEQUENCE_EXT = '_sequence';
     const FIELD_STATUS = 'status';
     const FIELD_STATUS_EXT = '_status';
+    const FIELD_TYPE = 'type';
+    const FIELD_POLICY_HOLDER = 'policyHolder';
     const FIELD_SUBSCRIBER = 'subscriber';
     const FIELD_SUBSCRIBER_ID = 'subscriberId';
     const FIELD_SUBSCRIBER_ID_EXT = '_subscriberId';
-    const FIELD_TYPE = 'type';
-
-    /** @var string */
-    private $_xmlns = 'http://hl7.org/fhir';
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The party who benefits from the insurance coverage., the patient when services
-     * are provided.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $beneficiary = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The policy(s) which constitute this insurance coverage.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    protected $contract = [];
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A unique identifier for a dependent under the coverage.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    protected $dependent = null;
-
-    /**
-     * Financial instrument which may be used to reimburse or pay for health care
-     * products and services.
-     *
-     * A suite of underwrite specific classifiers, for example may be used to identify
-     * a class of coverage or employer group, Policy, Plan.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage\FHIRCoverageGrouping
-     */
-    protected $grouping = null;
+    const FIELD_BENEFICIARY = 'beneficiary';
+    const FIELD_RELATIONSHIP = 'relationship';
+    const FIELD_PERIOD = 'period';
+    const FIELD_PAYOR = 'payor';
+    const FIELD_GROUPING = 'grouping';
+    const FIELD_DEPENDENT = 'dependent';
+    const FIELD_DEPENDENT_EXT = '_dependent';
+    const FIELD_SEQUENCE = 'sequence';
+    const FIELD_SEQUENCE_EXT = '_sequence';
+    const FIELD_ORDER = 'order';
+    const FIELD_ORDER_EXT = '_order';
+    const FIELD_NETWORK = 'network';
+    const FIELD_NETWORK_EXT = '_network';
+    const FIELD_CONTRACT = 'contract';
 
     /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
@@ -170,35 +138,95 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
-    protected $identifier = [];
-
+    protected null|array $identifier = [];
+    /**
+     * A code specifying the state of the resource instance.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The status of the resource instance.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRFinancialResourceStatusCodes
+     */
+    protected null|FHIRFinancialResourceStatusCodes $status = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The type of coverage: social program, medical plan, accident coverage (workers
+     * compensation, auto), group health or payment by an individual or organization.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected null|FHIRCodeableConcept $type = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The party who 'owns' the insurance policy, may be an individual, corporation or
+     * the subscriber's employer.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $policyHolder = null;
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The party who has signed-up for or 'owns' the contractual relationship to the
+     * policy or to whom the benefit of the policy for services rendered to them or
+     * their family is due.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    protected null|FHIRReference $subscriber = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The insurer-specific identifier for the insurer-defined network of providers to
-     * which the beneficiary may seek treatment which will be covered at the
-     * 'in-network' rate, otherwise 'out of network' terms and conditions apply.
+     * The insurer assigned ID for the Subscriber.
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $network = null;
-
+    protected null|FHIRString $subscriberId = null;
     /**
-     * An integer with a value that is positive (e.g. >0)
-     * If the element is present, it must have either a \@value, an \@id referenced from
-     * the Narrative, or extensions
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The order of applicability of this coverage relative to other coverages which
-     * are currently inforce. Note, there may be gaps in the numbering and this does
-     * not imply primary, secondard etc. as the specific positioning of coverages
-     * depends upon the episode of care.
+     * The party who benefits from the insurance coverage., the patient when services
+     * are provided.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
-    protected $order = null;
-
+    protected null|FHIRReference $beneficiary = null;
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The relationship of beneficiary (patient) to the subscriber.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    protected null|FHIRCodeableConcept $relationship = null;
+    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Time period during which the coverage is in force. A missing start date
+     * indicates the start date isn't known, a missing end date means the coverage is
+     * continuing to be in force.
+     *
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     */
+    protected null|FHIRPeriod $period = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -211,45 +239,27 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $payor = [];
-
+    protected null|array $payor = [];
     /**
-     * A time period defined by a start and end date and optionally time.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * Financial instrument which may be used to reimburse or pay for health care
+     * products and services.
      *
-     * Time period during which the coverage is in force. A missing start date
-     * indicates the start date isn't known, a missing end date means the coverage is
-     * continuing to be in force.
+     * A suite of underwrite specific classifiers, for example may be used to identify
+     * a class of coverage or employer group, Policy, Plan.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage\FHIRCoverageGrouping
      */
-    protected $period = null;
-
+    protected null|FHIRCoverageGrouping $grouping = null;
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The party who 'owns' the insurance policy, may be an individual, corporation or
-     * the subscriber's employer.
+     * A unique identifier for a dependent under the coverage.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $policyHolder = null;
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The relationship of beneficiary (patient) to the subscriber.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    protected $relationship = null;
-
+    protected null|FHIRString $dependent = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
@@ -260,132 +270,60 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $sequence = null;
-
+    protected null|FHIRString $sequence = null;
     /**
-     * A code specifying the state of the resource instance.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * An integer with a value that is positive (e.g. >0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
      *
-     * The status of the resource instance.
+     * The order of applicability of this coverage relative to other coverages which
+     * are currently inforce. Note, there may be gaps in the numbering and this does
+     * not imply primary, secondard etc. as the specific positioning of coverages
+     * depends upon the episode of care.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRFinancialResourceStatusCodes
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
      */
-    protected $status = null;
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The party who has signed-up for or 'owns' the contractual relationship to the
-     * policy or to whom the benefit of the policy for services rendered to them or
-     * their family is due.
-     *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    protected $subscriber = null;
-
+    protected null|FHIRPositiveInt $order = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The insurer assigned ID for the Subscriber.
+     * The insurer-specific identifier for the insurer-defined network of providers to
+     * which the beneficiary may seek treatment which will be covered at the
+     * 'in-network' rate, otherwise 'out of network' terms and conditions apply.
      *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    protected $subscriberId = null;
-
+    protected null|FHIRString $network = null;
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The type of coverage: social program, medical plan, accident coverage (workers
-     * compensation, auto), group health or payment by an individual or organization.
+     * The policy(s) which constitute this insurance coverage.
      *
-     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    protected $type = null;
+    protected null|array $contract = [];
 
     /**
      * Validation map for fields in type Coverage
      * @var array
      */
-    private static $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRCoverage Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRCoverage::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_BENEFICIARY])) {
-            if ($data[self::FIELD_BENEFICIARY] instanceof FHIRReference) {
-                $this->setBeneficiary($data[self::FIELD_BENEFICIARY]);
-            } else {
-                $this->setBeneficiary(new FHIRReference($data[self::FIELD_BENEFICIARY]));
-            }
-        }
-        if (isset($data[self::FIELD_CONTRACT])) {
-            if (is_array($data[self::FIELD_CONTRACT])) {
-                foreach($data[self::FIELD_CONTRACT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
-                    if ($v instanceof FHIRReference) {
-                        $this->addContract($v);
-                    } else {
-                        $this->addContract(new FHIRReference($v));
-                    }
-                }
-            } else if ($data[self::FIELD_CONTRACT] instanceof FHIRReference) {
-                $this->addContract($data[self::FIELD_CONTRACT]);
-            } else {
-                $this->addContract(new FHIRReference($data[self::FIELD_CONTRACT]));
-            }
-        }
-        if (isset($data[self::FIELD_DEPENDENT]) || isset($data[self::FIELD_DEPENDENT_EXT])) {
-            if (isset($data[self::FIELD_DEPENDENT])) {
-                $value = $data[self::FIELD_DEPENDENT];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_DEPENDENT_EXT]) && is_array($data[self::FIELD_DEPENDENT_EXT])) {
-                $ext = $data[self::FIELD_DEPENDENT_EXT];
-            } else {
-                $ext = [];
-            }
-            if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setDependent($value);
-                } else if (is_array($value)) {
-                    $this->setDependent(new FHIRString(array_merge($ext, $value)));
-                } else {
-                    $this->setDependent(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
-                }
-            } else if ([] !== $ext) {
-                $this->setDependent(new FHIRString($ext));
-            }
-        }
-        if (isset($data[self::FIELD_GROUPING])) {
-            if ($data[self::FIELD_GROUPING] instanceof FHIRCoverageGrouping) {
-                $this->setGrouping($data[self::FIELD_GROUPING]);
-            } else {
-                $this->setGrouping(new FHIRCoverageGrouping($data[self::FIELD_GROUPING]));
-            }
-        }
         if (isset($data[self::FIELD_IDENTIFIER])) {
             if (is_array($data[self::FIELD_IDENTIFIER])) {
                 foreach($data[self::FIELD_IDENTIFIER] as $v) {
@@ -398,56 +336,82 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                         $this->addIdentifier(new FHIRIdentifier($v));
                     }
                 }
-            } else if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
+            } elseif ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
                 $this->addIdentifier($data[self::FIELD_IDENTIFIER]);
             } else {
                 $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_NETWORK]) || isset($data[self::FIELD_NETWORK_EXT])) {
-            if (isset($data[self::FIELD_NETWORK])) {
-                $value = $data[self::FIELD_NETWORK];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_NETWORK_EXT]) && is_array($data[self::FIELD_NETWORK_EXT])) {
-                $ext = $data[self::FIELD_NETWORK_EXT];
-            } else {
-                $ext = [];
-            }
+        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+            $value = $data[self::FIELD_STATUS] ?? null;
+            $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) ? $data[self::FIELD_STATUS_EXT] : [];
             if (null !== $value) {
-                if ($value instanceof FHIRString) {
-                    $this->setNetwork($value);
+                if ($value instanceof FHIRFinancialResourceStatusCodes) {
+                    $this->setStatus($value);
                 } else if (is_array($value)) {
-                    $this->setNetwork(new FHIRString(array_merge($ext, $value)));
+                    $this->setStatus(new FHIRFinancialResourceStatusCodes(array_merge($ext, $value)));
                 } else {
-                    $this->setNetwork(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                    $this->setStatus(new FHIRFinancialResourceStatusCodes([FHIRFinancialResourceStatusCodes::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
-                $this->setNetwork(new FHIRString($ext));
+            } elseif ([] !== $ext) {
+                $this->setStatus(new FHIRFinancialResourceStatusCodes($ext));
             }
         }
-        if (isset($data[self::FIELD_ORDER]) || isset($data[self::FIELD_ORDER_EXT])) {
-            if (isset($data[self::FIELD_ORDER])) {
-                $value = $data[self::FIELD_ORDER];
+        if (isset($data[self::FIELD_TYPE])) {
+            if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
+                $this->setType($data[self::FIELD_TYPE]);
             } else {
-                $value = null;
+                $this->setType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
             }
-            if (isset($data[self::FIELD_ORDER_EXT]) && is_array($data[self::FIELD_ORDER_EXT])) {
-                $ext = $data[self::FIELD_ORDER_EXT];
+        }
+        if (isset($data[self::FIELD_POLICY_HOLDER])) {
+            if ($data[self::FIELD_POLICY_HOLDER] instanceof FHIRReference) {
+                $this->setPolicyHolder($data[self::FIELD_POLICY_HOLDER]);
             } else {
-                $ext = [];
+                $this->setPolicyHolder(new FHIRReference($data[self::FIELD_POLICY_HOLDER]));
             }
+        }
+        if (isset($data[self::FIELD_SUBSCRIBER])) {
+            if ($data[self::FIELD_SUBSCRIBER] instanceof FHIRReference) {
+                $this->setSubscriber($data[self::FIELD_SUBSCRIBER]);
+            } else {
+                $this->setSubscriber(new FHIRReference($data[self::FIELD_SUBSCRIBER]));
+            }
+        }
+        if (isset($data[self::FIELD_SUBSCRIBER_ID]) || isset($data[self::FIELD_SUBSCRIBER_ID_EXT])) {
+            $value = $data[self::FIELD_SUBSCRIBER_ID] ?? null;
+            $ext = (isset($data[self::FIELD_SUBSCRIBER_ID_EXT]) && is_array($data[self::FIELD_SUBSCRIBER_ID_EXT])) ? $data[self::FIELD_SUBSCRIBER_ID_EXT] : [];
             if (null !== $value) {
-                if ($value instanceof FHIRPositiveInt) {
-                    $this->setOrder($value);
+                if ($value instanceof FHIRString) {
+                    $this->setSubscriberId($value);
                 } else if (is_array($value)) {
-                    $this->setOrder(new FHIRPositiveInt(array_merge($ext, $value)));
+                    $this->setSubscriberId(new FHIRString(array_merge($ext, $value)));
                 } else {
-                    $this->setOrder(new FHIRPositiveInt([FHIRPositiveInt::FIELD_VALUE => $value] + $ext));
+                    $this->setSubscriberId(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
-                $this->setOrder(new FHIRPositiveInt($ext));
+            } elseif ([] !== $ext) {
+                $this->setSubscriberId(new FHIRString($ext));
+            }
+        }
+        if (isset($data[self::FIELD_BENEFICIARY])) {
+            if ($data[self::FIELD_BENEFICIARY] instanceof FHIRReference) {
+                $this->setBeneficiary($data[self::FIELD_BENEFICIARY]);
+            } else {
+                $this->setBeneficiary(new FHIRReference($data[self::FIELD_BENEFICIARY]));
+            }
+        }
+        if (isset($data[self::FIELD_RELATIONSHIP])) {
+            if ($data[self::FIELD_RELATIONSHIP] instanceof FHIRCodeableConcept) {
+                $this->setRelationship($data[self::FIELD_RELATIONSHIP]);
+            } else {
+                $this->setRelationship(new FHIRCodeableConcept($data[self::FIELD_RELATIONSHIP]));
+            }
+        }
+        if (isset($data[self::FIELD_PERIOD])) {
+            if ($data[self::FIELD_PERIOD] instanceof FHIRPeriod) {
+                $this->setPeriod($data[self::FIELD_PERIOD]);
+            } else {
+                $this->setPeriod(new FHIRPeriod($data[self::FIELD_PERIOD]));
             }
         }
         if (isset($data[self::FIELD_PAYOR])) {
@@ -462,44 +426,37 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                         $this->addPayor(new FHIRReference($v));
                     }
                 }
-            } else if ($data[self::FIELD_PAYOR] instanceof FHIRReference) {
+            } elseif ($data[self::FIELD_PAYOR] instanceof FHIRReference) {
                 $this->addPayor($data[self::FIELD_PAYOR]);
             } else {
                 $this->addPayor(new FHIRReference($data[self::FIELD_PAYOR]));
             }
         }
-        if (isset($data[self::FIELD_PERIOD])) {
-            if ($data[self::FIELD_PERIOD] instanceof FHIRPeriod) {
-                $this->setPeriod($data[self::FIELD_PERIOD]);
+        if (isset($data[self::FIELD_GROUPING])) {
+            if ($data[self::FIELD_GROUPING] instanceof FHIRCoverageGrouping) {
+                $this->setGrouping($data[self::FIELD_GROUPING]);
             } else {
-                $this->setPeriod(new FHIRPeriod($data[self::FIELD_PERIOD]));
+                $this->setGrouping(new FHIRCoverageGrouping($data[self::FIELD_GROUPING]));
             }
         }
-        if (isset($data[self::FIELD_POLICY_HOLDER])) {
-            if ($data[self::FIELD_POLICY_HOLDER] instanceof FHIRReference) {
-                $this->setPolicyHolder($data[self::FIELD_POLICY_HOLDER]);
-            } else {
-                $this->setPolicyHolder(new FHIRReference($data[self::FIELD_POLICY_HOLDER]));
-            }
-        }
-        if (isset($data[self::FIELD_RELATIONSHIP])) {
-            if ($data[self::FIELD_RELATIONSHIP] instanceof FHIRCodeableConcept) {
-                $this->setRelationship($data[self::FIELD_RELATIONSHIP]);
-            } else {
-                $this->setRelationship(new FHIRCodeableConcept($data[self::FIELD_RELATIONSHIP]));
+        if (isset($data[self::FIELD_DEPENDENT]) || isset($data[self::FIELD_DEPENDENT_EXT])) {
+            $value = $data[self::FIELD_DEPENDENT] ?? null;
+            $ext = (isset($data[self::FIELD_DEPENDENT_EXT]) && is_array($data[self::FIELD_DEPENDENT_EXT])) ? $data[self::FIELD_DEPENDENT_EXT] : [];
+            if (null !== $value) {
+                if ($value instanceof FHIRString) {
+                    $this->setDependent($value);
+                } else if (is_array($value)) {
+                    $this->setDependent(new FHIRString(array_merge($ext, $value)));
+                } else {
+                    $this->setDependent(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                }
+            } elseif ([] !== $ext) {
+                $this->setDependent(new FHIRString($ext));
             }
         }
         if (isset($data[self::FIELD_SEQUENCE]) || isset($data[self::FIELD_SEQUENCE_EXT])) {
-            if (isset($data[self::FIELD_SEQUENCE])) {
-                $value = $data[self::FIELD_SEQUENCE];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_SEQUENCE_EXT]) && is_array($data[self::FIELD_SEQUENCE_EXT])) {
-                $ext = $data[self::FIELD_SEQUENCE_EXT];
-            } else {
-                $ext = [];
-            }
+            $value = $data[self::FIELD_SEQUENCE] ?? null;
+            $ext = (isset($data[self::FIELD_SEQUENCE_EXT]) && is_array($data[self::FIELD_SEQUENCE_EXT])) ? $data[self::FIELD_SEQUENCE_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
                     $this->setSequence($value);
@@ -508,76 +465,65 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 } else {
                     $this->setSequence(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
+            } elseif ([] !== $ext) {
                 $this->setSequence(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
-            if (isset($data[self::FIELD_STATUS])) {
-                $value = $data[self::FIELD_STATUS];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) {
-                $ext = $data[self::FIELD_STATUS_EXT];
-            } else {
-                $ext = [];
-            }
+        if (isset($data[self::FIELD_ORDER]) || isset($data[self::FIELD_ORDER_EXT])) {
+            $value = $data[self::FIELD_ORDER] ?? null;
+            $ext = (isset($data[self::FIELD_ORDER_EXT]) && is_array($data[self::FIELD_ORDER_EXT])) ? $data[self::FIELD_ORDER_EXT] : [];
             if (null !== $value) {
-                if ($value instanceof FHIRFinancialResourceStatusCodes) {
-                    $this->setStatus($value);
+                if ($value instanceof FHIRPositiveInt) {
+                    $this->setOrder($value);
                 } else if (is_array($value)) {
-                    $this->setStatus(new FHIRFinancialResourceStatusCodes(array_merge($ext, $value)));
+                    $this->setOrder(new FHIRPositiveInt(array_merge($ext, $value)));
                 } else {
-                    $this->setStatus(new FHIRFinancialResourceStatusCodes([FHIRFinancialResourceStatusCodes::FIELD_VALUE => $value] + $ext));
+                    $this->setOrder(new FHIRPositiveInt([FHIRPositiveInt::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
-                $this->setStatus(new FHIRFinancialResourceStatusCodes($ext));
+            } elseif ([] !== $ext) {
+                $this->setOrder(new FHIRPositiveInt($ext));
             }
         }
-        if (isset($data[self::FIELD_SUBSCRIBER])) {
-            if ($data[self::FIELD_SUBSCRIBER] instanceof FHIRReference) {
-                $this->setSubscriber($data[self::FIELD_SUBSCRIBER]);
-            } else {
-                $this->setSubscriber(new FHIRReference($data[self::FIELD_SUBSCRIBER]));
-            }
-        }
-        if (isset($data[self::FIELD_SUBSCRIBER_ID]) || isset($data[self::FIELD_SUBSCRIBER_ID_EXT])) {
-            if (isset($data[self::FIELD_SUBSCRIBER_ID])) {
-                $value = $data[self::FIELD_SUBSCRIBER_ID];
-            } else {
-                $value = null;
-            }
-            if (isset($data[self::FIELD_SUBSCRIBER_ID_EXT]) && is_array($data[self::FIELD_SUBSCRIBER_ID_EXT])) {
-                $ext = $data[self::FIELD_SUBSCRIBER_ID_EXT];
-            } else {
-                $ext = [];
-            }
+        if (isset($data[self::FIELD_NETWORK]) || isset($data[self::FIELD_NETWORK_EXT])) {
+            $value = $data[self::FIELD_NETWORK] ?? null;
+            $ext = (isset($data[self::FIELD_NETWORK_EXT]) && is_array($data[self::FIELD_NETWORK_EXT])) ? $data[self::FIELD_NETWORK_EXT] : [];
             if (null !== $value) {
                 if ($value instanceof FHIRString) {
-                    $this->setSubscriberId($value);
+                    $this->setNetwork($value);
                 } else if (is_array($value)) {
-                    $this->setSubscriberId(new FHIRString(array_merge($ext, $value)));
+                    $this->setNetwork(new FHIRString(array_merge($ext, $value)));
                 } else {
-                    $this->setSubscriberId(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
+                    $this->setNetwork(new FHIRString([FHIRString::FIELD_VALUE => $value] + $ext));
                 }
-            } else if ([] !== $ext) {
-                $this->setSubscriberId(new FHIRString($ext));
+            } elseif ([] !== $ext) {
+                $this->setNetwork(new FHIRString($ext));
             }
         }
-        if (isset($data[self::FIELD_TYPE])) {
-            if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
-                $this->setType($data[self::FIELD_TYPE]);
+        if (isset($data[self::FIELD_CONTRACT])) {
+            if (is_array($data[self::FIELD_CONTRACT])) {
+                foreach($data[self::FIELD_CONTRACT] as $v) {
+                    if (null === $v) {
+                        continue;
+                    }
+                    if ($v instanceof FHIRReference) {
+                        $this->addContract($v);
+                    } else {
+                        $this->addContract(new FHIRReference($v));
+                    }
+                }
+            } elseif ($data[self::FIELD_CONTRACT] instanceof FHIRReference) {
+                $this->addContract($data[self::FIELD_CONTRACT]);
             } else {
-                $this->setType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
+                $this->addContract(new FHIRReference($data[self::FIELD_CONTRACT]));
             }
         }
     }
 
+
     /**
      * @return string
      */
-    public function _getFHIRTypeName()
+    public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -585,178 +531,11 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition()
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null !== $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Coverage{$xmlns}></Coverage>";
-    }
-    /**
-     * @return string
-     */
-    public function _getResourceType()
+    public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
 
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The party who benefits from the insurance coverage., the patient when services
-     * are provided.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getBeneficiary()
-    {
-        return $this->beneficiary;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The party who benefits from the insurance coverage., the patient when services
-     * are provided.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $beneficiary
-     * @return static
-     */
-    public function setBeneficiary(FHIRReference $beneficiary = null)
-    {
-        $this->beneficiary = $beneficiary;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The policy(s) which constitute this insurance coverage.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
-     */
-    public function getContract()
-    {
-        return $this->contract;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The policy(s) which constitute this insurance coverage.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $contract
-     * @return static
-     */
-    public function addContract(FHIRReference $contract = null)
-    {
-        $this->contract[] = $contract;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The policy(s) which constitute this insurance coverage.
-     *
-     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $contract
-     * @return static
-     */
-    public function setContract(array $contract = [])
-    {
-        $this->contract = [];
-        if ([] === $contract) {
-            return $this;
-        }
-        foreach($contract as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addContract($v);
-            } else {
-                $this->addContract(new FHIRReference($v));
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A unique identifier for a dependent under the coverage.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
-     */
-    public function getDependent()
-    {
-        return $this->dependent;
-    }
-
-    /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * A unique identifier for a dependent under the coverage.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $dependent
-     * @return static
-     */
-    public function setDependent($dependent = null)
-    {
-        if (null === $dependent) {
-            $this->dependent = null;
-            return $this;
-        }
-        if ($dependent instanceof FHIRString) {
-            $this->dependent = $dependent;
-            return $this;
-        }
-        $this->dependent = new FHIRString($dependent);
-        return $this;
-    }
-
-    /**
-     * Financial instrument which may be used to reimburse or pay for health care
-     * products and services.
-     *
-     * A suite of underwrite specific classifiers, for example may be used to identify
-     * a class of coverage or employer group, Policy, Plan.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage\FHIRCoverageGrouping
-     */
-    public function getGrouping()
-    {
-        return $this->grouping;
-    }
-
-    /**
-     * Financial instrument which may be used to reimburse or pay for health care
-     * products and services.
-     *
-     * A suite of underwrite specific classifiers, for example may be used to identify
-     * a class of coverage or employer group, Policy, Plan.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage\FHIRCoverageGrouping $grouping
-     * @return static
-     */
-    public function setGrouping(FHIRCoverageGrouping $grouping = null)
-    {
-        $this->grouping = $grouping;
-        return $this;
-    }
 
     /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
@@ -770,7 +549,7 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier()
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -788,8 +567,12 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(FHIRIdentifier $identifier = null)
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
+        $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
     }
@@ -807,9 +590,12 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = [])
+    public function setIdentifier(array $identifier = []): self
     {
-        $this->identifier = [];
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
         if ([] === $identifier) {
             return $this;
         }
@@ -824,88 +610,290 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     }
 
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
+     * A code specifying the state of the resource instance.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The insurer-specific identifier for the insurer-defined network of providers to
-     * which the beneficiary may seek treatment which will be covered at the
-     * 'in-network' rate, otherwise 'out of network' terms and conditions apply.
+     * The status of the resource instance.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRFinancialResourceStatusCodes
      */
-    public function getNetwork()
+    public function getStatus(): null|FHIRFinancialResourceStatusCodes
     {
-        return $this->network;
+        return $this->status;
     }
 
     /**
-     * A sequence of Unicode characters
-     * Note that FHIR strings may not exceed 1MB in size
+     * A code specifying the state of the resource instance.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The insurer-specific identifier for the insurer-defined network of providers to
-     * which the beneficiary may seek treatment which will be covered at the
-     * 'in-network' rate, otherwise 'out of network' terms and conditions apply.
+     * The status of the resource instance.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $network
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRFinancialResourceStatusCodes $status
      * @return static
      */
-    public function setNetwork($network = null)
+    public function setStatus(null|FHIRFinancialResourceStatusCodes $status = null): self
     {
-        if (null === $network) {
-            $this->network = null;
-            return $this;
+        if (null === $status) {
+            $status = new FHIRFinancialResourceStatusCodes();
         }
-        if ($network instanceof FHIRString) {
-            $this->network = $network;
-            return $this;
-        }
-        $this->network = new FHIRString($network);
+        $this->_trackValueSet($this->status, $status);
+        $this->status = $status;
         return $this;
     }
 
     /**
-     * An integer with a value that is positive (e.g. >0)
-     * If the element is present, it must have either a \@value, an \@id referenced from
-     * the Narrative, or extensions
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The order of applicability of this coverage relative to other coverages which
-     * are currently inforce. Note, there may be gaps in the numbering and this does
-     * not imply primary, secondard etc. as the specific positioning of coverages
-     * depends upon the episode of care.
+     * The type of coverage: social program, medical plan, accident coverage (workers
+     * compensation, auto), group health or payment by an individual or organization.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
-    public function getOrder()
+    public function getType(): null|FHIRCodeableConcept
     {
-        return $this->order;
+        return $this->type;
     }
 
     /**
-     * An integer with a value that is positive (e.g. >0)
-     * If the element is present, it must have either a \@value, an \@id referenced from
-     * the Narrative, or extensions
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The order of applicability of this coverage relative to other coverages which
-     * are currently inforce. Note, there may be gaps in the numbering and this does
-     * not imply primary, secondard etc. as the specific positioning of coverages
-     * depends upon the episode of care.
+     * The type of coverage: social program, medical plan, accident coverage (workers
+     * compensation, auto), group health or payment by an individual or organization.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt $order
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setOrder($order = null)
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
-        if (null === $order) {
-            $this->order = null;
-            return $this;
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
         }
-        if ($order instanceof FHIRPositiveInt) {
-            $this->order = $order;
-            return $this;
+        $this->_trackValueSet($this->type, $type);
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The party who 'owns' the insurance policy, may be an individual, corporation or
+     * the subscriber's employer.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getPolicyHolder(): null|FHIRReference
+    {
+        return $this->policyHolder;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The party who 'owns' the insurance policy, may be an individual, corporation or
+     * the subscriber's employer.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $policyHolder
+     * @return static
+     */
+    public function setPolicyHolder(null|FHIRReference $policyHolder = null): self
+    {
+        if (null === $policyHolder) {
+            $policyHolder = new FHIRReference();
         }
-        $this->order = new FHIRPositiveInt($order);
+        $this->_trackValueSet($this->policyHolder, $policyHolder);
+        $this->policyHolder = $policyHolder;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The party who has signed-up for or 'owns' the contractual relationship to the
+     * policy or to whom the benefit of the policy for services rendered to them or
+     * their family is due.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getSubscriber(): null|FHIRReference
+    {
+        return $this->subscriber;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The party who has signed-up for or 'owns' the contractual relationship to the
+     * policy or to whom the benefit of the policy for services rendered to them or
+     * their family is due.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subscriber
+     * @return static
+     */
+    public function setSubscriber(null|FHIRReference $subscriber = null): self
+    {
+        if (null === $subscriber) {
+            $subscriber = new FHIRReference();
+        }
+        $this->_trackValueSet($this->subscriber, $subscriber);
+        $this->subscriber = $subscriber;
+        return $this;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The insurer assigned ID for the Subscriber.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
+     */
+    public function getSubscriberId(): null|FHIRString
+    {
+        return $this->subscriberId;
+    }
+
+    /**
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * The insurer assigned ID for the Subscriber.
+     *
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $subscriberId
+     * @return static
+     */
+    public function setSubscriberId(null|string|FHIRStringPrimitive|FHIRString $subscriberId = null): self
+    {
+        if (null !== $subscriberId && !($subscriberId instanceof FHIRString)) {
+            $subscriberId = new FHIRString($subscriberId);
+        }
+        $this->_trackValueSet($this->subscriberId, $subscriberId);
+        $this->subscriberId = $subscriberId;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The party who benefits from the insurance coverage., the patient when services
+     * are provided.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     */
+    public function getBeneficiary(): null|FHIRReference
+    {
+        return $this->beneficiary;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The party who benefits from the insurance coverage., the patient when services
+     * are provided.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $beneficiary
+     * @return static
+     */
+    public function setBeneficiary(null|FHIRReference $beneficiary = null): self
+    {
+        if (null === $beneficiary) {
+            $beneficiary = new FHIRReference();
+        }
+        $this->_trackValueSet($this->beneficiary, $beneficiary);
+        $this->beneficiary = $beneficiary;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The relationship of beneficiary (patient) to the subscriber.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     */
+    public function getRelationship(): null|FHIRCodeableConcept
+    {
+        return $this->relationship;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The relationship of beneficiary (patient) to the subscriber.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $relationship
+     * @return static
+     */
+    public function setRelationship(null|FHIRCodeableConcept $relationship = null): self
+    {
+        if (null === $relationship) {
+            $relationship = new FHIRCodeableConcept();
+        }
+        $this->_trackValueSet($this->relationship, $relationship);
+        $this->relationship = $relationship;
+        return $this;
+    }
+
+    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Time period during which the coverage is in force. A missing start date
+     * indicates the start date isn't known, a missing end date means the coverage is
+     * continuing to be in force.
+     *
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     */
+    public function getPeriod(): null|FHIRPeriod
+    {
+        return $this->period;
+    }
+
+    /**
+     * A time period defined by a start and end date and optionally time.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Time period during which the coverage is in force. A missing start date
+     * indicates the start date isn't known, a missing end date means the coverage is
+     * continuing to be in force.
+     *
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
+     * @return static
+     */
+    public function setPeriod(null|FHIRPeriod $period = null): self
+    {
+        if (null === $period) {
+            $period = new FHIRPeriod();
+        }
+        $this->_trackValueSet($this->period, $period);
+        $this->period = $period;
         return $this;
     }
 
@@ -921,7 +909,7 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getPayor()
+    public function getPayor(): null|array
     {
         return $this->payor;
     }
@@ -939,8 +927,12 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $payor
      * @return static
      */
-    public function addPayor(FHIRReference $payor = null)
+    public function addPayor(null|FHIRReference $payor = null): self
     {
+        if (null === $payor) {
+            $payor = new FHIRReference();
+        }
+        $this->_trackValueAdded();
         $this->payor[] = $payor;
         return $this;
     }
@@ -958,9 +950,12 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $payor
      * @return static
      */
-    public function setPayor(array $payor = [])
+    public function setPayor(array $payor = []): self
     {
-        $this->payor = [];
+        if ([] !== $this->payor) {
+            $this->_trackValuesRemoved(count($this->payor));
+            $this->payor = [];
+        }
         if ([] === $payor) {
             return $this;
         }
@@ -975,100 +970,70 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     }
 
     /**
-     * A time period defined by a start and end date and optionally time.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * Financial instrument which may be used to reimburse or pay for health care
+     * products and services.
      *
-     * Time period during which the coverage is in force. A missing start date
-     * indicates the start date isn't known, a missing end date means the coverage is
-     * continuing to be in force.
+     * A suite of underwrite specific classifiers, for example may be used to identify
+     * a class of coverage or employer group, Policy, Plan.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage\FHIRCoverageGrouping
      */
-    public function getPeriod()
+    public function getGrouping(): null|FHIRCoverageGrouping
     {
-        return $this->period;
+        return $this->grouping;
     }
 
     /**
-     * A time period defined by a start and end date and optionally time.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * Financial instrument which may be used to reimburse or pay for health care
+     * products and services.
      *
-     * Time period during which the coverage is in force. A missing start date
-     * indicates the start date isn't known, a missing end date means the coverage is
-     * continuing to be in force.
+     * A suite of underwrite specific classifiers, for example may be used to identify
+     * a class of coverage or employer group, Policy, Plan.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod $period
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage\FHIRCoverageGrouping $grouping
      * @return static
      */
-    public function setPeriod(FHIRPeriod $period = null)
+    public function setGrouping(null|FHIRCoverageGrouping $grouping = null): self
     {
-        $this->period = $period;
+        if (null === $grouping) {
+            $grouping = new FHIRCoverageGrouping();
+        }
+        $this->_trackValueSet($this->grouping, $grouping);
+        $this->grouping = $grouping;
         return $this;
     }
 
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The party who 'owns' the insurance policy, may be an individual, corporation or
-     * the subscriber's employer.
+     * A unique identifier for a dependent under the coverage.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getPolicyHolder()
+    public function getDependent(): null|FHIRString
     {
-        return $this->policyHolder;
+        return $this->dependent;
     }
 
     /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
+     * A sequence of Unicode characters
+     * Note that FHIR strings may not exceed 1MB in size
+     * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The party who 'owns' the insurance policy, may be an individual, corporation or
-     * the subscriber's employer.
+     * A unique identifier for a dependent under the coverage.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $policyHolder
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $dependent
      * @return static
      */
-    public function setPolicyHolder(FHIRReference $policyHolder = null)
+    public function setDependent(null|string|FHIRStringPrimitive|FHIRString $dependent = null): self
     {
-        $this->policyHolder = $policyHolder;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The relationship of beneficiary (patient) to the subscriber.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
-     */
-    public function getRelationship()
-    {
-        return $this->relationship;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The relationship of beneficiary (patient) to the subscriber.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $relationship
-     * @return static
-     */
-    public function setRelationship(FHIRCodeableConcept $relationship = null)
-    {
-        $this->relationship = $relationship;
+        if (null !== $dependent && !($dependent instanceof FHIRString)) {
+            $dependent = new FHIRString($dependent);
+        }
+        $this->_trackValueSet($this->dependent, $dependent);
+        $this->dependent = $dependent;
         return $this;
     }
 
@@ -1082,7 +1047,7 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getSequence()
+    public function getSequence(): null|FHIRString
     {
         return $this->sequence;
     }
@@ -1095,82 +1060,56 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * An optional counter for a particular instance of the identified coverage which
      * increments upon each renewal.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $sequence
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $sequence
      * @return static
      */
-    public function setSequence($sequence = null)
+    public function setSequence(null|string|FHIRStringPrimitive|FHIRString $sequence = null): self
     {
-        if (null === $sequence) {
-            $this->sequence = null;
-            return $this;
+        if (null !== $sequence && !($sequence instanceof FHIRString)) {
+            $sequence = new FHIRString($sequence);
         }
-        if ($sequence instanceof FHIRString) {
-            $this->sequence = $sequence;
-            return $this;
-        }
-        $this->sequence = new FHIRString($sequence);
+        $this->_trackValueSet($this->sequence, $sequence);
+        $this->sequence = $sequence;
         return $this;
     }
 
     /**
-     * A code specifying the state of the resource instance.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * An integer with a value that is positive (e.g. >0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
      *
-     * The status of the resource instance.
+     * The order of applicability of this coverage relative to other coverages which
+     * are currently inforce. Note, there may be gaps in the numbering and this does
+     * not imply primary, secondard etc. as the specific positioning of coverages
+     * depends upon the episode of care.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRFinancialResourceStatusCodes
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
      */
-    public function getStatus()
+    public function getOrder(): null|FHIRPositiveInt
     {
-        return $this->status;
+        return $this->order;
     }
 
     /**
-     * A code specifying the state of the resource instance.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
+     * An integer with a value that is positive (e.g. >0)
+     * If the element is present, it must have either a \@value, an \@id referenced from
+     * the Narrative, or extensions
      *
-     * The status of the resource instance.
+     * The order of applicability of this coverage relative to other coverages which
+     * are currently inforce. Note, there may be gaps in the numbering and this does
+     * not imply primary, secondard etc. as the specific positioning of coverages
+     * depends upon the episode of care.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRFinancialResourceStatusCodes $status
+     * @param null|string|int|float|\HL7\FHIR\STU3\FHIRPositiveIntPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt $order
      * @return static
      */
-    public function setStatus(FHIRFinancialResourceStatusCodes $status = null)
+    public function setOrder(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $order = null): self
     {
-        $this->status = $status;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The party who has signed-up for or 'owns' the contractual relationship to the
-     * policy or to whom the benefit of the policy for services rendered to them or
-     * their family is due.
-     *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
-     */
-    public function getSubscriber()
-    {
-        return $this->subscriber;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The party who has signed-up for or 'owns' the contractual relationship to the
-     * policy or to whom the benefit of the policy for services rendered to them or
-     * their family is due.
-     *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $subscriber
-     * @return static
-     */
-    public function setSubscriber(FHIRReference $subscriber = null)
-    {
-        $this->subscriber = $subscriber;
+        if (null !== $order && !($order instanceof FHIRPositiveInt)) {
+            $order = new FHIRPositiveInt($order);
+        }
+        $this->_trackValueSet($this->order, $order);
+        $this->order = $order;
         return $this;
     }
 
@@ -1179,13 +1118,15 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The insurer assigned ID for the Subscriber.
+     * The insurer-specific identifier for the insurer-defined network of providers to
+     * which the beneficiary may seek treatment which will be covered at the
+     * 'in-network' rate, otherwise 'out of network' terms and conditions apply.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
-    public function getSubscriberId()
+    public function getNetwork(): null|FHIRString
     {
-        return $this->subscriberId;
+        return $this->network;
     }
 
     /**
@@ -1193,56 +1134,83 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
-     * The insurer assigned ID for the Subscriber.
+     * The insurer-specific identifier for the insurer-defined network of providers to
+     * which the beneficiary may seek treatment which will be covered at the
+     * 'in-network' rate, otherwise 'out of network' terms and conditions apply.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRString $subscriberId
+     * @param null|string|\HL7\FHIR\STU3\FHIRStringPrimitive|\HL7\FHIR\STU3\FHIRElement\FHIRString $network
      * @return static
      */
-    public function setSubscriberId($subscriberId = null)
+    public function setNetwork(null|string|FHIRStringPrimitive|FHIRString $network = null): self
     {
-        if (null === $subscriberId) {
-            $this->subscriberId = null;
-            return $this;
+        if (null !== $network && !($network instanceof FHIRString)) {
+            $network = new FHIRString($network);
         }
-        if ($subscriberId instanceof FHIRString) {
-            $this->subscriberId = $subscriberId;
-            return $this;
-        }
-        $this->subscriberId = new FHIRString($subscriberId);
+        $this->_trackValueSet($this->network, $network);
+        $this->network = $network;
         return $this;
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The type of coverage: social program, medical plan, accident coverage (workers
-     * compensation, auto), group health or payment by an individual or organization.
+     * The policy(s) which constitute this insurance coverage.
      *
-     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
+     * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
-    public function getType()
+    public function getContract(): null|array
     {
-        return $this->type;
+        return $this->contract;
     }
 
     /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
+     * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
-     * The type of coverage: social program, medical plan, accident coverage (workers
-     * compensation, auto), group health or payment by an individual or organization.
+     * The policy(s) which constitute this insurance coverage.
      *
-     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept $type
+     * @param null|\HL7\FHIR\STU3\FHIRElement\FHIRReference $contract
      * @return static
      */
-    public function setType(FHIRCodeableConcept $type = null)
+    public function addContract(null|FHIRReference $contract = null): self
     {
-        $this->type = $type;
+        if (null === $contract) {
+            $contract = new FHIRReference();
+        }
+        $this->_trackValueAdded();
+        $this->contract[] = $contract;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The policy(s) which constitute this insurance coverage.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference[] $contract
+     * @return static
+     */
+    public function setContract(array $contract = []): self
+    {
+        if ([] !== $this->contract) {
+            $this->_trackValuesRemoved(count($this->contract));
+            $this->contract = [];
+        }
+        if ([] === $contract) {
+            return $this;
+        }
+        foreach($contract as $v) {
+            if ($v instanceof FHIRReference) {
+                $this->addContract($v);
+            } else {
+                $this->addContract(new FHIRReference($v));
+            }
+        }
         return $this;
     }
 
@@ -1252,9 +1220,9 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return array
      */
-    public function _getValidationRules()
+    public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1263,32 +1231,10 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return array
      */
-    public function _getValidationErrors()
+    public function _getValidationErrors(): array
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (null !== ($v = $this->getBeneficiary())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_BENEFICIARY] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getContract())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_CONTRACT, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getDependent())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_DEPENDENT] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getGrouping())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_GROUPING] = $fieldErrs;
-            }
-        }
         if ([] !== ($vs = $this->getIdentifier())) {
             foreach($vs as $i => $v) {
                 if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
@@ -1296,46 +1242,19 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 }
             }
         }
-        if (null !== ($v = $this->getNetwork())) {
+        if (null !== ($v = $this->getStatus())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_NETWORK] = $fieldErrs;
+                $errs[self::FIELD_STATUS] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getOrder())) {
+        if (null !== ($v = $this->getType())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_ORDER] = $fieldErrs;
-            }
-        }
-        if ([] !== ($vs = $this->getPayor())) {
-            foreach($vs as $i => $v) {
-                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                    $errs[sprintf('%s.%d', self::FIELD_PAYOR, $i)] = $fieldErrs;
-                }
-            }
-        }
-        if (null !== ($v = $this->getPeriod())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_PERIOD] = $fieldErrs;
+                $errs[self::FIELD_TYPE] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getPolicyHolder())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
                 $errs[self::FIELD_POLICY_HOLDER] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getRelationship())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_RELATIONSHIP] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getSequence())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_SEQUENCE] = $fieldErrs;
-            }
-        }
-        if (null !== ($v = $this->getStatus())) {
-            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_STATUS] = $fieldErrs;
             }
         }
         if (null !== ($v = $this->getSubscriber())) {
@@ -1348,56 +1267,57 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 $errs[self::FIELD_SUBSCRIBER_ID] = $fieldErrs;
             }
         }
-        if (null !== ($v = $this->getType())) {
+        if (null !== ($v = $this->getBeneficiary())) {
             if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
-                $errs[self::FIELD_TYPE] = $fieldErrs;
+                $errs[self::FIELD_BENEFICIARY] = $fieldErrs;
             }
         }
-        if (isset($validationRules[self::FIELD_BENEFICIARY])) {
-            $v = $this->getBeneficiary();
-            foreach($validationRules[self::FIELD_BENEFICIARY] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_BENEFICIARY, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_BENEFICIARY])) {
-                        $errs[self::FIELD_BENEFICIARY] = [];
-                    }
-                    $errs[self::FIELD_BENEFICIARY][$rule] = $err;
+        if (null !== ($v = $this->getRelationship())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_RELATIONSHIP] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_PERIOD] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getPayor())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_PAYOR, $i)] = $fieldErrs;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_CONTRACT])) {
-            $v = $this->getContract();
-            foreach($validationRules[self::FIELD_CONTRACT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_CONTRACT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_CONTRACT])) {
-                        $errs[self::FIELD_CONTRACT] = [];
-                    }
-                    $errs[self::FIELD_CONTRACT][$rule] = $err;
-                }
+        if (null !== ($v = $this->getGrouping())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_GROUPING] = $fieldErrs;
             }
         }
-        if (isset($validationRules[self::FIELD_DEPENDENT])) {
-            $v = $this->getDependent();
-            foreach($validationRules[self::FIELD_DEPENDENT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_DEPENDENT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_DEPENDENT])) {
-                        $errs[self::FIELD_DEPENDENT] = [];
-                    }
-                    $errs[self::FIELD_DEPENDENT][$rule] = $err;
-                }
+        if (null !== ($v = $this->getDependent())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_DEPENDENT] = $fieldErrs;
             }
         }
-        if (isset($validationRules[self::FIELD_GROUPING])) {
-            $v = $this->getGrouping();
-            foreach($validationRules[self::FIELD_GROUPING] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_GROUPING, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_GROUPING])) {
-                        $errs[self::FIELD_GROUPING] = [];
-                    }
-                    $errs[self::FIELD_GROUPING][$rule] = $err;
+        if (null !== ($v = $this->getSequence())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_SEQUENCE] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getOrder())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_ORDER] = $fieldErrs;
+            }
+        }
+        if (null !== ($v = $this->getNetwork())) {
+            if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                $errs[self::FIELD_NETWORK] = $fieldErrs;
+            }
+        }
+        if ([] !== ($vs = $this->getContract())) {
+            foreach($vs as $i => $v) {
+                if ([] !== ($fieldErrs = $v->_getValidationErrors())) {
+                    $errs[sprintf('%s.%d', self::FIELD_CONTRACT, $i)] = $fieldErrs;
                 }
             }
         }
@@ -1413,51 +1333,27 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_NETWORK])) {
-            $v = $this->getNetwork();
-            foreach($validationRules[self::FIELD_NETWORK] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_NETWORK, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_STATUS])) {
+            $v = $this->getStatus();
+            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_STATUS, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_NETWORK])) {
-                        $errs[self::FIELD_NETWORK] = [];
+                    if (!isset($errs[self::FIELD_STATUS])) {
+                        $errs[self::FIELD_STATUS] = [];
                     }
-                    $errs[self::FIELD_NETWORK][$rule] = $err;
+                    $errs[self::FIELD_STATUS][$rule] = $err;
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_ORDER])) {
-            $v = $this->getOrder();
-            foreach($validationRules[self::FIELD_ORDER] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_ORDER, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_TYPE])) {
+            $v = $this->getType();
+            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_TYPE, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_ORDER])) {
-                        $errs[self::FIELD_ORDER] = [];
+                    if (!isset($errs[self::FIELD_TYPE])) {
+                        $errs[self::FIELD_TYPE] = [];
                     }
-                    $errs[self::FIELD_ORDER][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_PAYOR])) {
-            $v = $this->getPayor();
-            foreach($validationRules[self::FIELD_PAYOR] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_PAYOR, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PAYOR])) {
-                        $errs[self::FIELD_PAYOR] = [];
-                    }
-                    $errs[self::FIELD_PAYOR][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_PERIOD])) {
-            $v = $this->getPeriod();
-            foreach($validationRules[self::FIELD_PERIOD] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_PERIOD, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_PERIOD])) {
-                        $errs[self::FIELD_PERIOD] = [];
-                    }
-                    $errs[self::FIELD_PERIOD][$rule] = $err;
+                    $errs[self::FIELD_TYPE][$rule] = $err;
                 }
             }
         }
@@ -1470,42 +1366,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                         $errs[self::FIELD_POLICY_HOLDER] = [];
                     }
                     $errs[self::FIELD_POLICY_HOLDER][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_RELATIONSHIP])) {
-            $v = $this->getRelationship();
-            foreach($validationRules[self::FIELD_RELATIONSHIP] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_RELATIONSHIP, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_RELATIONSHIP])) {
-                        $errs[self::FIELD_RELATIONSHIP] = [];
-                    }
-                    $errs[self::FIELD_RELATIONSHIP][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_SEQUENCE])) {
-            $v = $this->getSequence();
-            foreach($validationRules[self::FIELD_SEQUENCE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_SEQUENCE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_SEQUENCE])) {
-                        $errs[self::FIELD_SEQUENCE] = [];
-                    }
-                    $errs[self::FIELD_SEQUENCE][$rule] = $err;
-                }
-            }
-        }
-        if (isset($validationRules[self::FIELD_STATUS])) {
-            $v = $this->getStatus();
-            foreach($validationRules[self::FIELD_STATUS] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_STATUS, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_STATUS])) {
-                        $errs[self::FIELD_STATUS] = [];
-                    }
-                    $errs[self::FIELD_STATUS][$rule] = $err;
                 }
             }
         }
@@ -1533,15 +1393,135 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TYPE])) {
-            $v = $this->getType();
-            foreach($validationRules[self::FIELD_TYPE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_TYPE, $rule, $constraint, $v);
+        if (isset($validationRules[self::FIELD_BENEFICIARY])) {
+            $v = $this->getBeneficiary();
+            foreach($validationRules[self::FIELD_BENEFICIARY] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_BENEFICIARY, $rule, $constraint, $v);
                 if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TYPE])) {
-                        $errs[self::FIELD_TYPE] = [];
+                    if (!isset($errs[self::FIELD_BENEFICIARY])) {
+                        $errs[self::FIELD_BENEFICIARY] = [];
                     }
-                    $errs[self::FIELD_TYPE][$rule] = $err;
+                    $errs[self::FIELD_BENEFICIARY][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_RELATIONSHIP])) {
+            $v = $this->getRelationship();
+            foreach($validationRules[self::FIELD_RELATIONSHIP] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_RELATIONSHIP, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_RELATIONSHIP])) {
+                        $errs[self::FIELD_RELATIONSHIP] = [];
+                    }
+                    $errs[self::FIELD_RELATIONSHIP][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PERIOD])) {
+            $v = $this->getPeriod();
+            foreach($validationRules[self::FIELD_PERIOD] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_PERIOD, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PERIOD])) {
+                        $errs[self::FIELD_PERIOD] = [];
+                    }
+                    $errs[self::FIELD_PERIOD][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_PAYOR])) {
+            $v = $this->getPayor();
+            foreach($validationRules[self::FIELD_PAYOR] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_PAYOR, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_PAYOR])) {
+                        $errs[self::FIELD_PAYOR] = [];
+                    }
+                    $errs[self::FIELD_PAYOR][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_GROUPING])) {
+            $v = $this->getGrouping();
+            foreach($validationRules[self::FIELD_GROUPING] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_GROUPING, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_GROUPING])) {
+                        $errs[self::FIELD_GROUPING] = [];
+                    }
+                    $errs[self::FIELD_GROUPING][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_DEPENDENT])) {
+            $v = $this->getDependent();
+            foreach($validationRules[self::FIELD_DEPENDENT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_DEPENDENT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_DEPENDENT])) {
+                        $errs[self::FIELD_DEPENDENT] = [];
+                    }
+                    $errs[self::FIELD_DEPENDENT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_SEQUENCE])) {
+            $v = $this->getSequence();
+            foreach($validationRules[self::FIELD_SEQUENCE] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_SEQUENCE, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_SEQUENCE])) {
+                        $errs[self::FIELD_SEQUENCE] = [];
+                    }
+                    $errs[self::FIELD_SEQUENCE][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_ORDER])) {
+            $v = $this->getOrder();
+            foreach($validationRules[self::FIELD_ORDER] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_ORDER, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_ORDER])) {
+                        $errs[self::FIELD_ORDER] = [];
+                    }
+                    $errs[self::FIELD_ORDER][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_NETWORK])) {
+            $v = $this->getNetwork();
+            foreach($validationRules[self::FIELD_NETWORK] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_NETWORK, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_NETWORK])) {
+                        $errs[self::FIELD_NETWORK] = [];
+                    }
+                    $errs[self::FIELD_NETWORK][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_CONTRACT])) {
+            $v = $this->getContract();
+            foreach($validationRules[self::FIELD_CONTRACT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_COVERAGE, self::FIELD_CONTRACT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_CONTRACT])) {
+                        $errs[self::FIELD_CONTRACT] = [];
+                    }
+                    $errs[self::FIELD_CONTRACT][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_TEXT])) {
+            $v = $this->getText();
+            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_TEXT])) {
+                        $errs[self::FIELD_TEXT] = [];
+                    }
+                    $errs[self::FIELD_TEXT][$rule] = $err;
                 }
             }
         }
@@ -1581,18 +1561,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_TEXT])) {
-            $v = $this->getText();
-            foreach($validationRules[self::FIELD_TEXT] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_DOMAIN_RESOURCE, self::FIELD_TEXT, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_TEXT])) {
-                        $errs[self::FIELD_TEXT] = [];
-                    }
-                    $errs[self::FIELD_TEXT][$rule] = $err;
-                }
-            }
-        }
         if (isset($validationRules[self::FIELD_ID])) {
             $v = $this->getId();
             foreach($validationRules[self::FIELD_ID] as $rule => $constraint) {
@@ -1602,6 +1570,18 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                         $errs[self::FIELD_ID] = [];
                     }
                     $errs[self::FIELD_ID][$rule] = $err;
+                }
+            }
+        }
+        if (isset($validationRules[self::FIELD_META])) {
+            $v = $this->getMeta();
+            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
+                if (null !== $err) {
+                    if (!isset($errs[self::FIELD_META])) {
+                        $errs[self::FIELD_META] = [];
+                    }
+                    $errs[self::FIELD_META][$rule] = $err;
                 }
             }
         }
@@ -1629,354 +1609,435 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 }
             }
         }
-        if (isset($validationRules[self::FIELD_META])) {
-            $v = $this->getMeta();
-            foreach($validationRules[self::FIELD_META] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE, self::FIELD_META, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_META])) {
-                        $errs[self::FIELD_META] = [];
-                    }
-                    $errs[self::FIELD_META][$rule] = $err;
-                }
-            }
-        }
         return $errs;
     }
 
     /**
-     * @param \SimpleXMLElement|string|null $sxe
+     * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRCoverage $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRCoverage
      */
-    public static function xmlUnserialize($sxe = null, PHPFHIRTypeInterface $type = null, $libxmlOpts = 591872)
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
-        if (null === $sxe) {
+        if (null === $element) {
             return null;
         }
-        if (is_string($sxe)) {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
+        if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $sxe = new \SimpleXMLElement($sxe, $libxmlOpts, false);
-            if ($sxe === false) {
-                throw new \DomainException(sprintf('FHIRCoverage::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+            $dom = $config->newDOMDocument();
+            if (false === $dom->loadXML($element, $libxmlOpts)) {
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
-        }
-        if (!($sxe instanceof \SimpleXMLElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRCoverage::xmlUnserialize - $sxe value must be null, \\SimpleXMLElement, or valid XML string, %s seen', gettype($sxe)));
+            $element = $dom->documentElement;
         }
         if (null === $type) {
-            $type = new FHIRCoverage;
-        } elseif (!is_object($type) || !($type instanceof FHIRCoverage)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRCoverage)) {
             throw new \RuntimeException(sprintf(
-                'FHIRCoverage::xmlUnserialize - $type must be instance of \HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRCoverage or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        FHIRDomainResource::xmlUnserialize($sxe, $type);
-        $xmlNamespaces = $sxe->getDocNamespaces(false, false);
-        if ([] !== $xmlNamespaces) {
-            $ns = reset($xmlNamespaces);
-            if (false !== $ns && '' !== $ns) {
-                $type->_xmlns = $ns;
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
+        }
+        for ($i = 0; $i < $element->childNodes->length; $i++) {
+            $n = $element->childNodes->item($i);
+            if (!($n instanceof \DOMElement)) {
+                continue;
+            }
+            if (self::FIELD_IDENTIFIER === $n->nodeName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
+            } elseif (self::FIELD_STATUS === $n->nodeName) {
+                $type->setStatus(FHIRFinancialResourceStatusCodes::xmlUnserialize($n));
+            } elseif (self::FIELD_TYPE === $n->nodeName) {
+                $type->setType(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_POLICY_HOLDER === $n->nodeName) {
+                $type->setPolicyHolder(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_SUBSCRIBER === $n->nodeName) {
+                $type->setSubscriber(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_SUBSCRIBER_ID === $n->nodeName) {
+                $type->setSubscriberId(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_BENEFICIARY === $n->nodeName) {
+                $type->setBeneficiary(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_RELATIONSHIP === $n->nodeName) {
+                $type->setRelationship(FHIRCodeableConcept::xmlUnserialize($n));
+            } elseif (self::FIELD_PERIOD === $n->nodeName) {
+                $type->setPeriod(FHIRPeriod::xmlUnserialize($n));
+            } elseif (self::FIELD_PAYOR === $n->nodeName) {
+                $type->addPayor(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_GROUPING === $n->nodeName) {
+                $type->setGrouping(FHIRCoverageGrouping::xmlUnserialize($n));
+            } elseif (self::FIELD_DEPENDENT === $n->nodeName) {
+                $type->setDependent(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_SEQUENCE === $n->nodeName) {
+                $type->setSequence(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_ORDER === $n->nodeName) {
+                $type->setOrder(FHIRPositiveInt::xmlUnserialize($n));
+            } elseif (self::FIELD_NETWORK === $n->nodeName) {
+                $type->setNetwork(FHIRString::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTRACT === $n->nodeName) {
+                $type->addContract(FHIRReference::xmlUnserialize($n));
+            } elseif (self::FIELD_TEXT === $n->nodeName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n));
+            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
+                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
+                    $nn = $n->childNodes->item($ni);
+                    if ($nn instanceof \DOMElement) {
+                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
+                    }
+                }
+            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
+            } elseif (self::FIELD_ID === $n->nodeName) {
+                $type->setId(FHIRId::xmlUnserialize($n));
+            } elseif (self::FIELD_META === $n->nodeName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n));
+            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
+            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n));
             }
         }
-        $attributes = $sxe->attributes();
-        $children = $sxe->children();
-        if (isset($children->beneficiary)) {
-            $type->setBeneficiary(FHIRReference::xmlUnserialize($children->beneficiary));
-        }
-        if (isset($children->contract)) {
-            foreach($children->contract as $child) {
-                $type->addContract(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->dependent)) {
-            $type->setDependent(FHIRString::xmlUnserialize($children->dependent));
-        }
-        if (isset($attributes->dependent)) {
-            $pt = $type->getDependent();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->dependent);
-            } else {
-                $type->setDependent((string)$attributes->dependent);
-            }
-        }
-        if (isset($children->grouping)) {
-            $type->setGrouping(FHIRCoverageGrouping::xmlUnserialize($children->grouping));
-        }
-        if (isset($children->identifier)) {
-            foreach($children->identifier as $child) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->network)) {
-            $type->setNetwork(FHIRString::xmlUnserialize($children->network));
-        }
-        if (isset($attributes->network)) {
-            $pt = $type->getNetwork();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->network);
-            } else {
-                $type->setNetwork((string)$attributes->network);
-            }
-        }
-        if (isset($children->order)) {
-            $type->setOrder(FHIRPositiveInt::xmlUnserialize($children->order));
-        }
-        if (isset($attributes->order)) {
-            $pt = $type->getOrder();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->order);
-            } else {
-                $type->setOrder((string)$attributes->order);
-            }
-        }
-        if (isset($children->payor)) {
-            foreach($children->payor as $child) {
-                $type->addPayor(FHIRReference::xmlUnserialize($child));
-            }
-        }
-        if (isset($children->period)) {
-            $type->setPeriod(FHIRPeriod::xmlUnserialize($children->period));
-        }
-        if (isset($children->policyHolder)) {
-            $type->setPolicyHolder(FHIRReference::xmlUnserialize($children->policyHolder));
-        }
-        if (isset($children->relationship)) {
-            $type->setRelationship(FHIRCodeableConcept::xmlUnserialize($children->relationship));
-        }
-        if (isset($children->sequence)) {
-            $type->setSequence(FHIRString::xmlUnserialize($children->sequence));
-        }
-        if (isset($attributes->sequence)) {
-            $pt = $type->getSequence();
-            if (null !== $pt) {
-                $pt->setValue((string)$attributes->sequence);
-            } else {
-                $type->setSequence((string)$attributes->sequence);
-            }
-        }
-        if (isset($children->status)) {
-            $type->setStatus(FHIRFinancialResourceStatusCodes::xmlUnserialize($children->status));
-        }
-        if (isset($children->subscriber)) {
-            $type->setSubscriber(FHIRReference::xmlUnserialize($children->subscriber));
-        }
-        if (isset($children->subscriberId)) {
-            $type->setSubscriberId(FHIRString::xmlUnserialize($children->subscriberId));
-        }
-        if (isset($attributes->subscriberId)) {
+        $n = $element->attributes->getNamedItem(self::FIELD_SUBSCRIBER_ID);
+        if (null !== $n) {
             $pt = $type->getSubscriberId();
             if (null !== $pt) {
-                $pt->setValue((string)$attributes->subscriberId);
+                $pt->setValue($n->nodeValue);
             } else {
-                $type->setSubscriberId((string)$attributes->subscriberId);
+                $type->setSubscriberId($n->nodeValue);
             }
         }
-        if (isset($children->type)) {
-            $type->setType(FHIRCodeableConcept::xmlUnserialize($children->type));
+        $n = $element->attributes->getNamedItem(self::FIELD_DEPENDENT);
+        if (null !== $n) {
+            $pt = $type->getDependent();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setDependent($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_SEQUENCE);
+        if (null !== $n) {
+            $pt = $type->getSequence();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setSequence($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ORDER);
+        if (null !== $n) {
+            $pt = $type->getOrder();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setOrder($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_NETWORK);
+        if (null !== $n) {
+            $pt = $type->getNetwork();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setNetwork($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_ID);
+        if (null !== $n) {
+            $pt = $type->getId();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setId($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
+        if (null !== $n) {
+            $pt = $type->getImplicitRules();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setImplicitRules($n->nodeValue);
+            }
+        }
+        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
+        if (null !== $n) {
+            $pt = $type->getLanguage();
+            if (null !== $pt) {
+                $pt->setValue($n->nodeValue);
+            } else {
+                $type->setLanguage($n->nodeValue);
+            }
         }
         return $type;
     }
 
     /**
-     * @param null|\SimpleXMLElement $sxe
-     * @param null|int $libxmlOpts
-     * @return \SimpleXMLElement
+     * @param null|\DOMElement $element
+     * @param null|int|\HL7\FHIR\STU3\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\SimpleXMLElement $sxe = null, $libxmlOpts = 591872)
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
-        if (null === $sxe) {
-            $sxe = new \SimpleXMLElement($this->_getFHIRXMLElementDefinition(), $libxmlOpts, false);
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
         }
-        parent::xmlSerialize($sxe);
-        if (null !== ($v = $this->getBeneficiary())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_BENEFICIARY, null, $v->_getFHIRXMLNamespace()));
+        if (null === $element) {
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Coverage'), $libxmlOpts);
+            $element = $dom->documentElement;
         }
-        if ([] !== ($vs = $this->getContract())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_CONTRACT, null, $v->_getFHIRXMLNamespace()));
-            }
-        }
-        if (null !== ($v = $this->getDependent())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_DEPENDENT, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getGrouping())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_GROUPING, null, $v->_getFHIRXMLNamespace()));
-        }
+        parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_IDENTIFIER, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getNetwork())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_NETWORK, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getStatus())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getOrder())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_ORDER, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getType())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPolicyHolder())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_POLICY_HOLDER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getSubscriber())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_SUBSCRIBER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getSubscriberId())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_SUBSCRIBER_ID);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getBeneficiary())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_BENEFICIARY);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getRelationship())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_RELATIONSHIP);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_PERIOD);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if ([] !== ($vs = $this->getPayor())) {
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $v->xmlSerialize($sxe->addChild(self::FIELD_PAYOR, null, $v->_getFHIRXMLNamespace()));
+                $telement = $element->ownerDocument->createElement(self::FIELD_PAYOR);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getPeriod())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_PERIOD, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getGrouping())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_GROUPING);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getPolicyHolder())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_POLICY_HOLDER, null, $v->_getFHIRXMLNamespace()));
-        }
-        if (null !== ($v = $this->getRelationship())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_RELATIONSHIP, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getDependent())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_DEPENDENT);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
         if (null !== ($v = $this->getSequence())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_SEQUENCE, null, $v->_getFHIRXMLNamespace()));
+            $telement = $element->ownerDocument->createElement(self::FIELD_SEQUENCE);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getStatus())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_STATUS, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getOrder())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_ORDER);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getSubscriber())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_SUBSCRIBER, null, $v->_getFHIRXMLNamespace()));
+        if (null !== ($v = $this->getNetwork())) {
+            $telement = $element->ownerDocument->createElement(self::FIELD_NETWORK);
+            $element->appendChild($telement);
+            $v->xmlSerialize($telement);
         }
-        if (null !== ($v = $this->getSubscriberId())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_SUBSCRIBER_ID, null, $v->_getFHIRXMLNamespace()));
+        if ([] !== ($vs = $this->getContract())) {
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $telement = $element->ownerDocument->createElement(self::FIELD_CONTRACT);
+                $element->appendChild($telement);
+                $v->xmlSerialize($telement);
+            }
         }
-        if (null !== ($v = $this->getType())) {
-            $v->xmlSerialize($sxe->addChild(self::FIELD_TYPE, null, $v->_getFHIRXMLNamespace()));
-        }
-        return $sxe;
+        return $element;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $a = parent::jsonSerialize();
-        if (null !== ($v = $this->getBeneficiary())) {
-            $a[self::FIELD_BENEFICIARY] = $v;
-        }
-        if ([] !== ($vs = $this->getContract())) {
-            $a[self::FIELD_CONTRACT] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_CONTRACT][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getDependent())) {
-            $a[self::FIELD_DEPENDENT] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_DEPENDENT_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getGrouping())) {
-            $a[self::FIELD_GROUPING] = $v;
-        }
+        $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
-            $a[self::FIELD_IDENTIFIER] = [];
+            $out->{self::FIELD_IDENTIFIER} = [];
             foreach($vs as $v) {
                 if (null === $v) {
                     continue;
                 }
-                $a[self::FIELD_IDENTIFIER][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getNetwork())) {
-            $a[self::FIELD_NETWORK] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_NETWORK_EXT] = $enc;
-            }
-        }
-        if (null !== ($v = $this->getOrder())) {
-            $a[self::FIELD_ORDER] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRPositiveInt::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRPositiveInt::FIELD_VALUE]);
-                $a[self::FIELD_ORDER_EXT] = $enc;
-            }
-        }
-        if ([] !== ($vs = $this->getPayor())) {
-            $a[self::FIELD_PAYOR] = [];
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $a[self::FIELD_PAYOR][] = $v;
-            }
-        }
-        if (null !== ($v = $this->getPeriod())) {
-            $a[self::FIELD_PERIOD] = $v;
-        }
-        if (null !== ($v = $this->getPolicyHolder())) {
-            $a[self::FIELD_POLICY_HOLDER] = $v;
-        }
-        if (null !== ($v = $this->getRelationship())) {
-            $a[self::FIELD_RELATIONSHIP] = $v;
-        }
-        if (null !== ($v = $this->getSequence())) {
-            $a[self::FIELD_SEQUENCE] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_SEQUENCE_EXT] = $enc;
+                $out->{self::FIELD_IDENTIFIER}[] = $v;
             }
         }
         if (null !== ($v = $this->getStatus())) {
-            $a[self::FIELD_STATUS] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRFinancialResourceStatusCodes::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRFinancialResourceStatusCodes::FIELD_VALUE]);
-                $a[self::FIELD_STATUS_EXT] = $enc;
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_STATUS} = $val;
             }
-        }
-        if (null !== ($v = $this->getSubscriber())) {
-            $a[self::FIELD_SUBSCRIBER] = $v;
-        }
-        if (null !== ($v = $this->getSubscriberId())) {
-            $a[self::FIELD_SUBSCRIBER_ID] = $v->getValue();
-            $enc = $v->jsonSerialize();
-            $cnt = count($enc);
-            if (0 < $cnt && (1 !== $cnt || (1 === $cnt && !array_key_exists(FHIRString::FIELD_VALUE, $enc)))) {
-                unset($enc[FHIRString::FIELD_VALUE]);
-                $a[self::FIELD_SUBSCRIBER_ID_EXT] = $enc;
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRFinancialResourceStatusCodes::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_STATUS_EXT} = $ext;
             }
         }
         if (null !== ($v = $this->getType())) {
-            $a[self::FIELD_TYPE] = $v;
+            $out->{self::FIELD_TYPE} = $v;
         }
-        if ([] !== ($vs = $this->_getFHIRComments())) {
-            $a[PHPFHIRConstants::JSON_FIELD_FHIR_COMMENTS] = $vs;
+        if (null !== ($v = $this->getPolicyHolder())) {
+            $out->{self::FIELD_POLICY_HOLDER} = $v;
         }
-        return [PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE => $this->_getResourceType()] + $a;
-    }
+        if (null !== ($v = $this->getSubscriber())) {
+            $out->{self::FIELD_SUBSCRIBER} = $v;
+        }
+        if (null !== ($v = $this->getSubscriberId())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_SUBSCRIBER_ID} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_SUBSCRIBER_ID_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getBeneficiary())) {
+            $out->{self::FIELD_BENEFICIARY} = $v;
+        }
+        if (null !== ($v = $this->getRelationship())) {
+            $out->{self::FIELD_RELATIONSHIP} = $v;
+        }
+        if (null !== ($v = $this->getPeriod())) {
+            $out->{self::FIELD_PERIOD} = $v;
+        }
+        if ([] !== ($vs = $this->getPayor())) {
+            $out->{self::FIELD_PAYOR} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_PAYOR}[] = $v;
+            }
+        }
+        if (null !== ($v = $this->getGrouping())) {
+            $out->{self::FIELD_GROUPING} = $v;
+        }
+        if (null !== ($v = $this->getDependent())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_DEPENDENT} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_DEPENDENT_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getSequence())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_SEQUENCE} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_SEQUENCE_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getOrder())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_ORDER} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRPositiveInt::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_ORDER_EXT} = $ext;
+            }
+        }
+        if (null !== ($v = $this->getNetwork())) {
+            if (null !== ($val = $v->getValue())) {
+                $out->{self::FIELD_NETWORK} = $val;
+            }
+            $ext = $v->jsonSerialize();
+            unset($ext->{FHIRString::FIELD_VALUE});
+            if (count((array)$ext) > 0) {
+                $out->{self::FIELD_NETWORK_EXT} = $ext;
+            }
+        }
+        if ([] !== ($vs = $this->getContract())) {
+            $out->{self::FIELD_CONTRACT} = [];
+            foreach($vs as $v) {
+                if (null === $v) {
+                    continue;
+                }
+                $out->{self::FIELD_CONTRACT}[] = $v;
+            }
+        }
 
+        $out->{PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE} = $this->_getResourceType();
+
+        return $out;
+    }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::FHIR_TYPE_NAME;
     }

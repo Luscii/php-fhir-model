@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackag
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,8 +71,11 @@ use HL7\FHIR\R4\FHIRElement\FHIRIdentifier;
 use HL7\FHIR\R4\FHIRElement\FHIRQuantity;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A medicinal product in a container or package.
@@ -84,6 +87,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MEDICINAL_PRODUCT_PACKAGED_DOT_PACKAGE_ITEM;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_TYPE = 'type';
     const FIELD_QUANTITY = 'quantity';
@@ -97,9 +101,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
     const FIELD_SHELF_LIFE_STORAGE = 'shelfLifeStorage';
     const FIELD_MANUFACTURER = 'manufacturer';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -110,8 +111,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -122,8 +122,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -136,8 +135,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $quantity = null;
-
+    protected null|FHIRQuantity $quantity = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -148,8 +146,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $material = [];
-
+    protected null|array $material = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -160,8 +157,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $alternateMaterial = [];
-
+    protected null|array $alternateMaterial = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -171,8 +167,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $device = [];
-
+    protected null|array $device = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -182,8 +177,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $manufacturedItem = [];
-
+    protected null|array $manufacturedItem = [];
     /**
      * A medicinal product in a container or package.
      *
@@ -191,8 +185,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackaged\FHIRMedicinalProductPackagedPackageItem[]
      */
-    protected ?array $packageItem = [];
-
+    protected null|array $packageItem = [];
     /**
      * The marketing status describes the date when a medicinal product is actually put
      * on the market or the date as of which it is no longer available.
@@ -203,8 +196,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProdCharacteristic
      */
-    protected ?FHIRProdCharacteristic $physicalCharacteristics = null;
-
+    protected null|FHIRProdCharacteristic $physicalCharacteristics = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -215,8 +207,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $otherCharacteristics = [];
-
+    protected null|array $otherCharacteristics = [];
     /**
      * The shelf-life and storage information for a medicinal product item or container
      * can be described using this class.
@@ -227,8 +218,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife[]
      */
-    protected ?array $shelfLifeStorage = [];
-
+    protected null|array $shelfLifeStorage = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -238,28 +228,23 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $manufacturer = [];
+    protected null|array $manufacturer = [];
 
     /**
      * Validation map for fields in type MedicinalProductPackaged.PackageItem
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRMedicinalProductPackagedPackageItem Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMedicinalProductPackagedPackageItem::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_IDENTIFIER])) {
@@ -447,24 +432,13 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<MedicinalProductPackagedPackageItem{$xmlns}></MedicinalProductPackagedPackageItem>";
     }
 
     /**
@@ -477,7 +451,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -493,8 +467,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -511,7 +488,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -540,7 +517,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -556,8 +533,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -575,7 +555,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getQuantity(): ?FHIRQuantity
+    public function getQuantity(): null|FHIRQuantity
     {
         return $this->quantity;
     }
@@ -593,8 +573,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $quantity
      * @return static
      */
-    public function setQuantity(?FHIRQuantity $quantity = null): object
+    public function setQuantity(null|FHIRQuantity $quantity = null): self
     {
+        if (null === $quantity) {
+            $quantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->quantity, $quantity);
         $this->quantity = $quantity;
         return $this;
@@ -610,7 +593,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getMaterial(): ?array
+    public function getMaterial(): null|array
     {
         return $this->material;
     }
@@ -626,8 +609,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $material
      * @return static
      */
-    public function addMaterial(?FHIRCodeableConcept $material = null): object
+    public function addMaterial(null|FHIRCodeableConcept $material = null): self
     {
+        if (null === $material) {
+            $material = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->material[] = $material;
         return $this;
@@ -644,7 +630,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $material
      * @return static
      */
-    public function setMaterial(array $material = []): object
+    public function setMaterial(array $material = []): self
     {
         if ([] !== $this->material) {
             $this->_trackValuesRemoved(count($this->material));
@@ -673,7 +659,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getAlternateMaterial(): ?array
+    public function getAlternateMaterial(): null|array
     {
         return $this->alternateMaterial;
     }
@@ -689,8 +675,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $alternateMaterial
      * @return static
      */
-    public function addAlternateMaterial(?FHIRCodeableConcept $alternateMaterial = null): object
+    public function addAlternateMaterial(null|FHIRCodeableConcept $alternateMaterial = null): self
     {
+        if (null === $alternateMaterial) {
+            $alternateMaterial = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->alternateMaterial[] = $alternateMaterial;
         return $this;
@@ -707,7 +696,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $alternateMaterial
      * @return static
      */
-    public function setAlternateMaterial(array $alternateMaterial = []): object
+    public function setAlternateMaterial(array $alternateMaterial = []): self
     {
         if ([] !== $this->alternateMaterial) {
             $this->_trackValuesRemoved(count($this->alternateMaterial));
@@ -735,7 +724,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getDevice(): ?array
+    public function getDevice(): null|array
     {
         return $this->device;
     }
@@ -750,8 +739,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $device
      * @return static
      */
-    public function addDevice(?FHIRReference $device = null): object
+    public function addDevice(null|FHIRReference $device = null): self
     {
+        if (null === $device) {
+            $device = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->device[] = $device;
         return $this;
@@ -767,7 +759,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $device
      * @return static
      */
-    public function setDevice(array $device = []): object
+    public function setDevice(array $device = []): self
     {
         if ([] !== $this->device) {
             $this->_trackValuesRemoved(count($this->device));
@@ -795,7 +787,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getManufacturedItem(): ?array
+    public function getManufacturedItem(): null|array
     {
         return $this->manufacturedItem;
     }
@@ -810,8 +802,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $manufacturedItem
      * @return static
      */
-    public function addManufacturedItem(?FHIRReference $manufacturedItem = null): object
+    public function addManufacturedItem(null|FHIRReference $manufacturedItem = null): self
     {
+        if (null === $manufacturedItem) {
+            $manufacturedItem = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->manufacturedItem[] = $manufacturedItem;
         return $this;
@@ -827,7 +822,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $manufacturedItem
      * @return static
      */
-    public function setManufacturedItem(array $manufacturedItem = []): object
+    public function setManufacturedItem(array $manufacturedItem = []): self
     {
         if ([] !== $this->manufacturedItem) {
             $this->_trackValuesRemoved(count($this->manufacturedItem));
@@ -853,7 +848,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackaged\FHIRMedicinalProductPackagedPackageItem[]
      */
-    public function getPackageItem(): ?array
+    public function getPackageItem(): null|array
     {
         return $this->packageItem;
     }
@@ -866,8 +861,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackaged\FHIRMedicinalProductPackagedPackageItem $packageItem
      * @return static
      */
-    public function addPackageItem(?FHIRMedicinalProductPackagedPackageItem $packageItem = null): object
+    public function addPackageItem(null|FHIRMedicinalProductPackagedPackageItem $packageItem = null): self
     {
+        if (null === $packageItem) {
+            $packageItem = new FHIRMedicinalProductPackagedPackageItem();
+        }
         $this->_trackValueAdded();
         $this->packageItem[] = $packageItem;
         return $this;
@@ -881,7 +879,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackaged\FHIRMedicinalProductPackagedPackageItem[] $packageItem
      * @return static
      */
-    public function setPackageItem(array $packageItem = []): object
+    public function setPackageItem(array $packageItem = []): self
     {
         if ([] !== $this->packageItem) {
             $this->_trackValuesRemoved(count($this->packageItem));
@@ -910,7 +908,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProdCharacteristic
      */
-    public function getPhysicalCharacteristics(): ?FHIRProdCharacteristic
+    public function getPhysicalCharacteristics(): null|FHIRProdCharacteristic
     {
         return $this->physicalCharacteristics;
     }
@@ -926,8 +924,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProdCharacteristic $physicalCharacteristics
      * @return static
      */
-    public function setPhysicalCharacteristics(?FHIRProdCharacteristic $physicalCharacteristics = null): object
+    public function setPhysicalCharacteristics(null|FHIRProdCharacteristic $physicalCharacteristics = null): self
     {
+        if (null === $physicalCharacteristics) {
+            $physicalCharacteristics = new FHIRProdCharacteristic();
+        }
         $this->_trackValueSet($this->physicalCharacteristics, $physicalCharacteristics);
         $this->physicalCharacteristics = $physicalCharacteristics;
         return $this;
@@ -943,7 +944,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getOtherCharacteristics(): ?array
+    public function getOtherCharacteristics(): null|array
     {
         return $this->otherCharacteristics;
     }
@@ -959,8 +960,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $otherCharacteristics
      * @return static
      */
-    public function addOtherCharacteristics(?FHIRCodeableConcept $otherCharacteristics = null): object
+    public function addOtherCharacteristics(null|FHIRCodeableConcept $otherCharacteristics = null): self
     {
+        if (null === $otherCharacteristics) {
+            $otherCharacteristics = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->otherCharacteristics[] = $otherCharacteristics;
         return $this;
@@ -977,7 +981,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $otherCharacteristics
      * @return static
      */
-    public function setOtherCharacteristics(array $otherCharacteristics = []): object
+    public function setOtherCharacteristics(array $otherCharacteristics = []): self
     {
         if ([] !== $this->otherCharacteristics) {
             $this->_trackValuesRemoved(count($this->otherCharacteristics));
@@ -1006,7 +1010,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife[]
      */
-    public function getShelfLifeStorage(): ?array
+    public function getShelfLifeStorage(): null|array
     {
         return $this->shelfLifeStorage;
     }
@@ -1022,8 +1026,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife $shelfLifeStorage
      * @return static
      */
-    public function addShelfLifeStorage(?FHIRProductShelfLife $shelfLifeStorage = null): object
+    public function addShelfLifeStorage(null|FHIRProductShelfLife $shelfLifeStorage = null): self
     {
+        if (null === $shelfLifeStorage) {
+            $shelfLifeStorage = new FHIRProductShelfLife();
+        }
         $this->_trackValueAdded();
         $this->shelfLifeStorage[] = $shelfLifeStorage;
         return $this;
@@ -1040,7 +1047,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife[] $shelfLifeStorage
      * @return static
      */
-    public function setShelfLifeStorage(array $shelfLifeStorage = []): object
+    public function setShelfLifeStorage(array $shelfLifeStorage = []): self
     {
         if ([] !== $this->shelfLifeStorage) {
             $this->_trackValuesRemoved(count($this->shelfLifeStorage));
@@ -1068,7 +1075,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getManufacturer(): ?array
+    public function getManufacturer(): null|array
     {
         return $this->manufacturer;
     }
@@ -1083,8 +1090,11 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $manufacturer
      * @return static
      */
-    public function addManufacturer(?FHIRReference $manufacturer = null): object
+    public function addManufacturer(null|FHIRReference $manufacturer = null): self
     {
+        if (null === $manufacturer) {
+            $manufacturer = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->manufacturer[] = $manufacturer;
         return $this;
@@ -1100,7 +1110,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $manufacturer
      * @return static
      */
-    public function setManufacturer(array $manufacturer = []): object
+    public function setManufacturer(array $manufacturer = []): self
     {
         if ([] !== $this->manufacturer) {
             $this->_trackValuesRemoved(count($this->manufacturer));
@@ -1127,7 +1137,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1404,36 +1414,48 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackaged\FHIRMedicinalProductPackagedPackageItem $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackaged\FHIRMedicinalProductPackagedPackageItem
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMedicinalProductPackagedPackageItem::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMedicinalProductPackagedPackageItem::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRMedicinalProductPackagedPackageItem(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMedicinalProductPackagedPackageItem)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMedicinalProductPackagedPackageItem)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMedicinalProductPackagedPackageItem::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackaged\FHIRMedicinalProductPackagedPackageItem or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1486,17 +1508,25 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('MedicinalProductPackagedPackageItem'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1610,7 +1640,7 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
@@ -1706,7 +1736,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

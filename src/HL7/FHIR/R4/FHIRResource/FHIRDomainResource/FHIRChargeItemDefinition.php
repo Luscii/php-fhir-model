@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDatePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionApplicability;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionPropertyGroup;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
@@ -83,11 +88,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUsageContext;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The ChargeItemDefinition resource provides the properties that apply to the
@@ -103,6 +115,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CHARGE_ITEM_DEFINITION;
+
     const FIELD_URL = 'url';
     const FIELD_URL_EXT = '_url';
     const FIELD_IDENTIFIER = 'identifier';
@@ -141,9 +154,6 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
     const FIELD_APPLICABILITY = 'applicability';
     const FIELD_PROPERTY_GROUP = 'propertyGroup';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -157,10 +167,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * reference. It SHALL remain the same when the charge item definition is stored on
      * different servers.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $url = null;
-
+    protected null|FHIRUri $url = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -173,8 +182,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -191,10 +199,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * assets, refer to the Decision Support Service specification. Note that a version
      * is required for non-experimental active assets.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $version = null;
-
+    protected null|FHIRString $version = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -202,10 +209,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * A short, descriptive, user-friendly title for the charge item definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $title = null;
-
+    protected null|FHIRString $title = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -214,10 +220,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The URL pointing to an externally-defined charge item definition that is adhered
      * to in whole or in part by this definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
      */
-    protected ?array $derivedFromUri = [];
-
+    protected null|array $derivedFromUri = [];
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -226,10 +231,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * A larger definition of which this particular definition is a component or step.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $partOf = [];
-
+    protected null|array $partOf = [];
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -239,10 +243,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * As new versions of a protocol or guideline are defined, allows identification of
      * what versions are replaced by a new instance.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $replaces = [];
-
+    protected null|array $replaces = [];
     /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -250,8 +253,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    protected ?FHIRPublicationStatus $status = null;
-
+    protected null|FHIRPublicationStatus $status = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -260,10 +262,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * testing purposes (or education/evaluation/marketing) and is not intended to be
      * used for genuine usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $experimental = null;
-
+    protected null|FHIRBoolean $experimental = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -277,10 +278,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * status code changes. In addition, it should change when the substantive content
      * of the charge item definition changes.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -289,10 +289,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The name of the organization or individual that published the charge item
      * definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $publisher = null;
-
+    protected null|FHIRString $publisher = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -303,8 +302,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $contact = [];
-
+    protected null|array $contact = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -317,10 +315,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * A free text natural language description of the charge item definition from a
      * consumer's perspective.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $description = null;
-
+    protected null|FHIRMarkdown $description = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -337,8 +334,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    protected ?array $useContext = [];
-
+    protected null|array $useContext = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -350,8 +346,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $jurisdiction = [];
-
+    protected null|array $jurisdiction = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -365,10 +360,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * contents. Copyright statements are generally legal restrictions on the use and
      * publishing of the charge item definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $copyright = null;
-
+    protected null|FHIRMarkdown $copyright = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -378,10 +372,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $approvalDate = null;
-
+    protected null|FHIRDate $approvalDate = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -391,10 +384,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $lastReviewDate = null;
-
+    protected null|FHIRDate $lastReviewDate = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -405,8 +397,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $effectivePeriod = null;
-
+    protected null|FHIRPeriod $effectivePeriod = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -417,8 +408,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $code = null;
-
+    protected null|FHIRCodeableConcept $code = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -429,8 +419,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $instance = [];
-
+    protected null|array $instance = [];
     /**
      * The ChargeItemDefinition resource provides the properties that apply to the
      * (billing) codes necessary to calculate costs and prices. The properties may
@@ -441,8 +430,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionApplicability[]
      */
-    protected ?array $applicability = [];
-
+    protected null|array $applicability = [];
     /**
      * The ChargeItemDefinition resource provides the properties that apply to the
      * (billing) codes necessary to calculate costs and prices. The properties may
@@ -455,28 +443,23 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionPropertyGroup[]
      */
-    protected ?array $propertyGroup = [];
+    protected null|array $propertyGroup = [];
 
     /**
      * Validation map for fields in type ChargeItemDefinition
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRChargeItemDefinition Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRChargeItemDefinition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_URL]) || isset($data[self::FIELD_URL_EXT])) {
@@ -876,6 +859,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
         }
     }
 
+
     /**
      * @return string
      */
@@ -884,17 +868,6 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ChargeItemDefinition{$xmlns}></ChargeItemDefinition>";
-    }
     /**
      * @return string
      */
@@ -917,9 +890,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * reference. It SHALL remain the same when the charge item definition is stored on
      * different servers.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getUrl(): ?FHIRUri
+    public function getUrl(): null|FHIRUri
     {
         return $this->url;
     }
@@ -937,10 +910,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * reference. It SHALL remain the same when the charge item definition is stored on
      * different servers.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
      * @return static
      */
-    public function setUrl($url = null): object
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
@@ -962,7 +935,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -980,8 +953,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -1000,7 +976,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -1035,9 +1011,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * assets, refer to the Decision Support Service specification. Note that a version
      * is required for non-experimental active assets.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getVersion(): ?FHIRString
+    public function getVersion(): null|FHIRString
     {
         return $this->version;
     }
@@ -1058,10 +1034,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * assets, refer to the Decision Support Service specification. Note that a version
      * is required for non-experimental active assets.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
      * @return static
      */
-    public function setVersion($version = null): object
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
@@ -1078,9 +1054,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * A short, descriptive, user-friendly title for the charge item definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTitle(): ?FHIRString
+    public function getTitle(): null|FHIRString
     {
         return $this->title;
     }
@@ -1092,10 +1068,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * A short, descriptive, user-friendly title for the charge item definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
      * @return static
      */
-    public function setTitle($title = null): object
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
@@ -1113,9 +1089,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The URL pointing to an externally-defined charge item definition that is adhered
      * to in whole or in part by this definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
      */
-    public function getDerivedFromUri(): ?array
+    public function getDerivedFromUri(): null|array
     {
         return $this->derivedFromUri;
     }
@@ -1128,10 +1104,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The URL pointing to an externally-defined charge item definition that is adhered
      * to in whole or in part by this definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRUri[] $derivedFromUri
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $derivedFromUri
      * @return static
      */
-    public function addDerivedFromUri($derivedFromUri = null): object
+    public function addDerivedFromUri(null|string|FHIRUriPrimitive|FHIRUri $derivedFromUri = null): self
     {
         if (null !== $derivedFromUri && !($derivedFromUri instanceof FHIRUri)) {
             $derivedFromUri = new FHIRUri($derivedFromUri);
@@ -1152,7 +1128,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUri[] $derivedFromUri
      * @return static
      */
-    public function setDerivedFromUri(array $derivedFromUri = []): object
+    public function setDerivedFromUri(array $derivedFromUri = []): self
     {
         if ([] !== $this->derivedFromUri) {
             $this->_trackValuesRemoved(count($this->derivedFromUri));
@@ -1179,9 +1155,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * A larger definition of which this particular definition is a component or step.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getPartOf(): ?array
+    public function getPartOf(): null|array
     {
         return $this->partOf;
     }
@@ -1194,10 +1170,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * A larger definition of which this particular definition is a component or step.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $partOf
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $partOf
      * @return static
      */
-    public function addPartOf($partOf = null): object
+    public function addPartOf(null|string|FHIRCanonicalPrimitive|FHIRCanonical $partOf = null): self
     {
         if (null !== $partOf && !($partOf instanceof FHIRCanonical)) {
             $partOf = new FHIRCanonical($partOf);
@@ -1218,7 +1194,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $partOf
      * @return static
      */
-    public function setPartOf(array $partOf = []): object
+    public function setPartOf(array $partOf = []): self
     {
         if ([] !== $this->partOf) {
             $this->_trackValuesRemoved(count($this->partOf));
@@ -1246,9 +1222,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * As new versions of a protocol or guideline are defined, allows identification of
      * what versions are replaced by a new instance.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getReplaces(): ?array
+    public function getReplaces(): null|array
     {
         return $this->replaces;
     }
@@ -1262,10 +1238,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * As new versions of a protocol or guideline are defined, allows identification of
      * what versions are replaced by a new instance.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $replaces
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $replaces
      * @return static
      */
-    public function addReplaces($replaces = null): object
+    public function addReplaces(null|string|FHIRCanonicalPrimitive|FHIRCanonical $replaces = null): self
     {
         if (null !== $replaces && !($replaces instanceof FHIRCanonical)) {
             $replaces = new FHIRCanonical($replaces);
@@ -1287,7 +1263,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $replaces
      * @return static
      */
-    public function setReplaces(array $replaces = []): object
+    public function setReplaces(array $replaces = []): self
     {
         if ([] !== $this->replaces) {
             $this->_trackValuesRemoved(count($this->replaces));
@@ -1313,7 +1289,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    public function getStatus(): ?FHIRPublicationStatus
+    public function getStatus(): null|FHIRPublicationStatus
     {
         return $this->status;
     }
@@ -1326,8 +1302,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus $status
      * @return static
      */
-    public function setStatus(?FHIRPublicationStatus $status = null): object
+    public function setStatus(null|FHIRPublicationStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRPublicationStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -1341,9 +1320,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * testing purposes (or education/evaluation/marketing) and is not intended to be
      * used for genuine usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getExperimental(): ?FHIRBoolean
+    public function getExperimental(): null|FHIRBoolean
     {
         return $this->experimental;
     }
@@ -1356,10 +1335,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * testing purposes (or education/evaluation/marketing) and is not intended to be
      * used for genuine usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
      * @return static
      */
-    public function setExperimental($experimental = null): object
+    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null): self
     {
         if (null !== $experimental && !($experimental instanceof FHIRBoolean)) {
             $experimental = new FHIRBoolean($experimental);
@@ -1382,9 +1361,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * status code changes. In addition, it should change when the substantive content
      * of the charge item definition changes.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDate(): ?FHIRDateTime
+    public function getDate(): null|FHIRDateTime
     {
         return $this->date;
     }
@@ -1402,10 +1381,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * status code changes. In addition, it should change when the substantive content
      * of the charge item definition changes.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
      * @return static
      */
-    public function setDate($date = null): object
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
@@ -1423,9 +1402,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The name of the organization or individual that published the charge item
      * definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPublisher(): ?FHIRString
+    public function getPublisher(): null|FHIRString
     {
         return $this->publisher;
     }
@@ -1438,10 +1417,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The name of the organization or individual that published the charge item
      * definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
      * @return static
      */
-    public function setPublisher($publisher = null): object
+    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null): self
     {
         if (null !== $publisher && !($publisher instanceof FHIRString)) {
             $publisher = new FHIRString($publisher);
@@ -1461,7 +1440,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getContact(): ?array
+    public function getContact(): null|array
     {
         return $this->contact;
     }
@@ -1477,8 +1456,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $contact
      * @return static
      */
-    public function addContact(?FHIRContactDetail $contact = null): object
+    public function addContact(null|FHIRContactDetail $contact = null): self
     {
+        if (null === $contact) {
+            $contact = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
         return $this;
@@ -1495,7 +1477,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $contact
      * @return static
      */
-    public function setContact(array $contact = []): object
+    public function setContact(array $contact = []): self
     {
         if ([] !== $this->contact) {
             $this->_trackValuesRemoved(count($this->contact));
@@ -1526,9 +1508,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * A free text natural language description of the charge item definition from a
      * consumer's perspective.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDescription(): ?FHIRMarkdown
+    public function getDescription(): null|FHIRMarkdown
     {
         return $this->description;
     }
@@ -1545,10 +1527,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * A free text natural language description of the charge item definition from a
      * consumer's perspective.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
@@ -1574,7 +1556,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    public function getUseContext(): ?array
+    public function getUseContext(): null|array
     {
         return $this->useContext;
     }
@@ -1596,8 +1578,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $useContext
      * @return static
      */
-    public function addUseContext(?FHIRUsageContext $useContext = null): object
+    public function addUseContext(null|FHIRUsageContext $useContext = null): self
     {
+        if (null === $useContext) {
+            $useContext = new FHIRUsageContext();
+        }
         $this->_trackValueAdded();
         $this->useContext[] = $useContext;
         return $this;
@@ -1620,7 +1605,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUsageContext[] $useContext
      * @return static
      */
-    public function setUseContext(array $useContext = []): object
+    public function setUseContext(array $useContext = []): self
     {
         if ([] !== $this->useContext) {
             $this->_trackValuesRemoved(count($this->useContext));
@@ -1650,7 +1635,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getJurisdiction(): ?array
+    public function getJurisdiction(): null|array
     {
         return $this->jurisdiction;
     }
@@ -1667,8 +1652,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $jurisdiction
      * @return static
      */
-    public function addJurisdiction(?FHIRCodeableConcept $jurisdiction = null): object
+    public function addJurisdiction(null|FHIRCodeableConcept $jurisdiction = null): self
     {
+        if (null === $jurisdiction) {
+            $jurisdiction = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
         return $this;
@@ -1686,7 +1674,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $jurisdiction
      * @return static
      */
-    public function setJurisdiction(array $jurisdiction = []): object
+    public function setJurisdiction(array $jurisdiction = []): self
     {
         if ([] !== $this->jurisdiction) {
             $this->_trackValuesRemoved(count($this->jurisdiction));
@@ -1718,9 +1706,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * contents. Copyright statements are generally legal restrictions on the use and
      * publishing of the charge item definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getCopyright(): ?FHIRMarkdown
+    public function getCopyright(): null|FHIRMarkdown
     {
         return $this->copyright;
     }
@@ -1738,10 +1726,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * contents. Copyright statements are generally legal restrictions on the use and
      * publishing of the charge item definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
      * @return static
      */
-    public function setCopyright($copyright = null): object
+    public function setCopyright(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $copyright = null): self
     {
         if (null !== $copyright && !($copyright instanceof FHIRMarkdown)) {
             $copyright = new FHIRMarkdown($copyright);
@@ -1760,9 +1748,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getApprovalDate(): ?FHIRDate
+    public function getApprovalDate(): null|FHIRDate
     {
         return $this->approvalDate;
     }
@@ -1776,10 +1764,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $approvalDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $approvalDate
      * @return static
      */
-    public function setApprovalDate($approvalDate = null): object
+    public function setApprovalDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $approvalDate = null): self
     {
         if (null !== $approvalDate && !($approvalDate instanceof FHIRDate)) {
             $approvalDate = new FHIRDate($approvalDate);
@@ -1798,9 +1786,9 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getLastReviewDate(): ?FHIRDate
+    public function getLastReviewDate(): null|FHIRDate
     {
         return $this->lastReviewDate;
     }
@@ -1814,10 +1802,10 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $lastReviewDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $lastReviewDate
      * @return static
      */
-    public function setLastReviewDate($lastReviewDate = null): object
+    public function setLastReviewDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $lastReviewDate = null): self
     {
         if (null !== $lastReviewDate && !($lastReviewDate instanceof FHIRDate)) {
             $lastReviewDate = new FHIRDate($lastReviewDate);
@@ -1837,7 +1825,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getEffectivePeriod(): ?FHIRPeriod
+    public function getEffectivePeriod(): null|FHIRPeriod
     {
         return $this->effectivePeriod;
     }
@@ -1853,8 +1841,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $effectivePeriod
      * @return static
      */
-    public function setEffectivePeriod(?FHIRPeriod $effectivePeriod = null): object
+    public function setEffectivePeriod(null|FHIRPeriod $effectivePeriod = null): self
     {
+        if (null === $effectivePeriod) {
+            $effectivePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->effectivePeriod, $effectivePeriod);
         $this->effectivePeriod = $effectivePeriod;
         return $this;
@@ -1870,7 +1861,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getCode(): ?FHIRCodeableConcept
+    public function getCode(): null|FHIRCodeableConcept
     {
         return $this->code;
     }
@@ -1886,8 +1877,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $code
      * @return static
      */
-    public function setCode(?FHIRCodeableConcept $code = null): object
+    public function setCode(null|FHIRCodeableConcept $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->code, $code);
         $this->code = $code;
         return $this;
@@ -1903,7 +1897,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getInstance(): ?array
+    public function getInstance(): null|array
     {
         return $this->instance;
     }
@@ -1919,8 +1913,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $instance
      * @return static
      */
-    public function addInstance(?FHIRReference $instance = null): object
+    public function addInstance(null|FHIRReference $instance = null): self
     {
+        if (null === $instance) {
+            $instance = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->instance[] = $instance;
         return $this;
@@ -1937,7 +1934,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $instance
      * @return static
      */
-    public function setInstance(array $instance = []): object
+    public function setInstance(array $instance = []): self
     {
         if ([] !== $this->instance) {
             $this->_trackValuesRemoved(count($this->instance));
@@ -1966,7 +1963,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionApplicability[]
      */
-    public function getApplicability(): ?array
+    public function getApplicability(): null|array
     {
         return $this->applicability;
     }
@@ -1982,8 +1979,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionApplicability $applicability
      * @return static
      */
-    public function addApplicability(?FHIRChargeItemDefinitionApplicability $applicability = null): object
+    public function addApplicability(null|FHIRChargeItemDefinitionApplicability $applicability = null): self
     {
+        if (null === $applicability) {
+            $applicability = new FHIRChargeItemDefinitionApplicability();
+        }
         $this->_trackValueAdded();
         $this->applicability[] = $applicability;
         return $this;
@@ -2000,7 +2000,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionApplicability[] $applicability
      * @return static
      */
-    public function setApplicability(array $applicability = []): object
+    public function setApplicability(array $applicability = []): self
     {
         if ([] !== $this->applicability) {
             $this->_trackValuesRemoved(count($this->applicability));
@@ -2031,7 +2031,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionPropertyGroup[]
      */
-    public function getPropertyGroup(): ?array
+    public function getPropertyGroup(): null|array
     {
         return $this->propertyGroup;
     }
@@ -2049,8 +2049,11 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionPropertyGroup $propertyGroup
      * @return static
      */
-    public function addPropertyGroup(?FHIRChargeItemDefinitionPropertyGroup $propertyGroup = null): object
+    public function addPropertyGroup(null|FHIRChargeItemDefinitionPropertyGroup $propertyGroup = null): self
     {
+        if (null === $propertyGroup) {
+            $propertyGroup = new FHIRChargeItemDefinitionPropertyGroup();
+        }
         $this->_trackValueAdded();
         $this->propertyGroup[] = $propertyGroup;
         return $this;
@@ -2069,7 +2072,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionPropertyGroup[] $propertyGroup
      * @return static
      */
-    public function setPropertyGroup(array $propertyGroup = []): object
+    public function setPropertyGroup(array $propertyGroup = []): self
     {
         if ([] !== $this->propertyGroup) {
             $this->_trackValuesRemoved(count($this->propertyGroup));
@@ -2096,7 +2099,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2622,36 +2625,48 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRChargeItemDefinition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRChargeItemDefinition
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRChargeItemDefinition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRChargeItemDefinition::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRChargeItemDefinition(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRChargeItemDefinition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRChargeItemDefinition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRChargeItemDefinition::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRChargeItemDefinition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -2756,30 +2771,15 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
         }
         $n = $element->attributes->getNamedItem(self::FIELD_DERIVED_FROM_URI);
         if (null !== $n) {
-            $pt = $type->getDerivedFromUri();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addDerivedFromUri($n->nodeValue);
-            }
+            $type->addDerivedFromUri($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_PART_OF);
         if (null !== $n) {
-            $pt = $type->getPartOf();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addPartOf($n->nodeValue);
-            }
+            $type->addPartOf($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_REPLACES);
         if (null !== $n) {
-            $pt = $type->getReplaces();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addReplaces($n->nodeValue);
-            }
+            $type->addReplaces($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_EXPERIMENTAL);
         if (null !== $n) {
@@ -2876,17 +2876,25 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ChargeItemDefinition'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getUrl())) {
@@ -3060,7 +3068,7 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getUrl())) {
@@ -3319,7 +3327,6 @@ class FHIRChargeItemDefinition extends FHIRDomainResource implements PHPFHIRCont
 
         return $out;
     }
-
 
     /**
      * @return string

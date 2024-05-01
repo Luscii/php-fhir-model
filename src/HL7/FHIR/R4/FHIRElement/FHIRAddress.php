@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,8 +64,11 @@ namespace HL7\FHIR\R4\FHIRElement;
 
 use HL7\FHIR\R4\FHIRElement;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * An address expressed using postal conventions (as opposed to GPS or other
@@ -83,6 +86,7 @@ class FHIRAddress extends FHIRElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ADDRESS;
+
     const FIELD_USE = 'use';
     const FIELD_USE_EXT = '_use';
     const FIELD_TYPE = 'type';
@@ -103,9 +107,6 @@ class FHIRAddress extends FHIRElement
     const FIELD_COUNTRY_EXT = '_country';
     const FIELD_PERIOD = 'period';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * The use of an address.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -114,8 +115,7 @@ class FHIRAddress extends FHIRElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAddressUse
      */
-    protected ?FHIRAddressUse $use = null;
-
+    protected null|FHIRAddressUse $use = null;
     /**
      * The type of an address (physical / postal).
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -125,8 +125,7 @@ class FHIRAddress extends FHIRElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAddressType
      */
-    protected ?FHIRAddressType $type = null;
-
+    protected null|FHIRAddressType $type = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -135,10 +134,9 @@ class FHIRAddress extends FHIRElement
      * Specifies the entire address as it should be displayed e.g. on a postal label.
      * This may be provided instead of or as well as the specific parts.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $text = null;
-
+    protected null|FHIRString $text = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -147,10 +145,9 @@ class FHIRAddress extends FHIRElement
      * This component contains the house number, apartment number, street name, street
      * direction, P.O. Box number, delivery hints, and similar address information.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $line = [];
-
+    protected null|array $line = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -159,10 +156,9 @@ class FHIRAddress extends FHIRElement
      * The name of the city, town, suburb, village or other community or delivery
      * center.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $city = null;
-
+    protected null|FHIRString $city = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -170,10 +166,9 @@ class FHIRAddress extends FHIRElement
      *
      * The name of the administrative area (county).
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $district = null;
-
+    protected null|FHIRString $district = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -182,10 +177,9 @@ class FHIRAddress extends FHIRElement
      * Sub-unit of a country with limited sovereignty in a federally organized country.
      * A code may be used if codes are in common use (e.g. US 2 letter state codes).
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $state = null;
-
+    protected null|FHIRString $state = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -193,10 +187,9 @@ class FHIRAddress extends FHIRElement
      *
      * A postal code designating a region defined by the postal service.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $postalCode = null;
-
+    protected null|FHIRString $postalCode = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -204,10 +197,9 @@ class FHIRAddress extends FHIRElement
      *
      * Country - a nation as commonly understood or generally accepted.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $country = null;
-
+    protected null|FHIRString $country = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -217,28 +209,23 @@ class FHIRAddress extends FHIRElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $period = null;
+    protected null|FHIRPeriod $period = null;
 
     /**
      * Validation map for fields in type Address
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRAddress Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRAddress::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_USE]) || isset($data[self::FIELD_USE_EXT])) {
@@ -400,24 +387,13 @@ class FHIRAddress extends FHIRElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Address{$xmlns}></Address>";
     }
 
     /**
@@ -428,7 +404,7 @@ class FHIRAddress extends FHIRElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAddressUse
      */
-    public function getUse(): ?FHIRAddressUse
+    public function getUse(): null|FHIRAddressUse
     {
         return $this->use;
     }
@@ -442,8 +418,11 @@ class FHIRAddress extends FHIRElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAddressUse $use
      * @return static
      */
-    public function setUse(?FHIRAddressUse $use = null): object
+    public function setUse(null|FHIRAddressUse $use = null): self
     {
+        if (null === $use) {
+            $use = new FHIRAddressUse();
+        }
         $this->_trackValueSet($this->use, $use);
         $this->use = $use;
         return $this;
@@ -458,7 +437,7 @@ class FHIRAddress extends FHIRElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAddressType
      */
-    public function getType(): ?FHIRAddressType
+    public function getType(): null|FHIRAddressType
     {
         return $this->type;
     }
@@ -473,8 +452,11 @@ class FHIRAddress extends FHIRElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAddressType $type
      * @return static
      */
-    public function setType(?FHIRAddressType $type = null): object
+    public function setType(null|FHIRAddressType $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRAddressType();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -488,9 +470,9 @@ class FHIRAddress extends FHIRElement
      * Specifies the entire address as it should be displayed e.g. on a postal label.
      * This may be provided instead of or as well as the specific parts.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getText(): ?FHIRString
+    public function getText(): null|FHIRString
     {
         return $this->text;
     }
@@ -503,10 +485,10 @@ class FHIRAddress extends FHIRElement
      * Specifies the entire address as it should be displayed e.g. on a postal label.
      * This may be provided instead of or as well as the specific parts.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $text
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $text
      * @return static
      */
-    public function setText($text = null): object
+    public function setText(null|string|FHIRStringPrimitive|FHIRString $text = null): self
     {
         if (null !== $text && !($text instanceof FHIRString)) {
             $text = new FHIRString($text);
@@ -524,9 +506,9 @@ class FHIRAddress extends FHIRElement
      * This component contains the house number, apartment number, street name, street
      * direction, P.O. Box number, delivery hints, and similar address information.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getLine(): ?array
+    public function getLine(): null|array
     {
         return $this->line;
     }
@@ -539,10 +521,10 @@ class FHIRAddress extends FHIRElement
      * This component contains the house number, apartment number, street name, street
      * direction, P.O. Box number, delivery hints, and similar address information.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $line
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $line
      * @return static
      */
-    public function addLine($line = null): object
+    public function addLine(null|string|FHIRStringPrimitive|FHIRString $line = null): self
     {
         if (null !== $line && !($line instanceof FHIRString)) {
             $line = new FHIRString($line);
@@ -563,7 +545,7 @@ class FHIRAddress extends FHIRElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $line
      * @return static
      */
-    public function setLine(array $line = []): object
+    public function setLine(array $line = []): self
     {
         if ([] !== $this->line) {
             $this->_trackValuesRemoved(count($this->line));
@@ -590,9 +572,9 @@ class FHIRAddress extends FHIRElement
      * The name of the city, town, suburb, village or other community or delivery
      * center.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getCity(): ?FHIRString
+    public function getCity(): null|FHIRString
     {
         return $this->city;
     }
@@ -605,10 +587,10 @@ class FHIRAddress extends FHIRElement
      * The name of the city, town, suburb, village or other community or delivery
      * center.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $city
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $city
      * @return static
      */
-    public function setCity($city = null): object
+    public function setCity(null|string|FHIRStringPrimitive|FHIRString $city = null): self
     {
         if (null !== $city && !($city instanceof FHIRString)) {
             $city = new FHIRString($city);
@@ -625,9 +607,9 @@ class FHIRAddress extends FHIRElement
      *
      * The name of the administrative area (county).
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDistrict(): ?FHIRString
+    public function getDistrict(): null|FHIRString
     {
         return $this->district;
     }
@@ -639,10 +621,10 @@ class FHIRAddress extends FHIRElement
      *
      * The name of the administrative area (county).
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $district
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $district
      * @return static
      */
-    public function setDistrict($district = null): object
+    public function setDistrict(null|string|FHIRStringPrimitive|FHIRString $district = null): self
     {
         if (null !== $district && !($district instanceof FHIRString)) {
             $district = new FHIRString($district);
@@ -660,9 +642,9 @@ class FHIRAddress extends FHIRElement
      * Sub-unit of a country with limited sovereignty in a federally organized country.
      * A code may be used if codes are in common use (e.g. US 2 letter state codes).
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getState(): ?FHIRString
+    public function getState(): null|FHIRString
     {
         return $this->state;
     }
@@ -675,10 +657,10 @@ class FHIRAddress extends FHIRElement
      * Sub-unit of a country with limited sovereignty in a federally organized country.
      * A code may be used if codes are in common use (e.g. US 2 letter state codes).
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $state
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $state
      * @return static
      */
-    public function setState($state = null): object
+    public function setState(null|string|FHIRStringPrimitive|FHIRString $state = null): self
     {
         if (null !== $state && !($state instanceof FHIRString)) {
             $state = new FHIRString($state);
@@ -695,9 +677,9 @@ class FHIRAddress extends FHIRElement
      *
      * A postal code designating a region defined by the postal service.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPostalCode(): ?FHIRString
+    public function getPostalCode(): null|FHIRString
     {
         return $this->postalCode;
     }
@@ -709,10 +691,10 @@ class FHIRAddress extends FHIRElement
      *
      * A postal code designating a region defined by the postal service.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $postalCode
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $postalCode
      * @return static
      */
-    public function setPostalCode($postalCode = null): object
+    public function setPostalCode(null|string|FHIRStringPrimitive|FHIRString $postalCode = null): self
     {
         if (null !== $postalCode && !($postalCode instanceof FHIRString)) {
             $postalCode = new FHIRString($postalCode);
@@ -729,9 +711,9 @@ class FHIRAddress extends FHIRElement
      *
      * Country - a nation as commonly understood or generally accepted.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getCountry(): ?FHIRString
+    public function getCountry(): null|FHIRString
     {
         return $this->country;
     }
@@ -743,10 +725,10 @@ class FHIRAddress extends FHIRElement
      *
      * Country - a nation as commonly understood or generally accepted.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $country
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $country
      * @return static
      */
-    public function setCountry($country = null): object
+    public function setCountry(null|string|FHIRStringPrimitive|FHIRString $country = null): self
     {
         if (null !== $country && !($country instanceof FHIRString)) {
             $country = new FHIRString($country);
@@ -765,7 +747,7 @@ class FHIRAddress extends FHIRElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getPeriod(): ?FHIRPeriod
+    public function getPeriod(): null|FHIRPeriod
     {
         return $this->period;
     }
@@ -780,8 +762,11 @@ class FHIRAddress extends FHIRElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $period
      * @return static
      */
-    public function setPeriod(?FHIRPeriod $period = null): object
+    public function setPeriod(null|FHIRPeriod $period = null): self
     {
+        if (null === $period) {
+            $period = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->period, $period);
         $this->period = $period;
         return $this;
@@ -795,7 +780,7 @@ class FHIRAddress extends FHIRElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1010,36 +995,48 @@ class FHIRAddress extends FHIRElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAddress $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRAddress::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRAddress::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRAddress(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRAddress)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRAddress)) {
             throw new \RuntimeException(sprintf(
-                'FHIRAddress::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRAddress or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1083,12 +1080,7 @@ class FHIRAddress extends FHIRElement
         }
         $n = $element->attributes->getNamedItem(self::FIELD_LINE);
         if (null !== $n) {
-            $pt = $type->getLine();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addLine($n->nodeValue);
-            }
+            $type->addLine($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_CITY);
         if (null !== $n) {
@@ -1149,17 +1141,25 @@ class FHIRAddress extends FHIRElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('Address'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getUse())) {
@@ -1223,7 +1223,7 @@ class FHIRAddress extends FHIRElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getUse())) {
@@ -1336,7 +1336,6 @@ class FHIRAddress extends FHIRElement
 
         return $out;
     }
-
 
     /**
      * @return string

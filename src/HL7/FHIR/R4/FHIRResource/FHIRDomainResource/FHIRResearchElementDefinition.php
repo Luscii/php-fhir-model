@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDatePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRResearchElementDefinition\FHIRResearchElementDefinitionCharacteristic;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCanonical;
@@ -85,11 +90,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUsageContext;
 use HL7\FHIR\R4\FHIRElement\FHIRVariableType;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * The ResearchElementDefinition resource describes a "PICO" element that knowledge
@@ -103,6 +115,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_RESEARCH_ELEMENT_DEFINITION;
+
     const FIELD_URL = 'url';
     const FIELD_URL_EXT = '_url';
     const FIELD_IDENTIFIER = 'identifier';
@@ -158,9 +171,6 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
     const FIELD_VARIABLE_TYPE_EXT = '_variableType';
     const FIELD_CHARACTERISTIC = 'characteristic';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -174,10 +184,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * reference. It SHALL remain the same when the research element definition is
      * stored on different servers.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $url = null;
-
+    protected null|FHIRUri $url = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -190,8 +199,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -209,10 +217,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * specification. Note that a version is required for non-experimental active
      * artifacts.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $version = null;
-
+    protected null|FHIRString $version = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -222,10 +229,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * should be usable as an identifier for the module by machine processing
      * applications such as code generation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -233,10 +239,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * A short, descriptive, user-friendly title for the research element definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $title = null;
-
+    protected null|FHIRString $title = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -245,10 +250,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The short title provides an alternate title for use in informal descriptive
      * contexts where the full, formal title is not necessary.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $shortTitle = null;
-
+    protected null|FHIRString $shortTitle = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -257,10 +261,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * An explanatory or alternate title for the ResearchElementDefinition giving
      * additional information about its content.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $subtitle = null;
-
+    protected null|FHIRString $subtitle = null;
     /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -269,8 +272,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    protected ?FHIRPublicationStatus $status = null;
-
+    protected null|FHIRPublicationStatus $status = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -279,10 +281,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * for testing purposes (or education/evaluation/marketing) and is not intended to
      * be used for genuine usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $experimental = null;
-
+    protected null|FHIRBoolean $experimental = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -295,8 +296,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $subjectCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $subjectCodeableConcept = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -308,8 +308,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $subjectReference = null;
-
+    protected null|FHIRReference $subjectReference = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -323,10 +322,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * change if the status code changes. In addition, it should change when the
      * substantive content of the research element definition changes.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -335,10 +333,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The name of the organization or individual that published the research element
      * definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $publisher = null;
-
+    protected null|FHIRString $publisher = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -349,8 +346,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $contact = [];
-
+    protected null|array $contact = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -363,10 +359,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * A free text natural language description of the research element definition from
      * a consumer's perspective.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $description = null;
-
+    protected null|FHIRMarkdown $description = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -374,10 +369,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * A human-readable string to clarify or explain concepts about the resource.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $comment = [];
-
+    protected null|array $comment = [];
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -394,8 +388,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    protected ?array $useContext = [];
-
+    protected null|array $useContext = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -407,8 +400,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $jurisdiction = [];
-
+    protected null|array $jurisdiction = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -421,10 +413,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * Explanation of why this research element definition is needed and why it has
      * been designed as it has.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $purpose = null;
-
+    protected null|FHIRMarkdown $purpose = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -433,10 +424,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * A detailed description, from a clinical perspective, of how the
      * ResearchElementDefinition is used.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $usage = null;
-
+    protected null|FHIRString $usage = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -450,10 +440,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * contents. Copyright statements are generally legal restrictions on the use and
      * publishing of the research element definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $copyright = null;
-
+    protected null|FHIRMarkdown $copyright = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -463,10 +452,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $approvalDate = null;
-
+    protected null|FHIRDate $approvalDate = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -476,10 +464,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $lastReviewDate = null;
-
+    protected null|FHIRDate $lastReviewDate = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -490,8 +477,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $effectivePeriod = null;
-
+    protected null|FHIRPeriod $effectivePeriod = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -504,8 +490,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $topic = [];
-
+    protected null|array $topic = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -516,8 +501,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $author = [];
-
+    protected null|array $author = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -528,8 +512,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $editor = [];
-
+    protected null|array $editor = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -540,8 +523,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $reviewer = [];
-
+    protected null|array $reviewer = [];
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -552,8 +534,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $endorser = [];
-
+    protected null|array $endorser = [];
     /**
      * Related artifacts such as additional documentation, justification, or
      * bibliographic references.
@@ -565,8 +546,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact[]
      */
-    protected ?array $relatedArtifact = [];
-
+    protected null|array $relatedArtifact = [];
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -576,10 +556,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * A reference to a Library resource containing the formal logic used by the
      * ResearchElementDefinition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $library = [];
-
+    protected null|array $library = [];
     /**
      * The possible types of research elements (E.g. Population, Exposure, Outcome).
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -588,8 +567,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRResearchElementType
      */
-    protected ?FHIRResearchElementType $type = null;
-
+    protected null|FHIRResearchElementType $type = null;
     /**
      * The possible types of variables for exposures or outcomes (E.g. Dichotomous,
      * Continuous, Descriptive).
@@ -599,8 +577,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRVariableType
      */
-    protected ?FHIRVariableType $variableType = null;
-
+    protected null|FHIRVariableType $variableType = null;
     /**
      * The ResearchElementDefinition resource describes a "PICO" element that knowledge
      * (evidence, assertion, recommendation) is about.
@@ -610,13 +587,13 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRResearchElementDefinition\FHIRResearchElementDefinitionCharacteristic[]
      */
-    protected ?array $characteristic = [];
+    protected null|array $characteristic = [];
 
     /**
      * Validation map for fields in type ResearchElementDefinition
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_CHARACTERISTIC => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
@@ -625,17 +602,12 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
     /**
      * FHIRResearchElementDefinition Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRResearchElementDefinition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_URL]) || isset($data[self::FIELD_URL_EXT])) {
@@ -1189,6 +1161,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
         }
     }
 
+
     /**
      * @return string
      */
@@ -1197,17 +1170,6 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
         return self::FHIR_TYPE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ResearchElementDefinition{$xmlns}></ResearchElementDefinition>";
-    }
     /**
      * @return string
      */
@@ -1230,9 +1192,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * reference. It SHALL remain the same when the research element definition is
      * stored on different servers.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getUrl(): ?FHIRUri
+    public function getUrl(): null|FHIRUri
     {
         return $this->url;
     }
@@ -1250,10 +1212,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * reference. It SHALL remain the same when the research element definition is
      * stored on different servers.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
      * @return static
      */
-    public function setUrl($url = null): object
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
@@ -1275,7 +1237,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -1293,8 +1255,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
         return $this;
@@ -1313,7 +1278,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
      * @return static
      */
-    public function setIdentifier(array $identifier = []): object
+    public function setIdentifier(array $identifier = []): self
     {
         if ([] !== $this->identifier) {
             $this->_trackValuesRemoved(count($this->identifier));
@@ -1349,9 +1314,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * specification. Note that a version is required for non-experimental active
      * artifacts.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getVersion(): ?FHIRString
+    public function getVersion(): null|FHIRString
     {
         return $this->version;
     }
@@ -1373,10 +1338,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * specification. Note that a version is required for non-experimental active
      * artifacts.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
      * @return static
      */
-    public function setVersion($version = null): object
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
@@ -1395,9 +1360,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * should be usable as an identifier for the module by machine processing
      * applications such as code generation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -1411,10 +1376,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * should be usable as an identifier for the module by machine processing
      * applications such as code generation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
@@ -1431,9 +1396,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * A short, descriptive, user-friendly title for the research element definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTitle(): ?FHIRString
+    public function getTitle(): null|FHIRString
     {
         return $this->title;
     }
@@ -1445,10 +1410,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * A short, descriptive, user-friendly title for the research element definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
      * @return static
      */
-    public function setTitle($title = null): object
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
@@ -1466,9 +1431,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The short title provides an alternate title for use in informal descriptive
      * contexts where the full, formal title is not necessary.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getShortTitle(): ?FHIRString
+    public function getShortTitle(): null|FHIRString
     {
         return $this->shortTitle;
     }
@@ -1481,10 +1446,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The short title provides an alternate title for use in informal descriptive
      * contexts where the full, formal title is not necessary.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $shortTitle
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $shortTitle
      * @return static
      */
-    public function setShortTitle($shortTitle = null): object
+    public function setShortTitle(null|string|FHIRStringPrimitive|FHIRString $shortTitle = null): self
     {
         if (null !== $shortTitle && !($shortTitle instanceof FHIRString)) {
             $shortTitle = new FHIRString($shortTitle);
@@ -1502,9 +1467,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * An explanatory or alternate title for the ResearchElementDefinition giving
      * additional information about its content.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getSubtitle(): ?FHIRString
+    public function getSubtitle(): null|FHIRString
     {
         return $this->subtitle;
     }
@@ -1517,10 +1482,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * An explanatory or alternate title for the ResearchElementDefinition giving
      * additional information about its content.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $subtitle
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $subtitle
      * @return static
      */
-    public function setSubtitle($subtitle = null): object
+    public function setSubtitle(null|string|FHIRStringPrimitive|FHIRString $subtitle = null): self
     {
         if (null !== $subtitle && !($subtitle instanceof FHIRString)) {
             $subtitle = new FHIRString($subtitle);
@@ -1538,7 +1503,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    public function getStatus(): ?FHIRPublicationStatus
+    public function getStatus(): null|FHIRPublicationStatus
     {
         return $this->status;
     }
@@ -1552,8 +1517,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus $status
      * @return static
      */
-    public function setStatus(?FHIRPublicationStatus $status = null): object
+    public function setStatus(null|FHIRPublicationStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRPublicationStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -1567,9 +1535,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * for testing purposes (or education/evaluation/marketing) and is not intended to
      * be used for genuine usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getExperimental(): ?FHIRBoolean
+    public function getExperimental(): null|FHIRBoolean
     {
         return $this->experimental;
     }
@@ -1582,10 +1550,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * for testing purposes (or education/evaluation/marketing) and is not intended to
      * be used for genuine usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
      * @return static
      */
-    public function setExperimental($experimental = null): object
+    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null): self
     {
         if (null !== $experimental && !($experimental instanceof FHIRBoolean)) {
             $experimental = new FHIRBoolean($experimental);
@@ -1607,7 +1575,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getSubjectCodeableConcept(): ?FHIRCodeableConcept
+    public function getSubjectCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->subjectCodeableConcept;
     }
@@ -1625,8 +1593,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $subjectCodeableConcept
      * @return static
      */
-    public function setSubjectCodeableConcept(?FHIRCodeableConcept $subjectCodeableConcept = null): object
+    public function setSubjectCodeableConcept(null|FHIRCodeableConcept $subjectCodeableConcept = null): self
     {
+        if (null === $subjectCodeableConcept) {
+            $subjectCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->subjectCodeableConcept, $subjectCodeableConcept);
         $this->subjectCodeableConcept = $subjectCodeableConcept;
         return $this;
@@ -1643,7 +1614,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubjectReference(): ?FHIRReference
+    public function getSubjectReference(): null|FHIRReference
     {
         return $this->subjectReference;
     }
@@ -1660,8 +1631,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $subjectReference
      * @return static
      */
-    public function setSubjectReference(?FHIRReference $subjectReference = null): object
+    public function setSubjectReference(null|FHIRReference $subjectReference = null): self
     {
+        if (null === $subjectReference) {
+            $subjectReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->subjectReference, $subjectReference);
         $this->subjectReference = $subjectReference;
         return $this;
@@ -1680,9 +1654,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * change if the status code changes. In addition, it should change when the
      * substantive content of the research element definition changes.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDate(): ?FHIRDateTime
+    public function getDate(): null|FHIRDateTime
     {
         return $this->date;
     }
@@ -1700,10 +1674,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * change if the status code changes. In addition, it should change when the
      * substantive content of the research element definition changes.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
      * @return static
      */
-    public function setDate($date = null): object
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
@@ -1721,9 +1695,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The name of the organization or individual that published the research element
      * definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPublisher(): ?FHIRString
+    public function getPublisher(): null|FHIRString
     {
         return $this->publisher;
     }
@@ -1736,10 +1710,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The name of the organization or individual that published the research element
      * definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
      * @return static
      */
-    public function setPublisher($publisher = null): object
+    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null): self
     {
         if (null !== $publisher && !($publisher instanceof FHIRString)) {
             $publisher = new FHIRString($publisher);
@@ -1759,7 +1733,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getContact(): ?array
+    public function getContact(): null|array
     {
         return $this->contact;
     }
@@ -1775,8 +1749,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $contact
      * @return static
      */
-    public function addContact(?FHIRContactDetail $contact = null): object
+    public function addContact(null|FHIRContactDetail $contact = null): self
     {
+        if (null === $contact) {
+            $contact = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
         return $this;
@@ -1793,7 +1770,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $contact
      * @return static
      */
-    public function setContact(array $contact = []): object
+    public function setContact(array $contact = []): self
     {
         if ([] !== $this->contact) {
             $this->_trackValuesRemoved(count($this->contact));
@@ -1824,9 +1801,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * A free text natural language description of the research element definition from
      * a consumer's perspective.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDescription(): ?FHIRMarkdown
+    public function getDescription(): null|FHIRMarkdown
     {
         return $this->description;
     }
@@ -1843,10 +1820,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * A free text natural language description of the research element definition from
      * a consumer's perspective.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
@@ -1863,9 +1840,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * A human-readable string to clarify or explain concepts about the resource.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getComment(): ?array
+    public function getComment(): null|array
     {
         return $this->comment;
     }
@@ -1877,10 +1854,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * A human-readable string to clarify or explain concepts about the resource.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $comment
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $comment
      * @return static
      */
-    public function addComment($comment = null): object
+    public function addComment(null|string|FHIRStringPrimitive|FHIRString $comment = null): self
     {
         if (null !== $comment && !($comment instanceof FHIRString)) {
             $comment = new FHIRString($comment);
@@ -1900,7 +1877,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $comment
      * @return static
      */
-    public function setComment(array $comment = []): object
+    public function setComment(array $comment = []): self
     {
         if ([] !== $this->comment) {
             $this->_trackValuesRemoved(count($this->comment));
@@ -1935,7 +1912,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    public function getUseContext(): ?array
+    public function getUseContext(): null|array
     {
         return $this->useContext;
     }
@@ -1957,8 +1934,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $useContext
      * @return static
      */
-    public function addUseContext(?FHIRUsageContext $useContext = null): object
+    public function addUseContext(null|FHIRUsageContext $useContext = null): self
     {
+        if (null === $useContext) {
+            $useContext = new FHIRUsageContext();
+        }
         $this->_trackValueAdded();
         $this->useContext[] = $useContext;
         return $this;
@@ -1981,7 +1961,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRUsageContext[] $useContext
      * @return static
      */
-    public function setUseContext(array $useContext = []): object
+    public function setUseContext(array $useContext = []): self
     {
         if ([] !== $this->useContext) {
             $this->_trackValuesRemoved(count($this->useContext));
@@ -2011,7 +1991,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getJurisdiction(): ?array
+    public function getJurisdiction(): null|array
     {
         return $this->jurisdiction;
     }
@@ -2028,8 +2008,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $jurisdiction
      * @return static
      */
-    public function addJurisdiction(?FHIRCodeableConcept $jurisdiction = null): object
+    public function addJurisdiction(null|FHIRCodeableConcept $jurisdiction = null): self
     {
+        if (null === $jurisdiction) {
+            $jurisdiction = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
         return $this;
@@ -2047,7 +2030,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $jurisdiction
      * @return static
      */
-    public function setJurisdiction(array $jurisdiction = []): object
+    public function setJurisdiction(array $jurisdiction = []): self
     {
         if ([] !== $this->jurisdiction) {
             $this->_trackValuesRemoved(count($this->jurisdiction));
@@ -2078,9 +2061,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * Explanation of why this research element definition is needed and why it has
      * been designed as it has.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getPurpose(): ?FHIRMarkdown
+    public function getPurpose(): null|FHIRMarkdown
     {
         return $this->purpose;
     }
@@ -2097,10 +2080,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * Explanation of why this research element definition is needed and why it has
      * been designed as it has.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
      * @return static
      */
-    public function setPurpose($purpose = null): object
+    public function setPurpose(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $purpose = null): self
     {
         if (null !== $purpose && !($purpose instanceof FHIRMarkdown)) {
             $purpose = new FHIRMarkdown($purpose);
@@ -2118,9 +2101,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * A detailed description, from a clinical perspective, of how the
      * ResearchElementDefinition is used.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getUsage(): ?FHIRString
+    public function getUsage(): null|FHIRString
     {
         return $this->usage;
     }
@@ -2133,10 +2116,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * A detailed description, from a clinical perspective, of how the
      * ResearchElementDefinition is used.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $usage
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $usage
      * @return static
      */
-    public function setUsage($usage = null): object
+    public function setUsage(null|string|FHIRStringPrimitive|FHIRString $usage = null): self
     {
         if (null !== $usage && !($usage instanceof FHIRString)) {
             $usage = new FHIRString($usage);
@@ -2159,9 +2142,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * contents. Copyright statements are generally legal restrictions on the use and
      * publishing of the research element definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getCopyright(): ?FHIRMarkdown
+    public function getCopyright(): null|FHIRMarkdown
     {
         return $this->copyright;
     }
@@ -2179,10 +2162,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * contents. Copyright statements are generally legal restrictions on the use and
      * publishing of the research element definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
      * @return static
      */
-    public function setCopyright($copyright = null): object
+    public function setCopyright(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $copyright = null): self
     {
         if (null !== $copyright && !($copyright instanceof FHIRMarkdown)) {
             $copyright = new FHIRMarkdown($copyright);
@@ -2201,9 +2184,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getApprovalDate(): ?FHIRDate
+    public function getApprovalDate(): null|FHIRDate
     {
         return $this->approvalDate;
     }
@@ -2217,10 +2200,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $approvalDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $approvalDate
      * @return static
      */
-    public function setApprovalDate($approvalDate = null): object
+    public function setApprovalDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $approvalDate = null): self
     {
         if (null !== $approvalDate && !($approvalDate instanceof FHIRDate)) {
             $approvalDate = new FHIRDate($approvalDate);
@@ -2239,9 +2222,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getLastReviewDate(): ?FHIRDate
+    public function getLastReviewDate(): null|FHIRDate
     {
         return $this->lastReviewDate;
     }
@@ -2255,10 +2238,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval but does not change the original approval date.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $lastReviewDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $lastReviewDate
      * @return static
      */
-    public function setLastReviewDate($lastReviewDate = null): object
+    public function setLastReviewDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $lastReviewDate = null): self
     {
         if (null !== $lastReviewDate && !($lastReviewDate instanceof FHIRDate)) {
             $lastReviewDate = new FHIRDate($lastReviewDate);
@@ -2278,7 +2261,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getEffectivePeriod(): ?FHIRPeriod
+    public function getEffectivePeriod(): null|FHIRPeriod
     {
         return $this->effectivePeriod;
     }
@@ -2294,8 +2277,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $effectivePeriod
      * @return static
      */
-    public function setEffectivePeriod(?FHIRPeriod $effectivePeriod = null): object
+    public function setEffectivePeriod(null|FHIRPeriod $effectivePeriod = null): self
     {
+        if (null === $effectivePeriod) {
+            $effectivePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->effectivePeriod, $effectivePeriod);
         $this->effectivePeriod = $effectivePeriod;
         return $this;
@@ -2313,7 +2299,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getTopic(): ?array
+    public function getTopic(): null|array
     {
         return $this->topic;
     }
@@ -2331,8 +2317,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $topic
      * @return static
      */
-    public function addTopic(?FHIRCodeableConcept $topic = null): object
+    public function addTopic(null|FHIRCodeableConcept $topic = null): self
     {
+        if (null === $topic) {
+            $topic = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->topic[] = $topic;
         return $this;
@@ -2351,7 +2340,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $topic
      * @return static
      */
-    public function setTopic(array $topic = []): object
+    public function setTopic(array $topic = []): self
     {
         if ([] !== $this->topic) {
             $this->_trackValuesRemoved(count($this->topic));
@@ -2380,7 +2369,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getAuthor(): ?array
+    public function getAuthor(): null|array
     {
         return $this->author;
     }
@@ -2396,8 +2385,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $author
      * @return static
      */
-    public function addAuthor(?FHIRContactDetail $author = null): object
+    public function addAuthor(null|FHIRContactDetail $author = null): self
     {
+        if (null === $author) {
+            $author = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->author[] = $author;
         return $this;
@@ -2414,7 +2406,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $author
      * @return static
      */
-    public function setAuthor(array $author = []): object
+    public function setAuthor(array $author = []): self
     {
         if ([] !== $this->author) {
             $this->_trackValuesRemoved(count($this->author));
@@ -2443,7 +2435,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getEditor(): ?array
+    public function getEditor(): null|array
     {
         return $this->editor;
     }
@@ -2459,8 +2451,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $editor
      * @return static
      */
-    public function addEditor(?FHIRContactDetail $editor = null): object
+    public function addEditor(null|FHIRContactDetail $editor = null): self
     {
+        if (null === $editor) {
+            $editor = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->editor[] = $editor;
         return $this;
@@ -2477,7 +2472,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $editor
      * @return static
      */
-    public function setEditor(array $editor = []): object
+    public function setEditor(array $editor = []): self
     {
         if ([] !== $this->editor) {
             $this->_trackValuesRemoved(count($this->editor));
@@ -2506,7 +2501,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getReviewer(): ?array
+    public function getReviewer(): null|array
     {
         return $this->reviewer;
     }
@@ -2522,8 +2517,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $reviewer
      * @return static
      */
-    public function addReviewer(?FHIRContactDetail $reviewer = null): object
+    public function addReviewer(null|FHIRContactDetail $reviewer = null): self
     {
+        if (null === $reviewer) {
+            $reviewer = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->reviewer[] = $reviewer;
         return $this;
@@ -2540,7 +2538,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $reviewer
      * @return static
      */
-    public function setReviewer(array $reviewer = []): object
+    public function setReviewer(array $reviewer = []): self
     {
         if ([] !== $this->reviewer) {
             $this->_trackValuesRemoved(count($this->reviewer));
@@ -2569,7 +2567,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getEndorser(): ?array
+    public function getEndorser(): null|array
     {
         return $this->endorser;
     }
@@ -2585,8 +2583,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $endorser
      * @return static
      */
-    public function addEndorser(?FHIRContactDetail $endorser = null): object
+    public function addEndorser(null|FHIRContactDetail $endorser = null): self
     {
+        if (null === $endorser) {
+            $endorser = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->endorser[] = $endorser;
         return $this;
@@ -2603,7 +2604,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $endorser
      * @return static
      */
-    public function setEndorser(array $endorser = []): object
+    public function setEndorser(array $endorser = []): self
     {
         if ([] !== $this->endorser) {
             $this->_trackValuesRemoved(count($this->endorser));
@@ -2633,7 +2634,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact[]
      */
-    public function getRelatedArtifact(): ?array
+    public function getRelatedArtifact(): null|array
     {
         return $this->relatedArtifact;
     }
@@ -2650,8 +2651,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact $relatedArtifact
      * @return static
      */
-    public function addRelatedArtifact(?FHIRRelatedArtifact $relatedArtifact = null): object
+    public function addRelatedArtifact(null|FHIRRelatedArtifact $relatedArtifact = null): self
     {
+        if (null === $relatedArtifact) {
+            $relatedArtifact = new FHIRRelatedArtifact();
+        }
         $this->_trackValueAdded();
         $this->relatedArtifact[] = $relatedArtifact;
         return $this;
@@ -2669,7 +2673,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact[] $relatedArtifact
      * @return static
      */
-    public function setRelatedArtifact(array $relatedArtifact = []): object
+    public function setRelatedArtifact(array $relatedArtifact = []): self
     {
         if ([] !== $this->relatedArtifact) {
             $this->_trackValuesRemoved(count($this->relatedArtifact));
@@ -2697,9 +2701,9 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * A reference to a Library resource containing the formal logic used by the
      * ResearchElementDefinition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getLibrary(): ?array
+    public function getLibrary(): null|array
     {
         return $this->library;
     }
@@ -2713,10 +2717,10 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * A reference to a Library resource containing the formal logic used by the
      * ResearchElementDefinition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $library
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $library
      * @return static
      */
-    public function addLibrary($library = null): object
+    public function addLibrary(null|string|FHIRCanonicalPrimitive|FHIRCanonical $library = null): self
     {
         if (null !== $library && !($library instanceof FHIRCanonical)) {
             $library = new FHIRCanonical($library);
@@ -2738,7 +2742,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $library
      * @return static
      */
-    public function setLibrary(array $library = []): object
+    public function setLibrary(array $library = []): self
     {
         if ([] !== $this->library) {
             $this->_trackValuesRemoved(count($this->library));
@@ -2765,7 +2769,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRResearchElementType
      */
-    public function getType(): ?FHIRResearchElementType
+    public function getType(): null|FHIRResearchElementType
     {
         return $this->type;
     }
@@ -2779,8 +2783,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRResearchElementType $type
      * @return static
      */
-    public function setType(?FHIRResearchElementType $type = null): object
+    public function setType(null|FHIRResearchElementType $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRResearchElementType();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -2795,7 +2802,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRVariableType
      */
-    public function getVariableType(): ?FHIRVariableType
+    public function getVariableType(): null|FHIRVariableType
     {
         return $this->variableType;
     }
@@ -2810,8 +2817,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRVariableType $variableType
      * @return static
      */
-    public function setVariableType(?FHIRVariableType $variableType = null): object
+    public function setVariableType(null|FHIRVariableType $variableType = null): self
     {
+        if (null === $variableType) {
+            $variableType = new FHIRVariableType();
+        }
         $this->_trackValueSet($this->variableType, $variableType);
         $this->variableType = $variableType;
         return $this;
@@ -2826,7 +2836,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRResearchElementDefinition\FHIRResearchElementDefinitionCharacteristic[]
      */
-    public function getCharacteristic(): ?array
+    public function getCharacteristic(): null|array
     {
         return $this->characteristic;
     }
@@ -2841,8 +2851,11 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRResearchElementDefinition\FHIRResearchElementDefinitionCharacteristic $characteristic
      * @return static
      */
-    public function addCharacteristic(?FHIRResearchElementDefinitionCharacteristic $characteristic = null): object
+    public function addCharacteristic(null|FHIRResearchElementDefinitionCharacteristic $characteristic = null): self
     {
+        if (null === $characteristic) {
+            $characteristic = new FHIRResearchElementDefinitionCharacteristic();
+        }
         $this->_trackValueAdded();
         $this->characteristic[] = $characteristic;
         return $this;
@@ -2858,7 +2871,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRResearchElementDefinition\FHIRResearchElementDefinitionCharacteristic[] $characteristic
      * @return static
      */
-    public function setCharacteristic(array $characteristic = []): object
+    public function setCharacteristic(array $characteristic = []): self
     {
         if ([] !== $this->characteristic) {
             $this->_trackValuesRemoved(count($this->characteristic));
@@ -2885,7 +2898,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -3604,36 +3617,48 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRResearchElementDefinition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRResearchElementDefinition
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRResearchElementDefinition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRResearchElementDefinition::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRResearchElementDefinition(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRResearchElementDefinition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRResearchElementDefinition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRResearchElementDefinition::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRResearchElementDefinition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -3823,12 +3848,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
         }
         $n = $element->attributes->getNamedItem(self::FIELD_COMMENT);
         if (null !== $n) {
-            $pt = $type->getComment();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addComment($n->nodeValue);
-            }
+            $type->addComment($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_PURPOSE);
         if (null !== $n) {
@@ -3877,12 +3897,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
         }
         $n = $element->attributes->getNamedItem(self::FIELD_LIBRARY);
         if (null !== $n) {
-            $pt = $type->getLibrary();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addLibrary($n->nodeValue);
-            }
+            $type->addLibrary($n->nodeValue);
         }
         $n = $element->attributes->getNamedItem(self::FIELD_ID);
         if (null !== $n) {
@@ -3916,17 +3931,25 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('ResearchElementDefinition'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getUrl())) {
@@ -4170,7 +4193,7 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getUrl())) {
@@ -4514,7 +4537,6 @@ class FHIRResearchElementDefinition extends FHIRDomainResource implements PHPFHI
 
         return $out;
     }
-
 
     /**
      * @return string

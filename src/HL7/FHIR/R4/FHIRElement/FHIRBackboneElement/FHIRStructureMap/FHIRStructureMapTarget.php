@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: May 1st, 2024 06:49+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,9 +69,13 @@ use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRStructureMapContextType;
 use HL7\FHIR\R4\FHIRElement\FHIRStructureMapTargetListMode;
 use HL7\FHIR\R4\FHIRElement\FHIRStructureMapTransform;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface;
+use HL7\FHIR\R4\PHPFHIRXmlSerializableInterface;
 
 /**
  * A Map of relationships between 2 structures that can be used to transform data.
@@ -83,6 +87,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_STRUCTURE_MAP_DOT_TARGET;
+
     const FIELD_CONTEXT = 'context';
     const FIELD_CONTEXT_EXT = '_context';
     const FIELD_CONTEXT_TYPE = 'contextType';
@@ -99,9 +104,6 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
     const FIELD_TRANSFORM_EXT = '_transform';
     const FIELD_PARAMETER = 'parameter';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -112,10 +114,9 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Type or variable this rule applies to.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    protected ?FHIRId $context = null;
-
+    protected null|FHIRId $context = null;
     /**
      * How to interpret the context.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -124,8 +125,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapContextType
      */
-    protected ?FHIRStructureMapContextType $contextType = null;
-
+    protected null|FHIRStructureMapContextType $contextType = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -133,10 +133,9 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Field to create in the context.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $element = null;
-
+    protected null|FHIRString $element = null;
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -147,10 +146,9 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Named context for field, if desired, and a field is specified.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    protected ?FHIRId $variable = null;
-
+    protected null|FHIRId $variable = null;
     /**
      * If field is a list, how to manage the production.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -159,8 +157,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapTargetListMode[]
      */
-    protected ?array $listMode = [];
-
+    protected null|array $listMode = [];
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -171,10 +168,9 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Internal rule reference for shared list items.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    protected ?FHIRId $listRuleId = null;
-
+    protected null|FHIRId $listRuleId = null;
     /**
      * How data is copied/created.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -183,8 +179,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapTransform
      */
-    protected ?FHIRStructureMapTransform $transform = null;
-
+    protected null|FHIRStructureMapTransform $transform = null;
     /**
      * A Map of relationships between 2 structures that can be used to transform data.
      *
@@ -192,28 +187,23 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapParameter[]
      */
-    protected ?array $parameter = [];
+    protected null|array $parameter = [];
 
     /**
      * Validation map for fields in type StructureMap.Target
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
 
     /**
      * FHIRStructureMapTarget Constructor
      * @param null|array $data
+
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
-        }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRStructureMapTarget::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
         }
         parent::__construct($data);
         if (isset($data[self::FIELD_CONTEXT]) || isset($data[self::FIELD_CONTEXT_EXT])) {
@@ -356,24 +346,13 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
         }
     }
 
+
     /**
      * @return string
      */
     public function _getFHIRTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<StructureMapTarget{$xmlns}></StructureMapTarget>";
     }
 
     /**
@@ -386,9 +365,9 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Type or variable this rule applies to.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    public function getContext(): ?FHIRId
+    public function getContext(): null|FHIRId
     {
         return $this->context;
     }
@@ -403,10 +382,10 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Type or variable this rule applies to.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $context
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $context
      * @return static
      */
-    public function setContext($context = null): object
+    public function setContext(null|string|FHIRIdPrimitive|FHIRId $context = null): self
     {
         if (null !== $context && !($context instanceof FHIRId)) {
             $context = new FHIRId($context);
@@ -424,7 +403,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapContextType
      */
-    public function getContextType(): ?FHIRStructureMapContextType
+    public function getContextType(): null|FHIRStructureMapContextType
     {
         return $this->contextType;
     }
@@ -438,8 +417,11 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapContextType $contextType
      * @return static
      */
-    public function setContextType(?FHIRStructureMapContextType $contextType = null): object
+    public function setContextType(null|FHIRStructureMapContextType $contextType = null): self
     {
+        if (null === $contextType) {
+            $contextType = new FHIRStructureMapContextType();
+        }
         $this->_trackValueSet($this->contextType, $contextType);
         $this->contextType = $contextType;
         return $this;
@@ -452,9 +434,9 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Field to create in the context.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getElement(): ?FHIRString
+    public function getElement(): null|FHIRString
     {
         return $this->element;
     }
@@ -466,10 +448,10 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Field to create in the context.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $element
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $element
      * @return static
      */
-    public function setElement($element = null): object
+    public function setElement(null|string|FHIRStringPrimitive|FHIRString $element = null): self
     {
         if (null !== $element && !($element instanceof FHIRString)) {
             $element = new FHIRString($element);
@@ -489,9 +471,9 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Named context for field, if desired, and a field is specified.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    public function getVariable(): ?FHIRId
+    public function getVariable(): null|FHIRId
     {
         return $this->variable;
     }
@@ -506,10 +488,10 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Named context for field, if desired, and a field is specified.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $variable
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $variable
      * @return static
      */
-    public function setVariable($variable = null): object
+    public function setVariable(null|string|FHIRIdPrimitive|FHIRId $variable = null): self
     {
         if (null !== $variable && !($variable instanceof FHIRId)) {
             $variable = new FHIRId($variable);
@@ -527,7 +509,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapTargetListMode[]
      */
-    public function getListMode(): ?array
+    public function getListMode(): null|array
     {
         return $this->listMode;
     }
@@ -541,8 +523,11 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapTargetListMode $listMode
      * @return static
      */
-    public function addListMode(?FHIRStructureMapTargetListMode $listMode = null): object
+    public function addListMode(null|FHIRStructureMapTargetListMode $listMode = null): self
     {
+        if (null === $listMode) {
+            $listMode = new FHIRStructureMapTargetListMode();
+        }
         $this->_trackValueAdded();
         $this->listMode[] = $listMode;
         return $this;
@@ -557,7 +542,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRStructureMapTargetListMode[] $listMode
      * @return static
      */
-    public function setListMode(array $listMode = []): object
+    public function setListMode(array $listMode = []): self
     {
         if ([] !== $this->listMode) {
             $this->_trackValuesRemoved(count($this->listMode));
@@ -586,9 +571,9 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Internal rule reference for shared list items.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    public function getListRuleId(): ?FHIRId
+    public function getListRuleId(): null|FHIRId
     {
         return $this->listRuleId;
     }
@@ -603,10 +588,10 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * Internal rule reference for shared list items.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $listRuleId
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $listRuleId
      * @return static
      */
-    public function setListRuleId($listRuleId = null): object
+    public function setListRuleId(null|string|FHIRIdPrimitive|FHIRId $listRuleId = null): self
     {
         if (null !== $listRuleId && !($listRuleId instanceof FHIRId)) {
             $listRuleId = new FHIRId($listRuleId);
@@ -624,7 +609,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapTransform
      */
-    public function getTransform(): ?FHIRStructureMapTransform
+    public function getTransform(): null|FHIRStructureMapTransform
     {
         return $this->transform;
     }
@@ -638,8 +623,11 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRStructureMapTransform $transform
      * @return static
      */
-    public function setTransform(?FHIRStructureMapTransform $transform = null): object
+    public function setTransform(null|FHIRStructureMapTransform $transform = null): self
     {
+        if (null === $transform) {
+            $transform = new FHIRStructureMapTransform();
+        }
         $this->_trackValueSet($this->transform, $transform);
         $this->transform = $transform;
         return $this;
@@ -652,7 +640,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapParameter[]
      */
-    public function getParameter(): ?array
+    public function getParameter(): null|array
     {
         return $this->parameter;
     }
@@ -665,8 +653,11 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapParameter $parameter
      * @return static
      */
-    public function addParameter(?FHIRStructureMapParameter $parameter = null): object
+    public function addParameter(null|FHIRStructureMapParameter $parameter = null): self
     {
+        if (null === $parameter) {
+            $parameter = new FHIRStructureMapParameter();
+        }
         $this->_trackValueAdded();
         $this->parameter[] = $parameter;
         return $this;
@@ -680,7 +671,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapParameter[] $parameter
      * @return static
      */
-    public function setParameter(array $parameter = []): object
+    public function setParameter(array $parameter = []): self
     {
         if ([] !== $this->parameter) {
             $this->_trackValuesRemoved(count($this->parameter));
@@ -707,7 +698,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -902,36 +893,48 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
     /**
      * @param null|string|\DOMElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapTarget $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapTarget
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\DOMElement $element, null|PHPFHIRXmlSerializableInterface $type = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (is_string($element)) {
             libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
+            $dom = $config->newDOMDocument();
             if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRStructureMapTarget::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
+                throw new \DomainException(sprintf(
+                    '%s::xmlUnserialize - String provided is not parseable as XML: %s',
+                    ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                    implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))
+                ));
             }
             libxml_use_internal_errors(false);
             $element = $dom->documentElement;
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRStructureMapTarget::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
         if (null === $type) {
-            $type = new FHIRStructureMapTarget(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRStructureMapTarget)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRStructureMapTarget)) {
             throw new \RuntimeException(sprintf(
-                'FHIRStructureMapTarget::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRStructureMap\FHIRStructureMapTarget or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if ('' === $type->_getFHIRXMLNamespace() && '' !== ($ens = (string)$element->namespaceURI)) {
+            $type->_setFHIRXMLNamespace($ens);
         }
         for ($i = 0; $i < $element->childNodes->length; $i++) {
             $n = $element->childNodes->item($i);
@@ -1012,17 +1015,25 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
 
     /**
      * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRXmlSerializableConfigInterface $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return \DOMElement
+     * @throws \DOMException
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(\DOMElement $element = null, null|int|PHPFHIRXmlSerializableConfigInterface $config = null): \DOMElement
     {
+        if (is_int($config)) {
+            $libxmlOpts = $config;
+            $config = new PHPFHIRConfig();
+        } else if (null === $config) {
+            $libxmlOpts = PHPFHIRXmlSerializableConfigInterface::DEFAULT_LIBXML_OPTS;
+            $config = new PHPFHIRConfig();
+        } else {
+            $libxmlOpts = $config->getLibxmlOpts();
+        }
         if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
+            $dom = $config->newDOMDocument();
+            $dom->loadXML($this->_getFHIRXMLElementDefinition('StructureMapTarget'), $libxmlOpts);
             $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
         }
         parent::xmlSerialize($element);
         if (null !== ($v = $this->getContext())) {
@@ -1081,7 +1092,7 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getContext())) {
@@ -1180,7 +1191,6 @@ class FHIRStructureMapTarget extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string
