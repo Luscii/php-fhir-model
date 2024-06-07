@@ -1,0 +1,26 @@
+name: Prepare Release
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-test
+  cancel-in-progress: true
+
+jobs:
+  administration:
+    runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.draft-release.outputs.name }}
+      tag_name: ${{ steps.draft-release.outputs.tag_name }}
+    steps:
+      - name: Draft Release
+        id: draft-release
+        uses: release-drafter/release-drafter@v5
+        with:
+          disable-autolabeler: true
+          publish: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
