@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRCodePrimitive;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,8 +63,12 @@ namespace HL7\FHIR\R4\FHIRCodePrimitive;
  */
 
 use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * Class FHIRConstraintSeverityList
@@ -74,157 +78,11 @@ class FHIRConstraintSeverityList extends FHIRCodePrimitive
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_CONSTRAINT_SEVERITY_HYPHEN_LIST;
-
-    /** @var string */
-    private $_xmlns = '';
-
-    /**
-     * Validation map for fields in type ConstraintSeverity-list
-     * @var array
-     */
-    private static array $_validationRules = [
-        self::FIELD_VALUE => [
-            PHPFHIRConstants::VALIDATE_ENUM => ['error','warning',],
-        ],
-    ];
-
-    /**
-     * FHIRConstraintSeverityList Constructor
-     * @param null|string $value
-     */
-    public function __construct($value = null)
-    {
-        parent::__construct($value);
-    }
-
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ConstraintSeverity_list{$xmlns}></ConstraintSeverity_list>";
-    }
-
-    /**
-     * Returns the validation rules that this type's fields must comply with to be considered "valid"
-     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
-     *
-     * @return array
-     */
-    public function _getValidationRules(): array
-    {
-        return self::$_validationRules;
-    }
-
-    /**
-     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
-     * passing.
-     *
-     * @return array
-     */
-    public function _getValidationErrors(): array
-    {
-        $errs = parent::_getValidationErrors();
-        $validationRules = $this->_getValidationRules();
-        if (isset($validationRules[self::FIELD_VALUE])) {
-            $v = $this->getValue();
-            foreach($validationRules[self::FIELD_VALUE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_CODE_HYPHEN_PRIMITIVE, self::FIELD_VALUE, $rule, $constraint, $v);
-                if (null !== $err) {
-                    if (!isset($errs[self::FIELD_VALUE])) {
-                        $errs[self::FIELD_VALUE] = [];
-                    }
-                    $errs[self::FIELD_VALUE][$rule] = $err;
-                }
-            }
-        }
-        return $errs;
-    }
-
-    /**
-     * @param null|string|\DOMElement $element
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive\FHIRConstraintSeverityList $type
-     * @param null|int $libxmlOpts
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive\FHIRConstraintSeverityList
-     */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
-    {
-        if (null === $element) {
-            return null;
-        }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRConstraintSeverityList::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
-        }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRConstraintSeverityList::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
-        }
-        if (null === $type) {
-            $type = new FHIRConstraintSeverityList(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRConstraintSeverityList)) {
-            throw new \RuntimeException(sprintf(
-                'FHIRConstraintSeverityList::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRCodePrimitive\FHIRConstraintSeverityList or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
-            ));
-        }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
-        }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_VALUE === $n->nodeName) {
-                $valueAttr = $n->attributes->getNamedItem('value');
-                if (null !== $valueAttr) {
-                    $type->setValue($valueAttr->nodeValue);
-                } elseif ($n->hasChildNodes()) {
-                    $type->setValue($n->ownerDocument->saveXML($n));
-                } else {
-                    $type->setValue($n->textContent);
-                }
-            }
-        }
-        $n = $element->attributes->getNamedItem(self::FIELD_VALUE);
-        if (null !== $n) {
-            $type->setValue($n->nodeValue);
-        }
-        return $type;
-    }
-
-    /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
-     */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
-    {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
-        }
-        parent::xmlSerialize($element);
-        return $element;
     }
 }

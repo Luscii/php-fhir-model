@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,8 +70,12 @@ use HL7\FHIR\R4\FHIRElement\FHIRObservationRangeCategory;
 use HL7\FHIR\R4\FHIRElement\FHIRRange;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * Set of definitional characteristics for a kind of observation or measurement
@@ -84,6 +88,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_OBSERVATION_DEFINITION_DOT_QUALIFIED_INTERVAL;
+
     const FIELD_CATEGORY = 'category';
     const FIELD_CATEGORY_EXT = '_category';
     const FIELD_RANGE = 'range';
@@ -96,9 +101,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
     const FIELD_CONDITION = 'condition';
     const FIELD_CONDITION_EXT = '_condition';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * Codes identifying the category of observation range.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -108,8 +110,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRObservationRangeCategory
      */
-    protected ?FHIRObservationRangeCategory $category = null;
-
+    protected null|FHIRObservationRangeCategory $category = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -120,8 +121,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $range = null;
-
+    protected null|FHIRRange $range = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -133,8 +133,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $context = null;
-
+    protected null|FHIRCodeableConcept $context = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -145,8 +144,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $appliesTo = [];
-
+    protected null|array $appliesTo = [];
     /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -154,8 +152,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAdministrativeGender
      */
-    protected ?FHIRAdministrativeGender $gender = null;
-
+    protected null|FHIRAdministrativeGender $gender = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -166,8 +163,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $age = null;
-
+    protected null|FHIRRange $age = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -178,8 +174,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $gestationalAge = null;
-
+    protected null|FHIRRange $gestationalAge = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -187,33 +182,30 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * Text based condition for which the reference range is valid.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $condition = null;
+    protected null|FHIRString $condition = null;
 
     /**
      * Validation map for fields in type ObservationDefinition.QualifiedInterval
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRObservationDefinitionQualifiedInterval Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRObservationDefinitionQualifiedInterval::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_CATEGORY]) || isset($data[self::FIELD_CATEGORY_EXT])) {
+        if (array_key_exists(self::FIELD_CATEGORY, $data) || array_key_exists(self::FIELD_CATEGORY_EXT, $data)) {
             $value = $data[self::FIELD_CATEGORY] ?? null;
             $ext = (isset($data[self::FIELD_CATEGORY_EXT]) && is_array($data[self::FIELD_CATEGORY_EXT])) ? $data[self::FIELD_CATEGORY_EXT] : [];
             if (null !== $value) {
@@ -226,28 +218,27 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setCategory(new FHIRObservationRangeCategory($ext));
+            } else {
+                $this->setCategory(new FHIRObservationRangeCategory(null));
             }
         }
-        if (isset($data[self::FIELD_RANGE])) {
+        if (array_key_exists(self::FIELD_RANGE, $data)) {
             if ($data[self::FIELD_RANGE] instanceof FHIRRange) {
                 $this->setRange($data[self::FIELD_RANGE]);
             } else {
                 $this->setRange(new FHIRRange($data[self::FIELD_RANGE]));
             }
         }
-        if (isset($data[self::FIELD_CONTEXT])) {
+        if (array_key_exists(self::FIELD_CONTEXT, $data)) {
             if ($data[self::FIELD_CONTEXT] instanceof FHIRCodeableConcept) {
                 $this->setContext($data[self::FIELD_CONTEXT]);
             } else {
                 $this->setContext(new FHIRCodeableConcept($data[self::FIELD_CONTEXT]));
             }
         }
-        if (isset($data[self::FIELD_APPLIES_TO])) {
+        if (array_key_exists(self::FIELD_APPLIES_TO, $data)) {
             if (is_array($data[self::FIELD_APPLIES_TO])) {
                 foreach($data[self::FIELD_APPLIES_TO] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRCodeableConcept) {
                         $this->addAppliesTo($v);
                     } else {
@@ -260,7 +251,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
                 $this->addAppliesTo(new FHIRCodeableConcept($data[self::FIELD_APPLIES_TO]));
             }
         }
-        if (isset($data[self::FIELD_GENDER]) || isset($data[self::FIELD_GENDER_EXT])) {
+        if (array_key_exists(self::FIELD_GENDER, $data) || array_key_exists(self::FIELD_GENDER_EXT, $data)) {
             $value = $data[self::FIELD_GENDER] ?? null;
             $ext = (isset($data[self::FIELD_GENDER_EXT]) && is_array($data[self::FIELD_GENDER_EXT])) ? $data[self::FIELD_GENDER_EXT] : [];
             if (null !== $value) {
@@ -273,23 +264,25 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setGender(new FHIRAdministrativeGender($ext));
+            } else {
+                $this->setGender(new FHIRAdministrativeGender(null));
             }
         }
-        if (isset($data[self::FIELD_AGE])) {
+        if (array_key_exists(self::FIELD_AGE, $data)) {
             if ($data[self::FIELD_AGE] instanceof FHIRRange) {
                 $this->setAge($data[self::FIELD_AGE]);
             } else {
                 $this->setAge(new FHIRRange($data[self::FIELD_AGE]));
             }
         }
-        if (isset($data[self::FIELD_GESTATIONAL_AGE])) {
+        if (array_key_exists(self::FIELD_GESTATIONAL_AGE, $data)) {
             if ($data[self::FIELD_GESTATIONAL_AGE] instanceof FHIRRange) {
                 $this->setGestationalAge($data[self::FIELD_GESTATIONAL_AGE]);
             } else {
                 $this->setGestationalAge(new FHIRRange($data[self::FIELD_GESTATIONAL_AGE]));
             }
         }
-        if (isset($data[self::FIELD_CONDITION]) || isset($data[self::FIELD_CONDITION_EXT])) {
+        if (array_key_exists(self::FIELD_CONDITION, $data) || array_key_exists(self::FIELD_CONDITION_EXT, $data)) {
             $value = $data[self::FIELD_CONDITION] ?? null;
             $ext = (isset($data[self::FIELD_CONDITION_EXT]) && is_array($data[self::FIELD_CONDITION_EXT])) ? $data[self::FIELD_CONDITION_EXT] : [];
             if (null !== $value) {
@@ -302,6 +295,8 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setCondition(new FHIRString($ext));
+            } else {
+                $this->setCondition(new FHIRString(null));
             }
         }
     }
@@ -309,21 +304,9 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ObservationDefinitionQualifiedInterval{$xmlns}></ObservationDefinitionQualifiedInterval>";
     }
 
     /**
@@ -335,7 +318,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRObservationRangeCategory
      */
-    public function getCategory(): ?FHIRObservationRangeCategory
+    public function getCategory(): null|FHIRObservationRangeCategory
     {
         return $this->category;
     }
@@ -350,8 +333,11 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRObservationRangeCategory $category
      * @return static
      */
-    public function setCategory(?FHIRObservationRangeCategory $category = null): object
+    public function setCategory(null|FHIRObservationRangeCategory $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRObservationRangeCategory();
+        }
         $this->_trackValueSet($this->category, $category);
         $this->category = $category;
         return $this;
@@ -367,7 +353,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getRange(): ?FHIRRange
+    public function getRange(): null|FHIRRange
     {
         return $this->range;
     }
@@ -383,8 +369,11 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $range
      * @return static
      */
-    public function setRange(?FHIRRange $range = null): object
+    public function setRange(null|FHIRRange $range = null): self
     {
+        if (null === $range) {
+            $range = new FHIRRange();
+        }
         $this->_trackValueSet($this->range, $range);
         $this->range = $range;
         return $this;
@@ -401,7 +390,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getContext(): ?FHIRCodeableConcept
+    public function getContext(): null|FHIRCodeableConcept
     {
         return $this->context;
     }
@@ -418,8 +407,11 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $context
      * @return static
      */
-    public function setContext(?FHIRCodeableConcept $context = null): object
+    public function setContext(null|FHIRCodeableConcept $context = null): self
     {
+        if (null === $context) {
+            $context = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->context, $context);
         $this->context = $context;
         return $this;
@@ -435,7 +427,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getAppliesTo(): ?array
+    public function getAppliesTo(): null|array
     {
         return $this->appliesTo;
     }
@@ -451,40 +443,13 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $appliesTo
      * @return static
      */
-    public function addAppliesTo(?FHIRCodeableConcept $appliesTo = null): object
+    public function addAppliesTo(null|FHIRCodeableConcept $appliesTo = null): self
     {
+        if (null === $appliesTo) {
+            $appliesTo = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->appliesTo[] = $appliesTo;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Codes to indicate the target population this reference range applies to.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $appliesTo
-     * @return static
-     */
-    public function setAppliesTo(array $appliesTo = []): object
-    {
-        if ([] !== $this->appliesTo) {
-            $this->_trackValuesRemoved(count($this->appliesTo));
-            $this->appliesTo = [];
-        }
-        if ([] === $appliesTo) {
-            return $this;
-        }
-        foreach($appliesTo as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addAppliesTo($v);
-            } else {
-                $this->addAppliesTo(new FHIRCodeableConcept($v));
-            }
-        }
         return $this;
     }
 
@@ -495,7 +460,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAdministrativeGender
      */
-    public function getGender(): ?FHIRAdministrativeGender
+    public function getGender(): null|FHIRAdministrativeGender
     {
         return $this->gender;
     }
@@ -508,8 +473,11 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAdministrativeGender $gender
      * @return static
      */
-    public function setGender(?FHIRAdministrativeGender $gender = null): object
+    public function setGender(null|FHIRAdministrativeGender $gender = null): self
     {
+        if (null === $gender) {
+            $gender = new FHIRAdministrativeGender();
+        }
         $this->_trackValueSet($this->gender, $gender);
         $this->gender = $gender;
         return $this;
@@ -525,7 +493,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getAge(): ?FHIRRange
+    public function getAge(): null|FHIRRange
     {
         return $this->age;
     }
@@ -541,8 +509,11 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $age
      * @return static
      */
-    public function setAge(?FHIRRange $age = null): object
+    public function setAge(null|FHIRRange $age = null): self
     {
+        if (null === $age) {
+            $age = new FHIRRange();
+        }
         $this->_trackValueSet($this->age, $age);
         $this->age = $age;
         return $this;
@@ -558,7 +529,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getGestationalAge(): ?FHIRRange
+    public function getGestationalAge(): null|FHIRRange
     {
         return $this->gestationalAge;
     }
@@ -574,8 +545,11 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $gestationalAge
      * @return static
      */
-    public function setGestationalAge(?FHIRRange $gestationalAge = null): object
+    public function setGestationalAge(null|FHIRRange $gestationalAge = null): self
     {
+        if (null === $gestationalAge) {
+            $gestationalAge = new FHIRRange();
+        }
         $this->_trackValueSet($this->gestationalAge, $gestationalAge);
         $this->gestationalAge = $gestationalAge;
         return $this;
@@ -588,9 +562,9 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * Text based condition for which the reference range is valid.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getCondition(): ?FHIRString
+    public function getCondition(): null|FHIRString
     {
         return $this->condition;
     }
@@ -602,15 +576,20 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * Text based condition for which the reference range is valid.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $condition
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $condition
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCondition($condition = null): object
+    public function setCondition(null|string|FHIRStringPrimitive|FHIRString $condition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $condition && !($condition instanceof FHIRString)) {
             $condition = new FHIRString($condition);
         }
         $this->_trackValueSet($this->condition, $condition);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_CONDITION])) {
+            $this->_primitiveXmlLocations[self::FIELD_CONDITION] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_CONDITION][0] = $xmlLocation;
         $this->condition = $condition;
         return $this;
     }
@@ -623,7 +602,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -814,156 +793,168 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition\FHIRObservationDefinitionQualifiedInterval $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition\FHIRObservationDefinitionQualifiedInterval
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRObservationDefinitionQualifiedInterval::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRObservationDefinitionQualifiedInterval::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRObservationDefinitionQualifiedInterval(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRObservationDefinitionQualifiedInterval)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRObservationDefinitionQualifiedInterval)) {
             throw new \RuntimeException(sprintf(
-                'FHIRObservationDefinitionQualifiedInterval::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition\FHIRObservationDefinitionQualifiedInterval or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_CATEGORY === $n->nodeName) {
-                $type->setCategory(FHIRObservationRangeCategory::xmlUnserialize($n));
-            } elseif (self::FIELD_RANGE === $n->nodeName) {
-                $type->setRange(FHIRRange::xmlUnserialize($n));
-            } elseif (self::FIELD_CONTEXT === $n->nodeName) {
-                $type->setContext(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_APPLIES_TO === $n->nodeName) {
-                $type->addAppliesTo(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_GENDER === $n->nodeName) {
-                $type->setGender(FHIRAdministrativeGender::xmlUnserialize($n));
-            } elseif (self::FIELD_AGE === $n->nodeName) {
-                $type->setAge(FHIRRange::xmlUnserialize($n));
-            } elseif (self::FIELD_GESTATIONAL_AGE === $n->nodeName) {
-                $type->setGestationalAge(FHIRRange::xmlUnserialize($n));
-            } elseif (self::FIELD_CONDITION === $n->nodeName) {
-                $type->setCondition(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_CATEGORY === $childName) {
+                $type->setCategory(FHIRObservationRangeCategory::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_RANGE === $childName) {
+                $type->setRange(FHIRRange::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CONTEXT === $childName) {
+                $type->setContext(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_APPLIES_TO === $childName) {
+                $type->addAppliesTo(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_GENDER === $childName) {
+                $type->setGender(FHIRAdministrativeGender::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_AGE === $childName) {
+                $type->setAge(FHIRRange::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_GESTATIONAL_AGE === $childName) {
+                $type->setGestationalAge(FHIRRange::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CONDITION === $childName) {
+                $type->setCondition(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_CONDITION);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_CONDITION])) {
             $pt = $type->getCondition();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_CONDITION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setCondition($n->nodeValue);
+                $type->setCondition((string)$attributes[self::FIELD_CONDITION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
+        }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
+        }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'ObservationDefinitionQualifiedInterval', $this->_getSourceXmlns());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCondition())) {
+            $xw->writeAttribute(self::FIELD_CONDITION, $v->getValue()?->getFormattedValue());
+        }
+        parent::xmlSerialize($xw, $config);
         if (null !== ($v = $this->getCategory())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CATEGORY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_CATEGORY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getRange())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_RANGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_RANGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getContext())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CONTEXT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_CONTEXT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getAppliesTo())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_APPLIES_TO);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getAppliesTo() as $v) {
+            $xw->startElement(self::FIELD_APPLIES_TO);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getGender())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_GENDER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_GENDER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getAge())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_AGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_AGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getGestationalAge())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_GESTATIONAL_AGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_GESTATIONAL_AGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getCondition())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CONDITION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCondition())) {
+            $xw->startElement(self::FIELD_CONDITION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getCategory())) {
@@ -985,9 +976,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
         if ([] !== ($vs = $this->getAppliesTo())) {
             $out->{self::FIELD_APPLIES_TO} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_APPLIES_TO}[] = $v;
             }
         }
@@ -1020,7 +1008,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

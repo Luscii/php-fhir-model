@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPractitioner;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,8 +69,12 @@ use HL7\FHIR\R4\FHIRElement\FHIRIdentifier;
 use HL7\FHIR\R4\FHIRElement\FHIRPeriod;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * A person who is directly or indirectly involved in the provisioning of
@@ -83,13 +87,11 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_PRACTITIONER_DOT_QUALIFICATION;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_CODE = 'code';
     const FIELD_PERIOD = 'period';
     const FIELD_ISSUER = 'issuer';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
@@ -101,8 +103,7 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -113,8 +114,7 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $code = null;
-
+    protected null|FHIRCodeableConcept $code = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -124,8 +124,7 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $period = null;
-
+    protected null|FHIRPeriod $period = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -135,36 +134,30 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $issuer = null;
+    protected null|FHIRReference $issuer = null;
 
     /**
      * Validation map for fields in type Practitioner.Qualification
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRPractitionerQualification Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRPractitionerQualification::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_IDENTIFIER])) {
+        if (array_key_exists(self::FIELD_IDENTIFIER, $data)) {
             if (is_array($data[self::FIELD_IDENTIFIER])) {
                 foreach($data[self::FIELD_IDENTIFIER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRIdentifier) {
                         $this->addIdentifier($v);
                     } else {
@@ -177,21 +170,21 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
                 $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_CODE])) {
+        if (array_key_exists(self::FIELD_CODE, $data)) {
             if ($data[self::FIELD_CODE] instanceof FHIRCodeableConcept) {
                 $this->setCode($data[self::FIELD_CODE]);
             } else {
                 $this->setCode(new FHIRCodeableConcept($data[self::FIELD_CODE]));
             }
         }
-        if (isset($data[self::FIELD_PERIOD])) {
+        if (array_key_exists(self::FIELD_PERIOD, $data)) {
             if ($data[self::FIELD_PERIOD] instanceof FHIRPeriod) {
                 $this->setPeriod($data[self::FIELD_PERIOD]);
             } else {
                 $this->setPeriod(new FHIRPeriod($data[self::FIELD_PERIOD]));
             }
         }
-        if (isset($data[self::FIELD_ISSUER])) {
+        if (array_key_exists(self::FIELD_ISSUER, $data)) {
             if ($data[self::FIELD_ISSUER] instanceof FHIRReference) {
                 $this->setIssuer($data[self::FIELD_ISSUER]);
             } else {
@@ -203,21 +196,9 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<PractitionerQualification{$xmlns}></PractitionerQualification>";
     }
 
     /**
@@ -230,7 +211,7 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -246,40 +227,13 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
-        return $this;
-    }
-
-    /**
-     * An identifier - identifies some entity uniquely and unambiguously. Typically
-     * this is used for business identifiers.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * An identifier that applies to this person's qualification in this role.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
-     * @return static
-     */
-    public function setIdentifier(array $identifier = []): object
-    {
-        if ([] !== $this->identifier) {
-            $this->_trackValuesRemoved(count($this->identifier));
-            $this->identifier = [];
-        }
-        if ([] === $identifier) {
-            return $this;
-        }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
-            }
-        }
         return $this;
     }
 
@@ -293,7 +247,7 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getCode(): ?FHIRCodeableConcept
+    public function getCode(): null|FHIRCodeableConcept
     {
         return $this->code;
     }
@@ -309,8 +263,11 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $code
      * @return static
      */
-    public function setCode(?FHIRCodeableConcept $code = null): object
+    public function setCode(null|FHIRCodeableConcept $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->code, $code);
         $this->code = $code;
         return $this;
@@ -325,7 +282,7 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getPeriod(): ?FHIRPeriod
+    public function getPeriod(): null|FHIRPeriod
     {
         return $this->period;
     }
@@ -340,8 +297,11 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $period
      * @return static
      */
-    public function setPeriod(?FHIRPeriod $period = null): object
+    public function setPeriod(null|FHIRPeriod $period = null): self
     {
+        if (null === $period) {
+            $period = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->period, $period);
         $this->period = $period;
         return $this;
@@ -356,7 +316,7 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getIssuer(): ?FHIRReference
+    public function getIssuer(): null|FHIRReference
     {
         return $this->issuer;
     }
@@ -371,8 +331,11 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $issuer
      * @return static
      */
-    public function setIssuer(?FHIRReference $issuer = null): object
+    public function setIssuer(null|FHIRReference $issuer = null): self
     {
+        if (null === $issuer) {
+            $issuer = new FHIRReference();
+        }
         $this->_trackValueSet($this->issuer, $issuer);
         $this->issuer = $issuer;
         return $this;
@@ -386,7 +349,7 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -509,127 +472,132 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPractitioner\FHIRPractitionerQualification $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPractitioner\FHIRPractitionerQualification
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRPractitionerQualification::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRPractitionerQualification::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRPractitionerQualification(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRPractitionerQualification)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRPractitionerQualification)) {
             throw new \RuntimeException(sprintf(
-                'FHIRPractitionerQualification::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPractitioner\FHIRPractitionerQualification or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_IDENTIFIER === $n->nodeName) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_CODE === $n->nodeName) {
-                $type->setCode(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_PERIOD === $n->nodeName) {
-                $type->setPeriod(FHIRPeriod::xmlUnserialize($n));
-            } elseif (self::FIELD_ISSUER === $n->nodeName) {
-                $type->setIssuer(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_IDENTIFIER === $childName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CODE === $childName) {
+                $type->setCode(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PERIOD === $childName) {
+                $type->setPeriod(FHIRPeriod::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ISSUER === $childName) {
+                $type->setIssuer(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
-        if ([] !== ($vs = $this->getIdentifier())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
+        }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
+        }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'PractitionerQualification', $this->_getSourceXmlns());
+        }
+        parent::xmlSerialize($xw, $config);
+        foreach ($this->getIdentifier() as $v) {
+            $xw->startElement(self::FIELD_IDENTIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getCode())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CODE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_CODE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPeriod())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PERIOD);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PERIOD);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getIssuer())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_ISSUER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_ISSUER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
             $out->{self::FIELD_IDENTIFIER} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_IDENTIFIER}[] = $v;
             }
         }
@@ -645,7 +613,6 @@ class FHIRPractitionerQualification extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

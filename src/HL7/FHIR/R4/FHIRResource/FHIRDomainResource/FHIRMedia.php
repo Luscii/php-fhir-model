@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,9 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAnnotation;
 use HL7\FHIR\R4\FHIRElement\FHIRAttachment;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
@@ -80,11 +83,20 @@ use HL7\FHIR\R4\FHIRElement\FHIRPositiveInt;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRInstantPrimitive;
+use HL7\FHIR\R4\FHIRPositiveIntPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * A photo, video, or audio recording acquired or used in healthcare. The actual
@@ -98,6 +110,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MEDIA;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_BASED_ON = 'basedOn';
     const FIELD_PART_OF = 'partOf';
@@ -130,9 +143,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     const FIELD_CONTENT = 'content';
     const FIELD_NOTE = 'note';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -145,8 +155,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -156,8 +165,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $basedOn = [];
-
+    protected null|array $basedOn = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -167,8 +175,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $partOf = [];
-
+    protected null|array $partOf = [];
     /**
      * The status of the communication.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -177,8 +184,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIREventStatus
      */
-    protected ?FHIREventStatus $status = null;
-
+    protected null|FHIREventStatus $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -190,8 +196,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -204,8 +209,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $modality = null;
-
+    protected null|FHIRCodeableConcept $modality = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -216,8 +220,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $view = null;
-
+    protected null|FHIRCodeableConcept $view = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -227,8 +230,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $subject = null;
-
+    protected null|FHIRReference $subject = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -238,8 +240,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $encounter = null;
-
+    protected null|FHIRReference $encounter = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -250,10 +251,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The date and time(s) at which the media was collected.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $createdDateTime = null;
-
+    protected null|FHIRDateTime $createdDateTime = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -263,8 +263,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $createdPeriod = null;
-
+    protected null|FHIRPeriod $createdPeriod = null;
     /**
      * An instant in time - known at least to the second
      * Note: This is intended for where precisely observed times are required,
@@ -276,10 +275,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * The date and time this version of the media was made available to providers,
      * typically after having been reviewed.
      *
-     * @var null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    protected ?FHIRInstant $issued = null;
-
+    protected null|FHIRInstant $issued = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -289,8 +287,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $operator = null;
-
+    protected null|FHIRReference $operator = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -301,8 +298,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $reasonCode = [];
-
+    protected null|array $reasonCode = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -314,8 +310,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $bodySite = null;
-
+    protected null|FHIRCodeableConcept $bodySite = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -324,10 +319,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * The name of the device / manufacturer of the device that was used to make the
      * recording.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $deviceName = null;
-
+    protected null|FHIRString $deviceName = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -337,8 +331,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $device = null;
-
+    protected null|FHIRReference $device = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -346,10 +339,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * Height of the image in pixels (photo/video).
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $height = null;
-
+    protected null|FHIRPositiveInt $height = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -357,10 +349,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * Width of the image in pixels (photo/video).
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $width = null;
-
+    protected null|FHIRPositiveInt $width = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -372,10 +363,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * to alert interface software that a multi-frame capable rendering widget is
      * required.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $frames = null;
-
+    protected null|FHIRPositiveInt $frames = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -384,10 +374,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The duration of the recording in seconds - for audio and video.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $duration = null;
-
+    protected null|FHIRDecimal $duration = null;
     /**
      * For referring to data content defined in other formats.
      * If the element is present, it must have a value for at least one of the defined
@@ -398,8 +387,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    protected ?FHIRAttachment $content = null;
-
+    protected null|FHIRAttachment $content = null;
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -410,36 +398,30 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    protected ?array $note = [];
+    protected null|array $note = [];
 
     /**
      * Validation map for fields in type Media
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRMedia Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMedia::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_IDENTIFIER])) {
+        if (array_key_exists(self::FIELD_IDENTIFIER, $data)) {
             if (is_array($data[self::FIELD_IDENTIFIER])) {
                 foreach($data[self::FIELD_IDENTIFIER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRIdentifier) {
                         $this->addIdentifier($v);
                     } else {
@@ -452,12 +434,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_BASED_ON])) {
+        if (array_key_exists(self::FIELD_BASED_ON, $data)) {
             if (is_array($data[self::FIELD_BASED_ON])) {
                 foreach($data[self::FIELD_BASED_ON] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRReference) {
                         $this->addBasedOn($v);
                     } else {
@@ -470,12 +449,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 $this->addBasedOn(new FHIRReference($data[self::FIELD_BASED_ON]));
             }
         }
-        if (isset($data[self::FIELD_PART_OF])) {
+        if (array_key_exists(self::FIELD_PART_OF, $data)) {
             if (is_array($data[self::FIELD_PART_OF])) {
                 foreach($data[self::FIELD_PART_OF] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRReference) {
                         $this->addPartOf($v);
                     } else {
@@ -488,7 +464,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 $this->addPartOf(new FHIRReference($data[self::FIELD_PART_OF]));
             }
         }
-        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+        if (array_key_exists(self::FIELD_STATUS, $data) || array_key_exists(self::FIELD_STATUS_EXT, $data)) {
             $value = $data[self::FIELD_STATUS] ?? null;
             $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) ? $data[self::FIELD_STATUS_EXT] : [];
             if (null !== $value) {
@@ -501,44 +477,46 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             } elseif ([] !== $ext) {
                 $this->setStatus(new FHIREventStatus($ext));
+            } else {
+                $this->setStatus(new FHIREventStatus(null));
             }
         }
-        if (isset($data[self::FIELD_TYPE])) {
+        if (array_key_exists(self::FIELD_TYPE, $data)) {
             if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
                 $this->setType($data[self::FIELD_TYPE]);
             } else {
                 $this->setType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
             }
         }
-        if (isset($data[self::FIELD_MODALITY])) {
+        if (array_key_exists(self::FIELD_MODALITY, $data)) {
             if ($data[self::FIELD_MODALITY] instanceof FHIRCodeableConcept) {
                 $this->setModality($data[self::FIELD_MODALITY]);
             } else {
                 $this->setModality(new FHIRCodeableConcept($data[self::FIELD_MODALITY]));
             }
         }
-        if (isset($data[self::FIELD_VIEW])) {
+        if (array_key_exists(self::FIELD_VIEW, $data)) {
             if ($data[self::FIELD_VIEW] instanceof FHIRCodeableConcept) {
                 $this->setView($data[self::FIELD_VIEW]);
             } else {
                 $this->setView(new FHIRCodeableConcept($data[self::FIELD_VIEW]));
             }
         }
-        if (isset($data[self::FIELD_SUBJECT])) {
+        if (array_key_exists(self::FIELD_SUBJECT, $data)) {
             if ($data[self::FIELD_SUBJECT] instanceof FHIRReference) {
                 $this->setSubject($data[self::FIELD_SUBJECT]);
             } else {
                 $this->setSubject(new FHIRReference($data[self::FIELD_SUBJECT]));
             }
         }
-        if (isset($data[self::FIELD_ENCOUNTER])) {
+        if (array_key_exists(self::FIELD_ENCOUNTER, $data)) {
             if ($data[self::FIELD_ENCOUNTER] instanceof FHIRReference) {
                 $this->setEncounter($data[self::FIELD_ENCOUNTER]);
             } else {
                 $this->setEncounter(new FHIRReference($data[self::FIELD_ENCOUNTER]));
             }
         }
-        if (isset($data[self::FIELD_CREATED_DATE_TIME]) || isset($data[self::FIELD_CREATED_DATE_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_CREATED_DATE_TIME, $data) || array_key_exists(self::FIELD_CREATED_DATE_TIME_EXT, $data)) {
             $value = $data[self::FIELD_CREATED_DATE_TIME] ?? null;
             $ext = (isset($data[self::FIELD_CREATED_DATE_TIME_EXT]) && is_array($data[self::FIELD_CREATED_DATE_TIME_EXT])) ? $data[self::FIELD_CREATED_DATE_TIME_EXT] : [];
             if (null !== $value) {
@@ -551,16 +529,18 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             } elseif ([] !== $ext) {
                 $this->setCreatedDateTime(new FHIRDateTime($ext));
+            } else {
+                $this->setCreatedDateTime(new FHIRDateTime(null));
             }
         }
-        if (isset($data[self::FIELD_CREATED_PERIOD])) {
+        if (array_key_exists(self::FIELD_CREATED_PERIOD, $data)) {
             if ($data[self::FIELD_CREATED_PERIOD] instanceof FHIRPeriod) {
                 $this->setCreatedPeriod($data[self::FIELD_CREATED_PERIOD]);
             } else {
                 $this->setCreatedPeriod(new FHIRPeriod($data[self::FIELD_CREATED_PERIOD]));
             }
         }
-        if (isset($data[self::FIELD_ISSUED]) || isset($data[self::FIELD_ISSUED_EXT])) {
+        if (array_key_exists(self::FIELD_ISSUED, $data) || array_key_exists(self::FIELD_ISSUED_EXT, $data)) {
             $value = $data[self::FIELD_ISSUED] ?? null;
             $ext = (isset($data[self::FIELD_ISSUED_EXT]) && is_array($data[self::FIELD_ISSUED_EXT])) ? $data[self::FIELD_ISSUED_EXT] : [];
             if (null !== $value) {
@@ -573,21 +553,20 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             } elseif ([] !== $ext) {
                 $this->setIssued(new FHIRInstant($ext));
+            } else {
+                $this->setIssued(new FHIRInstant(null));
             }
         }
-        if (isset($data[self::FIELD_OPERATOR])) {
+        if (array_key_exists(self::FIELD_OPERATOR, $data)) {
             if ($data[self::FIELD_OPERATOR] instanceof FHIRReference) {
                 $this->setOperator($data[self::FIELD_OPERATOR]);
             } else {
                 $this->setOperator(new FHIRReference($data[self::FIELD_OPERATOR]));
             }
         }
-        if (isset($data[self::FIELD_REASON_CODE])) {
+        if (array_key_exists(self::FIELD_REASON_CODE, $data)) {
             if (is_array($data[self::FIELD_REASON_CODE])) {
                 foreach($data[self::FIELD_REASON_CODE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRCodeableConcept) {
                         $this->addReasonCode($v);
                     } else {
@@ -600,14 +579,14 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 $this->addReasonCode(new FHIRCodeableConcept($data[self::FIELD_REASON_CODE]));
             }
         }
-        if (isset($data[self::FIELD_BODY_SITE])) {
+        if (array_key_exists(self::FIELD_BODY_SITE, $data)) {
             if ($data[self::FIELD_BODY_SITE] instanceof FHIRCodeableConcept) {
                 $this->setBodySite($data[self::FIELD_BODY_SITE]);
             } else {
                 $this->setBodySite(new FHIRCodeableConcept($data[self::FIELD_BODY_SITE]));
             }
         }
-        if (isset($data[self::FIELD_DEVICE_NAME]) || isset($data[self::FIELD_DEVICE_NAME_EXT])) {
+        if (array_key_exists(self::FIELD_DEVICE_NAME, $data) || array_key_exists(self::FIELD_DEVICE_NAME_EXT, $data)) {
             $value = $data[self::FIELD_DEVICE_NAME] ?? null;
             $ext = (isset($data[self::FIELD_DEVICE_NAME_EXT]) && is_array($data[self::FIELD_DEVICE_NAME_EXT])) ? $data[self::FIELD_DEVICE_NAME_EXT] : [];
             if (null !== $value) {
@@ -620,16 +599,18 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             } elseif ([] !== $ext) {
                 $this->setDeviceName(new FHIRString($ext));
+            } else {
+                $this->setDeviceName(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_DEVICE])) {
+        if (array_key_exists(self::FIELD_DEVICE, $data)) {
             if ($data[self::FIELD_DEVICE] instanceof FHIRReference) {
                 $this->setDevice($data[self::FIELD_DEVICE]);
             } else {
                 $this->setDevice(new FHIRReference($data[self::FIELD_DEVICE]));
             }
         }
-        if (isset($data[self::FIELD_HEIGHT]) || isset($data[self::FIELD_HEIGHT_EXT])) {
+        if (array_key_exists(self::FIELD_HEIGHT, $data) || array_key_exists(self::FIELD_HEIGHT_EXT, $data)) {
             $value = $data[self::FIELD_HEIGHT] ?? null;
             $ext = (isset($data[self::FIELD_HEIGHT_EXT]) && is_array($data[self::FIELD_HEIGHT_EXT])) ? $data[self::FIELD_HEIGHT_EXT] : [];
             if (null !== $value) {
@@ -642,9 +623,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             } elseif ([] !== $ext) {
                 $this->setHeight(new FHIRPositiveInt($ext));
+            } else {
+                $this->setHeight(new FHIRPositiveInt(null));
             }
         }
-        if (isset($data[self::FIELD_WIDTH]) || isset($data[self::FIELD_WIDTH_EXT])) {
+        if (array_key_exists(self::FIELD_WIDTH, $data) || array_key_exists(self::FIELD_WIDTH_EXT, $data)) {
             $value = $data[self::FIELD_WIDTH] ?? null;
             $ext = (isset($data[self::FIELD_WIDTH_EXT]) && is_array($data[self::FIELD_WIDTH_EXT])) ? $data[self::FIELD_WIDTH_EXT] : [];
             if (null !== $value) {
@@ -657,9 +640,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             } elseif ([] !== $ext) {
                 $this->setWidth(new FHIRPositiveInt($ext));
+            } else {
+                $this->setWidth(new FHIRPositiveInt(null));
             }
         }
-        if (isset($data[self::FIELD_FRAMES]) || isset($data[self::FIELD_FRAMES_EXT])) {
+        if (array_key_exists(self::FIELD_FRAMES, $data) || array_key_exists(self::FIELD_FRAMES_EXT, $data)) {
             $value = $data[self::FIELD_FRAMES] ?? null;
             $ext = (isset($data[self::FIELD_FRAMES_EXT]) && is_array($data[self::FIELD_FRAMES_EXT])) ? $data[self::FIELD_FRAMES_EXT] : [];
             if (null !== $value) {
@@ -672,9 +657,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             } elseif ([] !== $ext) {
                 $this->setFrames(new FHIRPositiveInt($ext));
+            } else {
+                $this->setFrames(new FHIRPositiveInt(null));
             }
         }
-        if (isset($data[self::FIELD_DURATION]) || isset($data[self::FIELD_DURATION_EXT])) {
+        if (array_key_exists(self::FIELD_DURATION, $data) || array_key_exists(self::FIELD_DURATION_EXT, $data)) {
             $value = $data[self::FIELD_DURATION] ?? null;
             $ext = (isset($data[self::FIELD_DURATION_EXT]) && is_array($data[self::FIELD_DURATION_EXT])) ? $data[self::FIELD_DURATION_EXT] : [];
             if (null !== $value) {
@@ -687,21 +674,20 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
                 }
             } elseif ([] !== $ext) {
                 $this->setDuration(new FHIRDecimal($ext));
+            } else {
+                $this->setDuration(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_CONTENT])) {
+        if (array_key_exists(self::FIELD_CONTENT, $data)) {
             if ($data[self::FIELD_CONTENT] instanceof FHIRAttachment) {
                 $this->setContent($data[self::FIELD_CONTENT]);
             } else {
                 $this->setContent(new FHIRAttachment($data[self::FIELD_CONTENT]));
             }
         }
-        if (isset($data[self::FIELD_NOTE])) {
+        if (array_key_exists(self::FIELD_NOTE, $data)) {
             if (is_array($data[self::FIELD_NOTE])) {
                 foreach($data[self::FIELD_NOTE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRAnnotation) {
                         $this->addNote($v);
                     } else {
@@ -719,7 +705,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -727,22 +713,10 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Media{$xmlns}></Media>";
-    }
-    /**
-     * @return string
-     */
     public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
-
 
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
@@ -756,7 +730,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -774,42 +748,13 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
-        return $this;
-    }
-
-    /**
-     * An identifier - identifies some entity uniquely and unambiguously. Typically
-     * this is used for business identifiers.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifiers associated with the image - these may include identifiers for the
-     * image itself, identifiers for the context of its collection (e.g. series ids)
-     * and context ids such as accession numbers or other workflow identifiers.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
-     * @return static
-     */
-    public function setIdentifier(array $identifier = []): object
-    {
-        if ([] !== $this->identifier) {
-            $this->_trackValuesRemoved(count($this->identifier));
-            $this->identifier = [];
-        }
-        if ([] === $identifier) {
-            return $this;
-        }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
-            }
-        }
         return $this;
     }
 
@@ -822,7 +767,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getBasedOn(): ?array
+    public function getBasedOn(): null|array
     {
         return $this->basedOn;
     }
@@ -837,39 +782,13 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $basedOn
      * @return static
      */
-    public function addBasedOn(?FHIRReference $basedOn = null): object
+    public function addBasedOn(null|FHIRReference $basedOn = null): self
     {
+        if (null === $basedOn) {
+            $basedOn = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->basedOn[] = $basedOn;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A procedure that is fulfilled in whole or in part by the creation of this media.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $basedOn
-     * @return static
-     */
-    public function setBasedOn(array $basedOn = []): object
-    {
-        if ([] !== $this->basedOn) {
-            $this->_trackValuesRemoved(count($this->basedOn));
-            $this->basedOn = [];
-        }
-        if ([] === $basedOn) {
-            return $this;
-        }
-        foreach($basedOn as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addBasedOn($v);
-            } else {
-                $this->addBasedOn(new FHIRReference($v));
-            }
-        }
         return $this;
     }
 
@@ -882,7 +801,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getPartOf(): ?array
+    public function getPartOf(): null|array
     {
         return $this->partOf;
     }
@@ -897,39 +816,13 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $partOf
      * @return static
      */
-    public function addPartOf(?FHIRReference $partOf = null): object
+    public function addPartOf(null|FHIRReference $partOf = null): self
     {
+        if (null === $partOf) {
+            $partOf = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->partOf[] = $partOf;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A larger event of which this particular event is a component or step.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $partOf
-     * @return static
-     */
-    public function setPartOf(array $partOf = []): object
-    {
-        if ([] !== $this->partOf) {
-            $this->_trackValuesRemoved(count($this->partOf));
-            $this->partOf = [];
-        }
-        if ([] === $partOf) {
-            return $this;
-        }
-        foreach($partOf as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addPartOf($v);
-            } else {
-                $this->addPartOf(new FHIRReference($v));
-            }
-        }
         return $this;
     }
 
@@ -941,7 +834,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIREventStatus
      */
-    public function getStatus(): ?FHIREventStatus
+    public function getStatus(): null|FHIREventStatus
     {
         return $this->status;
     }
@@ -955,8 +848,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIREventStatus $status
      * @return static
      */
-    public function setStatus(?FHIREventStatus $status = null): object
+    public function setStatus(null|FHIREventStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIREventStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -973,7 +869,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -990,8 +886,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -1009,7 +908,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getModality(): ?FHIRCodeableConcept
+    public function getModality(): null|FHIRCodeableConcept
     {
         return $this->modality;
     }
@@ -1027,8 +926,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $modality
      * @return static
      */
-    public function setModality(?FHIRCodeableConcept $modality = null): object
+    public function setModality(null|FHIRCodeableConcept $modality = null): self
     {
+        if (null === $modality) {
+            $modality = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->modality, $modality);
         $this->modality = $modality;
         return $this;
@@ -1044,7 +946,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getView(): ?FHIRCodeableConcept
+    public function getView(): null|FHIRCodeableConcept
     {
         return $this->view;
     }
@@ -1060,8 +962,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $view
      * @return static
      */
-    public function setView(?FHIRCodeableConcept $view = null): object
+    public function setView(null|FHIRCodeableConcept $view = null): self
     {
+        if (null === $view) {
+            $view = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->view, $view);
         $this->view = $view;
         return $this;
@@ -1076,7 +981,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSubject(): ?FHIRReference
+    public function getSubject(): null|FHIRReference
     {
         return $this->subject;
     }
@@ -1091,8 +996,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $subject
      * @return static
      */
-    public function setSubject(?FHIRReference $subject = null): object
+    public function setSubject(null|FHIRReference $subject = null): self
     {
+        if (null === $subject) {
+            $subject = new FHIRReference();
+        }
         $this->_trackValueSet($this->subject, $subject);
         $this->subject = $subject;
         return $this;
@@ -1107,7 +1015,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getEncounter(): ?FHIRReference
+    public function getEncounter(): null|FHIRReference
     {
         return $this->encounter;
     }
@@ -1122,8 +1030,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $encounter
      * @return static
      */
-    public function setEncounter(?FHIRReference $encounter = null): object
+    public function setEncounter(null|FHIRReference $encounter = null): self
     {
+        if (null === $encounter) {
+            $encounter = new FHIRReference();
+        }
         $this->_trackValueSet($this->encounter, $encounter);
         $this->encounter = $encounter;
         return $this;
@@ -1139,9 +1050,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The date and time(s) at which the media was collected.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getCreatedDateTime(): ?FHIRDateTime
+    public function getCreatedDateTime(): null|FHIRDateTime
     {
         return $this->createdDateTime;
     }
@@ -1156,15 +1067,20 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The date and time(s) at which the media was collected.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $createdDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $createdDateTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCreatedDateTime($createdDateTime = null): object
+    public function setCreatedDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $createdDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $createdDateTime && !($createdDateTime instanceof FHIRDateTime)) {
             $createdDateTime = new FHIRDateTime($createdDateTime);
         }
         $this->_trackValueSet($this->createdDateTime, $createdDateTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME][0] = $xmlLocation;
         $this->createdDateTime = $createdDateTime;
         return $this;
     }
@@ -1178,7 +1094,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getCreatedPeriod(): ?FHIRPeriod
+    public function getCreatedPeriod(): null|FHIRPeriod
     {
         return $this->createdPeriod;
     }
@@ -1193,8 +1109,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $createdPeriod
      * @return static
      */
-    public function setCreatedPeriod(?FHIRPeriod $createdPeriod = null): object
+    public function setCreatedPeriod(null|FHIRPeriod $createdPeriod = null): self
     {
+        if (null === $createdPeriod) {
+            $createdPeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->createdPeriod, $createdPeriod);
         $this->createdPeriod = $createdPeriod;
         return $this;
@@ -1211,9 +1130,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * The date and time this version of the media was made available to providers,
      * typically after having been reviewed.
      *
-     * @return null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    public function getIssued(): ?FHIRInstant
+    public function getIssued(): null|FHIRInstant
     {
         return $this->issued;
     }
@@ -1229,15 +1148,20 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * The date and time this version of the media was made available to providers,
      * typically after having been reviewed.
      *
-     * @param null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $issued
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $issued
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIssued($issued = null): object
+    public function setIssued(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $issued = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $issued && !($issued instanceof FHIRInstant)) {
             $issued = new FHIRInstant($issued);
         }
         $this->_trackValueSet($this->issued, $issued);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_ISSUED])) {
+            $this->_primitiveXmlLocations[self::FIELD_ISSUED] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_ISSUED][0] = $xmlLocation;
         $this->issued = $issued;
         return $this;
     }
@@ -1251,7 +1175,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getOperator(): ?FHIRReference
+    public function getOperator(): null|FHIRReference
     {
         return $this->operator;
     }
@@ -1266,8 +1190,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $operator
      * @return static
      */
-    public function setOperator(?FHIRReference $operator = null): object
+    public function setOperator(null|FHIRReference $operator = null): self
     {
+        if (null === $operator) {
+            $operator = new FHIRReference();
+        }
         $this->_trackValueSet($this->operator, $operator);
         $this->operator = $operator;
         return $this;
@@ -1283,7 +1210,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getReasonCode(): ?array
+    public function getReasonCode(): null|array
     {
         return $this->reasonCode;
     }
@@ -1299,40 +1226,13 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $reasonCode
      * @return static
      */
-    public function addReasonCode(?FHIRCodeableConcept $reasonCode = null): object
+    public function addReasonCode(null|FHIRCodeableConcept $reasonCode = null): self
     {
+        if (null === $reasonCode) {
+            $reasonCode = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->reasonCode[] = $reasonCode;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Describes why the event occurred in coded or textual form.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $reasonCode
-     * @return static
-     */
-    public function setReasonCode(array $reasonCode = []): object
-    {
-        if ([] !== $this->reasonCode) {
-            $this->_trackValuesRemoved(count($this->reasonCode));
-            $this->reasonCode = [];
-        }
-        if ([] === $reasonCode) {
-            return $this;
-        }
-        foreach($reasonCode as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addReasonCode($v);
-            } else {
-                $this->addReasonCode(new FHIRCodeableConcept($v));
-            }
-        }
         return $this;
     }
 
@@ -1347,7 +1247,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getBodySite(): ?FHIRCodeableConcept
+    public function getBodySite(): null|FHIRCodeableConcept
     {
         return $this->bodySite;
     }
@@ -1364,8 +1264,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $bodySite
      * @return static
      */
-    public function setBodySite(?FHIRCodeableConcept $bodySite = null): object
+    public function setBodySite(null|FHIRCodeableConcept $bodySite = null): self
     {
+        if (null === $bodySite) {
+            $bodySite = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->bodySite, $bodySite);
         $this->bodySite = $bodySite;
         return $this;
@@ -1379,9 +1282,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * The name of the device / manufacturer of the device that was used to make the
      * recording.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDeviceName(): ?FHIRString
+    public function getDeviceName(): null|FHIRString
     {
         return $this->deviceName;
     }
@@ -1394,15 +1297,20 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * The name of the device / manufacturer of the device that was used to make the
      * recording.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $deviceName
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $deviceName
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDeviceName($deviceName = null): object
+    public function setDeviceName(null|string|FHIRStringPrimitive|FHIRString $deviceName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $deviceName && !($deviceName instanceof FHIRString)) {
             $deviceName = new FHIRString($deviceName);
         }
         $this->_trackValueSet($this->deviceName, $deviceName);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME][0] = $xmlLocation;
         $this->deviceName = $deviceName;
         return $this;
     }
@@ -1416,7 +1324,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getDevice(): ?FHIRReference
+    public function getDevice(): null|FHIRReference
     {
         return $this->device;
     }
@@ -1431,8 +1339,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $device
      * @return static
      */
-    public function setDevice(?FHIRReference $device = null): object
+    public function setDevice(null|FHIRReference $device = null): self
     {
+        if (null === $device) {
+            $device = new FHIRReference();
+        }
         $this->_trackValueSet($this->device, $device);
         $this->device = $device;
         return $this;
@@ -1445,9 +1356,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * Height of the image in pixels (photo/video).
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getHeight(): ?FHIRPositiveInt
+    public function getHeight(): null|FHIRPositiveInt
     {
         return $this->height;
     }
@@ -1459,15 +1370,20 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * Height of the image in pixels (photo/video).
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $height
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $height
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setHeight($height = null): object
+    public function setHeight(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $height = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $height && !($height instanceof FHIRPositiveInt)) {
             $height = new FHIRPositiveInt($height);
         }
         $this->_trackValueSet($this->height, $height);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_HEIGHT])) {
+            $this->_primitiveXmlLocations[self::FIELD_HEIGHT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_HEIGHT][0] = $xmlLocation;
         $this->height = $height;
         return $this;
     }
@@ -1479,9 +1395,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * Width of the image in pixels (photo/video).
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getWidth(): ?FHIRPositiveInt
+    public function getWidth(): null|FHIRPositiveInt
     {
         return $this->width;
     }
@@ -1493,15 +1409,20 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * Width of the image in pixels (photo/video).
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $width
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $width
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setWidth($width = null): object
+    public function setWidth(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $width = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $width && !($width instanceof FHIRPositiveInt)) {
             $width = new FHIRPositiveInt($width);
         }
         $this->_trackValueSet($this->width, $width);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_WIDTH])) {
+            $this->_primitiveXmlLocations[self::FIELD_WIDTH] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_WIDTH][0] = $xmlLocation;
         $this->width = $width;
         return $this;
     }
@@ -1517,9 +1438,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * to alert interface software that a multi-frame capable rendering widget is
      * required.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getFrames(): ?FHIRPositiveInt
+    public function getFrames(): null|FHIRPositiveInt
     {
         return $this->frames;
     }
@@ -1535,15 +1456,20 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * to alert interface software that a multi-frame capable rendering widget is
      * required.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $frames
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $frames
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFrames($frames = null): object
+    public function setFrames(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $frames = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $frames && !($frames instanceof FHIRPositiveInt)) {
             $frames = new FHIRPositiveInt($frames);
         }
         $this->_trackValueSet($this->frames, $frames);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FRAMES])) {
+            $this->_primitiveXmlLocations[self::FIELD_FRAMES] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FRAMES][0] = $xmlLocation;
         $this->frames = $frames;
         return $this;
     }
@@ -1556,9 +1482,9 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The duration of the recording in seconds - for audio and video.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getDuration(): ?FHIRDecimal
+    public function getDuration(): null|FHIRDecimal
     {
         return $this->duration;
     }
@@ -1571,15 +1497,20 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The duration of the recording in seconds - for audio and video.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $duration
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $duration
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDuration($duration = null): object
+    public function setDuration(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $duration = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $duration && !($duration instanceof FHIRDecimal)) {
             $duration = new FHIRDecimal($duration);
         }
         $this->_trackValueSet($this->duration, $duration);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DURATION])) {
+            $this->_primitiveXmlLocations[self::FIELD_DURATION] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DURATION][0] = $xmlLocation;
         $this->duration = $duration;
         return $this;
     }
@@ -1594,7 +1525,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    public function getContent(): ?FHIRAttachment
+    public function getContent(): null|FHIRAttachment
     {
         return $this->content;
     }
@@ -1610,8 +1541,11 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment $content
      * @return static
      */
-    public function setContent(?FHIRAttachment $content = null): object
+    public function setContent(null|FHIRAttachment $content = null): self
     {
+        if (null === $content) {
+            $content = new FHIRAttachment();
+        }
         $this->_trackValueSet($this->content, $content);
         $this->content = $content;
         return $this;
@@ -1627,7 +1561,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    public function getNote(): ?array
+    public function getNote(): null|array
     {
         return $this->note;
     }
@@ -1643,40 +1577,13 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $note
      * @return static
      */
-    public function addNote(?FHIRAnnotation $note = null): object
+    public function addNote(null|FHIRAnnotation $note = null): self
     {
+        if (null === $note) {
+            $note = new FHIRAnnotation();
+        }
         $this->_trackValueAdded();
         $this->note[] = $note;
-        return $this;
-    }
-
-    /**
-     * A text note which also contains information about who made the statement and
-     * when.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Comments made about the media by the performer, subject or other participants.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation[] $note
-     * @return static
-     */
-    public function setNote(array $note = []): object
-    {
-        if ([] !== $this->note) {
-            $this->_trackValuesRemoved(count($this->note));
-            $this->note = [];
-        }
-        if ([] === $note) {
-            return $this;
-        }
-        foreach($note as $v) {
-            if ($v instanceof FHIRAnnotation) {
-                $this->addNote($v);
-            } else {
-                $this->addNote(new FHIRAnnotation($v));
-            }
-        }
         return $this;
     }
 
@@ -1688,7 +1595,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2202,394 +2109,396 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMedia $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMedia
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMedia::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMedia::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRMedia(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMedia)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMedia)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMedia::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMedia or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_IDENTIFIER === $n->nodeName) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_BASED_ON === $n->nodeName) {
-                $type->addBasedOn(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_PART_OF === $n->nodeName) {
-                $type->addPartOf(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_STATUS === $n->nodeName) {
-                $type->setStatus(FHIREventStatus::xmlUnserialize($n));
-            } elseif (self::FIELD_TYPE === $n->nodeName) {
-                $type->setType(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_MODALITY === $n->nodeName) {
-                $type->setModality(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_VIEW === $n->nodeName) {
-                $type->setView(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_SUBJECT === $n->nodeName) {
-                $type->setSubject(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_ENCOUNTER === $n->nodeName) {
-                $type->setEncounter(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_CREATED_DATE_TIME === $n->nodeName) {
-                $type->setCreatedDateTime(FHIRDateTime::xmlUnserialize($n));
-            } elseif (self::FIELD_CREATED_PERIOD === $n->nodeName) {
-                $type->setCreatedPeriod(FHIRPeriod::xmlUnserialize($n));
-            } elseif (self::FIELD_ISSUED === $n->nodeName) {
-                $type->setIssued(FHIRInstant::xmlUnserialize($n));
-            } elseif (self::FIELD_OPERATOR === $n->nodeName) {
-                $type->setOperator(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_REASON_CODE === $n->nodeName) {
-                $type->addReasonCode(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_BODY_SITE === $n->nodeName) {
-                $type->setBodySite(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_DEVICE_NAME === $n->nodeName) {
-                $type->setDeviceName(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_DEVICE === $n->nodeName) {
-                $type->setDevice(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_HEIGHT === $n->nodeName) {
-                $type->setHeight(FHIRPositiveInt::xmlUnserialize($n));
-            } elseif (self::FIELD_WIDTH === $n->nodeName) {
-                $type->setWidth(FHIRPositiveInt::xmlUnserialize($n));
-            } elseif (self::FIELD_FRAMES === $n->nodeName) {
-                $type->setFrames(FHIRPositiveInt::xmlUnserialize($n));
-            } elseif (self::FIELD_DURATION === $n->nodeName) {
-                $type->setDuration(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_CONTENT === $n->nodeName) {
-                $type->setContent(FHIRAttachment::xmlUnserialize($n));
-            } elseif (self::FIELD_NOTE === $n->nodeName) {
-                $type->addNote(FHIRAnnotation::xmlUnserialize($n));
-            } elseif (self::FIELD_TEXT === $n->nodeName) {
-                $type->setText(FHIRNarrative::xmlUnserialize($n));
-            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
-                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
-                    $nn = $n->childNodes->item($ni);
-                    if ($nn instanceof \DOMElement) {
-                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
-                    }
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_IDENTIFIER === $childName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_BASED_ON === $childName) {
+                $type->addBasedOn(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PART_OF === $childName) {
+                $type->addPartOf(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_STATUS === $childName) {
+                $type->setStatus(FHIREventStatus::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_TYPE === $childName) {
+                $type->setType(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODALITY === $childName) {
+                $type->setModality(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_VIEW === $childName) {
+                $type->setView(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SUBJECT === $childName) {
+                $type->setSubject(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ENCOUNTER === $childName) {
+                $type->setEncounter(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CREATED_DATE_TIME === $childName) {
+                $type->setCreatedDateTime(FHIRDateTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_CREATED_PERIOD === $childName) {
+                $type->setCreatedPeriod(FHIRPeriod::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ISSUED === $childName) {
+                $type->setIssued(FHIRInstant::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_OPERATOR === $childName) {
+                $type->setOperator(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_REASON_CODE === $childName) {
+                $type->addReasonCode(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_BODY_SITE === $childName) {
+                $type->setBodySite(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEVICE_NAME === $childName) {
+                $type->setDeviceName(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEVICE === $childName) {
+                $type->setDevice(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_HEIGHT === $childName) {
+                $type->setHeight(FHIRPositiveInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_WIDTH === $childName) {
+                $type->setWidth(FHIRPositiveInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FRAMES === $childName) {
+                $type->setFrames(FHIRPositiveInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DURATION === $childName) {
+                $type->setDuration(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_CONTENT === $childName) {
+                $type->setContent(FHIRAttachment::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_NOTE === $childName) {
+                $type->addNote(FHIRAnnotation::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_TEXT === $childName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CONTAINED === $childName) {
+                foreach ($n->children() as $nn) {
+                    $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn, $config));
                 }
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRId::xmlUnserialize($n));
-            } elseif (self::FIELD_META === $n->nodeName) {
-                $type->setMeta(FHIRMeta::xmlUnserialize($n));
-            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
-                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
-                $type->setLanguage(FHIRCode::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRId::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_META === $childName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_IMPLICIT_RULES === $childName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_LANGUAGE === $childName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_CREATED_DATE_TIME);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_CREATED_DATE_TIME])) {
             $pt = $type->getCreatedDateTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_CREATED_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setCreatedDateTime($n->nodeValue);
+                $type->setCreatedDateTime((string)$attributes[self::FIELD_CREATED_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ISSUED);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ISSUED])) {
             $pt = $type->getIssued();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ISSUED], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setIssued($n->nodeValue);
+                $type->setIssued((string)$attributes[self::FIELD_ISSUED], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEVICE_NAME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEVICE_NAME])) {
             $pt = $type->getDeviceName();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEVICE_NAME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDeviceName($n->nodeValue);
+                $type->setDeviceName((string)$attributes[self::FIELD_DEVICE_NAME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_HEIGHT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_HEIGHT])) {
             $pt = $type->getHeight();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_HEIGHT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setHeight($n->nodeValue);
+                $type->setHeight((string)$attributes[self::FIELD_HEIGHT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_WIDTH);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_WIDTH])) {
             $pt = $type->getWidth();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_WIDTH], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setWidth($n->nodeValue);
+                $type->setWidth((string)$attributes[self::FIELD_WIDTH], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FRAMES);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FRAMES])) {
             $pt = $type->getFrames();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FRAMES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFrames($n->nodeValue);
+                $type->setFrames((string)$attributes[self::FIELD_FRAMES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DURATION);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DURATION])) {
             $pt = $type->getDuration();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DURATION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDuration($n->nodeValue);
+                $type->setDuration((string)$attributes[self::FIELD_DURATION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_IMPLICIT_RULES])) {
             $pt = $type->getImplicitRules();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setImplicitRules($n->nodeValue);
+                $type->setImplicitRules((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_LANGUAGE])) {
             $pt = $type->getLanguage();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setLanguage($n->nodeValue);
+                $type->setLanguage((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
-        if ([] !== ($vs = $this->getIdentifier())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
         }
-        if ([] !== ($vs = $this->getBasedOn())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_BASED_ON);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
         }
-        if ([] !== ($vs = $this->getPartOf())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_PART_OF);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'Media', $this->_getSourceXmlns());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCreatedDateTime())) {
+            $xw->writeAttribute(self::FIELD_CREATED_DATE_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ISSUED] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIssued())) {
+            $xw->writeAttribute(self::FIELD_ISSUED, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDeviceName())) {
+            $xw->writeAttribute(self::FIELD_DEVICE_NAME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_HEIGHT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getHeight())) {
+            $xw->writeAttribute(self::FIELD_HEIGHT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_WIDTH] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getWidth())) {
+            $xw->writeAttribute(self::FIELD_WIDTH, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FRAMES] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFrames())) {
+            $xw->writeAttribute(self::FIELD_FRAMES, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DURATION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDuration())) {
+            $xw->writeAttribute(self::FIELD_DURATION, $v->getValue()?->getFormattedValue());
+        }
+        parent::xmlSerialize($xw, $config);
+        foreach ($this->getIdentifier() as $v) {
+            $xw->startElement(self::FIELD_IDENTIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getBasedOn() as $v) {
+            $xw->startElement(self::FIELD_BASED_ON);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getPartOf() as $v) {
+            $xw->startElement(self::FIELD_PART_OF);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getStatus())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_STATUS);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getType())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_TYPE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getModality())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MODALITY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_MODALITY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getView())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_VIEW);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_VIEW);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getSubject())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_SUBJECT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_SUBJECT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getEncounter())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_ENCOUNTER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_ENCOUNTER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getCreatedDateTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CREATED_DATE_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCreatedDateTime())) {
+            $xw->startElement(self::FIELD_CREATED_DATE_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getCreatedPeriod())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CREATED_PERIOD);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_CREATED_PERIOD);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getIssued())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_ISSUED);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ISSUED] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIssued())) {
+            $xw->startElement(self::FIELD_ISSUED);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getOperator())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_OPERATOR);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_OPERATOR);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getReasonCode())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_REASON_CODE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getReasonCode() as $v) {
+            $xw->startElement(self::FIELD_REASON_CODE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getBodySite())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_BODY_SITE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_BODY_SITE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDeviceName())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEVICE_NAME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDeviceName())) {
+            $xw->startElement(self::FIELD_DEVICE_NAME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDevice())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEVICE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEVICE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getHeight())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_HEIGHT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_HEIGHT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getHeight())) {
+            $xw->startElement(self::FIELD_HEIGHT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getWidth())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_WIDTH);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_WIDTH] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getWidth())) {
+            $xw->startElement(self::FIELD_WIDTH);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFrames())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FRAMES);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FRAMES] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFrames())) {
+            $xw->startElement(self::FIELD_FRAMES);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDuration())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DURATION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DURATION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDuration())) {
+            $xw->startElement(self::FIELD_DURATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getContent())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CONTENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_CONTENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getNote())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_NOTE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getNote() as $v) {
+            $xw->startElement(self::FIELD_NOTE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
             $out->{self::FIELD_IDENTIFIER} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_IDENTIFIER}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getBasedOn())) {
             $out->{self::FIELD_BASED_ON} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_BASED_ON}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getPartOf())) {
             $out->{self::FIELD_PART_OF} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_PART_OF}[] = $v;
             }
         }
@@ -2647,9 +2556,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
         if ([] !== ($vs = $this->getReasonCode())) {
             $out->{self::FIELD_REASON_CODE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_REASON_CODE}[] = $v;
             }
         }
@@ -2715,9 +2621,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
         if ([] !== ($vs = $this->getNote())) {
             $out->{self::FIELD_NOTE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_NOTE}[] = $v;
             }
         }
@@ -2726,7 +2629,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
 
         return $out;
     }
-
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,10 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
@@ -83,11 +87,19 @@ use HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUsageContext;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * Defines the characteristics of a message that can be shared between systems,
@@ -102,6 +114,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MESSAGE_DEFINITION;
+
     const FIELD_URL = 'url';
     const FIELD_URL_EXT = '_url';
     const FIELD_IDENTIFIER = 'identifier';
@@ -146,9 +159,6 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
     const FIELD_GRAPH = 'graph';
     const FIELD_GRAPH_EXT = '_graph';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -157,10 +167,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The business identifier that is used to reference the MessageDefinition and *is*
      * expected to be consistent from server to server.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $url = null;
-
+    protected null|FHIRUri $url = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -173,8 +182,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -187,10 +195,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * managed version is not available. There is also no expectation that versions can
      * be placed in a lexicographical sequence.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $version = null;
-
+    protected null|FHIRString $version = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -200,10 +207,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $name = null;
-
+    protected null|FHIRString $name = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -211,10 +217,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A short, descriptive, user-friendly title for the message definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $title = null;
-
+    protected null|FHIRString $title = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -223,10 +228,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A MessageDefinition that is superseded by this definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $replaces = [];
-
+    protected null|array $replaces = [];
     /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -235,8 +239,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    protected ?FHIRPublicationStatus $status = null;
-
+    protected null|FHIRPublicationStatus $status = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -245,10 +248,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $experimental = null;
-
+    protected null|FHIRBoolean $experimental = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -262,10 +264,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * status code changes. In addition, it should change when the substantive content
      * of the message definition changes.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $date = null;
-
+    protected null|FHIRDateTime $date = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -274,10 +275,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The name of the organization or individual that published the message
      * definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $publisher = null;
-
+    protected null|FHIRString $publisher = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -288,8 +288,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    protected ?array $contact = [];
-
+    protected null|array $contact = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -302,10 +301,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * A free text natural language description of the message definition from a
      * consumer's perspective.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $description = null;
-
+    protected null|FHIRMarkdown $description = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -322,8 +320,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    protected ?array $useContext = [];
-
+    protected null|array $useContext = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -335,8 +332,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $jurisdiction = [];
-
+    protected null|array $jurisdiction = [];
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -349,10 +345,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Explanation of why this message definition is needed and why it has been
      * designed as it has.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $purpose = null;
-
+    protected null|FHIRMarkdown $purpose = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -366,10 +361,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Copyright statements are generally legal restrictions on the use and publishing
      * of the message definition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $copyright = null;
-
+    protected null|FHIRMarkdown $copyright = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -378,10 +372,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * The MessageDefinition that is the basis for the contents of this resource.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $base = null;
-
+    protected null|FHIRCanonical $base = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -391,10 +384,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Identifies a protocol or workflow that this MessageDefinition represents a step
      * in.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $parent = [];
-
+    protected null|array $parent = [];
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -404,8 +396,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    protected ?FHIRCoding $eventCoding = null;
-
+    protected null|FHIRCoding $eventCoding = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -413,10 +404,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * Event code or link to the EventDefinition.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $eventUri = null;
-
+    protected null|FHIRUri $eventUri = null;
     /**
      * The impact of the content of a message.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -425,8 +415,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMessageSignificanceCategory
      */
-    protected ?FHIRMessageSignificanceCategory $category = null;
-
+    protected null|FHIRMessageSignificanceCategory $category = null;
     /**
      * Defines the characteristics of a message that can be shared between systems,
      * including the type of event that initiates the message, the content to be
@@ -438,8 +427,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus[]
      */
-    protected ?array $focus = [];
-
+    protected null|array $focus = [];
     /**
      * HL7-defined table of codes which identify conditions under which acknowledgments
      * are required to be returned in response to a message.
@@ -450,8 +438,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMessageheaderResponseRequest
      */
-    protected ?FHIRMessageheaderResponseRequest $responseRequired = null;
-
+    protected null|FHIRMessageheaderResponseRequest $responseRequired = null;
     /**
      * Defines the characteristics of a message that can be shared between systems,
      * including the type of event that initiates the message, the content to be
@@ -462,8 +449,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse[]
      */
-    protected ?array $allowedResponse = [];
-
+    protected null|array $allowedResponse = [];
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -475,33 +461,30 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * are to be added to the bundle when building the document. The GraphDefinition
      * can also specify profiles that apply to the various resources.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    protected ?array $graph = [];
+    protected null|array $graph = [];
 
     /**
      * Validation map for fields in type MessageDefinition
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRMessageDefinition Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMessageDefinition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_URL]) || isset($data[self::FIELD_URL_EXT])) {
+        if (array_key_exists(self::FIELD_URL, $data) || array_key_exists(self::FIELD_URL_EXT, $data)) {
             $value = $data[self::FIELD_URL] ?? null;
             $ext = (isset($data[self::FIELD_URL_EXT]) && is_array($data[self::FIELD_URL_EXT])) ? $data[self::FIELD_URL_EXT] : [];
             if (null !== $value) {
@@ -514,14 +497,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setUrl(new FHIRUri($ext));
+            } else {
+                $this->setUrl(new FHIRUri(null));
             }
         }
-        if (isset($data[self::FIELD_IDENTIFIER])) {
+        if (array_key_exists(self::FIELD_IDENTIFIER, $data)) {
             if (is_array($data[self::FIELD_IDENTIFIER])) {
                 foreach($data[self::FIELD_IDENTIFIER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRIdentifier) {
                         $this->addIdentifier($v);
                     } else {
@@ -534,7 +516,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_VERSION]) || isset($data[self::FIELD_VERSION_EXT])) {
+        if (array_key_exists(self::FIELD_VERSION, $data) || array_key_exists(self::FIELD_VERSION_EXT, $data)) {
             $value = $data[self::FIELD_VERSION] ?? null;
             $ext = (isset($data[self::FIELD_VERSION_EXT]) && is_array($data[self::FIELD_VERSION_EXT])) ? $data[self::FIELD_VERSION_EXT] : [];
             if (null !== $value) {
@@ -547,9 +529,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setVersion(new FHIRString($ext));
+            } else {
+                $this->setVersion(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_NAME]) || isset($data[self::FIELD_NAME_EXT])) {
+        if (array_key_exists(self::FIELD_NAME, $data) || array_key_exists(self::FIELD_NAME_EXT, $data)) {
             $value = $data[self::FIELD_NAME] ?? null;
             $ext = (isset($data[self::FIELD_NAME_EXT]) && is_array($data[self::FIELD_NAME_EXT])) ? $data[self::FIELD_NAME_EXT] : [];
             if (null !== $value) {
@@ -562,9 +546,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setName(new FHIRString($ext));
+            } else {
+                $this->setName(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_TITLE]) || isset($data[self::FIELD_TITLE_EXT])) {
+        if (array_key_exists(self::FIELD_TITLE, $data) || array_key_exists(self::FIELD_TITLE_EXT, $data)) {
             $value = $data[self::FIELD_TITLE] ?? null;
             $ext = (isset($data[self::FIELD_TITLE_EXT]) && is_array($data[self::FIELD_TITLE_EXT])) ? $data[self::FIELD_TITLE_EXT] : [];
             if (null !== $value) {
@@ -577,9 +563,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setTitle(new FHIRString($ext));
+            } else {
+                $this->setTitle(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_REPLACES]) || isset($data[self::FIELD_REPLACES_EXT])) {
+        if (array_key_exists(self::FIELD_REPLACES, $data) || array_key_exists(self::FIELD_REPLACES_EXT, $data)) {
             $value = $data[self::FIELD_REPLACES] ?? null;
             $ext = (isset($data[self::FIELD_REPLACES_EXT]) && is_array($data[self::FIELD_REPLACES_EXT])) ? $data[self::FIELD_REPLACES_EXT] : [];
             if (null !== $value) {
@@ -607,9 +595,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 foreach($ext as $iext) {
                     $this->addReplaces(new FHIRCanonical($iext));
                 }
+            } else {
+                $this->addReplaces(new FHIRCanonical(null));
             }
         }
-        if (isset($data[self::FIELD_STATUS]) || isset($data[self::FIELD_STATUS_EXT])) {
+        if (array_key_exists(self::FIELD_STATUS, $data) || array_key_exists(self::FIELD_STATUS_EXT, $data)) {
             $value = $data[self::FIELD_STATUS] ?? null;
             $ext = (isset($data[self::FIELD_STATUS_EXT]) && is_array($data[self::FIELD_STATUS_EXT])) ? $data[self::FIELD_STATUS_EXT] : [];
             if (null !== $value) {
@@ -622,9 +612,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setStatus(new FHIRPublicationStatus($ext));
+            } else {
+                $this->setStatus(new FHIRPublicationStatus(null));
             }
         }
-        if (isset($data[self::FIELD_EXPERIMENTAL]) || isset($data[self::FIELD_EXPERIMENTAL_EXT])) {
+        if (array_key_exists(self::FIELD_EXPERIMENTAL, $data) || array_key_exists(self::FIELD_EXPERIMENTAL_EXT, $data)) {
             $value = $data[self::FIELD_EXPERIMENTAL] ?? null;
             $ext = (isset($data[self::FIELD_EXPERIMENTAL_EXT]) && is_array($data[self::FIELD_EXPERIMENTAL_EXT])) ? $data[self::FIELD_EXPERIMENTAL_EXT] : [];
             if (null !== $value) {
@@ -637,9 +629,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setExperimental(new FHIRBoolean($ext));
+            } else {
+                $this->setExperimental(new FHIRBoolean(null));
             }
         }
-        if (isset($data[self::FIELD_DATE]) || isset($data[self::FIELD_DATE_EXT])) {
+        if (array_key_exists(self::FIELD_DATE, $data) || array_key_exists(self::FIELD_DATE_EXT, $data)) {
             $value = $data[self::FIELD_DATE] ?? null;
             $ext = (isset($data[self::FIELD_DATE_EXT]) && is_array($data[self::FIELD_DATE_EXT])) ? $data[self::FIELD_DATE_EXT] : [];
             if (null !== $value) {
@@ -652,9 +646,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setDate(new FHIRDateTime($ext));
+            } else {
+                $this->setDate(new FHIRDateTime(null));
             }
         }
-        if (isset($data[self::FIELD_PUBLISHER]) || isset($data[self::FIELD_PUBLISHER_EXT])) {
+        if (array_key_exists(self::FIELD_PUBLISHER, $data) || array_key_exists(self::FIELD_PUBLISHER_EXT, $data)) {
             $value = $data[self::FIELD_PUBLISHER] ?? null;
             $ext = (isset($data[self::FIELD_PUBLISHER_EXT]) && is_array($data[self::FIELD_PUBLISHER_EXT])) ? $data[self::FIELD_PUBLISHER_EXT] : [];
             if (null !== $value) {
@@ -667,14 +663,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setPublisher(new FHIRString($ext));
+            } else {
+                $this->setPublisher(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_CONTACT])) {
+        if (array_key_exists(self::FIELD_CONTACT, $data)) {
             if (is_array($data[self::FIELD_CONTACT])) {
                 foreach($data[self::FIELD_CONTACT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRContactDetail) {
                         $this->addContact($v);
                     } else {
@@ -687,7 +682,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 $this->addContact(new FHIRContactDetail($data[self::FIELD_CONTACT]));
             }
         }
-        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
+        if (array_key_exists(self::FIELD_DESCRIPTION, $data) || array_key_exists(self::FIELD_DESCRIPTION_EXT, $data)) {
             $value = $data[self::FIELD_DESCRIPTION] ?? null;
             $ext = (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) ? $data[self::FIELD_DESCRIPTION_EXT] : [];
             if (null !== $value) {
@@ -700,14 +695,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setDescription(new FHIRMarkdown($ext));
+            } else {
+                $this->setDescription(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_USE_CONTEXT])) {
+        if (array_key_exists(self::FIELD_USE_CONTEXT, $data)) {
             if (is_array($data[self::FIELD_USE_CONTEXT])) {
                 foreach($data[self::FIELD_USE_CONTEXT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRUsageContext) {
                         $this->addUseContext($v);
                     } else {
@@ -720,12 +714,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 $this->addUseContext(new FHIRUsageContext($data[self::FIELD_USE_CONTEXT]));
             }
         }
-        if (isset($data[self::FIELD_JURISDICTION])) {
+        if (array_key_exists(self::FIELD_JURISDICTION, $data)) {
             if (is_array($data[self::FIELD_JURISDICTION])) {
                 foreach($data[self::FIELD_JURISDICTION] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRCodeableConcept) {
                         $this->addJurisdiction($v);
                     } else {
@@ -738,7 +729,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 $this->addJurisdiction(new FHIRCodeableConcept($data[self::FIELD_JURISDICTION]));
             }
         }
-        if (isset($data[self::FIELD_PURPOSE]) || isset($data[self::FIELD_PURPOSE_EXT])) {
+        if (array_key_exists(self::FIELD_PURPOSE, $data) || array_key_exists(self::FIELD_PURPOSE_EXT, $data)) {
             $value = $data[self::FIELD_PURPOSE] ?? null;
             $ext = (isset($data[self::FIELD_PURPOSE_EXT]) && is_array($data[self::FIELD_PURPOSE_EXT])) ? $data[self::FIELD_PURPOSE_EXT] : [];
             if (null !== $value) {
@@ -751,9 +742,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setPurpose(new FHIRMarkdown($ext));
+            } else {
+                $this->setPurpose(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_COPYRIGHT]) || isset($data[self::FIELD_COPYRIGHT_EXT])) {
+        if (array_key_exists(self::FIELD_COPYRIGHT, $data) || array_key_exists(self::FIELD_COPYRIGHT_EXT, $data)) {
             $value = $data[self::FIELD_COPYRIGHT] ?? null;
             $ext = (isset($data[self::FIELD_COPYRIGHT_EXT]) && is_array($data[self::FIELD_COPYRIGHT_EXT])) ? $data[self::FIELD_COPYRIGHT_EXT] : [];
             if (null !== $value) {
@@ -766,9 +759,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setCopyright(new FHIRMarkdown($ext));
+            } else {
+                $this->setCopyright(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_BASE]) || isset($data[self::FIELD_BASE_EXT])) {
+        if (array_key_exists(self::FIELD_BASE, $data) || array_key_exists(self::FIELD_BASE_EXT, $data)) {
             $value = $data[self::FIELD_BASE] ?? null;
             $ext = (isset($data[self::FIELD_BASE_EXT]) && is_array($data[self::FIELD_BASE_EXT])) ? $data[self::FIELD_BASE_EXT] : [];
             if (null !== $value) {
@@ -781,9 +776,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setBase(new FHIRCanonical($ext));
+            } else {
+                $this->setBase(new FHIRCanonical(null));
             }
         }
-        if (isset($data[self::FIELD_PARENT]) || isset($data[self::FIELD_PARENT_EXT])) {
+        if (array_key_exists(self::FIELD_PARENT, $data) || array_key_exists(self::FIELD_PARENT_EXT, $data)) {
             $value = $data[self::FIELD_PARENT] ?? null;
             $ext = (isset($data[self::FIELD_PARENT_EXT]) && is_array($data[self::FIELD_PARENT_EXT])) ? $data[self::FIELD_PARENT_EXT] : [];
             if (null !== $value) {
@@ -811,16 +808,18 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 foreach($ext as $iext) {
                     $this->addParent(new FHIRCanonical($iext));
                 }
+            } else {
+                $this->addParent(new FHIRCanonical(null));
             }
         }
-        if (isset($data[self::FIELD_EVENT_CODING])) {
+        if (array_key_exists(self::FIELD_EVENT_CODING, $data)) {
             if ($data[self::FIELD_EVENT_CODING] instanceof FHIRCoding) {
                 $this->setEventCoding($data[self::FIELD_EVENT_CODING]);
             } else {
                 $this->setEventCoding(new FHIRCoding($data[self::FIELD_EVENT_CODING]));
             }
         }
-        if (isset($data[self::FIELD_EVENT_URI]) || isset($data[self::FIELD_EVENT_URI_EXT])) {
+        if (array_key_exists(self::FIELD_EVENT_URI, $data) || array_key_exists(self::FIELD_EVENT_URI_EXT, $data)) {
             $value = $data[self::FIELD_EVENT_URI] ?? null;
             $ext = (isset($data[self::FIELD_EVENT_URI_EXT]) && is_array($data[self::FIELD_EVENT_URI_EXT])) ? $data[self::FIELD_EVENT_URI_EXT] : [];
             if (null !== $value) {
@@ -833,9 +832,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setEventUri(new FHIRUri($ext));
+            } else {
+                $this->setEventUri(new FHIRUri(null));
             }
         }
-        if (isset($data[self::FIELD_CATEGORY]) || isset($data[self::FIELD_CATEGORY_EXT])) {
+        if (array_key_exists(self::FIELD_CATEGORY, $data) || array_key_exists(self::FIELD_CATEGORY_EXT, $data)) {
             $value = $data[self::FIELD_CATEGORY] ?? null;
             $ext = (isset($data[self::FIELD_CATEGORY_EXT]) && is_array($data[self::FIELD_CATEGORY_EXT])) ? $data[self::FIELD_CATEGORY_EXT] : [];
             if (null !== $value) {
@@ -848,14 +849,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setCategory(new FHIRMessageSignificanceCategory($ext));
+            } else {
+                $this->setCategory(new FHIRMessageSignificanceCategory(null));
             }
         }
-        if (isset($data[self::FIELD_FOCUS])) {
+        if (array_key_exists(self::FIELD_FOCUS, $data)) {
             if (is_array($data[self::FIELD_FOCUS])) {
                 foreach($data[self::FIELD_FOCUS] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRMessageDefinitionFocus) {
                         $this->addFocus($v);
                     } else {
@@ -868,7 +868,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 $this->addFocus(new FHIRMessageDefinitionFocus($data[self::FIELD_FOCUS]));
             }
         }
-        if (isset($data[self::FIELD_RESPONSE_REQUIRED]) || isset($data[self::FIELD_RESPONSE_REQUIRED_EXT])) {
+        if (array_key_exists(self::FIELD_RESPONSE_REQUIRED, $data) || array_key_exists(self::FIELD_RESPONSE_REQUIRED_EXT, $data)) {
             $value = $data[self::FIELD_RESPONSE_REQUIRED] ?? null;
             $ext = (isset($data[self::FIELD_RESPONSE_REQUIRED_EXT]) && is_array($data[self::FIELD_RESPONSE_REQUIRED_EXT])) ? $data[self::FIELD_RESPONSE_REQUIRED_EXT] : [];
             if (null !== $value) {
@@ -881,14 +881,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setResponseRequired(new FHIRMessageheaderResponseRequest($ext));
+            } else {
+                $this->setResponseRequired(new FHIRMessageheaderResponseRequest(null));
             }
         }
-        if (isset($data[self::FIELD_ALLOWED_RESPONSE])) {
+        if (array_key_exists(self::FIELD_ALLOWED_RESPONSE, $data)) {
             if (is_array($data[self::FIELD_ALLOWED_RESPONSE])) {
                 foreach($data[self::FIELD_ALLOWED_RESPONSE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRMessageDefinitionAllowedResponse) {
                         $this->addAllowedResponse($v);
                     } else {
@@ -901,7 +900,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 $this->addAllowedResponse(new FHIRMessageDefinitionAllowedResponse($data[self::FIELD_ALLOWED_RESPONSE]));
             }
         }
-        if (isset($data[self::FIELD_GRAPH]) || isset($data[self::FIELD_GRAPH_EXT])) {
+        if (array_key_exists(self::FIELD_GRAPH, $data) || array_key_exists(self::FIELD_GRAPH_EXT, $data)) {
             $value = $data[self::FIELD_GRAPH] ?? null;
             $ext = (isset($data[self::FIELD_GRAPH_EXT]) && is_array($data[self::FIELD_GRAPH_EXT])) ? $data[self::FIELD_GRAPH_EXT] : [];
             if (null !== $value) {
@@ -929,6 +928,8 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
                 foreach($ext as $iext) {
                     $this->addGraph(new FHIRCanonical($iext));
                 }
+            } else {
+                $this->addGraph(new FHIRCanonical(null));
             }
         }
     }
@@ -936,7 +937,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -944,22 +945,10 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<MessageDefinition{$xmlns}></MessageDefinition>";
-    }
-    /**
-     * @return string
-     */
     public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
-
 
     /**
      * String of characters used to identify a name or a resource
@@ -969,9 +958,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The business identifier that is used to reference the MessageDefinition and *is*
      * expected to be consistent from server to server.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getUrl(): ?FHIRUri
+    public function getUrl(): null|FHIRUri
     {
         return $this->url;
     }
@@ -984,15 +973,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The business identifier that is used to reference the MessageDefinition and *is*
      * expected to be consistent from server to server.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $url
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUrl($url = null): object
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
         }
         $this->_trackValueSet($this->url, $url);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_URL])) {
+            $this->_primitiveXmlLocations[self::FIELD_URL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_URL][0] = $xmlLocation;
         $this->url = $url;
         return $this;
     }
@@ -1009,7 +1003,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -1027,42 +1021,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
-        return $this;
-    }
-
-    /**
-     * An identifier - identifies some entity uniquely and unambiguously. Typically
-     * this is used for business identifiers.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A formal identifier that is used to identify this message definition when it is
-     * represented in other formats, or referenced in a specification, model, design or
-     * an instance.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
-     * @return static
-     */
-    public function setIdentifier(array $identifier = []): object
-    {
-        if ([] !== $this->identifier) {
-            $this->_trackValuesRemoved(count($this->identifier));
-            $this->identifier = [];
-        }
-        if ([] === $identifier) {
-            return $this;
-        }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
-            }
-        }
         return $this;
     }
 
@@ -1078,9 +1043,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * managed version is not available. There is also no expectation that versions can
      * be placed in a lexicographical sequence.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getVersion(): ?FHIRString
+    public function getVersion(): null|FHIRString
     {
         return $this->version;
     }
@@ -1097,15 +1062,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * managed version is not available. There is also no expectation that versions can
      * be placed in a lexicographical sequence.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $version
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setVersion($version = null): object
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
         }
         $this->_trackValueSet($this->version, $version);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_VERSION])) {
+            $this->_primitiveXmlLocations[self::FIELD_VERSION] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_VERSION][0] = $xmlLocation;
         $this->version = $version;
         return $this;
     }
@@ -1119,9 +1089,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getName(): ?FHIRString
+    public function getName(): null|FHIRString
     {
         return $this->name;
     }
@@ -1135,15 +1105,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $name
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setName($name = null): object
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
         }
         $this->_trackValueSet($this->name, $name);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_NAME])) {
+            $this->_primitiveXmlLocations[self::FIELD_NAME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_NAME][0] = $xmlLocation;
         $this->name = $name;
         return $this;
     }
@@ -1155,9 +1130,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A short, descriptive, user-friendly title for the message definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getTitle(): ?FHIRString
+    public function getTitle(): null|FHIRString
     {
         return $this->title;
     }
@@ -1169,15 +1144,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A short, descriptive, user-friendly title for the message definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $title
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTitle($title = null): object
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
         }
         $this->_trackValueSet($this->title, $title);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_TITLE])) {
+            $this->_primitiveXmlLocations[self::FIELD_TITLE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_TITLE][0] = $xmlLocation;
         $this->title = $title;
         return $this;
     }
@@ -1190,9 +1170,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A MessageDefinition that is superseded by this definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getReplaces(): ?array
+    public function getReplaces(): null|array
     {
         return $this->replaces;
     }
@@ -1205,15 +1185,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * A MessageDefinition that is superseded by this definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $replaces
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $replaces
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addReplaces($replaces = null): object
+    public function addReplaces(null|string|FHIRCanonicalPrimitive|FHIRCanonical $replaces = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $replaces && !($replaces instanceof FHIRCanonical)) {
             $replaces = new FHIRCanonical($replaces);
         }
         $this->_trackValueAdded();
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_REPLACES])) {
+            $this->_primitiveXmlLocations[self::FIELD_REPLACES] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_REPLACES][] = $xmlLocation;
         $this->replaces[] = $replaces;
         return $this;
     }
@@ -1227,10 +1212,12 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * A MessageDefinition that is superseded by this definition.
      *
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $replaces
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setReplaces(array $replaces = []): object
+    public function setReplaces(array $replaces = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
+        unset($this->_primitiveXmlLocations[self::FIELD_REPLACES]);
         if ([] !== $this->replaces) {
             $this->_trackValuesRemoved(count($this->replaces));
             $this->replaces = [];
@@ -1240,9 +1227,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         }
         foreach($replaces as $v) {
             if ($v instanceof FHIRCanonical) {
-                $this->addReplaces($v);
+                $this->addReplaces($v, $xmlLocation);
             } else {
-                $this->addReplaces(new FHIRCanonical($v));
+                $this->addReplaces(new FHIRCanonical($v), $xmlLocation);
             }
         }
         return $this;
@@ -1256,7 +1243,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
-    public function getStatus(): ?FHIRPublicationStatus
+    public function getStatus(): null|FHIRPublicationStatus
     {
         return $this->status;
     }
@@ -1270,8 +1257,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus $status
      * @return static
      */
-    public function setStatus(?FHIRPublicationStatus $status = null): object
+    public function setStatus(null|FHIRPublicationStatus $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRPublicationStatus();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -1285,9 +1275,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getExperimental(): ?FHIRBoolean
+    public function getExperimental(): null|FHIRBoolean
     {
         return $this->experimental;
     }
@@ -1300,15 +1290,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * purposes (or education/evaluation/marketing) and is not intended to be used for
      * genuine usage.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $experimental
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setExperimental($experimental = null): object
+    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $experimental && !($experimental instanceof FHIRBoolean)) {
             $experimental = new FHIRBoolean($experimental);
         }
         $this->_trackValueSet($this->experimental, $experimental);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL])) {
+            $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL][0] = $xmlLocation;
         $this->experimental = $experimental;
         return $this;
     }
@@ -1326,9 +1321,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * status code changes. In addition, it should change when the substantive content
      * of the message definition changes.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDate(): ?FHIRDateTime
+    public function getDate(): null|FHIRDateTime
     {
         return $this->date;
     }
@@ -1346,15 +1341,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * status code changes. In addition, it should change when the substantive content
      * of the message definition changes.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $date
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDate($date = null): object
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
         }
         $this->_trackValueSet($this->date, $date);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE])) {
+            $this->_primitiveXmlLocations[self::FIELD_DATE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DATE][0] = $xmlLocation;
         $this->date = $date;
         return $this;
     }
@@ -1367,9 +1367,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The name of the organization or individual that published the message
      * definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPublisher(): ?FHIRString
+    public function getPublisher(): null|FHIRString
     {
         return $this->publisher;
     }
@@ -1382,15 +1382,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * The name of the organization or individual that published the message
      * definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $publisher
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPublisher($publisher = null): object
+    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $publisher && !($publisher instanceof FHIRString)) {
             $publisher = new FHIRString($publisher);
         }
         $this->_trackValueSet($this->publisher, $publisher);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PUBLISHER])) {
+            $this->_primitiveXmlLocations[self::FIELD_PUBLISHER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PUBLISHER][0] = $xmlLocation;
         $this->publisher = $publisher;
         return $this;
     }
@@ -1405,7 +1410,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail[]
      */
-    public function getContact(): ?array
+    public function getContact(): null|array
     {
         return $this->contact;
     }
@@ -1421,40 +1426,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $contact
      * @return static
      */
-    public function addContact(?FHIRContactDetail $contact = null): object
+    public function addContact(null|FHIRContactDetail $contact = null): self
     {
+        if (null === $contact) {
+            $contact = new FHIRContactDetail();
+        }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
-        return $this;
-    }
-
-    /**
-     * Specifies contact information for a person or organization.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Contact details to assist a user in finding and communicating with the
-     * publisher.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRContactDetail[] $contact
-     * @return static
-     */
-    public function setContact(array $contact = []): object
-    {
-        if ([] !== $this->contact) {
-            $this->_trackValuesRemoved(count($this->contact));
-            $this->contact = [];
-        }
-        if ([] === $contact) {
-            return $this;
-        }
-        foreach($contact as $v) {
-            if ($v instanceof FHIRContactDetail) {
-                $this->addContact($v);
-            } else {
-                $this->addContact(new FHIRContactDetail($v));
-            }
-        }
         return $this;
     }
 
@@ -1470,9 +1448,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * A free text natural language description of the message definition from a
      * consumer's perspective.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDescription(): ?FHIRMarkdown
+    public function getDescription(): null|FHIRMarkdown
     {
         return $this->description;
     }
@@ -1489,15 +1467,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * A free text natural language description of the message definition from a
      * consumer's perspective.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $description
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
         }
         $this->_trackValueSet($this->description, $description);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -1518,7 +1501,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext[]
      */
-    public function getUseContext(): ?array
+    public function getUseContext(): null|array
     {
         return $this->useContext;
     }
@@ -1540,46 +1523,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $useContext
      * @return static
      */
-    public function addUseContext(?FHIRUsageContext $useContext = null): object
+    public function addUseContext(null|FHIRUsageContext $useContext = null): self
     {
+        if (null === $useContext) {
+            $useContext = new FHIRUsageContext();
+        }
         $this->_trackValueAdded();
         $this->useContext[] = $useContext;
-        return $this;
-    }
-
-    /**
-     * Specifies clinical/business/etc. metadata that can be used to retrieve, index
-     * and/or categorize an artifact. This metadata can either be specific to the
-     * applicable population (e.g., age category, DRG) or the specific context of care
-     * (e.g., venue, care setting, provider of care).
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The content was developed with a focus and intent of supporting the contexts
-     * that are listed. These contexts may be general categories (gender, age, ...) or
-     * may be references to specific programs (insurance plans, studies, ...) and may
-     * be used to assist with indexing and searching for appropriate message definition
-     * instances.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRUsageContext[] $useContext
-     * @return static
-     */
-    public function setUseContext(array $useContext = []): object
-    {
-        if ([] !== $this->useContext) {
-            $this->_trackValuesRemoved(count($this->useContext));
-            $this->useContext = [];
-        }
-        if ([] === $useContext) {
-            return $this;
-        }
-        foreach($useContext as $v) {
-            if ($v instanceof FHIRUsageContext) {
-                $this->addUseContext($v);
-            } else {
-                $this->addUseContext(new FHIRUsageContext($v));
-            }
-        }
         return $this;
     }
 
@@ -1594,7 +1544,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getJurisdiction(): ?array
+    public function getJurisdiction(): null|array
     {
         return $this->jurisdiction;
     }
@@ -1611,41 +1561,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $jurisdiction
      * @return static
      */
-    public function addJurisdiction(?FHIRCodeableConcept $jurisdiction = null): object
+    public function addJurisdiction(null|FHIRCodeableConcept $jurisdiction = null): self
     {
+        if (null === $jurisdiction) {
+            $jurisdiction = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A legal or geographic region in which the message definition is intended to be
-     * used.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $jurisdiction
-     * @return static
-     */
-    public function setJurisdiction(array $jurisdiction = []): object
-    {
-        if ([] !== $this->jurisdiction) {
-            $this->_trackValuesRemoved(count($this->jurisdiction));
-            $this->jurisdiction = [];
-        }
-        if ([] === $jurisdiction) {
-            return $this;
-        }
-        foreach($jurisdiction as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addJurisdiction($v);
-            } else {
-                $this->addJurisdiction(new FHIRCodeableConcept($v));
-            }
-        }
         return $this;
     }
 
@@ -1661,9 +1583,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Explanation of why this message definition is needed and why it has been
      * designed as it has.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getPurpose(): ?FHIRMarkdown
+    public function getPurpose(): null|FHIRMarkdown
     {
         return $this->purpose;
     }
@@ -1680,15 +1602,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Explanation of why this message definition is needed and why it has been
      * designed as it has.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $purpose
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPurpose($purpose = null): object
+    public function setPurpose(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $purpose = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $purpose && !($purpose instanceof FHIRMarkdown)) {
             $purpose = new FHIRMarkdown($purpose);
         }
         $this->_trackValueSet($this->purpose, $purpose);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PURPOSE])) {
+            $this->_primitiveXmlLocations[self::FIELD_PURPOSE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PURPOSE][0] = $xmlLocation;
         $this->purpose = $purpose;
         return $this;
     }
@@ -1706,9 +1633,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Copyright statements are generally legal restrictions on the use and publishing
      * of the message definition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getCopyright(): ?FHIRMarkdown
+    public function getCopyright(): null|FHIRMarkdown
     {
         return $this->copyright;
     }
@@ -1726,15 +1653,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Copyright statements are generally legal restrictions on the use and publishing
      * of the message definition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $copyright
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCopyright($copyright = null): object
+    public function setCopyright(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $copyright = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $copyright && !($copyright instanceof FHIRMarkdown)) {
             $copyright = new FHIRMarkdown($copyright);
         }
         $this->_trackValueSet($this->copyright, $copyright);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_COPYRIGHT])) {
+            $this->_primitiveXmlLocations[self::FIELD_COPYRIGHT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_COPYRIGHT][0] = $xmlLocation;
         $this->copyright = $copyright;
         return $this;
     }
@@ -1747,9 +1679,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * The MessageDefinition that is the basis for the contents of this resource.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getBase(): ?FHIRCanonical
+    public function getBase(): null|FHIRCanonical
     {
         return $this->base;
     }
@@ -1762,15 +1694,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * The MessageDefinition that is the basis for the contents of this resource.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $base
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $base
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setBase($base = null): object
+    public function setBase(null|string|FHIRCanonicalPrimitive|FHIRCanonical $base = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $base && !($base instanceof FHIRCanonical)) {
             $base = new FHIRCanonical($base);
         }
         $this->_trackValueSet($this->base, $base);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_BASE])) {
+            $this->_primitiveXmlLocations[self::FIELD_BASE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_BASE][0] = $xmlLocation;
         $this->base = $base;
         return $this;
     }
@@ -1784,9 +1721,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Identifies a protocol or workflow that this MessageDefinition represents a step
      * in.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getParent(): ?array
+    public function getParent(): null|array
     {
         return $this->parent;
     }
@@ -1800,15 +1737,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * Identifies a protocol or workflow that this MessageDefinition represents a step
      * in.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $parent
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $parent
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addParent($parent = null): object
+    public function addParent(null|string|FHIRCanonicalPrimitive|FHIRCanonical $parent = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $parent && !($parent instanceof FHIRCanonical)) {
             $parent = new FHIRCanonical($parent);
         }
         $this->_trackValueAdded();
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PARENT])) {
+            $this->_primitiveXmlLocations[self::FIELD_PARENT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PARENT][] = $xmlLocation;
         $this->parent[] = $parent;
         return $this;
     }
@@ -1823,10 +1765,12 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * in.
      *
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $parent
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setParent(array $parent = []): object
+    public function setParent(array $parent = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
+        unset($this->_primitiveXmlLocations[self::FIELD_PARENT]);
         if ([] !== $this->parent) {
             $this->_trackValuesRemoved(count($this->parent));
             $this->parent = [];
@@ -1836,9 +1780,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         }
         foreach($parent as $v) {
             if ($v instanceof FHIRCanonical) {
-                $this->addParent($v);
+                $this->addParent($v, $xmlLocation);
             } else {
-                $this->addParent(new FHIRCanonical($v));
+                $this->addParent(new FHIRCanonical($v), $xmlLocation);
             }
         }
         return $this;
@@ -1853,7 +1797,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    public function getEventCoding(): ?FHIRCoding
+    public function getEventCoding(): null|FHIRCoding
     {
         return $this->eventCoding;
     }
@@ -1868,8 +1812,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $eventCoding
      * @return static
      */
-    public function setEventCoding(?FHIRCoding $eventCoding = null): object
+    public function setEventCoding(null|FHIRCoding $eventCoding = null): self
     {
+        if (null === $eventCoding) {
+            $eventCoding = new FHIRCoding();
+        }
         $this->_trackValueSet($this->eventCoding, $eventCoding);
         $this->eventCoding = $eventCoding;
         return $this;
@@ -1882,9 +1829,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * Event code or link to the EventDefinition.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getEventUri(): ?FHIRUri
+    public function getEventUri(): null|FHIRUri
     {
         return $this->eventUri;
     }
@@ -1896,15 +1843,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * Event code or link to the EventDefinition.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $eventUri
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $eventUri
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setEventUri($eventUri = null): object
+    public function setEventUri(null|string|FHIRUriPrimitive|FHIRUri $eventUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $eventUri && !($eventUri instanceof FHIRUri)) {
             $eventUri = new FHIRUri($eventUri);
         }
         $this->_trackValueSet($this->eventUri, $eventUri);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_EVENT_URI])) {
+            $this->_primitiveXmlLocations[self::FIELD_EVENT_URI] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_EVENT_URI][0] = $xmlLocation;
         $this->eventUri = $eventUri;
         return $this;
     }
@@ -1917,7 +1869,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMessageSignificanceCategory
      */
-    public function getCategory(): ?FHIRMessageSignificanceCategory
+    public function getCategory(): null|FHIRMessageSignificanceCategory
     {
         return $this->category;
     }
@@ -1931,8 +1883,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMessageSignificanceCategory $category
      * @return static
      */
-    public function setCategory(?FHIRMessageSignificanceCategory $category = null): object
+    public function setCategory(null|FHIRMessageSignificanceCategory $category = null): self
     {
+        if (null === $category) {
+            $category = new FHIRMessageSignificanceCategory();
+        }
         $this->_trackValueSet($this->category, $category);
         $this->category = $category;
         return $this;
@@ -1949,7 +1904,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus[]
      */
-    public function getFocus(): ?array
+    public function getFocus(): null|array
     {
         return $this->focus;
     }
@@ -1966,41 +1921,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus $focus
      * @return static
      */
-    public function addFocus(?FHIRMessageDefinitionFocus $focus = null): object
+    public function addFocus(null|FHIRMessageDefinitionFocus $focus = null): self
     {
+        if (null === $focus) {
+            $focus = new FHIRMessageDefinitionFocus();
+        }
         $this->_trackValueAdded();
         $this->focus[] = $focus;
-        return $this;
-    }
-
-    /**
-     * Defines the characteristics of a message that can be shared between systems,
-     * including the type of event that initiates the message, the content to be
-     * transmitted and what response(s), if any, are permitted.
-     *
-     * Identifies the resource (or resources) that are being addressed by the event.
-     * For example, the Encounter for an admit message or two Account records for a
-     * merge.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionFocus[] $focus
-     * @return static
-     */
-    public function setFocus(array $focus = []): object
-    {
-        if ([] !== $this->focus) {
-            $this->_trackValuesRemoved(count($this->focus));
-            $this->focus = [];
-        }
-        if ([] === $focus) {
-            return $this;
-        }
-        foreach($focus as $v) {
-            if ($v instanceof FHIRMessageDefinitionFocus) {
-                $this->addFocus($v);
-            } else {
-                $this->addFocus(new FHIRMessageDefinitionFocus($v));
-            }
-        }
         return $this;
     }
 
@@ -2014,7 +1941,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMessageheaderResponseRequest
      */
-    public function getResponseRequired(): ?FHIRMessageheaderResponseRequest
+    public function getResponseRequired(): null|FHIRMessageheaderResponseRequest
     {
         return $this->responseRequired;
     }
@@ -2030,8 +1957,11 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMessageheaderResponseRequest $responseRequired
      * @return static
      */
-    public function setResponseRequired(?FHIRMessageheaderResponseRequest $responseRequired = null): object
+    public function setResponseRequired(null|FHIRMessageheaderResponseRequest $responseRequired = null): self
     {
+        if (null === $responseRequired) {
+            $responseRequired = new FHIRMessageheaderResponseRequest();
+        }
         $this->_trackValueSet($this->responseRequired, $responseRequired);
         $this->responseRequired = $responseRequired;
         return $this;
@@ -2047,7 +1977,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse[]
      */
-    public function getAllowedResponse(): ?array
+    public function getAllowedResponse(): null|array
     {
         return $this->allowedResponse;
     }
@@ -2063,40 +1993,13 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse $allowedResponse
      * @return static
      */
-    public function addAllowedResponse(?FHIRMessageDefinitionAllowedResponse $allowedResponse = null): object
+    public function addAllowedResponse(null|FHIRMessageDefinitionAllowedResponse $allowedResponse = null): self
     {
+        if (null === $allowedResponse) {
+            $allowedResponse = new FHIRMessageDefinitionAllowedResponse();
+        }
         $this->_trackValueAdded();
         $this->allowedResponse[] = $allowedResponse;
-        return $this;
-    }
-
-    /**
-     * Defines the characteristics of a message that can be shared between systems,
-     * including the type of event that initiates the message, the content to be
-     * transmitted and what response(s), if any, are permitted.
-     *
-     * Indicates what types of messages may be sent as an application-level response to
-     * this message.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition\FHIRMessageDefinitionAllowedResponse[] $allowedResponse
-     * @return static
-     */
-    public function setAllowedResponse(array $allowedResponse = []): object
-    {
-        if ([] !== $this->allowedResponse) {
-            $this->_trackValuesRemoved(count($this->allowedResponse));
-            $this->allowedResponse = [];
-        }
-        if ([] === $allowedResponse) {
-            return $this;
-        }
-        foreach($allowedResponse as $v) {
-            if ($v instanceof FHIRMessageDefinitionAllowedResponse) {
-                $this->addAllowedResponse($v);
-            } else {
-                $this->addAllowedResponse(new FHIRMessageDefinitionAllowedResponse($v));
-            }
-        }
         return $this;
     }
 
@@ -2111,9 +2014,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * are to be added to the bundle when building the document. The GraphDefinition
      * can also specify profiles that apply to the various resources.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
-    public function getGraph(): ?array
+    public function getGraph(): null|array
     {
         return $this->graph;
     }
@@ -2129,15 +2032,20 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * are to be added to the bundle when building the document. The GraphDefinition
      * can also specify profiles that apply to the various resources.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $graph
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $graph
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addGraph($graph = null): object
+    public function addGraph(null|string|FHIRCanonicalPrimitive|FHIRCanonical $graph = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $graph && !($graph instanceof FHIRCanonical)) {
             $graph = new FHIRCanonical($graph);
         }
         $this->_trackValueAdded();
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_GRAPH])) {
+            $this->_primitiveXmlLocations[self::FIELD_GRAPH] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_GRAPH][] = $xmlLocation;
         $this->graph[] = $graph;
         return $this;
     }
@@ -2154,10 +2062,12 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      * can also specify profiles that apply to the various resources.
      *
      * @param \HL7\FHIR\R4\FHIRElement\FHIRCanonical[] $graph
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setGraph(array $graph = []): object
+    public function setGraph(array $graph = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
+        unset($this->_primitiveXmlLocations[self::FIELD_GRAPH]);
         if ([] !== $this->graph) {
             $this->_trackValuesRemoved(count($this->graph));
             $this->graph = [];
@@ -2167,9 +2077,9 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         }
         foreach($graph as $v) {
             if ($v instanceof FHIRCanonical) {
-                $this->addGraph($v);
+                $this->addGraph($v, $xmlLocation);
             } else {
-                $this->addGraph(new FHIRCanonical($v));
+                $this->addGraph(new FHIRCanonical($v), $xmlLocation);
             }
         }
         return $this;
@@ -2183,7 +2093,7 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -2739,474 +2649,500 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMessageDefinition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMessageDefinition
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMessageDefinition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMessageDefinition::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRMessageDefinition(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMessageDefinition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMessageDefinition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMessageDefinition::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMessageDefinition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_URL === $n->nodeName) {
-                $type->setUrl(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_IDENTIFIER === $n->nodeName) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_VERSION === $n->nodeName) {
-                $type->setVersion(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_NAME === $n->nodeName) {
-                $type->setName(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_TITLE === $n->nodeName) {
-                $type->setTitle(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_REPLACES === $n->nodeName) {
-                $type->addReplaces(FHIRCanonical::xmlUnserialize($n));
-            } elseif (self::FIELD_STATUS === $n->nodeName) {
-                $type->setStatus(FHIRPublicationStatus::xmlUnserialize($n));
-            } elseif (self::FIELD_EXPERIMENTAL === $n->nodeName) {
-                $type->setExperimental(FHIRBoolean::xmlUnserialize($n));
-            } elseif (self::FIELD_DATE === $n->nodeName) {
-                $type->setDate(FHIRDateTime::xmlUnserialize($n));
-            } elseif (self::FIELD_PUBLISHER === $n->nodeName) {
-                $type->setPublisher(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_CONTACT === $n->nodeName) {
-                $type->addContact(FHIRContactDetail::xmlUnserialize($n));
-            } elseif (self::FIELD_DESCRIPTION === $n->nodeName) {
-                $type->setDescription(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_USE_CONTEXT === $n->nodeName) {
-                $type->addUseContext(FHIRUsageContext::xmlUnserialize($n));
-            } elseif (self::FIELD_JURISDICTION === $n->nodeName) {
-                $type->addJurisdiction(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_PURPOSE === $n->nodeName) {
-                $type->setPurpose(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_COPYRIGHT === $n->nodeName) {
-                $type->setCopyright(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_BASE === $n->nodeName) {
-                $type->setBase(FHIRCanonical::xmlUnserialize($n));
-            } elseif (self::FIELD_PARENT === $n->nodeName) {
-                $type->addParent(FHIRCanonical::xmlUnserialize($n));
-            } elseif (self::FIELD_EVENT_CODING === $n->nodeName) {
-                $type->setEventCoding(FHIRCoding::xmlUnserialize($n));
-            } elseif (self::FIELD_EVENT_URI === $n->nodeName) {
-                $type->setEventUri(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_CATEGORY === $n->nodeName) {
-                $type->setCategory(FHIRMessageSignificanceCategory::xmlUnserialize($n));
-            } elseif (self::FIELD_FOCUS === $n->nodeName) {
-                $type->addFocus(FHIRMessageDefinitionFocus::xmlUnserialize($n));
-            } elseif (self::FIELD_RESPONSE_REQUIRED === $n->nodeName) {
-                $type->setResponseRequired(FHIRMessageheaderResponseRequest::xmlUnserialize($n));
-            } elseif (self::FIELD_ALLOWED_RESPONSE === $n->nodeName) {
-                $type->addAllowedResponse(FHIRMessageDefinitionAllowedResponse::xmlUnserialize($n));
-            } elseif (self::FIELD_GRAPH === $n->nodeName) {
-                $type->addGraph(FHIRCanonical::xmlUnserialize($n));
-            } elseif (self::FIELD_TEXT === $n->nodeName) {
-                $type->setText(FHIRNarrative::xmlUnserialize($n));
-            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
-                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
-                    $nn = $n->childNodes->item($ni);
-                    if ($nn instanceof \DOMElement) {
-                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
-                    }
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_URL === $childName) {
+                $type->setUrl(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_IDENTIFIER === $childName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_VERSION === $childName) {
+                $type->setVersion(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_NAME === $childName) {
+                $type->setName(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_TITLE === $childName) {
+                $type->setTitle(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_REPLACES === $childName) {
+                $type->addReplaces(FHIRCanonical::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_STATUS === $childName) {
+                $type->setStatus(FHIRPublicationStatus::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EXPERIMENTAL === $childName) {
+                $type->setExperimental(FHIRBoolean::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DATE === $childName) {
+                $type->setDate(FHIRDateTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PUBLISHER === $childName) {
+                $type->setPublisher(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_CONTACT === $childName) {
+                $type->addContact(FHIRContactDetail::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DESCRIPTION === $childName) {
+                $type->setDescription(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_USE_CONTEXT === $childName) {
+                $type->addUseContext(FHIRUsageContext::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_JURISDICTION === $childName) {
+                $type->addJurisdiction(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PURPOSE === $childName) {
+                $type->setPurpose(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_COPYRIGHT === $childName) {
+                $type->setCopyright(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_BASE === $childName) {
+                $type->setBase(FHIRCanonical::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PARENT === $childName) {
+                $type->addParent(FHIRCanonical::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_EVENT_CODING === $childName) {
+                $type->setEventCoding(FHIRCoding::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EVENT_URI === $childName) {
+                $type->setEventUri(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_CATEGORY === $childName) {
+                $type->setCategory(FHIRMessageSignificanceCategory::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FOCUS === $childName) {
+                $type->addFocus(FHIRMessageDefinitionFocus::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_RESPONSE_REQUIRED === $childName) {
+                $type->setResponseRequired(FHIRMessageheaderResponseRequest::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ALLOWED_RESPONSE === $childName) {
+                $type->addAllowedResponse(FHIRMessageDefinitionAllowedResponse::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_GRAPH === $childName) {
+                $type->addGraph(FHIRCanonical::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_TEXT === $childName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CONTAINED === $childName) {
+                foreach ($n->children() as $nn) {
+                    $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn, $config));
                 }
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRId::xmlUnserialize($n));
-            } elseif (self::FIELD_META === $n->nodeName) {
-                $type->setMeta(FHIRMeta::xmlUnserialize($n));
-            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
-                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
-                $type->setLanguage(FHIRCode::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRId::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_META === $childName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_IMPLICIT_RULES === $childName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_LANGUAGE === $childName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_URL);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_URL])) {
             $pt = $type->getUrl();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_URL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setUrl($n->nodeValue);
+                $type->setUrl((string)$attributes[self::FIELD_URL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_VERSION);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_VERSION])) {
             $pt = $type->getVersion();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_VERSION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setVersion($n->nodeValue);
+                $type->setVersion((string)$attributes[self::FIELD_VERSION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_NAME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_NAME])) {
             $pt = $type->getName();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_NAME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setName($n->nodeValue);
+                $type->setName((string)$attributes[self::FIELD_NAME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_TITLE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_TITLE])) {
             $pt = $type->getTitle();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_TITLE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setTitle($n->nodeValue);
+                $type->setTitle((string)$attributes[self::FIELD_TITLE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_REPLACES);
-        if (null !== $n) {
-            $pt = $type->getReplaces();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addReplaces($n->nodeValue);
-            }
+        if (isset($attributes[self::FIELD_REPLACES])) {
+            $type->addReplaces((string)$attributes[self::FIELD_REPLACES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_EXPERIMENTAL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_EXPERIMENTAL])) {
             $pt = $type->getExperimental();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_EXPERIMENTAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setExperimental($n->nodeValue);
+                $type->setExperimental((string)$attributes[self::FIELD_EXPERIMENTAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DATE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DATE])) {
             $pt = $type->getDate();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDate($n->nodeValue);
+                $type->setDate((string)$attributes[self::FIELD_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PUBLISHER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PUBLISHER])) {
             $pt = $type->getPublisher();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PUBLISHER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPublisher($n->nodeValue);
+                $type->setPublisher((string)$attributes[self::FIELD_PUBLISHER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DESCRIPTION);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DESCRIPTION])) {
             $pt = $type->getDescription();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DESCRIPTION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDescription($n->nodeValue);
+                $type->setDescription((string)$attributes[self::FIELD_DESCRIPTION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PURPOSE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PURPOSE])) {
             $pt = $type->getPurpose();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PURPOSE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPurpose($n->nodeValue);
+                $type->setPurpose((string)$attributes[self::FIELD_PURPOSE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_COPYRIGHT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_COPYRIGHT])) {
             $pt = $type->getCopyright();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_COPYRIGHT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setCopyright($n->nodeValue);
+                $type->setCopyright((string)$attributes[self::FIELD_COPYRIGHT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_BASE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_BASE])) {
             $pt = $type->getBase();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_BASE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setBase($n->nodeValue);
+                $type->setBase((string)$attributes[self::FIELD_BASE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PARENT);
-        if (null !== $n) {
-            $pt = $type->getParent();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addParent($n->nodeValue);
-            }
+        if (isset($attributes[self::FIELD_PARENT])) {
+            $type->addParent((string)$attributes[self::FIELD_PARENT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_EVENT_URI);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_EVENT_URI])) {
             $pt = $type->getEventUri();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_EVENT_URI], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setEventUri($n->nodeValue);
+                $type->setEventUri((string)$attributes[self::FIELD_EVENT_URI], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_GRAPH);
-        if (null !== $n) {
-            $pt = $type->getGraph();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addGraph($n->nodeValue);
-            }
+        if (isset($attributes[self::FIELD_GRAPH])) {
+            $type->addGraph((string)$attributes[self::FIELD_GRAPH], PHPFHIRXmlLocationEnum::ATTRIBUTE);
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_IMPLICIT_RULES])) {
             $pt = $type->getImplicitRules();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setImplicitRules($n->nodeValue);
+                $type->setImplicitRules((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_LANGUAGE])) {
             $pt = $type->getLanguage();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setLanguage($n->nodeValue);
+                $type->setLanguage((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
-        if (null !== ($v = $this->getUrl())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_URL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
         }
-        if ([] !== ($vs = $this->getIdentifier())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
+        }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'MessageDefinition', $this->_getSourceXmlns());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_URL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUrl())) {
+            $xw->writeAttribute(self::FIELD_URL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_VERSION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getVersion())) {
+            $xw->writeAttribute(self::FIELD_VERSION, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getName())) {
+            $xw->writeAttribute(self::FIELD_NAME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTitle())) {
+            $xw->writeAttribute(self::FIELD_TITLE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_REPLACES] ?? [];
+        if ([] === $locs && [] !== ($vs = $this->getReplaces())) {
+            $xw->writeAttribute(self::FIELD_REPLACES, $vs[0]->getValue()?->getFormattedValue());
+        } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getReplaces()) && isset($vs[$idx])) {
+            $xw->writeAttribute(self::FIELD_REPLACES, $vs[$idx]->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getExperimental())) {
+            $xw->writeAttribute(self::FIELD_EXPERIMENTAL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDate())) {
+            $xw->writeAttribute(self::FIELD_DATE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PUBLISHER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPublisher())) {
+            $xw->writeAttribute(self::FIELD_PUBLISHER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
+            $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PURPOSE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPurpose())) {
+            $xw->writeAttribute(self::FIELD_PURPOSE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COPYRIGHT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCopyright())) {
+            $xw->writeAttribute(self::FIELD_COPYRIGHT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_BASE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getBase())) {
+            $xw->writeAttribute(self::FIELD_BASE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PARENT] ?? [];
+        if ([] === $locs && [] !== ($vs = $this->getParent())) {
+            $xw->writeAttribute(self::FIELD_PARENT, $vs[0]->getValue()?->getFormattedValue());
+        } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getParent()) && isset($vs[$idx])) {
+            $xw->writeAttribute(self::FIELD_PARENT, $vs[$idx]->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_EVENT_URI] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getEventUri())) {
+            $xw->writeAttribute(self::FIELD_EVENT_URI, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_GRAPH] ?? [];
+        if ([] === $locs && [] !== ($vs = $this->getGraph())) {
+            $xw->writeAttribute(self::FIELD_GRAPH, $vs[0]->getValue()?->getFormattedValue());
+        } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getGraph()) && isset($vs[$idx])) {
+            $xw->writeAttribute(self::FIELD_GRAPH, $vs[$idx]->getValue()?->getFormattedValue());
+        }
+        parent::xmlSerialize($xw, $config);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_URL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUrl())) {
+            $xw->startElement(self::FIELD_URL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getIdentifier() as $v) {
+            $xw->startElement(self::FIELD_IDENTIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_VERSION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getVersion())) {
+            $xw->startElement(self::FIELD_VERSION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getName())) {
+            $xw->startElement(self::FIELD_NAME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTitle())) {
+            $xw->startElement(self::FIELD_TITLE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_REPLACES] ?? [];
+        if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getReplaces())) {
+            foreach($vs as $i => $v) {
+                if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
+                    $xw->startElement(self::FIELD_REPLACES);
+                    $v->xmlSerialize($xw, $config);
+                    $xw->endElement();
                 }
-                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
-        }
-        if (null !== ($v = $this->getVersion())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_VERSION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
-        }
-        if (null !== ($v = $this->getName())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_NAME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
-        }
-        if (null !== ($v = $this->getTitle())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_TITLE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
-        }
-        if ([] !== ($vs = $this->getReplaces())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_REPLACES);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
             }
         }
         if (null !== ($v = $this->getStatus())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_STATUS);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getExperimental())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_EXPERIMENTAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getExperimental())) {
+            $xw->startElement(self::FIELD_EXPERIMENTAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDate())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DATE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDate())) {
+            $xw->startElement(self::FIELD_DATE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPublisher())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PUBLISHER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PUBLISHER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPublisher())) {
+            $xw->startElement(self::FIELD_PUBLISHER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getContact())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
+        foreach ($this->getContact() as $v) {
+            $xw->startElement(self::FIELD_CONTACT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
+            $xw->startElement(self::FIELD_DESCRIPTION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getUseContext() as $v) {
+            $xw->startElement(self::FIELD_USE_CONTEXT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getJurisdiction() as $v) {
+            $xw->startElement(self::FIELD_JURISDICTION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PURPOSE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPurpose())) {
+            $xw->startElement(self::FIELD_PURPOSE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COPYRIGHT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCopyright())) {
+            $xw->startElement(self::FIELD_COPYRIGHT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_BASE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getBase())) {
+            $xw->startElement(self::FIELD_BASE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PARENT] ?? [];
+        if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getParent())) {
+            foreach($vs as $i => $v) {
+                if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
+                    $xw->startElement(self::FIELD_PARENT);
+                    $v->xmlSerialize($xw, $config);
+                    $xw->endElement();
                 }
-                $telement = $element->ownerDocument->createElement(self::FIELD_CONTACT);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
-        }
-        if (null !== ($v = $this->getDescription())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DESCRIPTION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
-        }
-        if ([] !== ($vs = $this->getUseContext())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_USE_CONTEXT);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
-        }
-        if ([] !== ($vs = $this->getJurisdiction())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_JURISDICTION);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
-        }
-        if (null !== ($v = $this->getPurpose())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PURPOSE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
-        }
-        if (null !== ($v = $this->getCopyright())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_COPYRIGHT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
-        }
-        if (null !== ($v = $this->getBase())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_BASE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
-        }
-        if ([] !== ($vs = $this->getParent())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_PARENT);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
             }
         }
         if (null !== ($v = $this->getEventCoding())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_EVENT_CODING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_EVENT_CODING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getEventUri())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_EVENT_URI);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_EVENT_URI] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getEventUri())) {
+            $xw->startElement(self::FIELD_EVENT_URI);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getCategory())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CATEGORY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_CATEGORY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getFocus())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_FOCUS);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getFocus() as $v) {
+            $xw->startElement(self::FIELD_FOCUS);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getResponseRequired())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_RESPONSE_REQUIRED);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_RESPONSE_REQUIRED);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getAllowedResponse())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
+        foreach ($this->getAllowedResponse() as $v) {
+            $xw->startElement(self::FIELD_ALLOWED_RESPONSE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_GRAPH] ?? [];
+        if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getGraph())) {
+            foreach($vs as $i => $v) {
+                if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
+                    $xw->startElement(self::FIELD_GRAPH);
+                    $v->xmlSerialize($xw, $config);
+                    $xw->endElement();
                 }
-                $telement = $element->ownerDocument->createElement(self::FIELD_ALLOWED_RESPONSE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
             }
         }
-        if ([] !== ($vs = $this->getGraph())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_GRAPH);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
         }
-        return $element;
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getUrl())) {
@@ -3222,9 +3158,6 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         if ([] !== ($vs = $this->getIdentifier())) {
             $out->{self::FIELD_IDENTIFIER} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_IDENTIFIER}[] = $v;
             }
         }
@@ -3325,9 +3258,6 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         if ([] !== ($vs = $this->getContact())) {
             $out->{self::FIELD_CONTACT} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_CONTACT}[] = $v;
             }
         }
@@ -3344,18 +3274,12 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         if ([] !== ($vs = $this->getUseContext())) {
             $out->{self::FIELD_USE_CONTEXT} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_USE_CONTEXT}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getJurisdiction())) {
             $out->{self::FIELD_JURISDICTION} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_JURISDICTION}[] = $v;
             }
         }
@@ -3439,9 +3363,6 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         if ([] !== ($vs = $this->getFocus())) {
             $out->{self::FIELD_FOCUS} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_FOCUS}[] = $v;
             }
         }
@@ -3458,9 +3379,6 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
         if ([] !== ($vs = $this->getAllowedResponse())) {
             $out->{self::FIELD_ALLOWED_RESPONSE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_ALLOWED_RESPONSE}[] = $v;
             }
         }
@@ -3493,7 +3411,6 @@ class FHIRMessageDefinition extends FHIRDomainResource implements PHPFHIRContain
 
         return $out;
     }
-
 
     /**
      * @return string

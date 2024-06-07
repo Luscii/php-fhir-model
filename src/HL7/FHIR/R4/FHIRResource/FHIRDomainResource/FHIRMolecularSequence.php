@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceReferenceSeq;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository;
@@ -79,11 +80,19 @@ use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRSequenceType;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * Raw data describing a biological sequence.
@@ -96,6 +105,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MOLECULAR_SEQUENCE;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_TYPE = 'type';
     const FIELD_TYPE_EXT = '_type';
@@ -117,9 +127,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     const FIELD_POINTER = 'pointer';
     const FIELD_STRUCTURE_VARIANT = 'structureVariant';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -131,8 +138,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * Type if a sequence -- DNA, RNA, or amino acid sequence.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -141,8 +147,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSequenceType
      */
-    protected ?FHIRSequenceType $type = null;
-
+    protected null|FHIRSequenceType $type = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -152,10 +157,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * inclusive start, exclusive end) or starting at 1 (1-based numbering, inclusive
      * start and inclusive end).
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $coordinateSystem = null;
-
+    protected null|FHIRInteger $coordinateSystem = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -165,8 +169,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $patient = null;
-
+    protected null|FHIRReference $patient = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -176,8 +179,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $specimen = null;
-
+    protected null|FHIRReference $specimen = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -187,8 +189,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $device = null;
-
+    protected null|FHIRReference $device = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -198,8 +199,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $performer = null;
-
+    protected null|FHIRReference $performer = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -211,8 +211,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $quantity = null;
-
+    protected null|FHIRQuantity $quantity = null;
     /**
      * Raw data describing a biological sequence.
      *
@@ -221,8 +220,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceReferenceSeq
      */
-    protected ?FHIRMolecularSequenceReferenceSeq $referenceSeq = null;
-
+    protected null|FHIRMolecularSequenceReferenceSeq $referenceSeq = null;
     /**
      * Raw data describing a biological sequence.
      *
@@ -234,8 +232,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant[]
      */
-    protected ?array $variant = [];
-
+    protected null|array $variant = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -245,10 +242,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * variant records on referenceSeq. This shall start from referenceSeq.windowStart
      * and end by referenceSeq.windowEnd.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $observedSeq = null;
-
+    protected null|FHIRString $observedSeq = null;
     /**
      * Raw data describing a biological sequence.
      *
@@ -258,8 +254,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality[]
      */
-    protected ?array $quality = [];
-
+    protected null|array $quality = [];
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -268,10 +263,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Coverage (read depth or depth) is the average number of reads representing a
      * given nucleotide in the reconstructed sequence.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $readCoverage = null;
-
+    protected null|FHIRInteger $readCoverage = null;
     /**
      * Raw data describing a biological sequence.
      *
@@ -280,8 +274,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository[]
      */
-    protected ?array $repository = [];
-
+    protected null|array $repository = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -291,8 +284,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $pointer = [];
-
+    protected null|array $pointer = [];
     /**
      * Raw data describing a biological sequence.
      *
@@ -300,36 +292,30 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant[]
      */
-    protected ?array $structureVariant = [];
+    protected null|array $structureVariant = [];
 
     /**
      * Validation map for fields in type MolecularSequence
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRMolecularSequence Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMolecularSequence::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_IDENTIFIER])) {
+        if (array_key_exists(self::FIELD_IDENTIFIER, $data)) {
             if (is_array($data[self::FIELD_IDENTIFIER])) {
                 foreach($data[self::FIELD_IDENTIFIER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRIdentifier) {
                         $this->addIdentifier($v);
                     } else {
@@ -342,7 +328,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
                 $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_TYPE]) || isset($data[self::FIELD_TYPE_EXT])) {
+        if (array_key_exists(self::FIELD_TYPE, $data) || array_key_exists(self::FIELD_TYPE_EXT, $data)) {
             $value = $data[self::FIELD_TYPE] ?? null;
             $ext = (isset($data[self::FIELD_TYPE_EXT]) && is_array($data[self::FIELD_TYPE_EXT])) ? $data[self::FIELD_TYPE_EXT] : [];
             if (null !== $value) {
@@ -355,9 +341,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setType(new FHIRSequenceType($ext));
+            } else {
+                $this->setType(new FHIRSequenceType(null));
             }
         }
-        if (isset($data[self::FIELD_COORDINATE_SYSTEM]) || isset($data[self::FIELD_COORDINATE_SYSTEM_EXT])) {
+        if (array_key_exists(self::FIELD_COORDINATE_SYSTEM, $data) || array_key_exists(self::FIELD_COORDINATE_SYSTEM_EXT, $data)) {
             $value = $data[self::FIELD_COORDINATE_SYSTEM] ?? null;
             $ext = (isset($data[self::FIELD_COORDINATE_SYSTEM_EXT]) && is_array($data[self::FIELD_COORDINATE_SYSTEM_EXT])) ? $data[self::FIELD_COORDINATE_SYSTEM_EXT] : [];
             if (null !== $value) {
@@ -370,56 +358,55 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setCoordinateSystem(new FHIRInteger($ext));
+            } else {
+                $this->setCoordinateSystem(new FHIRInteger(null));
             }
         }
-        if (isset($data[self::FIELD_PATIENT])) {
+        if (array_key_exists(self::FIELD_PATIENT, $data)) {
             if ($data[self::FIELD_PATIENT] instanceof FHIRReference) {
                 $this->setPatient($data[self::FIELD_PATIENT]);
             } else {
                 $this->setPatient(new FHIRReference($data[self::FIELD_PATIENT]));
             }
         }
-        if (isset($data[self::FIELD_SPECIMEN])) {
+        if (array_key_exists(self::FIELD_SPECIMEN, $data)) {
             if ($data[self::FIELD_SPECIMEN] instanceof FHIRReference) {
                 $this->setSpecimen($data[self::FIELD_SPECIMEN]);
             } else {
                 $this->setSpecimen(new FHIRReference($data[self::FIELD_SPECIMEN]));
             }
         }
-        if (isset($data[self::FIELD_DEVICE])) {
+        if (array_key_exists(self::FIELD_DEVICE, $data)) {
             if ($data[self::FIELD_DEVICE] instanceof FHIRReference) {
                 $this->setDevice($data[self::FIELD_DEVICE]);
             } else {
                 $this->setDevice(new FHIRReference($data[self::FIELD_DEVICE]));
             }
         }
-        if (isset($data[self::FIELD_PERFORMER])) {
+        if (array_key_exists(self::FIELD_PERFORMER, $data)) {
             if ($data[self::FIELD_PERFORMER] instanceof FHIRReference) {
                 $this->setPerformer($data[self::FIELD_PERFORMER]);
             } else {
                 $this->setPerformer(new FHIRReference($data[self::FIELD_PERFORMER]));
             }
         }
-        if (isset($data[self::FIELD_QUANTITY])) {
+        if (array_key_exists(self::FIELD_QUANTITY, $data)) {
             if ($data[self::FIELD_QUANTITY] instanceof FHIRQuantity) {
                 $this->setQuantity($data[self::FIELD_QUANTITY]);
             } else {
                 $this->setQuantity(new FHIRQuantity($data[self::FIELD_QUANTITY]));
             }
         }
-        if (isset($data[self::FIELD_REFERENCE_SEQ])) {
+        if (array_key_exists(self::FIELD_REFERENCE_SEQ, $data)) {
             if ($data[self::FIELD_REFERENCE_SEQ] instanceof FHIRMolecularSequenceReferenceSeq) {
                 $this->setReferenceSeq($data[self::FIELD_REFERENCE_SEQ]);
             } else {
                 $this->setReferenceSeq(new FHIRMolecularSequenceReferenceSeq($data[self::FIELD_REFERENCE_SEQ]));
             }
         }
-        if (isset($data[self::FIELD_VARIANT])) {
+        if (array_key_exists(self::FIELD_VARIANT, $data)) {
             if (is_array($data[self::FIELD_VARIANT])) {
                 foreach($data[self::FIELD_VARIANT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRMolecularSequenceVariant) {
                         $this->addVariant($v);
                     } else {
@@ -432,7 +419,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
                 $this->addVariant(new FHIRMolecularSequenceVariant($data[self::FIELD_VARIANT]));
             }
         }
-        if (isset($data[self::FIELD_OBSERVED_SEQ]) || isset($data[self::FIELD_OBSERVED_SEQ_EXT])) {
+        if (array_key_exists(self::FIELD_OBSERVED_SEQ, $data) || array_key_exists(self::FIELD_OBSERVED_SEQ_EXT, $data)) {
             $value = $data[self::FIELD_OBSERVED_SEQ] ?? null;
             $ext = (isset($data[self::FIELD_OBSERVED_SEQ_EXT]) && is_array($data[self::FIELD_OBSERVED_SEQ_EXT])) ? $data[self::FIELD_OBSERVED_SEQ_EXT] : [];
             if (null !== $value) {
@@ -445,14 +432,13 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setObservedSeq(new FHIRString($ext));
+            } else {
+                $this->setObservedSeq(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_QUALITY])) {
+        if (array_key_exists(self::FIELD_QUALITY, $data)) {
             if (is_array($data[self::FIELD_QUALITY])) {
                 foreach($data[self::FIELD_QUALITY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRMolecularSequenceQuality) {
                         $this->addQuality($v);
                     } else {
@@ -465,7 +451,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
                 $this->addQuality(new FHIRMolecularSequenceQuality($data[self::FIELD_QUALITY]));
             }
         }
-        if (isset($data[self::FIELD_READ_COVERAGE]) || isset($data[self::FIELD_READ_COVERAGE_EXT])) {
+        if (array_key_exists(self::FIELD_READ_COVERAGE, $data) || array_key_exists(self::FIELD_READ_COVERAGE_EXT, $data)) {
             $value = $data[self::FIELD_READ_COVERAGE] ?? null;
             $ext = (isset($data[self::FIELD_READ_COVERAGE_EXT]) && is_array($data[self::FIELD_READ_COVERAGE_EXT])) ? $data[self::FIELD_READ_COVERAGE_EXT] : [];
             if (null !== $value) {
@@ -478,14 +464,13 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
                 }
             } elseif ([] !== $ext) {
                 $this->setReadCoverage(new FHIRInteger($ext));
+            } else {
+                $this->setReadCoverage(new FHIRInteger(null));
             }
         }
-        if (isset($data[self::FIELD_REPOSITORY])) {
+        if (array_key_exists(self::FIELD_REPOSITORY, $data)) {
             if (is_array($data[self::FIELD_REPOSITORY])) {
                 foreach($data[self::FIELD_REPOSITORY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRMolecularSequenceRepository) {
                         $this->addRepository($v);
                     } else {
@@ -498,12 +483,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
                 $this->addRepository(new FHIRMolecularSequenceRepository($data[self::FIELD_REPOSITORY]));
             }
         }
-        if (isset($data[self::FIELD_POINTER])) {
+        if (array_key_exists(self::FIELD_POINTER, $data)) {
             if (is_array($data[self::FIELD_POINTER])) {
                 foreach($data[self::FIELD_POINTER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRReference) {
                         $this->addPointer($v);
                     } else {
@@ -516,12 +498,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
                 $this->addPointer(new FHIRReference($data[self::FIELD_POINTER]));
             }
         }
-        if (isset($data[self::FIELD_STRUCTURE_VARIANT])) {
+        if (array_key_exists(self::FIELD_STRUCTURE_VARIANT, $data)) {
             if (is_array($data[self::FIELD_STRUCTURE_VARIANT])) {
                 foreach($data[self::FIELD_STRUCTURE_VARIANT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRMolecularSequenceStructureVariant) {
                         $this->addStructureVariant($v);
                     } else {
@@ -539,7 +518,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -547,22 +526,10 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<MolecularSequence{$xmlns}></MolecularSequence>";
-    }
-    /**
-     * @return string
-     */
     public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
-
 
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
@@ -575,7 +542,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -592,41 +559,13 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
-        return $this;
-    }
-
-    /**
-     * An identifier - identifies some entity uniquely and unambiguously. Typically
-     * this is used for business identifiers.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A unique identifier for this particular sequence instance. This is a
-     * FHIR-defined id.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
-     * @return static
-     */
-    public function setIdentifier(array $identifier = []): object
-    {
-        if ([] !== $this->identifier) {
-            $this->_trackValuesRemoved(count($this->identifier));
-            $this->identifier = [];
-        }
-        if ([] === $identifier) {
-            return $this;
-        }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
-            }
-        }
         return $this;
     }
 
@@ -638,7 +577,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSequenceType
      */
-    public function getType(): ?FHIRSequenceType
+    public function getType(): null|FHIRSequenceType
     {
         return $this->type;
     }
@@ -652,8 +591,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSequenceType $type
      * @return static
      */
-    public function setType(?FHIRSequenceType $type = null): object
+    public function setType(null|FHIRSequenceType $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRSequenceType();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -668,9 +610,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * inclusive start, exclusive end) or starting at 1 (1-based numbering, inclusive
      * start and inclusive end).
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getCoordinateSystem(): ?FHIRInteger
+    public function getCoordinateSystem(): null|FHIRInteger
     {
         return $this->coordinateSystem;
     }
@@ -684,15 +626,20 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * inclusive start, exclusive end) or starting at 1 (1-based numbering, inclusive
      * start and inclusive end).
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $coordinateSystem
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $coordinateSystem
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCoordinateSystem($coordinateSystem = null): object
+    public function setCoordinateSystem(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $coordinateSystem = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $coordinateSystem && !($coordinateSystem instanceof FHIRInteger)) {
             $coordinateSystem = new FHIRInteger($coordinateSystem);
         }
         $this->_trackValueSet($this->coordinateSystem, $coordinateSystem);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM])) {
+            $this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM][0] = $xmlLocation;
         $this->coordinateSystem = $coordinateSystem;
         return $this;
     }
@@ -706,7 +653,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPatient(): ?FHIRReference
+    public function getPatient(): null|FHIRReference
     {
         return $this->patient;
     }
@@ -721,8 +668,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $patient
      * @return static
      */
-    public function setPatient(?FHIRReference $patient = null): object
+    public function setPatient(null|FHIRReference $patient = null): self
     {
+        if (null === $patient) {
+            $patient = new FHIRReference();
+        }
         $this->_trackValueSet($this->patient, $patient);
         $this->patient = $patient;
         return $this;
@@ -737,7 +687,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSpecimen(): ?FHIRReference
+    public function getSpecimen(): null|FHIRReference
     {
         return $this->specimen;
     }
@@ -752,8 +702,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $specimen
      * @return static
      */
-    public function setSpecimen(?FHIRReference $specimen = null): object
+    public function setSpecimen(null|FHIRReference $specimen = null): self
     {
+        if (null === $specimen) {
+            $specimen = new FHIRReference();
+        }
         $this->_trackValueSet($this->specimen, $specimen);
         $this->specimen = $specimen;
         return $this;
@@ -768,7 +721,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getDevice(): ?FHIRReference
+    public function getDevice(): null|FHIRReference
     {
         return $this->device;
     }
@@ -783,8 +736,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $device
      * @return static
      */
-    public function setDevice(?FHIRReference $device = null): object
+    public function setDevice(null|FHIRReference $device = null): self
     {
+        if (null === $device) {
+            $device = new FHIRReference();
+        }
         $this->_trackValueSet($this->device, $device);
         $this->device = $device;
         return $this;
@@ -799,7 +755,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPerformer(): ?FHIRReference
+    public function getPerformer(): null|FHIRReference
     {
         return $this->performer;
     }
@@ -814,8 +770,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $performer
      * @return static
      */
-    public function setPerformer(?FHIRReference $performer = null): object
+    public function setPerformer(null|FHIRReference $performer = null): self
     {
+        if (null === $performer) {
+            $performer = new FHIRReference();
+        }
         $this->_trackValueSet($this->performer, $performer);
         $this->performer = $performer;
         return $this;
@@ -832,7 +791,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getQuantity(): ?FHIRQuantity
+    public function getQuantity(): null|FHIRQuantity
     {
         return $this->quantity;
     }
@@ -849,8 +808,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $quantity
      * @return static
      */
-    public function setQuantity(?FHIRQuantity $quantity = null): object
+    public function setQuantity(null|FHIRQuantity $quantity = null): self
     {
+        if (null === $quantity) {
+            $quantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->quantity, $quantity);
         $this->quantity = $quantity;
         return $this;
@@ -864,7 +826,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceReferenceSeq
      */
-    public function getReferenceSeq(): ?FHIRMolecularSequenceReferenceSeq
+    public function getReferenceSeq(): null|FHIRMolecularSequenceReferenceSeq
     {
         return $this->referenceSeq;
     }
@@ -878,8 +840,11 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceReferenceSeq $referenceSeq
      * @return static
      */
-    public function setReferenceSeq(?FHIRMolecularSequenceReferenceSeq $referenceSeq = null): object
+    public function setReferenceSeq(null|FHIRMolecularSequenceReferenceSeq $referenceSeq = null): self
     {
+        if (null === $referenceSeq) {
+            $referenceSeq = new FHIRMolecularSequenceReferenceSeq();
+        }
         $this->_trackValueSet($this->referenceSeq, $referenceSeq);
         $this->referenceSeq = $referenceSeq;
         return $this;
@@ -896,7 +861,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant[]
      */
-    public function getVariant(): ?array
+    public function getVariant(): null|array
     {
         return $this->variant;
     }
@@ -913,41 +878,13 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant $variant
      * @return static
      */
-    public function addVariant(?FHIRMolecularSequenceVariant $variant = null): object
+    public function addVariant(null|FHIRMolecularSequenceVariant $variant = null): self
     {
+        if (null === $variant) {
+            $variant = new FHIRMolecularSequenceVariant();
+        }
         $this->_trackValueAdded();
         $this->variant[] = $variant;
-        return $this;
-    }
-
-    /**
-     * Raw data describing a biological sequence.
-     *
-     * The definition of variant here originates from Sequence ontology
-     * ([variant_of](http://www.sequenceontology.org/browser/current_svn/term/variant_of)).
-     * This element can represent amino acid or nucleic sequence change(including
-     * insertion,deletion,SNP,etc.) It can represent some complex mutation or segment
-     * variation with the assist of CIGAR string.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant[] $variant
-     * @return static
-     */
-    public function setVariant(array $variant = []): object
-    {
-        if ([] !== $this->variant) {
-            $this->_trackValuesRemoved(count($this->variant));
-            $this->variant = [];
-        }
-        if ([] === $variant) {
-            return $this;
-        }
-        foreach($variant as $v) {
-            if ($v instanceof FHIRMolecularSequenceVariant) {
-                $this->addVariant($v);
-            } else {
-                $this->addVariant(new FHIRMolecularSequenceVariant($v));
-            }
-        }
         return $this;
     }
 
@@ -960,9 +897,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * variant records on referenceSeq. This shall start from referenceSeq.windowStart
      * and end by referenceSeq.windowEnd.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getObservedSeq(): ?FHIRString
+    public function getObservedSeq(): null|FHIRString
     {
         return $this->observedSeq;
     }
@@ -976,15 +913,20 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * variant records on referenceSeq. This shall start from referenceSeq.windowStart
      * and end by referenceSeq.windowEnd.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $observedSeq
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $observedSeq
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setObservedSeq($observedSeq = null): object
+    public function setObservedSeq(null|string|FHIRStringPrimitive|FHIRString $observedSeq = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $observedSeq && !($observedSeq instanceof FHIRString)) {
             $observedSeq = new FHIRString($observedSeq);
         }
         $this->_trackValueSet($this->observedSeq, $observedSeq);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ])) {
+            $this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ][0] = $xmlLocation;
         $this->observedSeq = $observedSeq;
         return $this;
     }
@@ -998,7 +940,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality[]
      */
-    public function getQuality(): ?array
+    public function getQuality(): null|array
     {
         return $this->quality;
     }
@@ -1013,39 +955,13 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality $quality
      * @return static
      */
-    public function addQuality(?FHIRMolecularSequenceQuality $quality = null): object
+    public function addQuality(null|FHIRMolecularSequenceQuality $quality = null): self
     {
+        if (null === $quality) {
+            $quality = new FHIRMolecularSequenceQuality();
+        }
         $this->_trackValueAdded();
         $this->quality[] = $quality;
-        return $this;
-    }
-
-    /**
-     * Raw data describing a biological sequence.
-     *
-     * An experimental feature attribute that defines the quality of the feature in a
-     * quantitative way, such as a phred quality score
-     * ([SO:0001686](http://www.sequenceontology.org/browser/current_svn/term/SO:0001686)).
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality[] $quality
-     * @return static
-     */
-    public function setQuality(array $quality = []): object
-    {
-        if ([] !== $this->quality) {
-            $this->_trackValuesRemoved(count($this->quality));
-            $this->quality = [];
-        }
-        if ([] === $quality) {
-            return $this;
-        }
-        foreach($quality as $v) {
-            if ($v instanceof FHIRMolecularSequenceQuality) {
-                $this->addQuality($v);
-            } else {
-                $this->addQuality(new FHIRMolecularSequenceQuality($v));
-            }
-        }
         return $this;
     }
 
@@ -1057,9 +973,9 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Coverage (read depth or depth) is the average number of reads representing a
      * given nucleotide in the reconstructed sequence.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getReadCoverage(): ?FHIRInteger
+    public function getReadCoverage(): null|FHIRInteger
     {
         return $this->readCoverage;
     }
@@ -1072,15 +988,20 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Coverage (read depth or depth) is the average number of reads representing a
      * given nucleotide in the reconstructed sequence.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $readCoverage
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $readCoverage
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setReadCoverage($readCoverage = null): object
+    public function setReadCoverage(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $readCoverage = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $readCoverage && !($readCoverage instanceof FHIRInteger)) {
             $readCoverage = new FHIRInteger($readCoverage);
         }
         $this->_trackValueSet($this->readCoverage, $readCoverage);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE])) {
+            $this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE][0] = $xmlLocation;
         $this->readCoverage = $readCoverage;
         return $this;
     }
@@ -1093,7 +1014,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository[]
      */
-    public function getRepository(): ?array
+    public function getRepository(): null|array
     {
         return $this->repository;
     }
@@ -1107,38 +1028,13 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository $repository
      * @return static
      */
-    public function addRepository(?FHIRMolecularSequenceRepository $repository = null): object
+    public function addRepository(null|FHIRMolecularSequenceRepository $repository = null): self
     {
+        if (null === $repository) {
+            $repository = new FHIRMolecularSequenceRepository();
+        }
         $this->_trackValueAdded();
         $this->repository[] = $repository;
-        return $this;
-    }
-
-    /**
-     * Raw data describing a biological sequence.
-     *
-     * Configurations of the external repository. The repository shall store target's
-     * observedSeq or records related with target's observedSeq.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository[] $repository
-     * @return static
-     */
-    public function setRepository(array $repository = []): object
-    {
-        if ([] !== $this->repository) {
-            $this->_trackValuesRemoved(count($this->repository));
-            $this->repository = [];
-        }
-        if ([] === $repository) {
-            return $this;
-        }
-        foreach($repository as $v) {
-            if ($v instanceof FHIRMolecularSequenceRepository) {
-                $this->addRepository($v);
-            } else {
-                $this->addRepository(new FHIRMolecularSequenceRepository($v));
-            }
-        }
         return $this;
     }
 
@@ -1151,7 +1047,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getPointer(): ?array
+    public function getPointer(): null|array
     {
         return $this->pointer;
     }
@@ -1166,39 +1062,13 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $pointer
      * @return static
      */
-    public function addPointer(?FHIRReference $pointer = null): object
+    public function addPointer(null|FHIRReference $pointer = null): self
     {
+        if (null === $pointer) {
+            $pointer = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->pointer[] = $pointer;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Pointer to next atomic sequence which at most contains one variant.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $pointer
-     * @return static
-     */
-    public function setPointer(array $pointer = []): object
-    {
-        if ([] !== $this->pointer) {
-            $this->_trackValuesRemoved(count($this->pointer));
-            $this->pointer = [];
-        }
-        if ([] === $pointer) {
-            return $this;
-        }
-        foreach($pointer as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addPointer($v);
-            } else {
-                $this->addPointer(new FHIRReference($v));
-            }
-        }
         return $this;
     }
 
@@ -1209,7 +1079,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant[]
      */
-    public function getStructureVariant(): ?array
+    public function getStructureVariant(): null|array
     {
         return $this->structureVariant;
     }
@@ -1222,37 +1092,13 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant $structureVariant
      * @return static
      */
-    public function addStructureVariant(?FHIRMolecularSequenceStructureVariant $structureVariant = null): object
+    public function addStructureVariant(null|FHIRMolecularSequenceStructureVariant $structureVariant = null): self
     {
+        if (null === $structureVariant) {
+            $structureVariant = new FHIRMolecularSequenceStructureVariant();
+        }
         $this->_trackValueAdded();
         $this->structureVariant[] = $structureVariant;
-        return $this;
-    }
-
-    /**
-     * Raw data describing a biological sequence.
-     *
-     * Information about chromosome structure variation.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant[] $structureVariant
-     * @return static
-     */
-    public function setStructureVariant(array $structureVariant = []): object
-    {
-        if ([] !== $this->structureVariant) {
-            $this->_trackValuesRemoved(count($this->structureVariant));
-            $this->structureVariant = [];
-        }
-        if ([] === $structureVariant) {
-            return $this;
-        }
-        foreach($structureVariant as $v) {
-            if ($v instanceof FHIRMolecularSequenceStructureVariant) {
-                $this->addStructureVariant($v);
-            } else {
-                $this->addStructureVariant(new FHIRMolecularSequenceStructureVariant($v));
-            }
-        }
         return $this;
     }
 
@@ -1264,7 +1110,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1661,296 +1507,283 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMolecularSequence $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMolecularSequence
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMolecularSequence::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMolecularSequence::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRMolecularSequence(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMolecularSequence)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMolecularSequence)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMolecularSequence::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRMolecularSequence or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_IDENTIFIER === $n->nodeName) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_TYPE === $n->nodeName) {
-                $type->setType(FHIRSequenceType::xmlUnserialize($n));
-            } elseif (self::FIELD_COORDINATE_SYSTEM === $n->nodeName) {
-                $type->setCoordinateSystem(FHIRInteger::xmlUnserialize($n));
-            } elseif (self::FIELD_PATIENT === $n->nodeName) {
-                $type->setPatient(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_SPECIMEN === $n->nodeName) {
-                $type->setSpecimen(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_DEVICE === $n->nodeName) {
-                $type->setDevice(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_PERFORMER === $n->nodeName) {
-                $type->setPerformer(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_QUANTITY === $n->nodeName) {
-                $type->setQuantity(FHIRQuantity::xmlUnserialize($n));
-            } elseif (self::FIELD_REFERENCE_SEQ === $n->nodeName) {
-                $type->setReferenceSeq(FHIRMolecularSequenceReferenceSeq::xmlUnserialize($n));
-            } elseif (self::FIELD_VARIANT === $n->nodeName) {
-                $type->addVariant(FHIRMolecularSequenceVariant::xmlUnserialize($n));
-            } elseif (self::FIELD_OBSERVED_SEQ === $n->nodeName) {
-                $type->setObservedSeq(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_QUALITY === $n->nodeName) {
-                $type->addQuality(FHIRMolecularSequenceQuality::xmlUnserialize($n));
-            } elseif (self::FIELD_READ_COVERAGE === $n->nodeName) {
-                $type->setReadCoverage(FHIRInteger::xmlUnserialize($n));
-            } elseif (self::FIELD_REPOSITORY === $n->nodeName) {
-                $type->addRepository(FHIRMolecularSequenceRepository::xmlUnserialize($n));
-            } elseif (self::FIELD_POINTER === $n->nodeName) {
-                $type->addPointer(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_STRUCTURE_VARIANT === $n->nodeName) {
-                $type->addStructureVariant(FHIRMolecularSequenceStructureVariant::xmlUnserialize($n));
-            } elseif (self::FIELD_TEXT === $n->nodeName) {
-                $type->setText(FHIRNarrative::xmlUnserialize($n));
-            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
-                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
-                    $nn = $n->childNodes->item($ni);
-                    if ($nn instanceof \DOMElement) {
-                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
-                    }
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_IDENTIFIER === $childName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_TYPE === $childName) {
+                $type->setType(FHIRSequenceType::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_COORDINATE_SYSTEM === $childName) {
+                $type->setCoordinateSystem(FHIRInteger::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATIENT === $childName) {
+                $type->setPatient(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SPECIMEN === $childName) {
+                $type->setSpecimen(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEVICE === $childName) {
+                $type->setDevice(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PERFORMER === $childName) {
+                $type->setPerformer(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_QUANTITY === $childName) {
+                $type->setQuantity(FHIRQuantity::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_REFERENCE_SEQ === $childName) {
+                $type->setReferenceSeq(FHIRMolecularSequenceReferenceSeq::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_VARIANT === $childName) {
+                $type->addVariant(FHIRMolecularSequenceVariant::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_OBSERVED_SEQ === $childName) {
+                $type->setObservedSeq(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_QUALITY === $childName) {
+                $type->addQuality(FHIRMolecularSequenceQuality::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_READ_COVERAGE === $childName) {
+                $type->setReadCoverage(FHIRInteger::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_REPOSITORY === $childName) {
+                $type->addRepository(FHIRMolecularSequenceRepository::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_POINTER === $childName) {
+                $type->addPointer(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_STRUCTURE_VARIANT === $childName) {
+                $type->addStructureVariant(FHIRMolecularSequenceStructureVariant::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_TEXT === $childName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CONTAINED === $childName) {
+                foreach ($n->children() as $nn) {
+                    $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn, $config));
                 }
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRId::xmlUnserialize($n));
-            } elseif (self::FIELD_META === $n->nodeName) {
-                $type->setMeta(FHIRMeta::xmlUnserialize($n));
-            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
-                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
-                $type->setLanguage(FHIRCode::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRId::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_META === $childName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_IMPLICIT_RULES === $childName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_LANGUAGE === $childName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_COORDINATE_SYSTEM);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_COORDINATE_SYSTEM])) {
             $pt = $type->getCoordinateSystem();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_COORDINATE_SYSTEM], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setCoordinateSystem($n->nodeValue);
+                $type->setCoordinateSystem((string)$attributes[self::FIELD_COORDINATE_SYSTEM], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_OBSERVED_SEQ);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_OBSERVED_SEQ])) {
             $pt = $type->getObservedSeq();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_OBSERVED_SEQ], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setObservedSeq($n->nodeValue);
+                $type->setObservedSeq((string)$attributes[self::FIELD_OBSERVED_SEQ], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_READ_COVERAGE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_READ_COVERAGE])) {
             $pt = $type->getReadCoverage();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_READ_COVERAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setReadCoverage($n->nodeValue);
+                $type->setReadCoverage((string)$attributes[self::FIELD_READ_COVERAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_IMPLICIT_RULES])) {
             $pt = $type->getImplicitRules();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setImplicitRules($n->nodeValue);
+                $type->setImplicitRules((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_LANGUAGE])) {
             $pt = $type->getLanguage();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setLanguage($n->nodeValue);
+                $type->setLanguage((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
-        if ([] !== ($vs = $this->getIdentifier())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
+        }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
+        }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'MolecularSequence', $this->_getSourceXmlns());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCoordinateSystem())) {
+            $xw->writeAttribute(self::FIELD_COORDINATE_SYSTEM, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getObservedSeq())) {
+            $xw->writeAttribute(self::FIELD_OBSERVED_SEQ, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getReadCoverage())) {
+            $xw->writeAttribute(self::FIELD_READ_COVERAGE, $v->getValue()?->getFormattedValue());
+        }
+        parent::xmlSerialize($xw, $config);
+        foreach ($this->getIdentifier() as $v) {
+            $xw->startElement(self::FIELD_IDENTIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getType())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_TYPE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getCoordinateSystem())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_COORDINATE_SYSTEM);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCoordinateSystem())) {
+            $xw->startElement(self::FIELD_COORDINATE_SYSTEM);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatient())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATIENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATIENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getSpecimen())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_SPECIMEN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_SPECIMEN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDevice())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEVICE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEVICE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPerformer())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PERFORMER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PERFORMER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getQuantity())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_QUANTITY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_QUANTITY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getReferenceSeq())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_REFERENCE_SEQ);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_REFERENCE_SEQ);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getVariant())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_VARIANT);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getVariant() as $v) {
+            $xw->startElement(self::FIELD_VARIANT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getObservedSeq())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_OBSERVED_SEQ);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getObservedSeq())) {
+            $xw->startElement(self::FIELD_OBSERVED_SEQ);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getQuality())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_QUALITY);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getQuality() as $v) {
+            $xw->startElement(self::FIELD_QUALITY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getReadCoverage())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_READ_COVERAGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getReadCoverage())) {
+            $xw->startElement(self::FIELD_READ_COVERAGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getRepository())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_REPOSITORY);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getRepository() as $v) {
+            $xw->startElement(self::FIELD_REPOSITORY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getPointer())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_POINTER);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getPointer() as $v) {
+            $xw->startElement(self::FIELD_POINTER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getStructureVariant())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_STRUCTURE_VARIANT);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getStructureVariant() as $v) {
+            $xw->startElement(self::FIELD_STRUCTURE_VARIANT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
             $out->{self::FIELD_IDENTIFIER} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_IDENTIFIER}[] = $v;
             }
         }
@@ -1995,9 +1828,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
         if ([] !== ($vs = $this->getVariant())) {
             $out->{self::FIELD_VARIANT} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_VARIANT}[] = $v;
             }
         }
@@ -2014,9 +1844,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
         if ([] !== ($vs = $this->getQuality())) {
             $out->{self::FIELD_QUALITY} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_QUALITY}[] = $v;
             }
         }
@@ -2033,27 +1860,18 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
         if ([] !== ($vs = $this->getRepository())) {
             $out->{self::FIELD_REPOSITORY} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_REPOSITORY}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getPointer())) {
             $out->{self::FIELD_POINTER} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_POINTER}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getStructureVariant())) {
             $out->{self::FIELD_STRUCTURE_VARIANT} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_STRUCTURE_VARIANT}[] = $v;
             }
         }
@@ -2062,7 +1880,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
 
         return $out;
     }
-
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBoolean;
 use HL7\FHIR\R4\FHIRElement\FHIRCode;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
@@ -74,11 +76,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRPeriod;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * A container for slots of time that may be available for booking appointments.
@@ -91,6 +100,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SCHEDULE;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_ACTIVE = 'active';
     const FIELD_ACTIVE_EXT = '_active';
@@ -102,9 +112,6 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     const FIELD_COMMENT = 'comment';
     const FIELD_COMMENT_EXT = '_comment';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -115,8 +122,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    protected ?array $identifier = [];
-
+    protected null|array $identifier = [];
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -124,10 +130,9 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Whether this schedule record is in active use or should not be used (such as was
      * entered in error).
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $active = null;
-
+    protected null|FHIRBoolean $active = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -139,8 +144,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $serviceCategory = [];
-
+    protected null|array $serviceCategory = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -151,8 +155,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $serviceType = [];
-
+    protected null|array $serviceType = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -164,8 +167,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $specialty = [];
-
+    protected null|array $specialty = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -176,8 +178,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $actor = [];
-
+    protected null|array $actor = [];
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -191,8 +192,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $planningHorizon = null;
-
+    protected null|FHIRPeriod $planningHorizon = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -201,42 +201,36 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Comments on the availability to describe any extended information. Such as
      * custom constraints on the slots that may be associated.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $comment = null;
+    protected null|FHIRString $comment = null;
 
     /**
      * Validation map for fields in type Schedule
      * @var array
      */
-    private static array $_validationRules = [
+    private const _VALIDATION_RULES = [
         self::FIELD_ACTOR => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
     ];
 
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
+
     /**
      * FHIRSchedule Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRSchedule::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_IDENTIFIER])) {
+        if (array_key_exists(self::FIELD_IDENTIFIER, $data)) {
             if (is_array($data[self::FIELD_IDENTIFIER])) {
                 foreach($data[self::FIELD_IDENTIFIER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRIdentifier) {
                         $this->addIdentifier($v);
                     } else {
@@ -249,7 +243,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 $this->addIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_ACTIVE]) || isset($data[self::FIELD_ACTIVE_EXT])) {
+        if (array_key_exists(self::FIELD_ACTIVE, $data) || array_key_exists(self::FIELD_ACTIVE_EXT, $data)) {
             $value = $data[self::FIELD_ACTIVE] ?? null;
             $ext = (isset($data[self::FIELD_ACTIVE_EXT]) && is_array($data[self::FIELD_ACTIVE_EXT])) ? $data[self::FIELD_ACTIVE_EXT] : [];
             if (null !== $value) {
@@ -262,14 +256,13 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 }
             } elseif ([] !== $ext) {
                 $this->setActive(new FHIRBoolean($ext));
+            } else {
+                $this->setActive(new FHIRBoolean(null));
             }
         }
-        if (isset($data[self::FIELD_SERVICE_CATEGORY])) {
+        if (array_key_exists(self::FIELD_SERVICE_CATEGORY, $data)) {
             if (is_array($data[self::FIELD_SERVICE_CATEGORY])) {
                 foreach($data[self::FIELD_SERVICE_CATEGORY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRCodeableConcept) {
                         $this->addServiceCategory($v);
                     } else {
@@ -282,12 +275,9 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 $this->addServiceCategory(new FHIRCodeableConcept($data[self::FIELD_SERVICE_CATEGORY]));
             }
         }
-        if (isset($data[self::FIELD_SERVICE_TYPE])) {
+        if (array_key_exists(self::FIELD_SERVICE_TYPE, $data)) {
             if (is_array($data[self::FIELD_SERVICE_TYPE])) {
                 foreach($data[self::FIELD_SERVICE_TYPE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRCodeableConcept) {
                         $this->addServiceType($v);
                     } else {
@@ -300,12 +290,9 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 $this->addServiceType(new FHIRCodeableConcept($data[self::FIELD_SERVICE_TYPE]));
             }
         }
-        if (isset($data[self::FIELD_SPECIALTY])) {
+        if (array_key_exists(self::FIELD_SPECIALTY, $data)) {
             if (is_array($data[self::FIELD_SPECIALTY])) {
                 foreach($data[self::FIELD_SPECIALTY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRCodeableConcept) {
                         $this->addSpecialty($v);
                     } else {
@@ -318,12 +305,9 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 $this->addSpecialty(new FHIRCodeableConcept($data[self::FIELD_SPECIALTY]));
             }
         }
-        if (isset($data[self::FIELD_ACTOR])) {
+        if (array_key_exists(self::FIELD_ACTOR, $data)) {
             if (is_array($data[self::FIELD_ACTOR])) {
                 foreach($data[self::FIELD_ACTOR] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRReference) {
                         $this->addActor($v);
                     } else {
@@ -336,14 +320,14 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 $this->addActor(new FHIRReference($data[self::FIELD_ACTOR]));
             }
         }
-        if (isset($data[self::FIELD_PLANNING_HORIZON])) {
+        if (array_key_exists(self::FIELD_PLANNING_HORIZON, $data)) {
             if ($data[self::FIELD_PLANNING_HORIZON] instanceof FHIRPeriod) {
                 $this->setPlanningHorizon($data[self::FIELD_PLANNING_HORIZON]);
             } else {
                 $this->setPlanningHorizon(new FHIRPeriod($data[self::FIELD_PLANNING_HORIZON]));
             }
         }
-        if (isset($data[self::FIELD_COMMENT]) || isset($data[self::FIELD_COMMENT_EXT])) {
+        if (array_key_exists(self::FIELD_COMMENT, $data) || array_key_exists(self::FIELD_COMMENT_EXT, $data)) {
             $value = $data[self::FIELD_COMMENT] ?? null;
             $ext = (isset($data[self::FIELD_COMMENT_EXT]) && is_array($data[self::FIELD_COMMENT_EXT])) ? $data[self::FIELD_COMMENT_EXT] : [];
             if (null !== $value) {
@@ -356,6 +340,8 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 }
             } elseif ([] !== $ext) {
                 $this->setComment(new FHIRString($ext));
+            } else {
+                $this->setComment(new FHIRString(null));
             }
         }
     }
@@ -363,7 +349,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -371,22 +357,10 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<Schedule{$xmlns}></Schedule>";
-    }
-    /**
-     * @return string
-     */
     public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
-
 
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
@@ -398,7 +372,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
-    public function getIdentifier(): ?array
+    public function getIdentifier(): null|array
     {
         return $this->identifier;
     }
@@ -414,40 +388,13 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function addIdentifier(?FHIRIdentifier $identifier = null): object
+    public function addIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
-        return $this;
-    }
-
-    /**
-     * An identifier - identifies some entity uniquely and unambiguously. Typically
-     * this is used for business identifiers.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * External Ids for this item.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier[] $identifier
-     * @return static
-     */
-    public function setIdentifier(array $identifier = []): object
-    {
-        if ([] !== $this->identifier) {
-            $this->_trackValuesRemoved(count($this->identifier));
-            $this->identifier = [];
-        }
-        if ([] === $identifier) {
-            return $this;
-        }
-        foreach($identifier as $v) {
-            if ($v instanceof FHIRIdentifier) {
-                $this->addIdentifier($v);
-            } else {
-                $this->addIdentifier(new FHIRIdentifier($v));
-            }
-        }
         return $this;
     }
 
@@ -458,9 +405,9 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Whether this schedule record is in active use or should not be used (such as was
      * entered in error).
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getActive(): ?FHIRBoolean
+    public function getActive(): null|FHIRBoolean
     {
         return $this->active;
     }
@@ -472,15 +419,20 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Whether this schedule record is in active use or should not be used (such as was
      * entered in error).
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $active
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $active
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setActive($active = null): object
+    public function setActive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $active = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $active && !($active instanceof FHIRBoolean)) {
             $active = new FHIRBoolean($active);
         }
         $this->_trackValueSet($this->active, $active);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_ACTIVE])) {
+            $this->_primitiveXmlLocations[self::FIELD_ACTIVE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_ACTIVE][0] = $xmlLocation;
         $this->active = $active;
         return $this;
     }
@@ -496,7 +448,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getServiceCategory(): ?array
+    public function getServiceCategory(): null|array
     {
         return $this->serviceCategory;
     }
@@ -513,41 +465,13 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $serviceCategory
      * @return static
      */
-    public function addServiceCategory(?FHIRCodeableConcept $serviceCategory = null): object
+    public function addServiceCategory(null|FHIRCodeableConcept $serviceCategory = null): self
     {
+        if (null === $serviceCategory) {
+            $serviceCategory = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->serviceCategory[] = $serviceCategory;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A broad categorization of the service that is to be performed during this
-     * appointment.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $serviceCategory
-     * @return static
-     */
-    public function setServiceCategory(array $serviceCategory = []): object
-    {
-        if ([] !== $this->serviceCategory) {
-            $this->_trackValuesRemoved(count($this->serviceCategory));
-            $this->serviceCategory = [];
-        }
-        if ([] === $serviceCategory) {
-            return $this;
-        }
-        foreach($serviceCategory as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addServiceCategory($v);
-            } else {
-                $this->addServiceCategory(new FHIRCodeableConcept($v));
-            }
-        }
         return $this;
     }
 
@@ -561,7 +485,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getServiceType(): ?array
+    public function getServiceType(): null|array
     {
         return $this->serviceType;
     }
@@ -577,40 +501,13 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $serviceType
      * @return static
      */
-    public function addServiceType(?FHIRCodeableConcept $serviceType = null): object
+    public function addServiceType(null|FHIRCodeableConcept $serviceType = null): self
     {
+        if (null === $serviceType) {
+            $serviceType = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->serviceType[] = $serviceType;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The specific service that is to be performed during this appointment.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $serviceType
-     * @return static
-     */
-    public function setServiceType(array $serviceType = []): object
-    {
-        if ([] !== $this->serviceType) {
-            $this->_trackValuesRemoved(count($this->serviceType));
-            $this->serviceType = [];
-        }
-        if ([] === $serviceType) {
-            return $this;
-        }
-        foreach($serviceType as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addServiceType($v);
-            } else {
-                $this->addServiceType(new FHIRCodeableConcept($v));
-            }
-        }
         return $this;
     }
 
@@ -625,7 +522,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getSpecialty(): ?array
+    public function getSpecialty(): null|array
     {
         return $this->specialty;
     }
@@ -642,41 +539,13 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $specialty
      * @return static
      */
-    public function addSpecialty(?FHIRCodeableConcept $specialty = null): object
+    public function addSpecialty(null|FHIRCodeableConcept $specialty = null): self
     {
+        if (null === $specialty) {
+            $specialty = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->specialty[] = $specialty;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The specialty of a practitioner that would be required to perform the service
-     * requested in this appointment.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $specialty
-     * @return static
-     */
-    public function setSpecialty(array $specialty = []): object
-    {
-        if ([] !== $this->specialty) {
-            $this->_trackValuesRemoved(count($this->specialty));
-            $this->specialty = [];
-        }
-        if ([] === $specialty) {
-            return $this;
-        }
-        foreach($specialty as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addSpecialty($v);
-            } else {
-                $this->addSpecialty(new FHIRCodeableConcept($v));
-            }
-        }
         return $this;
     }
 
@@ -690,7 +559,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getActor(): ?array
+    public function getActor(): null|array
     {
         return $this->actor;
     }
@@ -706,40 +575,13 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $actor
      * @return static
      */
-    public function addActor(?FHIRReference $actor = null): object
+    public function addActor(null|FHIRReference $actor = null): self
     {
+        if (null === $actor) {
+            $actor = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->actor[] = $actor;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Slots that reference this schedule resource provide the availability details to
-     * these referenced resource(s).
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $actor
-     * @return static
-     */
-    public function setActor(array $actor = []): object
-    {
-        if ([] !== $this->actor) {
-            $this->_trackValuesRemoved(count($this->actor));
-            $this->actor = [];
-        }
-        if ([] === $actor) {
-            return $this;
-        }
-        foreach($actor as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addActor($v);
-            } else {
-                $this->addActor(new FHIRReference($v));
-            }
-        }
         return $this;
     }
 
@@ -756,7 +598,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getPlanningHorizon(): ?FHIRPeriod
+    public function getPlanningHorizon(): null|FHIRPeriod
     {
         return $this->planningHorizon;
     }
@@ -775,8 +617,11 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $planningHorizon
      * @return static
      */
-    public function setPlanningHorizon(?FHIRPeriod $planningHorizon = null): object
+    public function setPlanningHorizon(null|FHIRPeriod $planningHorizon = null): self
     {
+        if (null === $planningHorizon) {
+            $planningHorizon = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->planningHorizon, $planningHorizon);
         $this->planningHorizon = $planningHorizon;
         return $this;
@@ -790,9 +635,9 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Comments on the availability to describe any extended information. Such as
      * custom constraints on the slots that may be associated.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getComment(): ?FHIRString
+    public function getComment(): null|FHIRString
     {
         return $this->comment;
     }
@@ -805,15 +650,20 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Comments on the availability to describe any extended information. Such as
      * custom constraints on the slots that may be associated.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $comment
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $comment
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setComment($comment = null): object
+    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $comment && !($comment instanceof FHIRString)) {
             $comment = new FHIRString($comment);
         }
         $this->_trackValueSet($this->comment, $comment);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_COMMENT])) {
+            $this->_primitiveXmlLocations[self::FIELD_COMMENT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_COMMENT][0] = $xmlLocation;
         $this->comment = $comment;
         return $this;
     }
@@ -826,7 +676,7 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1085,226 +935,214 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSchedule $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSchedule
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRSchedule::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRSchedule::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRSchedule(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRSchedule)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRSchedule)) {
             throw new \RuntimeException(sprintf(
-                'FHIRSchedule::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSchedule or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_IDENTIFIER === $n->nodeName) {
-                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_ACTIVE === $n->nodeName) {
-                $type->setActive(FHIRBoolean::xmlUnserialize($n));
-            } elseif (self::FIELD_SERVICE_CATEGORY === $n->nodeName) {
-                $type->addServiceCategory(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_SERVICE_TYPE === $n->nodeName) {
-                $type->addServiceType(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_SPECIALTY === $n->nodeName) {
-                $type->addSpecialty(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_ACTOR === $n->nodeName) {
-                $type->addActor(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_PLANNING_HORIZON === $n->nodeName) {
-                $type->setPlanningHorizon(FHIRPeriod::xmlUnserialize($n));
-            } elseif (self::FIELD_COMMENT === $n->nodeName) {
-                $type->setComment(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_TEXT === $n->nodeName) {
-                $type->setText(FHIRNarrative::xmlUnserialize($n));
-            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
-                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
-                    $nn = $n->childNodes->item($ni);
-                    if ($nn instanceof \DOMElement) {
-                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
-                    }
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_IDENTIFIER === $childName) {
+                $type->addIdentifier(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ACTIVE === $childName) {
+                $type->setActive(FHIRBoolean::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_SERVICE_CATEGORY === $childName) {
+                $type->addServiceCategory(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SERVICE_TYPE === $childName) {
+                $type->addServiceType(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SPECIALTY === $childName) {
+                $type->addSpecialty(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ACTOR === $childName) {
+                $type->addActor(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PLANNING_HORIZON === $childName) {
+                $type->setPlanningHorizon(FHIRPeriod::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_COMMENT === $childName) {
+                $type->setComment(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_TEXT === $childName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CONTAINED === $childName) {
+                foreach ($n->children() as $nn) {
+                    $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn, $config));
                 }
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRId::xmlUnserialize($n));
-            } elseif (self::FIELD_META === $n->nodeName) {
-                $type->setMeta(FHIRMeta::xmlUnserialize($n));
-            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
-                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
-                $type->setLanguage(FHIRCode::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRId::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_META === $childName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_IMPLICIT_RULES === $childName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_LANGUAGE === $childName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ACTIVE);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_ACTIVE])) {
             $pt = $type->getActive();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ACTIVE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setActive($n->nodeValue);
+                $type->setActive((string)$attributes[self::FIELD_ACTIVE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_COMMENT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_COMMENT])) {
             $pt = $type->getComment();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_COMMENT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setComment($n->nodeValue);
+                $type->setComment((string)$attributes[self::FIELD_COMMENT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_IMPLICIT_RULES])) {
             $pt = $type->getImplicitRules();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setImplicitRules($n->nodeValue);
+                $type->setImplicitRules((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_LANGUAGE])) {
             $pt = $type->getLanguage();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setLanguage($n->nodeValue);
+                $type->setLanguage((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
-        if ([] !== ($vs = $this->getIdentifier())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
         }
-        if (null !== ($v = $this->getActive())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_ACTIVE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
         }
-        if ([] !== ($vs = $this->getServiceCategory())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_SERVICE_CATEGORY);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
         }
-        if ([] !== ($vs = $this->getServiceType())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_SERVICE_TYPE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'Schedule', $this->_getSourceXmlns());
         }
-        if ([] !== ($vs = $this->getSpecialty())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_SPECIALTY);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTIVE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getActive())) {
+            $xw->writeAttribute(self::FIELD_ACTIVE, $v->getValue()?->getFormattedValue());
         }
-        if ([] !== ($vs = $this->getActor())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_ACTOR);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getComment())) {
+            $xw->writeAttribute(self::FIELD_COMMENT, $v->getValue()?->getFormattedValue());
+        }
+        parent::xmlSerialize($xw, $config);
+        foreach ($this->getIdentifier() as $v) {
+            $xw->startElement(self::FIELD_IDENTIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTIVE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getActive())) {
+            $xw->startElement(self::FIELD_ACTIVE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getServiceCategory() as $v) {
+            $xw->startElement(self::FIELD_SERVICE_CATEGORY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getServiceType() as $v) {
+            $xw->startElement(self::FIELD_SERVICE_TYPE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getSpecialty() as $v) {
+            $xw->startElement(self::FIELD_SPECIALTY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getActor() as $v) {
+            $xw->startElement(self::FIELD_ACTOR);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPlanningHorizon())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PLANNING_HORIZON);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PLANNING_HORIZON);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getComment())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_COMMENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getComment())) {
+            $xw->startElement(self::FIELD_COMMENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getIdentifier())) {
             $out->{self::FIELD_IDENTIFIER} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_IDENTIFIER}[] = $v;
             }
         }
@@ -1321,36 +1159,24 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         if ([] !== ($vs = $this->getServiceCategory())) {
             $out->{self::FIELD_SERVICE_CATEGORY} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_SERVICE_CATEGORY}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getServiceType())) {
             $out->{self::FIELD_SERVICE_TYPE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_SERVICE_TYPE}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getSpecialty())) {
             $out->{self::FIELD_SPECIALTY} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_SPECIALTY}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getActor())) {
             $out->{self::FIELD_ACTOR} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_ACTOR}[] = $v;
             }
         }
@@ -1372,7 +1198,6 @@ class FHIRSchedule extends FHIRDomainResource implements PHPFHIRContainedTypeInt
 
         return $out;
     }
-
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\PHPFHIRTests;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: September 7th, 2020 11:57+0000
+ * Class creation date: June 7th, 2024 08:28+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2020 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -987,6 +987,7 @@ class PHPFHIRTypeMapTest extends TestCase
         $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('VisionEyes-list'));
         $this->assertEquals('\HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRVisionPrescription', PHPFHIRTypeMap::getContainedTypeClassName('VisionPrescription'));
         $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('VisionPrescription.Dispense'));
+        $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('Xhtml'));
         $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('XPathUsageType'));
         $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('XPathUsageType-list'));
     }
@@ -6477,5 +6478,6 @@ class PHPFHIRTypeMapTest extends TestCase
         $this->assertEquals('\HL7\FHIR\STU3\FHIRUnsignedIntPrimitive', PHPFHIRTypeMap::getTypeClass('unsignedInt-primitive'));
         $this->assertEquals('\HL7\FHIR\STU3\FHIRUriPrimitive', PHPFHIRTypeMap::getTypeClass('uri-primitive'));
         $this->assertEquals('\HL7\FHIR\STU3\FHIRUuidPrimitive', PHPFHIRTypeMap::getTypeClass('uuid-primitive'));
+        $this->assertEquals('\HL7\FHIR\STU3\FHIRXhtml', PHPFHIRTypeMap::getTypeClass('Xhtml'));
     }
 }
