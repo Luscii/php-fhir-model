@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\PHPFHIRTests\Unit;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:05+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,18 +63,18 @@ namespace HL7\FHIR\R4\PHPFHIRTests\Unit;
  */
 
 use PHPUnit\Framework\TestCase;
-use HL7\FHIR\R4\FHIRXHTML;
+use HL7\FHIR\R4\FHIRXhtml;
 
 /**
- * Class FHIRXHTMLTest
+ * Class FHIRXhtmlTest
  * @package \HL7\FHIR\R4\PHPFHIRTests\Unit
  */
-class FHIRXHTMLTest extends TestCase
+class FHIRXhtmlTest extends TestCase
 {
     public function testCanConstructTypeNoArgs()
     {
-        $type = new FHIRXHTML();
-        $this->assertInstanceOf('\HL7\FHIR\R4\FHIRXHTML', $type);
+        $type = new FHIRXhtml();
+        $this->assertInstanceOf('\HL7\FHIR\R4\FHIRXhtml', $type);
     }
 
 

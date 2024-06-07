@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:05+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,8 +68,12 @@ use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * A request to supply a diet, formula feeding (enteral) or oral nutritional
@@ -82,6 +86,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_NUTRITION_ORDER_DOT_ORAL_DIET;
+
     const FIELD_TYPE = 'type';
     const FIELD_SCHEDULE = 'schedule';
     const FIELD_NUTRIENT = 'nutrient';
@@ -89,9 +94,6 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
     const FIELD_FLUID_CONSISTENCY_TYPE = 'fluidConsistencyType';
     const FIELD_INSTRUCTION = 'instruction';
     const FIELD_INSTRUCTION_EXT = '_instruction';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -104,8 +106,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $type = [];
-
+    protected null|array $type = [];
     /**
      * Specifies an event that may occur multiple times. Timing schedules are used to
      * record when things are planned, expected or requested to occur. The most common
@@ -121,8 +122,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming[]
      */
-    protected ?array $schedule = [];
-
+    protected null|array $schedule = [];
     /**
      * A request to supply a diet, formula feeding (enteral) or oral nutritional
      * supplement to a patient/resident.
@@ -132,8 +132,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderNutrient[]
      */
-    protected ?array $nutrient = [];
-
+    protected null|array $nutrient = [];
     /**
      * A request to supply a diet, formula feeding (enteral) or oral nutritional
      * supplement to a patient/resident.
@@ -143,8 +142,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderTexture[]
      */
-    protected ?array $texture = [];
-
+    protected null|array $texture = [];
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -156,8 +154,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    protected ?array $fluidConsistencyType = [];
-
+    protected null|array $fluidConsistencyType = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -165,38 +162,32 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * Free text or additional instructions or information pertaining to the oral diet.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $instruction = null;
+    protected null|FHIRString $instruction = null;
 
     /**
      * Validation map for fields in type NutritionOrder.OralDiet
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRNutritionOrderOralDiet Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRNutritionOrderOralDiet::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_TYPE])) {
+        if (array_key_exists(self::FIELD_TYPE, $data)) {
             if (is_array($data[self::FIELD_TYPE])) {
                 foreach($data[self::FIELD_TYPE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRCodeableConcept) {
                         $this->addType($v);
                     } else {
@@ -209,12 +200,9 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
                 $this->addType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
             }
         }
-        if (isset($data[self::FIELD_SCHEDULE])) {
+        if (array_key_exists(self::FIELD_SCHEDULE, $data)) {
             if (is_array($data[self::FIELD_SCHEDULE])) {
                 foreach($data[self::FIELD_SCHEDULE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRTiming) {
                         $this->addSchedule($v);
                     } else {
@@ -227,12 +215,9 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
                 $this->addSchedule(new FHIRTiming($data[self::FIELD_SCHEDULE]));
             }
         }
-        if (isset($data[self::FIELD_NUTRIENT])) {
+        if (array_key_exists(self::FIELD_NUTRIENT, $data)) {
             if (is_array($data[self::FIELD_NUTRIENT])) {
                 foreach($data[self::FIELD_NUTRIENT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRNutritionOrderNutrient) {
                         $this->addNutrient($v);
                     } else {
@@ -245,12 +230,9 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
                 $this->addNutrient(new FHIRNutritionOrderNutrient($data[self::FIELD_NUTRIENT]));
             }
         }
-        if (isset($data[self::FIELD_TEXTURE])) {
+        if (array_key_exists(self::FIELD_TEXTURE, $data)) {
             if (is_array($data[self::FIELD_TEXTURE])) {
                 foreach($data[self::FIELD_TEXTURE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRNutritionOrderTexture) {
                         $this->addTexture($v);
                     } else {
@@ -263,12 +245,9 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
                 $this->addTexture(new FHIRNutritionOrderTexture($data[self::FIELD_TEXTURE]));
             }
         }
-        if (isset($data[self::FIELD_FLUID_CONSISTENCY_TYPE])) {
+        if (array_key_exists(self::FIELD_FLUID_CONSISTENCY_TYPE, $data)) {
             if (is_array($data[self::FIELD_FLUID_CONSISTENCY_TYPE])) {
                 foreach($data[self::FIELD_FLUID_CONSISTENCY_TYPE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRCodeableConcept) {
                         $this->addFluidConsistencyType($v);
                     } else {
@@ -281,7 +260,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
                 $this->addFluidConsistencyType(new FHIRCodeableConcept($data[self::FIELD_FLUID_CONSISTENCY_TYPE]));
             }
         }
-        if (isset($data[self::FIELD_INSTRUCTION]) || isset($data[self::FIELD_INSTRUCTION_EXT])) {
+        if (array_key_exists(self::FIELD_INSTRUCTION, $data) || array_key_exists(self::FIELD_INSTRUCTION_EXT, $data)) {
             $value = $data[self::FIELD_INSTRUCTION] ?? null;
             $ext = (isset($data[self::FIELD_INSTRUCTION_EXT]) && is_array($data[self::FIELD_INSTRUCTION_EXT])) ? $data[self::FIELD_INSTRUCTION_EXT] : [];
             if (null !== $value) {
@@ -294,6 +273,8 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setInstruction(new FHIRString($ext));
+            } else {
+                $this->setInstruction(new FHIRString(null));
             }
         }
     }
@@ -301,21 +282,9 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<NutritionOrderOralDiet{$xmlns}></NutritionOrderOralDiet>";
     }
 
     /**
@@ -329,7 +298,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getType(): ?array
+    public function getType(): null|array
     {
         return $this->type;
     }
@@ -346,41 +315,13 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function addType(?FHIRCodeableConcept $type = null): object
+    public function addType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->type[] = $type;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The kind of diet or dietary restriction such as fiber restricted diet or
-     * diabetic diet.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $type
-     * @return static
-     */
-    public function setType(array $type = []): object
-    {
-        if ([] !== $this->type) {
-            $this->_trackValuesRemoved(count($this->type));
-            $this->type = [];
-        }
-        if ([] === $type) {
-            return $this;
-        }
-        foreach($type as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addType($v);
-            } else {
-                $this->addType(new FHIRCodeableConcept($v));
-            }
-        }
         return $this;
     }
 
@@ -399,7 +340,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming[]
      */
-    public function getSchedule(): ?array
+    public function getSchedule(): null|array
     {
         return $this->schedule;
     }
@@ -420,45 +361,13 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming $schedule
      * @return static
      */
-    public function addSchedule(?FHIRTiming $schedule = null): object
+    public function addSchedule(null|FHIRTiming $schedule = null): self
     {
+        if (null === $schedule) {
+            $schedule = new FHIRTiming();
+        }
         $this->_trackValueAdded();
         $this->schedule[] = $schedule;
-        return $this;
-    }
-
-    /**
-     * Specifies an event that may occur multiple times. Timing schedules are used to
-     * record when things are planned, expected or requested to occur. The most common
-     * usage is in dosage instructions for medications. They are also used when
-     * planning care of various kinds, and may be used for reporting the schedule to
-     * which past regular activities were carried out.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The time period and frequency at which the diet should be given. The diet should
-     * be given for the combination of all schedules if more than one schedule is
-     * present.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming[] $schedule
-     * @return static
-     */
-    public function setSchedule(array $schedule = []): object
-    {
-        if ([] !== $this->schedule) {
-            $this->_trackValuesRemoved(count($this->schedule));
-            $this->schedule = [];
-        }
-        if ([] === $schedule) {
-            return $this;
-        }
-        foreach($schedule as $v) {
-            if ($v instanceof FHIRTiming) {
-                $this->addSchedule($v);
-            } else {
-                $this->addSchedule(new FHIRTiming($v));
-            }
-        }
         return $this;
     }
 
@@ -471,7 +380,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderNutrient[]
      */
-    public function getNutrient(): ?array
+    public function getNutrient(): null|array
     {
         return $this->nutrient;
     }
@@ -486,39 +395,13 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderNutrient $nutrient
      * @return static
      */
-    public function addNutrient(?FHIRNutritionOrderNutrient $nutrient = null): object
+    public function addNutrient(null|FHIRNutritionOrderNutrient $nutrient = null): self
     {
+        if (null === $nutrient) {
+            $nutrient = new FHIRNutritionOrderNutrient();
+        }
         $this->_trackValueAdded();
         $this->nutrient[] = $nutrient;
-        return $this;
-    }
-
-    /**
-     * A request to supply a diet, formula feeding (enteral) or oral nutritional
-     * supplement to a patient/resident.
-     *
-     * Class that defines the quantity and type of nutrient modifications (for example
-     * carbohydrate, fiber or sodium) required for the oral diet.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderNutrient[] $nutrient
-     * @return static
-     */
-    public function setNutrient(array $nutrient = []): object
-    {
-        if ([] !== $this->nutrient) {
-            $this->_trackValuesRemoved(count($this->nutrient));
-            $this->nutrient = [];
-        }
-        if ([] === $nutrient) {
-            return $this;
-        }
-        foreach($nutrient as $v) {
-            if ($v instanceof FHIRNutritionOrderNutrient) {
-                $this->addNutrient($v);
-            } else {
-                $this->addNutrient(new FHIRNutritionOrderNutrient($v));
-            }
-        }
         return $this;
     }
 
@@ -531,7 +414,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderTexture[]
      */
-    public function getTexture(): ?array
+    public function getTexture(): null|array
     {
         return $this->texture;
     }
@@ -546,39 +429,13 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderTexture $texture
      * @return static
      */
-    public function addTexture(?FHIRNutritionOrderTexture $texture = null): object
+    public function addTexture(null|FHIRNutritionOrderTexture $texture = null): self
     {
+        if (null === $texture) {
+            $texture = new FHIRNutritionOrderTexture();
+        }
         $this->_trackValueAdded();
         $this->texture[] = $texture;
-        return $this;
-    }
-
-    /**
-     * A request to supply a diet, formula feeding (enteral) or oral nutritional
-     * supplement to a patient/resident.
-     *
-     * Class that describes any texture modifications required for the patient to
-     * safely consume various types of solid foods.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderTexture[] $texture
-     * @return static
-     */
-    public function setTexture(array $texture = []): object
-    {
-        if ([] !== $this->texture) {
-            $this->_trackValuesRemoved(count($this->texture));
-            $this->texture = [];
-        }
-        if ([] === $texture) {
-            return $this;
-        }
-        foreach($texture as $v) {
-            if ($v instanceof FHIRNutritionOrderTexture) {
-                $this->addTexture($v);
-            } else {
-                $this->addTexture(new FHIRNutritionOrderTexture($v));
-            }
-        }
         return $this;
     }
 
@@ -593,7 +450,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
-    public function getFluidConsistencyType(): ?array
+    public function getFluidConsistencyType(): null|array
     {
         return $this->fluidConsistencyType;
     }
@@ -610,41 +467,13 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $fluidConsistencyType
      * @return static
      */
-    public function addFluidConsistencyType(?FHIRCodeableConcept $fluidConsistencyType = null): object
+    public function addFluidConsistencyType(null|FHIRCodeableConcept $fluidConsistencyType = null): self
     {
+        if (null === $fluidConsistencyType) {
+            $fluidConsistencyType = new FHIRCodeableConcept();
+        }
         $this->_trackValueAdded();
         $this->fluidConsistencyType[] = $fluidConsistencyType;
-        return $this;
-    }
-
-    /**
-     * A concept that may be defined by a formal reference to a terminology or ontology
-     * or may be provided by text.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The required consistency (e.g. honey-thick, nectar-thick, thin, thickened.) of
-     * liquids or fluids served to the patient.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[] $fluidConsistencyType
-     * @return static
-     */
-    public function setFluidConsistencyType(array $fluidConsistencyType = []): object
-    {
-        if ([] !== $this->fluidConsistencyType) {
-            $this->_trackValuesRemoved(count($this->fluidConsistencyType));
-            $this->fluidConsistencyType = [];
-        }
-        if ([] === $fluidConsistencyType) {
-            return $this;
-        }
-        foreach($fluidConsistencyType as $v) {
-            if ($v instanceof FHIRCodeableConcept) {
-                $this->addFluidConsistencyType($v);
-            } else {
-                $this->addFluidConsistencyType(new FHIRCodeableConcept($v));
-            }
-        }
         return $this;
     }
 
@@ -655,9 +484,9 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * Free text or additional instructions or information pertaining to the oral diet.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getInstruction(): ?FHIRString
+    public function getInstruction(): null|FHIRString
     {
         return $this->instruction;
     }
@@ -669,15 +498,20 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * Free text or additional instructions or information pertaining to the oral diet.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $instruction
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $instruction
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setInstruction($instruction = null): object
+    public function setInstruction(null|string|FHIRStringPrimitive|FHIRString $instruction = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $instruction && !($instruction instanceof FHIRString)) {
             $instruction = new FHIRString($instruction);
         }
         $this->_trackValueSet($this->instruction, $instruction);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_INSTRUCTION])) {
+            $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION][0] = $xmlLocation;
         $this->instruction = $instruction;
         return $this;
     }
@@ -690,7 +524,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -855,206 +689,183 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderOralDiet $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderOralDiet
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRNutritionOrderOralDiet::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRNutritionOrderOralDiet::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRNutritionOrderOralDiet(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRNutritionOrderOralDiet)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRNutritionOrderOralDiet)) {
             throw new \RuntimeException(sprintf(
-                'FHIRNutritionOrderOralDiet::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderOralDiet or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_TYPE === $n->nodeName) {
-                $type->addType(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_SCHEDULE === $n->nodeName) {
-                $type->addSchedule(FHIRTiming::xmlUnserialize($n));
-            } elseif (self::FIELD_NUTRIENT === $n->nodeName) {
-                $type->addNutrient(FHIRNutritionOrderNutrient::xmlUnserialize($n));
-            } elseif (self::FIELD_TEXTURE === $n->nodeName) {
-                $type->addTexture(FHIRNutritionOrderTexture::xmlUnserialize($n));
-            } elseif (self::FIELD_FLUID_CONSISTENCY_TYPE === $n->nodeName) {
-                $type->addFluidConsistencyType(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_INSTRUCTION === $n->nodeName) {
-                $type->setInstruction(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_TYPE === $childName) {
+                $type->addType(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SCHEDULE === $childName) {
+                $type->addSchedule(FHIRTiming::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_NUTRIENT === $childName) {
+                $type->addNutrient(FHIRNutritionOrderNutrient::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_TEXTURE === $childName) {
+                $type->addTexture(FHIRNutritionOrderTexture::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FLUID_CONSISTENCY_TYPE === $childName) {
+                $type->addFluidConsistencyType(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_INSTRUCTION === $childName) {
+                $type->setInstruction(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_INSTRUCTION);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_INSTRUCTION])) {
             $pt = $type->getInstruction();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_INSTRUCTION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setInstruction($n->nodeValue);
+                $type->setInstruction((string)$attributes[self::FIELD_INSTRUCTION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
-        if ([] !== ($vs = $this->getType())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
         }
-        if ([] !== ($vs = $this->getSchedule())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_SCHEDULE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
         }
-        if ([] !== ($vs = $this->getNutrient())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_NUTRIENT);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
         }
-        if ([] !== ($vs = $this->getTexture())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_TEXTURE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'NutritionOrderOralDiet', $this->_getSourceXmlns());
         }
-        if ([] !== ($vs = $this->getFluidConsistencyType())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_FLUID_CONSISTENCY_TYPE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getInstruction())) {
+            $xw->writeAttribute(self::FIELD_INSTRUCTION, $v->getValue()?->getFormattedValue());
         }
-        if (null !== ($v = $this->getInstruction())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_INSTRUCTION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        parent::xmlSerialize($xw, $config);
+        foreach ($this->getType() as $v) {
+            $xw->startElement(self::FIELD_TYPE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        foreach ($this->getSchedule() as $v) {
+            $xw->startElement(self::FIELD_SCHEDULE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getNutrient() as $v) {
+            $xw->startElement(self::FIELD_NUTRIENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getTexture() as $v) {
+            $xw->startElement(self::FIELD_TEXTURE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getFluidConsistencyType() as $v) {
+            $xw->startElement(self::FIELD_FLUID_CONSISTENCY_TYPE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getInstruction())) {
+            $xw->startElement(self::FIELD_INSTRUCTION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getType())) {
             $out->{self::FIELD_TYPE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_TYPE}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getSchedule())) {
             $out->{self::FIELD_SCHEDULE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_SCHEDULE}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getNutrient())) {
             $out->{self::FIELD_NUTRIENT} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_NUTRIENT}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getTexture())) {
             $out->{self::FIELD_TEXTURE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_TEXTURE}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getFluidConsistencyType())) {
             $out->{self::FIELD_FLUID_CONSISTENCY_TYPE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_FLUID_CONSISTENCY_TYPE}[] = $v;
             }
         }
@@ -1071,7 +882,6 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:05+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct;
  * 
  */
 
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
 use HL7\FHIR\R4\FHIRElement\FHIRDateTime;
@@ -69,8 +70,12 @@ use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRIdentifier;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * Detailed definition of a medicinal product, typically for uses other than direct
@@ -83,6 +88,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MEDICINAL_PRODUCT_DOT_MANUFACTURING_BUSINESS_OPERATION;
+
     const FIELD_OPERATION_TYPE = 'operationType';
     const FIELD_AUTHORISATION_REFERENCE_NUMBER = 'authorisationReferenceNumber';
     const FIELD_EFFECTIVE_DATE = 'effectiveDate';
@@ -90,9 +96,6 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
     const FIELD_CONFIDENTIALITY_INDICATOR = 'confidentialityIndicator';
     const FIELD_MANUFACTURER = 'manufacturer';
     const FIELD_REGULATOR = 'regulator';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
@@ -104,8 +107,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $operationType = null;
-
+    protected null|FHIRCodeableConcept $operationType = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -116,8 +118,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $authorisationReferenceNumber = null;
-
+    protected null|FHIRIdentifier $authorisationReferenceNumber = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -128,10 +129,9 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * Regulatory authorization date.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $effectiveDate = null;
-
+    protected null|FHIRDateTime $effectiveDate = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -142,8 +142,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $confidentialityIndicator = null;
-
+    protected null|FHIRCodeableConcept $confidentialityIndicator = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -153,8 +152,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $manufacturer = [];
-
+    protected null|array $manufacturer = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -164,45 +162,42 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $regulator = null;
+    protected null|FHIRReference $regulator = null;
 
     /**
      * Validation map for fields in type MedicinalProduct.ManufacturingBusinessOperation
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRMedicinalProductManufacturingBusinessOperation Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMedicinalProductManufacturingBusinessOperation::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_OPERATION_TYPE])) {
+        if (array_key_exists(self::FIELD_OPERATION_TYPE, $data)) {
             if ($data[self::FIELD_OPERATION_TYPE] instanceof FHIRCodeableConcept) {
                 $this->setOperationType($data[self::FIELD_OPERATION_TYPE]);
             } else {
                 $this->setOperationType(new FHIRCodeableConcept($data[self::FIELD_OPERATION_TYPE]));
             }
         }
-        if (isset($data[self::FIELD_AUTHORISATION_REFERENCE_NUMBER])) {
+        if (array_key_exists(self::FIELD_AUTHORISATION_REFERENCE_NUMBER, $data)) {
             if ($data[self::FIELD_AUTHORISATION_REFERENCE_NUMBER] instanceof FHIRIdentifier) {
                 $this->setAuthorisationReferenceNumber($data[self::FIELD_AUTHORISATION_REFERENCE_NUMBER]);
             } else {
                 $this->setAuthorisationReferenceNumber(new FHIRIdentifier($data[self::FIELD_AUTHORISATION_REFERENCE_NUMBER]));
             }
         }
-        if (isset($data[self::FIELD_EFFECTIVE_DATE]) || isset($data[self::FIELD_EFFECTIVE_DATE_EXT])) {
+        if (array_key_exists(self::FIELD_EFFECTIVE_DATE, $data) || array_key_exists(self::FIELD_EFFECTIVE_DATE_EXT, $data)) {
             $value = $data[self::FIELD_EFFECTIVE_DATE] ?? null;
             $ext = (isset($data[self::FIELD_EFFECTIVE_DATE_EXT]) && is_array($data[self::FIELD_EFFECTIVE_DATE_EXT])) ? $data[self::FIELD_EFFECTIVE_DATE_EXT] : [];
             if (null !== $value) {
@@ -215,21 +210,20 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
                 }
             } elseif ([] !== $ext) {
                 $this->setEffectiveDate(new FHIRDateTime($ext));
+            } else {
+                $this->setEffectiveDate(new FHIRDateTime(null));
             }
         }
-        if (isset($data[self::FIELD_CONFIDENTIALITY_INDICATOR])) {
+        if (array_key_exists(self::FIELD_CONFIDENTIALITY_INDICATOR, $data)) {
             if ($data[self::FIELD_CONFIDENTIALITY_INDICATOR] instanceof FHIRCodeableConcept) {
                 $this->setConfidentialityIndicator($data[self::FIELD_CONFIDENTIALITY_INDICATOR]);
             } else {
                 $this->setConfidentialityIndicator(new FHIRCodeableConcept($data[self::FIELD_CONFIDENTIALITY_INDICATOR]));
             }
         }
-        if (isset($data[self::FIELD_MANUFACTURER])) {
+        if (array_key_exists(self::FIELD_MANUFACTURER, $data)) {
             if (is_array($data[self::FIELD_MANUFACTURER])) {
                 foreach($data[self::FIELD_MANUFACTURER] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRReference) {
                         $this->addManufacturer($v);
                     } else {
@@ -242,7 +236,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
                 $this->addManufacturer(new FHIRReference($data[self::FIELD_MANUFACTURER]));
             }
         }
-        if (isset($data[self::FIELD_REGULATOR])) {
+        if (array_key_exists(self::FIELD_REGULATOR, $data)) {
             if ($data[self::FIELD_REGULATOR] instanceof FHIRReference) {
                 $this->setRegulator($data[self::FIELD_REGULATOR]);
             } else {
@@ -254,21 +248,9 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<MedicinalProductManufacturingBusinessOperation{$xmlns}></MedicinalProductManufacturingBusinessOperation>";
     }
 
     /**
@@ -281,7 +263,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getOperationType(): ?FHIRCodeableConcept
+    public function getOperationType(): null|FHIRCodeableConcept
     {
         return $this->operationType;
     }
@@ -297,8 +279,11 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $operationType
      * @return static
      */
-    public function setOperationType(?FHIRCodeableConcept $operationType = null): object
+    public function setOperationType(null|FHIRCodeableConcept $operationType = null): self
     {
+        if (null === $operationType) {
+            $operationType = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->operationType, $operationType);
         $this->operationType = $operationType;
         return $this;
@@ -314,7 +299,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getAuthorisationReferenceNumber(): ?FHIRIdentifier
+    public function getAuthorisationReferenceNumber(): null|FHIRIdentifier
     {
         return $this->authorisationReferenceNumber;
     }
@@ -330,8 +315,11 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $authorisationReferenceNumber
      * @return static
      */
-    public function setAuthorisationReferenceNumber(?FHIRIdentifier $authorisationReferenceNumber = null): object
+    public function setAuthorisationReferenceNumber(null|FHIRIdentifier $authorisationReferenceNumber = null): self
     {
+        if (null === $authorisationReferenceNumber) {
+            $authorisationReferenceNumber = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->authorisationReferenceNumber, $authorisationReferenceNumber);
         $this->authorisationReferenceNumber = $authorisationReferenceNumber;
         return $this;
@@ -347,9 +335,9 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * Regulatory authorization date.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getEffectiveDate(): ?FHIRDateTime
+    public function getEffectiveDate(): null|FHIRDateTime
     {
         return $this->effectiveDate;
     }
@@ -364,15 +352,20 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * Regulatory authorization date.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $effectiveDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $effectiveDate
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setEffectiveDate($effectiveDate = null): object
+    public function setEffectiveDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $effectiveDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $effectiveDate && !($effectiveDate instanceof FHIRDateTime)) {
             $effectiveDate = new FHIRDateTime($effectiveDate);
         }
         $this->_trackValueSet($this->effectiveDate, $effectiveDate);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE])) {
+            $this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE][0] = $xmlLocation;
         $this->effectiveDate = $effectiveDate;
         return $this;
     }
@@ -387,7 +380,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getConfidentialityIndicator(): ?FHIRCodeableConcept
+    public function getConfidentialityIndicator(): null|FHIRCodeableConcept
     {
         return $this->confidentialityIndicator;
     }
@@ -403,8 +396,11 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $confidentialityIndicator
      * @return static
      */
-    public function setConfidentialityIndicator(?FHIRCodeableConcept $confidentialityIndicator = null): object
+    public function setConfidentialityIndicator(null|FHIRCodeableConcept $confidentialityIndicator = null): self
     {
+        if (null === $confidentialityIndicator) {
+            $confidentialityIndicator = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->confidentialityIndicator, $confidentialityIndicator);
         $this->confidentialityIndicator = $confidentialityIndicator;
         return $this;
@@ -419,7 +415,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getManufacturer(): ?array
+    public function getManufacturer(): null|array
     {
         return $this->manufacturer;
     }
@@ -434,39 +430,13 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $manufacturer
      * @return static
      */
-    public function addManufacturer(?FHIRReference $manufacturer = null): object
+    public function addManufacturer(null|FHIRReference $manufacturer = null): self
     {
+        if (null === $manufacturer) {
+            $manufacturer = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->manufacturer[] = $manufacturer;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The manufacturer or establishment associated with the process.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $manufacturer
-     * @return static
-     */
-    public function setManufacturer(array $manufacturer = []): object
-    {
-        if ([] !== $this->manufacturer) {
-            $this->_trackValuesRemoved(count($this->manufacturer));
-            $this->manufacturer = [];
-        }
-        if ([] === $manufacturer) {
-            return $this;
-        }
-        foreach($manufacturer as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addManufacturer($v);
-            } else {
-                $this->addManufacturer(new FHIRReference($v));
-            }
-        }
         return $this;
     }
 
@@ -479,7 +449,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getRegulator(): ?FHIRReference
+    public function getRegulator(): null|FHIRReference
     {
         return $this->regulator;
     }
@@ -494,8 +464,11 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $regulator
      * @return static
      */
-    public function setRegulator(?FHIRReference $regulator = null): object
+    public function setRegulator(null|FHIRReference $regulator = null): self
     {
+        if (null === $regulator) {
+            $regulator = new FHIRReference();
+        }
         $this->_trackValueSet($this->regulator, $regulator);
         $this->regulator = $regulator;
         return $this;
@@ -509,7 +482,7 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -666,142 +639,154 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct\FHIRMedicinalProductManufacturingBusinessOperation $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct\FHIRMedicinalProductManufacturingBusinessOperation
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMedicinalProductManufacturingBusinessOperation::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMedicinalProductManufacturingBusinessOperation::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRMedicinalProductManufacturingBusinessOperation(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMedicinalProductManufacturingBusinessOperation)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMedicinalProductManufacturingBusinessOperation)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMedicinalProductManufacturingBusinessOperation::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct\FHIRMedicinalProductManufacturingBusinessOperation or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_OPERATION_TYPE === $n->nodeName) {
-                $type->setOperationType(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_AUTHORISATION_REFERENCE_NUMBER === $n->nodeName) {
-                $type->setAuthorisationReferenceNumber(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_EFFECTIVE_DATE === $n->nodeName) {
-                $type->setEffectiveDate(FHIRDateTime::xmlUnserialize($n));
-            } elseif (self::FIELD_CONFIDENTIALITY_INDICATOR === $n->nodeName) {
-                $type->setConfidentialityIndicator(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_MANUFACTURER === $n->nodeName) {
-                $type->addManufacturer(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_REGULATOR === $n->nodeName) {
-                $type->setRegulator(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_OPERATION_TYPE === $childName) {
+                $type->setOperationType(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_AUTHORISATION_REFERENCE_NUMBER === $childName) {
+                $type->setAuthorisationReferenceNumber(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EFFECTIVE_DATE === $childName) {
+                $type->setEffectiveDate(FHIRDateTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_CONFIDENTIALITY_INDICATOR === $childName) {
+                $type->setConfidentialityIndicator(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MANUFACTURER === $childName) {
+                $type->addManufacturer(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_REGULATOR === $childName) {
+                $type->setRegulator(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_EFFECTIVE_DATE);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_EFFECTIVE_DATE])) {
             $pt = $type->getEffectiveDate();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_EFFECTIVE_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setEffectiveDate($n->nodeValue);
+                $type->setEffectiveDate((string)$attributes[self::FIELD_EFFECTIVE_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
+        }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
+        }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'MedicinalProductManufacturingBusinessOperation', $this->_getSourceXmlns());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getEffectiveDate())) {
+            $xw->writeAttribute(self::FIELD_EFFECTIVE_DATE, $v->getValue()?->getFormattedValue());
+        }
+        parent::xmlSerialize($xw, $config);
         if (null !== ($v = $this->getOperationType())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_OPERATION_TYPE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_OPERATION_TYPE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getAuthorisationReferenceNumber())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_AUTHORISATION_REFERENCE_NUMBER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_AUTHORISATION_REFERENCE_NUMBER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getEffectiveDate())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_EFFECTIVE_DATE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getEffectiveDate())) {
+            $xw->startElement(self::FIELD_EFFECTIVE_DATE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getConfidentialityIndicator())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CONFIDENTIALITY_INDICATOR);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_CONFIDENTIALITY_INDICATOR);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getManufacturer())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_MANUFACTURER);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getManufacturer() as $v) {
+            $xw->startElement(self::FIELD_MANUFACTURER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getRegulator())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_REGULATOR);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_REGULATOR);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getOperationType())) {
@@ -826,9 +811,6 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
         if ([] !== ($vs = $this->getManufacturer())) {
             $out->{self::FIELD_MANUFACTURER} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_MANUFACTURER}[] = $v;
             }
         }
@@ -838,7 +820,6 @@ class FHIRMedicinalProductManufacturingBusinessOperation extends FHIRBackboneEle
 
         return $out;
     }
-
 
     /**
      * @return string

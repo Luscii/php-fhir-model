@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:05+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * 
  */
 
+use HL7\FHIR\R4\FHIRCodePrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationCode;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMoiety;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMolecularWeight;
@@ -79,11 +80,18 @@ use HL7\FHIR\R4\FHIRElement\FHIRNarrative;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRUri;
+use HL7\FHIR\R4\FHIRIdPrimitive;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
+use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRContainedTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
 use HL7\FHIR\R4\PHPFHIRTypeMap;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * The detailed description of a substance, typically at a level beyond what is
@@ -97,6 +105,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_SUBSTANCE_SPECIFICATION;
+
     const FIELD_IDENTIFIER = 'identifier';
     const FIELD_TYPE = 'type';
     const FIELD_STATUS = 'status';
@@ -119,9 +128,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
     const FIELD_PROTEIN = 'protein';
     const FIELD_SOURCE_MATERIAL = 'sourceMaterial';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -132,8 +138,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $identifier = null;
-
+    protected null|FHIRIdentifier $identifier = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -144,8 +149,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $type = null;
-
+    protected null|FHIRCodeableConcept $type = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -156,8 +160,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $status = null;
-
+    protected null|FHIRCodeableConcept $status = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -168,8 +171,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $domain = null;
-
+    protected null|FHIRCodeableConcept $domain = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -177,10 +179,9 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * Textual description of the substance.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $description = null;
-
+    protected null|FHIRString $description = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -190,8 +191,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    protected ?array $source = [];
-
+    protected null|array $source = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -199,10 +199,9 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * Textual comment about this record of a substance.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $comment = null;
-
+    protected null|FHIRString $comment = null;
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -211,8 +210,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMoiety[]
      */
-    protected ?array $moiety = [];
-
+    protected null|array $moiety = [];
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -222,8 +220,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationProperty[]
      */
-    protected ?array $property = [];
-
+    protected null|array $property = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -233,8 +230,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $referenceInformation = null;
-
+    protected null|FHIRReference $referenceInformation = null;
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -243,8 +239,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationStructure
      */
-    protected ?FHIRSubstanceSpecificationStructure $structure = null;
-
+    protected null|FHIRSubstanceSpecificationStructure $structure = null;
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -253,8 +248,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationCode[]
      */
-    protected ?array $code = [];
-
+    protected null|array $code = [];
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -263,8 +257,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[]
      */
-    protected ?array $name = [];
-
+    protected null|array $name = [];
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -273,8 +266,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMolecularWeight[]
      */
-    protected ?array $molecularWeight = [];
-
+    protected null|array $molecularWeight = [];
     /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
@@ -283,8 +275,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship[]
      */
-    protected ?array $relationship = [];
-
+    protected null|array $relationship = [];
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -294,8 +285,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $nucleicAcid = null;
-
+    protected null|FHIRReference $nucleicAcid = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -305,8 +295,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $polymer = null;
-
+    protected null|FHIRReference $polymer = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -316,8 +305,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $protein = null;
-
+    protected null|FHIRReference $protein = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -327,59 +315,56 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $sourceMaterial = null;
+    protected null|FHIRReference $sourceMaterial = null;
 
     /**
      * Validation map for fields in type SubstanceSpecification
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRSubstanceSpecification Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRSubstanceSpecification::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_IDENTIFIER])) {
+        if (array_key_exists(self::FIELD_IDENTIFIER, $data)) {
             if ($data[self::FIELD_IDENTIFIER] instanceof FHIRIdentifier) {
                 $this->setIdentifier($data[self::FIELD_IDENTIFIER]);
             } else {
                 $this->setIdentifier(new FHIRIdentifier($data[self::FIELD_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_TYPE])) {
+        if (array_key_exists(self::FIELD_TYPE, $data)) {
             if ($data[self::FIELD_TYPE] instanceof FHIRCodeableConcept) {
                 $this->setType($data[self::FIELD_TYPE]);
             } else {
                 $this->setType(new FHIRCodeableConcept($data[self::FIELD_TYPE]));
             }
         }
-        if (isset($data[self::FIELD_STATUS])) {
+        if (array_key_exists(self::FIELD_STATUS, $data)) {
             if ($data[self::FIELD_STATUS] instanceof FHIRCodeableConcept) {
                 $this->setStatus($data[self::FIELD_STATUS]);
             } else {
                 $this->setStatus(new FHIRCodeableConcept($data[self::FIELD_STATUS]));
             }
         }
-        if (isset($data[self::FIELD_DOMAIN])) {
+        if (array_key_exists(self::FIELD_DOMAIN, $data)) {
             if ($data[self::FIELD_DOMAIN] instanceof FHIRCodeableConcept) {
                 $this->setDomain($data[self::FIELD_DOMAIN]);
             } else {
                 $this->setDomain(new FHIRCodeableConcept($data[self::FIELD_DOMAIN]));
             }
         }
-        if (isset($data[self::FIELD_DESCRIPTION]) || isset($data[self::FIELD_DESCRIPTION_EXT])) {
+        if (array_key_exists(self::FIELD_DESCRIPTION, $data) || array_key_exists(self::FIELD_DESCRIPTION_EXT, $data)) {
             $value = $data[self::FIELD_DESCRIPTION] ?? null;
             $ext = (isset($data[self::FIELD_DESCRIPTION_EXT]) && is_array($data[self::FIELD_DESCRIPTION_EXT])) ? $data[self::FIELD_DESCRIPTION_EXT] : [];
             if (null !== $value) {
@@ -392,14 +377,13 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
                 }
             } elseif ([] !== $ext) {
                 $this->setDescription(new FHIRString($ext));
+            } else {
+                $this->setDescription(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_SOURCE])) {
+        if (array_key_exists(self::FIELD_SOURCE, $data)) {
             if (is_array($data[self::FIELD_SOURCE])) {
                 foreach($data[self::FIELD_SOURCE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRReference) {
                         $this->addSource($v);
                     } else {
@@ -412,7 +396,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
                 $this->addSource(new FHIRReference($data[self::FIELD_SOURCE]));
             }
         }
-        if (isset($data[self::FIELD_COMMENT]) || isset($data[self::FIELD_COMMENT_EXT])) {
+        if (array_key_exists(self::FIELD_COMMENT, $data) || array_key_exists(self::FIELD_COMMENT_EXT, $data)) {
             $value = $data[self::FIELD_COMMENT] ?? null;
             $ext = (isset($data[self::FIELD_COMMENT_EXT]) && is_array($data[self::FIELD_COMMENT_EXT])) ? $data[self::FIELD_COMMENT_EXT] : [];
             if (null !== $value) {
@@ -425,14 +409,13 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
                 }
             } elseif ([] !== $ext) {
                 $this->setComment(new FHIRString($ext));
+            } else {
+                $this->setComment(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_MOIETY])) {
+        if (array_key_exists(self::FIELD_MOIETY, $data)) {
             if (is_array($data[self::FIELD_MOIETY])) {
                 foreach($data[self::FIELD_MOIETY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRSubstanceSpecificationMoiety) {
                         $this->addMoiety($v);
                     } else {
@@ -445,12 +428,9 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
                 $this->addMoiety(new FHIRSubstanceSpecificationMoiety($data[self::FIELD_MOIETY]));
             }
         }
-        if (isset($data[self::FIELD_PROPERTY])) {
+        if (array_key_exists(self::FIELD_PROPERTY, $data)) {
             if (is_array($data[self::FIELD_PROPERTY])) {
                 foreach($data[self::FIELD_PROPERTY] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRSubstanceSpecificationProperty) {
                         $this->addProperty($v);
                     } else {
@@ -463,26 +443,23 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
                 $this->addProperty(new FHIRSubstanceSpecificationProperty($data[self::FIELD_PROPERTY]));
             }
         }
-        if (isset($data[self::FIELD_REFERENCE_INFORMATION])) {
+        if (array_key_exists(self::FIELD_REFERENCE_INFORMATION, $data)) {
             if ($data[self::FIELD_REFERENCE_INFORMATION] instanceof FHIRReference) {
                 $this->setReferenceInformation($data[self::FIELD_REFERENCE_INFORMATION]);
             } else {
                 $this->setReferenceInformation(new FHIRReference($data[self::FIELD_REFERENCE_INFORMATION]));
             }
         }
-        if (isset($data[self::FIELD_STRUCTURE])) {
+        if (array_key_exists(self::FIELD_STRUCTURE, $data)) {
             if ($data[self::FIELD_STRUCTURE] instanceof FHIRSubstanceSpecificationStructure) {
                 $this->setStructure($data[self::FIELD_STRUCTURE]);
             } else {
                 $this->setStructure(new FHIRSubstanceSpecificationStructure($data[self::FIELD_STRUCTURE]));
             }
         }
-        if (isset($data[self::FIELD_CODE])) {
+        if (array_key_exists(self::FIELD_CODE, $data)) {
             if (is_array($data[self::FIELD_CODE])) {
                 foreach($data[self::FIELD_CODE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRSubstanceSpecificationCode) {
                         $this->addCode($v);
                     } else {
@@ -495,12 +472,9 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
                 $this->addCode(new FHIRSubstanceSpecificationCode($data[self::FIELD_CODE]));
             }
         }
-        if (isset($data[self::FIELD_NAME])) {
+        if (array_key_exists(self::FIELD_NAME, $data)) {
             if (is_array($data[self::FIELD_NAME])) {
                 foreach($data[self::FIELD_NAME] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRSubstanceSpecificationName) {
                         $this->addName($v);
                     } else {
@@ -513,12 +487,9 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
                 $this->addName(new FHIRSubstanceSpecificationName($data[self::FIELD_NAME]));
             }
         }
-        if (isset($data[self::FIELD_MOLECULAR_WEIGHT])) {
+        if (array_key_exists(self::FIELD_MOLECULAR_WEIGHT, $data)) {
             if (is_array($data[self::FIELD_MOLECULAR_WEIGHT])) {
                 foreach($data[self::FIELD_MOLECULAR_WEIGHT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRSubstanceSpecificationMolecularWeight) {
                         $this->addMolecularWeight($v);
                     } else {
@@ -531,12 +502,9 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
                 $this->addMolecularWeight(new FHIRSubstanceSpecificationMolecularWeight($data[self::FIELD_MOLECULAR_WEIGHT]));
             }
         }
-        if (isset($data[self::FIELD_RELATIONSHIP])) {
+        if (array_key_exists(self::FIELD_RELATIONSHIP, $data)) {
             if (is_array($data[self::FIELD_RELATIONSHIP])) {
                 foreach($data[self::FIELD_RELATIONSHIP] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRSubstanceSpecificationRelationship) {
                         $this->addRelationship($v);
                     } else {
@@ -549,28 +517,28 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
                 $this->addRelationship(new FHIRSubstanceSpecificationRelationship($data[self::FIELD_RELATIONSHIP]));
             }
         }
-        if (isset($data[self::FIELD_NUCLEIC_ACID])) {
+        if (array_key_exists(self::FIELD_NUCLEIC_ACID, $data)) {
             if ($data[self::FIELD_NUCLEIC_ACID] instanceof FHIRReference) {
                 $this->setNucleicAcid($data[self::FIELD_NUCLEIC_ACID]);
             } else {
                 $this->setNucleicAcid(new FHIRReference($data[self::FIELD_NUCLEIC_ACID]));
             }
         }
-        if (isset($data[self::FIELD_POLYMER])) {
+        if (array_key_exists(self::FIELD_POLYMER, $data)) {
             if ($data[self::FIELD_POLYMER] instanceof FHIRReference) {
                 $this->setPolymer($data[self::FIELD_POLYMER]);
             } else {
                 $this->setPolymer(new FHIRReference($data[self::FIELD_POLYMER]));
             }
         }
-        if (isset($data[self::FIELD_PROTEIN])) {
+        if (array_key_exists(self::FIELD_PROTEIN, $data)) {
             if ($data[self::FIELD_PROTEIN] instanceof FHIRReference) {
                 $this->setProtein($data[self::FIELD_PROTEIN]);
             } else {
                 $this->setProtein(new FHIRReference($data[self::FIELD_PROTEIN]));
             }
         }
-        if (isset($data[self::FIELD_SOURCE_MATERIAL])) {
+        if (array_key_exists(self::FIELD_SOURCE_MATERIAL, $data)) {
             if ($data[self::FIELD_SOURCE_MATERIAL] instanceof FHIRReference) {
                 $this->setSourceMaterial($data[self::FIELD_SOURCE_MATERIAL]);
             } else {
@@ -582,7 +550,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
     }
@@ -590,22 +558,10 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
     /**
      * @return string
      */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<SubstanceSpecification{$xmlns}></SubstanceSpecification>";
-    }
-    /**
-     * @return string
-     */
     public function _getResourceType(): string
     {
         return static::FHIR_TYPE_NAME;
     }
-
 
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
@@ -617,7 +573,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getIdentifier(): ?FHIRIdentifier
+    public function getIdentifier(): null|FHIRIdentifier
     {
         return $this->identifier;
     }
@@ -633,8 +589,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $identifier
      * @return static
      */
-    public function setIdentifier(?FHIRIdentifier $identifier = null): object
+    public function setIdentifier(null|FHIRIdentifier $identifier = null): self
     {
+        if (null === $identifier) {
+            $identifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->identifier, $identifier);
         $this->identifier = $identifier;
         return $this;
@@ -650,7 +609,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getType(): ?FHIRCodeableConcept
+    public function getType(): null|FHIRCodeableConcept
     {
         return $this->type;
     }
@@ -666,8 +625,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $type
      * @return static
      */
-    public function setType(?FHIRCodeableConcept $type = null): object
+    public function setType(null|FHIRCodeableConcept $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->type, $type);
         $this->type = $type;
         return $this;
@@ -683,7 +645,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getStatus(): ?FHIRCodeableConcept
+    public function getStatus(): null|FHIRCodeableConcept
     {
         return $this->status;
     }
@@ -699,8 +661,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $status
      * @return static
      */
-    public function setStatus(?FHIRCodeableConcept $status = null): object
+    public function setStatus(null|FHIRCodeableConcept $status = null): self
     {
+        if (null === $status) {
+            $status = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->status, $status);
         $this->status = $status;
         return $this;
@@ -716,7 +681,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getDomain(): ?FHIRCodeableConcept
+    public function getDomain(): null|FHIRCodeableConcept
     {
         return $this->domain;
     }
@@ -732,8 +697,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $domain
      * @return static
      */
-    public function setDomain(?FHIRCodeableConcept $domain = null): object
+    public function setDomain(null|FHIRCodeableConcept $domain = null): self
     {
+        if (null === $domain) {
+            $domain = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->domain, $domain);
         $this->domain = $domain;
         return $this;
@@ -746,9 +714,9 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * Textual description of the substance.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDescription(): ?FHIRString
+    public function getDescription(): null|FHIRString
     {
         return $this->description;
     }
@@ -760,15 +728,20 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * Textual description of the substance.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $description
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $description
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription($description = null): object
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -782,7 +755,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
-    public function getSource(): ?array
+    public function getSource(): null|array
     {
         return $this->source;
     }
@@ -797,39 +770,13 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $source
      * @return static
      */
-    public function addSource(?FHIRReference $source = null): object
+    public function addSource(null|FHIRReference $source = null): self
     {
+        if (null === $source) {
+            $source = new FHIRReference();
+        }
         $this->_trackValueAdded();
         $this->source[] = $source;
-        return $this;
-    }
-
-    /**
-     * A reference from one resource to another.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Supporting literature.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference[] $source
-     * @return static
-     */
-    public function setSource(array $source = []): object
-    {
-        if ([] !== $this->source) {
-            $this->_trackValuesRemoved(count($this->source));
-            $this->source = [];
-        }
-        if ([] === $source) {
-            return $this;
-        }
-        foreach($source as $v) {
-            if ($v instanceof FHIRReference) {
-                $this->addSource($v);
-            } else {
-                $this->addSource(new FHIRReference($v));
-            }
-        }
         return $this;
     }
 
@@ -840,9 +787,9 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * Textual comment about this record of a substance.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getComment(): ?FHIRString
+    public function getComment(): null|FHIRString
     {
         return $this->comment;
     }
@@ -854,15 +801,20 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * Textual comment about this record of a substance.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $comment
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $comment
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setComment($comment = null): object
+    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $comment && !($comment instanceof FHIRString)) {
             $comment = new FHIRString($comment);
         }
         $this->_trackValueSet($this->comment, $comment);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_COMMENT])) {
+            $this->_primitiveXmlLocations[self::FIELD_COMMENT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_COMMENT][0] = $xmlLocation;
         $this->comment = $comment;
         return $this;
     }
@@ -875,7 +827,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMoiety[]
      */
-    public function getMoiety(): ?array
+    public function getMoiety(): null|array
     {
         return $this->moiety;
     }
@@ -889,38 +841,13 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMoiety $moiety
      * @return static
      */
-    public function addMoiety(?FHIRSubstanceSpecificationMoiety $moiety = null): object
+    public function addMoiety(null|FHIRSubstanceSpecificationMoiety $moiety = null): self
     {
+        if (null === $moiety) {
+            $moiety = new FHIRSubstanceSpecificationMoiety();
+        }
         $this->_trackValueAdded();
         $this->moiety[] = $moiety;
-        return $this;
-    }
-
-    /**
-     * The detailed description of a substance, typically at a level beyond what is
-     * used for prescribing.
-     *
-     * Moiety, for structural modifications.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMoiety[] $moiety
-     * @return static
-     */
-    public function setMoiety(array $moiety = []): object
-    {
-        if ([] !== $this->moiety) {
-            $this->_trackValuesRemoved(count($this->moiety));
-            $this->moiety = [];
-        }
-        if ([] === $moiety) {
-            return $this;
-        }
-        foreach($moiety as $v) {
-            if ($v instanceof FHIRSubstanceSpecificationMoiety) {
-                $this->addMoiety($v);
-            } else {
-                $this->addMoiety(new FHIRSubstanceSpecificationMoiety($v));
-            }
-        }
         return $this;
     }
 
@@ -933,7 +860,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationProperty[]
      */
-    public function getProperty(): ?array
+    public function getProperty(): null|array
     {
         return $this->property;
     }
@@ -948,39 +875,13 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationProperty $property
      * @return static
      */
-    public function addProperty(?FHIRSubstanceSpecificationProperty $property = null): object
+    public function addProperty(null|FHIRSubstanceSpecificationProperty $property = null): self
     {
+        if (null === $property) {
+            $property = new FHIRSubstanceSpecificationProperty();
+        }
         $this->_trackValueAdded();
         $this->property[] = $property;
-        return $this;
-    }
-
-    /**
-     * The detailed description of a substance, typically at a level beyond what is
-     * used for prescribing.
-     *
-     * General specifications for this substance, including how it is related to other
-     * substances.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationProperty[] $property
-     * @return static
-     */
-    public function setProperty(array $property = []): object
-    {
-        if ([] !== $this->property) {
-            $this->_trackValuesRemoved(count($this->property));
-            $this->property = [];
-        }
-        if ([] === $property) {
-            return $this;
-        }
-        foreach($property as $v) {
-            if ($v instanceof FHIRSubstanceSpecificationProperty) {
-                $this->addProperty($v);
-            } else {
-                $this->addProperty(new FHIRSubstanceSpecificationProperty($v));
-            }
-        }
         return $this;
     }
 
@@ -993,7 +894,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getReferenceInformation(): ?FHIRReference
+    public function getReferenceInformation(): null|FHIRReference
     {
         return $this->referenceInformation;
     }
@@ -1008,8 +909,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $referenceInformation
      * @return static
      */
-    public function setReferenceInformation(?FHIRReference $referenceInformation = null): object
+    public function setReferenceInformation(null|FHIRReference $referenceInformation = null): self
     {
+        if (null === $referenceInformation) {
+            $referenceInformation = new FHIRReference();
+        }
         $this->_trackValueSet($this->referenceInformation, $referenceInformation);
         $this->referenceInformation = $referenceInformation;
         return $this;
@@ -1023,7 +927,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationStructure
      */
-    public function getStructure(): ?FHIRSubstanceSpecificationStructure
+    public function getStructure(): null|FHIRSubstanceSpecificationStructure
     {
         return $this->structure;
     }
@@ -1037,8 +941,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationStructure $structure
      * @return static
      */
-    public function setStructure(?FHIRSubstanceSpecificationStructure $structure = null): object
+    public function setStructure(null|FHIRSubstanceSpecificationStructure $structure = null): self
     {
+        if (null === $structure) {
+            $structure = new FHIRSubstanceSpecificationStructure();
+        }
         $this->_trackValueSet($this->structure, $structure);
         $this->structure = $structure;
         return $this;
@@ -1052,7 +959,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationCode[]
      */
-    public function getCode(): ?array
+    public function getCode(): null|array
     {
         return $this->code;
     }
@@ -1066,38 +973,13 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationCode $code
      * @return static
      */
-    public function addCode(?FHIRSubstanceSpecificationCode $code = null): object
+    public function addCode(null|FHIRSubstanceSpecificationCode $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRSubstanceSpecificationCode();
+        }
         $this->_trackValueAdded();
         $this->code[] = $code;
-        return $this;
-    }
-
-    /**
-     * The detailed description of a substance, typically at a level beyond what is
-     * used for prescribing.
-     *
-     * Codes associated with the substance.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationCode[] $code
-     * @return static
-     */
-    public function setCode(array $code = []): object
-    {
-        if ([] !== $this->code) {
-            $this->_trackValuesRemoved(count($this->code));
-            $this->code = [];
-        }
-        if ([] === $code) {
-            return $this;
-        }
-        foreach($code as $v) {
-            if ($v instanceof FHIRSubstanceSpecificationCode) {
-                $this->addCode($v);
-            } else {
-                $this->addCode(new FHIRSubstanceSpecificationCode($v));
-            }
-        }
         return $this;
     }
 
@@ -1109,7 +991,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[]
      */
-    public function getName(): ?array
+    public function getName(): null|array
     {
         return $this->name;
     }
@@ -1123,38 +1005,13 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName $name
      * @return static
      */
-    public function addName(?FHIRSubstanceSpecificationName $name = null): object
+    public function addName(null|FHIRSubstanceSpecificationName $name = null): self
     {
+        if (null === $name) {
+            $name = new FHIRSubstanceSpecificationName();
+        }
         $this->_trackValueAdded();
         $this->name[] = $name;
-        return $this;
-    }
-
-    /**
-     * The detailed description of a substance, typically at a level beyond what is
-     * used for prescribing.
-     *
-     * Names applicable to this substance.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[] $name
-     * @return static
-     */
-    public function setName(array $name = []): object
-    {
-        if ([] !== $this->name) {
-            $this->_trackValuesRemoved(count($this->name));
-            $this->name = [];
-        }
-        if ([] === $name) {
-            return $this;
-        }
-        foreach($name as $v) {
-            if ($v instanceof FHIRSubstanceSpecificationName) {
-                $this->addName($v);
-            } else {
-                $this->addName(new FHIRSubstanceSpecificationName($v));
-            }
-        }
         return $this;
     }
 
@@ -1166,7 +1023,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMolecularWeight[]
      */
-    public function getMolecularWeight(): ?array
+    public function getMolecularWeight(): null|array
     {
         return $this->molecularWeight;
     }
@@ -1180,38 +1037,13 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMolecularWeight $molecularWeight
      * @return static
      */
-    public function addMolecularWeight(?FHIRSubstanceSpecificationMolecularWeight $molecularWeight = null): object
+    public function addMolecularWeight(null|FHIRSubstanceSpecificationMolecularWeight $molecularWeight = null): self
     {
+        if (null === $molecularWeight) {
+            $molecularWeight = new FHIRSubstanceSpecificationMolecularWeight();
+        }
         $this->_trackValueAdded();
         $this->molecularWeight[] = $molecularWeight;
-        return $this;
-    }
-
-    /**
-     * The detailed description of a substance, typically at a level beyond what is
-     * used for prescribing.
-     *
-     * The molecular weight or weight range (for proteins, polymers or nucleic acids).
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMolecularWeight[] $molecularWeight
-     * @return static
-     */
-    public function setMolecularWeight(array $molecularWeight = []): object
-    {
-        if ([] !== $this->molecularWeight) {
-            $this->_trackValuesRemoved(count($this->molecularWeight));
-            $this->molecularWeight = [];
-        }
-        if ([] === $molecularWeight) {
-            return $this;
-        }
-        foreach($molecularWeight as $v) {
-            if ($v instanceof FHIRSubstanceSpecificationMolecularWeight) {
-                $this->addMolecularWeight($v);
-            } else {
-                $this->addMolecularWeight(new FHIRSubstanceSpecificationMolecularWeight($v));
-            }
-        }
         return $this;
     }
 
@@ -1223,7 +1055,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship[]
      */
-    public function getRelationship(): ?array
+    public function getRelationship(): null|array
     {
         return $this->relationship;
     }
@@ -1237,38 +1069,13 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship $relationship
      * @return static
      */
-    public function addRelationship(?FHIRSubstanceSpecificationRelationship $relationship = null): object
+    public function addRelationship(null|FHIRSubstanceSpecificationRelationship $relationship = null): self
     {
+        if (null === $relationship) {
+            $relationship = new FHIRSubstanceSpecificationRelationship();
+        }
         $this->_trackValueAdded();
         $this->relationship[] = $relationship;
-        return $this;
-    }
-
-    /**
-     * The detailed description of a substance, typically at a level beyond what is
-     * used for prescribing.
-     *
-     * A link between this substance and another, with details of the relationship.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship[] $relationship
-     * @return static
-     */
-    public function setRelationship(array $relationship = []): object
-    {
-        if ([] !== $this->relationship) {
-            $this->_trackValuesRemoved(count($this->relationship));
-            $this->relationship = [];
-        }
-        if ([] === $relationship) {
-            return $this;
-        }
-        foreach($relationship as $v) {
-            if ($v instanceof FHIRSubstanceSpecificationRelationship) {
-                $this->addRelationship($v);
-            } else {
-                $this->addRelationship(new FHIRSubstanceSpecificationRelationship($v));
-            }
-        }
         return $this;
     }
 
@@ -1281,7 +1088,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getNucleicAcid(): ?FHIRReference
+    public function getNucleicAcid(): null|FHIRReference
     {
         return $this->nucleicAcid;
     }
@@ -1296,8 +1103,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $nucleicAcid
      * @return static
      */
-    public function setNucleicAcid(?FHIRReference $nucleicAcid = null): object
+    public function setNucleicAcid(null|FHIRReference $nucleicAcid = null): self
     {
+        if (null === $nucleicAcid) {
+            $nucleicAcid = new FHIRReference();
+        }
         $this->_trackValueSet($this->nucleicAcid, $nucleicAcid);
         $this->nucleicAcid = $nucleicAcid;
         return $this;
@@ -1312,7 +1122,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPolymer(): ?FHIRReference
+    public function getPolymer(): null|FHIRReference
     {
         return $this->polymer;
     }
@@ -1327,8 +1137,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $polymer
      * @return static
      */
-    public function setPolymer(?FHIRReference $polymer = null): object
+    public function setPolymer(null|FHIRReference $polymer = null): self
     {
+        if (null === $polymer) {
+            $polymer = new FHIRReference();
+        }
         $this->_trackValueSet($this->polymer, $polymer);
         $this->polymer = $polymer;
         return $this;
@@ -1343,7 +1156,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getProtein(): ?FHIRReference
+    public function getProtein(): null|FHIRReference
     {
         return $this->protein;
     }
@@ -1358,8 +1171,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $protein
      * @return static
      */
-    public function setProtein(?FHIRReference $protein = null): object
+    public function setProtein(null|FHIRReference $protein = null): self
     {
+        if (null === $protein) {
+            $protein = new FHIRReference();
+        }
         $this->_trackValueSet($this->protein, $protein);
         $this->protein = $protein;
         return $this;
@@ -1374,7 +1190,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getSourceMaterial(): ?FHIRReference
+    public function getSourceMaterial(): null|FHIRReference
     {
         return $this->sourceMaterial;
     }
@@ -1389,8 +1205,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $sourceMaterial
      * @return static
      */
-    public function setSourceMaterial(?FHIRReference $sourceMaterial = null): object
+    public function setSourceMaterial(null|FHIRReference $sourceMaterial = null): self
     {
+        if (null === $sourceMaterial) {
+            $sourceMaterial = new FHIRReference();
+        }
         $this->_trackValueSet($this->sourceMaterial, $sourceMaterial);
         $this->sourceMaterial = $sourceMaterial;
         return $this;
@@ -1404,7 +1223,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1854,305 +1673,286 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSubstanceSpecification $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSubstanceSpecification
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRSubstanceSpecification::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRSubstanceSpecification::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRSubstanceSpecification(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRSubstanceSpecification)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRSubstanceSpecification)) {
             throw new \RuntimeException(sprintf(
-                'FHIRSubstanceSpecification::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRSubstanceSpecification or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_IDENTIFIER === $n->nodeName) {
-                $type->setIdentifier(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_TYPE === $n->nodeName) {
-                $type->setType(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_STATUS === $n->nodeName) {
-                $type->setStatus(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_DOMAIN === $n->nodeName) {
-                $type->setDomain(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_DESCRIPTION === $n->nodeName) {
-                $type->setDescription(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_SOURCE === $n->nodeName) {
-                $type->addSource(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_COMMENT === $n->nodeName) {
-                $type->setComment(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_MOIETY === $n->nodeName) {
-                $type->addMoiety(FHIRSubstanceSpecificationMoiety::xmlUnserialize($n));
-            } elseif (self::FIELD_PROPERTY === $n->nodeName) {
-                $type->addProperty(FHIRSubstanceSpecificationProperty::xmlUnserialize($n));
-            } elseif (self::FIELD_REFERENCE_INFORMATION === $n->nodeName) {
-                $type->setReferenceInformation(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_STRUCTURE === $n->nodeName) {
-                $type->setStructure(FHIRSubstanceSpecificationStructure::xmlUnserialize($n));
-            } elseif (self::FIELD_CODE === $n->nodeName) {
-                $type->addCode(FHIRSubstanceSpecificationCode::xmlUnserialize($n));
-            } elseif (self::FIELD_NAME === $n->nodeName) {
-                $type->addName(FHIRSubstanceSpecificationName::xmlUnserialize($n));
-            } elseif (self::FIELD_MOLECULAR_WEIGHT === $n->nodeName) {
-                $type->addMolecularWeight(FHIRSubstanceSpecificationMolecularWeight::xmlUnserialize($n));
-            } elseif (self::FIELD_RELATIONSHIP === $n->nodeName) {
-                $type->addRelationship(FHIRSubstanceSpecificationRelationship::xmlUnserialize($n));
-            } elseif (self::FIELD_NUCLEIC_ACID === $n->nodeName) {
-                $type->setNucleicAcid(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_POLYMER === $n->nodeName) {
-                $type->setPolymer(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_PROTEIN === $n->nodeName) {
-                $type->setProtein(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_SOURCE_MATERIAL === $n->nodeName) {
-                $type->setSourceMaterial(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_TEXT === $n->nodeName) {
-                $type->setText(FHIRNarrative::xmlUnserialize($n));
-            } elseif (self::FIELD_CONTAINED === $n->nodeName) {
-                for ($ni = 0; $ni < $n->childNodes->length; $ni++) {
-                    $nn = $n->childNodes->item($ni);
-                    if ($nn instanceof \DOMElement) {
-                        $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn));
-                    }
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_IDENTIFIER === $childName) {
+                $type->setIdentifier(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_TYPE === $childName) {
+                $type->setType(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_STATUS === $childName) {
+                $type->setStatus(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DOMAIN === $childName) {
+                $type->setDomain(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DESCRIPTION === $childName) {
+                $type->setDescription(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_SOURCE === $childName) {
+                $type->addSource(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_COMMENT === $childName) {
+                $type->setComment(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MOIETY === $childName) {
+                $type->addMoiety(FHIRSubstanceSpecificationMoiety::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PROPERTY === $childName) {
+                $type->addProperty(FHIRSubstanceSpecificationProperty::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_REFERENCE_INFORMATION === $childName) {
+                $type->setReferenceInformation(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_STRUCTURE === $childName) {
+                $type->setStructure(FHIRSubstanceSpecificationStructure::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CODE === $childName) {
+                $type->addCode(FHIRSubstanceSpecificationCode::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_NAME === $childName) {
+                $type->addName(FHIRSubstanceSpecificationName::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MOLECULAR_WEIGHT === $childName) {
+                $type->addMolecularWeight(FHIRSubstanceSpecificationMolecularWeight::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_RELATIONSHIP === $childName) {
+                $type->addRelationship(FHIRSubstanceSpecificationRelationship::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_NUCLEIC_ACID === $childName) {
+                $type->setNucleicAcid(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_POLYMER === $childName) {
+                $type->setPolymer(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PROTEIN === $childName) {
+                $type->setProtein(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SOURCE_MATERIAL === $childName) {
+                $type->setSourceMaterial(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_TEXT === $childName) {
+                $type->setText(FHIRNarrative::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CONTAINED === $childName) {
+                foreach ($n->children() as $nn) {
+                    $type->addContained(PHPFHIRTypeMap::getContainedTypeFromXML($nn, $config));
                 }
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRId::xmlUnserialize($n));
-            } elseif (self::FIELD_META === $n->nodeName) {
-                $type->setMeta(FHIRMeta::xmlUnserialize($n));
-            } elseif (self::FIELD_IMPLICIT_RULES === $n->nodeName) {
-                $type->setImplicitRules(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_LANGUAGE === $n->nodeName) {
-                $type->setLanguage(FHIRCode::xmlUnserialize($n));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRId::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_META === $childName) {
+                $type->setMeta(FHIRMeta::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_IMPLICIT_RULES === $childName) {
+                $type->setImplicitRules(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_LANGUAGE === $childName) {
+                $type->setLanguage(FHIRCode::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DESCRIPTION);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_DESCRIPTION])) {
             $pt = $type->getDescription();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DESCRIPTION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDescription($n->nodeValue);
+                $type->setDescription((string)$attributes[self::FIELD_DESCRIPTION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_COMMENT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_COMMENT])) {
             $pt = $type->getComment();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_COMMENT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setComment($n->nodeValue);
+                $type->setComment((string)$attributes[self::FIELD_COMMENT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_IMPLICIT_RULES);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_IMPLICIT_RULES])) {
             $pt = $type->getImplicitRules();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setImplicitRules($n->nodeValue);
+                $type->setImplicitRules((string)$attributes[self::FIELD_IMPLICIT_RULES], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_LANGUAGE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_LANGUAGE])) {
             $pt = $type->getLanguage();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setLanguage($n->nodeValue);
+                $type->setLanguage((string)$attributes[self::FIELD_LANGUAGE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
+        }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
+        }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'SubstanceSpecification', $this->_getSourceXmlns());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
+            $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getComment())) {
+            $xw->writeAttribute(self::FIELD_COMMENT, $v->getValue()?->getFormattedValue());
+        }
+        parent::xmlSerialize($xw, $config);
         if (null !== ($v = $this->getIdentifier())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_IDENTIFIER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_IDENTIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getType())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_TYPE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getStatus())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_STATUS);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_STATUS);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDomain())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DOMAIN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DOMAIN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDescription())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DESCRIPTION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
+            $xw->startElement(self::FIELD_DESCRIPTION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getSource())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_SOURCE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getSource() as $v) {
+            $xw->startElement(self::FIELD_SOURCE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getComment())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_COMMENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getComment())) {
+            $xw->startElement(self::FIELD_COMMENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getMoiety())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_MOIETY);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getMoiety() as $v) {
+            $xw->startElement(self::FIELD_MOIETY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getProperty())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_PROPERTY);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getProperty() as $v) {
+            $xw->startElement(self::FIELD_PROPERTY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getReferenceInformation())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_REFERENCE_INFORMATION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_REFERENCE_INFORMATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getStructure())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_STRUCTURE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_STRUCTURE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getCode())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_CODE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getCode() as $v) {
+            $xw->startElement(self::FIELD_CODE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getName())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_NAME);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getName() as $v) {
+            $xw->startElement(self::FIELD_NAME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getMolecularWeight())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_MOLECULAR_WEIGHT);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getMolecularWeight() as $v) {
+            $xw->startElement(self::FIELD_MOLECULAR_WEIGHT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getRelationship())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_RELATIONSHIP);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getRelationship() as $v) {
+            $xw->startElement(self::FIELD_RELATIONSHIP);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getNucleicAcid())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_NUCLEIC_ACID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_NUCLEIC_ACID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPolymer())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_POLYMER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_POLYMER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getProtein())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PROTEIN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PROTEIN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getSourceMaterial())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_SOURCE_MATERIAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_SOURCE_MATERIAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getIdentifier())) {
@@ -2180,9 +1980,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
         if ([] !== ($vs = $this->getSource())) {
             $out->{self::FIELD_SOURCE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_SOURCE}[] = $v;
             }
         }
@@ -2199,18 +1996,12 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
         if ([] !== ($vs = $this->getMoiety())) {
             $out->{self::FIELD_MOIETY} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_MOIETY}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getProperty())) {
             $out->{self::FIELD_PROPERTY} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_PROPERTY}[] = $v;
             }
         }
@@ -2223,36 +2014,24 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
         if ([] !== ($vs = $this->getCode())) {
             $out->{self::FIELD_CODE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_CODE}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getName())) {
             $out->{self::FIELD_NAME} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_NAME}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getMolecularWeight())) {
             $out->{self::FIELD_MOLECULAR_WEIGHT} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_MOLECULAR_WEIGHT}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getRelationship())) {
             $out->{self::FIELD_RELATIONSHIP} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_RELATIONSHIP}[] = $v;
             }
         }
@@ -2273,7 +2052,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
 
         return $out;
     }
-
 
     /**
      * @return string

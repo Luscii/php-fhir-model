@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\R4;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:05+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,11 +76,11 @@ trait PHPFHIRChangeTrackingTrait
     /**
      * Used to track the setting of a given value, taking into consideration whether a value is being overwritten
      *
-     * @param object|null $original
-     * @param object|null $new
+     * @param mixed $original
+     * @param mixed $new
      * @return void
      */
-    protected function _trackValueSet(?object $original, ?object $new): void {
+    protected function _trackValueSet(mixed $original, mixed $new): void {
         if ($original === $new) {
             return;
         }

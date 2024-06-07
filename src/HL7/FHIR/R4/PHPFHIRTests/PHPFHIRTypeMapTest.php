@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\PHPFHIRTests;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:05+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1194,7 +1194,7 @@ class PHPFHIRTypeMapTest extends TestCase
         $this->assertEquals('\HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRVisionPrescription', PHPFHIRTypeMap::getContainedTypeClassName('VisionPrescription'));
         $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('VisionPrescription.LensSpecification'));
         $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('VisionPrescription.Prism'));
-        $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('XHTML'));
+        $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('Xhtml'));
         $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('XPathUsageType'));
         $this->assertNull(PHPFHIRTypeMap::getContainedTypeClassName('XPathUsageType-list'));
     }
@@ -3435,8 +3435,6 @@ class PHPFHIRTypeMapTest extends TestCase
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionLensSpecification'));
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism'));
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism'));
-        $this->assertFalse(PHPFHIRTypeMap::isContainableResource('HL7\FHIR\R4\FHIRXHTML'));
-        $this->assertFalse(PHPFHIRTypeMap::isContainableResource('\HL7\FHIR\R4\FHIRXHTML'));
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('HL7\FHIR\R4\FHIRElement\FHIRXPathUsageType'));
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('\HL7\FHIR\R4\FHIRElement\FHIRXPathUsageType'));
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('HL7\FHIR\R4\FHIRCodePrimitive\FHIRXPathUsageTypeList'));
@@ -4562,7 +4560,6 @@ class PHPFHIRTypeMapTest extends TestCase
         $this->assertTrue(PHPFHIRTypeMap::isContainableResource('VisionPrescription'));
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('VisionPrescription.LensSpecification'));
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('VisionPrescription.Prism'));
-        $this->assertFalse(PHPFHIRTypeMap::isContainableResource('XHTML'));
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('XPathUsageType'));
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource('XPathUsageType-list'));
     }
@@ -6803,8 +6800,6 @@ class PHPFHIRTypeMapTest extends TestCase
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource($type));
         $type = new \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism;
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource($type));
-        $type = new \HL7\FHIR\R4\FHIRXHTML;
-        $this->assertFalse(PHPFHIRTypeMap::isContainableResource($type));
         $type = new \HL7\FHIR\R4\FHIRElement\FHIRXPathUsageType;
         $this->assertFalse(PHPFHIRTypeMap::isContainableResource($type));
         $type = new \HL7\FHIR\R4\FHIRCodePrimitive\FHIRXPathUsageTypeList;
@@ -7932,6 +7927,6 @@ class PHPFHIRTypeMapTest extends TestCase
         $this->assertEquals('\HL7\FHIR\R4\FHIRUriPrimitive', PHPFHIRTypeMap::getTypeClass('uri-primitive'));
         $this->assertEquals('\HL7\FHIR\R4\FHIRUrlPrimitive', PHPFHIRTypeMap::getTypeClass('url-primitive'));
         $this->assertEquals('\HL7\FHIR\R4\FHIRUuidPrimitive', PHPFHIRTypeMap::getTypeClass('uuid-primitive'));
-        $this->assertEquals('\HL7\FHIR\R4\FHIRXHTML', PHPFHIRTypeMap::getTypeClass('XHTML'));
+        $this->assertEquals('\HL7\FHIR\R4\FHIRXhtml', PHPFHIRTypeMap::getTypeClass('Xhtml'));
     }
 }

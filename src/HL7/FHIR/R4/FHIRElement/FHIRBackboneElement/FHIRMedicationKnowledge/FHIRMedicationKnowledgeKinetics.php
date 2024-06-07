@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:05+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,8 +67,12 @@ use HL7\FHIR\R4\FHIRElement\FHIRExtension;
 use HL7\FHIR\R4\FHIRElement\FHIRQuantity;
 use HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * Information about a medication that is used to support knowledge.
@@ -80,12 +84,10 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_MEDICATION_KNOWLEDGE_DOT_KINETICS;
+
     const FIELD_AREA_UNDER_CURVE = 'areaUnderCurve';
     const FIELD_LETHAL_DOSE_50 = 'lethalDose50';
     const FIELD_HALF_LIFE_PERIOD = 'halfLifePeriod';
-
-    /** @var string */
-    private $_xmlns = '';
 
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
@@ -98,8 +100,7 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity[]
      */
-    protected ?array $areaUnderCurve = [];
-
+    protected null|array $areaUnderCurve = [];
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -111,8 +112,7 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity[]
      */
-    protected ?array $lethalDose50 = [];
-
+    protected null|array $lethalDose50 = [];
     /**
      * A length of time.
      * If the element is present, it must have a value for at least one of the defined
@@ -123,36 +123,30 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    protected ?FHIRDuration $halfLifePeriod = null;
+    protected null|FHIRDuration $halfLifePeriod = null;
 
     /**
      * Validation map for fields in type MedicationKnowledge.Kinetics
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRMedicationKnowledgeKinetics Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRMedicationKnowledgeKinetics::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_AREA_UNDER_CURVE])) {
+        if (array_key_exists(self::FIELD_AREA_UNDER_CURVE, $data)) {
             if (is_array($data[self::FIELD_AREA_UNDER_CURVE])) {
                 foreach($data[self::FIELD_AREA_UNDER_CURVE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRQuantity) {
                         $this->addAreaUnderCurve($v);
                     } else {
@@ -165,12 +159,9 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
                 $this->addAreaUnderCurve(new FHIRQuantity($data[self::FIELD_AREA_UNDER_CURVE]));
             }
         }
-        if (isset($data[self::FIELD_LETHAL_DOSE_50])) {
+        if (array_key_exists(self::FIELD_LETHAL_DOSE_50, $data)) {
             if (is_array($data[self::FIELD_LETHAL_DOSE_50])) {
                 foreach($data[self::FIELD_LETHAL_DOSE_50] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRQuantity) {
                         $this->addLethalDose50($v);
                     } else {
@@ -183,7 +174,7 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
                 $this->addLethalDose50(new FHIRQuantity($data[self::FIELD_LETHAL_DOSE_50]));
             }
         }
-        if (isset($data[self::FIELD_HALF_LIFE_PERIOD])) {
+        if (array_key_exists(self::FIELD_HALF_LIFE_PERIOD, $data)) {
             if ($data[self::FIELD_HALF_LIFE_PERIOD] instanceof FHIRDuration) {
                 $this->setHalfLifePeriod($data[self::FIELD_HALF_LIFE_PERIOD]);
             } else {
@@ -195,21 +186,9 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<MedicationKnowledgeKinetics{$xmlns}></MedicationKnowledgeKinetics>";
     }
 
     /**
@@ -223,7 +202,7 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity[]
      */
-    public function getAreaUnderCurve(): ?array
+    public function getAreaUnderCurve(): null|array
     {
         return $this->areaUnderCurve;
     }
@@ -240,41 +219,13 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $areaUnderCurve
      * @return static
      */
-    public function addAreaUnderCurve(?FHIRQuantity $areaUnderCurve = null): object
+    public function addAreaUnderCurve(null|FHIRQuantity $areaUnderCurve = null): self
     {
+        if (null === $areaUnderCurve) {
+            $areaUnderCurve = new FHIRQuantity();
+        }
         $this->_trackValueAdded();
         $this->areaUnderCurve[] = $areaUnderCurve;
-        return $this;
-    }
-
-    /**
-     * A measured amount (or an amount that can potentially be measured). Note that
-     * measured amounts include amounts that are not precisely quantified, including
-     * amounts involving arbitrary units and floating currencies.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The drug concentration measured at certain discrete points in time.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRQuantity[] $areaUnderCurve
-     * @return static
-     */
-    public function setAreaUnderCurve(array $areaUnderCurve = []): object
-    {
-        if ([] !== $this->areaUnderCurve) {
-            $this->_trackValuesRemoved(count($this->areaUnderCurve));
-            $this->areaUnderCurve = [];
-        }
-        if ([] === $areaUnderCurve) {
-            return $this;
-        }
-        foreach($areaUnderCurve as $v) {
-            if ($v instanceof FHIRQuantity) {
-                $this->addAreaUnderCurve($v);
-            } else {
-                $this->addAreaUnderCurve(new FHIRQuantity($v));
-            }
-        }
         return $this;
     }
 
@@ -289,7 +240,7 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity[]
      */
-    public function getLethalDose50(): ?array
+    public function getLethalDose50(): null|array
     {
         return $this->lethalDose50;
     }
@@ -306,41 +257,13 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $lethalDose50
      * @return static
      */
-    public function addLethalDose50(?FHIRQuantity $lethalDose50 = null): object
+    public function addLethalDose50(null|FHIRQuantity $lethalDose50 = null): self
     {
+        if (null === $lethalDose50) {
+            $lethalDose50 = new FHIRQuantity();
+        }
         $this->_trackValueAdded();
         $this->lethalDose50[] = $lethalDose50;
-        return $this;
-    }
-
-    /**
-     * A measured amount (or an amount that can potentially be measured). Note that
-     * measured amounts include amounts that are not precisely quantified, including
-     * amounts involving arbitrary units and floating currencies.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The median lethal dose of a drug.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRQuantity[] $lethalDose50
-     * @return static
-     */
-    public function setLethalDose50(array $lethalDose50 = []): object
-    {
-        if ([] !== $this->lethalDose50) {
-            $this->_trackValuesRemoved(count($this->lethalDose50));
-            $this->lethalDose50 = [];
-        }
-        if ([] === $lethalDose50) {
-            return $this;
-        }
-        foreach($lethalDose50 as $v) {
-            if ($v instanceof FHIRQuantity) {
-                $this->addLethalDose50($v);
-            } else {
-                $this->addLethalDose50(new FHIRQuantity($v));
-            }
-        }
         return $this;
     }
 
@@ -354,7 +277,7 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    public function getHalfLifePeriod(): ?FHIRDuration
+    public function getHalfLifePeriod(): null|FHIRDuration
     {
         return $this->halfLifePeriod;
     }
@@ -370,8 +293,11 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration $halfLifePeriod
      * @return static
      */
-    public function setHalfLifePeriod(?FHIRDuration $halfLifePeriod = null): object
+    public function setHalfLifePeriod(null|FHIRDuration $halfLifePeriod = null): self
     {
+        if (null === $halfLifePeriod) {
+            $halfLifePeriod = new FHIRDuration();
+        }
         $this->_trackValueSet($this->halfLifePeriod, $halfLifePeriod);
         $this->halfLifePeriod = $halfLifePeriod;
         return $this;
@@ -385,7 +311,7 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -493,134 +419,131 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeKinetics $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeKinetics
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRMedicationKnowledgeKinetics::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRMedicationKnowledgeKinetics::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRMedicationKnowledgeKinetics(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRMedicationKnowledgeKinetics)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRMedicationKnowledgeKinetics)) {
             throw new \RuntimeException(sprintf(
-                'FHIRMedicationKnowledgeKinetics::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeKinetics or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_AREA_UNDER_CURVE === $n->nodeName) {
-                $type->addAreaUnderCurve(FHIRQuantity::xmlUnserialize($n));
-            } elseif (self::FIELD_LETHAL_DOSE_50 === $n->nodeName) {
-                $type->addLethalDose50(FHIRQuantity::xmlUnserialize($n));
-            } elseif (self::FIELD_HALF_LIFE_PERIOD === $n->nodeName) {
-                $type->setHalfLifePeriod(FHIRDuration::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_AREA_UNDER_CURVE === $childName) {
+                $type->addAreaUnderCurve(FHIRQuantity::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_LETHAL_DOSE_50 === $childName) {
+                $type->addLethalDose50(FHIRQuantity::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_HALF_LIFE_PERIOD === $childName) {
+                $type->setHalfLifePeriod(FHIRDuration::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
-        if ([] !== ($vs = $this->getAreaUnderCurve())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_AREA_UNDER_CURVE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
         }
-        if ([] !== ($vs = $this->getLethalDose50())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_LETHAL_DOSE_50);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
+        }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'MedicationKnowledgeKinetics', $this->_getSourceXmlns());
+        }
+        parent::xmlSerialize($xw, $config);
+        foreach ($this->getAreaUnderCurve() as $v) {
+            $xw->startElement(self::FIELD_AREA_UNDER_CURVE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getLethalDose50() as $v) {
+            $xw->startElement(self::FIELD_LETHAL_DOSE_50);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getHalfLifePeriod())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_HALF_LIFE_PERIOD);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_HALF_LIFE_PERIOD);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if ([] !== ($vs = $this->getAreaUnderCurve())) {
             $out->{self::FIELD_AREA_UNDER_CURVE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_AREA_UNDER_CURVE}[] = $v;
             }
         }
         if ([] !== ($vs = $this->getLethalDose50())) {
             $out->{self::FIELD_LETHAL_DOSE_50} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_LETHAL_DOSE_50}[] = $v;
             }
         }
@@ -630,7 +553,6 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
 
         return $out;
     }
-
 
     /**
      * @return string

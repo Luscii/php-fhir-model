@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\R4;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:05+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,36 +66,21 @@ namespace HL7\FHIR\R4;
  * Interface PHPFHIRTypeInterface
  * @package \HL7\FHIR\R4
  */
-interface PHPFHIRTypeInterface extends \JsonSerializable {
-    /**
-     * @param array|null $data
-     */
-    public function __construct(?array $data = null);
-
+interface PHPFHIRTypeInterface extends \JsonSerializable
+{
     /**
      * Returns the FHIR name represented by this Type
      * @return string
      */
-    public function _getFHIRTypeName(): string;
+    public function _getFhirTypeName(): string;
 
     /**
-     * Returns the xml namespace to use for this type when serializing to XML, if applicable.
-     * @return string
+     * Returns the root Xmlns value found in the source.  Null indicates no "xmlns" was found.  Only defined when
+     * unserializing XML, and only used when serializing XML.
+     *
+     * @return null|string
      */
-    public function _getFHIRXMLNamespace(): string;
-
-    /**
-     * Set the XML Namespace to be output when serializing this type to XML
-     * @param string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace(string $xmlNamespace): object;
-
-    /**
-     * Returns the base xml element definition for this type
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string;
+    public function _getSourceXmlns(): null|string;
 
     /**
      * Must return an associative array in structure ["field" => ["rule" => {constraint}]] to be used during validation
@@ -117,19 +102,19 @@ interface PHPFHIRTypeInterface extends \JsonSerializable {
     public function _isValued(): bool;
 
     /**
-     * @param \DOMElement|string|null $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|static $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|static
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?object;
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self;
 
     /**
-     * @param \DOMElement|null $element
-     * @param null|int $libxmlOpts
-     * @return string|\DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(?\DOMElement $element = null, ?int $libxmlOpts = 591872);
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter;
 
     /**
      * @return string
