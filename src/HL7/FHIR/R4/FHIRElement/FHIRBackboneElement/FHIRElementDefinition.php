@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,13 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
  * 
  */
 
+use HL7\FHIR\R4\FHIRBase64BinaryPrimitive;
+use HL7\FHIR\R4\FHIRBooleanPrimitive;
+use HL7\FHIR\R4\FHIRCanonicalPrimitive;
+use HL7\FHIR\R4\FHIRCodePrimitive;
+use HL7\FHIR\R4\FHIRDatePrimitive;
+use HL7\FHIR\R4\FHIRDateTimePrimitive;
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAddress;
 use HL7\FHIR\R4\FHIRElement\FHIRAnnotation;
 use HL7\FHIR\R4\FHIRElement\FHIRAttachment;
@@ -120,9 +127,24 @@ use HL7\FHIR\R4\FHIRElement\FHIRUri;
 use HL7\FHIR\R4\FHIRElement\FHIRUrl;
 use HL7\FHIR\R4\FHIRElement\FHIRUsageContext;
 use HL7\FHIR\R4\FHIRElement\FHIRUuid;
+use HL7\FHIR\R4\FHIRIdPrimitive;
+use HL7\FHIR\R4\FHIRInstantPrimitive;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
+use HL7\FHIR\R4\FHIRMarkdownPrimitive;
+use HL7\FHIR\R4\FHIROidPrimitive;
+use HL7\FHIR\R4\FHIRPositiveIntPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\FHIRTimePrimitive;
+use HL7\FHIR\R4\FHIRUnsignedIntPrimitive;
+use HL7\FHIR\R4\FHIRUriPrimitive;
+use HL7\FHIR\R4\FHIRUrlPrimitive;
+use HL7\FHIR\R4\FHIRUuidPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * Captures constraints on each element within the resource, profile, or extension.
@@ -136,6 +158,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_ELEMENT_DEFINITION;
+
     const FIELD_PATH = 'path';
     const FIELD_PATH_EXT = '_path';
     const FIELD_REPRESENTATION = 'representation';
@@ -428,9 +451,6 @@ class FHIRElementDefinition extends FHIRBackboneElement
     const FIELD_BINDING = 'binding';
     const FIELD_MAPPING = 'mapping';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -439,10 +459,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The path identifies the element and is expressed as a "."-separated list of
      * ancestor elements, beginning with the name of the resource or extension.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $path = null;
-
+    protected null|FHIRString $path = null;
     /**
      * How a property is represented when serialized.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -452,8 +471,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPropertyRepresentation[]
      */
-    protected ?array $representation = [];
-
+    protected null|array $representation = [];
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -464,10 +482,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * specific set of constraints applied to this element, used to provide a name to
      * different slices of the same element.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $sliceName = null;
-
+    protected null|FHIRString $sliceName = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -478,10 +495,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * might not be overriding a slice in an inherited profile, depending on the
      * sliceName.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $sliceIsConstraining = null;
-
+    protected null|FHIRBoolean $sliceIsConstraining = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -491,10 +507,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * indicating its meaning or to use to prompt for the element in a user display or
      * form.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $label = null;
-
+    protected null|FHIRString $label = null;
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -504,8 +519,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
-    protected ?array $code = [];
-
+    protected null|array $code = [];
     /**
      * Captures constraints on each element within the resource, profile, or extension.
      * If the element is present, it must have a value for at least one of the defined
@@ -521,8 +535,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionSlicing
      */
-    protected ?FHIRElementDefinitionSlicing $slicing = null;
-
+    protected null|FHIRElementDefinitionSlicing $slicing = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -531,10 +544,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * A concise description of what this element means (e.g. for use in autogenerated
      * summaries).
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $short = null;
-
+    protected null|FHIRString $short = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -551,10 +563,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * resource. (Note: The text you are reading is specified in
      * ElementDefinition.definition).
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $definition = null;
-
+    protected null|FHIRMarkdown $definition = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -568,10 +579,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * notes about how to use the data properly, exceptions to proper use, etc. (Note:
      * The text you are reading is specified in ElementDefinition.comment).
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $comment = null;
-
+    protected null|FHIRMarkdown $comment = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -585,10 +595,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * constraints exist as they do. This may be used to point to source materials or
      * specifications that drove the structure of this element.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $requirements = null;
-
+    protected null|FHIRMarkdown $requirements = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -596,10 +605,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * Identifies additional names by which this element might also be known.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    protected ?array $alias = [];
-
+    protected null|array $alias = [];
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -607,10 +615,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * The minimum number of times this element SHALL appear in the instance.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    protected ?FHIRUnsignedInt $min = null;
-
+    protected null|FHIRUnsignedInt $min = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -618,10 +625,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * The maximum number of times this element is permitted to appear in the instance.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $max = null;
-
+    protected null|FHIRString $max = null;
     /**
      * Captures constraints on each element within the resource, profile, or extension.
      * If the element is present, it must have a value for at least one of the defined
@@ -637,8 +643,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionBase
      */
-    protected ?FHIRElementDefinitionBase $base = null;
-
+    protected null|FHIRElementDefinitionBase $base = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -649,10 +654,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * rules that are in the ElementDefinition for the element, including definitions,
      * cardinality constraints, bindings, invariants etc.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $contentReference = null;
-
+    protected null|FHIRUri $contentReference = null;
     /**
      * Captures constraints on each element within the resource, profile, or extension.
      * If the element is present, it must have a value for at least one of the defined
@@ -662,8 +666,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionType[]
      */
-    protected ?array $type = [];
-
+    protected null|array $type = [];
     /**
      * A stream of bytes
      * A stream of bytes, base64 encoded
@@ -672,10 +675,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    protected ?FHIRBase64Binary $defaultValueBase64Binary = null;
-
+    protected null|FHIRBase64Binary $defaultValueBase64Binary = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -683,10 +685,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $defaultValueBoolean = null;
-
+    protected null|FHIRBoolean $defaultValueBoolean = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -696,10 +697,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $defaultValueCanonical = null;
-
+    protected null|FHIRCanonical $defaultValueCanonical = null;
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -709,10 +709,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    protected ?FHIRCode $defaultValueCode = null;
-
+    protected null|FHIRCode $defaultValueCode = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -722,10 +721,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $defaultValueDate = null;
-
+    protected null|FHIRDate $defaultValueDate = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -737,10 +735,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $defaultValueDateTime = null;
-
+    protected null|FHIRDateTime $defaultValueDateTime = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -750,10 +747,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $defaultValueDecimal = null;
-
+    protected null|FHIRDecimal $defaultValueDecimal = null;
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -765,10 +761,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    protected ?FHIRId $defaultValueId = null;
-
+    protected null|FHIRId $defaultValueId = null;
     /**
      * An instant in time - known at least to the second
      * Note: This is intended for where precisely observed times are required,
@@ -780,10 +775,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    protected ?FHIRInstant $defaultValueInstant = null;
-
+    protected null|FHIRInstant $defaultValueInstant = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -792,10 +786,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $defaultValueInteger = null;
-
+    protected null|FHIRInteger $defaultValueInteger = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -808,10 +801,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $defaultValueMarkdown = null;
-
+    protected null|FHIRMarkdown $defaultValueMarkdown = null;
     /**
      * An OID represented as a URI
      * RFC 3001. See also ISO/IEC 8824:1990 €
@@ -821,10 +813,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIROid
      */
-    protected ?FHIROid $defaultValueOid = null;
-
+    protected null|FHIROid $defaultValueOid = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -833,10 +824,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $defaultValuePositiveInt = null;
-
+    protected null|FHIRPositiveInt $defaultValuePositiveInt = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -845,10 +835,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $defaultValueString = null;
-
+    protected null|FHIRString $defaultValueString = null;
     /**
      * A time during the day, with no date specified
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -856,10 +845,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    protected ?FHIRTime $defaultValueTime = null;
-
+    protected null|FHIRTime $defaultValueTime = null;
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -868,10 +856,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    protected ?FHIRUnsignedInt $defaultValueUnsignedInt = null;
-
+    protected null|FHIRUnsignedInt $defaultValueUnsignedInt = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -880,10 +867,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $defaultValueUri = null;
-
+    protected null|FHIRUri $defaultValueUri = null;
     /**
      * A URI that is a literal reference
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -892,10 +878,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    protected ?FHIRUrl $defaultValueUrl = null;
-
+    protected null|FHIRUrl $defaultValueUrl = null;
     /**
      * A UUID, represented as a URI
      * See The Open Group, CDE 1.1 Remote Procedure Call specification, Appendix A.
@@ -905,10 +890,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @var null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUuid
      */
-    protected ?FHIRUuid $defaultValueUuid = null;
-
+    protected null|FHIRUuid $defaultValueUuid = null;
     /**
      * An address expressed using postal conventions (as opposed to GPS or other
      * location definition formats). This data type may be used to convey addresses for
@@ -923,8 +907,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
-    protected ?FHIRAddress $defaultValueAddress = null;
-
+    protected null|FHIRAddress $defaultValueAddress = null;
     /**
      * A duration of time during which an organism (or a process) has existed.
      * If the element is present, it must have a value for at least one of the defined
@@ -935,8 +918,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    protected ?FHIRAge $defaultValueAge = null;
-
+    protected null|FHIRAge $defaultValueAge = null;
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -948,8 +930,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation
      */
-    protected ?FHIRAnnotation $defaultValueAnnotation = null;
-
+    protected null|FHIRAnnotation $defaultValueAnnotation = null;
     /**
      * For referring to data content defined in other formats.
      * If the element is present, it must have a value for at least one of the defined
@@ -960,8 +941,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    protected ?FHIRAttachment $defaultValueAttachment = null;
-
+    protected null|FHIRAttachment $defaultValueAttachment = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -973,8 +953,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $defaultValueCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $defaultValueCodeableConcept = null;
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -985,8 +964,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    protected ?FHIRCoding $defaultValueCoding = null;
-
+    protected null|FHIRCoding $defaultValueCoding = null;
     /**
      * Details for all kinds of technology mediated contact points for a person or
      * organization, including telephone, email, etc.
@@ -998,8 +976,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint
      */
-    protected ?FHIRContactPoint $defaultValueContactPoint = null;
-
+    protected null|FHIRContactPoint $defaultValueContactPoint = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -1012,8 +989,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount
      */
-    protected ?FHIRCount $defaultValueCount = null;
-
+    protected null|FHIRCount $defaultValueCount = null;
     /**
      * A length - a value with a unit that is a physical distance.
      * If the element is present, it must have a value for at least one of the defined
@@ -1024,8 +1000,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance
      */
-    protected ?FHIRDistance $defaultValueDistance = null;
-
+    protected null|FHIRDistance $defaultValueDistance = null;
     /**
      * A length of time.
      * If the element is present, it must have a value for at least one of the defined
@@ -1036,8 +1011,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    protected ?FHIRDuration $defaultValueDuration = null;
-
+    protected null|FHIRDuration $defaultValueDuration = null;
     /**
      * A human's name with the ability to identify parts and usage.
      * If the element is present, it must have a value for at least one of the defined
@@ -1048,8 +1022,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
-    protected ?FHIRHumanName $defaultValueHumanName = null;
-
+    protected null|FHIRHumanName $defaultValueHumanName = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -1061,8 +1034,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $defaultValueIdentifier = null;
-
+    protected null|FHIRIdentifier $defaultValueIdentifier = null;
     /**
      * An amount of economic utility in some recognized currency.
      * If the element is present, it must have a value for at least one of the defined
@@ -1073,8 +1045,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    protected ?FHIRMoney $defaultValueMoney = null;
-
+    protected null|FHIRMoney $defaultValueMoney = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -1085,8 +1056,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $defaultValuePeriod = null;
-
+    protected null|FHIRPeriod $defaultValuePeriod = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -1099,8 +1069,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $defaultValueQuantity = null;
-
+    protected null|FHIRQuantity $defaultValueQuantity = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -1111,8 +1080,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $defaultValueRange = null;
-
+    protected null|FHIRRange $defaultValueRange = null;
     /**
      * A relationship of two Quantity values - expressed as a numerator and a
      * denominator.
@@ -1124,8 +1092,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    protected ?FHIRRatio $defaultValueRatio = null;
-
+    protected null|FHIRRatio $defaultValueRatio = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -1136,8 +1103,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $defaultValueReference = null;
-
+    protected null|FHIRReference $defaultValueReference = null;
     /**
      * A series of measurements taken by a device, with upper and lower limits. There
      * may be more than one dimension in the data.
@@ -1149,8 +1115,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    protected ?FHIRSampledData $defaultValueSampledData = null;
-
+    protected null|FHIRSampledData $defaultValueSampledData = null;
     /**
      * A signature along with supporting context. The signature may be a digital
      * signature that is cryptographic in nature, or some other signature acceptable to
@@ -1165,8 +1130,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSignature
      */
-    protected ?FHIRSignature $defaultValueSignature = null;
-
+    protected null|FHIRSignature $defaultValueSignature = null;
     /**
      * Specifies an event that may occur multiple times. Timing schedules are used to
      * record when things are planned, expected or requested to occur. The most common
@@ -1181,8 +1145,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    protected ?FHIRTiming $defaultValueTiming = null;
-
+    protected null|FHIRTiming $defaultValueTiming = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -1193,8 +1156,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail
      */
-    protected ?FHIRContactDetail $defaultValueContactDetail = null;
-
+    protected null|FHIRContactDetail $defaultValueContactDetail = null;
     /**
      * A contributor to the content of a knowledge asset, including authors, editors,
      * reviewers, and endorsers.
@@ -1206,8 +1168,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContributor
      */
-    protected ?FHIRContributor $defaultValueContributor = null;
-
+    protected null|FHIRContributor $defaultValueContributor = null;
     /**
      * Describes a required data item for evaluation in terms of the type of data, and
      * optional code or date-based filters of the data.
@@ -1219,8 +1180,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement
      */
-    protected ?FHIRDataRequirement $defaultValueDataRequirement = null;
-
+    protected null|FHIRDataRequirement $defaultValueDataRequirement = null;
     /**
      * A expression that is evaluated in a specified context and returns a value. The
      * context of use of the expression must specify the context in which the
@@ -1233,8 +1193,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRExpression
      */
-    protected ?FHIRExpression $defaultValueExpression = null;
-
+    protected null|FHIRExpression $defaultValueExpression = null;
     /**
      * The parameters to the module. This collection specifies both the input and
      * output parameters. Input parameters are provided by the caller as part of the
@@ -1247,8 +1206,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition
      */
-    protected ?FHIRParameterDefinition $defaultValueParameterDefinition = null;
-
+    protected null|FHIRParameterDefinition $defaultValueParameterDefinition = null;
     /**
      * Related artifacts such as additional documentation, justification, or
      * bibliographic references.
@@ -1260,8 +1218,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact
      */
-    protected ?FHIRRelatedArtifact $defaultValueRelatedArtifact = null;
-
+    protected null|FHIRRelatedArtifact $defaultValueRelatedArtifact = null;
     /**
      * A description of a triggering event. Triggering events can be named events, data
      * events, or periodic, as determined by the type element.
@@ -1273,8 +1230,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition
      */
-    protected ?FHIRTriggerDefinition $defaultValueTriggerDefinition = null;
-
+    protected null|FHIRTriggerDefinition $defaultValueTriggerDefinition = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -1288,8 +1244,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext
      */
-    protected ?FHIRUsageContext $defaultValueUsageContext = null;
-
+    protected null|FHIRUsageContext $defaultValueUsageContext = null;
     /**
      * Indicates how the medication is/was taken or should be taken by the patient.
      * If the element is present, it must have a value for at least one of the defined
@@ -1300,8 +1255,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage
      */
-    protected ?FHIRDosage $defaultValueDosage = null;
-
+    protected null|FHIRDosage $defaultValueDosage = null;
     /**
      * The metadata about a resource. This is content in the resource that is
      * maintained by the infrastructure. Changes to the content might not always be
@@ -1314,8 +1268,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMeta
      */
-    protected ?FHIRMeta $defaultValueMeta = null;
-
+    protected null|FHIRMeta $defaultValueMeta = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -1328,10 +1281,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The Implicit meaning that is to be understood when this element is missing (e.g.
      * 'when this element is missing, the period is ongoing').
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $meaningWhenMissing = null;
-
+    protected null|FHIRMarkdown $meaningWhenMissing = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -1341,10 +1293,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * describes what that meaning is. If absent, it means that the order of the
      * element has no meaning.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $orderMeaning = null;
-
+    protected null|FHIRString $orderMeaning = null;
     /**
      * A stream of bytes
      * A stream of bytes, base64 encoded
@@ -1355,10 +1306,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    protected ?FHIRBase64Binary $fixedBase64Binary = null;
-
+    protected null|FHIRBase64Binary $fixedBase64Binary = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -1368,10 +1318,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $fixedBoolean = null;
-
+    protected null|FHIRBoolean $fixedBoolean = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -1383,10 +1332,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $fixedCanonical = null;
-
+    protected null|FHIRCanonical $fixedCanonical = null;
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -1398,10 +1346,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    protected ?FHIRCode $fixedCode = null;
-
+    protected null|FHIRCode $fixedCode = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -1413,10 +1360,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $fixedDate = null;
-
+    protected null|FHIRDate $fixedDate = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -1430,10 +1376,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $fixedDateTime = null;
-
+    protected null|FHIRDateTime $fixedDateTime = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -1445,10 +1390,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $fixedDecimal = null;
-
+    protected null|FHIRDecimal $fixedDecimal = null;
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -1462,10 +1406,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    protected ?FHIRId $fixedId = null;
-
+    protected null|FHIRId $fixedId = null;
     /**
      * An instant in time - known at least to the second
      * Note: This is intended for where precisely observed times are required,
@@ -1479,10 +1422,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    protected ?FHIRInstant $fixedInstant = null;
-
+    protected null|FHIRInstant $fixedInstant = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -1493,10 +1435,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $fixedInteger = null;
-
+    protected null|FHIRInteger $fixedInteger = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -1511,10 +1452,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $fixedMarkdown = null;
-
+    protected null|FHIRMarkdown $fixedMarkdown = null;
     /**
      * An OID represented as a URI
      * RFC 3001. See also ISO/IEC 8824:1990 €
@@ -1526,10 +1466,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIROid
      */
-    protected ?FHIROid $fixedOid = null;
-
+    protected null|FHIROid $fixedOid = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -1540,10 +1479,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $fixedPositiveInt = null;
-
+    protected null|FHIRPositiveInt $fixedPositiveInt = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -1554,10 +1492,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $fixedString = null;
-
+    protected null|FHIRString $fixedString = null;
     /**
      * A time during the day, with no date specified
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -1567,10 +1504,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    protected ?FHIRTime $fixedTime = null;
-
+    protected null|FHIRTime $fixedTime = null;
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -1581,10 +1517,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    protected ?FHIRUnsignedInt $fixedUnsignedInt = null;
-
+    protected null|FHIRUnsignedInt $fixedUnsignedInt = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -1595,10 +1530,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $fixedUri = null;
-
+    protected null|FHIRUri $fixedUri = null;
     /**
      * A URI that is a literal reference
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -1609,10 +1543,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    protected ?FHIRUrl $fixedUrl = null;
-
+    protected null|FHIRUrl $fixedUrl = null;
     /**
      * A UUID, represented as a URI
      * See The Open Group, CDE 1.1 Remote Procedure Call specification, Appendix A.
@@ -1624,10 +1557,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUuid
      */
-    protected ?FHIRUuid $fixedUuid = null;
-
+    protected null|FHIRUuid $fixedUuid = null;
     /**
      * An address expressed using postal conventions (as opposed to GPS or other
      * location definition formats). This data type may be used to convey addresses for
@@ -1644,8 +1576,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
-    protected ?FHIRAddress $fixedAddress = null;
-
+    protected null|FHIRAddress $fixedAddress = null;
     /**
      * A duration of time during which an organism (or a process) has existed.
      * If the element is present, it must have a value for at least one of the defined
@@ -1658,8 +1589,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    protected ?FHIRAge $fixedAge = null;
-
+    protected null|FHIRAge $fixedAge = null;
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -1673,8 +1603,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation
      */
-    protected ?FHIRAnnotation $fixedAnnotation = null;
-
+    protected null|FHIRAnnotation $fixedAnnotation = null;
     /**
      * For referring to data content defined in other formats.
      * If the element is present, it must have a value for at least one of the defined
@@ -1687,8 +1616,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    protected ?FHIRAttachment $fixedAttachment = null;
-
+    protected null|FHIRAttachment $fixedAttachment = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -1702,8 +1630,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $fixedCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $fixedCodeableConcept = null;
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -1716,8 +1643,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    protected ?FHIRCoding $fixedCoding = null;
-
+    protected null|FHIRCoding $fixedCoding = null;
     /**
      * Details for all kinds of technology mediated contact points for a person or
      * organization, including telephone, email, etc.
@@ -1731,8 +1657,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint
      */
-    protected ?FHIRContactPoint $fixedContactPoint = null;
-
+    protected null|FHIRContactPoint $fixedContactPoint = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -1747,8 +1672,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount
      */
-    protected ?FHIRCount $fixedCount = null;
-
+    protected null|FHIRCount $fixedCount = null;
     /**
      * A length - a value with a unit that is a physical distance.
      * If the element is present, it must have a value for at least one of the defined
@@ -1761,8 +1685,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance
      */
-    protected ?FHIRDistance $fixedDistance = null;
-
+    protected null|FHIRDistance $fixedDistance = null;
     /**
      * A length of time.
      * If the element is present, it must have a value for at least one of the defined
@@ -1775,8 +1698,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    protected ?FHIRDuration $fixedDuration = null;
-
+    protected null|FHIRDuration $fixedDuration = null;
     /**
      * A human's name with the ability to identify parts and usage.
      * If the element is present, it must have a value for at least one of the defined
@@ -1789,8 +1711,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
-    protected ?FHIRHumanName $fixedHumanName = null;
-
+    protected null|FHIRHumanName $fixedHumanName = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -1804,8 +1725,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $fixedIdentifier = null;
-
+    protected null|FHIRIdentifier $fixedIdentifier = null;
     /**
      * An amount of economic utility in some recognized currency.
      * If the element is present, it must have a value for at least one of the defined
@@ -1818,8 +1738,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    protected ?FHIRMoney $fixedMoney = null;
-
+    protected null|FHIRMoney $fixedMoney = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -1832,8 +1751,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $fixedPeriod = null;
-
+    protected null|FHIRPeriod $fixedPeriod = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -1848,8 +1766,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $fixedQuantity = null;
-
+    protected null|FHIRQuantity $fixedQuantity = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -1862,8 +1779,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $fixedRange = null;
-
+    protected null|FHIRRange $fixedRange = null;
     /**
      * A relationship of two Quantity values - expressed as a numerator and a
      * denominator.
@@ -1877,8 +1793,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    protected ?FHIRRatio $fixedRatio = null;
-
+    protected null|FHIRRatio $fixedRatio = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -1891,8 +1806,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $fixedReference = null;
-
+    protected null|FHIRReference $fixedReference = null;
     /**
      * A series of measurements taken by a device, with upper and lower limits. There
      * may be more than one dimension in the data.
@@ -1906,8 +1820,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    protected ?FHIRSampledData $fixedSampledData = null;
-
+    protected null|FHIRSampledData $fixedSampledData = null;
     /**
      * A signature along with supporting context. The signature may be a digital
      * signature that is cryptographic in nature, or some other signature acceptable to
@@ -1924,8 +1837,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSignature
      */
-    protected ?FHIRSignature $fixedSignature = null;
-
+    protected null|FHIRSignature $fixedSignature = null;
     /**
      * Specifies an event that may occur multiple times. Timing schedules are used to
      * record when things are planned, expected or requested to occur. The most common
@@ -1942,8 +1854,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    protected ?FHIRTiming $fixedTiming = null;
-
+    protected null|FHIRTiming $fixedTiming = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -1956,8 +1867,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail
      */
-    protected ?FHIRContactDetail $fixedContactDetail = null;
-
+    protected null|FHIRContactDetail $fixedContactDetail = null;
     /**
      * A contributor to the content of a knowledge asset, including authors, editors,
      * reviewers, and endorsers.
@@ -1971,8 +1881,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContributor
      */
-    protected ?FHIRContributor $fixedContributor = null;
-
+    protected null|FHIRContributor $fixedContributor = null;
     /**
      * Describes a required data item for evaluation in terms of the type of data, and
      * optional code or date-based filters of the data.
@@ -1986,8 +1895,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement
      */
-    protected ?FHIRDataRequirement $fixedDataRequirement = null;
-
+    protected null|FHIRDataRequirement $fixedDataRequirement = null;
     /**
      * A expression that is evaluated in a specified context and returns a value. The
      * context of use of the expression must specify the context in which the
@@ -2002,8 +1910,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRExpression
      */
-    protected ?FHIRExpression $fixedExpression = null;
-
+    protected null|FHIRExpression $fixedExpression = null;
     /**
      * The parameters to the module. This collection specifies both the input and
      * output parameters. Input parameters are provided by the caller as part of the
@@ -2018,8 +1925,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition
      */
-    protected ?FHIRParameterDefinition $fixedParameterDefinition = null;
-
+    protected null|FHIRParameterDefinition $fixedParameterDefinition = null;
     /**
      * Related artifacts such as additional documentation, justification, or
      * bibliographic references.
@@ -2033,8 +1939,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact
      */
-    protected ?FHIRRelatedArtifact $fixedRelatedArtifact = null;
-
+    protected null|FHIRRelatedArtifact $fixedRelatedArtifact = null;
     /**
      * A description of a triggering event. Triggering events can be named events, data
      * events, or periodic, as determined by the type element.
@@ -2048,8 +1953,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition
      */
-    protected ?FHIRTriggerDefinition $fixedTriggerDefinition = null;
-
+    protected null|FHIRTriggerDefinition $fixedTriggerDefinition = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -2065,8 +1969,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext
      */
-    protected ?FHIRUsageContext $fixedUsageContext = null;
-
+    protected null|FHIRUsageContext $fixedUsageContext = null;
     /**
      * Indicates how the medication is/was taken or should be taken by the patient.
      * If the element is present, it must have a value for at least one of the defined
@@ -2079,8 +1982,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage
      */
-    protected ?FHIRDosage $fixedDosage = null;
-
+    protected null|FHIRDosage $fixedDosage = null;
     /**
      * The metadata about a resource. This is content in the resource that is
      * maintained by the infrastructure. Changes to the content might not always be
@@ -2095,8 +1997,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMeta
      */
-    protected ?FHIRMeta $fixedMeta = null;
-
+    protected null|FHIRMeta $fixedMeta = null;
     /**
      * A stream of bytes
      * A stream of bytes, base64 encoded
@@ -2115,10 +2016,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    protected ?FHIRBase64Binary $patternBase64Binary = null;
-
+    protected null|FHIRBase64Binary $patternBase64Binary = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -2136,10 +2036,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $patternBoolean = null;
-
+    protected null|FHIRBoolean $patternBoolean = null;
     /**
      * A URI that is a reference to a canonical URL on a FHIR resource
      * see [Canonical References](references.html#canonical)
@@ -2159,10 +2058,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    protected ?FHIRCanonical $patternCanonical = null;
-
+    protected null|FHIRCanonical $patternCanonical = null;
     /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
@@ -2182,10 +2080,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    protected ?FHIRCode $patternCode = null;
-
+    protected null|FHIRCode $patternCode = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -2205,10 +2102,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $patternDate = null;
-
+    protected null|FHIRDate $patternDate = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -2230,10 +2126,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $patternDateTime = null;
-
+    protected null|FHIRDateTime $patternDateTime = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -2253,10 +2148,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $patternDecimal = null;
-
+    protected null|FHIRDecimal $patternDecimal = null;
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -2278,10 +2172,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    protected ?FHIRId $patternId = null;
-
+    protected null|FHIRId $patternId = null;
     /**
      * An instant in time - known at least to the second
      * Note: This is intended for where precisely observed times are required,
@@ -2303,10 +2196,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    protected ?FHIRInstant $patternInstant = null;
-
+    protected null|FHIRInstant $patternInstant = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -2325,10 +2217,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $patternInteger = null;
-
+    protected null|FHIRInteger $patternInteger = null;
     /**
      * A string that may contain Github Flavored Markdown syntax for optional
      * processing by a mark down presentation engine
@@ -2351,10 +2242,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    protected ?FHIRMarkdown $patternMarkdown = null;
-
+    protected null|FHIRMarkdown $patternMarkdown = null;
     /**
      * An OID represented as a URI
      * RFC 3001. See also ISO/IEC 8824:1990 €
@@ -2374,10 +2264,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIROid
      */
-    protected ?FHIROid $patternOid = null;
-
+    protected null|FHIROid $patternOid = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -2396,10 +2285,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $patternPositiveInt = null;
-
+    protected null|FHIRPositiveInt $patternPositiveInt = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -2418,10 +2306,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $patternString = null;
-
+    protected null|FHIRString $patternString = null;
     /**
      * A time during the day, with no date specified
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -2439,10 +2326,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    protected ?FHIRTime $patternTime = null;
-
+    protected null|FHIRTime $patternTime = null;
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -2461,10 +2347,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    protected ?FHIRUnsignedInt $patternUnsignedInt = null;
-
+    protected null|FHIRUnsignedInt $patternUnsignedInt = null;
     /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
@@ -2483,10 +2368,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    protected ?FHIRUri $patternUri = null;
-
+    protected null|FHIRUri $patternUri = null;
     /**
      * A URI that is a literal reference
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -2505,10 +2389,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    protected ?FHIRUrl $patternUrl = null;
-
+    protected null|FHIRUrl $patternUrl = null;
     /**
      * A UUID, represented as a URI
      * See The Open Group, CDE 1.1 Remote Procedure Call specification, Appendix A.
@@ -2528,10 +2411,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUuid
      */
-    protected ?FHIRUuid $patternUuid = null;
-
+    protected null|FHIRUuid $patternUuid = null;
     /**
      * An address expressed using postal conventions (as opposed to GPS or other
      * location definition formats). This data type may be used to convey addresses for
@@ -2556,8 +2438,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
-    protected ?FHIRAddress $patternAddress = null;
-
+    protected null|FHIRAddress $patternAddress = null;
     /**
      * A duration of time during which an organism (or a process) has existed.
      * If the element is present, it must have a value for at least one of the defined
@@ -2578,8 +2459,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    protected ?FHIRAge $patternAge = null;
-
+    protected null|FHIRAge $patternAge = null;
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -2601,8 +2481,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation
      */
-    protected ?FHIRAnnotation $patternAnnotation = null;
-
+    protected null|FHIRAnnotation $patternAnnotation = null;
     /**
      * For referring to data content defined in other formats.
      * If the element is present, it must have a value for at least one of the defined
@@ -2623,8 +2502,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    protected ?FHIRAttachment $patternAttachment = null;
-
+    protected null|FHIRAttachment $patternAttachment = null;
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -2646,8 +2524,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $patternCodeableConcept = null;
-
+    protected null|FHIRCodeableConcept $patternCodeableConcept = null;
     /**
      * A reference to a code defined by a terminology system.
      * If the element is present, it must have a value for at least one of the defined
@@ -2668,8 +2545,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    protected ?FHIRCoding $patternCoding = null;
-
+    protected null|FHIRCoding $patternCoding = null;
     /**
      * Details for all kinds of technology mediated contact points for a person or
      * organization, including telephone, email, etc.
@@ -2691,8 +2567,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint
      */
-    protected ?FHIRContactPoint $patternContactPoint = null;
-
+    protected null|FHIRContactPoint $patternContactPoint = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -2715,8 +2590,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount
      */
-    protected ?FHIRCount $patternCount = null;
-
+    protected null|FHIRCount $patternCount = null;
     /**
      * A length - a value with a unit that is a physical distance.
      * If the element is present, it must have a value for at least one of the defined
@@ -2737,8 +2611,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance
      */
-    protected ?FHIRDistance $patternDistance = null;
-
+    protected null|FHIRDistance $patternDistance = null;
     /**
      * A length of time.
      * If the element is present, it must have a value for at least one of the defined
@@ -2759,8 +2632,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    protected ?FHIRDuration $patternDuration = null;
-
+    protected null|FHIRDuration $patternDuration = null;
     /**
      * A human's name with the ability to identify parts and usage.
      * If the element is present, it must have a value for at least one of the defined
@@ -2781,8 +2653,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
-    protected ?FHIRHumanName $patternHumanName = null;
-
+    protected null|FHIRHumanName $patternHumanName = null;
     /**
      * An identifier - identifies some entity uniquely and unambiguously. Typically
      * this is used for business identifiers.
@@ -2804,8 +2675,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    protected ?FHIRIdentifier $patternIdentifier = null;
-
+    protected null|FHIRIdentifier $patternIdentifier = null;
     /**
      * An amount of economic utility in some recognized currency.
      * If the element is present, it must have a value for at least one of the defined
@@ -2826,8 +2696,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    protected ?FHIRMoney $patternMoney = null;
-
+    protected null|FHIRMoney $patternMoney = null;
     /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
@@ -2848,8 +2717,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    protected ?FHIRPeriod $patternPeriod = null;
-
+    protected null|FHIRPeriod $patternPeriod = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -2872,8 +2740,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $patternQuantity = null;
-
+    protected null|FHIRQuantity $patternQuantity = null;
     /**
      * A set of ordered Quantities defined by a low and high limit.
      * If the element is present, it must have a value for at least one of the defined
@@ -2894,8 +2761,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    protected ?FHIRRange $patternRange = null;
-
+    protected null|FHIRRange $patternRange = null;
     /**
      * A relationship of two Quantity values - expressed as a numerator and a
      * denominator.
@@ -2917,8 +2783,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    protected ?FHIRRatio $patternRatio = null;
-
+    protected null|FHIRRatio $patternRatio = null;
     /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
@@ -2939,8 +2804,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    protected ?FHIRReference $patternReference = null;
-
+    protected null|FHIRReference $patternReference = null;
     /**
      * A series of measurements taken by a device, with upper and lower limits. There
      * may be more than one dimension in the data.
@@ -2962,8 +2826,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    protected ?FHIRSampledData $patternSampledData = null;
-
+    protected null|FHIRSampledData $patternSampledData = null;
     /**
      * A signature along with supporting context. The signature may be a digital
      * signature that is cryptographic in nature, or some other signature acceptable to
@@ -2988,8 +2851,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSignature
      */
-    protected ?FHIRSignature $patternSignature = null;
-
+    protected null|FHIRSignature $patternSignature = null;
     /**
      * Specifies an event that may occur multiple times. Timing schedules are used to
      * record when things are planned, expected or requested to occur. The most common
@@ -3014,8 +2876,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    protected ?FHIRTiming $patternTiming = null;
-
+    protected null|FHIRTiming $patternTiming = null;
     /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
@@ -3036,8 +2897,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail
      */
-    protected ?FHIRContactDetail $patternContactDetail = null;
-
+    protected null|FHIRContactDetail $patternContactDetail = null;
     /**
      * A contributor to the content of a knowledge asset, including authors, editors,
      * reviewers, and endorsers.
@@ -3059,8 +2919,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContributor
      */
-    protected ?FHIRContributor $patternContributor = null;
-
+    protected null|FHIRContributor $patternContributor = null;
     /**
      * Describes a required data item for evaluation in terms of the type of data, and
      * optional code or date-based filters of the data.
@@ -3082,8 +2941,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement
      */
-    protected ?FHIRDataRequirement $patternDataRequirement = null;
-
+    protected null|FHIRDataRequirement $patternDataRequirement = null;
     /**
      * A expression that is evaluated in a specified context and returns a value. The
      * context of use of the expression must specify the context in which the
@@ -3106,8 +2964,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRExpression
      */
-    protected ?FHIRExpression $patternExpression = null;
-
+    protected null|FHIRExpression $patternExpression = null;
     /**
      * The parameters to the module. This collection specifies both the input and
      * output parameters. Input parameters are provided by the caller as part of the
@@ -3130,8 +2987,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition
      */
-    protected ?FHIRParameterDefinition $patternParameterDefinition = null;
-
+    protected null|FHIRParameterDefinition $patternParameterDefinition = null;
     /**
      * Related artifacts such as additional documentation, justification, or
      * bibliographic references.
@@ -3153,8 +3009,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact
      */
-    protected ?FHIRRelatedArtifact $patternRelatedArtifact = null;
-
+    protected null|FHIRRelatedArtifact $patternRelatedArtifact = null;
     /**
      * A description of a triggering event. Triggering events can be named events, data
      * events, or periodic, as determined by the type element.
@@ -3176,8 +3031,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition
      */
-    protected ?FHIRTriggerDefinition $patternTriggerDefinition = null;
-
+    protected null|FHIRTriggerDefinition $patternTriggerDefinition = null;
     /**
      * Specifies clinical/business/etc. metadata that can be used to retrieve, index
      * and/or categorize an artifact. This metadata can either be specific to the
@@ -3201,8 +3055,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext
      */
-    protected ?FHIRUsageContext $patternUsageContext = null;
-
+    protected null|FHIRUsageContext $patternUsageContext = null;
     /**
      * Indicates how the medication is/was taken or should be taken by the patient.
      * If the element is present, it must have a value for at least one of the defined
@@ -3223,8 +3076,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage
      */
-    protected ?FHIRDosage $patternDosage = null;
-
+    protected null|FHIRDosage $patternDosage = null;
     /**
      * The metadata about a resource. This is content in the resource that is
      * maintained by the infrastructure. Changes to the content might not always be
@@ -3247,8 +3099,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMeta
      */
-    protected ?FHIRMeta $patternMeta = null;
-
+    protected null|FHIRMeta $patternMeta = null;
     /**
      * Captures constraints on each element within the resource, profile, or extension.
      * If the element is present, it must have a value for at least one of the defined
@@ -3259,8 +3110,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionExample[]
      */
-    protected ?array $example = [];
-
+    protected null|array $example = [];
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -3271,10 +3121,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $minValueDate = null;
-
+    protected null|FHIRDate $minValueDate = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -3287,10 +3136,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $minValueDateTime = null;
-
+    protected null|FHIRDateTime $minValueDateTime = null;
     /**
      * An instant in time - known at least to the second
      * Note: This is intended for where precisely observed times are required,
@@ -3303,10 +3151,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    protected ?FHIRInstant $minValueInstant = null;
-
+    protected null|FHIRInstant $minValueInstant = null;
     /**
      * A time during the day, with no date specified
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -3315,10 +3162,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    protected ?FHIRTime $minValueTime = null;
-
+    protected null|FHIRTime $minValueTime = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -3329,10 +3175,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $minValueDecimal = null;
-
+    protected null|FHIRDecimal $minValueDecimal = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -3342,10 +3187,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $minValueInteger = null;
-
+    protected null|FHIRInteger $minValueInteger = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -3355,10 +3199,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $minValuePositiveInt = null;
-
+    protected null|FHIRPositiveInt $minValuePositiveInt = null;
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -3368,10 +3211,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    protected ?FHIRUnsignedInt $minValueUnsignedInt = null;
-
+    protected null|FHIRUnsignedInt $minValueUnsignedInt = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -3385,8 +3227,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $minValueQuantity = null;
-
+    protected null|FHIRQuantity $minValueQuantity = null;
     /**
      * A date or partial date (e.g. just year or year + month). There is no time zone.
      * The format is a union of the schema types gYear, gYearMonth and date. Dates
@@ -3397,10 +3238,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    protected ?FHIRDate $maxValueDate = null;
-
+    protected null|FHIRDate $maxValueDate = null;
     /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
@@ -3413,10 +3253,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    protected ?FHIRDateTime $maxValueDateTime = null;
-
+    protected null|FHIRDateTime $maxValueDateTime = null;
     /**
      * An instant in time - known at least to the second
      * Note: This is intended for where precisely observed times are required,
@@ -3429,10 +3268,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    protected ?FHIRInstant $maxValueInstant = null;
-
+    protected null|FHIRInstant $maxValueInstant = null;
     /**
      * A time during the day, with no date specified
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -3441,10 +3279,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    protected ?FHIRTime $maxValueTime = null;
-
+    protected null|FHIRTime $maxValueTime = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -3455,10 +3292,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $maxValueDecimal = null;
-
+    protected null|FHIRDecimal $maxValueDecimal = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -3468,10 +3304,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $maxValueInteger = null;
-
+    protected null|FHIRInteger $maxValueInteger = null;
     /**
      * An integer with a value that is positive (e.g. >0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -3481,10 +3316,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    protected ?FHIRPositiveInt $maxValuePositiveInt = null;
-
+    protected null|FHIRPositiveInt $maxValuePositiveInt = null;
     /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -3494,10 +3328,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @var null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    protected ?FHIRUnsignedInt $maxValueUnsignedInt = null;
-
+    protected null|FHIRUnsignedInt $maxValueUnsignedInt = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -3511,8 +3344,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $maxValueQuantity = null;
-
+    protected null|FHIRQuantity $maxValueQuantity = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -3522,10 +3354,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * conformant instances and which is expected to be supported by conformant
      * consumers that support the element.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $maxLength = null;
-
+    protected null|FHIRInteger $maxLength = null;
     /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
@@ -3537,10 +3368,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * A reference to an invariant that may make additional statements about the
      * cardinality or value in the instance.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIdPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRId[]
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId[]
      */
-    protected ?array $condition = [];
-
+    protected null|array $condition = [];
     /**
      * Captures constraints on each element within the resource, profile, or extension.
      * If the element is present, it must have a value for at least one of the defined
@@ -3551,8 +3381,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionConstraint[]
      */
-    protected ?array $constraint = [];
-
+    protected null|array $constraint = [];
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -3562,10 +3391,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * ignored and not supported. If false, whether to populate or use the data element
      * in any way is at the discretion of the implementation.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $mustSupport = null;
-
+    protected null|FHIRBoolean $mustSupport = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -3577,10 +3405,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * recognize the element and process it, and/or a pre-determination has been made
      * that it is not relevant to their particular system.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $isModifier = null;
-
+    protected null|FHIRBoolean $isModifier = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -3589,10 +3416,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * Explains how that element affects the interpretation of the resource or element
      * that contains it.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $isModifierReason = null;
-
+    protected null|FHIRString $isModifierReason = null;
     /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -3600,10 +3426,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * Whether the element should be included if a client requests a search with the
      * parameter _summary=true.
      *
-     * @var null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    protected ?FHIRBoolean $isSummary = null;
-
+    protected null|FHIRBoolean $isSummary = null;
     /**
      * Captures constraints on each element within the resource, profile, or extension.
      * If the element is present, it must have a value for at least one of the defined
@@ -3614,8 +3439,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionBinding
      */
-    protected ?FHIRElementDefinitionBinding $binding = null;
-
+    protected null|FHIRElementDefinitionBinding $binding = null;
     /**
      * Captures constraints on each element within the resource, profile, or extension.
      * If the element is present, it must have a value for at least one of the defined
@@ -3626,31 +3450,28 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionMapping[]
      */
-    protected ?array $mapping = [];
+    protected null|array $mapping = [];
 
     /**
      * Validation map for fields in type ElementDefinition
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRElementDefinition Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRElementDefinition::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_PATH]) || isset($data[self::FIELD_PATH_EXT])) {
+        if (array_key_exists(self::FIELD_PATH, $data) || array_key_exists(self::FIELD_PATH_EXT, $data)) {
             $value = $data[self::FIELD_PATH] ?? null;
             $ext = (isset($data[self::FIELD_PATH_EXT]) && is_array($data[self::FIELD_PATH_EXT])) ? $data[self::FIELD_PATH_EXT] : [];
             if (null !== $value) {
@@ -3663,9 +3484,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPath(new FHIRString($ext));
+            } else {
+                $this->setPath(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_REPRESENTATION]) || isset($data[self::FIELD_REPRESENTATION_EXT])) {
+        if (array_key_exists(self::FIELD_REPRESENTATION, $data) || array_key_exists(self::FIELD_REPRESENTATION_EXT, $data)) {
             $value = $data[self::FIELD_REPRESENTATION] ?? null;
             $ext = (isset($data[self::FIELD_REPRESENTATION_EXT]) && is_array($data[self::FIELD_REPRESENTATION_EXT])) ? $data[self::FIELD_REPRESENTATION_EXT] : [];
             if (null !== $value) {
@@ -3693,9 +3516,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 foreach($ext as $iext) {
                     $this->addRepresentation(new FHIRPropertyRepresentation($iext));
                 }
+            } else {
+                $this->addRepresentation(new FHIRPropertyRepresentation(null));
             }
         }
-        if (isset($data[self::FIELD_SLICE_NAME]) || isset($data[self::FIELD_SLICE_NAME_EXT])) {
+        if (array_key_exists(self::FIELD_SLICE_NAME, $data) || array_key_exists(self::FIELD_SLICE_NAME_EXT, $data)) {
             $value = $data[self::FIELD_SLICE_NAME] ?? null;
             $ext = (isset($data[self::FIELD_SLICE_NAME_EXT]) && is_array($data[self::FIELD_SLICE_NAME_EXT])) ? $data[self::FIELD_SLICE_NAME_EXT] : [];
             if (null !== $value) {
@@ -3708,9 +3533,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setSliceName(new FHIRString($ext));
+            } else {
+                $this->setSliceName(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_SLICE_IS_CONSTRAINING]) || isset($data[self::FIELD_SLICE_IS_CONSTRAINING_EXT])) {
+        if (array_key_exists(self::FIELD_SLICE_IS_CONSTRAINING, $data) || array_key_exists(self::FIELD_SLICE_IS_CONSTRAINING_EXT, $data)) {
             $value = $data[self::FIELD_SLICE_IS_CONSTRAINING] ?? null;
             $ext = (isset($data[self::FIELD_SLICE_IS_CONSTRAINING_EXT]) && is_array($data[self::FIELD_SLICE_IS_CONSTRAINING_EXT])) ? $data[self::FIELD_SLICE_IS_CONSTRAINING_EXT] : [];
             if (null !== $value) {
@@ -3723,9 +3550,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setSliceIsConstraining(new FHIRBoolean($ext));
+            } else {
+                $this->setSliceIsConstraining(new FHIRBoolean(null));
             }
         }
-        if (isset($data[self::FIELD_LABEL]) || isset($data[self::FIELD_LABEL_EXT])) {
+        if (array_key_exists(self::FIELD_LABEL, $data) || array_key_exists(self::FIELD_LABEL_EXT, $data)) {
             $value = $data[self::FIELD_LABEL] ?? null;
             $ext = (isset($data[self::FIELD_LABEL_EXT]) && is_array($data[self::FIELD_LABEL_EXT])) ? $data[self::FIELD_LABEL_EXT] : [];
             if (null !== $value) {
@@ -3738,14 +3567,13 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setLabel(new FHIRString($ext));
+            } else {
+                $this->setLabel(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_CODE])) {
+        if (array_key_exists(self::FIELD_CODE, $data)) {
             if (is_array($data[self::FIELD_CODE])) {
                 foreach($data[self::FIELD_CODE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRCoding) {
                         $this->addCode($v);
                     } else {
@@ -3758,14 +3586,14 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 $this->addCode(new FHIRCoding($data[self::FIELD_CODE]));
             }
         }
-        if (isset($data[self::FIELD_SLICING])) {
+        if (array_key_exists(self::FIELD_SLICING, $data)) {
             if ($data[self::FIELD_SLICING] instanceof FHIRElementDefinitionSlicing) {
                 $this->setSlicing($data[self::FIELD_SLICING]);
             } else {
                 $this->setSlicing(new FHIRElementDefinitionSlicing($data[self::FIELD_SLICING]));
             }
         }
-        if (isset($data[self::FIELD_SHORT]) || isset($data[self::FIELD_SHORT_EXT])) {
+        if (array_key_exists(self::FIELD_SHORT, $data) || array_key_exists(self::FIELD_SHORT_EXT, $data)) {
             $value = $data[self::FIELD_SHORT] ?? null;
             $ext = (isset($data[self::FIELD_SHORT_EXT]) && is_array($data[self::FIELD_SHORT_EXT])) ? $data[self::FIELD_SHORT_EXT] : [];
             if (null !== $value) {
@@ -3778,9 +3606,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setShort(new FHIRString($ext));
+            } else {
+                $this->setShort(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_DEFINITION]) || isset($data[self::FIELD_DEFINITION_EXT])) {
+        if (array_key_exists(self::FIELD_DEFINITION, $data) || array_key_exists(self::FIELD_DEFINITION_EXT, $data)) {
             $value = $data[self::FIELD_DEFINITION] ?? null;
             $ext = (isset($data[self::FIELD_DEFINITION_EXT]) && is_array($data[self::FIELD_DEFINITION_EXT])) ? $data[self::FIELD_DEFINITION_EXT] : [];
             if (null !== $value) {
@@ -3793,9 +3623,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefinition(new FHIRMarkdown($ext));
+            } else {
+                $this->setDefinition(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_COMMENT]) || isset($data[self::FIELD_COMMENT_EXT])) {
+        if (array_key_exists(self::FIELD_COMMENT, $data) || array_key_exists(self::FIELD_COMMENT_EXT, $data)) {
             $value = $data[self::FIELD_COMMENT] ?? null;
             $ext = (isset($data[self::FIELD_COMMENT_EXT]) && is_array($data[self::FIELD_COMMENT_EXT])) ? $data[self::FIELD_COMMENT_EXT] : [];
             if (null !== $value) {
@@ -3808,9 +3640,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setComment(new FHIRMarkdown($ext));
+            } else {
+                $this->setComment(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_REQUIREMENTS]) || isset($data[self::FIELD_REQUIREMENTS_EXT])) {
+        if (array_key_exists(self::FIELD_REQUIREMENTS, $data) || array_key_exists(self::FIELD_REQUIREMENTS_EXT, $data)) {
             $value = $data[self::FIELD_REQUIREMENTS] ?? null;
             $ext = (isset($data[self::FIELD_REQUIREMENTS_EXT]) && is_array($data[self::FIELD_REQUIREMENTS_EXT])) ? $data[self::FIELD_REQUIREMENTS_EXT] : [];
             if (null !== $value) {
@@ -3823,9 +3657,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setRequirements(new FHIRMarkdown($ext));
+            } else {
+                $this->setRequirements(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_ALIAS]) || isset($data[self::FIELD_ALIAS_EXT])) {
+        if (array_key_exists(self::FIELD_ALIAS, $data) || array_key_exists(self::FIELD_ALIAS_EXT, $data)) {
             $value = $data[self::FIELD_ALIAS] ?? null;
             $ext = (isset($data[self::FIELD_ALIAS_EXT]) && is_array($data[self::FIELD_ALIAS_EXT])) ? $data[self::FIELD_ALIAS_EXT] : [];
             if (null !== $value) {
@@ -3853,9 +3689,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 foreach($ext as $iext) {
                     $this->addAlias(new FHIRString($iext));
                 }
+            } else {
+                $this->addAlias(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_MIN]) || isset($data[self::FIELD_MIN_EXT])) {
+        if (array_key_exists(self::FIELD_MIN, $data) || array_key_exists(self::FIELD_MIN_EXT, $data)) {
             $value = $data[self::FIELD_MIN] ?? null;
             $ext = (isset($data[self::FIELD_MIN_EXT]) && is_array($data[self::FIELD_MIN_EXT])) ? $data[self::FIELD_MIN_EXT] : [];
             if (null !== $value) {
@@ -3868,9 +3706,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMin(new FHIRUnsignedInt($ext));
+            } else {
+                $this->setMin(new FHIRUnsignedInt(null));
             }
         }
-        if (isset($data[self::FIELD_MAX]) || isset($data[self::FIELD_MAX_EXT])) {
+        if (array_key_exists(self::FIELD_MAX, $data) || array_key_exists(self::FIELD_MAX_EXT, $data)) {
             $value = $data[self::FIELD_MAX] ?? null;
             $ext = (isset($data[self::FIELD_MAX_EXT]) && is_array($data[self::FIELD_MAX_EXT])) ? $data[self::FIELD_MAX_EXT] : [];
             if (null !== $value) {
@@ -3883,16 +3723,18 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMax(new FHIRString($ext));
+            } else {
+                $this->setMax(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_BASE])) {
+        if (array_key_exists(self::FIELD_BASE, $data)) {
             if ($data[self::FIELD_BASE] instanceof FHIRElementDefinitionBase) {
                 $this->setBase($data[self::FIELD_BASE]);
             } else {
                 $this->setBase(new FHIRElementDefinitionBase($data[self::FIELD_BASE]));
             }
         }
-        if (isset($data[self::FIELD_CONTENT_REFERENCE]) || isset($data[self::FIELD_CONTENT_REFERENCE_EXT])) {
+        if (array_key_exists(self::FIELD_CONTENT_REFERENCE, $data) || array_key_exists(self::FIELD_CONTENT_REFERENCE_EXT, $data)) {
             $value = $data[self::FIELD_CONTENT_REFERENCE] ?? null;
             $ext = (isset($data[self::FIELD_CONTENT_REFERENCE_EXT]) && is_array($data[self::FIELD_CONTENT_REFERENCE_EXT])) ? $data[self::FIELD_CONTENT_REFERENCE_EXT] : [];
             if (null !== $value) {
@@ -3905,14 +3747,13 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setContentReference(new FHIRUri($ext));
+            } else {
+                $this->setContentReference(new FHIRUri(null));
             }
         }
-        if (isset($data[self::FIELD_TYPE])) {
+        if (array_key_exists(self::FIELD_TYPE, $data)) {
             if (is_array($data[self::FIELD_TYPE])) {
                 foreach($data[self::FIELD_TYPE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRElementDefinitionType) {
                         $this->addType($v);
                     } else {
@@ -3925,7 +3766,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 $this->addType(new FHIRElementDefinitionType($data[self::FIELD_TYPE]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_BASE_64BINARY]) || isset($data[self::FIELD_DEFAULT_VALUE_BASE_64BINARY_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_BASE_64BINARY, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_BASE_64BINARY_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_BASE_64BINARY] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_BASE_64BINARY_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_BASE_64BINARY_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_BASE_64BINARY_EXT] : [];
             if (null !== $value) {
@@ -3938,9 +3779,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueBase64Binary(new FHIRBase64Binary($ext));
+            } else {
+                $this->setDefaultValueBase64Binary(new FHIRBase64Binary(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_BOOLEAN]) || isset($data[self::FIELD_DEFAULT_VALUE_BOOLEAN_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_BOOLEAN, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_BOOLEAN_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_BOOLEAN] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_BOOLEAN_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_BOOLEAN_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_BOOLEAN_EXT] : [];
             if (null !== $value) {
@@ -3953,9 +3796,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueBoolean(new FHIRBoolean($ext));
+            } else {
+                $this->setDefaultValueBoolean(new FHIRBoolean(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_CANONICAL]) || isset($data[self::FIELD_DEFAULT_VALUE_CANONICAL_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_CANONICAL, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_CANONICAL_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_CANONICAL] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_CANONICAL_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_CANONICAL_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_CANONICAL_EXT] : [];
             if (null !== $value) {
@@ -3968,9 +3813,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueCanonical(new FHIRCanonical($ext));
+            } else {
+                $this->setDefaultValueCanonical(new FHIRCanonical(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_CODE]) || isset($data[self::FIELD_DEFAULT_VALUE_CODE_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_CODE, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_CODE_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_CODE] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_CODE_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_CODE_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_CODE_EXT] : [];
             if (null !== $value) {
@@ -3983,9 +3830,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueCode(new FHIRCode($ext));
+            } else {
+                $this->setDefaultValueCode(new FHIRCode(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_DATE]) || isset($data[self::FIELD_DEFAULT_VALUE_DATE_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_DATE, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_DATE_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_DATE] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_DATE_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_DATE_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_DATE_EXT] : [];
             if (null !== $value) {
@@ -3998,9 +3847,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueDate(new FHIRDate($ext));
+            } else {
+                $this->setDefaultValueDate(new FHIRDate(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_DATE_TIME]) || isset($data[self::FIELD_DEFAULT_VALUE_DATE_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_DATE_TIME, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_DATE_TIME_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_DATE_TIME] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_DATE_TIME_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_DATE_TIME_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_DATE_TIME_EXT] : [];
             if (null !== $value) {
@@ -4013,9 +3864,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueDateTime(new FHIRDateTime($ext));
+            } else {
+                $this->setDefaultValueDateTime(new FHIRDateTime(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_DECIMAL]) || isset($data[self::FIELD_DEFAULT_VALUE_DECIMAL_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_DECIMAL, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_DECIMAL_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_DECIMAL] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_DECIMAL_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_DECIMAL_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_DECIMAL_EXT] : [];
             if (null !== $value) {
@@ -4028,9 +3881,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueDecimal(new FHIRDecimal($ext));
+            } else {
+                $this->setDefaultValueDecimal(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_ID]) || isset($data[self::FIELD_DEFAULT_VALUE_ID_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_ID, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_ID_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_ID] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_ID_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_ID_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_ID_EXT] : [];
             if (null !== $value) {
@@ -4043,9 +3898,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueId(new FHIRId($ext));
+            } else {
+                $this->setDefaultValueId(new FHIRId(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_INSTANT]) || isset($data[self::FIELD_DEFAULT_VALUE_INSTANT_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_INSTANT, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_INSTANT_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_INSTANT] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_INSTANT_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_INSTANT_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_INSTANT_EXT] : [];
             if (null !== $value) {
@@ -4058,9 +3915,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueInstant(new FHIRInstant($ext));
+            } else {
+                $this->setDefaultValueInstant(new FHIRInstant(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_INTEGER]) || isset($data[self::FIELD_DEFAULT_VALUE_INTEGER_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_INTEGER, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_INTEGER_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_INTEGER] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_INTEGER_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_INTEGER_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_INTEGER_EXT] : [];
             if (null !== $value) {
@@ -4073,9 +3932,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueInteger(new FHIRInteger($ext));
+            } else {
+                $this->setDefaultValueInteger(new FHIRInteger(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_MARKDOWN]) || isset($data[self::FIELD_DEFAULT_VALUE_MARKDOWN_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_MARKDOWN, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_MARKDOWN_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_MARKDOWN] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_MARKDOWN_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_MARKDOWN_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_MARKDOWN_EXT] : [];
             if (null !== $value) {
@@ -4088,9 +3949,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueMarkdown(new FHIRMarkdown($ext));
+            } else {
+                $this->setDefaultValueMarkdown(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_OID]) || isset($data[self::FIELD_DEFAULT_VALUE_OID_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_OID, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_OID_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_OID] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_OID_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_OID_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_OID_EXT] : [];
             if (null !== $value) {
@@ -4103,9 +3966,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueOid(new FHIROid($ext));
+            } else {
+                $this->setDefaultValueOid(new FHIROid(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_POSITIVE_INT]) || isset($data[self::FIELD_DEFAULT_VALUE_POSITIVE_INT_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_POSITIVE_INT, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_POSITIVE_INT_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_POSITIVE_INT] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_POSITIVE_INT_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_POSITIVE_INT_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_POSITIVE_INT_EXT] : [];
             if (null !== $value) {
@@ -4118,9 +3983,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValuePositiveInt(new FHIRPositiveInt($ext));
+            } else {
+                $this->setDefaultValuePositiveInt(new FHIRPositiveInt(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_STRING]) || isset($data[self::FIELD_DEFAULT_VALUE_STRING_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_STRING, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_STRING_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_STRING] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_STRING_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_STRING_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_STRING_EXT] : [];
             if (null !== $value) {
@@ -4133,9 +4000,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueString(new FHIRString($ext));
+            } else {
+                $this->setDefaultValueString(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_TIME]) || isset($data[self::FIELD_DEFAULT_VALUE_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_TIME, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_TIME_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_TIME] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_TIME_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_TIME_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_TIME_EXT] : [];
             if (null !== $value) {
@@ -4148,9 +4017,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueTime(new FHIRTime($ext));
+            } else {
+                $this->setDefaultValueTime(new FHIRTime(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT]) || isset($data[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_UNSIGNED_INT, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_UNSIGNED_INT_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT_EXT] : [];
             if (null !== $value) {
@@ -4163,9 +4034,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueUnsignedInt(new FHIRUnsignedInt($ext));
+            } else {
+                $this->setDefaultValueUnsignedInt(new FHIRUnsignedInt(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_URI]) || isset($data[self::FIELD_DEFAULT_VALUE_URI_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_URI, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_URI_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_URI] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_URI_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_URI_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_URI_EXT] : [];
             if (null !== $value) {
@@ -4178,9 +4051,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueUri(new FHIRUri($ext));
+            } else {
+                $this->setDefaultValueUri(new FHIRUri(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_URL]) || isset($data[self::FIELD_DEFAULT_VALUE_URL_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_URL, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_URL_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_URL] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_URL_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_URL_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_URL_EXT] : [];
             if (null !== $value) {
@@ -4193,9 +4068,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueUrl(new FHIRUrl($ext));
+            } else {
+                $this->setDefaultValueUrl(new FHIRUrl(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_UUID]) || isset($data[self::FIELD_DEFAULT_VALUE_UUID_EXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_UUID, $data) || array_key_exists(self::FIELD_DEFAULT_VALUE_UUID_EXT, $data)) {
             $value = $data[self::FIELD_DEFAULT_VALUE_UUID] ?? null;
             $ext = (isset($data[self::FIELD_DEFAULT_VALUE_UUID_EXT]) && is_array($data[self::FIELD_DEFAULT_VALUE_UUID_EXT])) ? $data[self::FIELD_DEFAULT_VALUE_UUID_EXT] : [];
             if (null !== $value) {
@@ -4208,226 +4085,228 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDefaultValueUuid(new FHIRUuid($ext));
+            } else {
+                $this->setDefaultValueUuid(new FHIRUuid(null));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_ADDRESS])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_ADDRESS, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_ADDRESS] instanceof FHIRAddress) {
                 $this->setDefaultValueAddress($data[self::FIELD_DEFAULT_VALUE_ADDRESS]);
             } else {
                 $this->setDefaultValueAddress(new FHIRAddress($data[self::FIELD_DEFAULT_VALUE_ADDRESS]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_AGE])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_AGE, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_AGE] instanceof FHIRAge) {
                 $this->setDefaultValueAge($data[self::FIELD_DEFAULT_VALUE_AGE]);
             } else {
                 $this->setDefaultValueAge(new FHIRAge($data[self::FIELD_DEFAULT_VALUE_AGE]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_ANNOTATION])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_ANNOTATION, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_ANNOTATION] instanceof FHIRAnnotation) {
                 $this->setDefaultValueAnnotation($data[self::FIELD_DEFAULT_VALUE_ANNOTATION]);
             } else {
                 $this->setDefaultValueAnnotation(new FHIRAnnotation($data[self::FIELD_DEFAULT_VALUE_ANNOTATION]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_ATTACHMENT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_ATTACHMENT, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_ATTACHMENT] instanceof FHIRAttachment) {
                 $this->setDefaultValueAttachment($data[self::FIELD_DEFAULT_VALUE_ATTACHMENT]);
             } else {
                 $this->setDefaultValueAttachment(new FHIRAttachment($data[self::FIELD_DEFAULT_VALUE_ATTACHMENT]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_CODEABLE_CONCEPT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_CODEABLE_CONCEPT, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_CODEABLE_CONCEPT] instanceof FHIRCodeableConcept) {
                 $this->setDefaultValueCodeableConcept($data[self::FIELD_DEFAULT_VALUE_CODEABLE_CONCEPT]);
             } else {
                 $this->setDefaultValueCodeableConcept(new FHIRCodeableConcept($data[self::FIELD_DEFAULT_VALUE_CODEABLE_CONCEPT]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_CODING])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_CODING, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_CODING] instanceof FHIRCoding) {
                 $this->setDefaultValueCoding($data[self::FIELD_DEFAULT_VALUE_CODING]);
             } else {
                 $this->setDefaultValueCoding(new FHIRCoding($data[self::FIELD_DEFAULT_VALUE_CODING]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_CONTACT_POINT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_CONTACT_POINT, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_CONTACT_POINT] instanceof FHIRContactPoint) {
                 $this->setDefaultValueContactPoint($data[self::FIELD_DEFAULT_VALUE_CONTACT_POINT]);
             } else {
                 $this->setDefaultValueContactPoint(new FHIRContactPoint($data[self::FIELD_DEFAULT_VALUE_CONTACT_POINT]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_COUNT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_COUNT, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_COUNT] instanceof FHIRCount) {
                 $this->setDefaultValueCount($data[self::FIELD_DEFAULT_VALUE_COUNT]);
             } else {
                 $this->setDefaultValueCount(new FHIRCount($data[self::FIELD_DEFAULT_VALUE_COUNT]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_DISTANCE])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_DISTANCE, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_DISTANCE] instanceof FHIRDistance) {
                 $this->setDefaultValueDistance($data[self::FIELD_DEFAULT_VALUE_DISTANCE]);
             } else {
                 $this->setDefaultValueDistance(new FHIRDistance($data[self::FIELD_DEFAULT_VALUE_DISTANCE]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_DURATION])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_DURATION, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_DURATION] instanceof FHIRDuration) {
                 $this->setDefaultValueDuration($data[self::FIELD_DEFAULT_VALUE_DURATION]);
             } else {
                 $this->setDefaultValueDuration(new FHIRDuration($data[self::FIELD_DEFAULT_VALUE_DURATION]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_HUMAN_NAME])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_HUMAN_NAME, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_HUMAN_NAME] instanceof FHIRHumanName) {
                 $this->setDefaultValueHumanName($data[self::FIELD_DEFAULT_VALUE_HUMAN_NAME]);
             } else {
                 $this->setDefaultValueHumanName(new FHIRHumanName($data[self::FIELD_DEFAULT_VALUE_HUMAN_NAME]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_IDENTIFIER])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_IDENTIFIER, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_IDENTIFIER] instanceof FHIRIdentifier) {
                 $this->setDefaultValueIdentifier($data[self::FIELD_DEFAULT_VALUE_IDENTIFIER]);
             } else {
                 $this->setDefaultValueIdentifier(new FHIRIdentifier($data[self::FIELD_DEFAULT_VALUE_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_MONEY])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_MONEY, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_MONEY] instanceof FHIRMoney) {
                 $this->setDefaultValueMoney($data[self::FIELD_DEFAULT_VALUE_MONEY]);
             } else {
                 $this->setDefaultValueMoney(new FHIRMoney($data[self::FIELD_DEFAULT_VALUE_MONEY]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_PERIOD])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_PERIOD, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_PERIOD] instanceof FHIRPeriod) {
                 $this->setDefaultValuePeriod($data[self::FIELD_DEFAULT_VALUE_PERIOD]);
             } else {
                 $this->setDefaultValuePeriod(new FHIRPeriod($data[self::FIELD_DEFAULT_VALUE_PERIOD]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_QUANTITY])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_QUANTITY, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_QUANTITY] instanceof FHIRQuantity) {
                 $this->setDefaultValueQuantity($data[self::FIELD_DEFAULT_VALUE_QUANTITY]);
             } else {
                 $this->setDefaultValueQuantity(new FHIRQuantity($data[self::FIELD_DEFAULT_VALUE_QUANTITY]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_RANGE])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_RANGE, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_RANGE] instanceof FHIRRange) {
                 $this->setDefaultValueRange($data[self::FIELD_DEFAULT_VALUE_RANGE]);
             } else {
                 $this->setDefaultValueRange(new FHIRRange($data[self::FIELD_DEFAULT_VALUE_RANGE]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_RATIO])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_RATIO, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_RATIO] instanceof FHIRRatio) {
                 $this->setDefaultValueRatio($data[self::FIELD_DEFAULT_VALUE_RATIO]);
             } else {
                 $this->setDefaultValueRatio(new FHIRRatio($data[self::FIELD_DEFAULT_VALUE_RATIO]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_REFERENCE])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_REFERENCE, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_REFERENCE] instanceof FHIRReference) {
                 $this->setDefaultValueReference($data[self::FIELD_DEFAULT_VALUE_REFERENCE]);
             } else {
                 $this->setDefaultValueReference(new FHIRReference($data[self::FIELD_DEFAULT_VALUE_REFERENCE]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_SAMPLED_DATA])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_SAMPLED_DATA, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_SAMPLED_DATA] instanceof FHIRSampledData) {
                 $this->setDefaultValueSampledData($data[self::FIELD_DEFAULT_VALUE_SAMPLED_DATA]);
             } else {
                 $this->setDefaultValueSampledData(new FHIRSampledData($data[self::FIELD_DEFAULT_VALUE_SAMPLED_DATA]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_SIGNATURE])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_SIGNATURE, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_SIGNATURE] instanceof FHIRSignature) {
                 $this->setDefaultValueSignature($data[self::FIELD_DEFAULT_VALUE_SIGNATURE]);
             } else {
                 $this->setDefaultValueSignature(new FHIRSignature($data[self::FIELD_DEFAULT_VALUE_SIGNATURE]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_TIMING])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_TIMING, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_TIMING] instanceof FHIRTiming) {
                 $this->setDefaultValueTiming($data[self::FIELD_DEFAULT_VALUE_TIMING]);
             } else {
                 $this->setDefaultValueTiming(new FHIRTiming($data[self::FIELD_DEFAULT_VALUE_TIMING]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_CONTACT_DETAIL])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_CONTACT_DETAIL, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_CONTACT_DETAIL] instanceof FHIRContactDetail) {
                 $this->setDefaultValueContactDetail($data[self::FIELD_DEFAULT_VALUE_CONTACT_DETAIL]);
             } else {
                 $this->setDefaultValueContactDetail(new FHIRContactDetail($data[self::FIELD_DEFAULT_VALUE_CONTACT_DETAIL]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_CONTRIBUTOR])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_CONTRIBUTOR, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_CONTRIBUTOR] instanceof FHIRContributor) {
                 $this->setDefaultValueContributor($data[self::FIELD_DEFAULT_VALUE_CONTRIBUTOR]);
             } else {
                 $this->setDefaultValueContributor(new FHIRContributor($data[self::FIELD_DEFAULT_VALUE_CONTRIBUTOR]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_DATA_REQUIREMENT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_DATA_REQUIREMENT, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_DATA_REQUIREMENT] instanceof FHIRDataRequirement) {
                 $this->setDefaultValueDataRequirement($data[self::FIELD_DEFAULT_VALUE_DATA_REQUIREMENT]);
             } else {
                 $this->setDefaultValueDataRequirement(new FHIRDataRequirement($data[self::FIELD_DEFAULT_VALUE_DATA_REQUIREMENT]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_EXPRESSION])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_EXPRESSION, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_EXPRESSION] instanceof FHIRExpression) {
                 $this->setDefaultValueExpression($data[self::FIELD_DEFAULT_VALUE_EXPRESSION]);
             } else {
                 $this->setDefaultValueExpression(new FHIRExpression($data[self::FIELD_DEFAULT_VALUE_EXPRESSION]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_PARAMETER_DEFINITION])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_PARAMETER_DEFINITION, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_PARAMETER_DEFINITION] instanceof FHIRParameterDefinition) {
                 $this->setDefaultValueParameterDefinition($data[self::FIELD_DEFAULT_VALUE_PARAMETER_DEFINITION]);
             } else {
                 $this->setDefaultValueParameterDefinition(new FHIRParameterDefinition($data[self::FIELD_DEFAULT_VALUE_PARAMETER_DEFINITION]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_RELATED_ARTIFACT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_RELATED_ARTIFACT, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_RELATED_ARTIFACT] instanceof FHIRRelatedArtifact) {
                 $this->setDefaultValueRelatedArtifact($data[self::FIELD_DEFAULT_VALUE_RELATED_ARTIFACT]);
             } else {
                 $this->setDefaultValueRelatedArtifact(new FHIRRelatedArtifact($data[self::FIELD_DEFAULT_VALUE_RELATED_ARTIFACT]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_TRIGGER_DEFINITION])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_TRIGGER_DEFINITION, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_TRIGGER_DEFINITION] instanceof FHIRTriggerDefinition) {
                 $this->setDefaultValueTriggerDefinition($data[self::FIELD_DEFAULT_VALUE_TRIGGER_DEFINITION]);
             } else {
                 $this->setDefaultValueTriggerDefinition(new FHIRTriggerDefinition($data[self::FIELD_DEFAULT_VALUE_TRIGGER_DEFINITION]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_USAGE_CONTEXT])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_USAGE_CONTEXT, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_USAGE_CONTEXT] instanceof FHIRUsageContext) {
                 $this->setDefaultValueUsageContext($data[self::FIELD_DEFAULT_VALUE_USAGE_CONTEXT]);
             } else {
                 $this->setDefaultValueUsageContext(new FHIRUsageContext($data[self::FIELD_DEFAULT_VALUE_USAGE_CONTEXT]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_DOSAGE])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_DOSAGE, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_DOSAGE] instanceof FHIRDosage) {
                 $this->setDefaultValueDosage($data[self::FIELD_DEFAULT_VALUE_DOSAGE]);
             } else {
                 $this->setDefaultValueDosage(new FHIRDosage($data[self::FIELD_DEFAULT_VALUE_DOSAGE]));
             }
         }
-        if (isset($data[self::FIELD_DEFAULT_VALUE_META])) {
+        if (array_key_exists(self::FIELD_DEFAULT_VALUE_META, $data)) {
             if ($data[self::FIELD_DEFAULT_VALUE_META] instanceof FHIRMeta) {
                 $this->setDefaultValueMeta($data[self::FIELD_DEFAULT_VALUE_META]);
             } else {
                 $this->setDefaultValueMeta(new FHIRMeta($data[self::FIELD_DEFAULT_VALUE_META]));
             }
         }
-        if (isset($data[self::FIELD_MEANING_WHEN_MISSING]) || isset($data[self::FIELD_MEANING_WHEN_MISSING_EXT])) {
+        if (array_key_exists(self::FIELD_MEANING_WHEN_MISSING, $data) || array_key_exists(self::FIELD_MEANING_WHEN_MISSING_EXT, $data)) {
             $value = $data[self::FIELD_MEANING_WHEN_MISSING] ?? null;
             $ext = (isset($data[self::FIELD_MEANING_WHEN_MISSING_EXT]) && is_array($data[self::FIELD_MEANING_WHEN_MISSING_EXT])) ? $data[self::FIELD_MEANING_WHEN_MISSING_EXT] : [];
             if (null !== $value) {
@@ -4440,9 +4319,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMeaningWhenMissing(new FHIRMarkdown($ext));
+            } else {
+                $this->setMeaningWhenMissing(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_ORDER_MEANING]) || isset($data[self::FIELD_ORDER_MEANING_EXT])) {
+        if (array_key_exists(self::FIELD_ORDER_MEANING, $data) || array_key_exists(self::FIELD_ORDER_MEANING_EXT, $data)) {
             $value = $data[self::FIELD_ORDER_MEANING] ?? null;
             $ext = (isset($data[self::FIELD_ORDER_MEANING_EXT]) && is_array($data[self::FIELD_ORDER_MEANING_EXT])) ? $data[self::FIELD_ORDER_MEANING_EXT] : [];
             if (null !== $value) {
@@ -4455,9 +4336,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setOrderMeaning(new FHIRString($ext));
+            } else {
+                $this->setOrderMeaning(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_BASE_64BINARY]) || isset($data[self::FIELD_FIXED_BASE_64BINARY_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_BASE_64BINARY, $data) || array_key_exists(self::FIELD_FIXED_BASE_64BINARY_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_BASE_64BINARY] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_BASE_64BINARY_EXT]) && is_array($data[self::FIELD_FIXED_BASE_64BINARY_EXT])) ? $data[self::FIELD_FIXED_BASE_64BINARY_EXT] : [];
             if (null !== $value) {
@@ -4470,9 +4353,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedBase64Binary(new FHIRBase64Binary($ext));
+            } else {
+                $this->setFixedBase64Binary(new FHIRBase64Binary(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_BOOLEAN]) || isset($data[self::FIELD_FIXED_BOOLEAN_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_BOOLEAN, $data) || array_key_exists(self::FIELD_FIXED_BOOLEAN_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_BOOLEAN] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_BOOLEAN_EXT]) && is_array($data[self::FIELD_FIXED_BOOLEAN_EXT])) ? $data[self::FIELD_FIXED_BOOLEAN_EXT] : [];
             if (null !== $value) {
@@ -4485,9 +4370,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedBoolean(new FHIRBoolean($ext));
+            } else {
+                $this->setFixedBoolean(new FHIRBoolean(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_CANONICAL]) || isset($data[self::FIELD_FIXED_CANONICAL_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_CANONICAL, $data) || array_key_exists(self::FIELD_FIXED_CANONICAL_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_CANONICAL] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_CANONICAL_EXT]) && is_array($data[self::FIELD_FIXED_CANONICAL_EXT])) ? $data[self::FIELD_FIXED_CANONICAL_EXT] : [];
             if (null !== $value) {
@@ -4500,9 +4387,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedCanonical(new FHIRCanonical($ext));
+            } else {
+                $this->setFixedCanonical(new FHIRCanonical(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_CODE]) || isset($data[self::FIELD_FIXED_CODE_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_CODE, $data) || array_key_exists(self::FIELD_FIXED_CODE_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_CODE] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_CODE_EXT]) && is_array($data[self::FIELD_FIXED_CODE_EXT])) ? $data[self::FIELD_FIXED_CODE_EXT] : [];
             if (null !== $value) {
@@ -4515,9 +4404,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedCode(new FHIRCode($ext));
+            } else {
+                $this->setFixedCode(new FHIRCode(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_DATE]) || isset($data[self::FIELD_FIXED_DATE_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_DATE, $data) || array_key_exists(self::FIELD_FIXED_DATE_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_DATE] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_DATE_EXT]) && is_array($data[self::FIELD_FIXED_DATE_EXT])) ? $data[self::FIELD_FIXED_DATE_EXT] : [];
             if (null !== $value) {
@@ -4530,9 +4421,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedDate(new FHIRDate($ext));
+            } else {
+                $this->setFixedDate(new FHIRDate(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_DATE_TIME]) || isset($data[self::FIELD_FIXED_DATE_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_DATE_TIME, $data) || array_key_exists(self::FIELD_FIXED_DATE_TIME_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_DATE_TIME] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_DATE_TIME_EXT]) && is_array($data[self::FIELD_FIXED_DATE_TIME_EXT])) ? $data[self::FIELD_FIXED_DATE_TIME_EXT] : [];
             if (null !== $value) {
@@ -4545,9 +4438,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedDateTime(new FHIRDateTime($ext));
+            } else {
+                $this->setFixedDateTime(new FHIRDateTime(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_DECIMAL]) || isset($data[self::FIELD_FIXED_DECIMAL_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_DECIMAL, $data) || array_key_exists(self::FIELD_FIXED_DECIMAL_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_DECIMAL] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_DECIMAL_EXT]) && is_array($data[self::FIELD_FIXED_DECIMAL_EXT])) ? $data[self::FIELD_FIXED_DECIMAL_EXT] : [];
             if (null !== $value) {
@@ -4560,9 +4455,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedDecimal(new FHIRDecimal($ext));
+            } else {
+                $this->setFixedDecimal(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_ID]) || isset($data[self::FIELD_FIXED_ID_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_ID, $data) || array_key_exists(self::FIELD_FIXED_ID_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_ID] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_ID_EXT]) && is_array($data[self::FIELD_FIXED_ID_EXT])) ? $data[self::FIELD_FIXED_ID_EXT] : [];
             if (null !== $value) {
@@ -4575,9 +4472,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedId(new FHIRId($ext));
+            } else {
+                $this->setFixedId(new FHIRId(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_INSTANT]) || isset($data[self::FIELD_FIXED_INSTANT_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_INSTANT, $data) || array_key_exists(self::FIELD_FIXED_INSTANT_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_INSTANT] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_INSTANT_EXT]) && is_array($data[self::FIELD_FIXED_INSTANT_EXT])) ? $data[self::FIELD_FIXED_INSTANT_EXT] : [];
             if (null !== $value) {
@@ -4590,9 +4489,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedInstant(new FHIRInstant($ext));
+            } else {
+                $this->setFixedInstant(new FHIRInstant(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_INTEGER]) || isset($data[self::FIELD_FIXED_INTEGER_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_INTEGER, $data) || array_key_exists(self::FIELD_FIXED_INTEGER_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_INTEGER] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_INTEGER_EXT]) && is_array($data[self::FIELD_FIXED_INTEGER_EXT])) ? $data[self::FIELD_FIXED_INTEGER_EXT] : [];
             if (null !== $value) {
@@ -4605,9 +4506,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedInteger(new FHIRInteger($ext));
+            } else {
+                $this->setFixedInteger(new FHIRInteger(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_MARKDOWN]) || isset($data[self::FIELD_FIXED_MARKDOWN_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_MARKDOWN, $data) || array_key_exists(self::FIELD_FIXED_MARKDOWN_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_MARKDOWN] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_MARKDOWN_EXT]) && is_array($data[self::FIELD_FIXED_MARKDOWN_EXT])) ? $data[self::FIELD_FIXED_MARKDOWN_EXT] : [];
             if (null !== $value) {
@@ -4620,9 +4523,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedMarkdown(new FHIRMarkdown($ext));
+            } else {
+                $this->setFixedMarkdown(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_OID]) || isset($data[self::FIELD_FIXED_OID_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_OID, $data) || array_key_exists(self::FIELD_FIXED_OID_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_OID] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_OID_EXT]) && is_array($data[self::FIELD_FIXED_OID_EXT])) ? $data[self::FIELD_FIXED_OID_EXT] : [];
             if (null !== $value) {
@@ -4635,9 +4540,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedOid(new FHIROid($ext));
+            } else {
+                $this->setFixedOid(new FHIROid(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_POSITIVE_INT]) || isset($data[self::FIELD_FIXED_POSITIVE_INT_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_POSITIVE_INT, $data) || array_key_exists(self::FIELD_FIXED_POSITIVE_INT_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_POSITIVE_INT] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_POSITIVE_INT_EXT]) && is_array($data[self::FIELD_FIXED_POSITIVE_INT_EXT])) ? $data[self::FIELD_FIXED_POSITIVE_INT_EXT] : [];
             if (null !== $value) {
@@ -4650,9 +4557,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedPositiveInt(new FHIRPositiveInt($ext));
+            } else {
+                $this->setFixedPositiveInt(new FHIRPositiveInt(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_STRING]) || isset($data[self::FIELD_FIXED_STRING_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_STRING, $data) || array_key_exists(self::FIELD_FIXED_STRING_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_STRING] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_STRING_EXT]) && is_array($data[self::FIELD_FIXED_STRING_EXT])) ? $data[self::FIELD_FIXED_STRING_EXT] : [];
             if (null !== $value) {
@@ -4665,9 +4574,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedString(new FHIRString($ext));
+            } else {
+                $this->setFixedString(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_TIME]) || isset($data[self::FIELD_FIXED_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_TIME, $data) || array_key_exists(self::FIELD_FIXED_TIME_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_TIME] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_TIME_EXT]) && is_array($data[self::FIELD_FIXED_TIME_EXT])) ? $data[self::FIELD_FIXED_TIME_EXT] : [];
             if (null !== $value) {
@@ -4680,9 +4591,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedTime(new FHIRTime($ext));
+            } else {
+                $this->setFixedTime(new FHIRTime(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_UNSIGNED_INT]) || isset($data[self::FIELD_FIXED_UNSIGNED_INT_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_UNSIGNED_INT, $data) || array_key_exists(self::FIELD_FIXED_UNSIGNED_INT_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_UNSIGNED_INT] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_UNSIGNED_INT_EXT]) && is_array($data[self::FIELD_FIXED_UNSIGNED_INT_EXT])) ? $data[self::FIELD_FIXED_UNSIGNED_INT_EXT] : [];
             if (null !== $value) {
@@ -4695,9 +4608,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedUnsignedInt(new FHIRUnsignedInt($ext));
+            } else {
+                $this->setFixedUnsignedInt(new FHIRUnsignedInt(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_URI]) || isset($data[self::FIELD_FIXED_URI_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_URI, $data) || array_key_exists(self::FIELD_FIXED_URI_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_URI] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_URI_EXT]) && is_array($data[self::FIELD_FIXED_URI_EXT])) ? $data[self::FIELD_FIXED_URI_EXT] : [];
             if (null !== $value) {
@@ -4710,9 +4625,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedUri(new FHIRUri($ext));
+            } else {
+                $this->setFixedUri(new FHIRUri(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_URL]) || isset($data[self::FIELD_FIXED_URL_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_URL, $data) || array_key_exists(self::FIELD_FIXED_URL_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_URL] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_URL_EXT]) && is_array($data[self::FIELD_FIXED_URL_EXT])) ? $data[self::FIELD_FIXED_URL_EXT] : [];
             if (null !== $value) {
@@ -4725,9 +4642,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedUrl(new FHIRUrl($ext));
+            } else {
+                $this->setFixedUrl(new FHIRUrl(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_UUID]) || isset($data[self::FIELD_FIXED_UUID_EXT])) {
+        if (array_key_exists(self::FIELD_FIXED_UUID, $data) || array_key_exists(self::FIELD_FIXED_UUID_EXT, $data)) {
             $value = $data[self::FIELD_FIXED_UUID] ?? null;
             $ext = (isset($data[self::FIELD_FIXED_UUID_EXT]) && is_array($data[self::FIELD_FIXED_UUID_EXT])) ? $data[self::FIELD_FIXED_UUID_EXT] : [];
             if (null !== $value) {
@@ -4740,226 +4659,228 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setFixedUuid(new FHIRUuid($ext));
+            } else {
+                $this->setFixedUuid(new FHIRUuid(null));
             }
         }
-        if (isset($data[self::FIELD_FIXED_ADDRESS])) {
+        if (array_key_exists(self::FIELD_FIXED_ADDRESS, $data)) {
             if ($data[self::FIELD_FIXED_ADDRESS] instanceof FHIRAddress) {
                 $this->setFixedAddress($data[self::FIELD_FIXED_ADDRESS]);
             } else {
                 $this->setFixedAddress(new FHIRAddress($data[self::FIELD_FIXED_ADDRESS]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_AGE])) {
+        if (array_key_exists(self::FIELD_FIXED_AGE, $data)) {
             if ($data[self::FIELD_FIXED_AGE] instanceof FHIRAge) {
                 $this->setFixedAge($data[self::FIELD_FIXED_AGE]);
             } else {
                 $this->setFixedAge(new FHIRAge($data[self::FIELD_FIXED_AGE]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_ANNOTATION])) {
+        if (array_key_exists(self::FIELD_FIXED_ANNOTATION, $data)) {
             if ($data[self::FIELD_FIXED_ANNOTATION] instanceof FHIRAnnotation) {
                 $this->setFixedAnnotation($data[self::FIELD_FIXED_ANNOTATION]);
             } else {
                 $this->setFixedAnnotation(new FHIRAnnotation($data[self::FIELD_FIXED_ANNOTATION]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_ATTACHMENT])) {
+        if (array_key_exists(self::FIELD_FIXED_ATTACHMENT, $data)) {
             if ($data[self::FIELD_FIXED_ATTACHMENT] instanceof FHIRAttachment) {
                 $this->setFixedAttachment($data[self::FIELD_FIXED_ATTACHMENT]);
             } else {
                 $this->setFixedAttachment(new FHIRAttachment($data[self::FIELD_FIXED_ATTACHMENT]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_CODEABLE_CONCEPT])) {
+        if (array_key_exists(self::FIELD_FIXED_CODEABLE_CONCEPT, $data)) {
             if ($data[self::FIELD_FIXED_CODEABLE_CONCEPT] instanceof FHIRCodeableConcept) {
                 $this->setFixedCodeableConcept($data[self::FIELD_FIXED_CODEABLE_CONCEPT]);
             } else {
                 $this->setFixedCodeableConcept(new FHIRCodeableConcept($data[self::FIELD_FIXED_CODEABLE_CONCEPT]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_CODING])) {
+        if (array_key_exists(self::FIELD_FIXED_CODING, $data)) {
             if ($data[self::FIELD_FIXED_CODING] instanceof FHIRCoding) {
                 $this->setFixedCoding($data[self::FIELD_FIXED_CODING]);
             } else {
                 $this->setFixedCoding(new FHIRCoding($data[self::FIELD_FIXED_CODING]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_CONTACT_POINT])) {
+        if (array_key_exists(self::FIELD_FIXED_CONTACT_POINT, $data)) {
             if ($data[self::FIELD_FIXED_CONTACT_POINT] instanceof FHIRContactPoint) {
                 $this->setFixedContactPoint($data[self::FIELD_FIXED_CONTACT_POINT]);
             } else {
                 $this->setFixedContactPoint(new FHIRContactPoint($data[self::FIELD_FIXED_CONTACT_POINT]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_COUNT])) {
+        if (array_key_exists(self::FIELD_FIXED_COUNT, $data)) {
             if ($data[self::FIELD_FIXED_COUNT] instanceof FHIRCount) {
                 $this->setFixedCount($data[self::FIELD_FIXED_COUNT]);
             } else {
                 $this->setFixedCount(new FHIRCount($data[self::FIELD_FIXED_COUNT]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_DISTANCE])) {
+        if (array_key_exists(self::FIELD_FIXED_DISTANCE, $data)) {
             if ($data[self::FIELD_FIXED_DISTANCE] instanceof FHIRDistance) {
                 $this->setFixedDistance($data[self::FIELD_FIXED_DISTANCE]);
             } else {
                 $this->setFixedDistance(new FHIRDistance($data[self::FIELD_FIXED_DISTANCE]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_DURATION])) {
+        if (array_key_exists(self::FIELD_FIXED_DURATION, $data)) {
             if ($data[self::FIELD_FIXED_DURATION] instanceof FHIRDuration) {
                 $this->setFixedDuration($data[self::FIELD_FIXED_DURATION]);
             } else {
                 $this->setFixedDuration(new FHIRDuration($data[self::FIELD_FIXED_DURATION]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_HUMAN_NAME])) {
+        if (array_key_exists(self::FIELD_FIXED_HUMAN_NAME, $data)) {
             if ($data[self::FIELD_FIXED_HUMAN_NAME] instanceof FHIRHumanName) {
                 $this->setFixedHumanName($data[self::FIELD_FIXED_HUMAN_NAME]);
             } else {
                 $this->setFixedHumanName(new FHIRHumanName($data[self::FIELD_FIXED_HUMAN_NAME]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_IDENTIFIER])) {
+        if (array_key_exists(self::FIELD_FIXED_IDENTIFIER, $data)) {
             if ($data[self::FIELD_FIXED_IDENTIFIER] instanceof FHIRIdentifier) {
                 $this->setFixedIdentifier($data[self::FIELD_FIXED_IDENTIFIER]);
             } else {
                 $this->setFixedIdentifier(new FHIRIdentifier($data[self::FIELD_FIXED_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_MONEY])) {
+        if (array_key_exists(self::FIELD_FIXED_MONEY, $data)) {
             if ($data[self::FIELD_FIXED_MONEY] instanceof FHIRMoney) {
                 $this->setFixedMoney($data[self::FIELD_FIXED_MONEY]);
             } else {
                 $this->setFixedMoney(new FHIRMoney($data[self::FIELD_FIXED_MONEY]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_PERIOD])) {
+        if (array_key_exists(self::FIELD_FIXED_PERIOD, $data)) {
             if ($data[self::FIELD_FIXED_PERIOD] instanceof FHIRPeriod) {
                 $this->setFixedPeriod($data[self::FIELD_FIXED_PERIOD]);
             } else {
                 $this->setFixedPeriod(new FHIRPeriod($data[self::FIELD_FIXED_PERIOD]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_QUANTITY])) {
+        if (array_key_exists(self::FIELD_FIXED_QUANTITY, $data)) {
             if ($data[self::FIELD_FIXED_QUANTITY] instanceof FHIRQuantity) {
                 $this->setFixedQuantity($data[self::FIELD_FIXED_QUANTITY]);
             } else {
                 $this->setFixedQuantity(new FHIRQuantity($data[self::FIELD_FIXED_QUANTITY]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_RANGE])) {
+        if (array_key_exists(self::FIELD_FIXED_RANGE, $data)) {
             if ($data[self::FIELD_FIXED_RANGE] instanceof FHIRRange) {
                 $this->setFixedRange($data[self::FIELD_FIXED_RANGE]);
             } else {
                 $this->setFixedRange(new FHIRRange($data[self::FIELD_FIXED_RANGE]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_RATIO])) {
+        if (array_key_exists(self::FIELD_FIXED_RATIO, $data)) {
             if ($data[self::FIELD_FIXED_RATIO] instanceof FHIRRatio) {
                 $this->setFixedRatio($data[self::FIELD_FIXED_RATIO]);
             } else {
                 $this->setFixedRatio(new FHIRRatio($data[self::FIELD_FIXED_RATIO]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_REFERENCE])) {
+        if (array_key_exists(self::FIELD_FIXED_REFERENCE, $data)) {
             if ($data[self::FIELD_FIXED_REFERENCE] instanceof FHIRReference) {
                 $this->setFixedReference($data[self::FIELD_FIXED_REFERENCE]);
             } else {
                 $this->setFixedReference(new FHIRReference($data[self::FIELD_FIXED_REFERENCE]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_SAMPLED_DATA])) {
+        if (array_key_exists(self::FIELD_FIXED_SAMPLED_DATA, $data)) {
             if ($data[self::FIELD_FIXED_SAMPLED_DATA] instanceof FHIRSampledData) {
                 $this->setFixedSampledData($data[self::FIELD_FIXED_SAMPLED_DATA]);
             } else {
                 $this->setFixedSampledData(new FHIRSampledData($data[self::FIELD_FIXED_SAMPLED_DATA]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_SIGNATURE])) {
+        if (array_key_exists(self::FIELD_FIXED_SIGNATURE, $data)) {
             if ($data[self::FIELD_FIXED_SIGNATURE] instanceof FHIRSignature) {
                 $this->setFixedSignature($data[self::FIELD_FIXED_SIGNATURE]);
             } else {
                 $this->setFixedSignature(new FHIRSignature($data[self::FIELD_FIXED_SIGNATURE]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_TIMING])) {
+        if (array_key_exists(self::FIELD_FIXED_TIMING, $data)) {
             if ($data[self::FIELD_FIXED_TIMING] instanceof FHIRTiming) {
                 $this->setFixedTiming($data[self::FIELD_FIXED_TIMING]);
             } else {
                 $this->setFixedTiming(new FHIRTiming($data[self::FIELD_FIXED_TIMING]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_CONTACT_DETAIL])) {
+        if (array_key_exists(self::FIELD_FIXED_CONTACT_DETAIL, $data)) {
             if ($data[self::FIELD_FIXED_CONTACT_DETAIL] instanceof FHIRContactDetail) {
                 $this->setFixedContactDetail($data[self::FIELD_FIXED_CONTACT_DETAIL]);
             } else {
                 $this->setFixedContactDetail(new FHIRContactDetail($data[self::FIELD_FIXED_CONTACT_DETAIL]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_CONTRIBUTOR])) {
+        if (array_key_exists(self::FIELD_FIXED_CONTRIBUTOR, $data)) {
             if ($data[self::FIELD_FIXED_CONTRIBUTOR] instanceof FHIRContributor) {
                 $this->setFixedContributor($data[self::FIELD_FIXED_CONTRIBUTOR]);
             } else {
                 $this->setFixedContributor(new FHIRContributor($data[self::FIELD_FIXED_CONTRIBUTOR]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_DATA_REQUIREMENT])) {
+        if (array_key_exists(self::FIELD_FIXED_DATA_REQUIREMENT, $data)) {
             if ($data[self::FIELD_FIXED_DATA_REQUIREMENT] instanceof FHIRDataRequirement) {
                 $this->setFixedDataRequirement($data[self::FIELD_FIXED_DATA_REQUIREMENT]);
             } else {
                 $this->setFixedDataRequirement(new FHIRDataRequirement($data[self::FIELD_FIXED_DATA_REQUIREMENT]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_EXPRESSION])) {
+        if (array_key_exists(self::FIELD_FIXED_EXPRESSION, $data)) {
             if ($data[self::FIELD_FIXED_EXPRESSION] instanceof FHIRExpression) {
                 $this->setFixedExpression($data[self::FIELD_FIXED_EXPRESSION]);
             } else {
                 $this->setFixedExpression(new FHIRExpression($data[self::FIELD_FIXED_EXPRESSION]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_PARAMETER_DEFINITION])) {
+        if (array_key_exists(self::FIELD_FIXED_PARAMETER_DEFINITION, $data)) {
             if ($data[self::FIELD_FIXED_PARAMETER_DEFINITION] instanceof FHIRParameterDefinition) {
                 $this->setFixedParameterDefinition($data[self::FIELD_FIXED_PARAMETER_DEFINITION]);
             } else {
                 $this->setFixedParameterDefinition(new FHIRParameterDefinition($data[self::FIELD_FIXED_PARAMETER_DEFINITION]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_RELATED_ARTIFACT])) {
+        if (array_key_exists(self::FIELD_FIXED_RELATED_ARTIFACT, $data)) {
             if ($data[self::FIELD_FIXED_RELATED_ARTIFACT] instanceof FHIRRelatedArtifact) {
                 $this->setFixedRelatedArtifact($data[self::FIELD_FIXED_RELATED_ARTIFACT]);
             } else {
                 $this->setFixedRelatedArtifact(new FHIRRelatedArtifact($data[self::FIELD_FIXED_RELATED_ARTIFACT]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_TRIGGER_DEFINITION])) {
+        if (array_key_exists(self::FIELD_FIXED_TRIGGER_DEFINITION, $data)) {
             if ($data[self::FIELD_FIXED_TRIGGER_DEFINITION] instanceof FHIRTriggerDefinition) {
                 $this->setFixedTriggerDefinition($data[self::FIELD_FIXED_TRIGGER_DEFINITION]);
             } else {
                 $this->setFixedTriggerDefinition(new FHIRTriggerDefinition($data[self::FIELD_FIXED_TRIGGER_DEFINITION]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_USAGE_CONTEXT])) {
+        if (array_key_exists(self::FIELD_FIXED_USAGE_CONTEXT, $data)) {
             if ($data[self::FIELD_FIXED_USAGE_CONTEXT] instanceof FHIRUsageContext) {
                 $this->setFixedUsageContext($data[self::FIELD_FIXED_USAGE_CONTEXT]);
             } else {
                 $this->setFixedUsageContext(new FHIRUsageContext($data[self::FIELD_FIXED_USAGE_CONTEXT]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_DOSAGE])) {
+        if (array_key_exists(self::FIELD_FIXED_DOSAGE, $data)) {
             if ($data[self::FIELD_FIXED_DOSAGE] instanceof FHIRDosage) {
                 $this->setFixedDosage($data[self::FIELD_FIXED_DOSAGE]);
             } else {
                 $this->setFixedDosage(new FHIRDosage($data[self::FIELD_FIXED_DOSAGE]));
             }
         }
-        if (isset($data[self::FIELD_FIXED_META])) {
+        if (array_key_exists(self::FIELD_FIXED_META, $data)) {
             if ($data[self::FIELD_FIXED_META] instanceof FHIRMeta) {
                 $this->setFixedMeta($data[self::FIELD_FIXED_META]);
             } else {
                 $this->setFixedMeta(new FHIRMeta($data[self::FIELD_FIXED_META]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_BASE_64BINARY]) || isset($data[self::FIELD_PATTERN_BASE_64BINARY_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_BASE_64BINARY, $data) || array_key_exists(self::FIELD_PATTERN_BASE_64BINARY_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_BASE_64BINARY] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_BASE_64BINARY_EXT]) && is_array($data[self::FIELD_PATTERN_BASE_64BINARY_EXT])) ? $data[self::FIELD_PATTERN_BASE_64BINARY_EXT] : [];
             if (null !== $value) {
@@ -4972,9 +4893,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternBase64Binary(new FHIRBase64Binary($ext));
+            } else {
+                $this->setPatternBase64Binary(new FHIRBase64Binary(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_BOOLEAN]) || isset($data[self::FIELD_PATTERN_BOOLEAN_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_BOOLEAN, $data) || array_key_exists(self::FIELD_PATTERN_BOOLEAN_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_BOOLEAN] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_BOOLEAN_EXT]) && is_array($data[self::FIELD_PATTERN_BOOLEAN_EXT])) ? $data[self::FIELD_PATTERN_BOOLEAN_EXT] : [];
             if (null !== $value) {
@@ -4987,9 +4910,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternBoolean(new FHIRBoolean($ext));
+            } else {
+                $this->setPatternBoolean(new FHIRBoolean(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_CANONICAL]) || isset($data[self::FIELD_PATTERN_CANONICAL_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_CANONICAL, $data) || array_key_exists(self::FIELD_PATTERN_CANONICAL_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_CANONICAL] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_CANONICAL_EXT]) && is_array($data[self::FIELD_PATTERN_CANONICAL_EXT])) ? $data[self::FIELD_PATTERN_CANONICAL_EXT] : [];
             if (null !== $value) {
@@ -5002,9 +4927,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternCanonical(new FHIRCanonical($ext));
+            } else {
+                $this->setPatternCanonical(new FHIRCanonical(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_CODE]) || isset($data[self::FIELD_PATTERN_CODE_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_CODE, $data) || array_key_exists(self::FIELD_PATTERN_CODE_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_CODE] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_CODE_EXT]) && is_array($data[self::FIELD_PATTERN_CODE_EXT])) ? $data[self::FIELD_PATTERN_CODE_EXT] : [];
             if (null !== $value) {
@@ -5017,9 +4944,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternCode(new FHIRCode($ext));
+            } else {
+                $this->setPatternCode(new FHIRCode(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_DATE]) || isset($data[self::FIELD_PATTERN_DATE_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_DATE, $data) || array_key_exists(self::FIELD_PATTERN_DATE_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_DATE] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_DATE_EXT]) && is_array($data[self::FIELD_PATTERN_DATE_EXT])) ? $data[self::FIELD_PATTERN_DATE_EXT] : [];
             if (null !== $value) {
@@ -5032,9 +4961,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternDate(new FHIRDate($ext));
+            } else {
+                $this->setPatternDate(new FHIRDate(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_DATE_TIME]) || isset($data[self::FIELD_PATTERN_DATE_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_DATE_TIME, $data) || array_key_exists(self::FIELD_PATTERN_DATE_TIME_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_DATE_TIME] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_DATE_TIME_EXT]) && is_array($data[self::FIELD_PATTERN_DATE_TIME_EXT])) ? $data[self::FIELD_PATTERN_DATE_TIME_EXT] : [];
             if (null !== $value) {
@@ -5047,9 +4978,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternDateTime(new FHIRDateTime($ext));
+            } else {
+                $this->setPatternDateTime(new FHIRDateTime(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_DECIMAL]) || isset($data[self::FIELD_PATTERN_DECIMAL_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_DECIMAL, $data) || array_key_exists(self::FIELD_PATTERN_DECIMAL_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_DECIMAL] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_DECIMAL_EXT]) && is_array($data[self::FIELD_PATTERN_DECIMAL_EXT])) ? $data[self::FIELD_PATTERN_DECIMAL_EXT] : [];
             if (null !== $value) {
@@ -5062,9 +4995,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternDecimal(new FHIRDecimal($ext));
+            } else {
+                $this->setPatternDecimal(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_ID]) || isset($data[self::FIELD_PATTERN_ID_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_ID, $data) || array_key_exists(self::FIELD_PATTERN_ID_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_ID] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_ID_EXT]) && is_array($data[self::FIELD_PATTERN_ID_EXT])) ? $data[self::FIELD_PATTERN_ID_EXT] : [];
             if (null !== $value) {
@@ -5077,9 +5012,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternId(new FHIRId($ext));
+            } else {
+                $this->setPatternId(new FHIRId(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_INSTANT]) || isset($data[self::FIELD_PATTERN_INSTANT_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_INSTANT, $data) || array_key_exists(self::FIELD_PATTERN_INSTANT_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_INSTANT] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_INSTANT_EXT]) && is_array($data[self::FIELD_PATTERN_INSTANT_EXT])) ? $data[self::FIELD_PATTERN_INSTANT_EXT] : [];
             if (null !== $value) {
@@ -5092,9 +5029,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternInstant(new FHIRInstant($ext));
+            } else {
+                $this->setPatternInstant(new FHIRInstant(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_INTEGER]) || isset($data[self::FIELD_PATTERN_INTEGER_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_INTEGER, $data) || array_key_exists(self::FIELD_PATTERN_INTEGER_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_INTEGER] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_INTEGER_EXT]) && is_array($data[self::FIELD_PATTERN_INTEGER_EXT])) ? $data[self::FIELD_PATTERN_INTEGER_EXT] : [];
             if (null !== $value) {
@@ -5107,9 +5046,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternInteger(new FHIRInteger($ext));
+            } else {
+                $this->setPatternInteger(new FHIRInteger(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_MARKDOWN]) || isset($data[self::FIELD_PATTERN_MARKDOWN_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_MARKDOWN, $data) || array_key_exists(self::FIELD_PATTERN_MARKDOWN_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_MARKDOWN] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_MARKDOWN_EXT]) && is_array($data[self::FIELD_PATTERN_MARKDOWN_EXT])) ? $data[self::FIELD_PATTERN_MARKDOWN_EXT] : [];
             if (null !== $value) {
@@ -5122,9 +5063,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternMarkdown(new FHIRMarkdown($ext));
+            } else {
+                $this->setPatternMarkdown(new FHIRMarkdown(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_OID]) || isset($data[self::FIELD_PATTERN_OID_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_OID, $data) || array_key_exists(self::FIELD_PATTERN_OID_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_OID] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_OID_EXT]) && is_array($data[self::FIELD_PATTERN_OID_EXT])) ? $data[self::FIELD_PATTERN_OID_EXT] : [];
             if (null !== $value) {
@@ -5137,9 +5080,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternOid(new FHIROid($ext));
+            } else {
+                $this->setPatternOid(new FHIROid(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_POSITIVE_INT]) || isset($data[self::FIELD_PATTERN_POSITIVE_INT_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_POSITIVE_INT, $data) || array_key_exists(self::FIELD_PATTERN_POSITIVE_INT_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_POSITIVE_INT] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_POSITIVE_INT_EXT]) && is_array($data[self::FIELD_PATTERN_POSITIVE_INT_EXT])) ? $data[self::FIELD_PATTERN_POSITIVE_INT_EXT] : [];
             if (null !== $value) {
@@ -5152,9 +5097,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternPositiveInt(new FHIRPositiveInt($ext));
+            } else {
+                $this->setPatternPositiveInt(new FHIRPositiveInt(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_STRING]) || isset($data[self::FIELD_PATTERN_STRING_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_STRING, $data) || array_key_exists(self::FIELD_PATTERN_STRING_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_STRING] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_STRING_EXT]) && is_array($data[self::FIELD_PATTERN_STRING_EXT])) ? $data[self::FIELD_PATTERN_STRING_EXT] : [];
             if (null !== $value) {
@@ -5167,9 +5114,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternString(new FHIRString($ext));
+            } else {
+                $this->setPatternString(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_TIME]) || isset($data[self::FIELD_PATTERN_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_TIME, $data) || array_key_exists(self::FIELD_PATTERN_TIME_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_TIME] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_TIME_EXT]) && is_array($data[self::FIELD_PATTERN_TIME_EXT])) ? $data[self::FIELD_PATTERN_TIME_EXT] : [];
             if (null !== $value) {
@@ -5182,9 +5131,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternTime(new FHIRTime($ext));
+            } else {
+                $this->setPatternTime(new FHIRTime(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_UNSIGNED_INT]) || isset($data[self::FIELD_PATTERN_UNSIGNED_INT_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_UNSIGNED_INT, $data) || array_key_exists(self::FIELD_PATTERN_UNSIGNED_INT_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_UNSIGNED_INT] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_UNSIGNED_INT_EXT]) && is_array($data[self::FIELD_PATTERN_UNSIGNED_INT_EXT])) ? $data[self::FIELD_PATTERN_UNSIGNED_INT_EXT] : [];
             if (null !== $value) {
@@ -5197,9 +5148,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternUnsignedInt(new FHIRUnsignedInt($ext));
+            } else {
+                $this->setPatternUnsignedInt(new FHIRUnsignedInt(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_URI]) || isset($data[self::FIELD_PATTERN_URI_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_URI, $data) || array_key_exists(self::FIELD_PATTERN_URI_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_URI] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_URI_EXT]) && is_array($data[self::FIELD_PATTERN_URI_EXT])) ? $data[self::FIELD_PATTERN_URI_EXT] : [];
             if (null !== $value) {
@@ -5212,9 +5165,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternUri(new FHIRUri($ext));
+            } else {
+                $this->setPatternUri(new FHIRUri(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_URL]) || isset($data[self::FIELD_PATTERN_URL_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_URL, $data) || array_key_exists(self::FIELD_PATTERN_URL_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_URL] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_URL_EXT]) && is_array($data[self::FIELD_PATTERN_URL_EXT])) ? $data[self::FIELD_PATTERN_URL_EXT] : [];
             if (null !== $value) {
@@ -5227,9 +5182,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternUrl(new FHIRUrl($ext));
+            } else {
+                $this->setPatternUrl(new FHIRUrl(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_UUID]) || isset($data[self::FIELD_PATTERN_UUID_EXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_UUID, $data) || array_key_exists(self::FIELD_PATTERN_UUID_EXT, $data)) {
             $value = $data[self::FIELD_PATTERN_UUID] ?? null;
             $ext = (isset($data[self::FIELD_PATTERN_UUID_EXT]) && is_array($data[self::FIELD_PATTERN_UUID_EXT])) ? $data[self::FIELD_PATTERN_UUID_EXT] : [];
             if (null !== $value) {
@@ -5242,231 +5199,230 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPatternUuid(new FHIRUuid($ext));
+            } else {
+                $this->setPatternUuid(new FHIRUuid(null));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_ADDRESS])) {
+        if (array_key_exists(self::FIELD_PATTERN_ADDRESS, $data)) {
             if ($data[self::FIELD_PATTERN_ADDRESS] instanceof FHIRAddress) {
                 $this->setPatternAddress($data[self::FIELD_PATTERN_ADDRESS]);
             } else {
                 $this->setPatternAddress(new FHIRAddress($data[self::FIELD_PATTERN_ADDRESS]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_AGE])) {
+        if (array_key_exists(self::FIELD_PATTERN_AGE, $data)) {
             if ($data[self::FIELD_PATTERN_AGE] instanceof FHIRAge) {
                 $this->setPatternAge($data[self::FIELD_PATTERN_AGE]);
             } else {
                 $this->setPatternAge(new FHIRAge($data[self::FIELD_PATTERN_AGE]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_ANNOTATION])) {
+        if (array_key_exists(self::FIELD_PATTERN_ANNOTATION, $data)) {
             if ($data[self::FIELD_PATTERN_ANNOTATION] instanceof FHIRAnnotation) {
                 $this->setPatternAnnotation($data[self::FIELD_PATTERN_ANNOTATION]);
             } else {
                 $this->setPatternAnnotation(new FHIRAnnotation($data[self::FIELD_PATTERN_ANNOTATION]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_ATTACHMENT])) {
+        if (array_key_exists(self::FIELD_PATTERN_ATTACHMENT, $data)) {
             if ($data[self::FIELD_PATTERN_ATTACHMENT] instanceof FHIRAttachment) {
                 $this->setPatternAttachment($data[self::FIELD_PATTERN_ATTACHMENT]);
             } else {
                 $this->setPatternAttachment(new FHIRAttachment($data[self::FIELD_PATTERN_ATTACHMENT]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_CODEABLE_CONCEPT])) {
+        if (array_key_exists(self::FIELD_PATTERN_CODEABLE_CONCEPT, $data)) {
             if ($data[self::FIELD_PATTERN_CODEABLE_CONCEPT] instanceof FHIRCodeableConcept) {
                 $this->setPatternCodeableConcept($data[self::FIELD_PATTERN_CODEABLE_CONCEPT]);
             } else {
                 $this->setPatternCodeableConcept(new FHIRCodeableConcept($data[self::FIELD_PATTERN_CODEABLE_CONCEPT]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_CODING])) {
+        if (array_key_exists(self::FIELD_PATTERN_CODING, $data)) {
             if ($data[self::FIELD_PATTERN_CODING] instanceof FHIRCoding) {
                 $this->setPatternCoding($data[self::FIELD_PATTERN_CODING]);
             } else {
                 $this->setPatternCoding(new FHIRCoding($data[self::FIELD_PATTERN_CODING]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_CONTACT_POINT])) {
+        if (array_key_exists(self::FIELD_PATTERN_CONTACT_POINT, $data)) {
             if ($data[self::FIELD_PATTERN_CONTACT_POINT] instanceof FHIRContactPoint) {
                 $this->setPatternContactPoint($data[self::FIELD_PATTERN_CONTACT_POINT]);
             } else {
                 $this->setPatternContactPoint(new FHIRContactPoint($data[self::FIELD_PATTERN_CONTACT_POINT]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_COUNT])) {
+        if (array_key_exists(self::FIELD_PATTERN_COUNT, $data)) {
             if ($data[self::FIELD_PATTERN_COUNT] instanceof FHIRCount) {
                 $this->setPatternCount($data[self::FIELD_PATTERN_COUNT]);
             } else {
                 $this->setPatternCount(new FHIRCount($data[self::FIELD_PATTERN_COUNT]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_DISTANCE])) {
+        if (array_key_exists(self::FIELD_PATTERN_DISTANCE, $data)) {
             if ($data[self::FIELD_PATTERN_DISTANCE] instanceof FHIRDistance) {
                 $this->setPatternDistance($data[self::FIELD_PATTERN_DISTANCE]);
             } else {
                 $this->setPatternDistance(new FHIRDistance($data[self::FIELD_PATTERN_DISTANCE]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_DURATION])) {
+        if (array_key_exists(self::FIELD_PATTERN_DURATION, $data)) {
             if ($data[self::FIELD_PATTERN_DURATION] instanceof FHIRDuration) {
                 $this->setPatternDuration($data[self::FIELD_PATTERN_DURATION]);
             } else {
                 $this->setPatternDuration(new FHIRDuration($data[self::FIELD_PATTERN_DURATION]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_HUMAN_NAME])) {
+        if (array_key_exists(self::FIELD_PATTERN_HUMAN_NAME, $data)) {
             if ($data[self::FIELD_PATTERN_HUMAN_NAME] instanceof FHIRHumanName) {
                 $this->setPatternHumanName($data[self::FIELD_PATTERN_HUMAN_NAME]);
             } else {
                 $this->setPatternHumanName(new FHIRHumanName($data[self::FIELD_PATTERN_HUMAN_NAME]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_IDENTIFIER])) {
+        if (array_key_exists(self::FIELD_PATTERN_IDENTIFIER, $data)) {
             if ($data[self::FIELD_PATTERN_IDENTIFIER] instanceof FHIRIdentifier) {
                 $this->setPatternIdentifier($data[self::FIELD_PATTERN_IDENTIFIER]);
             } else {
                 $this->setPatternIdentifier(new FHIRIdentifier($data[self::FIELD_PATTERN_IDENTIFIER]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_MONEY])) {
+        if (array_key_exists(self::FIELD_PATTERN_MONEY, $data)) {
             if ($data[self::FIELD_PATTERN_MONEY] instanceof FHIRMoney) {
                 $this->setPatternMoney($data[self::FIELD_PATTERN_MONEY]);
             } else {
                 $this->setPatternMoney(new FHIRMoney($data[self::FIELD_PATTERN_MONEY]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_PERIOD])) {
+        if (array_key_exists(self::FIELD_PATTERN_PERIOD, $data)) {
             if ($data[self::FIELD_PATTERN_PERIOD] instanceof FHIRPeriod) {
                 $this->setPatternPeriod($data[self::FIELD_PATTERN_PERIOD]);
             } else {
                 $this->setPatternPeriod(new FHIRPeriod($data[self::FIELD_PATTERN_PERIOD]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_QUANTITY])) {
+        if (array_key_exists(self::FIELD_PATTERN_QUANTITY, $data)) {
             if ($data[self::FIELD_PATTERN_QUANTITY] instanceof FHIRQuantity) {
                 $this->setPatternQuantity($data[self::FIELD_PATTERN_QUANTITY]);
             } else {
                 $this->setPatternQuantity(new FHIRQuantity($data[self::FIELD_PATTERN_QUANTITY]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_RANGE])) {
+        if (array_key_exists(self::FIELD_PATTERN_RANGE, $data)) {
             if ($data[self::FIELD_PATTERN_RANGE] instanceof FHIRRange) {
                 $this->setPatternRange($data[self::FIELD_PATTERN_RANGE]);
             } else {
                 $this->setPatternRange(new FHIRRange($data[self::FIELD_PATTERN_RANGE]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_RATIO])) {
+        if (array_key_exists(self::FIELD_PATTERN_RATIO, $data)) {
             if ($data[self::FIELD_PATTERN_RATIO] instanceof FHIRRatio) {
                 $this->setPatternRatio($data[self::FIELD_PATTERN_RATIO]);
             } else {
                 $this->setPatternRatio(new FHIRRatio($data[self::FIELD_PATTERN_RATIO]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_REFERENCE])) {
+        if (array_key_exists(self::FIELD_PATTERN_REFERENCE, $data)) {
             if ($data[self::FIELD_PATTERN_REFERENCE] instanceof FHIRReference) {
                 $this->setPatternReference($data[self::FIELD_PATTERN_REFERENCE]);
             } else {
                 $this->setPatternReference(new FHIRReference($data[self::FIELD_PATTERN_REFERENCE]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_SAMPLED_DATA])) {
+        if (array_key_exists(self::FIELD_PATTERN_SAMPLED_DATA, $data)) {
             if ($data[self::FIELD_PATTERN_SAMPLED_DATA] instanceof FHIRSampledData) {
                 $this->setPatternSampledData($data[self::FIELD_PATTERN_SAMPLED_DATA]);
             } else {
                 $this->setPatternSampledData(new FHIRSampledData($data[self::FIELD_PATTERN_SAMPLED_DATA]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_SIGNATURE])) {
+        if (array_key_exists(self::FIELD_PATTERN_SIGNATURE, $data)) {
             if ($data[self::FIELD_PATTERN_SIGNATURE] instanceof FHIRSignature) {
                 $this->setPatternSignature($data[self::FIELD_PATTERN_SIGNATURE]);
             } else {
                 $this->setPatternSignature(new FHIRSignature($data[self::FIELD_PATTERN_SIGNATURE]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_TIMING])) {
+        if (array_key_exists(self::FIELD_PATTERN_TIMING, $data)) {
             if ($data[self::FIELD_PATTERN_TIMING] instanceof FHIRTiming) {
                 $this->setPatternTiming($data[self::FIELD_PATTERN_TIMING]);
             } else {
                 $this->setPatternTiming(new FHIRTiming($data[self::FIELD_PATTERN_TIMING]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_CONTACT_DETAIL])) {
+        if (array_key_exists(self::FIELD_PATTERN_CONTACT_DETAIL, $data)) {
             if ($data[self::FIELD_PATTERN_CONTACT_DETAIL] instanceof FHIRContactDetail) {
                 $this->setPatternContactDetail($data[self::FIELD_PATTERN_CONTACT_DETAIL]);
             } else {
                 $this->setPatternContactDetail(new FHIRContactDetail($data[self::FIELD_PATTERN_CONTACT_DETAIL]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_CONTRIBUTOR])) {
+        if (array_key_exists(self::FIELD_PATTERN_CONTRIBUTOR, $data)) {
             if ($data[self::FIELD_PATTERN_CONTRIBUTOR] instanceof FHIRContributor) {
                 $this->setPatternContributor($data[self::FIELD_PATTERN_CONTRIBUTOR]);
             } else {
                 $this->setPatternContributor(new FHIRContributor($data[self::FIELD_PATTERN_CONTRIBUTOR]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_DATA_REQUIREMENT])) {
+        if (array_key_exists(self::FIELD_PATTERN_DATA_REQUIREMENT, $data)) {
             if ($data[self::FIELD_PATTERN_DATA_REQUIREMENT] instanceof FHIRDataRequirement) {
                 $this->setPatternDataRequirement($data[self::FIELD_PATTERN_DATA_REQUIREMENT]);
             } else {
                 $this->setPatternDataRequirement(new FHIRDataRequirement($data[self::FIELD_PATTERN_DATA_REQUIREMENT]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_EXPRESSION])) {
+        if (array_key_exists(self::FIELD_PATTERN_EXPRESSION, $data)) {
             if ($data[self::FIELD_PATTERN_EXPRESSION] instanceof FHIRExpression) {
                 $this->setPatternExpression($data[self::FIELD_PATTERN_EXPRESSION]);
             } else {
                 $this->setPatternExpression(new FHIRExpression($data[self::FIELD_PATTERN_EXPRESSION]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_PARAMETER_DEFINITION])) {
+        if (array_key_exists(self::FIELD_PATTERN_PARAMETER_DEFINITION, $data)) {
             if ($data[self::FIELD_PATTERN_PARAMETER_DEFINITION] instanceof FHIRParameterDefinition) {
                 $this->setPatternParameterDefinition($data[self::FIELD_PATTERN_PARAMETER_DEFINITION]);
             } else {
                 $this->setPatternParameterDefinition(new FHIRParameterDefinition($data[self::FIELD_PATTERN_PARAMETER_DEFINITION]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_RELATED_ARTIFACT])) {
+        if (array_key_exists(self::FIELD_PATTERN_RELATED_ARTIFACT, $data)) {
             if ($data[self::FIELD_PATTERN_RELATED_ARTIFACT] instanceof FHIRRelatedArtifact) {
                 $this->setPatternRelatedArtifact($data[self::FIELD_PATTERN_RELATED_ARTIFACT]);
             } else {
                 $this->setPatternRelatedArtifact(new FHIRRelatedArtifact($data[self::FIELD_PATTERN_RELATED_ARTIFACT]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_TRIGGER_DEFINITION])) {
+        if (array_key_exists(self::FIELD_PATTERN_TRIGGER_DEFINITION, $data)) {
             if ($data[self::FIELD_PATTERN_TRIGGER_DEFINITION] instanceof FHIRTriggerDefinition) {
                 $this->setPatternTriggerDefinition($data[self::FIELD_PATTERN_TRIGGER_DEFINITION]);
             } else {
                 $this->setPatternTriggerDefinition(new FHIRTriggerDefinition($data[self::FIELD_PATTERN_TRIGGER_DEFINITION]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_USAGE_CONTEXT])) {
+        if (array_key_exists(self::FIELD_PATTERN_USAGE_CONTEXT, $data)) {
             if ($data[self::FIELD_PATTERN_USAGE_CONTEXT] instanceof FHIRUsageContext) {
                 $this->setPatternUsageContext($data[self::FIELD_PATTERN_USAGE_CONTEXT]);
             } else {
                 $this->setPatternUsageContext(new FHIRUsageContext($data[self::FIELD_PATTERN_USAGE_CONTEXT]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_DOSAGE])) {
+        if (array_key_exists(self::FIELD_PATTERN_DOSAGE, $data)) {
             if ($data[self::FIELD_PATTERN_DOSAGE] instanceof FHIRDosage) {
                 $this->setPatternDosage($data[self::FIELD_PATTERN_DOSAGE]);
             } else {
                 $this->setPatternDosage(new FHIRDosage($data[self::FIELD_PATTERN_DOSAGE]));
             }
         }
-        if (isset($data[self::FIELD_PATTERN_META])) {
+        if (array_key_exists(self::FIELD_PATTERN_META, $data)) {
             if ($data[self::FIELD_PATTERN_META] instanceof FHIRMeta) {
                 $this->setPatternMeta($data[self::FIELD_PATTERN_META]);
             } else {
                 $this->setPatternMeta(new FHIRMeta($data[self::FIELD_PATTERN_META]));
             }
         }
-        if (isset($data[self::FIELD_EXAMPLE])) {
+        if (array_key_exists(self::FIELD_EXAMPLE, $data)) {
             if (is_array($data[self::FIELD_EXAMPLE])) {
                 foreach($data[self::FIELD_EXAMPLE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRElementDefinitionExample) {
                         $this->addExample($v);
                     } else {
@@ -5479,7 +5435,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 $this->addExample(new FHIRElementDefinitionExample($data[self::FIELD_EXAMPLE]));
             }
         }
-        if (isset($data[self::FIELD_MIN_VALUE_DATE]) || isset($data[self::FIELD_MIN_VALUE_DATE_EXT])) {
+        if (array_key_exists(self::FIELD_MIN_VALUE_DATE, $data) || array_key_exists(self::FIELD_MIN_VALUE_DATE_EXT, $data)) {
             $value = $data[self::FIELD_MIN_VALUE_DATE] ?? null;
             $ext = (isset($data[self::FIELD_MIN_VALUE_DATE_EXT]) && is_array($data[self::FIELD_MIN_VALUE_DATE_EXT])) ? $data[self::FIELD_MIN_VALUE_DATE_EXT] : [];
             if (null !== $value) {
@@ -5492,9 +5448,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMinValueDate(new FHIRDate($ext));
+            } else {
+                $this->setMinValueDate(new FHIRDate(null));
             }
         }
-        if (isset($data[self::FIELD_MIN_VALUE_DATE_TIME]) || isset($data[self::FIELD_MIN_VALUE_DATE_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_MIN_VALUE_DATE_TIME, $data) || array_key_exists(self::FIELD_MIN_VALUE_DATE_TIME_EXT, $data)) {
             $value = $data[self::FIELD_MIN_VALUE_DATE_TIME] ?? null;
             $ext = (isset($data[self::FIELD_MIN_VALUE_DATE_TIME_EXT]) && is_array($data[self::FIELD_MIN_VALUE_DATE_TIME_EXT])) ? $data[self::FIELD_MIN_VALUE_DATE_TIME_EXT] : [];
             if (null !== $value) {
@@ -5507,9 +5465,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMinValueDateTime(new FHIRDateTime($ext));
+            } else {
+                $this->setMinValueDateTime(new FHIRDateTime(null));
             }
         }
-        if (isset($data[self::FIELD_MIN_VALUE_INSTANT]) || isset($data[self::FIELD_MIN_VALUE_INSTANT_EXT])) {
+        if (array_key_exists(self::FIELD_MIN_VALUE_INSTANT, $data) || array_key_exists(self::FIELD_MIN_VALUE_INSTANT_EXT, $data)) {
             $value = $data[self::FIELD_MIN_VALUE_INSTANT] ?? null;
             $ext = (isset($data[self::FIELD_MIN_VALUE_INSTANT_EXT]) && is_array($data[self::FIELD_MIN_VALUE_INSTANT_EXT])) ? $data[self::FIELD_MIN_VALUE_INSTANT_EXT] : [];
             if (null !== $value) {
@@ -5522,9 +5482,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMinValueInstant(new FHIRInstant($ext));
+            } else {
+                $this->setMinValueInstant(new FHIRInstant(null));
             }
         }
-        if (isset($data[self::FIELD_MIN_VALUE_TIME]) || isset($data[self::FIELD_MIN_VALUE_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_MIN_VALUE_TIME, $data) || array_key_exists(self::FIELD_MIN_VALUE_TIME_EXT, $data)) {
             $value = $data[self::FIELD_MIN_VALUE_TIME] ?? null;
             $ext = (isset($data[self::FIELD_MIN_VALUE_TIME_EXT]) && is_array($data[self::FIELD_MIN_VALUE_TIME_EXT])) ? $data[self::FIELD_MIN_VALUE_TIME_EXT] : [];
             if (null !== $value) {
@@ -5537,9 +5499,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMinValueTime(new FHIRTime($ext));
+            } else {
+                $this->setMinValueTime(new FHIRTime(null));
             }
         }
-        if (isset($data[self::FIELD_MIN_VALUE_DECIMAL]) || isset($data[self::FIELD_MIN_VALUE_DECIMAL_EXT])) {
+        if (array_key_exists(self::FIELD_MIN_VALUE_DECIMAL, $data) || array_key_exists(self::FIELD_MIN_VALUE_DECIMAL_EXT, $data)) {
             $value = $data[self::FIELD_MIN_VALUE_DECIMAL] ?? null;
             $ext = (isset($data[self::FIELD_MIN_VALUE_DECIMAL_EXT]) && is_array($data[self::FIELD_MIN_VALUE_DECIMAL_EXT])) ? $data[self::FIELD_MIN_VALUE_DECIMAL_EXT] : [];
             if (null !== $value) {
@@ -5552,9 +5516,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMinValueDecimal(new FHIRDecimal($ext));
+            } else {
+                $this->setMinValueDecimal(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_MIN_VALUE_INTEGER]) || isset($data[self::FIELD_MIN_VALUE_INTEGER_EXT])) {
+        if (array_key_exists(self::FIELD_MIN_VALUE_INTEGER, $data) || array_key_exists(self::FIELD_MIN_VALUE_INTEGER_EXT, $data)) {
             $value = $data[self::FIELD_MIN_VALUE_INTEGER] ?? null;
             $ext = (isset($data[self::FIELD_MIN_VALUE_INTEGER_EXT]) && is_array($data[self::FIELD_MIN_VALUE_INTEGER_EXT])) ? $data[self::FIELD_MIN_VALUE_INTEGER_EXT] : [];
             if (null !== $value) {
@@ -5567,9 +5533,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMinValueInteger(new FHIRInteger($ext));
+            } else {
+                $this->setMinValueInteger(new FHIRInteger(null));
             }
         }
-        if (isset($data[self::FIELD_MIN_VALUE_POSITIVE_INT]) || isset($data[self::FIELD_MIN_VALUE_POSITIVE_INT_EXT])) {
+        if (array_key_exists(self::FIELD_MIN_VALUE_POSITIVE_INT, $data) || array_key_exists(self::FIELD_MIN_VALUE_POSITIVE_INT_EXT, $data)) {
             $value = $data[self::FIELD_MIN_VALUE_POSITIVE_INT] ?? null;
             $ext = (isset($data[self::FIELD_MIN_VALUE_POSITIVE_INT_EXT]) && is_array($data[self::FIELD_MIN_VALUE_POSITIVE_INT_EXT])) ? $data[self::FIELD_MIN_VALUE_POSITIVE_INT_EXT] : [];
             if (null !== $value) {
@@ -5582,9 +5550,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMinValuePositiveInt(new FHIRPositiveInt($ext));
+            } else {
+                $this->setMinValuePositiveInt(new FHIRPositiveInt(null));
             }
         }
-        if (isset($data[self::FIELD_MIN_VALUE_UNSIGNED_INT]) || isset($data[self::FIELD_MIN_VALUE_UNSIGNED_INT_EXT])) {
+        if (array_key_exists(self::FIELD_MIN_VALUE_UNSIGNED_INT, $data) || array_key_exists(self::FIELD_MIN_VALUE_UNSIGNED_INT_EXT, $data)) {
             $value = $data[self::FIELD_MIN_VALUE_UNSIGNED_INT] ?? null;
             $ext = (isset($data[self::FIELD_MIN_VALUE_UNSIGNED_INT_EXT]) && is_array($data[self::FIELD_MIN_VALUE_UNSIGNED_INT_EXT])) ? $data[self::FIELD_MIN_VALUE_UNSIGNED_INT_EXT] : [];
             if (null !== $value) {
@@ -5597,16 +5567,18 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMinValueUnsignedInt(new FHIRUnsignedInt($ext));
+            } else {
+                $this->setMinValueUnsignedInt(new FHIRUnsignedInt(null));
             }
         }
-        if (isset($data[self::FIELD_MIN_VALUE_QUANTITY])) {
+        if (array_key_exists(self::FIELD_MIN_VALUE_QUANTITY, $data)) {
             if ($data[self::FIELD_MIN_VALUE_QUANTITY] instanceof FHIRQuantity) {
                 $this->setMinValueQuantity($data[self::FIELD_MIN_VALUE_QUANTITY]);
             } else {
                 $this->setMinValueQuantity(new FHIRQuantity($data[self::FIELD_MIN_VALUE_QUANTITY]));
             }
         }
-        if (isset($data[self::FIELD_MAX_VALUE_DATE]) || isset($data[self::FIELD_MAX_VALUE_DATE_EXT])) {
+        if (array_key_exists(self::FIELD_MAX_VALUE_DATE, $data) || array_key_exists(self::FIELD_MAX_VALUE_DATE_EXT, $data)) {
             $value = $data[self::FIELD_MAX_VALUE_DATE] ?? null;
             $ext = (isset($data[self::FIELD_MAX_VALUE_DATE_EXT]) && is_array($data[self::FIELD_MAX_VALUE_DATE_EXT])) ? $data[self::FIELD_MAX_VALUE_DATE_EXT] : [];
             if (null !== $value) {
@@ -5619,9 +5591,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMaxValueDate(new FHIRDate($ext));
+            } else {
+                $this->setMaxValueDate(new FHIRDate(null));
             }
         }
-        if (isset($data[self::FIELD_MAX_VALUE_DATE_TIME]) || isset($data[self::FIELD_MAX_VALUE_DATE_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_MAX_VALUE_DATE_TIME, $data) || array_key_exists(self::FIELD_MAX_VALUE_DATE_TIME_EXT, $data)) {
             $value = $data[self::FIELD_MAX_VALUE_DATE_TIME] ?? null;
             $ext = (isset($data[self::FIELD_MAX_VALUE_DATE_TIME_EXT]) && is_array($data[self::FIELD_MAX_VALUE_DATE_TIME_EXT])) ? $data[self::FIELD_MAX_VALUE_DATE_TIME_EXT] : [];
             if (null !== $value) {
@@ -5634,9 +5608,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMaxValueDateTime(new FHIRDateTime($ext));
+            } else {
+                $this->setMaxValueDateTime(new FHIRDateTime(null));
             }
         }
-        if (isset($data[self::FIELD_MAX_VALUE_INSTANT]) || isset($data[self::FIELD_MAX_VALUE_INSTANT_EXT])) {
+        if (array_key_exists(self::FIELD_MAX_VALUE_INSTANT, $data) || array_key_exists(self::FIELD_MAX_VALUE_INSTANT_EXT, $data)) {
             $value = $data[self::FIELD_MAX_VALUE_INSTANT] ?? null;
             $ext = (isset($data[self::FIELD_MAX_VALUE_INSTANT_EXT]) && is_array($data[self::FIELD_MAX_VALUE_INSTANT_EXT])) ? $data[self::FIELD_MAX_VALUE_INSTANT_EXT] : [];
             if (null !== $value) {
@@ -5649,9 +5625,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMaxValueInstant(new FHIRInstant($ext));
+            } else {
+                $this->setMaxValueInstant(new FHIRInstant(null));
             }
         }
-        if (isset($data[self::FIELD_MAX_VALUE_TIME]) || isset($data[self::FIELD_MAX_VALUE_TIME_EXT])) {
+        if (array_key_exists(self::FIELD_MAX_VALUE_TIME, $data) || array_key_exists(self::FIELD_MAX_VALUE_TIME_EXT, $data)) {
             $value = $data[self::FIELD_MAX_VALUE_TIME] ?? null;
             $ext = (isset($data[self::FIELD_MAX_VALUE_TIME_EXT]) && is_array($data[self::FIELD_MAX_VALUE_TIME_EXT])) ? $data[self::FIELD_MAX_VALUE_TIME_EXT] : [];
             if (null !== $value) {
@@ -5664,9 +5642,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMaxValueTime(new FHIRTime($ext));
+            } else {
+                $this->setMaxValueTime(new FHIRTime(null));
             }
         }
-        if (isset($data[self::FIELD_MAX_VALUE_DECIMAL]) || isset($data[self::FIELD_MAX_VALUE_DECIMAL_EXT])) {
+        if (array_key_exists(self::FIELD_MAX_VALUE_DECIMAL, $data) || array_key_exists(self::FIELD_MAX_VALUE_DECIMAL_EXT, $data)) {
             $value = $data[self::FIELD_MAX_VALUE_DECIMAL] ?? null;
             $ext = (isset($data[self::FIELD_MAX_VALUE_DECIMAL_EXT]) && is_array($data[self::FIELD_MAX_VALUE_DECIMAL_EXT])) ? $data[self::FIELD_MAX_VALUE_DECIMAL_EXT] : [];
             if (null !== $value) {
@@ -5679,9 +5659,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMaxValueDecimal(new FHIRDecimal($ext));
+            } else {
+                $this->setMaxValueDecimal(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_MAX_VALUE_INTEGER]) || isset($data[self::FIELD_MAX_VALUE_INTEGER_EXT])) {
+        if (array_key_exists(self::FIELD_MAX_VALUE_INTEGER, $data) || array_key_exists(self::FIELD_MAX_VALUE_INTEGER_EXT, $data)) {
             $value = $data[self::FIELD_MAX_VALUE_INTEGER] ?? null;
             $ext = (isset($data[self::FIELD_MAX_VALUE_INTEGER_EXT]) && is_array($data[self::FIELD_MAX_VALUE_INTEGER_EXT])) ? $data[self::FIELD_MAX_VALUE_INTEGER_EXT] : [];
             if (null !== $value) {
@@ -5694,9 +5676,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMaxValueInteger(new FHIRInteger($ext));
+            } else {
+                $this->setMaxValueInteger(new FHIRInteger(null));
             }
         }
-        if (isset($data[self::FIELD_MAX_VALUE_POSITIVE_INT]) || isset($data[self::FIELD_MAX_VALUE_POSITIVE_INT_EXT])) {
+        if (array_key_exists(self::FIELD_MAX_VALUE_POSITIVE_INT, $data) || array_key_exists(self::FIELD_MAX_VALUE_POSITIVE_INT_EXT, $data)) {
             $value = $data[self::FIELD_MAX_VALUE_POSITIVE_INT] ?? null;
             $ext = (isset($data[self::FIELD_MAX_VALUE_POSITIVE_INT_EXT]) && is_array($data[self::FIELD_MAX_VALUE_POSITIVE_INT_EXT])) ? $data[self::FIELD_MAX_VALUE_POSITIVE_INT_EXT] : [];
             if (null !== $value) {
@@ -5709,9 +5693,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMaxValuePositiveInt(new FHIRPositiveInt($ext));
+            } else {
+                $this->setMaxValuePositiveInt(new FHIRPositiveInt(null));
             }
         }
-        if (isset($data[self::FIELD_MAX_VALUE_UNSIGNED_INT]) || isset($data[self::FIELD_MAX_VALUE_UNSIGNED_INT_EXT])) {
+        if (array_key_exists(self::FIELD_MAX_VALUE_UNSIGNED_INT, $data) || array_key_exists(self::FIELD_MAX_VALUE_UNSIGNED_INT_EXT, $data)) {
             $value = $data[self::FIELD_MAX_VALUE_UNSIGNED_INT] ?? null;
             $ext = (isset($data[self::FIELD_MAX_VALUE_UNSIGNED_INT_EXT]) && is_array($data[self::FIELD_MAX_VALUE_UNSIGNED_INT_EXT])) ? $data[self::FIELD_MAX_VALUE_UNSIGNED_INT_EXT] : [];
             if (null !== $value) {
@@ -5724,16 +5710,18 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMaxValueUnsignedInt(new FHIRUnsignedInt($ext));
+            } else {
+                $this->setMaxValueUnsignedInt(new FHIRUnsignedInt(null));
             }
         }
-        if (isset($data[self::FIELD_MAX_VALUE_QUANTITY])) {
+        if (array_key_exists(self::FIELD_MAX_VALUE_QUANTITY, $data)) {
             if ($data[self::FIELD_MAX_VALUE_QUANTITY] instanceof FHIRQuantity) {
                 $this->setMaxValueQuantity($data[self::FIELD_MAX_VALUE_QUANTITY]);
             } else {
                 $this->setMaxValueQuantity(new FHIRQuantity($data[self::FIELD_MAX_VALUE_QUANTITY]));
             }
         }
-        if (isset($data[self::FIELD_MAX_LENGTH]) || isset($data[self::FIELD_MAX_LENGTH_EXT])) {
+        if (array_key_exists(self::FIELD_MAX_LENGTH, $data) || array_key_exists(self::FIELD_MAX_LENGTH_EXT, $data)) {
             $value = $data[self::FIELD_MAX_LENGTH] ?? null;
             $ext = (isset($data[self::FIELD_MAX_LENGTH_EXT]) && is_array($data[self::FIELD_MAX_LENGTH_EXT])) ? $data[self::FIELD_MAX_LENGTH_EXT] : [];
             if (null !== $value) {
@@ -5746,9 +5734,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMaxLength(new FHIRInteger($ext));
+            } else {
+                $this->setMaxLength(new FHIRInteger(null));
             }
         }
-        if (isset($data[self::FIELD_CONDITION]) || isset($data[self::FIELD_CONDITION_EXT])) {
+        if (array_key_exists(self::FIELD_CONDITION, $data) || array_key_exists(self::FIELD_CONDITION_EXT, $data)) {
             $value = $data[self::FIELD_CONDITION] ?? null;
             $ext = (isset($data[self::FIELD_CONDITION_EXT]) && is_array($data[self::FIELD_CONDITION_EXT])) ? $data[self::FIELD_CONDITION_EXT] : [];
             if (null !== $value) {
@@ -5776,14 +5766,13 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 foreach($ext as $iext) {
                     $this->addCondition(new FHIRId($iext));
                 }
+            } else {
+                $this->addCondition(new FHIRId(null));
             }
         }
-        if (isset($data[self::FIELD_CONSTRAINT])) {
+        if (array_key_exists(self::FIELD_CONSTRAINT, $data)) {
             if (is_array($data[self::FIELD_CONSTRAINT])) {
                 foreach($data[self::FIELD_CONSTRAINT] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRElementDefinitionConstraint) {
                         $this->addConstraint($v);
                     } else {
@@ -5796,7 +5785,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 $this->addConstraint(new FHIRElementDefinitionConstraint($data[self::FIELD_CONSTRAINT]));
             }
         }
-        if (isset($data[self::FIELD_MUST_SUPPORT]) || isset($data[self::FIELD_MUST_SUPPORT_EXT])) {
+        if (array_key_exists(self::FIELD_MUST_SUPPORT, $data) || array_key_exists(self::FIELD_MUST_SUPPORT_EXT, $data)) {
             $value = $data[self::FIELD_MUST_SUPPORT] ?? null;
             $ext = (isset($data[self::FIELD_MUST_SUPPORT_EXT]) && is_array($data[self::FIELD_MUST_SUPPORT_EXT])) ? $data[self::FIELD_MUST_SUPPORT_EXT] : [];
             if (null !== $value) {
@@ -5809,9 +5798,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setMustSupport(new FHIRBoolean($ext));
+            } else {
+                $this->setMustSupport(new FHIRBoolean(null));
             }
         }
-        if (isset($data[self::FIELD_IS_MODIFIER]) || isset($data[self::FIELD_IS_MODIFIER_EXT])) {
+        if (array_key_exists(self::FIELD_IS_MODIFIER, $data) || array_key_exists(self::FIELD_IS_MODIFIER_EXT, $data)) {
             $value = $data[self::FIELD_IS_MODIFIER] ?? null;
             $ext = (isset($data[self::FIELD_IS_MODIFIER_EXT]) && is_array($data[self::FIELD_IS_MODIFIER_EXT])) ? $data[self::FIELD_IS_MODIFIER_EXT] : [];
             if (null !== $value) {
@@ -5824,9 +5815,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setIsModifier(new FHIRBoolean($ext));
+            } else {
+                $this->setIsModifier(new FHIRBoolean(null));
             }
         }
-        if (isset($data[self::FIELD_IS_MODIFIER_REASON]) || isset($data[self::FIELD_IS_MODIFIER_REASON_EXT])) {
+        if (array_key_exists(self::FIELD_IS_MODIFIER_REASON, $data) || array_key_exists(self::FIELD_IS_MODIFIER_REASON_EXT, $data)) {
             $value = $data[self::FIELD_IS_MODIFIER_REASON] ?? null;
             $ext = (isset($data[self::FIELD_IS_MODIFIER_REASON_EXT]) && is_array($data[self::FIELD_IS_MODIFIER_REASON_EXT])) ? $data[self::FIELD_IS_MODIFIER_REASON_EXT] : [];
             if (null !== $value) {
@@ -5839,9 +5832,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setIsModifierReason(new FHIRString($ext));
+            } else {
+                $this->setIsModifierReason(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_IS_SUMMARY]) || isset($data[self::FIELD_IS_SUMMARY_EXT])) {
+        if (array_key_exists(self::FIELD_IS_SUMMARY, $data) || array_key_exists(self::FIELD_IS_SUMMARY_EXT, $data)) {
             $value = $data[self::FIELD_IS_SUMMARY] ?? null;
             $ext = (isset($data[self::FIELD_IS_SUMMARY_EXT]) && is_array($data[self::FIELD_IS_SUMMARY_EXT])) ? $data[self::FIELD_IS_SUMMARY_EXT] : [];
             if (null !== $value) {
@@ -5854,21 +5849,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setIsSummary(new FHIRBoolean($ext));
+            } else {
+                $this->setIsSummary(new FHIRBoolean(null));
             }
         }
-        if (isset($data[self::FIELD_BINDING])) {
+        if (array_key_exists(self::FIELD_BINDING, $data)) {
             if ($data[self::FIELD_BINDING] instanceof FHIRElementDefinitionBinding) {
                 $this->setBinding($data[self::FIELD_BINDING]);
             } else {
                 $this->setBinding(new FHIRElementDefinitionBinding($data[self::FIELD_BINDING]));
             }
         }
-        if (isset($data[self::FIELD_MAPPING])) {
+        if (array_key_exists(self::FIELD_MAPPING, $data)) {
             if (is_array($data[self::FIELD_MAPPING])) {
                 foreach($data[self::FIELD_MAPPING] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRElementDefinitionMapping) {
                         $this->addMapping($v);
                     } else {
@@ -5886,21 +5880,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<ElementDefinition{$xmlns}></ElementDefinition>";
     }
 
     /**
@@ -5911,9 +5893,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The path identifies the element and is expressed as a "."-separated list of
      * ancestor elements, beginning with the name of the resource or extension.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPath(): ?FHIRString
+    public function getPath(): null|FHIRString
     {
         return $this->path;
     }
@@ -5926,15 +5908,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The path identifies the element and is expressed as a "."-separated list of
      * ancestor elements, beginning with the name of the resource or extension.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $path
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $path
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPath($path = null): object
+    public function setPath(null|string|FHIRStringPrimitive|FHIRString $path = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $path && !($path instanceof FHIRString)) {
             $path = new FHIRString($path);
         }
         $this->_trackValueSet($this->path, $path);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATH])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATH] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATH][0] = $xmlLocation;
         $this->path = $path;
         return $this;
     }
@@ -5948,7 +5935,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPropertyRepresentation[]
      */
-    public function getRepresentation(): ?array
+    public function getRepresentation(): null|array
     {
         return $this->representation;
     }
@@ -5963,39 +5950,13 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPropertyRepresentation $representation
      * @return static
      */
-    public function addRepresentation(?FHIRPropertyRepresentation $representation = null): object
+    public function addRepresentation(null|FHIRPropertyRepresentation $representation = null): self
     {
+        if (null === $representation) {
+            $representation = new FHIRPropertyRepresentation();
+        }
         $this->_trackValueAdded();
         $this->representation[] = $representation;
-        return $this;
-    }
-
-    /**
-     * How a property is represented when serialized.
-     * If the element is present, it must have either a \@value, an \@id, or extensions
-     *
-     * Codes that define how this element is represented in instances, when the
-     * deviation varies from the normal case.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRPropertyRepresentation[] $representation
-     * @return static
-     */
-    public function setRepresentation(array $representation = []): object
-    {
-        if ([] !== $this->representation) {
-            $this->_trackValuesRemoved(count($this->representation));
-            $this->representation = [];
-        }
-        if ([] === $representation) {
-            return $this;
-        }
-        foreach($representation as $v) {
-            if ($v instanceof FHIRPropertyRepresentation) {
-                $this->addRepresentation($v);
-            } else {
-                $this->addRepresentation(new FHIRPropertyRepresentation($v));
-            }
-        }
         return $this;
     }
 
@@ -6009,9 +5970,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * specific set of constraints applied to this element, used to provide a name to
      * different slices of the same element.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getSliceName(): ?FHIRString
+    public function getSliceName(): null|FHIRString
     {
         return $this->sliceName;
     }
@@ -6026,15 +5987,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * specific set of constraints applied to this element, used to provide a name to
      * different slices of the same element.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $sliceName
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $sliceName
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSliceName($sliceName = null): object
+    public function setSliceName(null|string|FHIRStringPrimitive|FHIRString $sliceName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $sliceName && !($sliceName instanceof FHIRString)) {
             $sliceName = new FHIRString($sliceName);
         }
         $this->_trackValueSet($this->sliceName, $sliceName);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_SLICE_NAME])) {
+            $this->_primitiveXmlLocations[self::FIELD_SLICE_NAME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_SLICE_NAME][0] = $xmlLocation;
         $this->sliceName = $sliceName;
         return $this;
     }
@@ -6049,9 +6015,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * might not be overriding a slice in an inherited profile, depending on the
      * sliceName.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getSliceIsConstraining(): ?FHIRBoolean
+    public function getSliceIsConstraining(): null|FHIRBoolean
     {
         return $this->sliceIsConstraining;
     }
@@ -6066,15 +6032,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * might not be overriding a slice in an inherited profile, depending on the
      * sliceName.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $sliceIsConstraining
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $sliceIsConstraining
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSliceIsConstraining($sliceIsConstraining = null): object
+    public function setSliceIsConstraining(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $sliceIsConstraining = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $sliceIsConstraining && !($sliceIsConstraining instanceof FHIRBoolean)) {
             $sliceIsConstraining = new FHIRBoolean($sliceIsConstraining);
         }
         $this->_trackValueSet($this->sliceIsConstraining, $sliceIsConstraining);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_SLICE_IS_CONSTRAINING])) {
+            $this->_primitiveXmlLocations[self::FIELD_SLICE_IS_CONSTRAINING] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_SLICE_IS_CONSTRAINING][0] = $xmlLocation;
         $this->sliceIsConstraining = $sliceIsConstraining;
         return $this;
     }
@@ -6088,9 +6059,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * indicating its meaning or to use to prompt for the element in a user display or
      * form.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getLabel(): ?FHIRString
+    public function getLabel(): null|FHIRString
     {
         return $this->label;
     }
@@ -6104,15 +6075,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * indicating its meaning or to use to prompt for the element in a user display or
      * form.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $label
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $label
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLabel($label = null): object
+    public function setLabel(null|string|FHIRStringPrimitive|FHIRString $label = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $label && !($label instanceof FHIRString)) {
             $label = new FHIRString($label);
         }
         $this->_trackValueSet($this->label, $label);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_LABEL])) {
+            $this->_primitiveXmlLocations[self::FIELD_LABEL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_LABEL][0] = $xmlLocation;
         $this->label = $label;
         return $this;
     }
@@ -6126,7 +6102,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
-    public function getCode(): ?array
+    public function getCode(): null|array
     {
         return $this->code;
     }
@@ -6141,39 +6117,13 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $code
      * @return static
      */
-    public function addCode(?FHIRCoding $code = null): object
+    public function addCode(null|FHIRCoding $code = null): self
     {
+        if (null === $code) {
+            $code = new FHIRCoding();
+        }
         $this->_trackValueAdded();
         $this->code[] = $code;
-        return $this;
-    }
-
-    /**
-     * A reference to a code defined by a terminology system.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A code that has the same meaning as the element in a particular terminology.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRCoding[] $code
-     * @return static
-     */
-    public function setCode(array $code = []): object
-    {
-        if ([] !== $this->code) {
-            $this->_trackValuesRemoved(count($this->code));
-            $this->code = [];
-        }
-        if ([] === $code) {
-            return $this;
-        }
-        foreach($code as $v) {
-            if ($v instanceof FHIRCoding) {
-                $this->addCode($v);
-            } else {
-                $this->addCode(new FHIRCoding($v));
-            }
-        }
         return $this;
     }
 
@@ -6192,7 +6142,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionSlicing
      */
-    public function getSlicing(): ?FHIRElementDefinitionSlicing
+    public function getSlicing(): null|FHIRElementDefinitionSlicing
     {
         return $this->slicing;
     }
@@ -6213,8 +6163,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionSlicing $slicing
      * @return static
      */
-    public function setSlicing(?FHIRElementDefinitionSlicing $slicing = null): object
+    public function setSlicing(null|FHIRElementDefinitionSlicing $slicing = null): self
     {
+        if (null === $slicing) {
+            $slicing = new FHIRElementDefinitionSlicing();
+        }
         $this->_trackValueSet($this->slicing, $slicing);
         $this->slicing = $slicing;
         return $this;
@@ -6228,9 +6181,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * A concise description of what this element means (e.g. for use in autogenerated
      * summaries).
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getShort(): ?FHIRString
+    public function getShort(): null|FHIRString
     {
         return $this->short;
     }
@@ -6243,15 +6196,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * A concise description of what this element means (e.g. for use in autogenerated
      * summaries).
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $short
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $short
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setShort($short = null): object
+    public function setShort(null|string|FHIRStringPrimitive|FHIRString $short = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $short && !($short instanceof FHIRString)) {
             $short = new FHIRString($short);
         }
         $this->_trackValueSet($this->short, $short);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_SHORT])) {
+            $this->_primitiveXmlLocations[self::FIELD_SHORT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_SHORT][0] = $xmlLocation;
         $this->short = $short;
         return $this;
     }
@@ -6272,9 +6230,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * resource. (Note: The text you are reading is specified in
      * ElementDefinition.definition).
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDefinition(): ?FHIRMarkdown
+    public function getDefinition(): null|FHIRMarkdown
     {
         return $this->definition;
     }
@@ -6295,15 +6253,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * resource. (Note: The text you are reading is specified in
      * ElementDefinition.definition).
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $definition
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $definition
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefinition($definition = null): object
+    public function setDefinition(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $definition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $definition && !($definition instanceof FHIRMarkdown)) {
             $definition = new FHIRMarkdown($definition);
         }
         $this->_trackValueSet($this->definition, $definition);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFINITION])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFINITION] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFINITION][0] = $xmlLocation;
         $this->definition = $definition;
         return $this;
     }
@@ -6321,9 +6284,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * notes about how to use the data properly, exceptions to proper use, etc. (Note:
      * The text you are reading is specified in ElementDefinition.comment).
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getComment(): ?FHIRMarkdown
+    public function getComment(): null|FHIRMarkdown
     {
         return $this->comment;
     }
@@ -6341,15 +6304,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * notes about how to use the data properly, exceptions to proper use, etc. (Note:
      * The text you are reading is specified in ElementDefinition.comment).
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $comment
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $comment
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setComment($comment = null): object
+    public function setComment(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $comment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $comment && !($comment instanceof FHIRMarkdown)) {
             $comment = new FHIRMarkdown($comment);
         }
         $this->_trackValueSet($this->comment, $comment);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_COMMENT])) {
+            $this->_primitiveXmlLocations[self::FIELD_COMMENT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_COMMENT][0] = $xmlLocation;
         $this->comment = $comment;
         return $this;
     }
@@ -6367,9 +6335,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * constraints exist as they do. This may be used to point to source materials or
      * specifications that drove the structure of this element.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getRequirements(): ?FHIRMarkdown
+    public function getRequirements(): null|FHIRMarkdown
     {
         return $this->requirements;
     }
@@ -6387,15 +6355,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * constraints exist as they do. This may be used to point to source materials or
      * specifications that drove the structure of this element.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $requirements
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $requirements
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRequirements($requirements = null): object
+    public function setRequirements(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $requirements = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $requirements && !($requirements instanceof FHIRMarkdown)) {
             $requirements = new FHIRMarkdown($requirements);
         }
         $this->_trackValueSet($this->requirements, $requirements);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_REQUIREMENTS])) {
+            $this->_primitiveXmlLocations[self::FIELD_REQUIREMENTS] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_REQUIREMENTS][0] = $xmlLocation;
         $this->requirements = $requirements;
         return $this;
     }
@@ -6407,9 +6380,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * Identifies additional names by which this element might also be known.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
-    public function getAlias(): ?array
+    public function getAlias(): null|array
     {
         return $this->alias;
     }
@@ -6421,15 +6394,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * Identifies additional names by which this element might also be known.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRString[] $alias
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $alias
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addAlias($alias = null): object
+    public function addAlias(null|string|FHIRStringPrimitive|FHIRString $alias = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $alias && !($alias instanceof FHIRString)) {
             $alias = new FHIRString($alias);
         }
         $this->_trackValueAdded();
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_ALIAS])) {
+            $this->_primitiveXmlLocations[self::FIELD_ALIAS] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_ALIAS][] = $xmlLocation;
         $this->alias[] = $alias;
         return $this;
     }
@@ -6442,10 +6420,12 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * Identifies additional names by which this element might also be known.
      *
      * @param \HL7\FHIR\R4\FHIRElement\FHIRString[] $alias
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAlias(array $alias = []): object
+    public function setAlias(array $alias = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
+        unset($this->_primitiveXmlLocations[self::FIELD_ALIAS]);
         if ([] !== $this->alias) {
             $this->_trackValuesRemoved(count($this->alias));
             $this->alias = [];
@@ -6455,9 +6435,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
         }
         foreach($alias as $v) {
             if ($v instanceof FHIRString) {
-                $this->addAlias($v);
+                $this->addAlias($v, $xmlLocation);
             } else {
-                $this->addAlias(new FHIRString($v));
+                $this->addAlias(new FHIRString($v), $xmlLocation);
             }
         }
         return $this;
@@ -6470,9 +6450,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * The minimum number of times this element SHALL appear in the instance.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    public function getMin(): ?FHIRUnsignedInt
+    public function getMin(): null|FHIRUnsignedInt
     {
         return $this->min;
     }
@@ -6484,15 +6464,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * The minimum number of times this element SHALL appear in the instance.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $min
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $min
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMin($min = null): object
+    public function setMin(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $min = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $min && !($min instanceof FHIRUnsignedInt)) {
             $min = new FHIRUnsignedInt($min);
         }
         $this->_trackValueSet($this->min, $min);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MIN])) {
+            $this->_primitiveXmlLocations[self::FIELD_MIN] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MIN][0] = $xmlLocation;
         $this->min = $min;
         return $this;
     }
@@ -6504,9 +6489,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * The maximum number of times this element is permitted to appear in the instance.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getMax(): ?FHIRString
+    public function getMax(): null|FHIRString
     {
         return $this->max;
     }
@@ -6518,15 +6503,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * The maximum number of times this element is permitted to appear in the instance.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $max
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $max
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMax($max = null): object
+    public function setMax(null|string|FHIRStringPrimitive|FHIRString $max = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $max && !($max instanceof FHIRString)) {
             $max = new FHIRString($max);
         }
         $this->_trackValueSet($this->max, $max);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX][0] = $xmlLocation;
         $this->max = $max;
         return $this;
     }
@@ -6546,7 +6536,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionBase
      */
-    public function getBase(): ?FHIRElementDefinitionBase
+    public function getBase(): null|FHIRElementDefinitionBase
     {
         return $this->base;
     }
@@ -6567,8 +6557,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionBase $base
      * @return static
      */
-    public function setBase(?FHIRElementDefinitionBase $base = null): object
+    public function setBase(null|FHIRElementDefinitionBase $base = null): self
     {
+        if (null === $base) {
+            $base = new FHIRElementDefinitionBase();
+        }
         $this->_trackValueSet($this->base, $base);
         $this->base = $base;
         return $this;
@@ -6584,9 +6577,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * rules that are in the ElementDefinition for the element, including definitions,
      * cardinality constraints, bindings, invariants etc.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getContentReference(): ?FHIRUri
+    public function getContentReference(): null|FHIRUri
     {
         return $this->contentReference;
     }
@@ -6601,15 +6594,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * rules that are in the ElementDefinition for the element, including definitions,
      * cardinality constraints, bindings, invariants etc.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $contentReference
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $contentReference
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setContentReference($contentReference = null): object
+    public function setContentReference(null|string|FHIRUriPrimitive|FHIRUri $contentReference = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $contentReference && !($contentReference instanceof FHIRUri)) {
             $contentReference = new FHIRUri($contentReference);
         }
         $this->_trackValueSet($this->contentReference, $contentReference);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_CONTENT_REFERENCE])) {
+            $this->_primitiveXmlLocations[self::FIELD_CONTENT_REFERENCE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_CONTENT_REFERENCE][0] = $xmlLocation;
         $this->contentReference = $contentReference;
         return $this;
     }
@@ -6623,7 +6621,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionType[]
      */
-    public function getType(): ?array
+    public function getType(): null|array
     {
         return $this->type;
     }
@@ -6638,39 +6636,13 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionType $type
      * @return static
      */
-    public function addType(?FHIRElementDefinitionType $type = null): object
+    public function addType(null|FHIRElementDefinitionType $type = null): self
     {
+        if (null === $type) {
+            $type = new FHIRElementDefinitionType();
+        }
         $this->_trackValueAdded();
         $this->type[] = $type;
-        return $this;
-    }
-
-    /**
-     * Captures constraints on each element within the resource, profile, or extension.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * The data type or resource that the value of this element is permitted to be.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionType[] $type
-     * @return static
-     */
-    public function setType(array $type = []): object
-    {
-        if ([] !== $this->type) {
-            $this->_trackValuesRemoved(count($this->type));
-            $this->type = [];
-        }
-        if ([] === $type) {
-            return $this;
-        }
-        foreach($type as $v) {
-            if ($v instanceof FHIRElementDefinitionType) {
-                $this->addType($v);
-            } else {
-                $this->addType(new FHIRElementDefinitionType($v));
-            }
-        }
         return $this;
     }
 
@@ -6682,9 +6654,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    public function getDefaultValueBase64Binary(): ?FHIRBase64Binary
+    public function getDefaultValueBase64Binary(): null|FHIRBase64Binary
     {
         return $this->defaultValueBase64Binary;
     }
@@ -6697,15 +6669,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $defaultValueBase64Binary
+     * @param null|string|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $defaultValueBase64Binary
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueBase64Binary($defaultValueBase64Binary = null): object
+    public function setDefaultValueBase64Binary(null|string|FHIRBase64BinaryPrimitive|FHIRBase64Binary $defaultValueBase64Binary = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueBase64Binary && !($defaultValueBase64Binary instanceof FHIRBase64Binary)) {
             $defaultValueBase64Binary = new FHIRBase64Binary($defaultValueBase64Binary);
         }
         $this->_trackValueSet($this->defaultValueBase64Binary, $defaultValueBase64Binary);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BASE_64BINARY])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BASE_64BINARY] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BASE_64BINARY][0] = $xmlLocation;
         $this->defaultValueBase64Binary = $defaultValueBase64Binary;
         return $this;
     }
@@ -6717,9 +6694,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getDefaultValueBoolean(): ?FHIRBoolean
+    public function getDefaultValueBoolean(): null|FHIRBoolean
     {
         return $this->defaultValueBoolean;
     }
@@ -6731,15 +6708,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $defaultValueBoolean
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $defaultValueBoolean
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueBoolean($defaultValueBoolean = null): object
+    public function setDefaultValueBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $defaultValueBoolean = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueBoolean && !($defaultValueBoolean instanceof FHIRBoolean)) {
             $defaultValueBoolean = new FHIRBoolean($defaultValueBoolean);
         }
         $this->_trackValueSet($this->defaultValueBoolean, $defaultValueBoolean);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BOOLEAN])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BOOLEAN] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BOOLEAN][0] = $xmlLocation;
         $this->defaultValueBoolean = $defaultValueBoolean;
         return $this;
     }
@@ -6753,9 +6735,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getDefaultValueCanonical(): ?FHIRCanonical
+    public function getDefaultValueCanonical(): null|FHIRCanonical
     {
         return $this->defaultValueCanonical;
     }
@@ -6769,15 +6751,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $defaultValueCanonical
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $defaultValueCanonical
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueCanonical($defaultValueCanonical = null): object
+    public function setDefaultValueCanonical(null|string|FHIRCanonicalPrimitive|FHIRCanonical $defaultValueCanonical = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueCanonical && !($defaultValueCanonical instanceof FHIRCanonical)) {
             $defaultValueCanonical = new FHIRCanonical($defaultValueCanonical);
         }
         $this->_trackValueSet($this->defaultValueCanonical, $defaultValueCanonical);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CANONICAL])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CANONICAL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CANONICAL][0] = $xmlLocation;
         $this->defaultValueCanonical = $defaultValueCanonical;
         return $this;
     }
@@ -6791,9 +6778,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    public function getDefaultValueCode(): ?FHIRCode
+    public function getDefaultValueCode(): null|FHIRCode
     {
         return $this->defaultValueCode;
     }
@@ -6807,15 +6794,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $defaultValueCode
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $defaultValueCode
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueCode($defaultValueCode = null): object
+    public function setDefaultValueCode(null|string|FHIRCodePrimitive|FHIRCode $defaultValueCode = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueCode && !($defaultValueCode instanceof FHIRCode)) {
             $defaultValueCode = new FHIRCode($defaultValueCode);
         }
         $this->_trackValueSet($this->defaultValueCode, $defaultValueCode);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CODE])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CODE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CODE][0] = $xmlLocation;
         $this->defaultValueCode = $defaultValueCode;
         return $this;
     }
@@ -6829,9 +6821,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getDefaultValueDate(): ?FHIRDate
+    public function getDefaultValueDate(): null|FHIRDate
     {
         return $this->defaultValueDate;
     }
@@ -6845,15 +6837,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $defaultValueDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $defaultValueDate
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueDate($defaultValueDate = null): object
+    public function setDefaultValueDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $defaultValueDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueDate && !($defaultValueDate instanceof FHIRDate)) {
             $defaultValueDate = new FHIRDate($defaultValueDate);
         }
         $this->_trackValueSet($this->defaultValueDate, $defaultValueDate);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE][0] = $xmlLocation;
         $this->defaultValueDate = $defaultValueDate;
         return $this;
     }
@@ -6869,9 +6866,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getDefaultValueDateTime(): ?FHIRDateTime
+    public function getDefaultValueDateTime(): null|FHIRDateTime
     {
         return $this->defaultValueDateTime;
     }
@@ -6887,15 +6884,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $defaultValueDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $defaultValueDateTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueDateTime($defaultValueDateTime = null): object
+    public function setDefaultValueDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $defaultValueDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueDateTime && !($defaultValueDateTime instanceof FHIRDateTime)) {
             $defaultValueDateTime = new FHIRDateTime($defaultValueDateTime);
         }
         $this->_trackValueSet($this->defaultValueDateTime, $defaultValueDateTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE_TIME][0] = $xmlLocation;
         $this->defaultValueDateTime = $defaultValueDateTime;
         return $this;
     }
@@ -6909,9 +6911,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getDefaultValueDecimal(): ?FHIRDecimal
+    public function getDefaultValueDecimal(): null|FHIRDecimal
     {
         return $this->defaultValueDecimal;
     }
@@ -6925,15 +6927,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $defaultValueDecimal
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $defaultValueDecimal
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueDecimal($defaultValueDecimal = null): object
+    public function setDefaultValueDecimal(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $defaultValueDecimal = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueDecimal && !($defaultValueDecimal instanceof FHIRDecimal)) {
             $defaultValueDecimal = new FHIRDecimal($defaultValueDecimal);
         }
         $this->_trackValueSet($this->defaultValueDecimal, $defaultValueDecimal);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DECIMAL])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DECIMAL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DECIMAL][0] = $xmlLocation;
         $this->defaultValueDecimal = $defaultValueDecimal;
         return $this;
     }
@@ -6949,9 +6956,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    public function getDefaultValueId(): ?FHIRId
+    public function getDefaultValueId(): null|FHIRId
     {
         return $this->defaultValueId;
     }
@@ -6967,15 +6974,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $defaultValueId
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $defaultValueId
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueId($defaultValueId = null): object
+    public function setDefaultValueId(null|string|FHIRIdPrimitive|FHIRId $defaultValueId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueId && !($defaultValueId instanceof FHIRId)) {
             $defaultValueId = new FHIRId($defaultValueId);
         }
         $this->_trackValueSet($this->defaultValueId, $defaultValueId);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_ID])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_ID] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_ID][0] = $xmlLocation;
         $this->defaultValueId = $defaultValueId;
         return $this;
     }
@@ -6991,9 +7003,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    public function getDefaultValueInstant(): ?FHIRInstant
+    public function getDefaultValueInstant(): null|FHIRInstant
     {
         return $this->defaultValueInstant;
     }
@@ -7009,15 +7021,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $defaultValueInstant
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $defaultValueInstant
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueInstant($defaultValueInstant = null): object
+    public function setDefaultValueInstant(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $defaultValueInstant = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueInstant && !($defaultValueInstant instanceof FHIRInstant)) {
             $defaultValueInstant = new FHIRInstant($defaultValueInstant);
         }
         $this->_trackValueSet($this->defaultValueInstant, $defaultValueInstant);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INSTANT])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INSTANT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INSTANT][0] = $xmlLocation;
         $this->defaultValueInstant = $defaultValueInstant;
         return $this;
     }
@@ -7030,9 +7047,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getDefaultValueInteger(): ?FHIRInteger
+    public function getDefaultValueInteger(): null|FHIRInteger
     {
         return $this->defaultValueInteger;
     }
@@ -7045,15 +7062,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $defaultValueInteger
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $defaultValueInteger
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueInteger($defaultValueInteger = null): object
+    public function setDefaultValueInteger(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $defaultValueInteger = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueInteger && !($defaultValueInteger instanceof FHIRInteger)) {
             $defaultValueInteger = new FHIRInteger($defaultValueInteger);
         }
         $this->_trackValueSet($this->defaultValueInteger, $defaultValueInteger);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INTEGER])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INTEGER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INTEGER][0] = $xmlLocation;
         $this->defaultValueInteger = $defaultValueInteger;
         return $this;
     }
@@ -7070,9 +7092,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getDefaultValueMarkdown(): ?FHIRMarkdown
+    public function getDefaultValueMarkdown(): null|FHIRMarkdown
     {
         return $this->defaultValueMarkdown;
     }
@@ -7089,15 +7111,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $defaultValueMarkdown
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $defaultValueMarkdown
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueMarkdown($defaultValueMarkdown = null): object
+    public function setDefaultValueMarkdown(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $defaultValueMarkdown = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueMarkdown && !($defaultValueMarkdown instanceof FHIRMarkdown)) {
             $defaultValueMarkdown = new FHIRMarkdown($defaultValueMarkdown);
         }
         $this->_trackValueSet($this->defaultValueMarkdown, $defaultValueMarkdown);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_MARKDOWN])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_MARKDOWN] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_MARKDOWN][0] = $xmlLocation;
         $this->defaultValueMarkdown = $defaultValueMarkdown;
         return $this;
     }
@@ -7111,9 +7138,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIROid
      */
-    public function getDefaultValueOid(): ?FHIROid
+    public function getDefaultValueOid(): null|FHIROid
     {
         return $this->defaultValueOid;
     }
@@ -7127,15 +7154,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid $defaultValueOid
+     * @param null|string|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid $defaultValueOid
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueOid($defaultValueOid = null): object
+    public function setDefaultValueOid(null|string|FHIROidPrimitive|FHIROid $defaultValueOid = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueOid && !($defaultValueOid instanceof FHIROid)) {
             $defaultValueOid = new FHIROid($defaultValueOid);
         }
         $this->_trackValueSet($this->defaultValueOid, $defaultValueOid);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_OID])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_OID] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_OID][0] = $xmlLocation;
         $this->defaultValueOid = $defaultValueOid;
         return $this;
     }
@@ -7148,9 +7180,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getDefaultValuePositiveInt(): ?FHIRPositiveInt
+    public function getDefaultValuePositiveInt(): null|FHIRPositiveInt
     {
         return $this->defaultValuePositiveInt;
     }
@@ -7163,15 +7195,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $defaultValuePositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $defaultValuePositiveInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValuePositiveInt($defaultValuePositiveInt = null): object
+    public function setDefaultValuePositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $defaultValuePositiveInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValuePositiveInt && !($defaultValuePositiveInt instanceof FHIRPositiveInt)) {
             $defaultValuePositiveInt = new FHIRPositiveInt($defaultValuePositiveInt);
         }
         $this->_trackValueSet($this->defaultValuePositiveInt, $defaultValuePositiveInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_POSITIVE_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_POSITIVE_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_POSITIVE_INT][0] = $xmlLocation;
         $this->defaultValuePositiveInt = $defaultValuePositiveInt;
         return $this;
     }
@@ -7184,9 +7221,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getDefaultValueString(): ?FHIRString
+    public function getDefaultValueString(): null|FHIRString
     {
         return $this->defaultValueString;
     }
@@ -7199,15 +7236,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $defaultValueString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $defaultValueString
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueString($defaultValueString = null): object
+    public function setDefaultValueString(null|string|FHIRStringPrimitive|FHIRString $defaultValueString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueString && !($defaultValueString instanceof FHIRString)) {
             $defaultValueString = new FHIRString($defaultValueString);
         }
         $this->_trackValueSet($this->defaultValueString, $defaultValueString);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_STRING])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_STRING] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_STRING][0] = $xmlLocation;
         $this->defaultValueString = $defaultValueString;
         return $this;
     }
@@ -7219,9 +7261,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    public function getDefaultValueTime(): ?FHIRTime
+    public function getDefaultValueTime(): null|FHIRTime
     {
         return $this->defaultValueTime;
     }
@@ -7233,15 +7275,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $defaultValueTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $defaultValueTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueTime($defaultValueTime = null): object
+    public function setDefaultValueTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $defaultValueTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueTime && !($defaultValueTime instanceof FHIRTime)) {
             $defaultValueTime = new FHIRTime($defaultValueTime);
         }
         $this->_trackValueSet($this->defaultValueTime, $defaultValueTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_TIME][0] = $xmlLocation;
         $this->defaultValueTime = $defaultValueTime;
         return $this;
     }
@@ -7254,9 +7301,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    public function getDefaultValueUnsignedInt(): ?FHIRUnsignedInt
+    public function getDefaultValueUnsignedInt(): null|FHIRUnsignedInt
     {
         return $this->defaultValueUnsignedInt;
     }
@@ -7269,15 +7316,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $defaultValueUnsignedInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $defaultValueUnsignedInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueUnsignedInt($defaultValueUnsignedInt = null): object
+    public function setDefaultValueUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $defaultValueUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueUnsignedInt && !($defaultValueUnsignedInt instanceof FHIRUnsignedInt)) {
             $defaultValueUnsignedInt = new FHIRUnsignedInt($defaultValueUnsignedInt);
         }
         $this->_trackValueSet($this->defaultValueUnsignedInt, $defaultValueUnsignedInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT][0] = $xmlLocation;
         $this->defaultValueUnsignedInt = $defaultValueUnsignedInt;
         return $this;
     }
@@ -7290,9 +7342,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getDefaultValueUri(): ?FHIRUri
+    public function getDefaultValueUri(): null|FHIRUri
     {
         return $this->defaultValueUri;
     }
@@ -7305,15 +7357,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $defaultValueUri
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $defaultValueUri
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueUri($defaultValueUri = null): object
+    public function setDefaultValueUri(null|string|FHIRUriPrimitive|FHIRUri $defaultValueUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueUri && !($defaultValueUri instanceof FHIRUri)) {
             $defaultValueUri = new FHIRUri($defaultValueUri);
         }
         $this->_trackValueSet($this->defaultValueUri, $defaultValueUri);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URI])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URI] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URI][0] = $xmlLocation;
         $this->defaultValueUri = $defaultValueUri;
         return $this;
     }
@@ -7326,9 +7383,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    public function getDefaultValueUrl(): ?FHIRUrl
+    public function getDefaultValueUrl(): null|FHIRUrl
     {
         return $this->defaultValueUrl;
     }
@@ -7341,15 +7398,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $defaultValueUrl
+     * @param null|string|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $defaultValueUrl
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueUrl($defaultValueUrl = null): object
+    public function setDefaultValueUrl(null|string|FHIRUrlPrimitive|FHIRUrl $defaultValueUrl = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueUrl && !($defaultValueUrl instanceof FHIRUrl)) {
             $defaultValueUrl = new FHIRUrl($defaultValueUrl);
         }
         $this->_trackValueSet($this->defaultValueUrl, $defaultValueUrl);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URL])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URL][0] = $xmlLocation;
         $this->defaultValueUrl = $defaultValueUrl;
         return $this;
     }
@@ -7363,9 +7425,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @return null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUuid
      */
-    public function getDefaultValueUuid(): ?FHIRUuid
+    public function getDefaultValueUuid(): null|FHIRUuid
     {
         return $this->defaultValueUuid;
     }
@@ -7379,15 +7441,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The value that should be used if there is no value stated in the instance (e.g.
      * 'if not otherwise specified, the abstract is false').
      *
-     * @param null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid $defaultValueUuid
+     * @param null|string|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid $defaultValueUuid
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefaultValueUuid($defaultValueUuid = null): object
+    public function setDefaultValueUuid(null|string|FHIRUuidPrimitive|FHIRUuid $defaultValueUuid = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $defaultValueUuid && !($defaultValueUuid instanceof FHIRUuid)) {
             $defaultValueUuid = new FHIRUuid($defaultValueUuid);
         }
         $this->_trackValueSet($this->defaultValueUuid, $defaultValueUuid);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UUID])) {
+            $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UUID] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UUID][0] = $xmlLocation;
         $this->defaultValueUuid = $defaultValueUuid;
         return $this;
     }
@@ -7406,7 +7473,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
-    public function getDefaultValueAddress(): ?FHIRAddress
+    public function getDefaultValueAddress(): null|FHIRAddress
     {
         return $this->defaultValueAddress;
     }
@@ -7426,8 +7493,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAddress $defaultValueAddress
      * @return static
      */
-    public function setDefaultValueAddress(?FHIRAddress $defaultValueAddress = null): object
+    public function setDefaultValueAddress(null|FHIRAddress $defaultValueAddress = null): self
     {
+        if (null === $defaultValueAddress) {
+            $defaultValueAddress = new FHIRAddress();
+        }
         $this->_trackValueSet($this->defaultValueAddress, $defaultValueAddress);
         $this->defaultValueAddress = $defaultValueAddress;
         return $this;
@@ -7443,7 +7513,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    public function getDefaultValueAge(): ?FHIRAge
+    public function getDefaultValueAge(): null|FHIRAge
     {
         return $this->defaultValueAge;
     }
@@ -7459,8 +7529,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge $defaultValueAge
      * @return static
      */
-    public function setDefaultValueAge(?FHIRAge $defaultValueAge = null): object
+    public function setDefaultValueAge(null|FHIRAge $defaultValueAge = null): self
     {
+        if (null === $defaultValueAge) {
+            $defaultValueAge = new FHIRAge();
+        }
         $this->_trackValueSet($this->defaultValueAge, $defaultValueAge);
         $this->defaultValueAge = $defaultValueAge;
         return $this;
@@ -7477,7 +7550,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation
      */
-    public function getDefaultValueAnnotation(): ?FHIRAnnotation
+    public function getDefaultValueAnnotation(): null|FHIRAnnotation
     {
         return $this->defaultValueAnnotation;
     }
@@ -7494,8 +7567,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $defaultValueAnnotation
      * @return static
      */
-    public function setDefaultValueAnnotation(?FHIRAnnotation $defaultValueAnnotation = null): object
+    public function setDefaultValueAnnotation(null|FHIRAnnotation $defaultValueAnnotation = null): self
     {
+        if (null === $defaultValueAnnotation) {
+            $defaultValueAnnotation = new FHIRAnnotation();
+        }
         $this->_trackValueSet($this->defaultValueAnnotation, $defaultValueAnnotation);
         $this->defaultValueAnnotation = $defaultValueAnnotation;
         return $this;
@@ -7511,7 +7587,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    public function getDefaultValueAttachment(): ?FHIRAttachment
+    public function getDefaultValueAttachment(): null|FHIRAttachment
     {
         return $this->defaultValueAttachment;
     }
@@ -7527,8 +7603,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment $defaultValueAttachment
      * @return static
      */
-    public function setDefaultValueAttachment(?FHIRAttachment $defaultValueAttachment = null): object
+    public function setDefaultValueAttachment(null|FHIRAttachment $defaultValueAttachment = null): self
     {
+        if (null === $defaultValueAttachment) {
+            $defaultValueAttachment = new FHIRAttachment();
+        }
         $this->_trackValueSet($this->defaultValueAttachment, $defaultValueAttachment);
         $this->defaultValueAttachment = $defaultValueAttachment;
         return $this;
@@ -7545,7 +7624,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getDefaultValueCodeableConcept(): ?FHIRCodeableConcept
+    public function getDefaultValueCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->defaultValueCodeableConcept;
     }
@@ -7562,8 +7641,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $defaultValueCodeableConcept
      * @return static
      */
-    public function setDefaultValueCodeableConcept(?FHIRCodeableConcept $defaultValueCodeableConcept = null): object
+    public function setDefaultValueCodeableConcept(null|FHIRCodeableConcept $defaultValueCodeableConcept = null): self
     {
+        if (null === $defaultValueCodeableConcept) {
+            $defaultValueCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->defaultValueCodeableConcept, $defaultValueCodeableConcept);
         $this->defaultValueCodeableConcept = $defaultValueCodeableConcept;
         return $this;
@@ -7579,7 +7661,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    public function getDefaultValueCoding(): ?FHIRCoding
+    public function getDefaultValueCoding(): null|FHIRCoding
     {
         return $this->defaultValueCoding;
     }
@@ -7595,8 +7677,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $defaultValueCoding
      * @return static
      */
-    public function setDefaultValueCoding(?FHIRCoding $defaultValueCoding = null): object
+    public function setDefaultValueCoding(null|FHIRCoding $defaultValueCoding = null): self
     {
+        if (null === $defaultValueCoding) {
+            $defaultValueCoding = new FHIRCoding();
+        }
         $this->_trackValueSet($this->defaultValueCoding, $defaultValueCoding);
         $this->defaultValueCoding = $defaultValueCoding;
         return $this;
@@ -7613,7 +7698,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint
      */
-    public function getDefaultValueContactPoint(): ?FHIRContactPoint
+    public function getDefaultValueContactPoint(): null|FHIRContactPoint
     {
         return $this->defaultValueContactPoint;
     }
@@ -7630,8 +7715,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint $defaultValueContactPoint
      * @return static
      */
-    public function setDefaultValueContactPoint(?FHIRContactPoint $defaultValueContactPoint = null): object
+    public function setDefaultValueContactPoint(null|FHIRContactPoint $defaultValueContactPoint = null): self
     {
+        if (null === $defaultValueContactPoint) {
+            $defaultValueContactPoint = new FHIRContactPoint();
+        }
         $this->_trackValueSet($this->defaultValueContactPoint, $defaultValueContactPoint);
         $this->defaultValueContactPoint = $defaultValueContactPoint;
         return $this;
@@ -7649,7 +7737,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount
      */
-    public function getDefaultValueCount(): ?FHIRCount
+    public function getDefaultValueCount(): null|FHIRCount
     {
         return $this->defaultValueCount;
     }
@@ -7667,8 +7755,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount $defaultValueCount
      * @return static
      */
-    public function setDefaultValueCount(?FHIRCount $defaultValueCount = null): object
+    public function setDefaultValueCount(null|FHIRCount $defaultValueCount = null): self
     {
+        if (null === $defaultValueCount) {
+            $defaultValueCount = new FHIRCount();
+        }
         $this->_trackValueSet($this->defaultValueCount, $defaultValueCount);
         $this->defaultValueCount = $defaultValueCount;
         return $this;
@@ -7684,7 +7775,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance
      */
-    public function getDefaultValueDistance(): ?FHIRDistance
+    public function getDefaultValueDistance(): null|FHIRDistance
     {
         return $this->defaultValueDistance;
     }
@@ -7700,8 +7791,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance $defaultValueDistance
      * @return static
      */
-    public function setDefaultValueDistance(?FHIRDistance $defaultValueDistance = null): object
+    public function setDefaultValueDistance(null|FHIRDistance $defaultValueDistance = null): self
     {
+        if (null === $defaultValueDistance) {
+            $defaultValueDistance = new FHIRDistance();
+        }
         $this->_trackValueSet($this->defaultValueDistance, $defaultValueDistance);
         $this->defaultValueDistance = $defaultValueDistance;
         return $this;
@@ -7717,7 +7811,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    public function getDefaultValueDuration(): ?FHIRDuration
+    public function getDefaultValueDuration(): null|FHIRDuration
     {
         return $this->defaultValueDuration;
     }
@@ -7733,8 +7827,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration $defaultValueDuration
      * @return static
      */
-    public function setDefaultValueDuration(?FHIRDuration $defaultValueDuration = null): object
+    public function setDefaultValueDuration(null|FHIRDuration $defaultValueDuration = null): self
     {
+        if (null === $defaultValueDuration) {
+            $defaultValueDuration = new FHIRDuration();
+        }
         $this->_trackValueSet($this->defaultValueDuration, $defaultValueDuration);
         $this->defaultValueDuration = $defaultValueDuration;
         return $this;
@@ -7750,7 +7847,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
-    public function getDefaultValueHumanName(): ?FHIRHumanName
+    public function getDefaultValueHumanName(): null|FHIRHumanName
     {
         return $this->defaultValueHumanName;
     }
@@ -7766,8 +7863,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName $defaultValueHumanName
      * @return static
      */
-    public function setDefaultValueHumanName(?FHIRHumanName $defaultValueHumanName = null): object
+    public function setDefaultValueHumanName(null|FHIRHumanName $defaultValueHumanName = null): self
     {
+        if (null === $defaultValueHumanName) {
+            $defaultValueHumanName = new FHIRHumanName();
+        }
         $this->_trackValueSet($this->defaultValueHumanName, $defaultValueHumanName);
         $this->defaultValueHumanName = $defaultValueHumanName;
         return $this;
@@ -7784,7 +7884,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getDefaultValueIdentifier(): ?FHIRIdentifier
+    public function getDefaultValueIdentifier(): null|FHIRIdentifier
     {
         return $this->defaultValueIdentifier;
     }
@@ -7801,8 +7901,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $defaultValueIdentifier
      * @return static
      */
-    public function setDefaultValueIdentifier(?FHIRIdentifier $defaultValueIdentifier = null): object
+    public function setDefaultValueIdentifier(null|FHIRIdentifier $defaultValueIdentifier = null): self
     {
+        if (null === $defaultValueIdentifier) {
+            $defaultValueIdentifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->defaultValueIdentifier, $defaultValueIdentifier);
         $this->defaultValueIdentifier = $defaultValueIdentifier;
         return $this;
@@ -7818,7 +7921,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    public function getDefaultValueMoney(): ?FHIRMoney
+    public function getDefaultValueMoney(): null|FHIRMoney
     {
         return $this->defaultValueMoney;
     }
@@ -7834,8 +7937,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMoney $defaultValueMoney
      * @return static
      */
-    public function setDefaultValueMoney(?FHIRMoney $defaultValueMoney = null): object
+    public function setDefaultValueMoney(null|FHIRMoney $defaultValueMoney = null): self
     {
+        if (null === $defaultValueMoney) {
+            $defaultValueMoney = new FHIRMoney();
+        }
         $this->_trackValueSet($this->defaultValueMoney, $defaultValueMoney);
         $this->defaultValueMoney = $defaultValueMoney;
         return $this;
@@ -7851,7 +7957,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getDefaultValuePeriod(): ?FHIRPeriod
+    public function getDefaultValuePeriod(): null|FHIRPeriod
     {
         return $this->defaultValuePeriod;
     }
@@ -7867,8 +7973,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $defaultValuePeriod
      * @return static
      */
-    public function setDefaultValuePeriod(?FHIRPeriod $defaultValuePeriod = null): object
+    public function setDefaultValuePeriod(null|FHIRPeriod $defaultValuePeriod = null): self
     {
+        if (null === $defaultValuePeriod) {
+            $defaultValuePeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->defaultValuePeriod, $defaultValuePeriod);
         $this->defaultValuePeriod = $defaultValuePeriod;
         return $this;
@@ -7886,7 +7995,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getDefaultValueQuantity(): ?FHIRQuantity
+    public function getDefaultValueQuantity(): null|FHIRQuantity
     {
         return $this->defaultValueQuantity;
     }
@@ -7904,8 +8013,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $defaultValueQuantity
      * @return static
      */
-    public function setDefaultValueQuantity(?FHIRQuantity $defaultValueQuantity = null): object
+    public function setDefaultValueQuantity(null|FHIRQuantity $defaultValueQuantity = null): self
     {
+        if (null === $defaultValueQuantity) {
+            $defaultValueQuantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->defaultValueQuantity, $defaultValueQuantity);
         $this->defaultValueQuantity = $defaultValueQuantity;
         return $this;
@@ -7921,7 +8033,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getDefaultValueRange(): ?FHIRRange
+    public function getDefaultValueRange(): null|FHIRRange
     {
         return $this->defaultValueRange;
     }
@@ -7937,8 +8049,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $defaultValueRange
      * @return static
      */
-    public function setDefaultValueRange(?FHIRRange $defaultValueRange = null): object
+    public function setDefaultValueRange(null|FHIRRange $defaultValueRange = null): self
     {
+        if (null === $defaultValueRange) {
+            $defaultValueRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->defaultValueRange, $defaultValueRange);
         $this->defaultValueRange = $defaultValueRange;
         return $this;
@@ -7955,7 +8070,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    public function getDefaultValueRatio(): ?FHIRRatio
+    public function getDefaultValueRatio(): null|FHIRRatio
     {
         return $this->defaultValueRatio;
     }
@@ -7972,8 +8087,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRatio $defaultValueRatio
      * @return static
      */
-    public function setDefaultValueRatio(?FHIRRatio $defaultValueRatio = null): object
+    public function setDefaultValueRatio(null|FHIRRatio $defaultValueRatio = null): self
     {
+        if (null === $defaultValueRatio) {
+            $defaultValueRatio = new FHIRRatio();
+        }
         $this->_trackValueSet($this->defaultValueRatio, $defaultValueRatio);
         $this->defaultValueRatio = $defaultValueRatio;
         return $this;
@@ -7989,7 +8107,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getDefaultValueReference(): ?FHIRReference
+    public function getDefaultValueReference(): null|FHIRReference
     {
         return $this->defaultValueReference;
     }
@@ -8005,8 +8123,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $defaultValueReference
      * @return static
      */
-    public function setDefaultValueReference(?FHIRReference $defaultValueReference = null): object
+    public function setDefaultValueReference(null|FHIRReference $defaultValueReference = null): self
     {
+        if (null === $defaultValueReference) {
+            $defaultValueReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->defaultValueReference, $defaultValueReference);
         $this->defaultValueReference = $defaultValueReference;
         return $this;
@@ -8023,7 +8144,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    public function getDefaultValueSampledData(): ?FHIRSampledData
+    public function getDefaultValueSampledData(): null|FHIRSampledData
     {
         return $this->defaultValueSampledData;
     }
@@ -8040,8 +8161,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData $defaultValueSampledData
      * @return static
      */
-    public function setDefaultValueSampledData(?FHIRSampledData $defaultValueSampledData = null): object
+    public function setDefaultValueSampledData(null|FHIRSampledData $defaultValueSampledData = null): self
     {
+        if (null === $defaultValueSampledData) {
+            $defaultValueSampledData = new FHIRSampledData();
+        }
         $this->_trackValueSet($this->defaultValueSampledData, $defaultValueSampledData);
         $this->defaultValueSampledData = $defaultValueSampledData;
         return $this;
@@ -8061,7 +8185,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSignature
      */
-    public function getDefaultValueSignature(): ?FHIRSignature
+    public function getDefaultValueSignature(): null|FHIRSignature
     {
         return $this->defaultValueSignature;
     }
@@ -8081,8 +8205,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSignature $defaultValueSignature
      * @return static
      */
-    public function setDefaultValueSignature(?FHIRSignature $defaultValueSignature = null): object
+    public function setDefaultValueSignature(null|FHIRSignature $defaultValueSignature = null): self
     {
+        if (null === $defaultValueSignature) {
+            $defaultValueSignature = new FHIRSignature();
+        }
         $this->_trackValueSet($this->defaultValueSignature, $defaultValueSignature);
         $this->defaultValueSignature = $defaultValueSignature;
         return $this;
@@ -8102,7 +8229,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    public function getDefaultValueTiming(): ?FHIRTiming
+    public function getDefaultValueTiming(): null|FHIRTiming
     {
         return $this->defaultValueTiming;
     }
@@ -8122,8 +8249,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming $defaultValueTiming
      * @return static
      */
-    public function setDefaultValueTiming(?FHIRTiming $defaultValueTiming = null): object
+    public function setDefaultValueTiming(null|FHIRTiming $defaultValueTiming = null): self
     {
+        if (null === $defaultValueTiming) {
+            $defaultValueTiming = new FHIRTiming();
+        }
         $this->_trackValueSet($this->defaultValueTiming, $defaultValueTiming);
         $this->defaultValueTiming = $defaultValueTiming;
         return $this;
@@ -8139,7 +8269,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail
      */
-    public function getDefaultValueContactDetail(): ?FHIRContactDetail
+    public function getDefaultValueContactDetail(): null|FHIRContactDetail
     {
         return $this->defaultValueContactDetail;
     }
@@ -8155,8 +8285,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $defaultValueContactDetail
      * @return static
      */
-    public function setDefaultValueContactDetail(?FHIRContactDetail $defaultValueContactDetail = null): object
+    public function setDefaultValueContactDetail(null|FHIRContactDetail $defaultValueContactDetail = null): self
     {
+        if (null === $defaultValueContactDetail) {
+            $defaultValueContactDetail = new FHIRContactDetail();
+        }
         $this->_trackValueSet($this->defaultValueContactDetail, $defaultValueContactDetail);
         $this->defaultValueContactDetail = $defaultValueContactDetail;
         return $this;
@@ -8173,7 +8306,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContributor
      */
-    public function getDefaultValueContributor(): ?FHIRContributor
+    public function getDefaultValueContributor(): null|FHIRContributor
     {
         return $this->defaultValueContributor;
     }
@@ -8190,8 +8323,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContributor $defaultValueContributor
      * @return static
      */
-    public function setDefaultValueContributor(?FHIRContributor $defaultValueContributor = null): object
+    public function setDefaultValueContributor(null|FHIRContributor $defaultValueContributor = null): self
     {
+        if (null === $defaultValueContributor) {
+            $defaultValueContributor = new FHIRContributor();
+        }
         $this->_trackValueSet($this->defaultValueContributor, $defaultValueContributor);
         $this->defaultValueContributor = $defaultValueContributor;
         return $this;
@@ -8208,7 +8344,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement
      */
-    public function getDefaultValueDataRequirement(): ?FHIRDataRequirement
+    public function getDefaultValueDataRequirement(): null|FHIRDataRequirement
     {
         return $this->defaultValueDataRequirement;
     }
@@ -8225,8 +8361,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement $defaultValueDataRequirement
      * @return static
      */
-    public function setDefaultValueDataRequirement(?FHIRDataRequirement $defaultValueDataRequirement = null): object
+    public function setDefaultValueDataRequirement(null|FHIRDataRequirement $defaultValueDataRequirement = null): self
     {
+        if (null === $defaultValueDataRequirement) {
+            $defaultValueDataRequirement = new FHIRDataRequirement();
+        }
         $this->_trackValueSet($this->defaultValueDataRequirement, $defaultValueDataRequirement);
         $this->defaultValueDataRequirement = $defaultValueDataRequirement;
         return $this;
@@ -8244,7 +8383,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRExpression
      */
-    public function getDefaultValueExpression(): ?FHIRExpression
+    public function getDefaultValueExpression(): null|FHIRExpression
     {
         return $this->defaultValueExpression;
     }
@@ -8262,8 +8401,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRExpression $defaultValueExpression
      * @return static
      */
-    public function setDefaultValueExpression(?FHIRExpression $defaultValueExpression = null): object
+    public function setDefaultValueExpression(null|FHIRExpression $defaultValueExpression = null): self
     {
+        if (null === $defaultValueExpression) {
+            $defaultValueExpression = new FHIRExpression();
+        }
         $this->_trackValueSet($this->defaultValueExpression, $defaultValueExpression);
         $this->defaultValueExpression = $defaultValueExpression;
         return $this;
@@ -8281,7 +8423,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition
      */
-    public function getDefaultValueParameterDefinition(): ?FHIRParameterDefinition
+    public function getDefaultValueParameterDefinition(): null|FHIRParameterDefinition
     {
         return $this->defaultValueParameterDefinition;
     }
@@ -8299,8 +8441,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition $defaultValueParameterDefinition
      * @return static
      */
-    public function setDefaultValueParameterDefinition(?FHIRParameterDefinition $defaultValueParameterDefinition = null): object
+    public function setDefaultValueParameterDefinition(null|FHIRParameterDefinition $defaultValueParameterDefinition = null): self
     {
+        if (null === $defaultValueParameterDefinition) {
+            $defaultValueParameterDefinition = new FHIRParameterDefinition();
+        }
         $this->_trackValueSet($this->defaultValueParameterDefinition, $defaultValueParameterDefinition);
         $this->defaultValueParameterDefinition = $defaultValueParameterDefinition;
         return $this;
@@ -8317,7 +8462,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact
      */
-    public function getDefaultValueRelatedArtifact(): ?FHIRRelatedArtifact
+    public function getDefaultValueRelatedArtifact(): null|FHIRRelatedArtifact
     {
         return $this->defaultValueRelatedArtifact;
     }
@@ -8334,8 +8479,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact $defaultValueRelatedArtifact
      * @return static
      */
-    public function setDefaultValueRelatedArtifact(?FHIRRelatedArtifact $defaultValueRelatedArtifact = null): object
+    public function setDefaultValueRelatedArtifact(null|FHIRRelatedArtifact $defaultValueRelatedArtifact = null): self
     {
+        if (null === $defaultValueRelatedArtifact) {
+            $defaultValueRelatedArtifact = new FHIRRelatedArtifact();
+        }
         $this->_trackValueSet($this->defaultValueRelatedArtifact, $defaultValueRelatedArtifact);
         $this->defaultValueRelatedArtifact = $defaultValueRelatedArtifact;
         return $this;
@@ -8352,7 +8500,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition
      */
-    public function getDefaultValueTriggerDefinition(): ?FHIRTriggerDefinition
+    public function getDefaultValueTriggerDefinition(): null|FHIRTriggerDefinition
     {
         return $this->defaultValueTriggerDefinition;
     }
@@ -8369,8 +8517,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition $defaultValueTriggerDefinition
      * @return static
      */
-    public function setDefaultValueTriggerDefinition(?FHIRTriggerDefinition $defaultValueTriggerDefinition = null): object
+    public function setDefaultValueTriggerDefinition(null|FHIRTriggerDefinition $defaultValueTriggerDefinition = null): self
     {
+        if (null === $defaultValueTriggerDefinition) {
+            $defaultValueTriggerDefinition = new FHIRTriggerDefinition();
+        }
         $this->_trackValueSet($this->defaultValueTriggerDefinition, $defaultValueTriggerDefinition);
         $this->defaultValueTriggerDefinition = $defaultValueTriggerDefinition;
         return $this;
@@ -8389,7 +8540,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext
      */
-    public function getDefaultValueUsageContext(): ?FHIRUsageContext
+    public function getDefaultValueUsageContext(): null|FHIRUsageContext
     {
         return $this->defaultValueUsageContext;
     }
@@ -8408,8 +8559,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $defaultValueUsageContext
      * @return static
      */
-    public function setDefaultValueUsageContext(?FHIRUsageContext $defaultValueUsageContext = null): object
+    public function setDefaultValueUsageContext(null|FHIRUsageContext $defaultValueUsageContext = null): self
     {
+        if (null === $defaultValueUsageContext) {
+            $defaultValueUsageContext = new FHIRUsageContext();
+        }
         $this->_trackValueSet($this->defaultValueUsageContext, $defaultValueUsageContext);
         $this->defaultValueUsageContext = $defaultValueUsageContext;
         return $this;
@@ -8425,7 +8579,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage
      */
-    public function getDefaultValueDosage(): ?FHIRDosage
+    public function getDefaultValueDosage(): null|FHIRDosage
     {
         return $this->defaultValueDosage;
     }
@@ -8441,8 +8595,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage $defaultValueDosage
      * @return static
      */
-    public function setDefaultValueDosage(?FHIRDosage $defaultValueDosage = null): object
+    public function setDefaultValueDosage(null|FHIRDosage $defaultValueDosage = null): self
     {
+        if (null === $defaultValueDosage) {
+            $defaultValueDosage = new FHIRDosage();
+        }
         $this->_trackValueSet($this->defaultValueDosage, $defaultValueDosage);
         $this->defaultValueDosage = $defaultValueDosage;
         return $this;
@@ -8460,7 +8617,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMeta
      */
-    public function getDefaultValueMeta(): ?FHIRMeta
+    public function getDefaultValueMeta(): null|FHIRMeta
     {
         return $this->defaultValueMeta;
     }
@@ -8478,8 +8635,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMeta $defaultValueMeta
      * @return static
      */
-    public function setDefaultValueMeta(?FHIRMeta $defaultValueMeta = null): object
+    public function setDefaultValueMeta(null|FHIRMeta $defaultValueMeta = null): self
     {
+        if (null === $defaultValueMeta) {
+            $defaultValueMeta = new FHIRMeta();
+        }
         $this->_trackValueSet($this->defaultValueMeta, $defaultValueMeta);
         $this->defaultValueMeta = $defaultValueMeta;
         return $this;
@@ -8497,9 +8657,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The Implicit meaning that is to be understood when this element is missing (e.g.
      * 'when this element is missing, the period is ongoing').
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getMeaningWhenMissing(): ?FHIRMarkdown
+    public function getMeaningWhenMissing(): null|FHIRMarkdown
     {
         return $this->meaningWhenMissing;
     }
@@ -8516,15 +8676,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * The Implicit meaning that is to be understood when this element is missing (e.g.
      * 'when this element is missing, the period is ongoing').
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $meaningWhenMissing
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $meaningWhenMissing
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMeaningWhenMissing($meaningWhenMissing = null): object
+    public function setMeaningWhenMissing(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $meaningWhenMissing = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $meaningWhenMissing && !($meaningWhenMissing instanceof FHIRMarkdown)) {
             $meaningWhenMissing = new FHIRMarkdown($meaningWhenMissing);
         }
         $this->_trackValueSet($this->meaningWhenMissing, $meaningWhenMissing);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MEANING_WHEN_MISSING])) {
+            $this->_primitiveXmlLocations[self::FIELD_MEANING_WHEN_MISSING] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MEANING_WHEN_MISSING][0] = $xmlLocation;
         $this->meaningWhenMissing = $meaningWhenMissing;
         return $this;
     }
@@ -8538,9 +8703,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * describes what that meaning is. If absent, it means that the order of the
      * element has no meaning.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getOrderMeaning(): ?FHIRString
+    public function getOrderMeaning(): null|FHIRString
     {
         return $this->orderMeaning;
     }
@@ -8554,15 +8719,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * describes what that meaning is. If absent, it means that the order of the
      * element has no meaning.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $orderMeaning
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $orderMeaning
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOrderMeaning($orderMeaning = null): object
+    public function setOrderMeaning(null|string|FHIRStringPrimitive|FHIRString $orderMeaning = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $orderMeaning && !($orderMeaning instanceof FHIRString)) {
             $orderMeaning = new FHIRString($orderMeaning);
         }
         $this->_trackValueSet($this->orderMeaning, $orderMeaning);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_ORDER_MEANING])) {
+            $this->_primitiveXmlLocations[self::FIELD_ORDER_MEANING] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_ORDER_MEANING][0] = $xmlLocation;
         $this->orderMeaning = $orderMeaning;
         return $this;
     }
@@ -8577,9 +8747,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    public function getFixedBase64Binary(): ?FHIRBase64Binary
+    public function getFixedBase64Binary(): null|FHIRBase64Binary
     {
         return $this->fixedBase64Binary;
     }
@@ -8594,15 +8764,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $fixedBase64Binary
+     * @param null|string|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $fixedBase64Binary
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedBase64Binary($fixedBase64Binary = null): object
+    public function setFixedBase64Binary(null|string|FHIRBase64BinaryPrimitive|FHIRBase64Binary $fixedBase64Binary = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedBase64Binary && !($fixedBase64Binary instanceof FHIRBase64Binary)) {
             $fixedBase64Binary = new FHIRBase64Binary($fixedBase64Binary);
         }
         $this->_trackValueSet($this->fixedBase64Binary, $fixedBase64Binary);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_BASE_64BINARY])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_BASE_64BINARY] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_BASE_64BINARY][0] = $xmlLocation;
         $this->fixedBase64Binary = $fixedBase64Binary;
         return $this;
     }
@@ -8616,9 +8791,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getFixedBoolean(): ?FHIRBoolean
+    public function getFixedBoolean(): null|FHIRBoolean
     {
         return $this->fixedBoolean;
     }
@@ -8632,15 +8807,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $fixedBoolean
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $fixedBoolean
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedBoolean($fixedBoolean = null): object
+    public function setFixedBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $fixedBoolean = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedBoolean && !($fixedBoolean instanceof FHIRBoolean)) {
             $fixedBoolean = new FHIRBoolean($fixedBoolean);
         }
         $this->_trackValueSet($this->fixedBoolean, $fixedBoolean);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_BOOLEAN])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_BOOLEAN] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_BOOLEAN][0] = $xmlLocation;
         $this->fixedBoolean = $fixedBoolean;
         return $this;
     }
@@ -8656,9 +8836,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getFixedCanonical(): ?FHIRCanonical
+    public function getFixedCanonical(): null|FHIRCanonical
     {
         return $this->fixedCanonical;
     }
@@ -8674,15 +8854,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $fixedCanonical
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $fixedCanonical
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedCanonical($fixedCanonical = null): object
+    public function setFixedCanonical(null|string|FHIRCanonicalPrimitive|FHIRCanonical $fixedCanonical = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedCanonical && !($fixedCanonical instanceof FHIRCanonical)) {
             $fixedCanonical = new FHIRCanonical($fixedCanonical);
         }
         $this->_trackValueSet($this->fixedCanonical, $fixedCanonical);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_CANONICAL])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_CANONICAL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_CANONICAL][0] = $xmlLocation;
         $this->fixedCanonical = $fixedCanonical;
         return $this;
     }
@@ -8698,9 +8883,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    public function getFixedCode(): ?FHIRCode
+    public function getFixedCode(): null|FHIRCode
     {
         return $this->fixedCode;
     }
@@ -8716,15 +8901,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $fixedCode
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $fixedCode
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedCode($fixedCode = null): object
+    public function setFixedCode(null|string|FHIRCodePrimitive|FHIRCode $fixedCode = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedCode && !($fixedCode instanceof FHIRCode)) {
             $fixedCode = new FHIRCode($fixedCode);
         }
         $this->_trackValueSet($this->fixedCode, $fixedCode);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_CODE])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_CODE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_CODE][0] = $xmlLocation;
         $this->fixedCode = $fixedCode;
         return $this;
     }
@@ -8740,9 +8930,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getFixedDate(): ?FHIRDate
+    public function getFixedDate(): null|FHIRDate
     {
         return $this->fixedDate;
     }
@@ -8758,15 +8948,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $fixedDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $fixedDate
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedDate($fixedDate = null): object
+    public function setFixedDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $fixedDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedDate && !($fixedDate instanceof FHIRDate)) {
             $fixedDate = new FHIRDate($fixedDate);
         }
         $this->_trackValueSet($this->fixedDate, $fixedDate);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_DATE])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_DATE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_DATE][0] = $xmlLocation;
         $this->fixedDate = $fixedDate;
         return $this;
     }
@@ -8784,9 +8979,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getFixedDateTime(): ?FHIRDateTime
+    public function getFixedDateTime(): null|FHIRDateTime
     {
         return $this->fixedDateTime;
     }
@@ -8804,15 +8999,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $fixedDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $fixedDateTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedDateTime($fixedDateTime = null): object
+    public function setFixedDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $fixedDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedDateTime && !($fixedDateTime instanceof FHIRDateTime)) {
             $fixedDateTime = new FHIRDateTime($fixedDateTime);
         }
         $this->_trackValueSet($this->fixedDateTime, $fixedDateTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_DATE_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_DATE_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_DATE_TIME][0] = $xmlLocation;
         $this->fixedDateTime = $fixedDateTime;
         return $this;
     }
@@ -8828,9 +9028,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getFixedDecimal(): ?FHIRDecimal
+    public function getFixedDecimal(): null|FHIRDecimal
     {
         return $this->fixedDecimal;
     }
@@ -8846,15 +9046,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $fixedDecimal
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $fixedDecimal
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedDecimal($fixedDecimal = null): object
+    public function setFixedDecimal(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $fixedDecimal = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedDecimal && !($fixedDecimal instanceof FHIRDecimal)) {
             $fixedDecimal = new FHIRDecimal($fixedDecimal);
         }
         $this->_trackValueSet($this->fixedDecimal, $fixedDecimal);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_DECIMAL])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_DECIMAL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_DECIMAL][0] = $xmlLocation;
         $this->fixedDecimal = $fixedDecimal;
         return $this;
     }
@@ -8872,9 +9077,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    public function getFixedId(): ?FHIRId
+    public function getFixedId(): null|FHIRId
     {
         return $this->fixedId;
     }
@@ -8892,15 +9097,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $fixedId
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $fixedId
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedId($fixedId = null): object
+    public function setFixedId(null|string|FHIRIdPrimitive|FHIRId $fixedId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedId && !($fixedId instanceof FHIRId)) {
             $fixedId = new FHIRId($fixedId);
         }
         $this->_trackValueSet($this->fixedId, $fixedId);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_ID])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_ID] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_ID][0] = $xmlLocation;
         $this->fixedId = $fixedId;
         return $this;
     }
@@ -8918,9 +9128,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    public function getFixedInstant(): ?FHIRInstant
+    public function getFixedInstant(): null|FHIRInstant
     {
         return $this->fixedInstant;
     }
@@ -8938,15 +9148,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $fixedInstant
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $fixedInstant
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedInstant($fixedInstant = null): object
+    public function setFixedInstant(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $fixedInstant = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedInstant && !($fixedInstant instanceof FHIRInstant)) {
             $fixedInstant = new FHIRInstant($fixedInstant);
         }
         $this->_trackValueSet($this->fixedInstant, $fixedInstant);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_INSTANT])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_INSTANT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_INSTANT][0] = $xmlLocation;
         $this->fixedInstant = $fixedInstant;
         return $this;
     }
@@ -8961,9 +9176,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getFixedInteger(): ?FHIRInteger
+    public function getFixedInteger(): null|FHIRInteger
     {
         return $this->fixedInteger;
     }
@@ -8978,15 +9193,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $fixedInteger
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $fixedInteger
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedInteger($fixedInteger = null): object
+    public function setFixedInteger(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $fixedInteger = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedInteger && !($fixedInteger instanceof FHIRInteger)) {
             $fixedInteger = new FHIRInteger($fixedInteger);
         }
         $this->_trackValueSet($this->fixedInteger, $fixedInteger);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_INTEGER])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_INTEGER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_INTEGER][0] = $xmlLocation;
         $this->fixedInteger = $fixedInteger;
         return $this;
     }
@@ -9005,9 +9225,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getFixedMarkdown(): ?FHIRMarkdown
+    public function getFixedMarkdown(): null|FHIRMarkdown
     {
         return $this->fixedMarkdown;
     }
@@ -9026,15 +9246,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $fixedMarkdown
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $fixedMarkdown
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedMarkdown($fixedMarkdown = null): object
+    public function setFixedMarkdown(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $fixedMarkdown = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedMarkdown && !($fixedMarkdown instanceof FHIRMarkdown)) {
             $fixedMarkdown = new FHIRMarkdown($fixedMarkdown);
         }
         $this->_trackValueSet($this->fixedMarkdown, $fixedMarkdown);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_MARKDOWN])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_MARKDOWN] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_MARKDOWN][0] = $xmlLocation;
         $this->fixedMarkdown = $fixedMarkdown;
         return $this;
     }
@@ -9050,9 +9275,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIROid
      */
-    public function getFixedOid(): ?FHIROid
+    public function getFixedOid(): null|FHIROid
     {
         return $this->fixedOid;
     }
@@ -9068,15 +9293,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid $fixedOid
+     * @param null|string|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid $fixedOid
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedOid($fixedOid = null): object
+    public function setFixedOid(null|string|FHIROidPrimitive|FHIROid $fixedOid = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedOid && !($fixedOid instanceof FHIROid)) {
             $fixedOid = new FHIROid($fixedOid);
         }
         $this->_trackValueSet($this->fixedOid, $fixedOid);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_OID])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_OID] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_OID][0] = $xmlLocation;
         $this->fixedOid = $fixedOid;
         return $this;
     }
@@ -9091,9 +9321,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getFixedPositiveInt(): ?FHIRPositiveInt
+    public function getFixedPositiveInt(): null|FHIRPositiveInt
     {
         return $this->fixedPositiveInt;
     }
@@ -9108,15 +9338,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $fixedPositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $fixedPositiveInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedPositiveInt($fixedPositiveInt = null): object
+    public function setFixedPositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $fixedPositiveInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedPositiveInt && !($fixedPositiveInt instanceof FHIRPositiveInt)) {
             $fixedPositiveInt = new FHIRPositiveInt($fixedPositiveInt);
         }
         $this->_trackValueSet($this->fixedPositiveInt, $fixedPositiveInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_POSITIVE_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_POSITIVE_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_POSITIVE_INT][0] = $xmlLocation;
         $this->fixedPositiveInt = $fixedPositiveInt;
         return $this;
     }
@@ -9131,9 +9366,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getFixedString(): ?FHIRString
+    public function getFixedString(): null|FHIRString
     {
         return $this->fixedString;
     }
@@ -9148,15 +9383,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $fixedString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $fixedString
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedString($fixedString = null): object
+    public function setFixedString(null|string|FHIRStringPrimitive|FHIRString $fixedString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedString && !($fixedString instanceof FHIRString)) {
             $fixedString = new FHIRString($fixedString);
         }
         $this->_trackValueSet($this->fixedString, $fixedString);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_STRING])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_STRING] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_STRING][0] = $xmlLocation;
         $this->fixedString = $fixedString;
         return $this;
     }
@@ -9170,9 +9410,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    public function getFixedTime(): ?FHIRTime
+    public function getFixedTime(): null|FHIRTime
     {
         return $this->fixedTime;
     }
@@ -9186,15 +9426,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $fixedTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $fixedTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedTime($fixedTime = null): object
+    public function setFixedTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $fixedTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedTime && !($fixedTime instanceof FHIRTime)) {
             $fixedTime = new FHIRTime($fixedTime);
         }
         $this->_trackValueSet($this->fixedTime, $fixedTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_TIME][0] = $xmlLocation;
         $this->fixedTime = $fixedTime;
         return $this;
     }
@@ -9209,9 +9454,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    public function getFixedUnsignedInt(): ?FHIRUnsignedInt
+    public function getFixedUnsignedInt(): null|FHIRUnsignedInt
     {
         return $this->fixedUnsignedInt;
     }
@@ -9226,15 +9471,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $fixedUnsignedInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $fixedUnsignedInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedUnsignedInt($fixedUnsignedInt = null): object
+    public function setFixedUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $fixedUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedUnsignedInt && !($fixedUnsignedInt instanceof FHIRUnsignedInt)) {
             $fixedUnsignedInt = new FHIRUnsignedInt($fixedUnsignedInt);
         }
         $this->_trackValueSet($this->fixedUnsignedInt, $fixedUnsignedInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_UNSIGNED_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_UNSIGNED_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_UNSIGNED_INT][0] = $xmlLocation;
         $this->fixedUnsignedInt = $fixedUnsignedInt;
         return $this;
     }
@@ -9249,9 +9499,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getFixedUri(): ?FHIRUri
+    public function getFixedUri(): null|FHIRUri
     {
         return $this->fixedUri;
     }
@@ -9266,15 +9516,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $fixedUri
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $fixedUri
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedUri($fixedUri = null): object
+    public function setFixedUri(null|string|FHIRUriPrimitive|FHIRUri $fixedUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedUri && !($fixedUri instanceof FHIRUri)) {
             $fixedUri = new FHIRUri($fixedUri);
         }
         $this->_trackValueSet($this->fixedUri, $fixedUri);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_URI])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_URI] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_URI][0] = $xmlLocation;
         $this->fixedUri = $fixedUri;
         return $this;
     }
@@ -9289,9 +9544,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    public function getFixedUrl(): ?FHIRUrl
+    public function getFixedUrl(): null|FHIRUrl
     {
         return $this->fixedUrl;
     }
@@ -9306,15 +9561,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $fixedUrl
+     * @param null|string|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $fixedUrl
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedUrl($fixedUrl = null): object
+    public function setFixedUrl(null|string|FHIRUrlPrimitive|FHIRUrl $fixedUrl = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedUrl && !($fixedUrl instanceof FHIRUrl)) {
             $fixedUrl = new FHIRUrl($fixedUrl);
         }
         $this->_trackValueSet($this->fixedUrl, $fixedUrl);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_URL])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_URL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_URL][0] = $xmlLocation;
         $this->fixedUrl = $fixedUrl;
         return $this;
     }
@@ -9330,9 +9590,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUuid
      */
-    public function getFixedUuid(): ?FHIRUuid
+    public function getFixedUuid(): null|FHIRUuid
     {
         return $this->fixedUuid;
     }
@@ -9348,15 +9608,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * all values must be an exact match (case and accent sensitive). Missing
      * elements/attributes must also be missing.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid $fixedUuid
+     * @param null|string|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid $fixedUuid
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFixedUuid($fixedUuid = null): object
+    public function setFixedUuid(null|string|FHIRUuidPrimitive|FHIRUuid $fixedUuid = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $fixedUuid && !($fixedUuid instanceof FHIRUuid)) {
             $fixedUuid = new FHIRUuid($fixedUuid);
         }
         $this->_trackValueSet($this->fixedUuid, $fixedUuid);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_FIXED_UUID])) {
+            $this->_primitiveXmlLocations[self::FIELD_FIXED_UUID] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_FIXED_UUID][0] = $xmlLocation;
         $this->fixedUuid = $fixedUuid;
         return $this;
     }
@@ -9377,7 +9642,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
-    public function getFixedAddress(): ?FHIRAddress
+    public function getFixedAddress(): null|FHIRAddress
     {
         return $this->fixedAddress;
     }
@@ -9399,8 +9664,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAddress $fixedAddress
      * @return static
      */
-    public function setFixedAddress(?FHIRAddress $fixedAddress = null): object
+    public function setFixedAddress(null|FHIRAddress $fixedAddress = null): self
     {
+        if (null === $fixedAddress) {
+            $fixedAddress = new FHIRAddress();
+        }
         $this->_trackValueSet($this->fixedAddress, $fixedAddress);
         $this->fixedAddress = $fixedAddress;
         return $this;
@@ -9418,7 +9686,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    public function getFixedAge(): ?FHIRAge
+    public function getFixedAge(): null|FHIRAge
     {
         return $this->fixedAge;
     }
@@ -9436,8 +9704,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge $fixedAge
      * @return static
      */
-    public function setFixedAge(?FHIRAge $fixedAge = null): object
+    public function setFixedAge(null|FHIRAge $fixedAge = null): self
     {
+        if (null === $fixedAge) {
+            $fixedAge = new FHIRAge();
+        }
         $this->_trackValueSet($this->fixedAge, $fixedAge);
         $this->fixedAge = $fixedAge;
         return $this;
@@ -9456,7 +9727,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation
      */
-    public function getFixedAnnotation(): ?FHIRAnnotation
+    public function getFixedAnnotation(): null|FHIRAnnotation
     {
         return $this->fixedAnnotation;
     }
@@ -9475,8 +9746,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $fixedAnnotation
      * @return static
      */
-    public function setFixedAnnotation(?FHIRAnnotation $fixedAnnotation = null): object
+    public function setFixedAnnotation(null|FHIRAnnotation $fixedAnnotation = null): self
     {
+        if (null === $fixedAnnotation) {
+            $fixedAnnotation = new FHIRAnnotation();
+        }
         $this->_trackValueSet($this->fixedAnnotation, $fixedAnnotation);
         $this->fixedAnnotation = $fixedAnnotation;
         return $this;
@@ -9494,7 +9768,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    public function getFixedAttachment(): ?FHIRAttachment
+    public function getFixedAttachment(): null|FHIRAttachment
     {
         return $this->fixedAttachment;
     }
@@ -9512,8 +9786,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment $fixedAttachment
      * @return static
      */
-    public function setFixedAttachment(?FHIRAttachment $fixedAttachment = null): object
+    public function setFixedAttachment(null|FHIRAttachment $fixedAttachment = null): self
     {
+        if (null === $fixedAttachment) {
+            $fixedAttachment = new FHIRAttachment();
+        }
         $this->_trackValueSet($this->fixedAttachment, $fixedAttachment);
         $this->fixedAttachment = $fixedAttachment;
         return $this;
@@ -9532,7 +9809,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getFixedCodeableConcept(): ?FHIRCodeableConcept
+    public function getFixedCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->fixedCodeableConcept;
     }
@@ -9551,8 +9828,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $fixedCodeableConcept
      * @return static
      */
-    public function setFixedCodeableConcept(?FHIRCodeableConcept $fixedCodeableConcept = null): object
+    public function setFixedCodeableConcept(null|FHIRCodeableConcept $fixedCodeableConcept = null): self
     {
+        if (null === $fixedCodeableConcept) {
+            $fixedCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->fixedCodeableConcept, $fixedCodeableConcept);
         $this->fixedCodeableConcept = $fixedCodeableConcept;
         return $this;
@@ -9570,7 +9850,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    public function getFixedCoding(): ?FHIRCoding
+    public function getFixedCoding(): null|FHIRCoding
     {
         return $this->fixedCoding;
     }
@@ -9588,8 +9868,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $fixedCoding
      * @return static
      */
-    public function setFixedCoding(?FHIRCoding $fixedCoding = null): object
+    public function setFixedCoding(null|FHIRCoding $fixedCoding = null): self
     {
+        if (null === $fixedCoding) {
+            $fixedCoding = new FHIRCoding();
+        }
         $this->_trackValueSet($this->fixedCoding, $fixedCoding);
         $this->fixedCoding = $fixedCoding;
         return $this;
@@ -9608,7 +9891,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint
      */
-    public function getFixedContactPoint(): ?FHIRContactPoint
+    public function getFixedContactPoint(): null|FHIRContactPoint
     {
         return $this->fixedContactPoint;
     }
@@ -9627,8 +9910,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint $fixedContactPoint
      * @return static
      */
-    public function setFixedContactPoint(?FHIRContactPoint $fixedContactPoint = null): object
+    public function setFixedContactPoint(null|FHIRContactPoint $fixedContactPoint = null): self
     {
+        if (null === $fixedContactPoint) {
+            $fixedContactPoint = new FHIRContactPoint();
+        }
         $this->_trackValueSet($this->fixedContactPoint, $fixedContactPoint);
         $this->fixedContactPoint = $fixedContactPoint;
         return $this;
@@ -9648,7 +9934,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount
      */
-    public function getFixedCount(): ?FHIRCount
+    public function getFixedCount(): null|FHIRCount
     {
         return $this->fixedCount;
     }
@@ -9668,8 +9954,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount $fixedCount
      * @return static
      */
-    public function setFixedCount(?FHIRCount $fixedCount = null): object
+    public function setFixedCount(null|FHIRCount $fixedCount = null): self
     {
+        if (null === $fixedCount) {
+            $fixedCount = new FHIRCount();
+        }
         $this->_trackValueSet($this->fixedCount, $fixedCount);
         $this->fixedCount = $fixedCount;
         return $this;
@@ -9687,7 +9976,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance
      */
-    public function getFixedDistance(): ?FHIRDistance
+    public function getFixedDistance(): null|FHIRDistance
     {
         return $this->fixedDistance;
     }
@@ -9705,8 +9994,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance $fixedDistance
      * @return static
      */
-    public function setFixedDistance(?FHIRDistance $fixedDistance = null): object
+    public function setFixedDistance(null|FHIRDistance $fixedDistance = null): self
     {
+        if (null === $fixedDistance) {
+            $fixedDistance = new FHIRDistance();
+        }
         $this->_trackValueSet($this->fixedDistance, $fixedDistance);
         $this->fixedDistance = $fixedDistance;
         return $this;
@@ -9724,7 +10016,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    public function getFixedDuration(): ?FHIRDuration
+    public function getFixedDuration(): null|FHIRDuration
     {
         return $this->fixedDuration;
     }
@@ -9742,8 +10034,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration $fixedDuration
      * @return static
      */
-    public function setFixedDuration(?FHIRDuration $fixedDuration = null): object
+    public function setFixedDuration(null|FHIRDuration $fixedDuration = null): self
     {
+        if (null === $fixedDuration) {
+            $fixedDuration = new FHIRDuration();
+        }
         $this->_trackValueSet($this->fixedDuration, $fixedDuration);
         $this->fixedDuration = $fixedDuration;
         return $this;
@@ -9761,7 +10056,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
-    public function getFixedHumanName(): ?FHIRHumanName
+    public function getFixedHumanName(): null|FHIRHumanName
     {
         return $this->fixedHumanName;
     }
@@ -9779,8 +10074,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName $fixedHumanName
      * @return static
      */
-    public function setFixedHumanName(?FHIRHumanName $fixedHumanName = null): object
+    public function setFixedHumanName(null|FHIRHumanName $fixedHumanName = null): self
     {
+        if (null === $fixedHumanName) {
+            $fixedHumanName = new FHIRHumanName();
+        }
         $this->_trackValueSet($this->fixedHumanName, $fixedHumanName);
         $this->fixedHumanName = $fixedHumanName;
         return $this;
@@ -9799,7 +10097,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getFixedIdentifier(): ?FHIRIdentifier
+    public function getFixedIdentifier(): null|FHIRIdentifier
     {
         return $this->fixedIdentifier;
     }
@@ -9818,8 +10116,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $fixedIdentifier
      * @return static
      */
-    public function setFixedIdentifier(?FHIRIdentifier $fixedIdentifier = null): object
+    public function setFixedIdentifier(null|FHIRIdentifier $fixedIdentifier = null): self
     {
+        if (null === $fixedIdentifier) {
+            $fixedIdentifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->fixedIdentifier, $fixedIdentifier);
         $this->fixedIdentifier = $fixedIdentifier;
         return $this;
@@ -9837,7 +10138,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    public function getFixedMoney(): ?FHIRMoney
+    public function getFixedMoney(): null|FHIRMoney
     {
         return $this->fixedMoney;
     }
@@ -9855,8 +10156,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMoney $fixedMoney
      * @return static
      */
-    public function setFixedMoney(?FHIRMoney $fixedMoney = null): object
+    public function setFixedMoney(null|FHIRMoney $fixedMoney = null): self
     {
+        if (null === $fixedMoney) {
+            $fixedMoney = new FHIRMoney();
+        }
         $this->_trackValueSet($this->fixedMoney, $fixedMoney);
         $this->fixedMoney = $fixedMoney;
         return $this;
@@ -9874,7 +10178,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getFixedPeriod(): ?FHIRPeriod
+    public function getFixedPeriod(): null|FHIRPeriod
     {
         return $this->fixedPeriod;
     }
@@ -9892,8 +10196,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $fixedPeriod
      * @return static
      */
-    public function setFixedPeriod(?FHIRPeriod $fixedPeriod = null): object
+    public function setFixedPeriod(null|FHIRPeriod $fixedPeriod = null): self
     {
+        if (null === $fixedPeriod) {
+            $fixedPeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->fixedPeriod, $fixedPeriod);
         $this->fixedPeriod = $fixedPeriod;
         return $this;
@@ -9913,7 +10220,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getFixedQuantity(): ?FHIRQuantity
+    public function getFixedQuantity(): null|FHIRQuantity
     {
         return $this->fixedQuantity;
     }
@@ -9933,8 +10240,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $fixedQuantity
      * @return static
      */
-    public function setFixedQuantity(?FHIRQuantity $fixedQuantity = null): object
+    public function setFixedQuantity(null|FHIRQuantity $fixedQuantity = null): self
     {
+        if (null === $fixedQuantity) {
+            $fixedQuantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->fixedQuantity, $fixedQuantity);
         $this->fixedQuantity = $fixedQuantity;
         return $this;
@@ -9952,7 +10262,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getFixedRange(): ?FHIRRange
+    public function getFixedRange(): null|FHIRRange
     {
         return $this->fixedRange;
     }
@@ -9970,8 +10280,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $fixedRange
      * @return static
      */
-    public function setFixedRange(?FHIRRange $fixedRange = null): object
+    public function setFixedRange(null|FHIRRange $fixedRange = null): self
     {
+        if (null === $fixedRange) {
+            $fixedRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->fixedRange, $fixedRange);
         $this->fixedRange = $fixedRange;
         return $this;
@@ -9990,7 +10303,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    public function getFixedRatio(): ?FHIRRatio
+    public function getFixedRatio(): null|FHIRRatio
     {
         return $this->fixedRatio;
     }
@@ -10009,8 +10322,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRatio $fixedRatio
      * @return static
      */
-    public function setFixedRatio(?FHIRRatio $fixedRatio = null): object
+    public function setFixedRatio(null|FHIRRatio $fixedRatio = null): self
     {
+        if (null === $fixedRatio) {
+            $fixedRatio = new FHIRRatio();
+        }
         $this->_trackValueSet($this->fixedRatio, $fixedRatio);
         $this->fixedRatio = $fixedRatio;
         return $this;
@@ -10028,7 +10344,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getFixedReference(): ?FHIRReference
+    public function getFixedReference(): null|FHIRReference
     {
         return $this->fixedReference;
     }
@@ -10046,8 +10362,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $fixedReference
      * @return static
      */
-    public function setFixedReference(?FHIRReference $fixedReference = null): object
+    public function setFixedReference(null|FHIRReference $fixedReference = null): self
     {
+        if (null === $fixedReference) {
+            $fixedReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->fixedReference, $fixedReference);
         $this->fixedReference = $fixedReference;
         return $this;
@@ -10066,7 +10385,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    public function getFixedSampledData(): ?FHIRSampledData
+    public function getFixedSampledData(): null|FHIRSampledData
     {
         return $this->fixedSampledData;
     }
@@ -10085,8 +10404,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData $fixedSampledData
      * @return static
      */
-    public function setFixedSampledData(?FHIRSampledData $fixedSampledData = null): object
+    public function setFixedSampledData(null|FHIRSampledData $fixedSampledData = null): self
     {
+        if (null === $fixedSampledData) {
+            $fixedSampledData = new FHIRSampledData();
+        }
         $this->_trackValueSet($this->fixedSampledData, $fixedSampledData);
         $this->fixedSampledData = $fixedSampledData;
         return $this;
@@ -10108,7 +10430,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSignature
      */
-    public function getFixedSignature(): ?FHIRSignature
+    public function getFixedSignature(): null|FHIRSignature
     {
         return $this->fixedSignature;
     }
@@ -10130,8 +10452,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSignature $fixedSignature
      * @return static
      */
-    public function setFixedSignature(?FHIRSignature $fixedSignature = null): object
+    public function setFixedSignature(null|FHIRSignature $fixedSignature = null): self
     {
+        if (null === $fixedSignature) {
+            $fixedSignature = new FHIRSignature();
+        }
         $this->_trackValueSet($this->fixedSignature, $fixedSignature);
         $this->fixedSignature = $fixedSignature;
         return $this;
@@ -10153,7 +10478,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    public function getFixedTiming(): ?FHIRTiming
+    public function getFixedTiming(): null|FHIRTiming
     {
         return $this->fixedTiming;
     }
@@ -10175,8 +10500,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming $fixedTiming
      * @return static
      */
-    public function setFixedTiming(?FHIRTiming $fixedTiming = null): object
+    public function setFixedTiming(null|FHIRTiming $fixedTiming = null): self
     {
+        if (null === $fixedTiming) {
+            $fixedTiming = new FHIRTiming();
+        }
         $this->_trackValueSet($this->fixedTiming, $fixedTiming);
         $this->fixedTiming = $fixedTiming;
         return $this;
@@ -10194,7 +10522,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail
      */
-    public function getFixedContactDetail(): ?FHIRContactDetail
+    public function getFixedContactDetail(): null|FHIRContactDetail
     {
         return $this->fixedContactDetail;
     }
@@ -10212,8 +10540,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $fixedContactDetail
      * @return static
      */
-    public function setFixedContactDetail(?FHIRContactDetail $fixedContactDetail = null): object
+    public function setFixedContactDetail(null|FHIRContactDetail $fixedContactDetail = null): self
     {
+        if (null === $fixedContactDetail) {
+            $fixedContactDetail = new FHIRContactDetail();
+        }
         $this->_trackValueSet($this->fixedContactDetail, $fixedContactDetail);
         $this->fixedContactDetail = $fixedContactDetail;
         return $this;
@@ -10232,7 +10563,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContributor
      */
-    public function getFixedContributor(): ?FHIRContributor
+    public function getFixedContributor(): null|FHIRContributor
     {
         return $this->fixedContributor;
     }
@@ -10251,8 +10582,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContributor $fixedContributor
      * @return static
      */
-    public function setFixedContributor(?FHIRContributor $fixedContributor = null): object
+    public function setFixedContributor(null|FHIRContributor $fixedContributor = null): self
     {
+        if (null === $fixedContributor) {
+            $fixedContributor = new FHIRContributor();
+        }
         $this->_trackValueSet($this->fixedContributor, $fixedContributor);
         $this->fixedContributor = $fixedContributor;
         return $this;
@@ -10271,7 +10605,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement
      */
-    public function getFixedDataRequirement(): ?FHIRDataRequirement
+    public function getFixedDataRequirement(): null|FHIRDataRequirement
     {
         return $this->fixedDataRequirement;
     }
@@ -10290,8 +10624,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement $fixedDataRequirement
      * @return static
      */
-    public function setFixedDataRequirement(?FHIRDataRequirement $fixedDataRequirement = null): object
+    public function setFixedDataRequirement(null|FHIRDataRequirement $fixedDataRequirement = null): self
     {
+        if (null === $fixedDataRequirement) {
+            $fixedDataRequirement = new FHIRDataRequirement();
+        }
         $this->_trackValueSet($this->fixedDataRequirement, $fixedDataRequirement);
         $this->fixedDataRequirement = $fixedDataRequirement;
         return $this;
@@ -10311,7 +10648,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRExpression
      */
-    public function getFixedExpression(): ?FHIRExpression
+    public function getFixedExpression(): null|FHIRExpression
     {
         return $this->fixedExpression;
     }
@@ -10331,8 +10668,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRExpression $fixedExpression
      * @return static
      */
-    public function setFixedExpression(?FHIRExpression $fixedExpression = null): object
+    public function setFixedExpression(null|FHIRExpression $fixedExpression = null): self
     {
+        if (null === $fixedExpression) {
+            $fixedExpression = new FHIRExpression();
+        }
         $this->_trackValueSet($this->fixedExpression, $fixedExpression);
         $this->fixedExpression = $fixedExpression;
         return $this;
@@ -10352,7 +10692,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition
      */
-    public function getFixedParameterDefinition(): ?FHIRParameterDefinition
+    public function getFixedParameterDefinition(): null|FHIRParameterDefinition
     {
         return $this->fixedParameterDefinition;
     }
@@ -10372,8 +10712,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition $fixedParameterDefinition
      * @return static
      */
-    public function setFixedParameterDefinition(?FHIRParameterDefinition $fixedParameterDefinition = null): object
+    public function setFixedParameterDefinition(null|FHIRParameterDefinition $fixedParameterDefinition = null): self
     {
+        if (null === $fixedParameterDefinition) {
+            $fixedParameterDefinition = new FHIRParameterDefinition();
+        }
         $this->_trackValueSet($this->fixedParameterDefinition, $fixedParameterDefinition);
         $this->fixedParameterDefinition = $fixedParameterDefinition;
         return $this;
@@ -10392,7 +10735,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact
      */
-    public function getFixedRelatedArtifact(): ?FHIRRelatedArtifact
+    public function getFixedRelatedArtifact(): null|FHIRRelatedArtifact
     {
         return $this->fixedRelatedArtifact;
     }
@@ -10411,8 +10754,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact $fixedRelatedArtifact
      * @return static
      */
-    public function setFixedRelatedArtifact(?FHIRRelatedArtifact $fixedRelatedArtifact = null): object
+    public function setFixedRelatedArtifact(null|FHIRRelatedArtifact $fixedRelatedArtifact = null): self
     {
+        if (null === $fixedRelatedArtifact) {
+            $fixedRelatedArtifact = new FHIRRelatedArtifact();
+        }
         $this->_trackValueSet($this->fixedRelatedArtifact, $fixedRelatedArtifact);
         $this->fixedRelatedArtifact = $fixedRelatedArtifact;
         return $this;
@@ -10431,7 +10777,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition
      */
-    public function getFixedTriggerDefinition(): ?FHIRTriggerDefinition
+    public function getFixedTriggerDefinition(): null|FHIRTriggerDefinition
     {
         return $this->fixedTriggerDefinition;
     }
@@ -10450,8 +10796,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition $fixedTriggerDefinition
      * @return static
      */
-    public function setFixedTriggerDefinition(?FHIRTriggerDefinition $fixedTriggerDefinition = null): object
+    public function setFixedTriggerDefinition(null|FHIRTriggerDefinition $fixedTriggerDefinition = null): self
     {
+        if (null === $fixedTriggerDefinition) {
+            $fixedTriggerDefinition = new FHIRTriggerDefinition();
+        }
         $this->_trackValueSet($this->fixedTriggerDefinition, $fixedTriggerDefinition);
         $this->fixedTriggerDefinition = $fixedTriggerDefinition;
         return $this;
@@ -10472,7 +10821,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext
      */
-    public function getFixedUsageContext(): ?FHIRUsageContext
+    public function getFixedUsageContext(): null|FHIRUsageContext
     {
         return $this->fixedUsageContext;
     }
@@ -10493,8 +10842,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $fixedUsageContext
      * @return static
      */
-    public function setFixedUsageContext(?FHIRUsageContext $fixedUsageContext = null): object
+    public function setFixedUsageContext(null|FHIRUsageContext $fixedUsageContext = null): self
     {
+        if (null === $fixedUsageContext) {
+            $fixedUsageContext = new FHIRUsageContext();
+        }
         $this->_trackValueSet($this->fixedUsageContext, $fixedUsageContext);
         $this->fixedUsageContext = $fixedUsageContext;
         return $this;
@@ -10512,7 +10864,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage
      */
-    public function getFixedDosage(): ?FHIRDosage
+    public function getFixedDosage(): null|FHIRDosage
     {
         return $this->fixedDosage;
     }
@@ -10530,8 +10882,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage $fixedDosage
      * @return static
      */
-    public function setFixedDosage(?FHIRDosage $fixedDosage = null): object
+    public function setFixedDosage(null|FHIRDosage $fixedDosage = null): self
     {
+        if (null === $fixedDosage) {
+            $fixedDosage = new FHIRDosage();
+        }
         $this->_trackValueSet($this->fixedDosage, $fixedDosage);
         $this->fixedDosage = $fixedDosage;
         return $this;
@@ -10551,7 +10906,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMeta
      */
-    public function getFixedMeta(): ?FHIRMeta
+    public function getFixedMeta(): null|FHIRMeta
     {
         return $this->fixedMeta;
     }
@@ -10571,8 +10926,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMeta $fixedMeta
      * @return static
      */
-    public function setFixedMeta(?FHIRMeta $fixedMeta = null): object
+    public function setFixedMeta(null|FHIRMeta $fixedMeta = null): self
     {
+        if (null === $fixedMeta) {
+            $fixedMeta = new FHIRMeta();
+        }
         $this->_trackValueSet($this->fixedMeta, $fixedMeta);
         $this->fixedMeta = $fixedMeta;
         return $this;
@@ -10596,9 +10954,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary
      */
-    public function getPatternBase64Binary(): ?FHIRBase64Binary
+    public function getPatternBase64Binary(): null|FHIRBase64Binary
     {
         return $this->patternBase64Binary;
     }
@@ -10621,15 +10979,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $patternBase64Binary
+     * @param null|string|\HL7\FHIR\R4\FHIRBase64BinaryPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBase64Binary $patternBase64Binary
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternBase64Binary($patternBase64Binary = null): object
+    public function setPatternBase64Binary(null|string|FHIRBase64BinaryPrimitive|FHIRBase64Binary $patternBase64Binary = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternBase64Binary && !($patternBase64Binary instanceof FHIRBase64Binary)) {
             $patternBase64Binary = new FHIRBase64Binary($patternBase64Binary);
         }
         $this->_trackValueSet($this->patternBase64Binary, $patternBase64Binary);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_BASE_64BINARY])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_BASE_64BINARY] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_BASE_64BINARY][0] = $xmlLocation;
         $this->patternBase64Binary = $patternBase64Binary;
         return $this;
     }
@@ -10651,9 +11014,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getPatternBoolean(): ?FHIRBoolean
+    public function getPatternBoolean(): null|FHIRBoolean
     {
         return $this->patternBoolean;
     }
@@ -10675,15 +11038,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $patternBoolean
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $patternBoolean
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternBoolean($patternBoolean = null): object
+    public function setPatternBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $patternBoolean = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternBoolean && !($patternBoolean instanceof FHIRBoolean)) {
             $patternBoolean = new FHIRBoolean($patternBoolean);
         }
         $this->_trackValueSet($this->patternBoolean, $patternBoolean);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_BOOLEAN])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_BOOLEAN] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_BOOLEAN][0] = $xmlLocation;
         $this->patternBoolean = $patternBoolean;
         return $this;
     }
@@ -10707,9 +11075,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
-    public function getPatternCanonical(): ?FHIRCanonical
+    public function getPatternCanonical(): null|FHIRCanonical
     {
         return $this->patternCanonical;
     }
@@ -10733,15 +11101,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $patternCanonical
+     * @param null|string|\HL7\FHIR\R4\FHIRCanonicalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCanonical $patternCanonical
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternCanonical($patternCanonical = null): object
+    public function setPatternCanonical(null|string|FHIRCanonicalPrimitive|FHIRCanonical $patternCanonical = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternCanonical && !($patternCanonical instanceof FHIRCanonical)) {
             $patternCanonical = new FHIRCanonical($patternCanonical);
         }
         $this->_trackValueSet($this->patternCanonical, $patternCanonical);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_CANONICAL])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_CANONICAL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_CANONICAL][0] = $xmlLocation;
         $this->patternCanonical = $patternCanonical;
         return $this;
     }
@@ -10765,9 +11138,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
-    public function getPatternCode(): ?FHIRCode
+    public function getPatternCode(): null|FHIRCode
     {
         return $this->patternCode;
     }
@@ -10791,15 +11164,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $patternCode
+     * @param null|string|\HL7\FHIR\R4\FHIRCodePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRCode $patternCode
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternCode($patternCode = null): object
+    public function setPatternCode(null|string|FHIRCodePrimitive|FHIRCode $patternCode = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternCode && !($patternCode instanceof FHIRCode)) {
             $patternCode = new FHIRCode($patternCode);
         }
         $this->_trackValueSet($this->patternCode, $patternCode);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_CODE])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_CODE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_CODE][0] = $xmlLocation;
         $this->patternCode = $patternCode;
         return $this;
     }
@@ -10823,9 +11201,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getPatternDate(): ?FHIRDate
+    public function getPatternDate(): null|FHIRDate
     {
         return $this->patternDate;
     }
@@ -10849,15 +11227,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $patternDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $patternDate
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternDate($patternDate = null): object
+    public function setPatternDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $patternDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternDate && !($patternDate instanceof FHIRDate)) {
             $patternDate = new FHIRDate($patternDate);
         }
         $this->_trackValueSet($this->patternDate, $patternDate);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE][0] = $xmlLocation;
         $this->patternDate = $patternDate;
         return $this;
     }
@@ -10883,9 +11266,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getPatternDateTime(): ?FHIRDateTime
+    public function getPatternDateTime(): null|FHIRDateTime
     {
         return $this->patternDateTime;
     }
@@ -10911,15 +11294,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $patternDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $patternDateTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternDateTime($patternDateTime = null): object
+    public function setPatternDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $patternDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternDateTime && !($patternDateTime instanceof FHIRDateTime)) {
             $patternDateTime = new FHIRDateTime($patternDateTime);
         }
         $this->_trackValueSet($this->patternDateTime, $patternDateTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE_TIME][0] = $xmlLocation;
         $this->patternDateTime = $patternDateTime;
         return $this;
     }
@@ -10943,9 +11331,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getPatternDecimal(): ?FHIRDecimal
+    public function getPatternDecimal(): null|FHIRDecimal
     {
         return $this->patternDecimal;
     }
@@ -10969,15 +11357,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $patternDecimal
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $patternDecimal
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternDecimal($patternDecimal = null): object
+    public function setPatternDecimal(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $patternDecimal = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternDecimal && !($patternDecimal instanceof FHIRDecimal)) {
             $patternDecimal = new FHIRDecimal($patternDecimal);
         }
         $this->_trackValueSet($this->patternDecimal, $patternDecimal);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_DECIMAL])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_DECIMAL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_DECIMAL][0] = $xmlLocation;
         $this->patternDecimal = $patternDecimal;
         return $this;
     }
@@ -11003,9 +11396,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
-    public function getPatternId(): ?FHIRId
+    public function getPatternId(): null|FHIRId
     {
         return $this->patternId;
     }
@@ -11031,15 +11424,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $patternId
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $patternId
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternId($patternId = null): object
+    public function setPatternId(null|string|FHIRIdPrimitive|FHIRId $patternId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternId && !($patternId instanceof FHIRId)) {
             $patternId = new FHIRId($patternId);
         }
         $this->_trackValueSet($this->patternId, $patternId);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_ID])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_ID] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_ID][0] = $xmlLocation;
         $this->patternId = $patternId;
         return $this;
     }
@@ -11065,9 +11463,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    public function getPatternInstant(): ?FHIRInstant
+    public function getPatternInstant(): null|FHIRInstant
     {
         return $this->patternInstant;
     }
@@ -11093,15 +11491,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $patternInstant
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $patternInstant
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternInstant($patternInstant = null): object
+    public function setPatternInstant(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $patternInstant = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternInstant && !($patternInstant instanceof FHIRInstant)) {
             $patternInstant = new FHIRInstant($patternInstant);
         }
         $this->_trackValueSet($this->patternInstant, $patternInstant);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_INSTANT])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_INSTANT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_INSTANT][0] = $xmlLocation;
         $this->patternInstant = $patternInstant;
         return $this;
     }
@@ -11124,9 +11527,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getPatternInteger(): ?FHIRInteger
+    public function getPatternInteger(): null|FHIRInteger
     {
         return $this->patternInteger;
     }
@@ -11149,15 +11552,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $patternInteger
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $patternInteger
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternInteger($patternInteger = null): object
+    public function setPatternInteger(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $patternInteger = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternInteger && !($patternInteger instanceof FHIRInteger)) {
             $patternInteger = new FHIRInteger($patternInteger);
         }
         $this->_trackValueSet($this->patternInteger, $patternInteger);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_INTEGER])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_INTEGER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_INTEGER][0] = $xmlLocation;
         $this->patternInteger = $patternInteger;
         return $this;
     }
@@ -11184,9 +11592,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
-    public function getPatternMarkdown(): ?FHIRMarkdown
+    public function getPatternMarkdown(): null|FHIRMarkdown
     {
         return $this->patternMarkdown;
     }
@@ -11213,15 +11621,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $patternMarkdown
+     * @param null|string|\HL7\FHIR\R4\FHIRMarkdownPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown $patternMarkdown
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternMarkdown($patternMarkdown = null): object
+    public function setPatternMarkdown(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $patternMarkdown = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternMarkdown && !($patternMarkdown instanceof FHIRMarkdown)) {
             $patternMarkdown = new FHIRMarkdown($patternMarkdown);
         }
         $this->_trackValueSet($this->patternMarkdown, $patternMarkdown);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_MARKDOWN])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_MARKDOWN] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_MARKDOWN][0] = $xmlLocation;
         $this->patternMarkdown = $patternMarkdown;
         return $this;
     }
@@ -11245,9 +11658,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIROid
      */
-    public function getPatternOid(): ?FHIROid
+    public function getPatternOid(): null|FHIROid
     {
         return $this->patternOid;
     }
@@ -11271,15 +11684,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid $patternOid
+     * @param null|string|\HL7\FHIR\R4\FHIROidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIROid $patternOid
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternOid($patternOid = null): object
+    public function setPatternOid(null|string|FHIROidPrimitive|FHIROid $patternOid = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternOid && !($patternOid instanceof FHIROid)) {
             $patternOid = new FHIROid($patternOid);
         }
         $this->_trackValueSet($this->patternOid, $patternOid);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_OID])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_OID] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_OID][0] = $xmlLocation;
         $this->patternOid = $patternOid;
         return $this;
     }
@@ -11302,9 +11720,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getPatternPositiveInt(): ?FHIRPositiveInt
+    public function getPatternPositiveInt(): null|FHIRPositiveInt
     {
         return $this->patternPositiveInt;
     }
@@ -11327,15 +11745,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $patternPositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $patternPositiveInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternPositiveInt($patternPositiveInt = null): object
+    public function setPatternPositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $patternPositiveInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternPositiveInt && !($patternPositiveInt instanceof FHIRPositiveInt)) {
             $patternPositiveInt = new FHIRPositiveInt($patternPositiveInt);
         }
         $this->_trackValueSet($this->patternPositiveInt, $patternPositiveInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_POSITIVE_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_POSITIVE_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_POSITIVE_INT][0] = $xmlLocation;
         $this->patternPositiveInt = $patternPositiveInt;
         return $this;
     }
@@ -11358,9 +11781,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getPatternString(): ?FHIRString
+    public function getPatternString(): null|FHIRString
     {
         return $this->patternString;
     }
@@ -11383,15 +11806,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $patternString
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $patternString
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternString($patternString = null): object
+    public function setPatternString(null|string|FHIRStringPrimitive|FHIRString $patternString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternString && !($patternString instanceof FHIRString)) {
             $patternString = new FHIRString($patternString);
         }
         $this->_trackValueSet($this->patternString, $patternString);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_STRING])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_STRING] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_STRING][0] = $xmlLocation;
         $this->patternString = $patternString;
         return $this;
     }
@@ -11413,9 +11841,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    public function getPatternTime(): ?FHIRTime
+    public function getPatternTime(): null|FHIRTime
     {
         return $this->patternTime;
     }
@@ -11437,15 +11865,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $patternTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $patternTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternTime($patternTime = null): object
+    public function setPatternTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $patternTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternTime && !($patternTime instanceof FHIRTime)) {
             $patternTime = new FHIRTime($patternTime);
         }
         $this->_trackValueSet($this->patternTime, $patternTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_TIME][0] = $xmlLocation;
         $this->patternTime = $patternTime;
         return $this;
     }
@@ -11468,9 +11901,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    public function getPatternUnsignedInt(): ?FHIRUnsignedInt
+    public function getPatternUnsignedInt(): null|FHIRUnsignedInt
     {
         return $this->patternUnsignedInt;
     }
@@ -11493,15 +11926,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $patternUnsignedInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $patternUnsignedInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternUnsignedInt($patternUnsignedInt = null): object
+    public function setPatternUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $patternUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternUnsignedInt && !($patternUnsignedInt instanceof FHIRUnsignedInt)) {
             $patternUnsignedInt = new FHIRUnsignedInt($patternUnsignedInt);
         }
         $this->_trackValueSet($this->patternUnsignedInt, $patternUnsignedInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_UNSIGNED_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_UNSIGNED_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_UNSIGNED_INT][0] = $xmlLocation;
         $this->patternUnsignedInt = $patternUnsignedInt;
         return $this;
     }
@@ -11524,9 +11962,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
-    public function getPatternUri(): ?FHIRUri
+    public function getPatternUri(): null|FHIRUri
     {
         return $this->patternUri;
     }
@@ -11549,15 +11987,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $patternUri
+     * @param null|string|\HL7\FHIR\R4\FHIRUriPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUri $patternUri
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternUri($patternUri = null): object
+    public function setPatternUri(null|string|FHIRUriPrimitive|FHIRUri $patternUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternUri && !($patternUri instanceof FHIRUri)) {
             $patternUri = new FHIRUri($patternUri);
         }
         $this->_trackValueSet($this->patternUri, $patternUri);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_URI])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_URI] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_URI][0] = $xmlLocation;
         $this->patternUri = $patternUri;
         return $this;
     }
@@ -11580,9 +12023,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
-    public function getPatternUrl(): ?FHIRUrl
+    public function getPatternUrl(): null|FHIRUrl
     {
         return $this->patternUrl;
     }
@@ -11605,15 +12048,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $patternUrl
+     * @param null|string|\HL7\FHIR\R4\FHIRUrlPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUrl $patternUrl
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternUrl($patternUrl = null): object
+    public function setPatternUrl(null|string|FHIRUrlPrimitive|FHIRUrl $patternUrl = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternUrl && !($patternUrl instanceof FHIRUrl)) {
             $patternUrl = new FHIRUrl($patternUrl);
         }
         $this->_trackValueSet($this->patternUrl, $patternUrl);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_URL])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_URL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_URL][0] = $xmlLocation;
         $this->patternUrl = $patternUrl;
         return $this;
     }
@@ -11637,9 +12085,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUuid
      */
-    public function getPatternUuid(): ?FHIRUuid
+    public function getPatternUuid(): null|FHIRUuid
     {
         return $this->patternUuid;
     }
@@ -11663,15 +12111,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * value 2. If a complex object: it must match (recursively) the pattern value 3.
      * If an array: it must match (recursively) the pattern value.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid $patternUuid
+     * @param null|string|\HL7\FHIR\R4\FHIRUuidPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUuid $patternUuid
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPatternUuid($patternUuid = null): object
+    public function setPatternUuid(null|string|FHIRUuidPrimitive|FHIRUuid $patternUuid = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $patternUuid && !($patternUuid instanceof FHIRUuid)) {
             $patternUuid = new FHIRUuid($patternUuid);
         }
         $this->_trackValueSet($this->patternUuid, $patternUuid);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATTERN_UUID])) {
+            $this->_primitiveXmlLocations[self::FIELD_PATTERN_UUID] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_PATTERN_UUID][0] = $xmlLocation;
         $this->patternUuid = $patternUuid;
         return $this;
     }
@@ -11700,7 +12153,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
-    public function getPatternAddress(): ?FHIRAddress
+    public function getPatternAddress(): null|FHIRAddress
     {
         return $this->patternAddress;
     }
@@ -11730,8 +12183,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAddress $patternAddress
      * @return static
      */
-    public function setPatternAddress(?FHIRAddress $patternAddress = null): object
+    public function setPatternAddress(null|FHIRAddress $patternAddress = null): self
     {
+        if (null === $patternAddress) {
+            $patternAddress = new FHIRAddress();
+        }
         $this->_trackValueSet($this->patternAddress, $patternAddress);
         $this->patternAddress = $patternAddress;
         return $this;
@@ -11757,7 +12213,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge
      */
-    public function getPatternAge(): ?FHIRAge
+    public function getPatternAge(): null|FHIRAge
     {
         return $this->patternAge;
     }
@@ -11783,8 +12239,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRAge $patternAge
      * @return static
      */
-    public function setPatternAge(?FHIRAge $patternAge = null): object
+    public function setPatternAge(null|FHIRAge $patternAge = null): self
     {
+        if (null === $patternAge) {
+            $patternAge = new FHIRAge();
+        }
         $this->_trackValueSet($this->patternAge, $patternAge);
         $this->patternAge = $patternAge;
         return $this;
@@ -11811,7 +12270,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation
      */
-    public function getPatternAnnotation(): ?FHIRAnnotation
+    public function getPatternAnnotation(): null|FHIRAnnotation
     {
         return $this->patternAnnotation;
     }
@@ -11838,8 +12297,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $patternAnnotation
      * @return static
      */
-    public function setPatternAnnotation(?FHIRAnnotation $patternAnnotation = null): object
+    public function setPatternAnnotation(null|FHIRAnnotation $patternAnnotation = null): self
     {
+        if (null === $patternAnnotation) {
+            $patternAnnotation = new FHIRAnnotation();
+        }
         $this->_trackValueSet($this->patternAnnotation, $patternAnnotation);
         $this->patternAnnotation = $patternAnnotation;
         return $this;
@@ -11865,7 +12327,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
-    public function getPatternAttachment(): ?FHIRAttachment
+    public function getPatternAttachment(): null|FHIRAttachment
     {
         return $this->patternAttachment;
     }
@@ -11891,8 +12353,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment $patternAttachment
      * @return static
      */
-    public function setPatternAttachment(?FHIRAttachment $patternAttachment = null): object
+    public function setPatternAttachment(null|FHIRAttachment $patternAttachment = null): self
     {
+        if (null === $patternAttachment) {
+            $patternAttachment = new FHIRAttachment();
+        }
         $this->_trackValueSet($this->patternAttachment, $patternAttachment);
         $this->patternAttachment = $patternAttachment;
         return $this;
@@ -11919,7 +12384,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getPatternCodeableConcept(): ?FHIRCodeableConcept
+    public function getPatternCodeableConcept(): null|FHIRCodeableConcept
     {
         return $this->patternCodeableConcept;
     }
@@ -11946,8 +12411,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $patternCodeableConcept
      * @return static
      */
-    public function setPatternCodeableConcept(?FHIRCodeableConcept $patternCodeableConcept = null): object
+    public function setPatternCodeableConcept(null|FHIRCodeableConcept $patternCodeableConcept = null): self
     {
+        if (null === $patternCodeableConcept) {
+            $patternCodeableConcept = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->patternCodeableConcept, $patternCodeableConcept);
         $this->patternCodeableConcept = $patternCodeableConcept;
         return $this;
@@ -11973,7 +12441,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
-    public function getPatternCoding(): ?FHIRCoding
+    public function getPatternCoding(): null|FHIRCoding
     {
         return $this->patternCoding;
     }
@@ -11999,8 +12467,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCoding $patternCoding
      * @return static
      */
-    public function setPatternCoding(?FHIRCoding $patternCoding = null): object
+    public function setPatternCoding(null|FHIRCoding $patternCoding = null): self
     {
+        if (null === $patternCoding) {
+            $patternCoding = new FHIRCoding();
+        }
         $this->_trackValueSet($this->patternCoding, $patternCoding);
         $this->patternCoding = $patternCoding;
         return $this;
@@ -12027,7 +12498,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint
      */
-    public function getPatternContactPoint(): ?FHIRContactPoint
+    public function getPatternContactPoint(): null|FHIRContactPoint
     {
         return $this->patternContactPoint;
     }
@@ -12054,8 +12525,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint $patternContactPoint
      * @return static
      */
-    public function setPatternContactPoint(?FHIRContactPoint $patternContactPoint = null): object
+    public function setPatternContactPoint(null|FHIRContactPoint $patternContactPoint = null): self
     {
+        if (null === $patternContactPoint) {
+            $patternContactPoint = new FHIRContactPoint();
+        }
         $this->_trackValueSet($this->patternContactPoint, $patternContactPoint);
         $this->patternContactPoint = $patternContactPoint;
         return $this;
@@ -12083,7 +12557,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount
      */
-    public function getPatternCount(): ?FHIRCount
+    public function getPatternCount(): null|FHIRCount
     {
         return $this->patternCount;
     }
@@ -12111,8 +12585,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRCount $patternCount
      * @return static
      */
-    public function setPatternCount(?FHIRCount $patternCount = null): object
+    public function setPatternCount(null|FHIRCount $patternCount = null): self
     {
+        if (null === $patternCount) {
+            $patternCount = new FHIRCount();
+        }
         $this->_trackValueSet($this->patternCount, $patternCount);
         $this->patternCount = $patternCount;
         return $this;
@@ -12138,7 +12615,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance
      */
-    public function getPatternDistance(): ?FHIRDistance
+    public function getPatternDistance(): null|FHIRDistance
     {
         return $this->patternDistance;
     }
@@ -12164,8 +12641,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDistance $patternDistance
      * @return static
      */
-    public function setPatternDistance(?FHIRDistance $patternDistance = null): object
+    public function setPatternDistance(null|FHIRDistance $patternDistance = null): self
     {
+        if (null === $patternDistance) {
+            $patternDistance = new FHIRDistance();
+        }
         $this->_trackValueSet($this->patternDistance, $patternDistance);
         $this->patternDistance = $patternDistance;
         return $this;
@@ -12191,7 +12671,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
-    public function getPatternDuration(): ?FHIRDuration
+    public function getPatternDuration(): null|FHIRDuration
     {
         return $this->patternDuration;
     }
@@ -12217,8 +12697,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration $patternDuration
      * @return static
      */
-    public function setPatternDuration(?FHIRDuration $patternDuration = null): object
+    public function setPatternDuration(null|FHIRDuration $patternDuration = null): self
     {
+        if (null === $patternDuration) {
+            $patternDuration = new FHIRDuration();
+        }
         $this->_trackValueSet($this->patternDuration, $patternDuration);
         $this->patternDuration = $patternDuration;
         return $this;
@@ -12244,7 +12727,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
-    public function getPatternHumanName(): ?FHIRHumanName
+    public function getPatternHumanName(): null|FHIRHumanName
     {
         return $this->patternHumanName;
     }
@@ -12270,8 +12753,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName $patternHumanName
      * @return static
      */
-    public function setPatternHumanName(?FHIRHumanName $patternHumanName = null): object
+    public function setPatternHumanName(null|FHIRHumanName $patternHumanName = null): self
     {
+        if (null === $patternHumanName) {
+            $patternHumanName = new FHIRHumanName();
+        }
         $this->_trackValueSet($this->patternHumanName, $patternHumanName);
         $this->patternHumanName = $patternHumanName;
         return $this;
@@ -12298,7 +12784,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
-    public function getPatternIdentifier(): ?FHIRIdentifier
+    public function getPatternIdentifier(): null|FHIRIdentifier
     {
         return $this->patternIdentifier;
     }
@@ -12325,8 +12811,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier $patternIdentifier
      * @return static
      */
-    public function setPatternIdentifier(?FHIRIdentifier $patternIdentifier = null): object
+    public function setPatternIdentifier(null|FHIRIdentifier $patternIdentifier = null): self
     {
+        if (null === $patternIdentifier) {
+            $patternIdentifier = new FHIRIdentifier();
+        }
         $this->_trackValueSet($this->patternIdentifier, $patternIdentifier);
         $this->patternIdentifier = $patternIdentifier;
         return $this;
@@ -12352,7 +12841,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
-    public function getPatternMoney(): ?FHIRMoney
+    public function getPatternMoney(): null|FHIRMoney
     {
         return $this->patternMoney;
     }
@@ -12378,8 +12867,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMoney $patternMoney
      * @return static
      */
-    public function setPatternMoney(?FHIRMoney $patternMoney = null): object
+    public function setPatternMoney(null|FHIRMoney $patternMoney = null): self
     {
+        if (null === $patternMoney) {
+            $patternMoney = new FHIRMoney();
+        }
         $this->_trackValueSet($this->patternMoney, $patternMoney);
         $this->patternMoney = $patternMoney;
         return $this;
@@ -12405,7 +12897,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
-    public function getPatternPeriod(): ?FHIRPeriod
+    public function getPatternPeriod(): null|FHIRPeriod
     {
         return $this->patternPeriod;
     }
@@ -12431,8 +12923,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod $patternPeriod
      * @return static
      */
-    public function setPatternPeriod(?FHIRPeriod $patternPeriod = null): object
+    public function setPatternPeriod(null|FHIRPeriod $patternPeriod = null): self
     {
+        if (null === $patternPeriod) {
+            $patternPeriod = new FHIRPeriod();
+        }
         $this->_trackValueSet($this->patternPeriod, $patternPeriod);
         $this->patternPeriod = $patternPeriod;
         return $this;
@@ -12460,7 +12955,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getPatternQuantity(): ?FHIRQuantity
+    public function getPatternQuantity(): null|FHIRQuantity
     {
         return $this->patternQuantity;
     }
@@ -12488,8 +12983,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $patternQuantity
      * @return static
      */
-    public function setPatternQuantity(?FHIRQuantity $patternQuantity = null): object
+    public function setPatternQuantity(null|FHIRQuantity $patternQuantity = null): self
     {
+        if (null === $patternQuantity) {
+            $patternQuantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->patternQuantity, $patternQuantity);
         $this->patternQuantity = $patternQuantity;
         return $this;
@@ -12515,7 +13013,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
-    public function getPatternRange(): ?FHIRRange
+    public function getPatternRange(): null|FHIRRange
     {
         return $this->patternRange;
     }
@@ -12541,8 +13039,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRange $patternRange
      * @return static
      */
-    public function setPatternRange(?FHIRRange $patternRange = null): object
+    public function setPatternRange(null|FHIRRange $patternRange = null): self
     {
+        if (null === $patternRange) {
+            $patternRange = new FHIRRange();
+        }
         $this->_trackValueSet($this->patternRange, $patternRange);
         $this->patternRange = $patternRange;
         return $this;
@@ -12569,7 +13070,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
-    public function getPatternRatio(): ?FHIRRatio
+    public function getPatternRatio(): null|FHIRRatio
     {
         return $this->patternRatio;
     }
@@ -12596,8 +13097,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRatio $patternRatio
      * @return static
      */
-    public function setPatternRatio(?FHIRRatio $patternRatio = null): object
+    public function setPatternRatio(null|FHIRRatio $patternRatio = null): self
     {
+        if (null === $patternRatio) {
+            $patternRatio = new FHIRRatio();
+        }
         $this->_trackValueSet($this->patternRatio, $patternRatio);
         $this->patternRatio = $patternRatio;
         return $this;
@@ -12623,7 +13127,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
-    public function getPatternReference(): ?FHIRReference
+    public function getPatternReference(): null|FHIRReference
     {
         return $this->patternReference;
     }
@@ -12649,8 +13153,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRReference $patternReference
      * @return static
      */
-    public function setPatternReference(?FHIRReference $patternReference = null): object
+    public function setPatternReference(null|FHIRReference $patternReference = null): self
     {
+        if (null === $patternReference) {
+            $patternReference = new FHIRReference();
+        }
         $this->_trackValueSet($this->patternReference, $patternReference);
         $this->patternReference = $patternReference;
         return $this;
@@ -12677,7 +13184,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData
      */
-    public function getPatternSampledData(): ?FHIRSampledData
+    public function getPatternSampledData(): null|FHIRSampledData
     {
         return $this->patternSampledData;
     }
@@ -12704,8 +13211,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSampledData $patternSampledData
      * @return static
      */
-    public function setPatternSampledData(?FHIRSampledData $patternSampledData = null): object
+    public function setPatternSampledData(null|FHIRSampledData $patternSampledData = null): self
     {
+        if (null === $patternSampledData) {
+            $patternSampledData = new FHIRSampledData();
+        }
         $this->_trackValueSet($this->patternSampledData, $patternSampledData);
         $this->patternSampledData = $patternSampledData;
         return $this;
@@ -12735,7 +13245,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRSignature
      */
-    public function getPatternSignature(): ?FHIRSignature
+    public function getPatternSignature(): null|FHIRSignature
     {
         return $this->patternSignature;
     }
@@ -12765,8 +13275,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRSignature $patternSignature
      * @return static
      */
-    public function setPatternSignature(?FHIRSignature $patternSignature = null): object
+    public function setPatternSignature(null|FHIRSignature $patternSignature = null): self
     {
+        if (null === $patternSignature) {
+            $patternSignature = new FHIRSignature();
+        }
         $this->_trackValueSet($this->patternSignature, $patternSignature);
         $this->patternSignature = $patternSignature;
         return $this;
@@ -12796,7 +13309,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
-    public function getPatternTiming(): ?FHIRTiming
+    public function getPatternTiming(): null|FHIRTiming
     {
         return $this->patternTiming;
     }
@@ -12826,8 +13339,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming $patternTiming
      * @return static
      */
-    public function setPatternTiming(?FHIRTiming $patternTiming = null): object
+    public function setPatternTiming(null|FHIRTiming $patternTiming = null): self
     {
+        if (null === $patternTiming) {
+            $patternTiming = new FHIRTiming();
+        }
         $this->_trackValueSet($this->patternTiming, $patternTiming);
         $this->patternTiming = $patternTiming;
         return $this;
@@ -12853,7 +13369,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail
      */
-    public function getPatternContactDetail(): ?FHIRContactDetail
+    public function getPatternContactDetail(): null|FHIRContactDetail
     {
         return $this->patternContactDetail;
     }
@@ -12879,8 +13395,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContactDetail $patternContactDetail
      * @return static
      */
-    public function setPatternContactDetail(?FHIRContactDetail $patternContactDetail = null): object
+    public function setPatternContactDetail(null|FHIRContactDetail $patternContactDetail = null): self
     {
+        if (null === $patternContactDetail) {
+            $patternContactDetail = new FHIRContactDetail();
+        }
         $this->_trackValueSet($this->patternContactDetail, $patternContactDetail);
         $this->patternContactDetail = $patternContactDetail;
         return $this;
@@ -12907,7 +13426,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRContributor
      */
-    public function getPatternContributor(): ?FHIRContributor
+    public function getPatternContributor(): null|FHIRContributor
     {
         return $this->patternContributor;
     }
@@ -12934,8 +13453,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRContributor $patternContributor
      * @return static
      */
-    public function setPatternContributor(?FHIRContributor $patternContributor = null): object
+    public function setPatternContributor(null|FHIRContributor $patternContributor = null): self
     {
+        if (null === $patternContributor) {
+            $patternContributor = new FHIRContributor();
+        }
         $this->_trackValueSet($this->patternContributor, $patternContributor);
         $this->patternContributor = $patternContributor;
         return $this;
@@ -12962,7 +13484,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement
      */
-    public function getPatternDataRequirement(): ?FHIRDataRequirement
+    public function getPatternDataRequirement(): null|FHIRDataRequirement
     {
         return $this->patternDataRequirement;
     }
@@ -12989,8 +13511,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRDataRequirement $patternDataRequirement
      * @return static
      */
-    public function setPatternDataRequirement(?FHIRDataRequirement $patternDataRequirement = null): object
+    public function setPatternDataRequirement(null|FHIRDataRequirement $patternDataRequirement = null): self
     {
+        if (null === $patternDataRequirement) {
+            $patternDataRequirement = new FHIRDataRequirement();
+        }
         $this->_trackValueSet($this->patternDataRequirement, $patternDataRequirement);
         $this->patternDataRequirement = $patternDataRequirement;
         return $this;
@@ -13018,7 +13543,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRExpression
      */
-    public function getPatternExpression(): ?FHIRExpression
+    public function getPatternExpression(): null|FHIRExpression
     {
         return $this->patternExpression;
     }
@@ -13046,8 +13571,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRExpression $patternExpression
      * @return static
      */
-    public function setPatternExpression(?FHIRExpression $patternExpression = null): object
+    public function setPatternExpression(null|FHIRExpression $patternExpression = null): self
     {
+        if (null === $patternExpression) {
+            $patternExpression = new FHIRExpression();
+        }
         $this->_trackValueSet($this->patternExpression, $patternExpression);
         $this->patternExpression = $patternExpression;
         return $this;
@@ -13075,7 +13603,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition
      */
-    public function getPatternParameterDefinition(): ?FHIRParameterDefinition
+    public function getPatternParameterDefinition(): null|FHIRParameterDefinition
     {
         return $this->patternParameterDefinition;
     }
@@ -13103,8 +13631,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRParameterDefinition $patternParameterDefinition
      * @return static
      */
-    public function setPatternParameterDefinition(?FHIRParameterDefinition $patternParameterDefinition = null): object
+    public function setPatternParameterDefinition(null|FHIRParameterDefinition $patternParameterDefinition = null): self
     {
+        if (null === $patternParameterDefinition) {
+            $patternParameterDefinition = new FHIRParameterDefinition();
+        }
         $this->_trackValueSet($this->patternParameterDefinition, $patternParameterDefinition);
         $this->patternParameterDefinition = $patternParameterDefinition;
         return $this;
@@ -13131,7 +13662,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact
      */
-    public function getPatternRelatedArtifact(): ?FHIRRelatedArtifact
+    public function getPatternRelatedArtifact(): null|FHIRRelatedArtifact
     {
         return $this->patternRelatedArtifact;
     }
@@ -13158,8 +13689,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRRelatedArtifact $patternRelatedArtifact
      * @return static
      */
-    public function setPatternRelatedArtifact(?FHIRRelatedArtifact $patternRelatedArtifact = null): object
+    public function setPatternRelatedArtifact(null|FHIRRelatedArtifact $patternRelatedArtifact = null): self
     {
+        if (null === $patternRelatedArtifact) {
+            $patternRelatedArtifact = new FHIRRelatedArtifact();
+        }
         $this->_trackValueSet($this->patternRelatedArtifact, $patternRelatedArtifact);
         $this->patternRelatedArtifact = $patternRelatedArtifact;
         return $this;
@@ -13186,7 +13720,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition
      */
-    public function getPatternTriggerDefinition(): ?FHIRTriggerDefinition
+    public function getPatternTriggerDefinition(): null|FHIRTriggerDefinition
     {
         return $this->patternTriggerDefinition;
     }
@@ -13213,8 +13747,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRTriggerDefinition $patternTriggerDefinition
      * @return static
      */
-    public function setPatternTriggerDefinition(?FHIRTriggerDefinition $patternTriggerDefinition = null): object
+    public function setPatternTriggerDefinition(null|FHIRTriggerDefinition $patternTriggerDefinition = null): self
     {
+        if (null === $patternTriggerDefinition) {
+            $patternTriggerDefinition = new FHIRTriggerDefinition();
+        }
         $this->_trackValueSet($this->patternTriggerDefinition, $patternTriggerDefinition);
         $this->patternTriggerDefinition = $patternTriggerDefinition;
         return $this;
@@ -13243,7 +13780,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext
      */
-    public function getPatternUsageContext(): ?FHIRUsageContext
+    public function getPatternUsageContext(): null|FHIRUsageContext
     {
         return $this->patternUsageContext;
     }
@@ -13272,8 +13809,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRUsageContext $patternUsageContext
      * @return static
      */
-    public function setPatternUsageContext(?FHIRUsageContext $patternUsageContext = null): object
+    public function setPatternUsageContext(null|FHIRUsageContext $patternUsageContext = null): self
     {
+        if (null === $patternUsageContext) {
+            $patternUsageContext = new FHIRUsageContext();
+        }
         $this->_trackValueSet($this->patternUsageContext, $patternUsageContext);
         $this->patternUsageContext = $patternUsageContext;
         return $this;
@@ -13299,7 +13839,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage
      */
-    public function getPatternDosage(): ?FHIRDosage
+    public function getPatternDosage(): null|FHIRDosage
     {
         return $this->patternDosage;
     }
@@ -13325,8 +13865,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDosage $patternDosage
      * @return static
      */
-    public function setPatternDosage(?FHIRDosage $patternDosage = null): object
+    public function setPatternDosage(null|FHIRDosage $patternDosage = null): self
     {
+        if (null === $patternDosage) {
+            $patternDosage = new FHIRDosage();
+        }
         $this->_trackValueSet($this->patternDosage, $patternDosage);
         $this->patternDosage = $patternDosage;
         return $this;
@@ -13354,7 +13897,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRMeta
      */
-    public function getPatternMeta(): ?FHIRMeta
+    public function getPatternMeta(): null|FHIRMeta
     {
         return $this->patternMeta;
     }
@@ -13382,8 +13925,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRMeta $patternMeta
      * @return static
      */
-    public function setPatternMeta(?FHIRMeta $patternMeta = null): object
+    public function setPatternMeta(null|FHIRMeta $patternMeta = null): self
     {
+        if (null === $patternMeta) {
+            $patternMeta = new FHIRMeta();
+        }
         $this->_trackValueSet($this->patternMeta, $patternMeta);
         $this->patternMeta = $patternMeta;
         return $this;
@@ -13399,7 +13945,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionExample[]
      */
-    public function getExample(): ?array
+    public function getExample(): null|array
     {
         return $this->example;
     }
@@ -13415,40 +13961,13 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionExample $example
      * @return static
      */
-    public function addExample(?FHIRElementDefinitionExample $example = null): object
+    public function addExample(null|FHIRElementDefinitionExample $example = null): self
     {
+        if (null === $example) {
+            $example = new FHIRElementDefinitionExample();
+        }
         $this->_trackValueAdded();
         $this->example[] = $example;
-        return $this;
-    }
-
-    /**
-     * Captures constraints on each element within the resource, profile, or extension.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * A sample value for this element demonstrating the type of information that would
-     * typically be found in the element.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionExample[] $example
-     * @return static
-     */
-    public function setExample(array $example = []): object
-    {
-        if ([] !== $this->example) {
-            $this->_trackValuesRemoved(count($this->example));
-            $this->example = [];
-        }
-        if ([] === $example) {
-            return $this;
-        }
-        foreach($example as $v) {
-            if ($v instanceof FHIRElementDefinitionExample) {
-                $this->addExample($v);
-            } else {
-                $this->addExample(new FHIRElementDefinitionExample($v));
-            }
-        }
         return $this;
     }
 
@@ -13462,9 +13981,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getMinValueDate(): ?FHIRDate
+    public function getMinValueDate(): null|FHIRDate
     {
         return $this->minValueDate;
     }
@@ -13479,15 +13998,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $minValueDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $minValueDate
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMinValueDate($minValueDate = null): object
+    public function setMinValueDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $minValueDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $minValueDate && !($minValueDate instanceof FHIRDate)) {
             $minValueDate = new FHIRDate($minValueDate);
         }
         $this->_trackValueSet($this->minValueDate, $minValueDate);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE])) {
+            $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE][0] = $xmlLocation;
         $this->minValueDate = $minValueDate;
         return $this;
     }
@@ -13504,9 +14028,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getMinValueDateTime(): ?FHIRDateTime
+    public function getMinValueDateTime(): null|FHIRDateTime
     {
         return $this->minValueDateTime;
     }
@@ -13523,15 +14047,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $minValueDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $minValueDateTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMinValueDateTime($minValueDateTime = null): object
+    public function setMinValueDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $minValueDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $minValueDateTime && !($minValueDateTime instanceof FHIRDateTime)) {
             $minValueDateTime = new FHIRDateTime($minValueDateTime);
         }
         $this->_trackValueSet($this->minValueDateTime, $minValueDateTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE_TIME][0] = $xmlLocation;
         $this->minValueDateTime = $minValueDateTime;
         return $this;
     }
@@ -13548,9 +14077,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    public function getMinValueInstant(): ?FHIRInstant
+    public function getMinValueInstant(): null|FHIRInstant
     {
         return $this->minValueInstant;
     }
@@ -13567,15 +14096,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $minValueInstant
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $minValueInstant
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMinValueInstant($minValueInstant = null): object
+    public function setMinValueInstant(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $minValueInstant = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $minValueInstant && !($minValueInstant instanceof FHIRInstant)) {
             $minValueInstant = new FHIRInstant($minValueInstant);
         }
         $this->_trackValueSet($this->minValueInstant, $minValueInstant);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INSTANT])) {
+            $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INSTANT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INSTANT][0] = $xmlLocation;
         $this->minValueInstant = $minValueInstant;
         return $this;
     }
@@ -13588,9 +14122,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    public function getMinValueTime(): ?FHIRTime
+    public function getMinValueTime(): null|FHIRTime
     {
         return $this->minValueTime;
     }
@@ -13603,15 +14137,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $minValueTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $minValueTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMinValueTime($minValueTime = null): object
+    public function setMinValueTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $minValueTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $minValueTime && !($minValueTime instanceof FHIRTime)) {
             $minValueTime = new FHIRTime($minValueTime);
         }
         $this->_trackValueSet($this->minValueTime, $minValueTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_TIME][0] = $xmlLocation;
         $this->minValueTime = $minValueTime;
         return $this;
     }
@@ -13626,9 +14165,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getMinValueDecimal(): ?FHIRDecimal
+    public function getMinValueDecimal(): null|FHIRDecimal
     {
         return $this->minValueDecimal;
     }
@@ -13643,15 +14182,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $minValueDecimal
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $minValueDecimal
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMinValueDecimal($minValueDecimal = null): object
+    public function setMinValueDecimal(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $minValueDecimal = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $minValueDecimal && !($minValueDecimal instanceof FHIRDecimal)) {
             $minValueDecimal = new FHIRDecimal($minValueDecimal);
         }
         $this->_trackValueSet($this->minValueDecimal, $minValueDecimal);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DECIMAL])) {
+            $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DECIMAL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DECIMAL][0] = $xmlLocation;
         $this->minValueDecimal = $minValueDecimal;
         return $this;
     }
@@ -13665,9 +14209,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getMinValueInteger(): ?FHIRInteger
+    public function getMinValueInteger(): null|FHIRInteger
     {
         return $this->minValueInteger;
     }
@@ -13681,15 +14225,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $minValueInteger
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $minValueInteger
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMinValueInteger($minValueInteger = null): object
+    public function setMinValueInteger(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $minValueInteger = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $minValueInteger && !($minValueInteger instanceof FHIRInteger)) {
             $minValueInteger = new FHIRInteger($minValueInteger);
         }
         $this->_trackValueSet($this->minValueInteger, $minValueInteger);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INTEGER])) {
+            $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INTEGER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INTEGER][0] = $xmlLocation;
         $this->minValueInteger = $minValueInteger;
         return $this;
     }
@@ -13703,9 +14252,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getMinValuePositiveInt(): ?FHIRPositiveInt
+    public function getMinValuePositiveInt(): null|FHIRPositiveInt
     {
         return $this->minValuePositiveInt;
     }
@@ -13719,15 +14268,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $minValuePositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $minValuePositiveInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMinValuePositiveInt($minValuePositiveInt = null): object
+    public function setMinValuePositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $minValuePositiveInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $minValuePositiveInt && !($minValuePositiveInt instanceof FHIRPositiveInt)) {
             $minValuePositiveInt = new FHIRPositiveInt($minValuePositiveInt);
         }
         $this->_trackValueSet($this->minValuePositiveInt, $minValuePositiveInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_POSITIVE_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_POSITIVE_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_POSITIVE_INT][0] = $xmlLocation;
         $this->minValuePositiveInt = $minValuePositiveInt;
         return $this;
     }
@@ -13741,9 +14295,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    public function getMinValueUnsignedInt(): ?FHIRUnsignedInt
+    public function getMinValueUnsignedInt(): null|FHIRUnsignedInt
     {
         return $this->minValueUnsignedInt;
     }
@@ -13757,15 +14311,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $minValueUnsignedInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $minValueUnsignedInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMinValueUnsignedInt($minValueUnsignedInt = null): object
+    public function setMinValueUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $minValueUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $minValueUnsignedInt && !($minValueUnsignedInt instanceof FHIRUnsignedInt)) {
             $minValueUnsignedInt = new FHIRUnsignedInt($minValueUnsignedInt);
         }
         $this->_trackValueSet($this->minValueUnsignedInt, $minValueUnsignedInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_UNSIGNED_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_UNSIGNED_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_UNSIGNED_INT][0] = $xmlLocation;
         $this->minValueUnsignedInt = $minValueUnsignedInt;
         return $this;
     }
@@ -13783,7 +14342,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getMinValueQuantity(): ?FHIRQuantity
+    public function getMinValueQuantity(): null|FHIRQuantity
     {
         return $this->minValueQuantity;
     }
@@ -13802,8 +14361,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $minValueQuantity
      * @return static
      */
-    public function setMinValueQuantity(?FHIRQuantity $minValueQuantity = null): object
+    public function setMinValueQuantity(null|FHIRQuantity $minValueQuantity = null): self
     {
+        if (null === $minValueQuantity) {
+            $minValueQuantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->minValueQuantity, $minValueQuantity);
         $this->minValueQuantity = $minValueQuantity;
         return $this;
@@ -13819,9 +14381,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
-    public function getMaxValueDate(): ?FHIRDate
+    public function getMaxValueDate(): null|FHIRDate
     {
         return $this->maxValueDate;
     }
@@ -13836,15 +14398,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $maxValueDate
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDatePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDate $maxValueDate
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMaxValueDate($maxValueDate = null): object
+    public function setMaxValueDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $maxValueDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $maxValueDate && !($maxValueDate instanceof FHIRDate)) {
             $maxValueDate = new FHIRDate($maxValueDate);
         }
         $this->_trackValueSet($this->maxValueDate, $maxValueDate);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE][0] = $xmlLocation;
         $this->maxValueDate = $maxValueDate;
         return $this;
     }
@@ -13861,9 +14428,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
-    public function getMaxValueDateTime(): ?FHIRDateTime
+    public function getMaxValueDateTime(): null|FHIRDateTime
     {
         return $this->maxValueDateTime;
     }
@@ -13880,15 +14447,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $maxValueDateTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRDateTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDateTime $maxValueDateTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMaxValueDateTime($maxValueDateTime = null): object
+    public function setMaxValueDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $maxValueDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $maxValueDateTime && !($maxValueDateTime instanceof FHIRDateTime)) {
             $maxValueDateTime = new FHIRDateTime($maxValueDateTime);
         }
         $this->_trackValueSet($this->maxValueDateTime, $maxValueDateTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE_TIME][0] = $xmlLocation;
         $this->maxValueDateTime = $maxValueDateTime;
         return $this;
     }
@@ -13905,9 +14477,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
-    public function getMaxValueInstant(): ?FHIRInstant
+    public function getMaxValueInstant(): null|FHIRInstant
     {
         return $this->maxValueInstant;
     }
@@ -13924,15 +14496,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $maxValueInstant
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRInstantPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInstant $maxValueInstant
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMaxValueInstant($maxValueInstant = null): object
+    public function setMaxValueInstant(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $maxValueInstant = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $maxValueInstant && !($maxValueInstant instanceof FHIRInstant)) {
             $maxValueInstant = new FHIRInstant($maxValueInstant);
         }
         $this->_trackValueSet($this->maxValueInstant, $maxValueInstant);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INSTANT])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INSTANT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INSTANT][0] = $xmlLocation;
         $this->maxValueInstant = $maxValueInstant;
         return $this;
     }
@@ -13945,9 +14522,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
-    public function getMaxValueTime(): ?FHIRTime
+    public function getMaxValueTime(): null|FHIRTime
     {
         return $this->maxValueTime;
     }
@@ -13960,15 +14537,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $maxValueTime
+     * @param null|string|\DateTimeInterface|\HL7\FHIR\R4\FHIRTimePrimitive|\HL7\FHIR\R4\FHIRElement\FHIRTime $maxValueTime
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMaxValueTime($maxValueTime = null): object
+    public function setMaxValueTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $maxValueTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $maxValueTime && !($maxValueTime instanceof FHIRTime)) {
             $maxValueTime = new FHIRTime($maxValueTime);
         }
         $this->_trackValueSet($this->maxValueTime, $maxValueTime);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_TIME])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_TIME] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_TIME][0] = $xmlLocation;
         $this->maxValueTime = $maxValueTime;
         return $this;
     }
@@ -13983,9 +14565,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getMaxValueDecimal(): ?FHIRDecimal
+    public function getMaxValueDecimal(): null|FHIRDecimal
     {
         return $this->maxValueDecimal;
     }
@@ -14000,15 +14582,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $maxValueDecimal
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $maxValueDecimal
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMaxValueDecimal($maxValueDecimal = null): object
+    public function setMaxValueDecimal(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $maxValueDecimal = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $maxValueDecimal && !($maxValueDecimal instanceof FHIRDecimal)) {
             $maxValueDecimal = new FHIRDecimal($maxValueDecimal);
         }
         $this->_trackValueSet($this->maxValueDecimal, $maxValueDecimal);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DECIMAL])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DECIMAL] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DECIMAL][0] = $xmlLocation;
         $this->maxValueDecimal = $maxValueDecimal;
         return $this;
     }
@@ -14022,9 +14609,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getMaxValueInteger(): ?FHIRInteger
+    public function getMaxValueInteger(): null|FHIRInteger
     {
         return $this->maxValueInteger;
     }
@@ -14038,15 +14625,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $maxValueInteger
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $maxValueInteger
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMaxValueInteger($maxValueInteger = null): object
+    public function setMaxValueInteger(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $maxValueInteger = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $maxValueInteger && !($maxValueInteger instanceof FHIRInteger)) {
             $maxValueInteger = new FHIRInteger($maxValueInteger);
         }
         $this->_trackValueSet($this->maxValueInteger, $maxValueInteger);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INTEGER])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INTEGER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INTEGER][0] = $xmlLocation;
         $this->maxValueInteger = $maxValueInteger;
         return $this;
     }
@@ -14060,9 +14652,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
-    public function getMaxValuePositiveInt(): ?FHIRPositiveInt
+    public function getMaxValuePositiveInt(): null|FHIRPositiveInt
     {
         return $this->maxValuePositiveInt;
     }
@@ -14076,15 +14668,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $maxValuePositiveInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRPositiveIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt $maxValuePositiveInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMaxValuePositiveInt($maxValuePositiveInt = null): object
+    public function setMaxValuePositiveInt(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $maxValuePositiveInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $maxValuePositiveInt && !($maxValuePositiveInt instanceof FHIRPositiveInt)) {
             $maxValuePositiveInt = new FHIRPositiveInt($maxValuePositiveInt);
         }
         $this->_trackValueSet($this->maxValuePositiveInt, $maxValuePositiveInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_POSITIVE_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_POSITIVE_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_POSITIVE_INT][0] = $xmlLocation;
         $this->maxValuePositiveInt = $maxValuePositiveInt;
         return $this;
     }
@@ -14098,9 +14695,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @return null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
-    public function getMaxValueUnsignedInt(): ?FHIRUnsignedInt
+    public function getMaxValueUnsignedInt(): null|FHIRUnsignedInt
     {
         return $this->maxValueUnsignedInt;
     }
@@ -14114,15 +14711,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * allowed for the types date, dateTime, instant, time, decimal, integer, and
      * Quantity.
      *
-     * @param null|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $maxValueUnsignedInt
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRUnsignedIntPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt $maxValueUnsignedInt
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMaxValueUnsignedInt($maxValueUnsignedInt = null): object
+    public function setMaxValueUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $maxValueUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $maxValueUnsignedInt && !($maxValueUnsignedInt instanceof FHIRUnsignedInt)) {
             $maxValueUnsignedInt = new FHIRUnsignedInt($maxValueUnsignedInt);
         }
         $this->_trackValueSet($this->maxValueUnsignedInt, $maxValueUnsignedInt);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_UNSIGNED_INT])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_UNSIGNED_INT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_UNSIGNED_INT][0] = $xmlLocation;
         $this->maxValueUnsignedInt = $maxValueUnsignedInt;
         return $this;
     }
@@ -14140,7 +14742,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getMaxValueQuantity(): ?FHIRQuantity
+    public function getMaxValueQuantity(): null|FHIRQuantity
     {
         return $this->maxValueQuantity;
     }
@@ -14159,8 +14761,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $maxValueQuantity
      * @return static
      */
-    public function setMaxValueQuantity(?FHIRQuantity $maxValueQuantity = null): object
+    public function setMaxValueQuantity(null|FHIRQuantity $maxValueQuantity = null): self
     {
+        if (null === $maxValueQuantity) {
+            $maxValueQuantity = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->maxValueQuantity, $maxValueQuantity);
         $this->maxValueQuantity = $maxValueQuantity;
         return $this;
@@ -14175,9 +14780,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * conformant instances and which is expected to be supported by conformant
      * consumers that support the element.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getMaxLength(): ?FHIRInteger
+    public function getMaxLength(): null|FHIRInteger
     {
         return $this->maxLength;
     }
@@ -14191,15 +14796,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * conformant instances and which is expected to be supported by conformant
      * consumers that support the element.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $maxLength
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $maxLength
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMaxLength($maxLength = null): object
+    public function setMaxLength(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $maxLength = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $maxLength && !($maxLength instanceof FHIRInteger)) {
             $maxLength = new FHIRInteger($maxLength);
         }
         $this->_trackValueSet($this->maxLength, $maxLength);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MAX_LENGTH])) {
+            $this->_primitiveXmlLocations[self::FIELD_MAX_LENGTH] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MAX_LENGTH][0] = $xmlLocation;
         $this->maxLength = $maxLength;
         return $this;
     }
@@ -14215,9 +14825,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * A reference to an invariant that may make additional statements about the
      * cardinality or value in the instance.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIdPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRId[]
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRId[]
      */
-    public function getCondition(): ?array
+    public function getCondition(): null|array
     {
         return $this->condition;
     }
@@ -14233,15 +14843,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * A reference to an invariant that may make additional statements about the
      * cardinality or value in the instance.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIdPrimitive[]|\HL7\FHIR\R4\FHIRElement\FHIRId[] $condition
+     * @param null|string|\HL7\FHIR\R4\FHIRIdPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRId $condition
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addCondition($condition = null): object
+    public function addCondition(null|string|FHIRIdPrimitive|FHIRId $condition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $condition && !($condition instanceof FHIRId)) {
             $condition = new FHIRId($condition);
         }
         $this->_trackValueAdded();
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_CONDITION])) {
+            $this->_primitiveXmlLocations[self::FIELD_CONDITION] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_CONDITION][] = $xmlLocation;
         $this->condition[] = $condition;
         return $this;
     }
@@ -14258,10 +14873,12 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * cardinality or value in the instance.
      *
      * @param \HL7\FHIR\R4\FHIRElement\FHIRId[] $condition
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCondition(array $condition = []): object
+    public function setCondition(array $condition = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
+        unset($this->_primitiveXmlLocations[self::FIELD_CONDITION]);
         if ([] !== $this->condition) {
             $this->_trackValuesRemoved(count($this->condition));
             $this->condition = [];
@@ -14271,9 +14888,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
         }
         foreach($condition as $v) {
             if ($v instanceof FHIRId) {
-                $this->addCondition($v);
+                $this->addCondition($v, $xmlLocation);
             } else {
-                $this->addCondition(new FHIRId($v));
+                $this->addCondition(new FHIRId($v), $xmlLocation);
             }
         }
         return $this;
@@ -14289,7 +14906,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionConstraint[]
      */
-    public function getConstraint(): ?array
+    public function getConstraint(): null|array
     {
         return $this->constraint;
     }
@@ -14305,40 +14922,13 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionConstraint $constraint
      * @return static
      */
-    public function addConstraint(?FHIRElementDefinitionConstraint $constraint = null): object
+    public function addConstraint(null|FHIRElementDefinitionConstraint $constraint = null): self
     {
+        if (null === $constraint) {
+            $constraint = new FHIRElementDefinitionConstraint();
+        }
         $this->_trackValueAdded();
         $this->constraint[] = $constraint;
-        return $this;
-    }
-
-    /**
-     * Captures constraints on each element within the resource, profile, or extension.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Formal constraints such as co-occurrence and other constraints that can be
-     * computationally evaluated within the context of the instance.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionConstraint[] $constraint
-     * @return static
-     */
-    public function setConstraint(array $constraint = []): object
-    {
-        if ([] !== $this->constraint) {
-            $this->_trackValuesRemoved(count($this->constraint));
-            $this->constraint = [];
-        }
-        if ([] === $constraint) {
-            return $this;
-        }
-        foreach($constraint as $v) {
-            if ($v instanceof FHIRElementDefinitionConstraint) {
-                $this->addConstraint($v);
-            } else {
-                $this->addConstraint(new FHIRElementDefinitionConstraint($v));
-            }
-        }
         return $this;
     }
 
@@ -14351,9 +14941,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * ignored and not supported. If false, whether to populate or use the data element
      * in any way is at the discretion of the implementation.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getMustSupport(): ?FHIRBoolean
+    public function getMustSupport(): null|FHIRBoolean
     {
         return $this->mustSupport;
     }
@@ -14367,15 +14957,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * ignored and not supported. If false, whether to populate or use the data element
      * in any way is at the discretion of the implementation.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $mustSupport
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $mustSupport
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMustSupport($mustSupport = null): object
+    public function setMustSupport(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $mustSupport = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $mustSupport && !($mustSupport instanceof FHIRBoolean)) {
             $mustSupport = new FHIRBoolean($mustSupport);
         }
         $this->_trackValueSet($this->mustSupport, $mustSupport);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_MUST_SUPPORT])) {
+            $this->_primitiveXmlLocations[self::FIELD_MUST_SUPPORT] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_MUST_SUPPORT][0] = $xmlLocation;
         $this->mustSupport = $mustSupport;
         return $this;
     }
@@ -14391,9 +14986,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * recognize the element and process it, and/or a pre-determination has been made
      * that it is not relevant to their particular system.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getIsModifier(): ?FHIRBoolean
+    public function getIsModifier(): null|FHIRBoolean
     {
         return $this->isModifier;
     }
@@ -14409,15 +15004,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * recognize the element and process it, and/or a pre-determination has been made
      * that it is not relevant to their particular system.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $isModifier
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $isModifier
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIsModifier($isModifier = null): object
+    public function setIsModifier(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isModifier = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $isModifier && !($isModifier instanceof FHIRBoolean)) {
             $isModifier = new FHIRBoolean($isModifier);
         }
         $this->_trackValueSet($this->isModifier, $isModifier);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER])) {
+            $this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER][0] = $xmlLocation;
         $this->isModifier = $isModifier;
         return $this;
     }
@@ -14430,9 +15030,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * Explains how that element affects the interpretation of the resource or element
      * that contains it.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getIsModifierReason(): ?FHIRString
+    public function getIsModifierReason(): null|FHIRString
     {
         return $this->isModifierReason;
     }
@@ -14445,15 +15045,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * Explains how that element affects the interpretation of the resource or element
      * that contains it.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $isModifierReason
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $isModifierReason
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIsModifierReason($isModifierReason = null): object
+    public function setIsModifierReason(null|string|FHIRStringPrimitive|FHIRString $isModifierReason = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $isModifierReason && !($isModifierReason instanceof FHIRString)) {
             $isModifierReason = new FHIRString($isModifierReason);
         }
         $this->_trackValueSet($this->isModifierReason, $isModifierReason);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER_REASON])) {
+            $this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER_REASON] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER_REASON][0] = $xmlLocation;
         $this->isModifierReason = $isModifierReason;
         return $this;
     }
@@ -14465,9 +15070,9 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * Whether the element should be included if a client requests a search with the
      * parameter _summary=true.
      *
-     * @return null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
-    public function getIsSummary(): ?FHIRBoolean
+    public function getIsSummary(): null|FHIRBoolean
     {
         return $this->isSummary;
     }
@@ -14479,15 +15084,20 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * Whether the element should be included if a client requests a search with the
      * parameter _summary=true.
      *
-     * @param null|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $isSummary
+     * @param null|string|bool|\HL7\FHIR\R4\FHIRBooleanPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRBoolean $isSummary
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIsSummary($isSummary = null): object
+    public function setIsSummary(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isSummary = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $isSummary && !($isSummary instanceof FHIRBoolean)) {
             $isSummary = new FHIRBoolean($isSummary);
         }
         $this->_trackValueSet($this->isSummary, $isSummary);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_IS_SUMMARY])) {
+            $this->_primitiveXmlLocations[self::FIELD_IS_SUMMARY] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_IS_SUMMARY][0] = $xmlLocation;
         $this->isSummary = $isSummary;
         return $this;
     }
@@ -14502,7 +15112,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionBinding
      */
-    public function getBinding(): ?FHIRElementDefinitionBinding
+    public function getBinding(): null|FHIRElementDefinitionBinding
     {
         return $this->binding;
     }
@@ -14518,8 +15128,11 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionBinding $binding
      * @return static
      */
-    public function setBinding(?FHIRElementDefinitionBinding $binding = null): object
+    public function setBinding(null|FHIRElementDefinitionBinding $binding = null): self
     {
+        if (null === $binding) {
+            $binding = new FHIRElementDefinitionBinding();
+        }
         $this->_trackValueSet($this->binding, $binding);
         $this->binding = $binding;
         return $this;
@@ -14535,7 +15148,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionMapping[]
      */
-    public function getMapping(): ?array
+    public function getMapping(): null|array
     {
         return $this->mapping;
     }
@@ -14551,40 +15164,13 @@ class FHIRElementDefinition extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionMapping $mapping
      * @return static
      */
-    public function addMapping(?FHIRElementDefinitionMapping $mapping = null): object
+    public function addMapping(null|FHIRElementDefinitionMapping $mapping = null): self
     {
+        if (null === $mapping) {
+            $mapping = new FHIRElementDefinitionMapping();
+        }
         $this->_trackValueAdded();
         $this->mapping[] = $mapping;
-        return $this;
-    }
-
-    /**
-     * Captures constraints on each element within the resource, profile, or extension.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Identifies a concept from an external specification that roughly corresponds to
-     * this element.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition\FHIRElementDefinitionMapping[] $mapping
-     * @return static
-     */
-    public function setMapping(array $mapping = []): object
-    {
-        if ([] !== $this->mapping) {
-            $this->_trackValuesRemoved(count($this->mapping));
-            $this->mapping = [];
-        }
-        if ([] === $mapping) {
-            return $this;
-        }
-        foreach($mapping as $v) {
-            if ($v instanceof FHIRElementDefinitionMapping) {
-                $this->addMapping($v);
-            } else {
-                $this->addMapping(new FHIRElementDefinitionMapping($v));
-            }
-        }
         return $this;
     }
 
@@ -14596,7 +15182,7 @@ class FHIRElementDefinition extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -18014,2342 +18600,2689 @@ class FHIRElementDefinition extends FHIRBackboneElement
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRElementDefinition::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRElementDefinition::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRElementDefinition(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRElementDefinition)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRElementDefinition)) {
             throw new \RuntimeException(sprintf(
-                'FHIRElementDefinition::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_PATH === $n->nodeName) {
-                $type->setPath(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_REPRESENTATION === $n->nodeName) {
-                $type->addRepresentation(FHIRPropertyRepresentation::xmlUnserialize($n));
-            } elseif (self::FIELD_SLICE_NAME === $n->nodeName) {
-                $type->setSliceName(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_SLICE_IS_CONSTRAINING === $n->nodeName) {
-                $type->setSliceIsConstraining(FHIRBoolean::xmlUnserialize($n));
-            } elseif (self::FIELD_LABEL === $n->nodeName) {
-                $type->setLabel(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_CODE === $n->nodeName) {
-                $type->addCode(FHIRCoding::xmlUnserialize($n));
-            } elseif (self::FIELD_SLICING === $n->nodeName) {
-                $type->setSlicing(FHIRElementDefinitionSlicing::xmlUnserialize($n));
-            } elseif (self::FIELD_SHORT === $n->nodeName) {
-                $type->setShort(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFINITION === $n->nodeName) {
-                $type->setDefinition(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_COMMENT === $n->nodeName) {
-                $type->setComment(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_REQUIREMENTS === $n->nodeName) {
-                $type->setRequirements(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_ALIAS === $n->nodeName) {
-                $type->addAlias(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN === $n->nodeName) {
-                $type->setMin(FHIRUnsignedInt::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX === $n->nodeName) {
-                $type->setMax(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_BASE === $n->nodeName) {
-                $type->setBase(FHIRElementDefinitionBase::xmlUnserialize($n));
-            } elseif (self::FIELD_CONTENT_REFERENCE === $n->nodeName) {
-                $type->setContentReference(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_TYPE === $n->nodeName) {
-                $type->addType(FHIRElementDefinitionType::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_BASE_64BINARY === $n->nodeName) {
-                $type->setDefaultValueBase64Binary(FHIRBase64Binary::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_BOOLEAN === $n->nodeName) {
-                $type->setDefaultValueBoolean(FHIRBoolean::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_CANONICAL === $n->nodeName) {
-                $type->setDefaultValueCanonical(FHIRCanonical::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_CODE === $n->nodeName) {
-                $type->setDefaultValueCode(FHIRCode::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_DATE === $n->nodeName) {
-                $type->setDefaultValueDate(FHIRDate::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_DATE_TIME === $n->nodeName) {
-                $type->setDefaultValueDateTime(FHIRDateTime::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_DECIMAL === $n->nodeName) {
-                $type->setDefaultValueDecimal(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_ID === $n->nodeName) {
-                $type->setDefaultValueId(FHIRId::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_INSTANT === $n->nodeName) {
-                $type->setDefaultValueInstant(FHIRInstant::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_INTEGER === $n->nodeName) {
-                $type->setDefaultValueInteger(FHIRInteger::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_MARKDOWN === $n->nodeName) {
-                $type->setDefaultValueMarkdown(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_OID === $n->nodeName) {
-                $type->setDefaultValueOid(FHIROid::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_POSITIVE_INT === $n->nodeName) {
-                $type->setDefaultValuePositiveInt(FHIRPositiveInt::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_STRING === $n->nodeName) {
-                $type->setDefaultValueString(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_TIME === $n->nodeName) {
-                $type->setDefaultValueTime(FHIRTime::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_UNSIGNED_INT === $n->nodeName) {
-                $type->setDefaultValueUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_URI === $n->nodeName) {
-                $type->setDefaultValueUri(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_URL === $n->nodeName) {
-                $type->setDefaultValueUrl(FHIRUrl::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_UUID === $n->nodeName) {
-                $type->setDefaultValueUuid(FHIRUuid::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_ADDRESS === $n->nodeName) {
-                $type->setDefaultValueAddress(FHIRAddress::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_AGE === $n->nodeName) {
-                $type->setDefaultValueAge(FHIRAge::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_ANNOTATION === $n->nodeName) {
-                $type->setDefaultValueAnnotation(FHIRAnnotation::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_ATTACHMENT === $n->nodeName) {
-                $type->setDefaultValueAttachment(FHIRAttachment::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_CODEABLE_CONCEPT === $n->nodeName) {
-                $type->setDefaultValueCodeableConcept(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_CODING === $n->nodeName) {
-                $type->setDefaultValueCoding(FHIRCoding::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_CONTACT_POINT === $n->nodeName) {
-                $type->setDefaultValueContactPoint(FHIRContactPoint::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_COUNT === $n->nodeName) {
-                $type->setDefaultValueCount(FHIRCount::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_DISTANCE === $n->nodeName) {
-                $type->setDefaultValueDistance(FHIRDistance::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_DURATION === $n->nodeName) {
-                $type->setDefaultValueDuration(FHIRDuration::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_HUMAN_NAME === $n->nodeName) {
-                $type->setDefaultValueHumanName(FHIRHumanName::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_IDENTIFIER === $n->nodeName) {
-                $type->setDefaultValueIdentifier(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_MONEY === $n->nodeName) {
-                $type->setDefaultValueMoney(FHIRMoney::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_PERIOD === $n->nodeName) {
-                $type->setDefaultValuePeriod(FHIRPeriod::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_QUANTITY === $n->nodeName) {
-                $type->setDefaultValueQuantity(FHIRQuantity::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_RANGE === $n->nodeName) {
-                $type->setDefaultValueRange(FHIRRange::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_RATIO === $n->nodeName) {
-                $type->setDefaultValueRatio(FHIRRatio::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_REFERENCE === $n->nodeName) {
-                $type->setDefaultValueReference(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_SAMPLED_DATA === $n->nodeName) {
-                $type->setDefaultValueSampledData(FHIRSampledData::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_SIGNATURE === $n->nodeName) {
-                $type->setDefaultValueSignature(FHIRSignature::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_TIMING === $n->nodeName) {
-                $type->setDefaultValueTiming(FHIRTiming::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_CONTACT_DETAIL === $n->nodeName) {
-                $type->setDefaultValueContactDetail(FHIRContactDetail::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_CONTRIBUTOR === $n->nodeName) {
-                $type->setDefaultValueContributor(FHIRContributor::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_DATA_REQUIREMENT === $n->nodeName) {
-                $type->setDefaultValueDataRequirement(FHIRDataRequirement::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_EXPRESSION === $n->nodeName) {
-                $type->setDefaultValueExpression(FHIRExpression::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_PARAMETER_DEFINITION === $n->nodeName) {
-                $type->setDefaultValueParameterDefinition(FHIRParameterDefinition::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_RELATED_ARTIFACT === $n->nodeName) {
-                $type->setDefaultValueRelatedArtifact(FHIRRelatedArtifact::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_TRIGGER_DEFINITION === $n->nodeName) {
-                $type->setDefaultValueTriggerDefinition(FHIRTriggerDefinition::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_USAGE_CONTEXT === $n->nodeName) {
-                $type->setDefaultValueUsageContext(FHIRUsageContext::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_DOSAGE === $n->nodeName) {
-                $type->setDefaultValueDosage(FHIRDosage::xmlUnserialize($n));
-            } elseif (self::FIELD_DEFAULT_VALUE_META === $n->nodeName) {
-                $type->setDefaultValueMeta(FHIRMeta::xmlUnserialize($n));
-            } elseif (self::FIELD_MEANING_WHEN_MISSING === $n->nodeName) {
-                $type->setMeaningWhenMissing(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_ORDER_MEANING === $n->nodeName) {
-                $type->setOrderMeaning(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_BASE_64BINARY === $n->nodeName) {
-                $type->setFixedBase64Binary(FHIRBase64Binary::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_BOOLEAN === $n->nodeName) {
-                $type->setFixedBoolean(FHIRBoolean::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_CANONICAL === $n->nodeName) {
-                $type->setFixedCanonical(FHIRCanonical::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_CODE === $n->nodeName) {
-                $type->setFixedCode(FHIRCode::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_DATE === $n->nodeName) {
-                $type->setFixedDate(FHIRDate::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_DATE_TIME === $n->nodeName) {
-                $type->setFixedDateTime(FHIRDateTime::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_DECIMAL === $n->nodeName) {
-                $type->setFixedDecimal(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_ID === $n->nodeName) {
-                $type->setFixedId(FHIRId::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_INSTANT === $n->nodeName) {
-                $type->setFixedInstant(FHIRInstant::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_INTEGER === $n->nodeName) {
-                $type->setFixedInteger(FHIRInteger::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_MARKDOWN === $n->nodeName) {
-                $type->setFixedMarkdown(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_OID === $n->nodeName) {
-                $type->setFixedOid(FHIROid::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_POSITIVE_INT === $n->nodeName) {
-                $type->setFixedPositiveInt(FHIRPositiveInt::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_STRING === $n->nodeName) {
-                $type->setFixedString(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_TIME === $n->nodeName) {
-                $type->setFixedTime(FHIRTime::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_UNSIGNED_INT === $n->nodeName) {
-                $type->setFixedUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_URI === $n->nodeName) {
-                $type->setFixedUri(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_URL === $n->nodeName) {
-                $type->setFixedUrl(FHIRUrl::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_UUID === $n->nodeName) {
-                $type->setFixedUuid(FHIRUuid::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_ADDRESS === $n->nodeName) {
-                $type->setFixedAddress(FHIRAddress::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_AGE === $n->nodeName) {
-                $type->setFixedAge(FHIRAge::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_ANNOTATION === $n->nodeName) {
-                $type->setFixedAnnotation(FHIRAnnotation::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_ATTACHMENT === $n->nodeName) {
-                $type->setFixedAttachment(FHIRAttachment::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_CODEABLE_CONCEPT === $n->nodeName) {
-                $type->setFixedCodeableConcept(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_CODING === $n->nodeName) {
-                $type->setFixedCoding(FHIRCoding::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_CONTACT_POINT === $n->nodeName) {
-                $type->setFixedContactPoint(FHIRContactPoint::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_COUNT === $n->nodeName) {
-                $type->setFixedCount(FHIRCount::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_DISTANCE === $n->nodeName) {
-                $type->setFixedDistance(FHIRDistance::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_DURATION === $n->nodeName) {
-                $type->setFixedDuration(FHIRDuration::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_HUMAN_NAME === $n->nodeName) {
-                $type->setFixedHumanName(FHIRHumanName::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_IDENTIFIER === $n->nodeName) {
-                $type->setFixedIdentifier(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_MONEY === $n->nodeName) {
-                $type->setFixedMoney(FHIRMoney::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_PERIOD === $n->nodeName) {
-                $type->setFixedPeriod(FHIRPeriod::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_QUANTITY === $n->nodeName) {
-                $type->setFixedQuantity(FHIRQuantity::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_RANGE === $n->nodeName) {
-                $type->setFixedRange(FHIRRange::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_RATIO === $n->nodeName) {
-                $type->setFixedRatio(FHIRRatio::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_REFERENCE === $n->nodeName) {
-                $type->setFixedReference(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_SAMPLED_DATA === $n->nodeName) {
-                $type->setFixedSampledData(FHIRSampledData::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_SIGNATURE === $n->nodeName) {
-                $type->setFixedSignature(FHIRSignature::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_TIMING === $n->nodeName) {
-                $type->setFixedTiming(FHIRTiming::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_CONTACT_DETAIL === $n->nodeName) {
-                $type->setFixedContactDetail(FHIRContactDetail::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_CONTRIBUTOR === $n->nodeName) {
-                $type->setFixedContributor(FHIRContributor::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_DATA_REQUIREMENT === $n->nodeName) {
-                $type->setFixedDataRequirement(FHIRDataRequirement::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_EXPRESSION === $n->nodeName) {
-                $type->setFixedExpression(FHIRExpression::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_PARAMETER_DEFINITION === $n->nodeName) {
-                $type->setFixedParameterDefinition(FHIRParameterDefinition::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_RELATED_ARTIFACT === $n->nodeName) {
-                $type->setFixedRelatedArtifact(FHIRRelatedArtifact::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_TRIGGER_DEFINITION === $n->nodeName) {
-                $type->setFixedTriggerDefinition(FHIRTriggerDefinition::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_USAGE_CONTEXT === $n->nodeName) {
-                $type->setFixedUsageContext(FHIRUsageContext::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_DOSAGE === $n->nodeName) {
-                $type->setFixedDosage(FHIRDosage::xmlUnserialize($n));
-            } elseif (self::FIELD_FIXED_META === $n->nodeName) {
-                $type->setFixedMeta(FHIRMeta::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_BASE_64BINARY === $n->nodeName) {
-                $type->setPatternBase64Binary(FHIRBase64Binary::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_BOOLEAN === $n->nodeName) {
-                $type->setPatternBoolean(FHIRBoolean::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_CANONICAL === $n->nodeName) {
-                $type->setPatternCanonical(FHIRCanonical::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_CODE === $n->nodeName) {
-                $type->setPatternCode(FHIRCode::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_DATE === $n->nodeName) {
-                $type->setPatternDate(FHIRDate::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_DATE_TIME === $n->nodeName) {
-                $type->setPatternDateTime(FHIRDateTime::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_DECIMAL === $n->nodeName) {
-                $type->setPatternDecimal(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_ID === $n->nodeName) {
-                $type->setPatternId(FHIRId::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_INSTANT === $n->nodeName) {
-                $type->setPatternInstant(FHIRInstant::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_INTEGER === $n->nodeName) {
-                $type->setPatternInteger(FHIRInteger::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_MARKDOWN === $n->nodeName) {
-                $type->setPatternMarkdown(FHIRMarkdown::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_OID === $n->nodeName) {
-                $type->setPatternOid(FHIROid::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_POSITIVE_INT === $n->nodeName) {
-                $type->setPatternPositiveInt(FHIRPositiveInt::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_STRING === $n->nodeName) {
-                $type->setPatternString(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_TIME === $n->nodeName) {
-                $type->setPatternTime(FHIRTime::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_UNSIGNED_INT === $n->nodeName) {
-                $type->setPatternUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_URI === $n->nodeName) {
-                $type->setPatternUri(FHIRUri::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_URL === $n->nodeName) {
-                $type->setPatternUrl(FHIRUrl::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_UUID === $n->nodeName) {
-                $type->setPatternUuid(FHIRUuid::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_ADDRESS === $n->nodeName) {
-                $type->setPatternAddress(FHIRAddress::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_AGE === $n->nodeName) {
-                $type->setPatternAge(FHIRAge::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_ANNOTATION === $n->nodeName) {
-                $type->setPatternAnnotation(FHIRAnnotation::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_ATTACHMENT === $n->nodeName) {
-                $type->setPatternAttachment(FHIRAttachment::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_CODEABLE_CONCEPT === $n->nodeName) {
-                $type->setPatternCodeableConcept(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_CODING === $n->nodeName) {
-                $type->setPatternCoding(FHIRCoding::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_CONTACT_POINT === $n->nodeName) {
-                $type->setPatternContactPoint(FHIRContactPoint::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_COUNT === $n->nodeName) {
-                $type->setPatternCount(FHIRCount::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_DISTANCE === $n->nodeName) {
-                $type->setPatternDistance(FHIRDistance::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_DURATION === $n->nodeName) {
-                $type->setPatternDuration(FHIRDuration::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_HUMAN_NAME === $n->nodeName) {
-                $type->setPatternHumanName(FHIRHumanName::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_IDENTIFIER === $n->nodeName) {
-                $type->setPatternIdentifier(FHIRIdentifier::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_MONEY === $n->nodeName) {
-                $type->setPatternMoney(FHIRMoney::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_PERIOD === $n->nodeName) {
-                $type->setPatternPeriod(FHIRPeriod::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_QUANTITY === $n->nodeName) {
-                $type->setPatternQuantity(FHIRQuantity::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_RANGE === $n->nodeName) {
-                $type->setPatternRange(FHIRRange::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_RATIO === $n->nodeName) {
-                $type->setPatternRatio(FHIRRatio::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_REFERENCE === $n->nodeName) {
-                $type->setPatternReference(FHIRReference::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_SAMPLED_DATA === $n->nodeName) {
-                $type->setPatternSampledData(FHIRSampledData::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_SIGNATURE === $n->nodeName) {
-                $type->setPatternSignature(FHIRSignature::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_TIMING === $n->nodeName) {
-                $type->setPatternTiming(FHIRTiming::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_CONTACT_DETAIL === $n->nodeName) {
-                $type->setPatternContactDetail(FHIRContactDetail::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_CONTRIBUTOR === $n->nodeName) {
-                $type->setPatternContributor(FHIRContributor::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_DATA_REQUIREMENT === $n->nodeName) {
-                $type->setPatternDataRequirement(FHIRDataRequirement::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_EXPRESSION === $n->nodeName) {
-                $type->setPatternExpression(FHIRExpression::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_PARAMETER_DEFINITION === $n->nodeName) {
-                $type->setPatternParameterDefinition(FHIRParameterDefinition::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_RELATED_ARTIFACT === $n->nodeName) {
-                $type->setPatternRelatedArtifact(FHIRRelatedArtifact::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_TRIGGER_DEFINITION === $n->nodeName) {
-                $type->setPatternTriggerDefinition(FHIRTriggerDefinition::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_USAGE_CONTEXT === $n->nodeName) {
-                $type->setPatternUsageContext(FHIRUsageContext::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_DOSAGE === $n->nodeName) {
-                $type->setPatternDosage(FHIRDosage::xmlUnserialize($n));
-            } elseif (self::FIELD_PATTERN_META === $n->nodeName) {
-                $type->setPatternMeta(FHIRMeta::xmlUnserialize($n));
-            } elseif (self::FIELD_EXAMPLE === $n->nodeName) {
-                $type->addExample(FHIRElementDefinitionExample::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN_VALUE_DATE === $n->nodeName) {
-                $type->setMinValueDate(FHIRDate::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN_VALUE_DATE_TIME === $n->nodeName) {
-                $type->setMinValueDateTime(FHIRDateTime::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN_VALUE_INSTANT === $n->nodeName) {
-                $type->setMinValueInstant(FHIRInstant::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN_VALUE_TIME === $n->nodeName) {
-                $type->setMinValueTime(FHIRTime::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN_VALUE_DECIMAL === $n->nodeName) {
-                $type->setMinValueDecimal(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN_VALUE_INTEGER === $n->nodeName) {
-                $type->setMinValueInteger(FHIRInteger::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN_VALUE_POSITIVE_INT === $n->nodeName) {
-                $type->setMinValuePositiveInt(FHIRPositiveInt::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN_VALUE_UNSIGNED_INT === $n->nodeName) {
-                $type->setMinValueUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n));
-            } elseif (self::FIELD_MIN_VALUE_QUANTITY === $n->nodeName) {
-                $type->setMinValueQuantity(FHIRQuantity::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_VALUE_DATE === $n->nodeName) {
-                $type->setMaxValueDate(FHIRDate::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_VALUE_DATE_TIME === $n->nodeName) {
-                $type->setMaxValueDateTime(FHIRDateTime::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_VALUE_INSTANT === $n->nodeName) {
-                $type->setMaxValueInstant(FHIRInstant::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_VALUE_TIME === $n->nodeName) {
-                $type->setMaxValueTime(FHIRTime::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_VALUE_DECIMAL === $n->nodeName) {
-                $type->setMaxValueDecimal(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_VALUE_INTEGER === $n->nodeName) {
-                $type->setMaxValueInteger(FHIRInteger::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_VALUE_POSITIVE_INT === $n->nodeName) {
-                $type->setMaxValuePositiveInt(FHIRPositiveInt::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_VALUE_UNSIGNED_INT === $n->nodeName) {
-                $type->setMaxValueUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_VALUE_QUANTITY === $n->nodeName) {
-                $type->setMaxValueQuantity(FHIRQuantity::xmlUnserialize($n));
-            } elseif (self::FIELD_MAX_LENGTH === $n->nodeName) {
-                $type->setMaxLength(FHIRInteger::xmlUnserialize($n));
-            } elseif (self::FIELD_CONDITION === $n->nodeName) {
-                $type->addCondition(FHIRId::xmlUnserialize($n));
-            } elseif (self::FIELD_CONSTRAINT === $n->nodeName) {
-                $type->addConstraint(FHIRElementDefinitionConstraint::xmlUnserialize($n));
-            } elseif (self::FIELD_MUST_SUPPORT === $n->nodeName) {
-                $type->setMustSupport(FHIRBoolean::xmlUnserialize($n));
-            } elseif (self::FIELD_IS_MODIFIER === $n->nodeName) {
-                $type->setIsModifier(FHIRBoolean::xmlUnserialize($n));
-            } elseif (self::FIELD_IS_MODIFIER_REASON === $n->nodeName) {
-                $type->setIsModifierReason(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_IS_SUMMARY === $n->nodeName) {
-                $type->setIsSummary(FHIRBoolean::xmlUnserialize($n));
-            } elseif (self::FIELD_BINDING === $n->nodeName) {
-                $type->setBinding(FHIRElementDefinitionBinding::xmlUnserialize($n));
-            } elseif (self::FIELD_MAPPING === $n->nodeName) {
-                $type->addMapping(FHIRElementDefinitionMapping::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_PATH === $childName) {
+                $type->setPath(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_REPRESENTATION === $childName) {
+                $type->addRepresentation(FHIRPropertyRepresentation::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SLICE_NAME === $childName) {
+                $type->setSliceName(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_SLICE_IS_CONSTRAINING === $childName) {
+                $type->setSliceIsConstraining(FHIRBoolean::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_LABEL === $childName) {
+                $type->setLabel(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_CODE === $childName) {
+                $type->addCode(FHIRCoding::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SLICING === $childName) {
+                $type->setSlicing(FHIRElementDefinitionSlicing::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SHORT === $childName) {
+                $type->setShort(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFINITION === $childName) {
+                $type->setDefinition(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_COMMENT === $childName) {
+                $type->setComment(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_REQUIREMENTS === $childName) {
+                $type->setRequirements(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_ALIAS === $childName) {
+                $type->addAlias(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MIN === $childName) {
+                $type->setMin(FHIRUnsignedInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MAX === $childName) {
+                $type->setMax(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_BASE === $childName) {
+                $type->setBase(FHIRElementDefinitionBase::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_CONTENT_REFERENCE === $childName) {
+                $type->setContentReference(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_TYPE === $childName) {
+                $type->addType(FHIRElementDefinitionType::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_BASE_64BINARY === $childName) {
+                $type->setDefaultValueBase64Binary(FHIRBase64Binary::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_BOOLEAN === $childName) {
+                $type->setDefaultValueBoolean(FHIRBoolean::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_CANONICAL === $childName) {
+                $type->setDefaultValueCanonical(FHIRCanonical::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_CODE === $childName) {
+                $type->setDefaultValueCode(FHIRCode::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_DATE === $childName) {
+                $type->setDefaultValueDate(FHIRDate::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_DATE_TIME === $childName) {
+                $type->setDefaultValueDateTime(FHIRDateTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_DECIMAL === $childName) {
+                $type->setDefaultValueDecimal(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_ID === $childName) {
+                $type->setDefaultValueId(FHIRId::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_INSTANT === $childName) {
+                $type->setDefaultValueInstant(FHIRInstant::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_INTEGER === $childName) {
+                $type->setDefaultValueInteger(FHIRInteger::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_MARKDOWN === $childName) {
+                $type->setDefaultValueMarkdown(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_OID === $childName) {
+                $type->setDefaultValueOid(FHIROid::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_POSITIVE_INT === $childName) {
+                $type->setDefaultValuePositiveInt(FHIRPositiveInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_STRING === $childName) {
+                $type->setDefaultValueString(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_TIME === $childName) {
+                $type->setDefaultValueTime(FHIRTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_UNSIGNED_INT === $childName) {
+                $type->setDefaultValueUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_URI === $childName) {
+                $type->setDefaultValueUri(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_URL === $childName) {
+                $type->setDefaultValueUrl(FHIRUrl::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_UUID === $childName) {
+                $type->setDefaultValueUuid(FHIRUuid::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DEFAULT_VALUE_ADDRESS === $childName) {
+                $type->setDefaultValueAddress(FHIRAddress::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_AGE === $childName) {
+                $type->setDefaultValueAge(FHIRAge::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_ANNOTATION === $childName) {
+                $type->setDefaultValueAnnotation(FHIRAnnotation::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_ATTACHMENT === $childName) {
+                $type->setDefaultValueAttachment(FHIRAttachment::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_CODEABLE_CONCEPT === $childName) {
+                $type->setDefaultValueCodeableConcept(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_CODING === $childName) {
+                $type->setDefaultValueCoding(FHIRCoding::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_CONTACT_POINT === $childName) {
+                $type->setDefaultValueContactPoint(FHIRContactPoint::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_COUNT === $childName) {
+                $type->setDefaultValueCount(FHIRCount::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_DISTANCE === $childName) {
+                $type->setDefaultValueDistance(FHIRDistance::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_DURATION === $childName) {
+                $type->setDefaultValueDuration(FHIRDuration::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_HUMAN_NAME === $childName) {
+                $type->setDefaultValueHumanName(FHIRHumanName::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_IDENTIFIER === $childName) {
+                $type->setDefaultValueIdentifier(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_MONEY === $childName) {
+                $type->setDefaultValueMoney(FHIRMoney::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_PERIOD === $childName) {
+                $type->setDefaultValuePeriod(FHIRPeriod::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_QUANTITY === $childName) {
+                $type->setDefaultValueQuantity(FHIRQuantity::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_RANGE === $childName) {
+                $type->setDefaultValueRange(FHIRRange::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_RATIO === $childName) {
+                $type->setDefaultValueRatio(FHIRRatio::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_REFERENCE === $childName) {
+                $type->setDefaultValueReference(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_SAMPLED_DATA === $childName) {
+                $type->setDefaultValueSampledData(FHIRSampledData::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_SIGNATURE === $childName) {
+                $type->setDefaultValueSignature(FHIRSignature::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_TIMING === $childName) {
+                $type->setDefaultValueTiming(FHIRTiming::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_CONTACT_DETAIL === $childName) {
+                $type->setDefaultValueContactDetail(FHIRContactDetail::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_CONTRIBUTOR === $childName) {
+                $type->setDefaultValueContributor(FHIRContributor::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_DATA_REQUIREMENT === $childName) {
+                $type->setDefaultValueDataRequirement(FHIRDataRequirement::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_EXPRESSION === $childName) {
+                $type->setDefaultValueExpression(FHIRExpression::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_PARAMETER_DEFINITION === $childName) {
+                $type->setDefaultValueParameterDefinition(FHIRParameterDefinition::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_RELATED_ARTIFACT === $childName) {
+                $type->setDefaultValueRelatedArtifact(FHIRRelatedArtifact::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_TRIGGER_DEFINITION === $childName) {
+                $type->setDefaultValueTriggerDefinition(FHIRTriggerDefinition::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_USAGE_CONTEXT === $childName) {
+                $type->setDefaultValueUsageContext(FHIRUsageContext::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_DOSAGE === $childName) {
+                $type->setDefaultValueDosage(FHIRDosage::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_DEFAULT_VALUE_META === $childName) {
+                $type->setDefaultValueMeta(FHIRMeta::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MEANING_WHEN_MISSING === $childName) {
+                $type->setMeaningWhenMissing(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_ORDER_MEANING === $childName) {
+                $type->setOrderMeaning(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_BASE_64BINARY === $childName) {
+                $type->setFixedBase64Binary(FHIRBase64Binary::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_BOOLEAN === $childName) {
+                $type->setFixedBoolean(FHIRBoolean::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_CANONICAL === $childName) {
+                $type->setFixedCanonical(FHIRCanonical::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_CODE === $childName) {
+                $type->setFixedCode(FHIRCode::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_DATE === $childName) {
+                $type->setFixedDate(FHIRDate::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_DATE_TIME === $childName) {
+                $type->setFixedDateTime(FHIRDateTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_DECIMAL === $childName) {
+                $type->setFixedDecimal(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_ID === $childName) {
+                $type->setFixedId(FHIRId::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_INSTANT === $childName) {
+                $type->setFixedInstant(FHIRInstant::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_INTEGER === $childName) {
+                $type->setFixedInteger(FHIRInteger::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_MARKDOWN === $childName) {
+                $type->setFixedMarkdown(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_OID === $childName) {
+                $type->setFixedOid(FHIROid::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_POSITIVE_INT === $childName) {
+                $type->setFixedPositiveInt(FHIRPositiveInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_STRING === $childName) {
+                $type->setFixedString(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_TIME === $childName) {
+                $type->setFixedTime(FHIRTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_UNSIGNED_INT === $childName) {
+                $type->setFixedUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_URI === $childName) {
+                $type->setFixedUri(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_URL === $childName) {
+                $type->setFixedUrl(FHIRUrl::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_UUID === $childName) {
+                $type->setFixedUuid(FHIRUuid::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_FIXED_ADDRESS === $childName) {
+                $type->setFixedAddress(FHIRAddress::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_AGE === $childName) {
+                $type->setFixedAge(FHIRAge::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_ANNOTATION === $childName) {
+                $type->setFixedAnnotation(FHIRAnnotation::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_ATTACHMENT === $childName) {
+                $type->setFixedAttachment(FHIRAttachment::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_CODEABLE_CONCEPT === $childName) {
+                $type->setFixedCodeableConcept(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_CODING === $childName) {
+                $type->setFixedCoding(FHIRCoding::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_CONTACT_POINT === $childName) {
+                $type->setFixedContactPoint(FHIRContactPoint::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_COUNT === $childName) {
+                $type->setFixedCount(FHIRCount::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_DISTANCE === $childName) {
+                $type->setFixedDistance(FHIRDistance::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_DURATION === $childName) {
+                $type->setFixedDuration(FHIRDuration::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_HUMAN_NAME === $childName) {
+                $type->setFixedHumanName(FHIRHumanName::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_IDENTIFIER === $childName) {
+                $type->setFixedIdentifier(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_MONEY === $childName) {
+                $type->setFixedMoney(FHIRMoney::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_PERIOD === $childName) {
+                $type->setFixedPeriod(FHIRPeriod::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_QUANTITY === $childName) {
+                $type->setFixedQuantity(FHIRQuantity::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_RANGE === $childName) {
+                $type->setFixedRange(FHIRRange::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_RATIO === $childName) {
+                $type->setFixedRatio(FHIRRatio::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_REFERENCE === $childName) {
+                $type->setFixedReference(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_SAMPLED_DATA === $childName) {
+                $type->setFixedSampledData(FHIRSampledData::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_SIGNATURE === $childName) {
+                $type->setFixedSignature(FHIRSignature::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_TIMING === $childName) {
+                $type->setFixedTiming(FHIRTiming::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_CONTACT_DETAIL === $childName) {
+                $type->setFixedContactDetail(FHIRContactDetail::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_CONTRIBUTOR === $childName) {
+                $type->setFixedContributor(FHIRContributor::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_DATA_REQUIREMENT === $childName) {
+                $type->setFixedDataRequirement(FHIRDataRequirement::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_EXPRESSION === $childName) {
+                $type->setFixedExpression(FHIRExpression::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_PARAMETER_DEFINITION === $childName) {
+                $type->setFixedParameterDefinition(FHIRParameterDefinition::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_RELATED_ARTIFACT === $childName) {
+                $type->setFixedRelatedArtifact(FHIRRelatedArtifact::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_TRIGGER_DEFINITION === $childName) {
+                $type->setFixedTriggerDefinition(FHIRTriggerDefinition::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_USAGE_CONTEXT === $childName) {
+                $type->setFixedUsageContext(FHIRUsageContext::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_DOSAGE === $childName) {
+                $type->setFixedDosage(FHIRDosage::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_FIXED_META === $childName) {
+                $type->setFixedMeta(FHIRMeta::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_BASE_64BINARY === $childName) {
+                $type->setPatternBase64Binary(FHIRBase64Binary::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_BOOLEAN === $childName) {
+                $type->setPatternBoolean(FHIRBoolean::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_CANONICAL === $childName) {
+                $type->setPatternCanonical(FHIRCanonical::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_CODE === $childName) {
+                $type->setPatternCode(FHIRCode::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_DATE === $childName) {
+                $type->setPatternDate(FHIRDate::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_DATE_TIME === $childName) {
+                $type->setPatternDateTime(FHIRDateTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_DECIMAL === $childName) {
+                $type->setPatternDecimal(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_ID === $childName) {
+                $type->setPatternId(FHIRId::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_INSTANT === $childName) {
+                $type->setPatternInstant(FHIRInstant::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_INTEGER === $childName) {
+                $type->setPatternInteger(FHIRInteger::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_MARKDOWN === $childName) {
+                $type->setPatternMarkdown(FHIRMarkdown::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_OID === $childName) {
+                $type->setPatternOid(FHIROid::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_POSITIVE_INT === $childName) {
+                $type->setPatternPositiveInt(FHIRPositiveInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_STRING === $childName) {
+                $type->setPatternString(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_TIME === $childName) {
+                $type->setPatternTime(FHIRTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_UNSIGNED_INT === $childName) {
+                $type->setPatternUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_URI === $childName) {
+                $type->setPatternUri(FHIRUri::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_URL === $childName) {
+                $type->setPatternUrl(FHIRUrl::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_UUID === $childName) {
+                $type->setPatternUuid(FHIRUuid::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PATTERN_ADDRESS === $childName) {
+                $type->setPatternAddress(FHIRAddress::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_AGE === $childName) {
+                $type->setPatternAge(FHIRAge::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_ANNOTATION === $childName) {
+                $type->setPatternAnnotation(FHIRAnnotation::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_ATTACHMENT === $childName) {
+                $type->setPatternAttachment(FHIRAttachment::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_CODEABLE_CONCEPT === $childName) {
+                $type->setPatternCodeableConcept(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_CODING === $childName) {
+                $type->setPatternCoding(FHIRCoding::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_CONTACT_POINT === $childName) {
+                $type->setPatternContactPoint(FHIRContactPoint::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_COUNT === $childName) {
+                $type->setPatternCount(FHIRCount::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_DISTANCE === $childName) {
+                $type->setPatternDistance(FHIRDistance::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_DURATION === $childName) {
+                $type->setPatternDuration(FHIRDuration::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_HUMAN_NAME === $childName) {
+                $type->setPatternHumanName(FHIRHumanName::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_IDENTIFIER === $childName) {
+                $type->setPatternIdentifier(FHIRIdentifier::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_MONEY === $childName) {
+                $type->setPatternMoney(FHIRMoney::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_PERIOD === $childName) {
+                $type->setPatternPeriod(FHIRPeriod::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_QUANTITY === $childName) {
+                $type->setPatternQuantity(FHIRQuantity::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_RANGE === $childName) {
+                $type->setPatternRange(FHIRRange::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_RATIO === $childName) {
+                $type->setPatternRatio(FHIRRatio::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_REFERENCE === $childName) {
+                $type->setPatternReference(FHIRReference::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_SAMPLED_DATA === $childName) {
+                $type->setPatternSampledData(FHIRSampledData::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_SIGNATURE === $childName) {
+                $type->setPatternSignature(FHIRSignature::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_TIMING === $childName) {
+                $type->setPatternTiming(FHIRTiming::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_CONTACT_DETAIL === $childName) {
+                $type->setPatternContactDetail(FHIRContactDetail::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_CONTRIBUTOR === $childName) {
+                $type->setPatternContributor(FHIRContributor::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_DATA_REQUIREMENT === $childName) {
+                $type->setPatternDataRequirement(FHIRDataRequirement::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_EXPRESSION === $childName) {
+                $type->setPatternExpression(FHIRExpression::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_PARAMETER_DEFINITION === $childName) {
+                $type->setPatternParameterDefinition(FHIRParameterDefinition::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_RELATED_ARTIFACT === $childName) {
+                $type->setPatternRelatedArtifact(FHIRRelatedArtifact::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_TRIGGER_DEFINITION === $childName) {
+                $type->setPatternTriggerDefinition(FHIRTriggerDefinition::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_USAGE_CONTEXT === $childName) {
+                $type->setPatternUsageContext(FHIRUsageContext::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_DOSAGE === $childName) {
+                $type->setPatternDosage(FHIRDosage::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_PATTERN_META === $childName) {
+                $type->setPatternMeta(FHIRMeta::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EXAMPLE === $childName) {
+                $type->addExample(FHIRElementDefinitionExample::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MIN_VALUE_DATE === $childName) {
+                $type->setMinValueDate(FHIRDate::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MIN_VALUE_DATE_TIME === $childName) {
+                $type->setMinValueDateTime(FHIRDateTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MIN_VALUE_INSTANT === $childName) {
+                $type->setMinValueInstant(FHIRInstant::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MIN_VALUE_TIME === $childName) {
+                $type->setMinValueTime(FHIRTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MIN_VALUE_DECIMAL === $childName) {
+                $type->setMinValueDecimal(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MIN_VALUE_INTEGER === $childName) {
+                $type->setMinValueInteger(FHIRInteger::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MIN_VALUE_POSITIVE_INT === $childName) {
+                $type->setMinValuePositiveInt(FHIRPositiveInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MIN_VALUE_UNSIGNED_INT === $childName) {
+                $type->setMinValueUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MIN_VALUE_QUANTITY === $childName) {
+                $type->setMinValueQuantity(FHIRQuantity::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MAX_VALUE_DATE === $childName) {
+                $type->setMaxValueDate(FHIRDate::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MAX_VALUE_DATE_TIME === $childName) {
+                $type->setMaxValueDateTime(FHIRDateTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MAX_VALUE_INSTANT === $childName) {
+                $type->setMaxValueInstant(FHIRInstant::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MAX_VALUE_TIME === $childName) {
+                $type->setMaxValueTime(FHIRTime::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MAX_VALUE_DECIMAL === $childName) {
+                $type->setMaxValueDecimal(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MAX_VALUE_INTEGER === $childName) {
+                $type->setMaxValueInteger(FHIRInteger::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MAX_VALUE_POSITIVE_INT === $childName) {
+                $type->setMaxValuePositiveInt(FHIRPositiveInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MAX_VALUE_UNSIGNED_INT === $childName) {
+                $type->setMaxValueUnsignedInt(FHIRUnsignedInt::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_MAX_VALUE_QUANTITY === $childName) {
+                $type->setMaxValueQuantity(FHIRQuantity::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MAX_LENGTH === $childName) {
+                $type->setMaxLength(FHIRInteger::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_CONDITION === $childName) {
+                $type->addCondition(FHIRId::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_CONSTRAINT === $childName) {
+                $type->addConstraint(FHIRElementDefinitionConstraint::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MUST_SUPPORT === $childName) {
+                $type->setMustSupport(FHIRBoolean::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_IS_MODIFIER === $childName) {
+                $type->setIsModifier(FHIRBoolean::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_IS_MODIFIER_REASON === $childName) {
+                $type->setIsModifierReason(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_IS_SUMMARY === $childName) {
+                $type->setIsSummary(FHIRBoolean::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_BINDING === $childName) {
+                $type->setBinding(FHIRElementDefinitionBinding::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MAPPING === $childName) {
+                $type->addMapping(FHIRElementDefinitionMapping::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATH);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_PATH])) {
             $pt = $type->getPath();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATH], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPath($n->nodeValue);
+                $type->setPath((string)$attributes[self::FIELD_PATH], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_SLICE_NAME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_SLICE_NAME])) {
             $pt = $type->getSliceName();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_SLICE_NAME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setSliceName($n->nodeValue);
+                $type->setSliceName((string)$attributes[self::FIELD_SLICE_NAME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_SLICE_IS_CONSTRAINING);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_SLICE_IS_CONSTRAINING])) {
             $pt = $type->getSliceIsConstraining();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_SLICE_IS_CONSTRAINING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setSliceIsConstraining($n->nodeValue);
+                $type->setSliceIsConstraining((string)$attributes[self::FIELD_SLICE_IS_CONSTRAINING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_LABEL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_LABEL])) {
             $pt = $type->getLabel();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_LABEL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setLabel($n->nodeValue);
+                $type->setLabel((string)$attributes[self::FIELD_LABEL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_SHORT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_SHORT])) {
             $pt = $type->getShort();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_SHORT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setShort($n->nodeValue);
+                $type->setShort((string)$attributes[self::FIELD_SHORT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFINITION);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFINITION])) {
             $pt = $type->getDefinition();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFINITION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefinition($n->nodeValue);
+                $type->setDefinition((string)$attributes[self::FIELD_DEFINITION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_COMMENT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_COMMENT])) {
             $pt = $type->getComment();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_COMMENT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setComment($n->nodeValue);
+                $type->setComment((string)$attributes[self::FIELD_COMMENT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_REQUIREMENTS);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_REQUIREMENTS])) {
             $pt = $type->getRequirements();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_REQUIREMENTS], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setRequirements($n->nodeValue);
+                $type->setRequirements((string)$attributes[self::FIELD_REQUIREMENTS], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ALIAS);
-        if (null !== $n) {
-            $pt = $type->getAlias();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addAlias($n->nodeValue);
-            }
+        if (isset($attributes[self::FIELD_ALIAS])) {
+            $type->addAlias((string)$attributes[self::FIELD_ALIAS], PHPFHIRXmlLocationEnum::ATTRIBUTE);
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MIN);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MIN])) {
             $pt = $type->getMin();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MIN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMin($n->nodeValue);
+                $type->setMin((string)$attributes[self::FIELD_MIN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX])) {
             $pt = $type->getMax();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMax($n->nodeValue);
+                $type->setMax((string)$attributes[self::FIELD_MAX], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_CONTENT_REFERENCE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_CONTENT_REFERENCE])) {
             $pt = $type->getContentReference();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_CONTENT_REFERENCE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setContentReference($n->nodeValue);
+                $type->setContentReference((string)$attributes[self::FIELD_CONTENT_REFERENCE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_BASE_64BINARY);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_BASE_64BINARY])) {
             $pt = $type->getDefaultValueBase64Binary();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_BASE_64BINARY], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueBase64Binary($n->nodeValue);
+                $type->setDefaultValueBase64Binary((string)$attributes[self::FIELD_DEFAULT_VALUE_BASE_64BINARY], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_BOOLEAN);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_BOOLEAN])) {
             $pt = $type->getDefaultValueBoolean();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_BOOLEAN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueBoolean($n->nodeValue);
+                $type->setDefaultValueBoolean((string)$attributes[self::FIELD_DEFAULT_VALUE_BOOLEAN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_CANONICAL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_CANONICAL])) {
             $pt = $type->getDefaultValueCanonical();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_CANONICAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueCanonical($n->nodeValue);
+                $type->setDefaultValueCanonical((string)$attributes[self::FIELD_DEFAULT_VALUE_CANONICAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_CODE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_CODE])) {
             $pt = $type->getDefaultValueCode();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_CODE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueCode($n->nodeValue);
+                $type->setDefaultValueCode((string)$attributes[self::FIELD_DEFAULT_VALUE_CODE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_DATE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_DATE])) {
             $pt = $type->getDefaultValueDate();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueDate($n->nodeValue);
+                $type->setDefaultValueDate((string)$attributes[self::FIELD_DEFAULT_VALUE_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_DATE_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_DATE_TIME])) {
             $pt = $type->getDefaultValueDateTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueDateTime($n->nodeValue);
+                $type->setDefaultValueDateTime((string)$attributes[self::FIELD_DEFAULT_VALUE_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_DECIMAL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_DECIMAL])) {
             $pt = $type->getDefaultValueDecimal();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueDecimal($n->nodeValue);
+                $type->setDefaultValueDecimal((string)$attributes[self::FIELD_DEFAULT_VALUE_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_ID])) {
             $pt = $type->getDefaultValueId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueId($n->nodeValue);
+                $type->setDefaultValueId((string)$attributes[self::FIELD_DEFAULT_VALUE_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_INSTANT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_INSTANT])) {
             $pt = $type->getDefaultValueInstant();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueInstant($n->nodeValue);
+                $type->setDefaultValueInstant((string)$attributes[self::FIELD_DEFAULT_VALUE_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_INTEGER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_INTEGER])) {
             $pt = $type->getDefaultValueInteger();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueInteger($n->nodeValue);
+                $type->setDefaultValueInteger((string)$attributes[self::FIELD_DEFAULT_VALUE_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_MARKDOWN);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_MARKDOWN])) {
             $pt = $type->getDefaultValueMarkdown();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_MARKDOWN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueMarkdown($n->nodeValue);
+                $type->setDefaultValueMarkdown((string)$attributes[self::FIELD_DEFAULT_VALUE_MARKDOWN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_OID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_OID])) {
             $pt = $type->getDefaultValueOid();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_OID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueOid($n->nodeValue);
+                $type->setDefaultValueOid((string)$attributes[self::FIELD_DEFAULT_VALUE_OID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_POSITIVE_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_POSITIVE_INT])) {
             $pt = $type->getDefaultValuePositiveInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValuePositiveInt($n->nodeValue);
+                $type->setDefaultValuePositiveInt((string)$attributes[self::FIELD_DEFAULT_VALUE_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_STRING);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_STRING])) {
             $pt = $type->getDefaultValueString();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_STRING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueString($n->nodeValue);
+                $type->setDefaultValueString((string)$attributes[self::FIELD_DEFAULT_VALUE_STRING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_TIME])) {
             $pt = $type->getDefaultValueTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueTime($n->nodeValue);
+                $type->setDefaultValueTime((string)$attributes[self::FIELD_DEFAULT_VALUE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_UNSIGNED_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT])) {
             $pt = $type->getDefaultValueUnsignedInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueUnsignedInt($n->nodeValue);
+                $type->setDefaultValueUnsignedInt((string)$attributes[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_URI);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_URI])) {
             $pt = $type->getDefaultValueUri();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_URI], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueUri($n->nodeValue);
+                $type->setDefaultValueUri((string)$attributes[self::FIELD_DEFAULT_VALUE_URI], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_URL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_URL])) {
             $pt = $type->getDefaultValueUrl();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_URL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueUrl($n->nodeValue);
+                $type->setDefaultValueUrl((string)$attributes[self::FIELD_DEFAULT_VALUE_URL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DEFAULT_VALUE_UUID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DEFAULT_VALUE_UUID])) {
             $pt = $type->getDefaultValueUuid();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DEFAULT_VALUE_UUID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDefaultValueUuid($n->nodeValue);
+                $type->setDefaultValueUuid((string)$attributes[self::FIELD_DEFAULT_VALUE_UUID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MEANING_WHEN_MISSING);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MEANING_WHEN_MISSING])) {
             $pt = $type->getMeaningWhenMissing();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MEANING_WHEN_MISSING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMeaningWhenMissing($n->nodeValue);
+                $type->setMeaningWhenMissing((string)$attributes[self::FIELD_MEANING_WHEN_MISSING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ORDER_MEANING);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ORDER_MEANING])) {
             $pt = $type->getOrderMeaning();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ORDER_MEANING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setOrderMeaning($n->nodeValue);
+                $type->setOrderMeaning((string)$attributes[self::FIELD_ORDER_MEANING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_BASE_64BINARY);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_BASE_64BINARY])) {
             $pt = $type->getFixedBase64Binary();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_BASE_64BINARY], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedBase64Binary($n->nodeValue);
+                $type->setFixedBase64Binary((string)$attributes[self::FIELD_FIXED_BASE_64BINARY], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_BOOLEAN);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_BOOLEAN])) {
             $pt = $type->getFixedBoolean();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_BOOLEAN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedBoolean($n->nodeValue);
+                $type->setFixedBoolean((string)$attributes[self::FIELD_FIXED_BOOLEAN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_CANONICAL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_CANONICAL])) {
             $pt = $type->getFixedCanonical();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_CANONICAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedCanonical($n->nodeValue);
+                $type->setFixedCanonical((string)$attributes[self::FIELD_FIXED_CANONICAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_CODE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_CODE])) {
             $pt = $type->getFixedCode();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_CODE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedCode($n->nodeValue);
+                $type->setFixedCode((string)$attributes[self::FIELD_FIXED_CODE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_DATE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_DATE])) {
             $pt = $type->getFixedDate();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedDate($n->nodeValue);
+                $type->setFixedDate((string)$attributes[self::FIELD_FIXED_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_DATE_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_DATE_TIME])) {
             $pt = $type->getFixedDateTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedDateTime($n->nodeValue);
+                $type->setFixedDateTime((string)$attributes[self::FIELD_FIXED_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_DECIMAL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_DECIMAL])) {
             $pt = $type->getFixedDecimal();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedDecimal($n->nodeValue);
+                $type->setFixedDecimal((string)$attributes[self::FIELD_FIXED_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_ID])) {
             $pt = $type->getFixedId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedId($n->nodeValue);
+                $type->setFixedId((string)$attributes[self::FIELD_FIXED_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_INSTANT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_INSTANT])) {
             $pt = $type->getFixedInstant();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedInstant($n->nodeValue);
+                $type->setFixedInstant((string)$attributes[self::FIELD_FIXED_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_INTEGER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_INTEGER])) {
             $pt = $type->getFixedInteger();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedInteger($n->nodeValue);
+                $type->setFixedInteger((string)$attributes[self::FIELD_FIXED_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_MARKDOWN);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_MARKDOWN])) {
             $pt = $type->getFixedMarkdown();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_MARKDOWN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedMarkdown($n->nodeValue);
+                $type->setFixedMarkdown((string)$attributes[self::FIELD_FIXED_MARKDOWN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_OID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_OID])) {
             $pt = $type->getFixedOid();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_OID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedOid($n->nodeValue);
+                $type->setFixedOid((string)$attributes[self::FIELD_FIXED_OID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_POSITIVE_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_POSITIVE_INT])) {
             $pt = $type->getFixedPositiveInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedPositiveInt($n->nodeValue);
+                $type->setFixedPositiveInt((string)$attributes[self::FIELD_FIXED_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_STRING);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_STRING])) {
             $pt = $type->getFixedString();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_STRING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedString($n->nodeValue);
+                $type->setFixedString((string)$attributes[self::FIELD_FIXED_STRING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_TIME])) {
             $pt = $type->getFixedTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedTime($n->nodeValue);
+                $type->setFixedTime((string)$attributes[self::FIELD_FIXED_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_UNSIGNED_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_UNSIGNED_INT])) {
             $pt = $type->getFixedUnsignedInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedUnsignedInt($n->nodeValue);
+                $type->setFixedUnsignedInt((string)$attributes[self::FIELD_FIXED_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_URI);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_URI])) {
             $pt = $type->getFixedUri();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_URI], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedUri($n->nodeValue);
+                $type->setFixedUri((string)$attributes[self::FIELD_FIXED_URI], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_URL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_URL])) {
             $pt = $type->getFixedUrl();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_URL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedUrl($n->nodeValue);
+                $type->setFixedUrl((string)$attributes[self::FIELD_FIXED_URL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_FIXED_UUID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_FIXED_UUID])) {
             $pt = $type->getFixedUuid();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_FIXED_UUID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setFixedUuid($n->nodeValue);
+                $type->setFixedUuid((string)$attributes[self::FIELD_FIXED_UUID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_BASE_64BINARY);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_BASE_64BINARY])) {
             $pt = $type->getPatternBase64Binary();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_BASE_64BINARY], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternBase64Binary($n->nodeValue);
+                $type->setPatternBase64Binary((string)$attributes[self::FIELD_PATTERN_BASE_64BINARY], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_BOOLEAN);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_BOOLEAN])) {
             $pt = $type->getPatternBoolean();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_BOOLEAN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternBoolean($n->nodeValue);
+                $type->setPatternBoolean((string)$attributes[self::FIELD_PATTERN_BOOLEAN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_CANONICAL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_CANONICAL])) {
             $pt = $type->getPatternCanonical();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_CANONICAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternCanonical($n->nodeValue);
+                $type->setPatternCanonical((string)$attributes[self::FIELD_PATTERN_CANONICAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_CODE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_CODE])) {
             $pt = $type->getPatternCode();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_CODE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternCode($n->nodeValue);
+                $type->setPatternCode((string)$attributes[self::FIELD_PATTERN_CODE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_DATE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_DATE])) {
             $pt = $type->getPatternDate();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternDate($n->nodeValue);
+                $type->setPatternDate((string)$attributes[self::FIELD_PATTERN_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_DATE_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_DATE_TIME])) {
             $pt = $type->getPatternDateTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternDateTime($n->nodeValue);
+                $type->setPatternDateTime((string)$attributes[self::FIELD_PATTERN_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_DECIMAL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_DECIMAL])) {
             $pt = $type->getPatternDecimal();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternDecimal($n->nodeValue);
+                $type->setPatternDecimal((string)$attributes[self::FIELD_PATTERN_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_ID])) {
             $pt = $type->getPatternId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternId($n->nodeValue);
+                $type->setPatternId((string)$attributes[self::FIELD_PATTERN_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_INSTANT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_INSTANT])) {
             $pt = $type->getPatternInstant();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternInstant($n->nodeValue);
+                $type->setPatternInstant((string)$attributes[self::FIELD_PATTERN_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_INTEGER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_INTEGER])) {
             $pt = $type->getPatternInteger();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternInteger($n->nodeValue);
+                $type->setPatternInteger((string)$attributes[self::FIELD_PATTERN_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_MARKDOWN);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_MARKDOWN])) {
             $pt = $type->getPatternMarkdown();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_MARKDOWN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternMarkdown($n->nodeValue);
+                $type->setPatternMarkdown((string)$attributes[self::FIELD_PATTERN_MARKDOWN], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_OID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_OID])) {
             $pt = $type->getPatternOid();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_OID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternOid($n->nodeValue);
+                $type->setPatternOid((string)$attributes[self::FIELD_PATTERN_OID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_POSITIVE_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_POSITIVE_INT])) {
             $pt = $type->getPatternPositiveInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternPositiveInt($n->nodeValue);
+                $type->setPatternPositiveInt((string)$attributes[self::FIELD_PATTERN_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_STRING);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_STRING])) {
             $pt = $type->getPatternString();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_STRING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternString($n->nodeValue);
+                $type->setPatternString((string)$attributes[self::FIELD_PATTERN_STRING], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_TIME])) {
             $pt = $type->getPatternTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternTime($n->nodeValue);
+                $type->setPatternTime((string)$attributes[self::FIELD_PATTERN_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_UNSIGNED_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_UNSIGNED_INT])) {
             $pt = $type->getPatternUnsignedInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternUnsignedInt($n->nodeValue);
+                $type->setPatternUnsignedInt((string)$attributes[self::FIELD_PATTERN_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_URI);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_URI])) {
             $pt = $type->getPatternUri();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_URI], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternUri($n->nodeValue);
+                $type->setPatternUri((string)$attributes[self::FIELD_PATTERN_URI], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_URL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_URL])) {
             $pt = $type->getPatternUrl();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_URL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternUrl($n->nodeValue);
+                $type->setPatternUrl((string)$attributes[self::FIELD_PATTERN_URL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_PATTERN_UUID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_PATTERN_UUID])) {
             $pt = $type->getPatternUuid();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_PATTERN_UUID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPatternUuid($n->nodeValue);
+                $type->setPatternUuid((string)$attributes[self::FIELD_PATTERN_UUID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MIN_VALUE_DATE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MIN_VALUE_DATE])) {
             $pt = $type->getMinValueDate();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MIN_VALUE_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMinValueDate($n->nodeValue);
+                $type->setMinValueDate((string)$attributes[self::FIELD_MIN_VALUE_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MIN_VALUE_DATE_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MIN_VALUE_DATE_TIME])) {
             $pt = $type->getMinValueDateTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MIN_VALUE_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMinValueDateTime($n->nodeValue);
+                $type->setMinValueDateTime((string)$attributes[self::FIELD_MIN_VALUE_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MIN_VALUE_INSTANT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MIN_VALUE_INSTANT])) {
             $pt = $type->getMinValueInstant();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MIN_VALUE_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMinValueInstant($n->nodeValue);
+                $type->setMinValueInstant((string)$attributes[self::FIELD_MIN_VALUE_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MIN_VALUE_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MIN_VALUE_TIME])) {
             $pt = $type->getMinValueTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MIN_VALUE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMinValueTime($n->nodeValue);
+                $type->setMinValueTime((string)$attributes[self::FIELD_MIN_VALUE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MIN_VALUE_DECIMAL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MIN_VALUE_DECIMAL])) {
             $pt = $type->getMinValueDecimal();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MIN_VALUE_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMinValueDecimal($n->nodeValue);
+                $type->setMinValueDecimal((string)$attributes[self::FIELD_MIN_VALUE_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MIN_VALUE_INTEGER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MIN_VALUE_INTEGER])) {
             $pt = $type->getMinValueInteger();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MIN_VALUE_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMinValueInteger($n->nodeValue);
+                $type->setMinValueInteger((string)$attributes[self::FIELD_MIN_VALUE_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MIN_VALUE_POSITIVE_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MIN_VALUE_POSITIVE_INT])) {
             $pt = $type->getMinValuePositiveInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MIN_VALUE_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMinValuePositiveInt($n->nodeValue);
+                $type->setMinValuePositiveInt((string)$attributes[self::FIELD_MIN_VALUE_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MIN_VALUE_UNSIGNED_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MIN_VALUE_UNSIGNED_INT])) {
             $pt = $type->getMinValueUnsignedInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MIN_VALUE_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMinValueUnsignedInt($n->nodeValue);
+                $type->setMinValueUnsignedInt((string)$attributes[self::FIELD_MIN_VALUE_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX_VALUE_DATE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX_VALUE_DATE])) {
             $pt = $type->getMaxValueDate();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX_VALUE_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMaxValueDate($n->nodeValue);
+                $type->setMaxValueDate((string)$attributes[self::FIELD_MAX_VALUE_DATE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX_VALUE_DATE_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX_VALUE_DATE_TIME])) {
             $pt = $type->getMaxValueDateTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX_VALUE_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMaxValueDateTime($n->nodeValue);
+                $type->setMaxValueDateTime((string)$attributes[self::FIELD_MAX_VALUE_DATE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX_VALUE_INSTANT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX_VALUE_INSTANT])) {
             $pt = $type->getMaxValueInstant();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX_VALUE_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMaxValueInstant($n->nodeValue);
+                $type->setMaxValueInstant((string)$attributes[self::FIELD_MAX_VALUE_INSTANT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX_VALUE_TIME);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX_VALUE_TIME])) {
             $pt = $type->getMaxValueTime();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX_VALUE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMaxValueTime($n->nodeValue);
+                $type->setMaxValueTime((string)$attributes[self::FIELD_MAX_VALUE_TIME], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX_VALUE_DECIMAL);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX_VALUE_DECIMAL])) {
             $pt = $type->getMaxValueDecimal();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX_VALUE_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMaxValueDecimal($n->nodeValue);
+                $type->setMaxValueDecimal((string)$attributes[self::FIELD_MAX_VALUE_DECIMAL], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX_VALUE_INTEGER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX_VALUE_INTEGER])) {
             $pt = $type->getMaxValueInteger();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX_VALUE_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMaxValueInteger($n->nodeValue);
+                $type->setMaxValueInteger((string)$attributes[self::FIELD_MAX_VALUE_INTEGER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX_VALUE_POSITIVE_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX_VALUE_POSITIVE_INT])) {
             $pt = $type->getMaxValuePositiveInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX_VALUE_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMaxValuePositiveInt($n->nodeValue);
+                $type->setMaxValuePositiveInt((string)$attributes[self::FIELD_MAX_VALUE_POSITIVE_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX_VALUE_UNSIGNED_INT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX_VALUE_UNSIGNED_INT])) {
             $pt = $type->getMaxValueUnsignedInt();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX_VALUE_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMaxValueUnsignedInt($n->nodeValue);
+                $type->setMaxValueUnsignedInt((string)$attributes[self::FIELD_MAX_VALUE_UNSIGNED_INT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MAX_LENGTH);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MAX_LENGTH])) {
             $pt = $type->getMaxLength();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MAX_LENGTH], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMaxLength($n->nodeValue);
+                $type->setMaxLength((string)$attributes[self::FIELD_MAX_LENGTH], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_CONDITION);
-        if (null !== $n) {
-            $pt = $type->getCondition();
-            if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
-            } else {
-                $type->addCondition($n->nodeValue);
-            }
+        if (isset($attributes[self::FIELD_CONDITION])) {
+            $type->addCondition((string)$attributes[self::FIELD_CONDITION], PHPFHIRXmlLocationEnum::ATTRIBUTE);
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_MUST_SUPPORT);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_MUST_SUPPORT])) {
             $pt = $type->getMustSupport();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_MUST_SUPPORT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setMustSupport($n->nodeValue);
+                $type->setMustSupport((string)$attributes[self::FIELD_MUST_SUPPORT], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_IS_MODIFIER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_IS_MODIFIER])) {
             $pt = $type->getIsModifier();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_IS_MODIFIER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setIsModifier($n->nodeValue);
+                $type->setIsModifier((string)$attributes[self::FIELD_IS_MODIFIER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_IS_MODIFIER_REASON);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_IS_MODIFIER_REASON])) {
             $pt = $type->getIsModifierReason();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_IS_MODIFIER_REASON], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setIsModifierReason($n->nodeValue);
+                $type->setIsModifierReason((string)$attributes[self::FIELD_IS_MODIFIER_REASON], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_IS_SUMMARY);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_IS_SUMMARY])) {
             $pt = $type->getIsSummary();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_IS_SUMMARY], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setIsSummary($n->nodeValue);
+                $type->setIsSummary((string)$attributes[self::FIELD_IS_SUMMARY], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
-        if (null !== ($v = $this->getPath())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATH);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
         }
-        if ([] !== ($vs = $this->getRepresentation())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_REPRESENTATION);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
         }
-        if (null !== ($v = $this->getSliceName())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_SLICE_NAME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
         }
-        if (null !== ($v = $this->getSliceIsConstraining())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_SLICE_IS_CONSTRAINING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'ElementDefinition', $this->_getSourceXmlns());
         }
-        if (null !== ($v = $this->getLabel())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_LABEL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATH] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPath())) {
+            $xw->writeAttribute(self::FIELD_PATH, $v->getValue()?->getFormattedValue());
         }
-        if ([] !== ($vs = $this->getCode())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_CODE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_SLICE_NAME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSliceName())) {
+            $xw->writeAttribute(self::FIELD_SLICE_NAME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_SLICE_IS_CONSTRAINING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSliceIsConstraining())) {
+            $xw->writeAttribute(self::FIELD_SLICE_IS_CONSTRAINING, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_LABEL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLabel())) {
+            $xw->writeAttribute(self::FIELD_LABEL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_SHORT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getShort())) {
+            $xw->writeAttribute(self::FIELD_SHORT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFINITION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefinition())) {
+            $xw->writeAttribute(self::FIELD_DEFINITION, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getComment())) {
+            $xw->writeAttribute(self::FIELD_COMMENT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_REQUIREMENTS] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRequirements())) {
+            $xw->writeAttribute(self::FIELD_REQUIREMENTS, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ALIAS] ?? [];
+        if ([] === $locs && [] !== ($vs = $this->getAlias())) {
+            $xw->writeAttribute(self::FIELD_ALIAS, $vs[0]->getValue()?->getFormattedValue());
+        } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getAlias()) && isset($vs[$idx])) {
+            $xw->writeAttribute(self::FIELD_ALIAS, $vs[$idx]->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMin())) {
+            $xw->writeAttribute(self::FIELD_MIN, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMax())) {
+            $xw->writeAttribute(self::FIELD_MAX, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CONTENT_REFERENCE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getContentReference())) {
+            $xw->writeAttribute(self::FIELD_CONTENT_REFERENCE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BASE_64BINARY] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueBase64Binary())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_BASE_64BINARY, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BOOLEAN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueBoolean())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_BOOLEAN, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CANONICAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueCanonical())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_CANONICAL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CODE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueCode())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_CODE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueDate())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_DATE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueDateTime())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_DATE_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueDecimal())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_DECIMAL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_ID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueId())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_ID, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueInstant())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_INSTANT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueInteger())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_INTEGER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_MARKDOWN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueMarkdown())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_MARKDOWN, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_OID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueOid())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_OID, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValuePositiveInt())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_POSITIVE_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_STRING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueString())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_STRING, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueTime())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueUnsignedInt())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_UNSIGNED_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URI] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueUri())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_URI, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueUrl())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_URL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UUID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefaultValueUuid())) {
+            $xw->writeAttribute(self::FIELD_DEFAULT_VALUE_UUID, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MEANING_WHEN_MISSING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMeaningWhenMissing())) {
+            $xw->writeAttribute(self::FIELD_MEANING_WHEN_MISSING, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ORDER_MEANING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOrderMeaning())) {
+            $xw->writeAttribute(self::FIELD_ORDER_MEANING, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_BASE_64BINARY] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedBase64Binary())) {
+            $xw->writeAttribute(self::FIELD_FIXED_BASE_64BINARY, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_BOOLEAN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedBoolean())) {
+            $xw->writeAttribute(self::FIELD_FIXED_BOOLEAN, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_CANONICAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedCanonical())) {
+            $xw->writeAttribute(self::FIELD_FIXED_CANONICAL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_CODE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedCode())) {
+            $xw->writeAttribute(self::FIELD_FIXED_CODE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedDate())) {
+            $xw->writeAttribute(self::FIELD_FIXED_DATE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedDateTime())) {
+            $xw->writeAttribute(self::FIELD_FIXED_DATE_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedDecimal())) {
+            $xw->writeAttribute(self::FIELD_FIXED_DECIMAL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_ID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedId())) {
+            $xw->writeAttribute(self::FIELD_FIXED_ID, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedInstant())) {
+            $xw->writeAttribute(self::FIELD_FIXED_INSTANT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedInteger())) {
+            $xw->writeAttribute(self::FIELD_FIXED_INTEGER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_MARKDOWN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedMarkdown())) {
+            $xw->writeAttribute(self::FIELD_FIXED_MARKDOWN, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_OID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedOid())) {
+            $xw->writeAttribute(self::FIELD_FIXED_OID, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedPositiveInt())) {
+            $xw->writeAttribute(self::FIELD_FIXED_POSITIVE_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_STRING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedString())) {
+            $xw->writeAttribute(self::FIELD_FIXED_STRING, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedTime())) {
+            $xw->writeAttribute(self::FIELD_FIXED_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedUnsignedInt())) {
+            $xw->writeAttribute(self::FIELD_FIXED_UNSIGNED_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_URI] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedUri())) {
+            $xw->writeAttribute(self::FIELD_FIXED_URI, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_URL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedUrl())) {
+            $xw->writeAttribute(self::FIELD_FIXED_URL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_UUID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFixedUuid())) {
+            $xw->writeAttribute(self::FIELD_FIXED_UUID, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_BASE_64BINARY] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternBase64Binary())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_BASE_64BINARY, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_BOOLEAN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternBoolean())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_BOOLEAN, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_CANONICAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternCanonical())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_CANONICAL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_CODE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternCode())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_CODE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternDate())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_DATE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternDateTime())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_DATE_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternDecimal())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_DECIMAL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_ID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternId())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_ID, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternInstant())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_INSTANT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternInteger())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_INTEGER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_MARKDOWN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternMarkdown())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_MARKDOWN, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_OID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternOid())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_OID, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternPositiveInt())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_POSITIVE_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_STRING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternString())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_STRING, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternTime())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternUnsignedInt())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_UNSIGNED_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_URI] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternUri())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_URI, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_URL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternUrl())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_URL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_UUID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPatternUuid())) {
+            $xw->writeAttribute(self::FIELD_PATTERN_UUID, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMinValueDate())) {
+            $xw->writeAttribute(self::FIELD_MIN_VALUE_DATE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMinValueDateTime())) {
+            $xw->writeAttribute(self::FIELD_MIN_VALUE_DATE_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMinValueInstant())) {
+            $xw->writeAttribute(self::FIELD_MIN_VALUE_INSTANT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMinValueTime())) {
+            $xw->writeAttribute(self::FIELD_MIN_VALUE_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMinValueDecimal())) {
+            $xw->writeAttribute(self::FIELD_MIN_VALUE_DECIMAL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMinValueInteger())) {
+            $xw->writeAttribute(self::FIELD_MIN_VALUE_INTEGER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMinValuePositiveInt())) {
+            $xw->writeAttribute(self::FIELD_MIN_VALUE_POSITIVE_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMinValueUnsignedInt())) {
+            $xw->writeAttribute(self::FIELD_MIN_VALUE_UNSIGNED_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMaxValueDate())) {
+            $xw->writeAttribute(self::FIELD_MAX_VALUE_DATE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMaxValueDateTime())) {
+            $xw->writeAttribute(self::FIELD_MAX_VALUE_DATE_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMaxValueInstant())) {
+            $xw->writeAttribute(self::FIELD_MAX_VALUE_INSTANT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMaxValueTime())) {
+            $xw->writeAttribute(self::FIELD_MAX_VALUE_TIME, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMaxValueDecimal())) {
+            $xw->writeAttribute(self::FIELD_MAX_VALUE_DECIMAL, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMaxValueInteger())) {
+            $xw->writeAttribute(self::FIELD_MAX_VALUE_INTEGER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMaxValuePositiveInt())) {
+            $xw->writeAttribute(self::FIELD_MAX_VALUE_POSITIVE_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMaxValueUnsignedInt())) {
+            $xw->writeAttribute(self::FIELD_MAX_VALUE_UNSIGNED_INT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_LENGTH] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMaxLength())) {
+            $xw->writeAttribute(self::FIELD_MAX_LENGTH, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITION] ?? [];
+        if ([] === $locs && [] !== ($vs = $this->getCondition())) {
+            $xw->writeAttribute(self::FIELD_CONDITION, $vs[0]->getValue()?->getFormattedValue());
+        } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getCondition()) && isset($vs[$idx])) {
+            $xw->writeAttribute(self::FIELD_CONDITION, $vs[$idx]->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MUST_SUPPORT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMustSupport())) {
+            $xw->writeAttribute(self::FIELD_MUST_SUPPORT, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIsModifier())) {
+            $xw->writeAttribute(self::FIELD_IS_MODIFIER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER_REASON] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIsModifierReason())) {
+            $xw->writeAttribute(self::FIELD_IS_MODIFIER_REASON, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_SUMMARY] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIsSummary())) {
+            $xw->writeAttribute(self::FIELD_IS_SUMMARY, $v->getValue()?->getFormattedValue());
+        }
+        parent::xmlSerialize($xw, $config);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATH] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPath())) {
+            $xw->startElement(self::FIELD_PATH);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getRepresentation() as $v) {
+            $xw->startElement(self::FIELD_REPRESENTATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_SLICE_NAME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSliceName())) {
+            $xw->startElement(self::FIELD_SLICE_NAME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_SLICE_IS_CONSTRAINING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSliceIsConstraining())) {
+            $xw->startElement(self::FIELD_SLICE_IS_CONSTRAINING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_LABEL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLabel())) {
+            $xw->startElement(self::FIELD_LABEL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
+        }
+        foreach ($this->getCode() as $v) {
+            $xw->startElement(self::FIELD_CODE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getSlicing())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_SLICING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_SLICING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getShort())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_SHORT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_SHORT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getShort())) {
+            $xw->startElement(self::FIELD_SHORT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefinition())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFINITION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFINITION] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefinition())) {
+            $xw->startElement(self::FIELD_DEFINITION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getComment())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_COMMENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getComment())) {
+            $xw->startElement(self::FIELD_COMMENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getRequirements())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_REQUIREMENTS);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_REQUIREMENTS] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRequirements())) {
+            $xw->startElement(self::FIELD_REQUIREMENTS);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getAlias())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ALIAS] ?? [];
+        if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getAlias())) {
+            foreach($vs as $i => $v) {
+                if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
+                    $xw->startElement(self::FIELD_ALIAS);
+                    $v->xmlSerialize($xw, $config);
+                    $xw->endElement();
                 }
-                $telement = $element->ownerDocument->createElement(self::FIELD_ALIAS);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
             }
         }
-        if (null !== ($v = $this->getMin())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMin())) {
+            $xw->startElement(self::FIELD_MIN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMax())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMax())) {
+            $xw->startElement(self::FIELD_MAX);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getBase())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_BASE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_BASE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getContentReference())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CONTENT_REFERENCE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CONTENT_REFERENCE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getContentReference())) {
+            $xw->startElement(self::FIELD_CONTENT_REFERENCE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getType())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_TYPE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getType() as $v) {
+            $xw->startElement(self::FIELD_TYPE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueBase64Binary())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_BASE_64BINARY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BASE_64BINARY] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueBase64Binary())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_BASE_64BINARY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueBoolean())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_BOOLEAN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_BOOLEAN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueBoolean())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_BOOLEAN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueCanonical())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_CANONICAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CANONICAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueCanonical())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_CANONICAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueCode())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_CODE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_CODE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueCode())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_CODE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueDate())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_DATE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueDate())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_DATE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueDateTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_DATE_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueDateTime())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_DATE_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueDecimal())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_DECIMAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueDecimal())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_DECIMAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueId())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_ID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_ID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueId())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_ID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueInstant())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_INSTANT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueInstant())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_INSTANT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueInteger())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_INTEGER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueInteger())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_INTEGER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueMarkdown())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_MARKDOWN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_MARKDOWN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueMarkdown())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_MARKDOWN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueOid())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_OID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_OID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueOid())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_OID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValuePositiveInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_POSITIVE_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValuePositiveInt())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_POSITIVE_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueString())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_STRING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_STRING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueString())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_STRING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueTime())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueUnsignedInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_UNSIGNED_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueUnsignedInt())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_UNSIGNED_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueUri())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_URI);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URI] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueUri())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_URI);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueUrl())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_URL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_URL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueUrl())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_URL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDefaultValueUuid())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_UUID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFAULT_VALUE_UUID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefaultValueUuid())) {
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_UUID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueAddress())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_ADDRESS);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_ADDRESS);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueAge())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_AGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_AGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueAnnotation())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_ANNOTATION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_ANNOTATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueAttachment())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_ATTACHMENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_ATTACHMENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueCodeableConcept())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_CODEABLE_CONCEPT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_CODEABLE_CONCEPT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueCoding())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_CODING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_CODING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueContactPoint())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_CONTACT_POINT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_CONTACT_POINT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueCount())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_COUNT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_COUNT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueDistance())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_DISTANCE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_DISTANCE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueDuration())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_DURATION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_DURATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueHumanName())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_HUMAN_NAME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_HUMAN_NAME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueIdentifier())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_IDENTIFIER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_IDENTIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueMoney())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_MONEY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_MONEY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValuePeriod())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_PERIOD);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_PERIOD);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueQuantity())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_QUANTITY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_QUANTITY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueRange())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_RANGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_RANGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueRatio())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_RATIO);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_RATIO);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueReference())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_REFERENCE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_REFERENCE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueSampledData())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_SAMPLED_DATA);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_SAMPLED_DATA);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueSignature())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_SIGNATURE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_SIGNATURE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueTiming())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_TIMING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_TIMING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueContactDetail())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_CONTACT_DETAIL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_CONTACT_DETAIL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueContributor())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_CONTRIBUTOR);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_CONTRIBUTOR);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueDataRequirement())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_DATA_REQUIREMENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_DATA_REQUIREMENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueExpression())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_EXPRESSION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_EXPRESSION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueParameterDefinition())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_PARAMETER_DEFINITION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_PARAMETER_DEFINITION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueRelatedArtifact())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_RELATED_ARTIFACT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_RELATED_ARTIFACT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueTriggerDefinition())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_TRIGGER_DEFINITION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_TRIGGER_DEFINITION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueUsageContext())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_USAGE_CONTEXT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_USAGE_CONTEXT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueDosage())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_DOSAGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_DOSAGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDefaultValueMeta())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DEFAULT_VALUE_META);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DEFAULT_VALUE_META);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMeaningWhenMissing())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MEANING_WHEN_MISSING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MEANING_WHEN_MISSING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMeaningWhenMissing())) {
+            $xw->startElement(self::FIELD_MEANING_WHEN_MISSING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getOrderMeaning())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_ORDER_MEANING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ORDER_MEANING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOrderMeaning())) {
+            $xw->startElement(self::FIELD_ORDER_MEANING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedBase64Binary())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_BASE_64BINARY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_BASE_64BINARY] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedBase64Binary())) {
+            $xw->startElement(self::FIELD_FIXED_BASE_64BINARY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedBoolean())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_BOOLEAN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_BOOLEAN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedBoolean())) {
+            $xw->startElement(self::FIELD_FIXED_BOOLEAN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedCanonical())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_CANONICAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_CANONICAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedCanonical())) {
+            $xw->startElement(self::FIELD_FIXED_CANONICAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedCode())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_CODE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_CODE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedCode())) {
+            $xw->startElement(self::FIELD_FIXED_CODE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedDate())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_DATE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedDate())) {
+            $xw->startElement(self::FIELD_FIXED_DATE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedDateTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_DATE_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedDateTime())) {
+            $xw->startElement(self::FIELD_FIXED_DATE_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedDecimal())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_DECIMAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedDecimal())) {
+            $xw->startElement(self::FIELD_FIXED_DECIMAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedId())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_ID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_ID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedId())) {
+            $xw->startElement(self::FIELD_FIXED_ID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedInstant())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_INSTANT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedInstant())) {
+            $xw->startElement(self::FIELD_FIXED_INSTANT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedInteger())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_INTEGER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedInteger())) {
+            $xw->startElement(self::FIELD_FIXED_INTEGER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedMarkdown())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_MARKDOWN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_MARKDOWN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedMarkdown())) {
+            $xw->startElement(self::FIELD_FIXED_MARKDOWN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedOid())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_OID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_OID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedOid())) {
+            $xw->startElement(self::FIELD_FIXED_OID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedPositiveInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_POSITIVE_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedPositiveInt())) {
+            $xw->startElement(self::FIELD_FIXED_POSITIVE_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedString())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_STRING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_STRING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedString())) {
+            $xw->startElement(self::FIELD_FIXED_STRING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedTime())) {
+            $xw->startElement(self::FIELD_FIXED_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedUnsignedInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_UNSIGNED_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedUnsignedInt())) {
+            $xw->startElement(self::FIELD_FIXED_UNSIGNED_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedUri())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_URI);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_URI] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedUri())) {
+            $xw->startElement(self::FIELD_FIXED_URI);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedUrl())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_URL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_URL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedUrl())) {
+            $xw->startElement(self::FIELD_FIXED_URL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getFixedUuid())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_UUID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_FIXED_UUID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFixedUuid())) {
+            $xw->startElement(self::FIELD_FIXED_UUID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedAddress())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_ADDRESS);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_ADDRESS);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedAge())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_AGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_AGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedAnnotation())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_ANNOTATION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_ANNOTATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedAttachment())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_ATTACHMENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_ATTACHMENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedCodeableConcept())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_CODEABLE_CONCEPT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_CODEABLE_CONCEPT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedCoding())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_CODING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_CODING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedContactPoint())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_CONTACT_POINT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_CONTACT_POINT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedCount())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_COUNT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_COUNT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedDistance())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_DISTANCE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_DISTANCE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedDuration())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_DURATION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_DURATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedHumanName())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_HUMAN_NAME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_HUMAN_NAME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedIdentifier())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_IDENTIFIER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_IDENTIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedMoney())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_MONEY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_MONEY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedPeriod())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_PERIOD);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_PERIOD);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedQuantity())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_QUANTITY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_QUANTITY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedRange())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_RANGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_RANGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedRatio())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_RATIO);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_RATIO);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedReference())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_REFERENCE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_REFERENCE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedSampledData())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_SAMPLED_DATA);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_SAMPLED_DATA);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedSignature())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_SIGNATURE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_SIGNATURE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedTiming())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_TIMING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_TIMING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedContactDetail())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_CONTACT_DETAIL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_CONTACT_DETAIL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedContributor())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_CONTRIBUTOR);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_CONTRIBUTOR);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedDataRequirement())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_DATA_REQUIREMENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_DATA_REQUIREMENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedExpression())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_EXPRESSION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_EXPRESSION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedParameterDefinition())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_PARAMETER_DEFINITION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_PARAMETER_DEFINITION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedRelatedArtifact())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_RELATED_ARTIFACT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_RELATED_ARTIFACT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedTriggerDefinition())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_TRIGGER_DEFINITION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_TRIGGER_DEFINITION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedUsageContext())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_USAGE_CONTEXT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_USAGE_CONTEXT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedDosage())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_DOSAGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_DOSAGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getFixedMeta())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_FIXED_META);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_FIXED_META);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternBase64Binary())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_BASE_64BINARY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_BASE_64BINARY] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternBase64Binary())) {
+            $xw->startElement(self::FIELD_PATTERN_BASE_64BINARY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternBoolean())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_BOOLEAN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_BOOLEAN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternBoolean())) {
+            $xw->startElement(self::FIELD_PATTERN_BOOLEAN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternCanonical())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_CANONICAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_CANONICAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternCanonical())) {
+            $xw->startElement(self::FIELD_PATTERN_CANONICAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternCode())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_CODE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_CODE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternCode())) {
+            $xw->startElement(self::FIELD_PATTERN_CODE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternDate())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_DATE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternDate())) {
+            $xw->startElement(self::FIELD_PATTERN_DATE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternDateTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_DATE_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternDateTime())) {
+            $xw->startElement(self::FIELD_PATTERN_DATE_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternDecimal())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_DECIMAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternDecimal())) {
+            $xw->startElement(self::FIELD_PATTERN_DECIMAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternId())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_ID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_ID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternId())) {
+            $xw->startElement(self::FIELD_PATTERN_ID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternInstant())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_INSTANT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternInstant())) {
+            $xw->startElement(self::FIELD_PATTERN_INSTANT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternInteger())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_INTEGER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternInteger())) {
+            $xw->startElement(self::FIELD_PATTERN_INTEGER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternMarkdown())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_MARKDOWN);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_MARKDOWN] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternMarkdown())) {
+            $xw->startElement(self::FIELD_PATTERN_MARKDOWN);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternOid())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_OID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_OID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternOid())) {
+            $xw->startElement(self::FIELD_PATTERN_OID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternPositiveInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_POSITIVE_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternPositiveInt())) {
+            $xw->startElement(self::FIELD_PATTERN_POSITIVE_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternString())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_STRING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_STRING] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternString())) {
+            $xw->startElement(self::FIELD_PATTERN_STRING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternTime())) {
+            $xw->startElement(self::FIELD_PATTERN_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternUnsignedInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_UNSIGNED_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternUnsignedInt())) {
+            $xw->startElement(self::FIELD_PATTERN_UNSIGNED_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternUri())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_URI);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_URI] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternUri())) {
+            $xw->startElement(self::FIELD_PATTERN_URI);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternUrl())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_URL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_URL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternUrl())) {
+            $xw->startElement(self::FIELD_PATTERN_URL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPatternUuid())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_UUID);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_PATTERN_UUID] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPatternUuid())) {
+            $xw->startElement(self::FIELD_PATTERN_UUID);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternAddress())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_ADDRESS);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_ADDRESS);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternAge())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_AGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_AGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternAnnotation())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_ANNOTATION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_ANNOTATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternAttachment())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_ATTACHMENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_ATTACHMENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternCodeableConcept())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_CODEABLE_CONCEPT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_CODEABLE_CONCEPT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternCoding())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_CODING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_CODING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternContactPoint())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_CONTACT_POINT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_CONTACT_POINT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternCount())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_COUNT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_COUNT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternDistance())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_DISTANCE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_DISTANCE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternDuration())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_DURATION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_DURATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternHumanName())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_HUMAN_NAME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_HUMAN_NAME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternIdentifier())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_IDENTIFIER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_IDENTIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternMoney())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_MONEY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_MONEY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternPeriod())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_PERIOD);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_PERIOD);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternQuantity())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_QUANTITY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_QUANTITY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternRange())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_RANGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_RANGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternRatio())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_RATIO);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_RATIO);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternReference())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_REFERENCE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_REFERENCE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternSampledData())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_SAMPLED_DATA);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_SAMPLED_DATA);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternSignature())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_SIGNATURE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_SIGNATURE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternTiming())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_TIMING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_TIMING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternContactDetail())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_CONTACT_DETAIL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_CONTACT_DETAIL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternContributor())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_CONTRIBUTOR);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_CONTRIBUTOR);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternDataRequirement())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_DATA_REQUIREMENT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_DATA_REQUIREMENT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternExpression())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_EXPRESSION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_EXPRESSION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternParameterDefinition())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_PARAMETER_DEFINITION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_PARAMETER_DEFINITION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternRelatedArtifact())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_RELATED_ARTIFACT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_RELATED_ARTIFACT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternTriggerDefinition())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_TRIGGER_DEFINITION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_TRIGGER_DEFINITION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternUsageContext())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_USAGE_CONTEXT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_USAGE_CONTEXT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternDosage())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_DOSAGE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_DOSAGE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getPatternMeta())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PATTERN_META);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PATTERN_META);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getExample())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_EXAMPLE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getExample() as $v) {
+            $xw->startElement(self::FIELD_EXAMPLE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMinValueDate())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN_VALUE_DATE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMinValueDate())) {
+            $xw->startElement(self::FIELD_MIN_VALUE_DATE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMinValueDateTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN_VALUE_DATE_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMinValueDateTime())) {
+            $xw->startElement(self::FIELD_MIN_VALUE_DATE_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMinValueInstant())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN_VALUE_INSTANT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMinValueInstant())) {
+            $xw->startElement(self::FIELD_MIN_VALUE_INSTANT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMinValueTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN_VALUE_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMinValueTime())) {
+            $xw->startElement(self::FIELD_MIN_VALUE_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMinValueDecimal())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN_VALUE_DECIMAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMinValueDecimal())) {
+            $xw->startElement(self::FIELD_MIN_VALUE_DECIMAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMinValueInteger())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN_VALUE_INTEGER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMinValueInteger())) {
+            $xw->startElement(self::FIELD_MIN_VALUE_INTEGER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMinValuePositiveInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN_VALUE_POSITIVE_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMinValuePositiveInt())) {
+            $xw->startElement(self::FIELD_MIN_VALUE_POSITIVE_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMinValueUnsignedInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN_VALUE_UNSIGNED_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MIN_VALUE_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMinValueUnsignedInt())) {
+            $xw->startElement(self::FIELD_MIN_VALUE_UNSIGNED_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getMinValueQuantity())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MIN_VALUE_QUANTITY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_MIN_VALUE_QUANTITY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMaxValueDate())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_VALUE_DATE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMaxValueDate())) {
+            $xw->startElement(self::FIELD_MAX_VALUE_DATE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMaxValueDateTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_VALUE_DATE_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DATE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMaxValueDateTime())) {
+            $xw->startElement(self::FIELD_MAX_VALUE_DATE_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMaxValueInstant())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_VALUE_INSTANT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INSTANT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMaxValueInstant())) {
+            $xw->startElement(self::FIELD_MAX_VALUE_INSTANT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMaxValueTime())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_VALUE_TIME);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_TIME] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMaxValueTime())) {
+            $xw->startElement(self::FIELD_MAX_VALUE_TIME);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMaxValueDecimal())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_VALUE_DECIMAL);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_DECIMAL] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMaxValueDecimal())) {
+            $xw->startElement(self::FIELD_MAX_VALUE_DECIMAL);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMaxValueInteger())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_VALUE_INTEGER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_INTEGER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMaxValueInteger())) {
+            $xw->startElement(self::FIELD_MAX_VALUE_INTEGER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMaxValuePositiveInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_VALUE_POSITIVE_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_POSITIVE_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMaxValuePositiveInt())) {
+            $xw->startElement(self::FIELD_MAX_VALUE_POSITIVE_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMaxValueUnsignedInt())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_VALUE_UNSIGNED_INT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_VALUE_UNSIGNED_INT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMaxValueUnsignedInt())) {
+            $xw->startElement(self::FIELD_MAX_VALUE_UNSIGNED_INT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getMaxValueQuantity())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_VALUE_QUANTITY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_MAX_VALUE_QUANTITY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMaxLength())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MAX_LENGTH);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MAX_LENGTH] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMaxLength())) {
+            $xw->startElement(self::FIELD_MAX_LENGTH);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getCondition())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITION] ?? [];
+        if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getCondition())) {
+            foreach($vs as $i => $v) {
+                if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
+                    $xw->startElement(self::FIELD_CONDITION);
+                    $v->xmlSerialize($xw, $config);
+                    $xw->endElement();
                 }
-                $telement = $element->ownerDocument->createElement(self::FIELD_CONDITION);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
             }
         }
-        if ([] !== ($vs = $this->getConstraint())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_CONSTRAINT);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getConstraint() as $v) {
+            $xw->startElement(self::FIELD_CONSTRAINT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getMustSupport())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_MUST_SUPPORT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_MUST_SUPPORT] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMustSupport())) {
+            $xw->startElement(self::FIELD_MUST_SUPPORT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getIsModifier())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_IS_MODIFIER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIsModifier())) {
+            $xw->startElement(self::FIELD_IS_MODIFIER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getIsModifierReason())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_IS_MODIFIER_REASON);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_MODIFIER_REASON] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIsModifierReason())) {
+            $xw->startElement(self::FIELD_IS_MODIFIER_REASON);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getIsSummary())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_IS_SUMMARY);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_SUMMARY] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIsSummary())) {
+            $xw->startElement(self::FIELD_IS_SUMMARY);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getBinding())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_BINDING);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_BINDING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getMapping())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_MAPPING);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getMapping() as $v) {
+            $xw->startElement(self::FIELD_MAPPING);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getPath())) {
@@ -20419,9 +21352,6 @@ class FHIRElementDefinition extends FHIRBackboneElement
         if ([] !== ($vs = $this->getCode())) {
             $out->{self::FIELD_CODE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_CODE}[] = $v;
             }
         }
@@ -20528,9 +21458,6 @@ class FHIRElementDefinition extends FHIRBackboneElement
         if ([] !== ($vs = $this->getType())) {
             $out->{self::FIELD_TYPE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_TYPE}[] = $v;
             }
         }
@@ -21406,9 +22333,6 @@ class FHIRElementDefinition extends FHIRBackboneElement
         if ([] !== ($vs = $this->getExample())) {
             $out->{self::FIELD_EXAMPLE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_EXAMPLE}[] = $v;
             }
         }
@@ -21615,9 +22539,6 @@ class FHIRElementDefinition extends FHIRBackboneElement
         if ([] !== ($vs = $this->getConstraint())) {
             $out->{self::FIELD_CONSTRAINT} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_CONSTRAINT}[] = $v;
             }
         }
@@ -21667,16 +22588,12 @@ class FHIRElementDefinition extends FHIRBackboneElement
         if ([] !== ($vs = $this->getMapping())) {
             $out->{self::FIELD_MAPPING} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_MAPPING}[] = $v;
             }
         }
 
         return $out;
     }
-
 
     /**
      * @return string

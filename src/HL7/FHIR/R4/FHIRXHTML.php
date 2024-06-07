@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,239 +65,226 @@ namespace HL7\FHIR\R4;
 /**
  * XHTML type used in special cases
  *
- * Class FHIRXHTML
+ * Class FHIRXhtml
  * @package \HL7\FHIR\R4
  */
-class FHIRXHTML implements PHPFHIRTypeInterface
+class FHIRXhtml implements PHPFHIRTypeInterface
 {
-    use PHPFHIRValidationAssertionsTrait;
-    use PHPFHIRChangeTrackingTrait;
+    use PHPFHIRChangeTrackingTrait,
+        PHPFHIRValidationAssertionsTrait,
+        PHPFHIRSourceXmlNamespaceTrait;
 
-    // name of FHIR type this class describes
-    const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_XHTML;
-
-    /** @var null|\DOMNode */
-    private ?\DOMNode $_data = null;
     /** @var null|string */
-    private ?string $_elementName = null;
-    /** @var string */
-    private string $_xmlns = '';
-
-    /** @var array */
-    private static array $_validationRules = [];
+    private null|string $_xhtml = null;
 
     /**
-     * XHTML Constructor
-     * @param null|string|\SimpleXMLElement|\DOMNode $data
+     * Xhtml Constructor
+     * @param null|string|\DOMNode|\SimpleXMLElement $xhtml
      */
-    public function __construct($data = null)
+    public function __construct(null|string|\DOMNode|\SimpleXmlElement $xhtml = null)
     {
-        $this->_setData($data);
-    }
-
-    /**
-     * The name of the FHIR element this raw type represents
-     *
-     * @param string $elementName
-     * @return \HL7\FHIR\R4\FHIRXHTML
-     */
-    public function _setElementName(string $elementName): FHIRXHTML
-    {
-        $this->_elementName = $elementName;
-        return $this;
+        $this->setXhtml($xhtml);
     }
 
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
-        return self::FHIR_TYPE_NAME;
+        return 'Xhtml';
     }
 
     /**
-     * @return string
-     */
-    public function _getFHIRXMLNamespace(): string
-    {
-        return $this->_xmlns;
-    }
-
-    /**
-     * @param null|string $xmlNamespace
-     * @return static
-     */
-    public function _setFHIRXMLNamespace(string $xmlNamespace): object
-    {
-        $this->_xmlns = trim((string)$xmlNamespace);
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<XHTML{$xmlns}></XHTML>";
-    }
-
-    /**
-     * @return null|\DOMNode
-     */
-    public function _getData(): ?\DOMNode
-    {
-        return $this->_data;
-    }
-
-    /**
-     * @param null|string|\SimpleXMLElement|\DOMNode $data
-     * @return \HL7\FHIR\R4\FHIRXHTML
-     */
-    public function _setData($data): FHIRXHTML
-    {
-        if (null === $data) {
-            $this->_data = null;
-            return $this;
-        }
-        if (is_string($data)) {
-            $dom = new \DOMDocument();
-            $dom->loadHTML($data);
-            $this->_data = $dom->documentElement;
-            return $this;
-        }
-        if ($data instanceof \SimpleXMLElement) {
-            $dom = new \DOMDocument();
-            $dom->appendChild($dom->importNode(dom_import_simplexml($data), true));
-            $this->_data = $dom->documentElement;
-            return $this;
-        }
-        if ($data instanceof \DOMDocument) {
-            $dom = new \DOMDocument();
-            $dom->appendChild($dom->importNode($data->documentElement, true));
-            $this->_data = $dom->documentElement;
-            return $this;
-        }
-        if ($data instanceof \DOMNode) {
-            $dom = new \DOMDocument();
-            $dom->appendChild($dom->importNode($data, true));
-            $this->_data = $dom->documentElement;
-            return $this;
-        }
-        throw new \InvalidArgumentException(sprintf(
-            '$data must be one of: null, valid XHTML string, or instance of \\SimpleXMLElement or \\DOMNode, saw "%s"',
-            gettype($data)
-        ));
-    }
-
-
-    /**
-     * Returns the validation rules that this type's fields must comply with to be considered "valid"
-     * The returned array is in ["fieldname[.offset]" => ["rule" => {constraint}]]
-     *
      * @return array
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return [];
     }
 
     /**
-     * Validates that this type conforms to the specifications set forth for it by FHIR.  An empty array must be seen as
-     * passing.
-     *
      * @return array
      */
     public function _getValidationErrors(): array
     {
-        $errs = [];
-        $validationRules = $this->_getValidationRules();
-        return $errs;
+        return [];
     }
 
     /**
-     * @param null|string|\DOMElement $element
-     * @param null|\HL7\FHIR\R4\FHIRXHTML $type
-     * @param null|int $libxmlOpts
-     * @return null|\HL7\FHIR\R4\FHIRXHTML
+     * @return null|string
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public function getXhtml(): null|string
+    {
+        return $this->_xhtml;
+    }
+
+    /**
+     * @param null|string|\DOMNode|\SimpleXmlElement $xhtml
+     * @return static
+     */
+    public function setXhtml(null|string|\DOMNode|\SimpleXMLElement $xhtml): self
+    {
+        if (null === $xhtml) {
+            $this->_trackValueSet($this->_xhtml, null);
+            $this->_xhtml = null;
+            return $this;
+        }
+        if ($xhtml instanceof \DOMDocument) {
+            $xhtml = $xhtml->saveXML($xhtml->documentElement);
+        } else if ($xhtml instanceof \DOMNode) {
+            $xhtml = $xhtml->ownerDocument->saveXML($xhtml);
+        } else if ($xhtml instanceof \SimpleXMLElement) {
+            $xhtml = $xhtml->asXML();
+        }
+        $this->_trackValueSet($this->_xhtml, $xhtml);
+        $this->_xhtml = $xhtml;
+        return $this;
+    }
+
+    /**
+     * @param null|\HL7\FHIR\R4\PHPFHIRConfig $config
+     * @return null|\SimpleXMLElement
+     * @throws \Exception
+     */
+    public function getSimpleXMLElement(null|PHPFHIRConfig $config = null): null|\SimpleXMLElement
+    {
+        $xhtml = $this->getXhtml();
+        if (null === $xhtml) {
+            return null;
+        }
+        if (null === $config) {
+            $config = new PHPFHIRConfig();
+        }
+        return new \SimpleXMLElement($xhtml, $config->getLibxmlOpts());
+    }
+
+    /**
+     * @param null|\HL7\FHIR\R4\PHPFHIRConfig $config
+     * @return null|\DOMDocument
+     */
+    public function getDOMDocument(null|PHPFHIRConfig $config = null): null|\DOMDocument
+    {
+        $xhtml = $this->getXhtml();
+        if (null === $xhtml) {
+            return null;
+        }
+        if (null === $config) {
+            $config = new PHPFHIRConfig();
+        }
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML($xhtml, $config->getLibxmlOpts());
+        return $dom;
+    }
+
+    /**
+     * Returns open \XMLReader instance with content read
+     *
+     * @param null|\HL7\FHIR\R4\PHPFHIRConfig $config
+     * @return null|\XMLReader
+     */
+    public function getXMLReader(null|PHPFHIRConfig $config = null): null|\XMLReader
+    {
+        $xhtml = $this->getXhtml();
+        if (null === $xhtml) {
+            return null;
+        }
+        if (null === $config) {
+            $config = new PHPFHIRConfig();
+        }
+        $xr = \XMLReader::XML($xhtml, 'UTF-8', $config->getLibxmlOpts());
+        $xr->read();
+        return $xr;
+    }
+
+    /**
+     * @param null|string|\SimpleXMLElement $element
+     * @param null|\HL7\FHIR\R4\FHIRXhtml $type
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return null|\HL7\FHIR\R4\FHIRXhtml
+     */
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRXHTML::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRXHTML::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRXHTML(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRXHTML)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRXhtml)) {
             throw new \RuntimeException(sprintf(
-                'FHIRXHTML::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRXHTML or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        $type->_setData($element);
+        $type->setXhtml($element);
         return $type;
     }
 
-     /**
-     * @param \DOMElement|null $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+    /**
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config XML serialization config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        $data = $this->_getData();
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            if (!empty($xmlns)) {
-                $xmlns = " xmlns=\"{$xmlns}\"";
-            }
-            if (null === $data) {
-                $dom->loadXML("<XHTML{$xmlns}></XHTML>", $libxmlOpts);
-                return $dom->documentElement;
-            }
-            $dom->appendChild($dom->importNode($data, true));
-            return $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (null === $data) {
-            return $element;
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
         }
-        if (!empty($xmlns)) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
         }
-        $element->appendChild($element->ownerDocument->importNode($data, true));
-        return $element;
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $rootOpened = true;
+            $xw->openRootNode($config, 'Xhtml', $this->_getSourceXmlns());
+        }
+        $xr = $this->getXMLReader($config);
+        if (null === $xr) {
+            return $xw;
+        }
+        while ($xr->moveToNextAttribute()) {
+            $xw->writeAttribute($xr->name, $xr->value);
+        }
+        $xw->writeRaw($xr->readInnerXml());
+        if (isset($rootOpened) && $rootOpened) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return mixed
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
-        $data = $this->_getData();
-        if (null === $data) {
+        $xhtml = $this->getXhtml();
+        if (null === $xhtml) {
             return null;
         }
-        return $data->ownerDocument->saveXML($data);
+        return (string)$xhtml;
     }
 
     /**
@@ -305,10 +292,6 @@ class FHIRXHTML implements PHPFHIRTypeInterface
      */
     public function __toString(): string
     {
-        $data = $this->_getData();
-        if (null === $data) {
-            return '';
-        }
-        return $data->ownerDocument->saveXML($data);
+        return (string)$this->getXhtml();
     }
 }

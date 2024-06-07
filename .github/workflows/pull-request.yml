@@ -31,6 +31,7 @@ jobs:
           configuration: './phpunit.xml'
           log_junit: "test-results/phpunit.xml"
           memory_limit: "-1"
+          test_suffix: "Test.php"
         env:
           XDEBUG_MODE: coverage
       - name: Upload test results

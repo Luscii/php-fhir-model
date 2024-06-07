@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\R4;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1351,7 +1351,7 @@ abstract class PHPFHIRTypeMap
      * @param string $typeName
      * @return string|null
      */
-    public static function getTypeClass(string $typeName): ?string
+    public static function getTypeClass(string $typeName): null|string
     {
         return self::TYPE_MAP[$typeName] ?? null;
     }
@@ -1378,69 +1378,56 @@ abstract class PHPFHIRTypeMap
      * @param string $typeName Name of FHIR object reference by ResourceContainer
      * @return string|null Name of class as string or null if type is not contained in map
      */
-    public static function getContainedTypeClassName(string $typeName): ?string
+    public static function getContainedTypeClassName(string $typeName): null|string
     {
         return self::CONTAINABLE_TYPES[$typeName] ?? null;
     }
 
     /**
      * Will attempt to determine if the provided value is or describes a containable resource type
-     * @param object|string|array $type
+     * @param string|array|\SimpleXMLElement|PHPFHIRTypeInterface $type
      * @return bool
      * @throws \InvalidArgumentException
      */
-    public static function isContainableResource($type): bool
+    public static function isContainableResource(string|array|\SimpleXMLElement|PHPFHIRTypeInterface $type): bool
     {
         $tt = gettype($type);
         if ('object' === $tt) {
             if ($type instanceof PHPFHIRTypeInterface) {
                 return in_array('\\' . get_class($type), self::CONTAINABLE_TYPES, true);
             }
-            if ($type instanceof \DOMNode) {
-                return isset(self::CONTAINABLE_TYPES[$type->nodeName]);
-            }
-            throw new \InvalidArgumentException(sprintf(
-                'Expected "$type" to be instance of "\HL7\FHIR\R4\PHPFHIRTypeInterface" or "%s", saw "%s"',
-                '\\DOMNode',
-                get_class($type)
-            ));
+            return isset(self::CONTAINABLE_TYPES[$type->getName()]);
         }
         if ('string' === $tt) {
             return isset(self::CONTAINABLE_TYPES[$type]) || in_array('\\' . ltrim($type, '\\'), self::CONTAINABLE_TYPES, true);
         }
-        if ('array' === $tt) {
-            if (isset($type[PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE])) {
-                return isset(self::CONTAINABLE_TYPES[$type[PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE]]);
-            }
-            return false;
+        if (isset($type[PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE])) {
+            return isset(self::CONTAINABLE_TYPES[$type[PHPFHIRConstants::JSON_FIELD_RESOURCE_TYPE]]);
         }
-
-        throw new \InvalidArgumentException(sprintf(
-            'Unable to process input of type "%s"',
-            gettype($type)
-        ));
+        return false;
     }
 
     /**
-     * @param \DOMNode $node Parent element containing inline resource
-     * @return \HL7\FHIR\R4\PHPFHIRContainedTypeInterface|null
+     * @param \SimpleXMLElement $node Parent element containing inline resource
+     * @param \HL7\FHIR\R4\PHPFHIRConfig $config
+     * @return null|\HL7\FHIR\R4\PHPFHIRContainedTypeInterface
      */
-    public static function getContainedTypeFromXML(\DOMNode $node): ?PHPFHIRContainedTypeInterface
+    public static function getContainedTypeFromXML(\SimpleXMLElement $node, PHPFHIRConfig $config): null|PHPFHIRContainedTypeInterface
     {
-        $typeName = $node->nodeName;
+        $typeName = $node->getName();
         $className = self::getContainedTypeClassName($typeName);
         if (null === $className) {
             throw self::createdInvalidContainedTypeException($typeName);
         }
         /** @var \HL7\FHIR\R4\PHPFHIRContainedTypeInterface $className */
-        return $className::xmlUnserialize($node);
+        return $className::xmlUnserialize($node, null, $config);
     }
 
     /**
      * @param array|null $data
-     * @return \HL7\FHIR\R4\PHPFHIRContainedTypeInterface|null
+     * @return null|\HL7\FHIR\R4\PHPFHIRContainedTypeInterface
      */
-    public static function getContainedTypeFromArray(?array $data): ?PHPFHIRContainedTypeInterface
+    public static function getContainedTypeFromArray(null|array $data): null|PHPFHIRContainedTypeInterface
     {
         if (null === $data || [] === $data) {
             return null;

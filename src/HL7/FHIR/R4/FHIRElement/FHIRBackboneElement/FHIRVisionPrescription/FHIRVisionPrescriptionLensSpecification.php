@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription;
  * 
  */
 
+use HL7\FHIR\R4\FHIRDecimalPrimitive;
 use HL7\FHIR\R4\FHIRElement\FHIRAnnotation;
 use HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
 use HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept;
@@ -71,9 +72,14 @@ use HL7\FHIR\R4\FHIRElement\FHIRInteger;
 use HL7\FHIR\R4\FHIRElement\FHIRQuantity;
 use HL7\FHIR\R4\FHIRElement\FHIRString;
 use HL7\FHIR\R4\FHIRElement\FHIRVisionEyes;
+use HL7\FHIR\R4\FHIRIntegerPrimitive;
 use HL7\FHIR\R4\FHIRStringPrimitive;
+use HL7\FHIR\R4\PHPFHIRConfig;
+use HL7\FHIR\R4\PHPFHIRConfigKeyEnum;
 use HL7\FHIR\R4\PHPFHIRConstants;
 use HL7\FHIR\R4\PHPFHIRTypeInterface;
+use HL7\FHIR\R4\PHPFHIRXmlLocationEnum;
+use HL7\FHIR\R4\PHPFHIRXmlWriter;
 
 /**
  * An authorization for the provision of glasses and/or contact lenses to a
@@ -86,6 +92,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
 {
     // name of FHIR type this class describes
     const FHIR_TYPE_NAME = PHPFHIRConstants::TYPE_NAME_VISION_PRESCRIPTION_DOT_LENS_SPECIFICATION;
+
     const FIELD_PRODUCT = 'product';
     const FIELD_EYE = 'eye';
     const FIELD_EYE_EXT = '_eye';
@@ -111,9 +118,6 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
     const FIELD_BRAND_EXT = '_brand';
     const FIELD_NOTE = 'note';
 
-    /** @var string */
-    private $_xmlns = '';
-
     /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
@@ -125,8 +129,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    protected ?FHIRCodeableConcept $product = null;
-
+    protected null|FHIRCodeableConcept $product = null;
     /**
      * A coded concept listing the eye codes.
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -135,8 +138,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRVisionEyes
      */
-    protected ?FHIRVisionEyes $eye = null;
-
+    protected null|FHIRVisionEyes $eye = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -145,10 +147,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Lens power measured in dioptres (0.25 units).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $sphere = null;
-
+    protected null|FHIRDecimal $sphere = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -157,10 +158,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for astigmatism measured in dioptres (0.25 units).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $cylinder = null;
-
+    protected null|FHIRDecimal $cylinder = null;
     /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
@@ -168,10 +168,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Adjustment for astigmatism measured in integer degrees.
      *
-     * @var null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    protected ?FHIRInteger $axis = null;
-
+    protected null|FHIRInteger $axis = null;
     /**
      * An authorization for the provision of glasses and/or contact lenses to a
      * patient.
@@ -180,8 +179,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism[]
      */
-    protected ?array $prism = [];
-
+    protected null|array $prism = [];
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -190,10 +188,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for multifocal lenses measured in dioptres (0.25 units).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $add = null;
-
+    protected null|FHIRDecimal $add = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -202,10 +199,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens power measured in dioptres (0.25 units).
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $power = null;
-
+    protected null|FHIRDecimal $power = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -214,10 +210,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Back curvature measured in millimetres.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $backCurve = null;
-
+    protected null|FHIRDecimal $backCurve = null;
     /**
      * A rational number with implicit precision
      * Do not use an IEEE type floating point type, instead use something that works
@@ -226,10 +221,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens diameter measured in millimetres.
      *
-     * @var null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    protected ?FHIRDecimal $diameter = null;
-
+    protected null|FHIRDecimal $diameter = null;
     /**
      * A measured amount (or an amount that can potentially be measured). Note that
      * measured amounts include amounts that are not precisely quantified, including
@@ -241,8 +235,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    protected ?FHIRQuantity $duration = null;
-
+    protected null|FHIRQuantity $duration = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -250,10 +243,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Special color or pattern.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $color = null;
-
+    protected null|FHIRString $color = null;
     /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
@@ -261,10 +253,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Brand recommendations or restrictions.
      *
-     * @var null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    protected ?FHIRString $brand = null;
-
+    protected null|FHIRString $brand = null;
     /**
      * A text note which also contains information about who made the statement and
      * when.
@@ -275,38 +266,35 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    protected ?array $note = [];
+    protected null|array $note = [];
 
     /**
      * Validation map for fields in type VisionPrescription.LensSpecification
      * @var array
      */
-    private static array $_validationRules = [    ];
+    private const _VALIDATION_RULES = [    ];
+
+    /** @var array */
+    private array $_primitiveXmlLocations = [];
 
     /**
      * FHIRVisionPrescriptionLensSpecification Constructor
      * @param null|array $data
      */
-    public function __construct($data = null)
+    public function __construct(null|array $data = null)
     {
         if (null === $data || [] === $data) {
             return;
         }
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException(sprintf(
-                'FHIRVisionPrescriptionLensSpecification::_construct - $data expected to be null or array, %s seen',
-                gettype($data)
-            ));
-        }
         parent::__construct($data);
-        if (isset($data[self::FIELD_PRODUCT])) {
+        if (array_key_exists(self::FIELD_PRODUCT, $data)) {
             if ($data[self::FIELD_PRODUCT] instanceof FHIRCodeableConcept) {
                 $this->setProduct($data[self::FIELD_PRODUCT]);
             } else {
                 $this->setProduct(new FHIRCodeableConcept($data[self::FIELD_PRODUCT]));
             }
         }
-        if (isset($data[self::FIELD_EYE]) || isset($data[self::FIELD_EYE_EXT])) {
+        if (array_key_exists(self::FIELD_EYE, $data) || array_key_exists(self::FIELD_EYE_EXT, $data)) {
             $value = $data[self::FIELD_EYE] ?? null;
             $ext = (isset($data[self::FIELD_EYE_EXT]) && is_array($data[self::FIELD_EYE_EXT])) ? $data[self::FIELD_EYE_EXT] : [];
             if (null !== $value) {
@@ -319,9 +307,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setEye(new FHIRVisionEyes($ext));
+            } else {
+                $this->setEye(new FHIRVisionEyes(null));
             }
         }
-        if (isset($data[self::FIELD_SPHERE]) || isset($data[self::FIELD_SPHERE_EXT])) {
+        if (array_key_exists(self::FIELD_SPHERE, $data) || array_key_exists(self::FIELD_SPHERE_EXT, $data)) {
             $value = $data[self::FIELD_SPHERE] ?? null;
             $ext = (isset($data[self::FIELD_SPHERE_EXT]) && is_array($data[self::FIELD_SPHERE_EXT])) ? $data[self::FIELD_SPHERE_EXT] : [];
             if (null !== $value) {
@@ -334,9 +324,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setSphere(new FHIRDecimal($ext));
+            } else {
+                $this->setSphere(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_CYLINDER]) || isset($data[self::FIELD_CYLINDER_EXT])) {
+        if (array_key_exists(self::FIELD_CYLINDER, $data) || array_key_exists(self::FIELD_CYLINDER_EXT, $data)) {
             $value = $data[self::FIELD_CYLINDER] ?? null;
             $ext = (isset($data[self::FIELD_CYLINDER_EXT]) && is_array($data[self::FIELD_CYLINDER_EXT])) ? $data[self::FIELD_CYLINDER_EXT] : [];
             if (null !== $value) {
@@ -349,9 +341,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setCylinder(new FHIRDecimal($ext));
+            } else {
+                $this->setCylinder(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_AXIS]) || isset($data[self::FIELD_AXIS_EXT])) {
+        if (array_key_exists(self::FIELD_AXIS, $data) || array_key_exists(self::FIELD_AXIS_EXT, $data)) {
             $value = $data[self::FIELD_AXIS] ?? null;
             $ext = (isset($data[self::FIELD_AXIS_EXT]) && is_array($data[self::FIELD_AXIS_EXT])) ? $data[self::FIELD_AXIS_EXT] : [];
             if (null !== $value) {
@@ -364,14 +358,13 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setAxis(new FHIRInteger($ext));
+            } else {
+                $this->setAxis(new FHIRInteger(null));
             }
         }
-        if (isset($data[self::FIELD_PRISM])) {
+        if (array_key_exists(self::FIELD_PRISM, $data)) {
             if (is_array($data[self::FIELD_PRISM])) {
                 foreach($data[self::FIELD_PRISM] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRVisionPrescriptionPrism) {
                         $this->addPrism($v);
                     } else {
@@ -384,7 +377,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 $this->addPrism(new FHIRVisionPrescriptionPrism($data[self::FIELD_PRISM]));
             }
         }
-        if (isset($data[self::FIELD_ADD]) || isset($data[self::FIELD_ADD_EXT])) {
+        if (array_key_exists(self::FIELD_ADD, $data) || array_key_exists(self::FIELD_ADD_EXT, $data)) {
             $value = $data[self::FIELD_ADD] ?? null;
             $ext = (isset($data[self::FIELD_ADD_EXT]) && is_array($data[self::FIELD_ADD_EXT])) ? $data[self::FIELD_ADD_EXT] : [];
             if (null !== $value) {
@@ -397,9 +390,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setAdd(new FHIRDecimal($ext));
+            } else {
+                $this->setAdd(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_POWER]) || isset($data[self::FIELD_POWER_EXT])) {
+        if (array_key_exists(self::FIELD_POWER, $data) || array_key_exists(self::FIELD_POWER_EXT, $data)) {
             $value = $data[self::FIELD_POWER] ?? null;
             $ext = (isset($data[self::FIELD_POWER_EXT]) && is_array($data[self::FIELD_POWER_EXT])) ? $data[self::FIELD_POWER_EXT] : [];
             if (null !== $value) {
@@ -412,9 +407,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setPower(new FHIRDecimal($ext));
+            } else {
+                $this->setPower(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_BACK_CURVE]) || isset($data[self::FIELD_BACK_CURVE_EXT])) {
+        if (array_key_exists(self::FIELD_BACK_CURVE, $data) || array_key_exists(self::FIELD_BACK_CURVE_EXT, $data)) {
             $value = $data[self::FIELD_BACK_CURVE] ?? null;
             $ext = (isset($data[self::FIELD_BACK_CURVE_EXT]) && is_array($data[self::FIELD_BACK_CURVE_EXT])) ? $data[self::FIELD_BACK_CURVE_EXT] : [];
             if (null !== $value) {
@@ -427,9 +424,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setBackCurve(new FHIRDecimal($ext));
+            } else {
+                $this->setBackCurve(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_DIAMETER]) || isset($data[self::FIELD_DIAMETER_EXT])) {
+        if (array_key_exists(self::FIELD_DIAMETER, $data) || array_key_exists(self::FIELD_DIAMETER_EXT, $data)) {
             $value = $data[self::FIELD_DIAMETER] ?? null;
             $ext = (isset($data[self::FIELD_DIAMETER_EXT]) && is_array($data[self::FIELD_DIAMETER_EXT])) ? $data[self::FIELD_DIAMETER_EXT] : [];
             if (null !== $value) {
@@ -442,16 +441,18 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setDiameter(new FHIRDecimal($ext));
+            } else {
+                $this->setDiameter(new FHIRDecimal(null));
             }
         }
-        if (isset($data[self::FIELD_DURATION])) {
+        if (array_key_exists(self::FIELD_DURATION, $data)) {
             if ($data[self::FIELD_DURATION] instanceof FHIRQuantity) {
                 $this->setDuration($data[self::FIELD_DURATION]);
             } else {
                 $this->setDuration(new FHIRQuantity($data[self::FIELD_DURATION]));
             }
         }
-        if (isset($data[self::FIELD_COLOR]) || isset($data[self::FIELD_COLOR_EXT])) {
+        if (array_key_exists(self::FIELD_COLOR, $data) || array_key_exists(self::FIELD_COLOR_EXT, $data)) {
             $value = $data[self::FIELD_COLOR] ?? null;
             $ext = (isset($data[self::FIELD_COLOR_EXT]) && is_array($data[self::FIELD_COLOR_EXT])) ? $data[self::FIELD_COLOR_EXT] : [];
             if (null !== $value) {
@@ -464,9 +465,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setColor(new FHIRString($ext));
+            } else {
+                $this->setColor(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_BRAND]) || isset($data[self::FIELD_BRAND_EXT])) {
+        if (array_key_exists(self::FIELD_BRAND, $data) || array_key_exists(self::FIELD_BRAND_EXT, $data)) {
             $value = $data[self::FIELD_BRAND] ?? null;
             $ext = (isset($data[self::FIELD_BRAND_EXT]) && is_array($data[self::FIELD_BRAND_EXT])) ? $data[self::FIELD_BRAND_EXT] : [];
             if (null !== $value) {
@@ -479,14 +482,13 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
                 }
             } elseif ([] !== $ext) {
                 $this->setBrand(new FHIRString($ext));
+            } else {
+                $this->setBrand(new FHIRString(null));
             }
         }
-        if (isset($data[self::FIELD_NOTE])) {
+        if (array_key_exists(self::FIELD_NOTE, $data)) {
             if (is_array($data[self::FIELD_NOTE])) {
                 foreach($data[self::FIELD_NOTE] as $v) {
-                    if (null === $v) {
-                        continue;
-                    }
                     if ($v instanceof FHIRAnnotation) {
                         $this->addNote($v);
                     } else {
@@ -504,21 +506,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
     /**
      * @return string
      */
-    public function _getFHIRTypeName(): string
+    public function _getFhirTypeName(): string
     {
         return self::FHIR_TYPE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function _getFHIRXMLElementDefinition(): string
-    {
-        $xmlns = $this->_getFHIRXMLNamespace();
-        if ('' !==  $xmlns) {
-            $xmlns = " xmlns=\"{$xmlns}\"";
-        }
-        return "<VisionPrescriptionLensSpecification{$xmlns}></VisionPrescriptionLensSpecification>";
     }
 
     /**
@@ -532,7 +522,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
-    public function getProduct(): ?FHIRCodeableConcept
+    public function getProduct(): null|FHIRCodeableConcept
     {
         return $this->product;
     }
@@ -549,8 +539,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept $product
      * @return static
      */
-    public function setProduct(?FHIRCodeableConcept $product = null): object
+    public function setProduct(null|FHIRCodeableConcept $product = null): self
     {
+        if (null === $product) {
+            $product = new FHIRCodeableConcept();
+        }
         $this->_trackValueSet($this->product, $product);
         $this->product = $product;
         return $this;
@@ -564,7 +557,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRVisionEyes
      */
-    public function getEye(): ?FHIRVisionEyes
+    public function getEye(): null|FHIRVisionEyes
     {
         return $this->eye;
     }
@@ -578,8 +571,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRVisionEyes $eye
      * @return static
      */
-    public function setEye(?FHIRVisionEyes $eye = null): object
+    public function setEye(null|FHIRVisionEyes $eye = null): self
     {
+        if (null === $eye) {
+            $eye = new FHIRVisionEyes();
+        }
         $this->_trackValueSet($this->eye, $eye);
         $this->eye = $eye;
         return $this;
@@ -593,9 +589,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Lens power measured in dioptres (0.25 units).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getSphere(): ?FHIRDecimal
+    public function getSphere(): null|FHIRDecimal
     {
         return $this->sphere;
     }
@@ -608,15 +604,20 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Lens power measured in dioptres (0.25 units).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $sphere
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $sphere
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSphere($sphere = null): object
+    public function setSphere(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $sphere = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $sphere && !($sphere instanceof FHIRDecimal)) {
             $sphere = new FHIRDecimal($sphere);
         }
         $this->_trackValueSet($this->sphere, $sphere);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_SPHERE])) {
+            $this->_primitiveXmlLocations[self::FIELD_SPHERE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_SPHERE][0] = $xmlLocation;
         $this->sphere = $sphere;
         return $this;
     }
@@ -629,9 +630,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for astigmatism measured in dioptres (0.25 units).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getCylinder(): ?FHIRDecimal
+    public function getCylinder(): null|FHIRDecimal
     {
         return $this->cylinder;
     }
@@ -644,15 +645,20 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for astigmatism measured in dioptres (0.25 units).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $cylinder
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $cylinder
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCylinder($cylinder = null): object
+    public function setCylinder(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $cylinder = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $cylinder && !($cylinder instanceof FHIRDecimal)) {
             $cylinder = new FHIRDecimal($cylinder);
         }
         $this->_trackValueSet($this->cylinder, $cylinder);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_CYLINDER])) {
+            $this->_primitiveXmlLocations[self::FIELD_CYLINDER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_CYLINDER][0] = $xmlLocation;
         $this->cylinder = $cylinder;
         return $this;
     }
@@ -664,9 +670,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Adjustment for astigmatism measured in integer degrees.
      *
-     * @return null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
-    public function getAxis(): ?FHIRInteger
+    public function getAxis(): null|FHIRInteger
     {
         return $this->axis;
     }
@@ -678,15 +684,20 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Adjustment for astigmatism measured in integer degrees.
      *
-     * @param null|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $axis
+     * @param null|string|int|float|\HL7\FHIR\R4\FHIRIntegerPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRInteger $axis
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAxis($axis = null): object
+    public function setAxis(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $axis = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $axis && !($axis instanceof FHIRInteger)) {
             $axis = new FHIRInteger($axis);
         }
         $this->_trackValueSet($this->axis, $axis);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_AXIS])) {
+            $this->_primitiveXmlLocations[self::FIELD_AXIS] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_AXIS][0] = $xmlLocation;
         $this->axis = $axis;
         return $this;
     }
@@ -699,7 +710,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism[]
      */
-    public function getPrism(): ?array
+    public function getPrism(): null|array
     {
         return $this->prism;
     }
@@ -713,38 +724,13 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism $prism
      * @return static
      */
-    public function addPrism(?FHIRVisionPrescriptionPrism $prism = null): object
+    public function addPrism(null|FHIRVisionPrescriptionPrism $prism = null): self
     {
+        if (null === $prism) {
+            $prism = new FHIRVisionPrescriptionPrism();
+        }
         $this->_trackValueAdded();
         $this->prism[] = $prism;
-        return $this;
-    }
-
-    /**
-     * An authorization for the provision of glasses and/or contact lenses to a
-     * patient.
-     *
-     * Allows for adjustment on two axis.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionPrism[] $prism
-     * @return static
-     */
-    public function setPrism(array $prism = []): object
-    {
-        if ([] !== $this->prism) {
-            $this->_trackValuesRemoved(count($this->prism));
-            $this->prism = [];
-        }
-        if ([] === $prism) {
-            return $this;
-        }
-        foreach($prism as $v) {
-            if ($v instanceof FHIRVisionPrescriptionPrism) {
-                $this->addPrism($v);
-            } else {
-                $this->addPrism(new FHIRVisionPrescriptionPrism($v));
-            }
-        }
         return $this;
     }
 
@@ -756,9 +742,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for multifocal lenses measured in dioptres (0.25 units).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getAdd(): ?FHIRDecimal
+    public function getAdd(): null|FHIRDecimal
     {
         return $this->add;
     }
@@ -771,15 +757,20 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Power adjustment for multifocal lenses measured in dioptres (0.25 units).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $add
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $add
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAdd($add = null): object
+    public function setAdd(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $add = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $add && !($add instanceof FHIRDecimal)) {
             $add = new FHIRDecimal($add);
         }
         $this->_trackValueSet($this->add, $add);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_ADD])) {
+            $this->_primitiveXmlLocations[self::FIELD_ADD] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_ADD][0] = $xmlLocation;
         $this->add = $add;
         return $this;
     }
@@ -792,9 +783,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens power measured in dioptres (0.25 units).
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getPower(): ?FHIRDecimal
+    public function getPower(): null|FHIRDecimal
     {
         return $this->power;
     }
@@ -807,15 +798,20 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens power measured in dioptres (0.25 units).
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $power
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $power
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPower($power = null): object
+    public function setPower(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $power = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $power && !($power instanceof FHIRDecimal)) {
             $power = new FHIRDecimal($power);
         }
         $this->_trackValueSet($this->power, $power);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_POWER])) {
+            $this->_primitiveXmlLocations[self::FIELD_POWER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_POWER][0] = $xmlLocation;
         $this->power = $power;
         return $this;
     }
@@ -828,9 +824,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Back curvature measured in millimetres.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getBackCurve(): ?FHIRDecimal
+    public function getBackCurve(): null|FHIRDecimal
     {
         return $this->backCurve;
     }
@@ -843,15 +839,20 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Back curvature measured in millimetres.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $backCurve
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $backCurve
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setBackCurve($backCurve = null): object
+    public function setBackCurve(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $backCurve = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $backCurve && !($backCurve instanceof FHIRDecimal)) {
             $backCurve = new FHIRDecimal($backCurve);
         }
         $this->_trackValueSet($this->backCurve, $backCurve);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_BACK_CURVE])) {
+            $this->_primitiveXmlLocations[self::FIELD_BACK_CURVE] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_BACK_CURVE][0] = $xmlLocation;
         $this->backCurve = $backCurve;
         return $this;
     }
@@ -864,9 +865,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens diameter measured in millimetres.
      *
-     * @return null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
-    public function getDiameter(): ?FHIRDecimal
+    public function getDiameter(): null|FHIRDecimal
     {
         return $this->diameter;
     }
@@ -879,15 +880,20 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Contact lens diameter measured in millimetres.
      *
-     * @param null|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $diameter
+     * @param null|string|float|int|\HL7\FHIR\R4\FHIRDecimalPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRDecimal $diameter
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDiameter($diameter = null): object
+    public function setDiameter(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $diameter = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $diameter && !($diameter instanceof FHIRDecimal)) {
             $diameter = new FHIRDecimal($diameter);
         }
         $this->_trackValueSet($this->diameter, $diameter);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_DIAMETER])) {
+            $this->_primitiveXmlLocations[self::FIELD_DIAMETER] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_DIAMETER][0] = $xmlLocation;
         $this->diameter = $diameter;
         return $this;
     }
@@ -903,7 +909,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
-    public function getDuration(): ?FHIRQuantity
+    public function getDuration(): null|FHIRQuantity
     {
         return $this->duration;
     }
@@ -920,8 +926,11 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity $duration
      * @return static
      */
-    public function setDuration(?FHIRQuantity $duration = null): object
+    public function setDuration(null|FHIRQuantity $duration = null): self
     {
+        if (null === $duration) {
+            $duration = new FHIRQuantity();
+        }
         $this->_trackValueSet($this->duration, $duration);
         $this->duration = $duration;
         return $this;
@@ -934,9 +943,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Special color or pattern.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getColor(): ?FHIRString
+    public function getColor(): null|FHIRString
     {
         return $this->color;
     }
@@ -948,15 +957,20 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Special color or pattern.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $color
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $color
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setColor($color = null): object
+    public function setColor(null|string|FHIRStringPrimitive|FHIRString $color = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $color && !($color instanceof FHIRString)) {
             $color = new FHIRString($color);
         }
         $this->_trackValueSet($this->color, $color);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_COLOR])) {
+            $this->_primitiveXmlLocations[self::FIELD_COLOR] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_COLOR][0] = $xmlLocation;
         $this->color = $color;
         return $this;
     }
@@ -968,9 +982,9 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Brand recommendations or restrictions.
      *
-     * @return null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString
+     * @return null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
-    public function getBrand(): ?FHIRString
+    public function getBrand(): null|FHIRString
     {
         return $this->brand;
     }
@@ -982,15 +996,20 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * Brand recommendations or restrictions.
      *
-     * @param null|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $brand
+     * @param null|string|\HL7\FHIR\R4\FHIRStringPrimitive|\HL7\FHIR\R4\FHIRElement\FHIRString $brand
+     * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setBrand($brand = null): object
+    public function setBrand(null|string|FHIRStringPrimitive|FHIRString $brand = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
     {
         if (null !== $brand && !($brand instanceof FHIRString)) {
             $brand = new FHIRString($brand);
         }
         $this->_trackValueSet($this->brand, $brand);
+        if (!isset($this->_primitiveXmlLocations[self::FIELD_BRAND])) {
+            $this->_primitiveXmlLocations[self::FIELD_BRAND] = [];
+        }
+        $this->_primitiveXmlLocations[self::FIELD_BRAND][0] = $xmlLocation;
         $this->brand = $brand;
         return $this;
     }
@@ -1005,7 +1024,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
-    public function getNote(): ?array
+    public function getNote(): null|array
     {
         return $this->note;
     }
@@ -1021,40 +1040,13 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation $note
      * @return static
      */
-    public function addNote(?FHIRAnnotation $note = null): object
+    public function addNote(null|FHIRAnnotation $note = null): self
     {
+        if (null === $note) {
+            $note = new FHIRAnnotation();
+        }
         $this->_trackValueAdded();
         $this->note[] = $note;
-        return $this;
-    }
-
-    /**
-     * A text note which also contains information about who made the statement and
-     * when.
-     * If the element is present, it must have a value for at least one of the defined
-     * elements, an \@id referenced from the Narrative, or extensions
-     *
-     * Notes for special requirements such as coatings and lens materials.
-     *
-     * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation[] $note
-     * @return static
-     */
-    public function setNote(array $note = []): object
-    {
-        if ([] !== $this->note) {
-            $this->_trackValuesRemoved(count($this->note));
-            $this->note = [];
-        }
-        if ([] === $note) {
-            return $this;
-        }
-        foreach($note as $v) {
-            if ($v instanceof FHIRAnnotation) {
-                $this->addNote($v);
-            } else {
-                $this->addNote(new FHIRAnnotation($v));
-            }
-        }
         return $this;
     }
 
@@ -1066,7 +1058,7 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
      */
     public function _getValidationRules(): array
     {
-        return self::$_validationRules;
+        return self::_VALIDATION_RULES;
     }
 
     /**
@@ -1361,275 +1353,314 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
     }
 
     /**
-     * @param null|string|\DOMElement $element
+     * @param null|string|\SimpleXMLElement $element
      * @param null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionLensSpecification $type
-     * @param null|int $libxmlOpts
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionLensSpecification
      */
-    public static function xmlUnserialize($element = null, PHPFHIRTypeInterface $type = null, ?int $libxmlOpts = 591872): ?PHPFHIRTypeInterface
+    public static function xmlUnserialize(null|string|\SimpleXMLElement $element, null|PHPFHIRTypeInterface $type = null, null|int|PHPFHIRConfig $config = null): null|self
     {
         if (null === $element) {
             return null;
         }
-        if (is_string($element)) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            if (false === $dom->loadXML($element, $libxmlOpts)) {
-                throw new \DomainException(sprintf('FHIRVisionPrescriptionLensSpecification::xmlUnserialize - String provided is not parseable as XML: %s', implode(', ', array_map(function(\libXMLError $err) { return $err->message; }, libxml_get_errors()))));
-            }
-            libxml_use_internal_errors(false);
-            $element = $dom->documentElement;
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        if (!($element instanceof \DOMElement)) {
-            throw new \InvalidArgumentException(sprintf('FHIRVisionPrescriptionLensSpecification::xmlUnserialize - $node value must be null, \\DOMElement, or valid XML string, %s seen', is_object($element) ? get_class($element) : gettype($element)));
+        if (is_string($element)) {
+            $element = new \SimpleXMLElement($element, $config->getLibxmlOpts());
         }
         if (null === $type) {
-            $type = new FHIRVisionPrescriptionLensSpecification(null);
-        } elseif (!is_object($type) || !($type instanceof FHIRVisionPrescriptionLensSpecification)) {
+            $type = new static(null);
+        } else if (!($type instanceof FHIRVisionPrescriptionLensSpecification)) {
             throw new \RuntimeException(sprintf(
-                'FHIRVisionPrescriptionLensSpecification::xmlUnserialize - $type must be instance of \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionLensSpecification or null, %s seen.',
-                is_object($type) ? get_class($type) : gettype($type)
+                '%s::xmlUnserialize - $type must be instance of \\%s or null, %s seen.',
+                ltrim(substr(__CLASS__, (int)strrpos(__CLASS__, '\\')), '\\'),
+                static::class,
+                get_class($type)
             ));
         }
-        if ('' === $type->_getFHIRXMLNamespace() && (null === $element->parentNode || $element->namespaceURI !== $element->parentNode->namespaceURI)) {
-            $type->_setFHIRXMLNamespace($element->namespaceURI);
+        if (null !== ($ns = $element->getNamespaces()[''] ?? null)) {
+            $type->_setSourceXmlns((string)$ns);
         }
-        for ($i = 0; $i < $element->childNodes->length; $i++) {
-            $n = $element->childNodes->item($i);
-            if (!($n instanceof \DOMElement)) {
-                continue;
-            }
-            if (self::FIELD_PRODUCT === $n->nodeName) {
-                $type->setProduct(FHIRCodeableConcept::xmlUnserialize($n));
-            } elseif (self::FIELD_EYE === $n->nodeName) {
-                $type->setEye(FHIRVisionEyes::xmlUnserialize($n));
-            } elseif (self::FIELD_SPHERE === $n->nodeName) {
-                $type->setSphere(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_CYLINDER === $n->nodeName) {
-                $type->setCylinder(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_AXIS === $n->nodeName) {
-                $type->setAxis(FHIRInteger::xmlUnserialize($n));
-            } elseif (self::FIELD_PRISM === $n->nodeName) {
-                $type->addPrism(FHIRVisionPrescriptionPrism::xmlUnserialize($n));
-            } elseif (self::FIELD_ADD === $n->nodeName) {
-                $type->setAdd(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_POWER === $n->nodeName) {
-                $type->setPower(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_BACK_CURVE === $n->nodeName) {
-                $type->setBackCurve(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_DIAMETER === $n->nodeName) {
-                $type->setDiameter(FHIRDecimal::xmlUnserialize($n));
-            } elseif (self::FIELD_DURATION === $n->nodeName) {
-                $type->setDuration(FHIRQuantity::xmlUnserialize($n));
-            } elseif (self::FIELD_COLOR === $n->nodeName) {
-                $type->setColor(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_BRAND === $n->nodeName) {
-                $type->setBrand(FHIRString::xmlUnserialize($n));
-            } elseif (self::FIELD_NOTE === $n->nodeName) {
-                $type->addNote(FHIRAnnotation::xmlUnserialize($n));
-            } elseif (self::FIELD_MODIFIER_EXTENSION === $n->nodeName) {
-                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_EXTENSION === $n->nodeName) {
-                $type->addExtension(FHIRExtension::xmlUnserialize($n));
-            } elseif (self::FIELD_ID === $n->nodeName) {
-                $type->setId(FHIRStringPrimitive::xmlUnserialize($n));
+        foreach ($element->children() as $n) {
+            $childName = $n->getName();
+            if (self::FIELD_PRODUCT === $childName) {
+                $type->setProduct(FHIRCodeableConcept::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EYE === $childName) {
+                $type->setEye(FHIRVisionEyes::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_SPHERE === $childName) {
+                $type->setSphere(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_CYLINDER === $childName) {
+                $type->setCylinder(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_AXIS === $childName) {
+                $type->setAxis(FHIRInteger::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_PRISM === $childName) {
+                $type->addPrism(FHIRVisionPrescriptionPrism::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ADD === $childName) {
+                $type->setAdd(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_POWER === $childName) {
+                $type->setPower(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_BACK_CURVE === $childName) {
+                $type->setBackCurve(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DIAMETER === $childName) {
+                $type->setDiameter(FHIRDecimal::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_DURATION === $childName) {
+                $type->setDuration(FHIRQuantity::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_COLOR === $childName) {
+                $type->setColor(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_BRAND === $childName) {
+                $type->setBrand(FHIRString::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
+            } elseif (self::FIELD_NOTE === $childName) {
+                $type->addNote(FHIRAnnotation::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_MODIFIER_EXTENSION === $childName) {
+                $type->addModifierExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_EXTENSION === $childName) {
+                $type->addExtension(FHIRExtension::xmlUnserialize($n, null, $config));
+            } elseif (self::FIELD_ID === $childName) {
+                $type->setId(FHIRStringPrimitive::xmlUnserialize($n, null, $config), PHPFHIRXmlLocationEnum::ELEMENT);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_SPHERE);
-        if (null !== $n) {
+        $attributes = $element->attributes();
+        if (isset($attributes[self::FIELD_SPHERE])) {
             $pt = $type->getSphere();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_SPHERE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setSphere($n->nodeValue);
+                $type->setSphere((string)$attributes[self::FIELD_SPHERE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_CYLINDER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_CYLINDER])) {
             $pt = $type->getCylinder();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_CYLINDER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setCylinder($n->nodeValue);
+                $type->setCylinder((string)$attributes[self::FIELD_CYLINDER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_AXIS);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_AXIS])) {
             $pt = $type->getAxis();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_AXIS], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setAxis($n->nodeValue);
+                $type->setAxis((string)$attributes[self::FIELD_AXIS], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ADD);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ADD])) {
             $pt = $type->getAdd();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ADD], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setAdd($n->nodeValue);
+                $type->setAdd((string)$attributes[self::FIELD_ADD], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_POWER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_POWER])) {
             $pt = $type->getPower();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_POWER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setPower($n->nodeValue);
+                $type->setPower((string)$attributes[self::FIELD_POWER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_BACK_CURVE);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_BACK_CURVE])) {
             $pt = $type->getBackCurve();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_BACK_CURVE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setBackCurve($n->nodeValue);
+                $type->setBackCurve((string)$attributes[self::FIELD_BACK_CURVE], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_DIAMETER);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_DIAMETER])) {
             $pt = $type->getDiameter();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_DIAMETER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setDiameter($n->nodeValue);
+                $type->setDiameter((string)$attributes[self::FIELD_DIAMETER], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_COLOR);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_COLOR])) {
             $pt = $type->getColor();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_COLOR], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setColor($n->nodeValue);
+                $type->setColor((string)$attributes[self::FIELD_COLOR], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_BRAND);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_BRAND])) {
             $pt = $type->getBrand();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_BRAND], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setBrand($n->nodeValue);
+                $type->setBrand((string)$attributes[self::FIELD_BRAND], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
-        $n = $element->attributes->getNamedItem(self::FIELD_ID);
-        if (null !== $n) {
+        if (isset($attributes[self::FIELD_ID])) {
             $pt = $type->getId();
             if (null !== $pt) {
-                $pt->setValue($n->nodeValue);
+                $pt->setValue((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             } else {
-                $type->setId($n->nodeValue);
+                $type->setId((string)$attributes[self::FIELD_ID], PHPFHIRXmlLocationEnum::ATTRIBUTE);
             }
         }
         return $type;
     }
 
     /**
-     * @param null|\DOMElement $element
-     * @param null|int $libxmlOpts
-     * @return \DOMElement
+     * @param null|\HL7\FHIR\R4\PHPFHIRXmlWriter $xw
+     * @param null|int|\HL7\FHIR\R4\PHPFHIRConfig $config PHP FHIR config.  Supports an integer value interpreted as libxml opts for backwards compatibility.
+     * @return \HL7\FHIR\R4\PHPFHIRXmlWriter
      */
-    public function xmlSerialize(\DOMElement $element = null, ?int $libxmlOpts = 591872): \DOMElement
+    public function xmlSerialize(null|PHPFHIRXmlWriter $xw = null, null|int|PHPFHIRConfig $config = null): PHPFHIRXmlWriter
     {
-        if (null === $element) {
-            $dom = new \DOMDocument();
-            $dom->loadXML($this->_getFHIRXMLElementDefinition(), $libxmlOpts);
-            $element = $dom->documentElement;
-        } elseif (null === $element->namespaceURI && '' !== ($xmlns = $this->_getFHIRXMLNamespace())) {
-            $element->setAttribute('xmlns', $xmlns);
+        if (is_int($config)) {
+            $config = new PHPFHIRConfig([PHPFHIRConfigKeyEnum::LIBXML_OPTS->value => $config]);
+        } else if (null === $config) {
+            $config = new PHPFHIRConfig();
         }
-        parent::xmlSerialize($element);
+        if (null === $xw) {
+            $xw = new PHPFHIRXmlWriter();
+        }
+        if (!$xw->isOpen()) {
+            $xw->openMemory();
+        }
+        if (!$xw->isDocStarted()) {
+            $docStarted = true;
+            $xw->startDocument();
+        }
+        if (!$xw->isRootOpen()) {
+            $openedRoot = true;
+            $xw->openRootNode($config, 'VisionPrescriptionLensSpecification', $this->_getSourceXmlns());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_SPHERE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSphere())) {
+            $xw->writeAttribute(self::FIELD_SPHERE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CYLINDER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCylinder())) {
+            $xw->writeAttribute(self::FIELD_CYLINDER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_AXIS] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAxis())) {
+            $xw->writeAttribute(self::FIELD_AXIS, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ADD] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAdd())) {
+            $xw->writeAttribute(self::FIELD_ADD, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_POWER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPower())) {
+            $xw->writeAttribute(self::FIELD_POWER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_BACK_CURVE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getBackCurve())) {
+            $xw->writeAttribute(self::FIELD_BACK_CURVE, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DIAMETER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDiameter())) {
+            $xw->writeAttribute(self::FIELD_DIAMETER, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COLOR] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getColor())) {
+            $xw->writeAttribute(self::FIELD_COLOR, $v->getValue()?->getFormattedValue());
+        }
+        $locs = $this->_primitiveXmlLocations[self::FIELD_BRAND] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getBrand())) {
+            $xw->writeAttribute(self::FIELD_BRAND, $v->getValue()?->getFormattedValue());
+        }
+        parent::xmlSerialize($xw, $config);
         if (null !== ($v = $this->getProduct())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_PRODUCT);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_PRODUCT);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getEye())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_EYE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_EYE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getSphere())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_SPHERE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_SPHERE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSphere())) {
+            $xw->startElement(self::FIELD_SPHERE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getCylinder())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_CYLINDER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_CYLINDER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCylinder())) {
+            $xw->startElement(self::FIELD_CYLINDER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getAxis())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_AXIS);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_AXIS] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAxis())) {
+            $xw->startElement(self::FIELD_AXIS);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getPrism())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_PRISM);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getPrism() as $v) {
+            $xw->startElement(self::FIELD_PRISM);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getAdd())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_ADD);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_ADD] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAdd())) {
+            $xw->startElement(self::FIELD_ADD);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getPower())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_POWER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_POWER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPower())) {
+            $xw->startElement(self::FIELD_POWER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getBackCurve())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_BACK_CURVE);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_BACK_CURVE] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getBackCurve())) {
+            $xw->startElement(self::FIELD_BACK_CURVE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getDiameter())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DIAMETER);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_DIAMETER] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDiameter())) {
+            $xw->startElement(self::FIELD_DIAMETER);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
         if (null !== ($v = $this->getDuration())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_DURATION);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+            $xw->startElement(self::FIELD_DURATION);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getColor())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_COLOR);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_COLOR] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getColor())) {
+            $xw->startElement(self::FIELD_COLOR);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if (null !== ($v = $this->getBrand())) {
-            $telement = $element->ownerDocument->createElement(self::FIELD_BRAND);
-            $element->appendChild($telement);
-            $v->xmlSerialize($telement);
+        $locs = $this->_primitiveXmlLocations[self::FIELD_BRAND] ?? [];
+        if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getBrand())) {
+            $xw->startElement(self::FIELD_BRAND);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        if ([] !== ($vs = $this->getNote())) {
-            foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
-                $telement = $element->ownerDocument->createElement(self::FIELD_NOTE);
-                $element->appendChild($telement);
-                $v->xmlSerialize($telement);
-            }
+        foreach ($this->getNote() as $v) {
+            $xw->startElement(self::FIELD_NOTE);
+            $v->xmlSerialize($xw, $config);
+            $xw->endElement();
         }
-        return $element;
+        if (isset($openedRoot) && $openedRoot) {
+            $xw->endElement();
+        }
+        if (isset($docStarted) && $docStarted) {
+            $xw->endDocument();
+        }
+        return $xw;
     }
 
     /**
      * @return \stdClass
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
         if (null !== ($v = $this->getProduct())) {
@@ -1678,9 +1709,6 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
         if ([] !== ($vs = $this->getPrism())) {
             $out->{self::FIELD_PRISM} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_PRISM}[] = $v;
             }
         }
@@ -1750,16 +1778,12 @@ class FHIRVisionPrescriptionLensSpecification extends FHIRBackboneElement
         if ([] !== ($vs = $this->getNote())) {
             $out->{self::FIELD_NOTE} = [];
             foreach($vs as $v) {
-                if (null === $v) {
-                    continue;
-                }
                 $out->{self::FIELD_NOTE}[] = $v;
             }
         }
 
         return $out;
     }
-
 
     /**
      * @return string

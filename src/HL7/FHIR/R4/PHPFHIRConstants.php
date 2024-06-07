@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HL7\FHIR\R4;
 
@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: October 23rd, 2023 13:30+0000
+ * Class creation date: June 7th, 2024 08:29+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2023 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,14 +66,18 @@ namespace HL7\FHIR\R4;
  * Class PHPFHIRConstants
  * @package \HL7\FHIR\R4
  */
-abstract class PHPFHIRConstants
+final class PHPFHIRConstants
 {
     // FHIR source
     public const SOURCE_VERSION = 'v4.0.1';
     public const SOURCE_GENERATION_DATE = 'Fri, Nov 1, 2019 09:29+1100';
 
     // PHPFHIR
-    public const CODE_GENERATION_DATE = 'October 23rd, 2023 13:30+0000';
+    public const CODE_GENERATION_DATE = 'June 7th, 2024 08:29+0000';
+
+    // Config Defaults
+    public const DEFAULT_LIBXML_OPTS = LIBXML_NONET | LIBXML_BIGLINES | LIBXML_PARSEHUGE | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOXMLDECL;
+    public const DEFAULT_XMLNS = 'https://hl7.org/fhir';
 
     // Common
     public const JSON_FIELD_RESOURCE_TYPE = 'resourceType';
@@ -1217,7 +1221,7 @@ abstract class PHPFHIRConstants
     public const TYPE_NAME_VISION_PRESCRIPTION = 'VisionPrescription';
     public const TYPE_NAME_VISION_PRESCRIPTION_DOT_LENS_SPECIFICATION = 'VisionPrescription.LensSpecification';
     public const TYPE_NAME_VISION_PRESCRIPTION_DOT_PRISM = 'VisionPrescription.Prism';
-    public const TYPE_NAME_XHTML = 'XHTML';
+    public const TYPE_NAME_XHTML = 'Xhtml';
     public const TYPE_NAME_XPATH_USAGE_TYPE = 'XPathUsageType';
     public const TYPE_NAME_XPATH_USAGE_TYPE_HYPHEN_LIST = 'XPathUsageType-list';
 
@@ -2339,7 +2343,7 @@ abstract class PHPFHIRConstants
     public const TYPE_CLASS_VISION_PRESCRIPTION = '\\HL7\\FHIR\\R4\\FHIRResource\\FHIRDomainResource\\FHIRVisionPrescription';
     public const TYPE_CLASS_VISION_PRESCRIPTION_DOT_LENS_SPECIFICATION = '\\HL7\\FHIR\\R4\\FHIRElement\\FHIRBackboneElement\\FHIRVisionPrescription\\FHIRVisionPrescriptionLensSpecification';
     public const TYPE_CLASS_VISION_PRESCRIPTION_DOT_PRISM = '\\HL7\\FHIR\\R4\\FHIRElement\\FHIRBackboneElement\\FHIRVisionPrescription\\FHIRVisionPrescriptionPrism';
-    public const TYPE_CLASS_XHTML = '\\HL7\\FHIR\\R4\\FHIRXHTML';
+    public const TYPE_CLASS_XHTML = '\\HL7\\FHIR\\R4\\FHIRXhtml';
     public const TYPE_CLASS_XPATH_USAGE_TYPE = '\\HL7\\FHIR\\R4\\FHIRElement\\FHIRXPathUsageType';
     public const TYPE_CLASS_XPATH_USAGE_TYPE_HYPHEN_LIST = '\\HL7\\FHIR\\R4\\FHIRCodePrimitive\\FHIRXPathUsageTypeList';
 }
