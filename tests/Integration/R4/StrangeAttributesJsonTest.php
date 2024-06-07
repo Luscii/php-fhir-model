@@ -1,6 +1,6 @@
 <?php
 
-namespace FHIR\Tests\Integration;
+namespace FHIR\Tests\Integration\R4;
 
 use HL7\FHIR\R4\FHIRElement\FHIRIdentifier;
 use HL7\FHIR\R4\FHIRElement\FHIRReference;

@@ -1,6 +1,6 @@
 <?php
 
-namespace FHIR\Tests\Integration;
+namespace FHIR\Tests\Integration\R4;
 
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRPatient;
 use HL7\FHIR\R4\FHIRResource\FHIRDomainResource\FHIRTask;
