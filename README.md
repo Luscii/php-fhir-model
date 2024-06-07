@@ -32,8 +32,11 @@ $resource = $parser->parse($json);
 **No** for all code in `src/`, because this is the result of generating with
 dcarbone/php-fhir and will not be directly changed. Fixes and additions should
 be done in dcarbone/php-fhir and not here.
-**Exception**: you can submit a newly generated set of classes,
-see below for instructions.
+
+Pull requests with changes to `src/` will be rejected unless they come from a
+repository maintainer, or are small enough to be reviewable manually: under 500
+lines of code. It would be impossible to review the code resulting from running
+the generator: changes can consist of millions of lines of code.
 
 **Yes** for all code in `tests/` and the organizational files in the repository
 root, those are all handwritten.
@@ -52,7 +55,7 @@ simultaneously in one application using Composer as a dependency manager.
 
 ## How to keep this repository up to date?
 
-For contributors/maintainers: to update the files in this repository, follow these steps.
+For maintainers: to update the files in this repository, follow these steps.
 
 1. Clone https://github.com/dcarbone/php-fhir (the generator) and make sure it's up to date
 2. Run `./bin/generate.sh --versions STU3` from the root of the generator
