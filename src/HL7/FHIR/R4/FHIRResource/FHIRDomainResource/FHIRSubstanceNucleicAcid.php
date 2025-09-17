@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -117,7 +117,6 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The type of the sequence shall be specified based on a controlled vocabulary.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $sequenceType = null;
@@ -130,7 +129,6 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
      * bonds shall be described. Subunits would be strands of nucleic acids that are
      * tightly associated typically through Watson-Crick base pairing. NOTE: If not
      * specified in the reference source, the assumption is that there is 1 subunit.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $numberOfSubunits = null;
@@ -143,7 +141,6 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
      * RNA or DNA. The number associated with the subunit followed by the number
      * associated to the residue shall be specified in increasing order. The underscore
      * “” shall be used as separator as follows: “Subunitnumber Residue”.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $areaOfHybridisation = null;
@@ -154,7 +151,6 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * (TBC).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $oligoNucleotideType = null;
@@ -167,7 +163,6 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
      * Subunits are listed in order of decreasing length; sequences of the same length
      * will be ordered by molecular weight; subunits that have identical sequences will
      * be repeated multiple times.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceNucleicAcid\FHIRSubstanceNucleicAcidSubunit[]
      */
     protected null|array $subunit = [];
@@ -176,10 +171,10 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
      * Validation map for fields in type SubstanceNucleicAcid
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceNucleicAcid Constructor
@@ -339,16 +334,16 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumberOfSubunits(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numberOfSubunits = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumberOfSubunits(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numberOfSubunits = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $numberOfSubunits && !($numberOfSubunits instanceof FHIRInteger)) {
             $numberOfSubunits = new FHIRInteger($numberOfSubunits);
         }
         $this->_trackValueSet($this->numberOfSubunits, $numberOfSubunits);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS])) {
+            $this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS][0] = $xmlLocation;
         $this->numberOfSubunits = $numberOfSubunits;
         return $this;
     }
@@ -384,16 +379,16 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAreaOfHybridisation(null|string|FHIRStringPrimitive|FHIRString $areaOfHybridisation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAreaOfHybridisation(null|string|FHIRStringPrimitive|FHIRString $areaOfHybridisation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $areaOfHybridisation && !($areaOfHybridisation instanceof FHIRString)) {
             $areaOfHybridisation = new FHIRString($areaOfHybridisation);
         }
         $this->_trackValueSet($this->areaOfHybridisation, $areaOfHybridisation);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AREA_OF_HYBRIDISATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_AREA_OF_HYBRIDISATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AREA_OF_HYBRIDISATION])) {
+            $this->_xmlLocations[self::FIELD_AREA_OF_HYBRIDISATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AREA_OF_HYBRIDISATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AREA_OF_HYBRIDISATION][0] = $xmlLocation;
         $this->areaOfHybridisation = $areaOfHybridisation;
         return $this;
     }
@@ -471,6 +466,34 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
         }
         $this->_trackValueAdded();
         $this->subunit[] = $subunit;
+        return $this;
+    }
+
+    /**
+     * Nucleic acids are defined by three distinct elements: the base, sugar and
+     * linkage. Individual substance/moiety IDs will be created for each of these
+     * elements. The nucleotide sequence will be always entered in the 5’-3’
+     * direction.
+     *
+     * Subunits are listed in order of decreasing length; sequences of the same length
+     * will be ordered by molecular weight; subunits that have identical sequences will
+     * be repeated multiple times.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceNucleicAcid\FHIRSubstanceNucleicAcidSubunit ...$subunit
+     * @return static
+     */
+    public function setSubunit(FHIRSubstanceNucleicAcidSubunit ...$subunit): self
+    {
+        if ([] !== $this->subunit) {
+            $this->_trackValuesRemoved(count($this->subunit));
+            $this->subunit = [];
+        }
+        if ([] === $subunit) {
+            return $this;
+        }
+        foreach($subunit as $v) {
+            $this->addSubunit($v);
+        }
         return $this;
     }
 
@@ -815,11 +838,11 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceNucleicAcid', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getNumberOfSubunits())) {
             $xw->writeAttribute(self::FIELD_NUMBER_OF_SUBUNITS, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AREA_OF_HYBRIDISATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AREA_OF_HYBRIDISATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAreaOfHybridisation())) {
             $xw->writeAttribute(self::FIELD_AREA_OF_HYBRIDISATION, $v->getValue()?->getFormattedValue());
         }
@@ -829,13 +852,13 @@ class FHIRSubstanceNucleicAcid extends FHIRDomainResource implements PHPFHIRCont
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getNumberOfSubunits())) {
             $xw->startElement(self::FIELD_NUMBER_OF_SUBUNITS);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AREA_OF_HYBRIDISATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AREA_OF_HYBRIDISATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAreaOfHybridisation())) {
             $xw->startElement(self::FIELD_AREA_OF_HYBRIDISATION);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -140,7 +140,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A unique identifier assigned to this coverage eligiblity request.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -149,7 +148,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The status of the resource instance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRFinancialResourceStatusCodes
      */
     protected null|FHIRFinancialResourceStatusCodes $status = null;
@@ -162,7 +160,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * discovered; discovery and return of coverages for the patient; and/or validation
      * that the specified coverage is in-force at the date/period specified or 'now' if
      * not specified.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIREligibilityResponsePurpose[]
      */
     protected null|array $purpose = [];
@@ -173,7 +170,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      *
      * The party who is the beneficiary of the supplied coverage and for whom
      * eligibility is sought.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $patient = null;
@@ -185,7 +181,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      *
      * The date or dates when the enclosed suite of services were performed or
      * completed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
     protected null|FHIRDate $servicedDate = null;
@@ -196,7 +191,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      *
      * The date or dates when the enclosed suite of services were performed or
      * completed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $servicedPeriod = null;
@@ -209,7 +203,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date this resource was created.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $created = null;
@@ -219,7 +212,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The provider which is responsible for the request.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $requestor = null;
@@ -229,7 +221,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Reference to the original request resource.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $request = null;
@@ -237,7 +228,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The outcome of the request processing.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRemittanceOutcome
      */
     protected null|FHIRRemittanceOutcome $outcome = null;
@@ -247,7 +237,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A human readable description of the status of the adjudication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $disposition = null;
@@ -258,7 +247,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      *
      * The Insurer who issued the coverage in question and is the author of the
      * response.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $insurer = null;
@@ -268,7 +256,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      *
      * Financial instruments for reimbursement for the health care products and
      * services.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityResponse\FHIRCoverageEligibilityResponseInsurance[]
      */
     protected null|array $insurance = [];
@@ -279,7 +266,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      *
      * A reference from the Insurer to which these services pertain to be used on
      * further communication and as proof that the request occurred.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $preAuthRef = null;
@@ -290,7 +276,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A code for the form to be used for printing the content.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $form = null;
@@ -299,7 +284,6 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * CoverageEligibilityRequest resource.
      *
      * Errors encountered during the processing of the request.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityResponse\FHIRCoverageEligibilityResponseError[]
      */
     protected null|array $error = [];
@@ -309,13 +293,31 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * @var array
      */
     private const _VALIDATION_RULES = [
+        self::FIELD_CREATED => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_INSURER => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_OUTCOME => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_PATIENT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
         self::FIELD_PURPOSE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_REQUEST => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_STATUS => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCoverageEligibilityResponse Constructor
@@ -603,6 +605,32 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A unique identifier assigned to this coverage eligiblity request.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A code specifying the state of the resource instance.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -675,6 +703,34 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
     }
 
     /**
+     * A code specifying the types of information being requested.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Code to specify whether requesting: prior authorization requirements for some
+     * service categories or billing codes; benefits for coverages specified or
+     * discovered; discovery and return of coverages for the patient; and/or validation
+     * that the specified coverage is in-force at the date/period specified or 'now' if
+     * not specified.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIREligibilityResponsePurpose ...$purpose
+     * @return static
+     */
+    public function setPurpose(FHIREligibilityResponsePurpose ...$purpose): self
+    {
+        if ([] !== $this->purpose) {
+            $this->_trackValuesRemoved(count($this->purpose));
+            $this->purpose = [];
+        }
+        if ([] === $purpose) {
+            return $this;
+        }
+        foreach($purpose as $v) {
+            $this->addPurpose($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -739,16 +795,16 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setServicedDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $servicedDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setServicedDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $servicedDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $servicedDate && !($servicedDate instanceof FHIRDate)) {
             $servicedDate = new FHIRDate($servicedDate);
         }
         $this->_trackValueSet($this->servicedDate, $servicedDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SERVICED_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SERVICED_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SERVICED_DATE])) {
+            $this->_xmlLocations[self::FIELD_SERVICED_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SERVICED_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SERVICED_DATE][0] = $xmlLocation;
         $this->servicedDate = $servicedDate;
         return $this;
     }
@@ -820,16 +876,16 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCreated(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $created = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCreated(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $created = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $created && !($created instanceof FHIRDateTime)) {
             $created = new FHIRDateTime($created);
         }
         $this->_trackValueSet($this->created, $created);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CREATED])) {
-            $this->_primitiveXmlLocations[self::FIELD_CREATED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CREATED])) {
+            $this->_xmlLocations[self::FIELD_CREATED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CREATED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CREATED][0] = $xmlLocation;
         $this->created = $created;
         return $this;
     }
@@ -957,16 +1013,16 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDisposition(null|string|FHIRStringPrimitive|FHIRString $disposition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDisposition(null|string|FHIRStringPrimitive|FHIRString $disposition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $disposition && !($disposition instanceof FHIRString)) {
             $disposition = new FHIRString($disposition);
         }
         $this->_trackValueSet($this->disposition, $disposition);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DISPOSITION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DISPOSITION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DISPOSITION])) {
+            $this->_xmlLocations[self::FIELD_DISPOSITION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DISPOSITION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DISPOSITION][0] = $xmlLocation;
         $this->disposition = $disposition;
         return $this;
     }
@@ -1042,6 +1098,31 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
     }
 
     /**
+     * This resource provides eligibility and plan details from the processing of an
+     * CoverageEligibilityRequest resource.
+     *
+     * Financial instruments for reimbursement for the health care products and
+     * services.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityResponse\FHIRCoverageEligibilityResponseInsurance ...$insurance
+     * @return static
+     */
+    public function setInsurance(FHIRCoverageEligibilityResponseInsurance ...$insurance): self
+    {
+        if ([] !== $this->insurance) {
+            $this->_trackValuesRemoved(count($this->insurance));
+            $this->insurance = [];
+        }
+        if ([] === $insurance) {
+            return $this;
+        }
+        foreach($insurance as $v) {
+            $this->addInsurance($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -1068,16 +1149,16 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPreAuthRef(null|string|FHIRStringPrimitive|FHIRString $preAuthRef = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPreAuthRef(null|string|FHIRStringPrimitive|FHIRString $preAuthRef = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $preAuthRef && !($preAuthRef instanceof FHIRString)) {
             $preAuthRef = new FHIRString($preAuthRef);
         }
         $this->_trackValueSet($this->preAuthRef, $preAuthRef);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF])) {
-            $this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PRE_AUTH_REF])) {
+            $this->_xmlLocations[self::FIELD_PRE_AUTH_REF] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PRE_AUTH_REF][0] = $xmlLocation;
         $this->preAuthRef = $preAuthRef;
         return $this;
     }
@@ -1147,6 +1228,30 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
         }
         $this->_trackValueAdded();
         $this->error[] = $error;
+        return $this;
+    }
+
+    /**
+     * This resource provides eligibility and plan details from the processing of an
+     * CoverageEligibilityRequest resource.
+     *
+     * Errors encountered during the processing of the request.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityResponse\FHIRCoverageEligibilityResponseError ...$error
+     * @return static
+     */
+    public function setError(FHIRCoverageEligibilityResponseError ...$error): self
+    {
+        if ([] !== $this->error) {
+            $this->_trackValuesRemoved(count($this->error));
+            $this->error = [];
+        }
+        if ([] === $error) {
+            return $this;
+        }
+        foreach($error as $v) {
+            $this->addError($v);
+        }
         return $this;
     }
 
@@ -1722,19 +1827,19 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
             $openedRoot = true;
             $xw->openRootNode($config, 'CoverageEligibilityResponse', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SERVICED_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SERVICED_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getServicedDate())) {
             $xw->writeAttribute(self::FIELD_SERVICED_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CREATED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CREATED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCreated())) {
             $xw->writeAttribute(self::FIELD_CREATED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISPOSITION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISPOSITION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDisposition())) {
             $xw->writeAttribute(self::FIELD_DISPOSITION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRE_AUTH_REF] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPreAuthRef())) {
             $xw->writeAttribute(self::FIELD_PRE_AUTH_REF, $v->getValue()?->getFormattedValue());
         }
@@ -1759,7 +1864,7 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SERVICED_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SERVICED_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getServicedDate())) {
             $xw->startElement(self::FIELD_SERVICED_DATE);
             $v->xmlSerialize($xw, $config);
@@ -1770,7 +1875,7 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CREATED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CREATED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCreated())) {
             $xw->startElement(self::FIELD_CREATED);
             $v->xmlSerialize($xw, $config);
@@ -1791,7 +1896,7 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISPOSITION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISPOSITION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDisposition())) {
             $xw->startElement(self::FIELD_DISPOSITION);
             $v->xmlSerialize($xw, $config);
@@ -1807,7 +1912,7 @@ class FHIRCoverageEligibilityResponse extends FHIRDomainResource implements PHPF
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRE_AUTH_REF] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPreAuthRef())) {
             $xw->startElement(self::FIELD_PRE_AUTH_REF);
             $v->xmlSerialize($xw, $config);

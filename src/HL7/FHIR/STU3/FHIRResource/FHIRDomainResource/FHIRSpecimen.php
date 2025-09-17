@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -124,7 +124,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Id for specimen.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -136,7 +135,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * The identifier assigned by the lab when accessioning specimen(s). This is not
      * necessarily the same as the specimen identifier, depending on local lab
      * procedures.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $accessionIdentifier = null;
@@ -145,7 +143,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The availability of the specimen.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRSpecimenStatus
      */
     protected null|FHIRSpecimenStatus $status = null;
@@ -156,7 +153,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The kind of material that forms the specimen.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -167,7 +163,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * Where the specimen came from. This may be from the patient(s) or from the
      * environment or a device.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -180,7 +175,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Time when specimen was received for processing or testing.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $receivedTime = null;
@@ -191,7 +185,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * Reference to the parent (source) specimen which is used when the specimen was
      * either derived from or a component of another specimen.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $parent = [];
@@ -202,7 +195,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * Details concerning a test or procedure request that required a specimen to be
      * collected.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $request = [];
@@ -210,7 +202,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * A sample to be used for analysis.
      *
      * Details concerning the specimen collection.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen\FHIRSpecimenCollection
      */
     protected null|FHIRSpecimenCollection $collection = null;
@@ -218,7 +209,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * A sample to be used for analysis.
      *
      * Details concerning processing and processing steps for the specimen.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen\FHIRSpecimenProcessing[]
      */
     protected null|array $processing = [];
@@ -227,7 +217,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * The container holding the specimen. The recursive nature of containers; i.e.
      * blood in tube in tray in rack is not addressed here.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen\FHIRSpecimenContainer[]
      */
     protected null|array $container = [];
@@ -239,7 +228,6 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * To communicate any details or issues about the specimen or during the specimen
      * collection. (for example: broken vial, sent with patient, frozen).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -248,10 +236,14 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Validation map for fields in type Specimen
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_SUBJECT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSpecimen Constructor
@@ -472,6 +464,31 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Id for specimen.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * The identifier assigned by the lab when accessioning specimen(s). This is not
      * necessarily the same as the specimen identifier, depending on local lab
      * procedures.
@@ -640,16 +657,16 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setReceivedTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $receivedTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setReceivedTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $receivedTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $receivedTime && !($receivedTime instanceof FHIRDateTime)) {
             $receivedTime = new FHIRDateTime($receivedTime);
         }
         $this->_trackValueSet($this->receivedTime, $receivedTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RECEIVED_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_RECEIVED_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RECEIVED_TIME])) {
+            $this->_xmlLocations[self::FIELD_RECEIVED_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RECEIVED_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RECEIVED_TIME][0] = $xmlLocation;
         $this->receivedTime = $receivedTime;
         return $this;
     }
@@ -695,6 +712,32 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Reference to the parent (source) specimen which is used when the specimen was
+     * either derived from or a component of another specimen.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$parent
+     * @return static
+     */
+    public function setParent(FHIRReference ...$parent): self
+    {
+        if ([] !== $this->parent) {
+            $this->_trackValuesRemoved(count($this->parent));
+            $this->parent = [];
+        }
+        if ([] === $parent) {
+            return $this;
+        }
+        foreach($parent as $v) {
+            $this->addParent($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Details concerning a test or procedure request that required a specimen to be
      * collected.
      *
@@ -723,6 +766,32 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         }
         $this->_trackValueAdded();
         $this->request[] = $request;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Details concerning a test or procedure request that required a specimen to be
+     * collected.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$request
+     * @return static
+     */
+    public function setRequest(FHIRReference ...$request): self
+    {
+        if ([] !== $this->request) {
+            $this->_trackValuesRemoved(count($this->request));
+            $this->request = [];
+        }
+        if ([] === $request) {
+            return $this;
+        }
+        foreach($request as $v) {
+            $this->addRequest($v);
+        }
         return $this;
     }
 
@@ -789,6 +858,29 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * A sample to be used for analysis.
      *
+     * Details concerning processing and processing steps for the specimen.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen\FHIRSpecimenProcessing ...$processing
+     * @return static
+     */
+    public function setProcessing(FHIRSpecimenProcessing ...$processing): self
+    {
+        if ([] !== $this->processing) {
+            $this->_trackValuesRemoved(count($this->processing));
+            $this->processing = [];
+        }
+        if ([] === $processing) {
+            return $this;
+        }
+        foreach($processing as $v) {
+            $this->addProcessing($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A sample to be used for analysis.
+     *
      * The container holding the specimen. The recursive nature of containers; i.e.
      * blood in tube in tray in rack is not addressed here.
      *
@@ -815,6 +907,30 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         }
         $this->_trackValueAdded();
         $this->container[] = $container;
+        return $this;
+    }
+
+    /**
+     * A sample to be used for analysis.
+     *
+     * The container holding the specimen. The recursive nature of containers; i.e.
+     * blood in tube in tray in rack is not addressed here.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSpecimen\FHIRSpecimenContainer ...$container
+     * @return static
+     */
+    public function setContainer(FHIRSpecimenContainer ...$container): self
+    {
+        if ([] !== $this->container) {
+            $this->_trackValuesRemoved(count($this->container));
+            $this->container = [];
+        }
+        if ([] === $container) {
+            return $this;
+        }
+        foreach($container as $v) {
+            $this->addContainer($v);
+        }
         return $this;
     }
 
@@ -853,6 +969,33 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         }
         $this->_trackValueAdded();
         $this->note[] = $note;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * To communicate any details or issues about the specimen or during the specimen
+     * collection. (for example: broken vial, sent with patient, frozen).
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
         return $this;
     }
 
@@ -1332,7 +1475,7 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
             $openedRoot = true;
             $xw->openRootNode($config, 'Specimen', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RECEIVED_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RECEIVED_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getReceivedTime())) {
             $xw->writeAttribute(self::FIELD_RECEIVED_TIME, $v->getValue()?->getFormattedValue());
         }
@@ -1362,7 +1505,7 @@ class FHIRSpecimen extends FHIRDomainResource implements PHPFHIRContainedTypeInt
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RECEIVED_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RECEIVED_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getReceivedTime())) {
             $xw->startElement(self::FIELD_RECEIVED_TIME);
             $v->xmlSerialize($xw, $config);

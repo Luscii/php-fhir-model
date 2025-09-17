@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRLocation;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,7 +104,6 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Indicates which days of the week are available between the start and end Times.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDaysOfWeek[]
      */
     protected null|array $daysOfWeek = [];
@@ -113,7 +112,6 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The Location is open all day.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $allDay = null;
@@ -122,7 +120,6 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Time that the Location opens.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
     protected null|FHIRTime $openingTime = null;
@@ -131,7 +128,6 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Time that the Location closes.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRTime
      */
     protected null|FHIRTime $closingTime = null;
@@ -140,10 +136,10 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
      * Validation map for fields in type Location.HoursOfOperation
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRLocationHoursOfOperation Constructor
@@ -281,6 +277,30 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
     }
 
     /**
+     * The days of the week.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Indicates which days of the week are available between the start and end Times.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRDaysOfWeek ...$daysOfWeek
+     * @return static
+     */
+    public function setDaysOfWeek(FHIRDaysOfWeek ...$daysOfWeek): self
+    {
+        if ([] !== $this->daysOfWeek) {
+            $this->_trackValuesRemoved(count($this->daysOfWeek));
+            $this->daysOfWeek = [];
+        }
+        if ([] === $daysOfWeek) {
+            return $this;
+        }
+        foreach($daysOfWeek as $v) {
+            $this->addDaysOfWeek($v);
+        }
+        return $this;
+    }
+
+    /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -303,16 +323,16 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAllDay(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $allDay = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAllDay(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $allDay = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $allDay && !($allDay instanceof FHIRBoolean)) {
             $allDay = new FHIRBoolean($allDay);
         }
         $this->_trackValueSet($this->allDay, $allDay);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ALL_DAY])) {
-            $this->_primitiveXmlLocations[self::FIELD_ALL_DAY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ALL_DAY])) {
+            $this->_xmlLocations[self::FIELD_ALL_DAY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ALL_DAY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ALL_DAY][0] = $xmlLocation;
         $this->allDay = $allDay;
         return $this;
     }
@@ -340,16 +360,16 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOpeningTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $openingTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOpeningTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $openingTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $openingTime && !($openingTime instanceof FHIRTime)) {
             $openingTime = new FHIRTime($openingTime);
         }
         $this->_trackValueSet($this->openingTime, $openingTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_OPENING_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_OPENING_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_OPENING_TIME])) {
+            $this->_xmlLocations[self::FIELD_OPENING_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_OPENING_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_OPENING_TIME][0] = $xmlLocation;
         $this->openingTime = $openingTime;
         return $this;
     }
@@ -377,16 +397,16 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setClosingTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $closingTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setClosingTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $closingTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $closingTime && !($closingTime instanceof FHIRTime)) {
             $closingTime = new FHIRTime($closingTime);
         }
         $this->_trackValueSet($this->closingTime, $closingTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CLOSING_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_CLOSING_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CLOSING_TIME])) {
+            $this->_xmlLocations[self::FIELD_CLOSING_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CLOSING_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CLOSING_TIME][0] = $xmlLocation;
         $this->closingTime = $closingTime;
         return $this;
     }
@@ -633,15 +653,15 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'LocationHoursOfOperation', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALL_DAY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALL_DAY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAllDay())) {
             $xw->writeAttribute(self::FIELD_ALL_DAY, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_OPENING_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_OPENING_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOpeningTime())) {
             $xw->writeAttribute(self::FIELD_OPENING_TIME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CLOSING_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CLOSING_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getClosingTime())) {
             $xw->writeAttribute(self::FIELD_CLOSING_TIME, $v->getValue()?->getFormattedValue());
         }
@@ -651,19 +671,19 @@ class FHIRLocationHoursOfOperation extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALL_DAY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALL_DAY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAllDay())) {
             $xw->startElement(self::FIELD_ALL_DAY);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_OPENING_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_OPENING_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOpeningTime())) {
             $xw->startElement(self::FIELD_OPENING_TIME);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CLOSING_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CLOSING_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getClosingTime())) {
             $xw->startElement(self::FIELD_CLOSING_TIME);
             $v->xmlSerialize($xw, $config);

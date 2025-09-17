@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMessageHeader;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,7 +103,6 @@ class FHIRMessageHeaderDestination extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Human-readable name for the target system.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $name = null;
@@ -114,7 +113,6 @@ class FHIRMessageHeaderDestination extends FHIRBackboneElement
      *
      * Identifies the target end system in situations where the initial message
      * transmission is to an intermediary system.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $target = null;
@@ -124,7 +122,6 @@ class FHIRMessageHeaderDestination extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Indicates where the message should be routed to.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
     protected null|FHIRUrl $endpoint = null;
@@ -135,7 +132,6 @@ class FHIRMessageHeaderDestination extends FHIRBackboneElement
      *
      * Allows data conveyed by a message to be addressed to a particular person or
      * department when routing to a specific application isn't sufficient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $receiver = null;
@@ -144,10 +140,14 @@ class FHIRMessageHeaderDestination extends FHIRBackboneElement
      * Validation map for fields in type MessageHeader.Destination
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_ENDPOINT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMessageHeaderDestination Constructor
@@ -242,16 +242,16 @@ class FHIRMessageHeaderDestination extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
         }
         $this->_trackValueSet($this->name, $name);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NAME])) {
+            $this->_xmlLocations[self::FIELD_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NAME][0] = $xmlLocation;
         $this->name = $name;
         return $this;
     }
@@ -317,16 +317,16 @@ class FHIRMessageHeaderDestination extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setEndpoint(null|string|FHIRUrlPrimitive|FHIRUrl $endpoint = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setEndpoint(null|string|FHIRUrlPrimitive|FHIRUrl $endpoint = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $endpoint && !($endpoint instanceof FHIRUrl)) {
             $endpoint = new FHIRUrl($endpoint);
         }
         $this->_trackValueSet($this->endpoint, $endpoint);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ENDPOINT])) {
-            $this->_primitiveXmlLocations[self::FIELD_ENDPOINT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ENDPOINT])) {
+            $this->_xmlLocations[self::FIELD_ENDPOINT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ENDPOINT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ENDPOINT][0] = $xmlLocation;
         $this->endpoint = $endpoint;
         return $this;
     }
@@ -599,16 +599,16 @@ class FHIRMessageHeaderDestination extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MessageHeaderDestination', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->writeAttribute(self::FIELD_NAME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ENDPOINT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ENDPOINT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getEndpoint())) {
             $xw->writeAttribute(self::FIELD_ENDPOINT, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->startElement(self::FIELD_NAME);
             $v->xmlSerialize($xw, $config);
@@ -619,7 +619,7 @@ class FHIRMessageHeaderDestination extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ENDPOINT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ENDPOINT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getEndpoint())) {
             $xw->startElement(self::FIELD_ENDPOINT);
             $v->xmlSerialize($xw, $config);

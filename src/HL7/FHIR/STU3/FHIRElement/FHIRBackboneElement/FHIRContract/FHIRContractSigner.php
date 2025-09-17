@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRContract;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,6 @@ class FHIRContractSigner extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Role of this Contract signer, e.g. notary, grantee.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
      */
     protected null|FHIRCoding $type = null;
@@ -107,7 +106,6 @@ class FHIRContractSigner extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Party which is a signator to this Contract.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $party = null;
@@ -120,7 +118,6 @@ class FHIRContractSigner extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Legally binding Contract DSIG signature contents in Base64.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature[]
      */
     protected null|array $signature = [];
@@ -130,13 +127,19 @@ class FHIRContractSigner extends FHIRBackboneElement
      * @var array
      */
     private const _VALIDATION_RULES = [
+        self::FIELD_PARTY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
         self::FIELD_SIGNATURE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_TYPE => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRContractSigner Constructor
@@ -292,6 +295,34 @@ class FHIRContractSigner extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->signature[] = $signature;
+        return $this;
+    }
+
+    /**
+     * A digital signature along with supporting context. The signature may be
+     * electronic/cryptographic in nature, or a graphical image representing a
+     * hand-written signature, or a signature process. Different signature approaches
+     * have different utilities.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Legally binding Contract DSIG signature contents in Base64.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRSignature ...$signature
+     * @return static
+     */
+    public function setSignature(FHIRSignature ...$signature): self
+    {
+        if ([] !== $this->signature) {
+            $this->_trackValuesRemoved(count($this->signature));
+            $this->signature = [];
+        }
+        if ([] === $signature) {
+            return $this;
+        }
+        foreach($signature as $v) {
+            $this->addSignature($v);
+        }
         return $this;
     }
 

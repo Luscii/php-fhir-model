@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,6 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Role that the moiety is playing.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $role = null;
@@ -118,7 +117,6 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Identifier by which this moiety substance is known.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -128,7 +126,6 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Textual name for this moiety substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $name = null;
@@ -139,7 +136,6 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Stereochemistry type.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $stereochemistry = null;
@@ -150,7 +146,6 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Optical activity type.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $opticalActivity = null;
@@ -160,7 +155,6 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Molecular formula.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $molecularFormula = null;
@@ -172,7 +166,6 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Quantitative value for this moiety.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $amountQuantity = null;
@@ -182,7 +175,6 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Quantitative value for this moiety.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $amountString = null;
@@ -191,10 +183,10 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * Validation map for fields in type SubstanceSpecification.Moiety
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceSpecificationMoiety Constructor
@@ -399,16 +391,16 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
         }
         $this->_trackValueSet($this->name, $name);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NAME])) {
+            $this->_xmlLocations[self::FIELD_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NAME][0] = $xmlLocation;
         $this->name = $name;
         return $this;
     }
@@ -510,16 +502,16 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMolecularFormula(null|string|FHIRStringPrimitive|FHIRString $molecularFormula = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setMolecularFormula(null|string|FHIRStringPrimitive|FHIRString $molecularFormula = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $molecularFormula && !($molecularFormula instanceof FHIRString)) {
             $molecularFormula = new FHIRString($molecularFormula);
         }
         $this->_trackValueSet($this->molecularFormula, $molecularFormula);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA])) {
-            $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA])) {
+            $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA][0] = $xmlLocation;
         $this->molecularFormula = $molecularFormula;
         return $this;
     }
@@ -587,16 +579,16 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAmountString(null|string|FHIRStringPrimitive|FHIRString $amountString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAmountString(null|string|FHIRStringPrimitive|FHIRString $amountString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $amountString && !($amountString instanceof FHIRString)) {
             $amountString = new FHIRString($amountString);
         }
         $this->_trackValueSet($this->amountString, $amountString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AMOUNT_STRING])) {
+            $this->_xmlLocations[self::FIELD_AMOUNT_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AMOUNT_STRING][0] = $xmlLocation;
         $this->amountString = $amountString;
         return $this;
     }
@@ -917,15 +909,15 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceSpecificationMoiety', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->writeAttribute(self::FIELD_NAME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMolecularFormula())) {
             $xw->writeAttribute(self::FIELD_MOLECULAR_FORMULA, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAmountString())) {
             $xw->writeAttribute(self::FIELD_AMOUNT_STRING, $v->getValue()?->getFormattedValue());
         }
@@ -940,7 +932,7 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->startElement(self::FIELD_NAME);
             $v->xmlSerialize($xw, $config);
@@ -956,7 +948,7 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMolecularFormula())) {
             $xw->startElement(self::FIELD_MOLECULAR_FORMULA);
             $v->xmlSerialize($xw, $config);
@@ -967,7 +959,7 @@ class FHIRSubstanceSpecificationMoiety extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAmountString())) {
             $xw->startElement(self::FIELD_AMOUNT_STRING);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,6 @@ class FHIRReference extends FHIRElement
      * found. The reference may be version specific or not. If the reference is not to
      * a FHIR RESTful server, then it should be assumed to be version specific.
      * Internal fragment references (start with '#') refer to contained resources.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $reference = null;
@@ -118,7 +117,6 @@ class FHIRReference extends FHIRElement
      * exposed as a FHIR instance, but it SHALL point to a business concept that would
      * be expected to be exposed as a FHIR instance, and that instance would need to be
      * of a FHIR resource type allowed by the reference.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -129,7 +127,6 @@ class FHIRReference extends FHIRElement
      *
      * Plain text narrative that identifies the resource in addition to the resource
      * reference.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $display = null;
@@ -138,10 +135,10 @@ class FHIRReference extends FHIRElement
      * Validation map for fields in type Reference
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRReference Constructor
@@ -239,16 +236,16 @@ class FHIRReference extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setReference(null|string|FHIRStringPrimitive|FHIRString $reference = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setReference(null|string|FHIRStringPrimitive|FHIRString $reference = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $reference && !($reference instanceof FHIRString)) {
             $reference = new FHIRString($reference);
         }
         $this->_trackValueSet($this->reference, $reference);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_REFERENCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_REFERENCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_REFERENCE])) {
+            $this->_xmlLocations[self::FIELD_REFERENCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_REFERENCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_REFERENCE][0] = $xmlLocation;
         $this->reference = $reference;
         return $this;
     }
@@ -328,16 +325,16 @@ class FHIRReference extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDisplay(null|string|FHIRStringPrimitive|FHIRString $display = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDisplay(null|string|FHIRStringPrimitive|FHIRString $display = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $display && !($display instanceof FHIRString)) {
             $display = new FHIRString($display);
         }
         $this->_trackValueSet($this->display, $display);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DISPLAY])) {
-            $this->_primitiveXmlLocations[self::FIELD_DISPLAY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DISPLAY])) {
+            $this->_xmlLocations[self::FIELD_DISPLAY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DISPLAY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DISPLAY][0] = $xmlLocation;
         $this->display = $display;
         return $this;
     }
@@ -541,16 +538,16 @@ class FHIRReference extends FHIRElement
             $openedRoot = true;
             $xw->openRootNode($config, 'Reference', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REFERENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REFERENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getReference())) {
             $xw->writeAttribute(self::FIELD_REFERENCE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISPLAY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISPLAY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDisplay())) {
             $xw->writeAttribute(self::FIELD_DISPLAY, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REFERENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REFERENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getReference())) {
             $xw->startElement(self::FIELD_REFERENCE);
             $v->xmlSerialize($xw, $config);
@@ -561,7 +558,7 @@ class FHIRReference extends FHIRElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISPLAY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISPLAY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDisplay())) {
             $xw->startElement(self::FIELD_DISPLAY);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCommunication;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ class FHIRCommunicationPayload extends FHIRBackboneElement
      *
      * A communicated content (or for multi-part communications, one portion of the
      * communication).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $contentString = null;
@@ -111,7 +110,6 @@ class FHIRCommunicationPayload extends FHIRBackboneElement
      *
      * A communicated content (or for multi-part communications, one portion of the
      * communication).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment
      */
     protected null|FHIRAttachment $contentAttachment = null;
@@ -122,7 +120,6 @@ class FHIRCommunicationPayload extends FHIRBackboneElement
      *
      * A communicated content (or for multi-part communications, one portion of the
      * communication).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $contentReference = null;
@@ -131,10 +128,20 @@ class FHIRCommunicationPayload extends FHIRBackboneElement
      * Validation map for fields in type Communication.Payload
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CONTENT_ATTACHMENT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_CONTENT_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_CONTENT_STRING => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCommunicationPayload Constructor
@@ -214,16 +221,16 @@ class FHIRCommunicationPayload extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setContentString(null|string|FHIRStringPrimitive|FHIRString $contentString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setContentString(null|string|FHIRStringPrimitive|FHIRString $contentString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $contentString && !($contentString instanceof FHIRString)) {
             $contentString = new FHIRString($contentString);
         }
         $this->_trackValueSet($this->contentString, $contentString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CONTENT_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_CONTENT_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CONTENT_STRING])) {
+            $this->_xmlLocations[self::FIELD_CONTENT_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CONTENT_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CONTENT_STRING][0] = $xmlLocation;
         $this->contentString = $contentString;
         return $this;
     }
@@ -505,12 +512,12 @@ class FHIRCommunicationPayload extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'CommunicationPayload', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONTENT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONTENT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getContentString())) {
             $xw->writeAttribute(self::FIELD_CONTENT_STRING, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONTENT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONTENT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getContentString())) {
             $xw->startElement(self::FIELD_CONTENT_STRING);
             $v->xmlSerialize($xw, $config);

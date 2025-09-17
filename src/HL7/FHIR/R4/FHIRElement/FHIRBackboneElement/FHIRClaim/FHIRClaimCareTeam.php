@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClaim;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * A number to uniquely identify care team entries.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $sequence = null;
@@ -115,7 +114,6 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Member of the team who provided the product or service.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $provider = null;
@@ -125,7 +123,6 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
      *
      * The party who is billing and/or responsible for the claimed products or
      * services.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $responsible = null;
@@ -137,7 +134,6 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
      *
      * The lead, assisting or supervising practitioner and their discipline if a
      * multidisciplinary team.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $role = null;
@@ -148,7 +144,6 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The qualification of the practitioner which is applicable for this service.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $qualification = null;
@@ -157,10 +152,17 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
      * Validation map for fields in type Claim.CareTeam
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_PROVIDER => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_SEQUENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRClaimCareTeam Constructor
@@ -262,16 +264,16 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSequence(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $sequence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSequence(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $sequence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $sequence && !($sequence instanceof FHIRPositiveInt)) {
             $sequence = new FHIRPositiveInt($sequence);
         }
         $this->_trackValueSet($this->sequence, $sequence);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SEQUENCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SEQUENCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SEQUENCE])) {
+            $this->_xmlLocations[self::FIELD_SEQUENCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SEQUENCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SEQUENCE][0] = $xmlLocation;
         $this->sequence = $sequence;
         return $this;
     }
@@ -335,16 +337,16 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setResponsible(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $responsible = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setResponsible(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $responsible = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $responsible && !($responsible instanceof FHIRBoolean)) {
             $responsible = new FHIRBoolean($responsible);
         }
         $this->_trackValueSet($this->responsible, $responsible);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RESPONSIBLE])) {
-            $this->_primitiveXmlLocations[self::FIELD_RESPONSIBLE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RESPONSIBLE])) {
+            $this->_xmlLocations[self::FIELD_RESPONSIBLE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RESPONSIBLE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RESPONSIBLE][0] = $xmlLocation;
         $this->responsible = $responsible;
         return $this;
     }
@@ -674,16 +676,16 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ClaimCareTeam', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEQUENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEQUENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSequence())) {
             $xw->writeAttribute(self::FIELD_SEQUENCE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RESPONSIBLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RESPONSIBLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getResponsible())) {
             $xw->writeAttribute(self::FIELD_RESPONSIBLE, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEQUENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEQUENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSequence())) {
             $xw->startElement(self::FIELD_SEQUENCE);
             $v->xmlSerialize($xw, $config);
@@ -694,7 +696,7 @@ class FHIRClaimCareTeam extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RESPONSIBLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RESPONSIBLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getResponsible())) {
             $xw->startElement(self::FIELD_RESPONSIBLE);
             $v->xmlSerialize($xw, $config);

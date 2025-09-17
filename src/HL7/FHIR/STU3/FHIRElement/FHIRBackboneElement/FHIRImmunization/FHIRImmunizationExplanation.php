@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImmunization;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,7 +96,6 @@ class FHIRImmunizationExplanation extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Reasons why a vaccine was administered.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $reason = [];
@@ -107,7 +106,6 @@ class FHIRImmunizationExplanation extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Reason why a vaccine was not administered.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $reasonNotGiven = [];
@@ -116,10 +114,10 @@ class FHIRImmunizationExplanation extends FHIRBackboneElement
      * Validation map for fields in type Immunization.Explanation
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRImmunizationExplanation Constructor
@@ -213,6 +211,32 @@ class FHIRImmunizationExplanation extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Reasons why a vaccine was administered.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$reason
+     * @return static
+     */
+    public function setReason(FHIRCodeableConcept ...$reason): self
+    {
+        if ([] !== $this->reason) {
+            $this->_trackValuesRemoved(count($this->reason));
+            $this->reason = [];
+        }
+        if ([] === $reason) {
+            return $this;
+        }
+        foreach($reason as $v) {
+            $this->addReason($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Reason why a vaccine was not administered.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
@@ -240,6 +264,32 @@ class FHIRImmunizationExplanation extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->reasonNotGiven[] = $reasonNotGiven;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Reason why a vaccine was not administered.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$reasonNotGiven
+     * @return static
+     */
+    public function setReasonNotGiven(FHIRCodeableConcept ...$reasonNotGiven): self
+    {
+        if ([] !== $this->reasonNotGiven) {
+            $this->_trackValuesRemoved(count($this->reasonNotGiven));
+            $this->reasonNotGiven = [];
+        }
+        if ([] === $reasonNotGiven) {
+            return $this;
+        }
+        foreach($reasonNotGiven as $v) {
+            $this->addReasonNotGiven($v);
+        }
         return $this;
     }
 

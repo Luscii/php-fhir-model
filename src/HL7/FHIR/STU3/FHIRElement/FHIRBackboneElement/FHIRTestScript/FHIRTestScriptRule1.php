@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRTestScriptRule1 extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Id of the referenced rule within the external ruleset template.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRId
      */
     protected null|FHIRId $ruleId = null;
@@ -108,7 +107,6 @@ class FHIRTestScriptRule1 extends FHIRBackboneElement
      * compliance against the FHIR specification.
      *
      * Each rule template can take one or more parameters for rule evaluation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptParam1[]
      */
     protected null|array $param = [];
@@ -117,10 +115,14 @@ class FHIRTestScriptRule1 extends FHIRBackboneElement
      * Validation map for fields in type TestScript.Rule1
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_RULE_ID => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRTestScriptRule1 Constructor
@@ -205,16 +207,16 @@ class FHIRTestScriptRule1 extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRuleId(null|string|FHIRIdPrimitive|FHIRId $ruleId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRuleId(null|string|FHIRIdPrimitive|FHIRId $ruleId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $ruleId && !($ruleId instanceof FHIRId)) {
             $ruleId = new FHIRId($ruleId);
         }
         $this->_trackValueSet($this->ruleId, $ruleId);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RULE_ID])) {
-            $this->_primitiveXmlLocations[self::FIELD_RULE_ID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RULE_ID])) {
+            $this->_xmlLocations[self::FIELD_RULE_ID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RULE_ID][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RULE_ID][0] = $xmlLocation;
         $this->ruleId = $ruleId;
         return $this;
     }
@@ -248,6 +250,30 @@ class FHIRTestScriptRule1 extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->param[] = $param;
+        return $this;
+    }
+
+    /**
+     * A structured set of tests against a FHIR server implementation to determine
+     * compliance against the FHIR specification.
+     *
+     * Each rule template can take one or more parameters for rule evaluation.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptParam1 ...$param
+     * @return static
+     */
+    public function setParam(FHIRTestScriptParam1 ...$param): self
+    {
+        if ([] !== $this->param) {
+            $this->_trackValuesRemoved(count($this->param));
+            $this->param = [];
+        }
+        if ([] === $param) {
+            return $this;
+        }
+        foreach($param as $v) {
+            $this->addParam($v);
+        }
         return $this;
     }
 
@@ -439,12 +465,12 @@ class FHIRTestScriptRule1 extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'TestScriptRule1', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RULE_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RULE_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRuleId())) {
             $xw->writeAttribute(self::FIELD_RULE_ID, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RULE_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RULE_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRuleId())) {
             $xw->startElement(self::FIELD_RULE_ID);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRBundleEntry extends FHIRBackboneElement
      * A container for a collection of resources.
      *
      * A series of links that provide context to this entry.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleLink[]
      */
     protected null|array $link = [];
@@ -114,13 +113,11 @@ class FHIRBundleEntry extends FHIRBackboneElement
      * POST (although it does not need to when specifying a temporary id for reference
      * in the bundle) * Results from operations might involve resources that are not
      * identified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $fullUrl = null;
     /**
      * The Resources for the entry.
-     *
      * @var null|\HL7\FHIR\STU3\|PHPFHIRContainedTypeInterface
      */
     protected null|PHPFHIRContainedTypeInterface $resource = null;
@@ -128,7 +125,6 @@ class FHIRBundleEntry extends FHIRBackboneElement
      * A container for a collection of resources.
      *
      * Information about the search process that lead to the creation of this entry.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleSearch
      */
     protected null|FHIRBundleSearch $search = null;
@@ -137,7 +133,6 @@ class FHIRBundleEntry extends FHIRBackboneElement
      *
      * Additional information about how this entry should be processed as part of a
      * transaction.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleRequest
      */
     protected null|FHIRBundleRequest $request = null;
@@ -146,7 +141,6 @@ class FHIRBundleEntry extends FHIRBackboneElement
      *
      * Additional information about how this entry should be processed as part of a
      * transaction.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleResponse
      */
     protected null|FHIRBundleResponse $response = null;
@@ -155,10 +149,10 @@ class FHIRBundleEntry extends FHIRBackboneElement
      * Validation map for fields in type Bundle.Entry
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRBundleEntry Constructor
@@ -290,6 +284,29 @@ class FHIRBundleEntry extends FHIRBackboneElement
     }
 
     /**
+     * A container for a collection of resources.
+     *
+     * A series of links that provide context to this entry.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleLink ...$link
+     * @return static
+     */
+    public function setLink(FHIRBundleLink ...$link): self
+    {
+        if ([] !== $this->link) {
+            $this->_trackValuesRemoved(count($this->link));
+            $this->link = [];
+        }
+        if ([] === $link) {
+            return $this;
+        }
+        foreach($link as $v) {
+            $this->addLink($v);
+        }
+        return $this;
+    }
+
+    /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -324,16 +341,16 @@ class FHIRBundleEntry extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFullUrl(null|string|FHIRUriPrimitive|FHIRUri $fullUrl = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setFullUrl(null|string|FHIRUriPrimitive|FHIRUri $fullUrl = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $fullUrl && !($fullUrl instanceof FHIRUri)) {
             $fullUrl = new FHIRUri($fullUrl);
         }
         $this->_trackValueSet($this->fullUrl, $fullUrl);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_FULL_URL])) {
-            $this->_primitiveXmlLocations[self::FIELD_FULL_URL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_FULL_URL])) {
+            $this->_xmlLocations[self::FIELD_FULL_URL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_FULL_URL][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_FULL_URL][0] = $xmlLocation;
         $this->fullUrl = $fullUrl;
         return $this;
     }
@@ -721,7 +738,7 @@ class FHIRBundleEntry extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'BundleEntry', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FULL_URL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FULL_URL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFullUrl())) {
             $xw->writeAttribute(self::FIELD_FULL_URL, $v->getValue()?->getFormattedValue());
         }
@@ -731,7 +748,7 @@ class FHIRBundleEntry extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FULL_URL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FULL_URL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFullUrl())) {
             $xw->startElement(self::FIELD_FULL_URL);
             $v->xmlSerialize($xw, $config);

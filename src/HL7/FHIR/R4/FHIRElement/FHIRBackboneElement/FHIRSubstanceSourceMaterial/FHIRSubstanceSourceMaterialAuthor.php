@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMateria
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -111,7 +111,6 @@ class FHIRSubstanceSourceMaterialAuthor extends FHIRBackboneElement
      * author of an organism species refers to the first author who published the
      * plant/animal name (of any rank). The primary author of an organism species
      * refers to the first author(s), who validly published the plant/animal name.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $authorType = null;
@@ -123,7 +122,6 @@ class FHIRSubstanceSourceMaterialAuthor extends FHIRBackboneElement
      * The author of an organism species shall be specified. The author year of an
      * organism shall also be specified when applicable; refers to the year in which
      * the first author(s) published the infraspecific plant/animal name (of any rank).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $authorDescription = null;
@@ -132,10 +130,10 @@ class FHIRSubstanceSourceMaterialAuthor extends FHIRBackboneElement
      * Validation map for fields in type SubstanceSourceMaterial.Author
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceSourceMaterialAuthor Constructor
@@ -252,16 +250,16 @@ class FHIRSubstanceSourceMaterialAuthor extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAuthorDescription(null|string|FHIRStringPrimitive|FHIRString $authorDescription = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAuthorDescription(null|string|FHIRStringPrimitive|FHIRString $authorDescription = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $authorDescription && !($authorDescription instanceof FHIRString)) {
             $authorDescription = new FHIRString($authorDescription);
         }
         $this->_trackValueSet($this->authorDescription, $authorDescription);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AUTHOR_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_AUTHOR_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AUTHOR_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_AUTHOR_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AUTHOR_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AUTHOR_DESCRIPTION][0] = $xmlLocation;
         $this->authorDescription = $authorDescription;
         return $this;
     }
@@ -452,7 +450,7 @@ class FHIRSubstanceSourceMaterialAuthor extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceSourceMaterialAuthor', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHOR_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHOR_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAuthorDescription())) {
             $xw->writeAttribute(self::FIELD_AUTHOR_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
@@ -462,7 +460,7 @@ class FHIRSubstanceSourceMaterialAuthor extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHOR_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHOR_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAuthorDescription())) {
             $xw->startElement(self::FIELD_AUTHOR_DESCRIPTION);
             $v->xmlSerialize($xw, $config);

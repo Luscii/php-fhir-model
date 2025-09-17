@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,7 +96,6 @@ class FHIRChargeItemDefinitionPropertyGroup extends FHIRBackboneElement
      * rough structure and requires profiling for each type of billing code system.
      *
      * Expressions that describe applicability criteria for the priceComponent.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionApplicability[]
      */
     protected null|array $applicability = [];
@@ -112,7 +111,6 @@ class FHIRChargeItemDefinitionPropertyGroup extends FHIRBackboneElement
      * code is currently under development. The priceComponent element can be used to
      * offer transparency to the recipient of the Invoice of how the prices have been
      * calculated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionPriceComponent[]
      */
     protected null|array $priceComponent = [];
@@ -121,10 +119,10 @@ class FHIRChargeItemDefinitionPropertyGroup extends FHIRBackboneElement
      * Validation map for fields in type ChargeItemDefinition.PropertyGroup
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRChargeItemDefinitionPropertyGroup Constructor
@@ -218,6 +216,32 @@ class FHIRChargeItemDefinitionPropertyGroup extends FHIRBackboneElement
      * differ largely depending on type and realm, therefore this resource gives only a
      * rough structure and requires profiling for each type of billing code system.
      *
+     * Expressions that describe applicability criteria for the priceComponent.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionApplicability ...$applicability
+     * @return static
+     */
+    public function setApplicability(FHIRChargeItemDefinitionApplicability ...$applicability): self
+    {
+        if ([] !== $this->applicability) {
+            $this->_trackValuesRemoved(count($this->applicability));
+            $this->applicability = [];
+        }
+        if ([] === $applicability) {
+            return $this;
+        }
+        foreach($applicability as $v) {
+            $this->addApplicability($v);
+        }
+        return $this;
+    }
+
+    /**
+     * The ChargeItemDefinition resource provides the properties that apply to the
+     * (billing) codes necessary to calculate costs and prices. The properties may
+     * differ largely depending on type and realm, therefore this resource gives only a
+     * rough structure and requires profiling for each type of billing code system.
+     *
      * The price for a ChargeItem may be calculated as a base price with
      * surcharges/deductions that apply in certain conditions. A ChargeItemDefinition
      * resource that defines the prices, factors and conditions that apply to a billing
@@ -255,6 +279,37 @@ class FHIRChargeItemDefinitionPropertyGroup extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->priceComponent[] = $priceComponent;
+        return $this;
+    }
+
+    /**
+     * The ChargeItemDefinition resource provides the properties that apply to the
+     * (billing) codes necessary to calculate costs and prices. The properties may
+     * differ largely depending on type and realm, therefore this resource gives only a
+     * rough structure and requires profiling for each type of billing code system.
+     *
+     * The price for a ChargeItem may be calculated as a base price with
+     * surcharges/deductions that apply in certain conditions. A ChargeItemDefinition
+     * resource that defines the prices, factors and conditions that apply to a billing
+     * code is currently under development. The priceComponent element can be used to
+     * offer transparency to the recipient of the Invoice of how the prices have been
+     * calculated.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRChargeItemDefinition\FHIRChargeItemDefinitionPriceComponent ...$priceComponent
+     * @return static
+     */
+    public function setPriceComponent(FHIRChargeItemDefinitionPriceComponent ...$priceComponent): self
+    {
+        if ([] !== $this->priceComponent) {
+            $this->_trackValuesRemoved(count($this->priceComponent));
+            $this->priceComponent = [];
+        }
+        if ([] === $priceComponent) {
+            return $this;
+        }
+        foreach($priceComponent as $v) {
+            $this->addPriceComponent($v);
+        }
         return $this;
     }
 

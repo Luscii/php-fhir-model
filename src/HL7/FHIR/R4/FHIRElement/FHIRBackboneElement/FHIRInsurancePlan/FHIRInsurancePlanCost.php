@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,6 @@ class FHIRInsurancePlanCost extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Type of cost (copay; individual cap; family cap; coinsurance; deductible).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -109,7 +108,6 @@ class FHIRInsurancePlanCost extends FHIRBackboneElement
      *
      * Whether the cost applies to in-network or out-of-network providers (in-network;
      * out-of-network; other).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $applicability = null;
@@ -121,7 +119,6 @@ class FHIRInsurancePlanCost extends FHIRBackboneElement
      *
      * Additional information about the cost, such as information about funding sources
      * (e.g. HSA, HRA, FSA, RRA).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $qualifiers = [];
@@ -134,7 +131,6 @@ class FHIRInsurancePlanCost extends FHIRBackboneElement
      *
      * The actual cost value. (some of the costs may be represented as percentages
      * rather than currency, e.g. 10% coinsurance).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $value = null;
@@ -143,10 +139,14 @@ class FHIRInsurancePlanCost extends FHIRBackboneElement
      * Validation map for fields in type InsurancePlan.Cost
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRInsurancePlanCost Constructor
@@ -313,6 +313,33 @@ class FHIRInsurancePlanCost extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->qualifiers[] = $qualifiers;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Additional information about the cost, such as information about funding sources
+     * (e.g. HSA, HRA, FSA, RRA).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$qualifiers
+     * @return static
+     */
+    public function setQualifiers(FHIRCodeableConcept ...$qualifiers): self
+    {
+        if ([] !== $this->qualifiers) {
+            $this->_trackValuesRemoved(count($this->qualifiers));
+            $this->qualifiers = [];
+        }
+        if ([] === $qualifiers) {
+            return $this;
+        }
+        foreach($qualifiers as $v) {
+            $this->addQualifiers($v);
+        }
         return $this;
     }
 

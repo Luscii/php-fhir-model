@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -154,7 +154,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * business processes and/or used to refer to it when a direct URL reference to the
      * resource itself is not appropriate (e.g. in CDA documents, or in written /
      * printed documentation).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -163,7 +162,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The clinical status of the condition.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRConditionClinicalStatusCodes
      */
     protected null|FHIRConditionClinicalStatusCodes $clinicalStatus = null;
@@ -173,7 +171,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The verification status to support the clinical status of the condition.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRConditionVerificationStatus
      */
     protected null|FHIRConditionVerificationStatus $verificationStatus = null;
@@ -184,7 +181,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A category assigned to the condition.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $category = [];
@@ -196,7 +192,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * A subjective assessment of the severity of the condition as evaluated by the
      * clinician.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $severity = null;
@@ -207,7 +202,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Identification of the condition, problem or diagnosis.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -218,7 +212,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The anatomical location where this condition manifests itself.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $bodySite = [];
@@ -228,7 +221,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indicates the patient or group who the condition record is associated with.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -238,7 +230,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Encounter during which the condition was first asserted.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $context = null;
@@ -252,7 +243,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $onsetDateTime = null;
@@ -263,7 +253,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity\FHIRAge
      */
     protected null|FHIRAge $onsetAge = null;
@@ -274,7 +263,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $onsetPeriod = null;
@@ -285,7 +273,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $onsetRange = null;
@@ -296,7 +283,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * Estimated or actual date or date-time the condition began, in the opinion of the
      * clinician.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $onsetString = null;
@@ -312,7 +298,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * This is called "abatement" because of the many overloaded connotations
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $abatementDateTime = null;
@@ -325,7 +310,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * This is called "abatement" because of the many overloaded connotations
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity\FHIRAge
      */
     protected null|FHIRAge $abatementAge = null;
@@ -337,7 +321,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * This is called "abatement" because of the many overloaded connotations
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $abatementBoolean = null;
@@ -350,7 +333,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * This is called "abatement" because of the many overloaded connotations
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $abatementPeriod = null;
@@ -363,7 +345,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * This is called "abatement" because of the many overloaded connotations
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $abatementRange = null;
@@ -376,7 +357,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * This is called "abatement" because of the many overloaded connotations
      * associated with "remission" or "resolution" - Conditions are never really
      * resolved, but they can abate.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $abatementString = null;
@@ -390,7 +370,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * The date on which the existance of the Condition was first asserted or
      * acknowledged.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $assertedDate = null;
@@ -400,7 +379,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Individual who is making the condition statement.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $asserter = null;
@@ -409,7 +387,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * clinical concept that has risen to a level of concern.
      *
      * Clinical stage or grade of a condition. May include formal severity assessments.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionStage
      */
     protected null|FHIRConditionStage $stage = null;
@@ -419,7 +396,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * Supporting Evidence / manifestations that are the basis on which this condition
      * is suspected or confirmed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionEvidence[]
      */
     protected null|array $evidence = [];
@@ -431,7 +407,6 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      *
      * Additional information about the Condition. This is a general notes/comments
      * entry for description of the Condition, its diagnosis and prognosis.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -440,10 +415,14 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * Validation map for fields in type Condition
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_SUBJECT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCondition Constructor
@@ -809,6 +788,34 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     }
 
     /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This records identifiers associated with this condition that are defined by
+     * business processes and/or used to refer to it when a direct URL reference to the
+     * resource itself is not appropriate (e.g. in CDA documents, or in written /
+     * printed documentation).
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * The clinical status of the condition or diagnosis.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -907,6 +914,32 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
         }
         $this->_trackValueAdded();
         $this->category[] = $category;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A category assigned to the condition.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$category
+     * @return static
+     */
+    public function setCategory(FHIRCodeableConcept ...$category): self
+    {
+        if ([] !== $this->category) {
+            $this->_trackValuesRemoved(count($this->category));
+            $this->category = [];
+        }
+        if ([] === $category) {
+            return $this;
+        }
+        foreach($category as $v) {
+            $this->addCategory($v);
+        }
         return $this;
     }
 
@@ -1021,6 +1054,32 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The anatomical location where this condition manifests itself.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$bodySite
+     * @return static
+     */
+    public function setBodySite(FHIRCodeableConcept ...$bodySite): self
+    {
+        if ([] !== $this->bodySite) {
+            $this->_trackValuesRemoved(count($this->bodySite));
+            $this->bodySite = [];
+        }
+        if ([] === $bodySite) {
+            return $this;
+        }
+        foreach($bodySite as $v) {
+            $this->addBodySite($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -1121,16 +1180,16 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOnsetDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $onsetDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOnsetDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $onsetDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $onsetDateTime && !($onsetDateTime instanceof FHIRDateTime)) {
             $onsetDateTime = new FHIRDateTime($onsetDateTime);
         }
         $this->_trackValueSet($this->onsetDateTime, $onsetDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ONSET_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_ONSET_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ONSET_DATE_TIME][0] = $xmlLocation;
         $this->onsetDateTime = $onsetDateTime;
         return $this;
     }
@@ -1270,16 +1329,16 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOnsetString(null|string|FHIRStringPrimitive|FHIRString $onsetString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOnsetString(null|string|FHIRStringPrimitive|FHIRString $onsetString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $onsetString && !($onsetString instanceof FHIRString)) {
             $onsetString = new FHIRString($onsetString);
         }
         $this->_trackValueSet($this->onsetString, $onsetString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ONSET_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ONSET_STRING])) {
+            $this->_xmlLocations[self::FIELD_ONSET_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ONSET_STRING][0] = $xmlLocation;
         $this->onsetString = $onsetString;
         return $this;
     }
@@ -1321,16 +1380,16 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAbatementDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $abatementDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAbatementDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $abatementDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $abatementDateTime && !($abatementDateTime instanceof FHIRDateTime)) {
             $abatementDateTime = new FHIRDateTime($abatementDateTime);
         }
         $this->_trackValueSet($this->abatementDateTime, $abatementDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ABATEMENT_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ABATEMENT_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_ABATEMENT_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ABATEMENT_DATE_TIME][0] = $xmlLocation;
         $this->abatementDateTime = $abatementDateTime;
         return $this;
     }
@@ -1404,16 +1463,16 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAbatementBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $abatementBoolean = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAbatementBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $abatementBoolean = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $abatementBoolean && !($abatementBoolean instanceof FHIRBoolean)) {
             $abatementBoolean = new FHIRBoolean($abatementBoolean);
         }
         $this->_trackValueSet($this->abatementBoolean, $abatementBoolean);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ABATEMENT_BOOLEAN])) {
-            $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_BOOLEAN] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ABATEMENT_BOOLEAN])) {
+            $this->_xmlLocations[self::FIELD_ABATEMENT_BOOLEAN] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_BOOLEAN][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ABATEMENT_BOOLEAN][0] = $xmlLocation;
         $this->abatementBoolean = $abatementBoolean;
         return $this;
     }
@@ -1529,16 +1588,16 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAbatementString(null|string|FHIRStringPrimitive|FHIRString $abatementString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAbatementString(null|string|FHIRStringPrimitive|FHIRString $abatementString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $abatementString && !($abatementString instanceof FHIRString)) {
             $abatementString = new FHIRString($abatementString);
         }
         $this->_trackValueSet($this->abatementString, $abatementString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ABATEMENT_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ABATEMENT_STRING])) {
+            $this->_xmlLocations[self::FIELD_ABATEMENT_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ABATEMENT_STRING][0] = $xmlLocation;
         $this->abatementString = $abatementString;
         return $this;
     }
@@ -1576,16 +1635,16 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAssertedDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $assertedDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAssertedDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $assertedDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $assertedDate && !($assertedDate instanceof FHIRDateTime)) {
             $assertedDate = new FHIRDateTime($assertedDate);
         }
         $this->_trackValueSet($this->assertedDate, $assertedDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ASSERTED_DATE])) {
+            $this->_xmlLocations[self::FIELD_ASSERTED_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ASSERTED_DATE][0] = $xmlLocation;
         $this->assertedDate = $assertedDate;
         return $this;
     }
@@ -1691,6 +1750,31 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     }
 
     /**
+     * A clinical condition, problem, diagnosis, or other event, situation, issue, or
+     * clinical concept that has risen to a level of concern.
+     *
+     * Supporting Evidence / manifestations that are the basis on which this condition
+     * is suspected or confirmed.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCondition\FHIRConditionEvidence ...$evidence
+     * @return static
+     */
+    public function setEvidence(FHIRConditionEvidence ...$evidence): self
+    {
+        if ([] !== $this->evidence) {
+            $this->_trackValuesRemoved(count($this->evidence));
+            $this->evidence = [];
+        }
+        if ([] === $evidence) {
+            return $this;
+        }
+        foreach($evidence as $v) {
+            $this->addEvidence($v);
+        }
+        return $this;
+    }
+
+    /**
      * A text note which also contains information about who made the statement and
      * when.
      * If the element is present, it must have a value for at least one of the defined
@@ -1725,6 +1809,33 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
         }
         $this->_trackValueAdded();
         $this->note[] = $note;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Additional information about the Condition. This is a general notes/comments
+     * entry for description of the Condition, its diagnosis and prognosis.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
         return $this;
     }
 
@@ -2489,27 +2600,27 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
             $openedRoot = true;
             $xw->openRootNode($config, 'Condition', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOnsetDateTime())) {
             $xw->writeAttribute(self::FIELD_ONSET_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOnsetString())) {
             $xw->writeAttribute(self::FIELD_ONSET_STRING, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ABATEMENT_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAbatementDateTime())) {
             $xw->writeAttribute(self::FIELD_ABATEMENT_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_BOOLEAN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ABATEMENT_BOOLEAN] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAbatementBoolean())) {
             $xw->writeAttribute(self::FIELD_ABATEMENT_BOOLEAN, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ABATEMENT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAbatementString())) {
             $xw->writeAttribute(self::FIELD_ABATEMENT_STRING, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ASSERTED_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAssertedDate())) {
             $xw->writeAttribute(self::FIELD_ASSERTED_DATE, $v->getValue()?->getFormattedValue());
         }
@@ -2559,7 +2670,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOnsetDateTime())) {
             $xw->startElement(self::FIELD_ONSET_DATE_TIME);
             $v->xmlSerialize($xw, $config);
@@ -2580,13 +2691,13 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOnsetString())) {
             $xw->startElement(self::FIELD_ONSET_STRING);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ABATEMENT_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAbatementDateTime())) {
             $xw->startElement(self::FIELD_ABATEMENT_DATE_TIME);
             $v->xmlSerialize($xw, $config);
@@ -2597,7 +2708,7 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_BOOLEAN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ABATEMENT_BOOLEAN] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAbatementBoolean())) {
             $xw->startElement(self::FIELD_ABATEMENT_BOOLEAN);
             $v->xmlSerialize($xw, $config);
@@ -2613,13 +2724,13 @@ class FHIRCondition extends FHIRDomainResource implements PHPFHIRContainedTypeIn
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ABATEMENT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ABATEMENT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAbatementString())) {
             $xw->startElement(self::FIELD_ABATEMENT_STRING);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ASSERTED_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAssertedDate())) {
             $xw->startElement(self::FIELD_ASSERTED_DATE);
             $v->xmlSerialize($xw, $config);

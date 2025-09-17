@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREncounter;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIREncounterDiagnosis extends FHIRBackboneElement
      * resource. For admissions, this is the admission diagnosis. The indication will
      * typically be a Condition (with other resources referenced in the
      * evidence.detail), or a Procedure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $condition = null;
@@ -114,7 +113,6 @@ class FHIREncounterDiagnosis extends FHIRBackboneElement
      *
      * Role that this diagnosis has within the encounter (e.g. admission, billing,
      * discharge …).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $role = null;
@@ -124,7 +122,6 @@ class FHIREncounterDiagnosis extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Ranking of the diagnosis (for each role type).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $rank = null;
@@ -133,10 +130,14 @@ class FHIREncounterDiagnosis extends FHIRBackboneElement
      * Validation map for fields in type Encounter.Diagnosis
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CONDITION => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIREncounterDiagnosis Constructor
@@ -292,16 +293,16 @@ class FHIREncounterDiagnosis extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRank(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $rank = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRank(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $rank = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $rank && !($rank instanceof FHIRPositiveInt)) {
             $rank = new FHIRPositiveInt($rank);
         }
         $this->_trackValueSet($this->rank, $rank);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RANK])) {
-            $this->_primitiveXmlLocations[self::FIELD_RANK] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RANK])) {
+            $this->_xmlLocations[self::FIELD_RANK] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RANK][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RANK][0] = $xmlLocation;
         $this->rank = $rank;
         return $this;
     }
@@ -511,7 +512,7 @@ class FHIREncounterDiagnosis extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'EncounterDiagnosis', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RANK] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RANK] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRank())) {
             $xw->writeAttribute(self::FIELD_RANK, $v->getValue()?->getFormattedValue());
         }
@@ -526,7 +527,7 @@ class FHIREncounterDiagnosis extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RANK] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RANK] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRank())) {
             $xw->startElement(self::FIELD_RANK);
             $v->xmlSerialize($xw, $config);

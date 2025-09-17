@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,9 +86,9 @@ class PHPFHIRConfig implements \JsonSerializable
      */
     public function __construct(array $config = [])
     {
-        foreach(PHPFHIRConfigKeyEnum::values() as $k => $_) {
-            if (isset($config[$k]) || array_key_exists($k, $config)) {
-                $this->setKey($k, $config[$k]);
+        foreach(PHPFHIRConfigKeyEnum::cases() as $k) {
+            if (isset($config[$k->value]) || array_key_exists($k->value, $config)) {
+                $this->setKey($k->value, $config[$k->value]);
             }
         }
     }

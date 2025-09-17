@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRFamilyMemberHistory;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      * The actual condition specified. Could be a coded condition (like MI or Diabetes)
      * or a less specific string like 'cancer' depending on how much is known about the
      * condition and the capabilities of the creating system.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -120,7 +119,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      *
      * Indicates what happened as a result of this condition. If the condition resulted
      * in death, deceased date is captured on the relation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $outcome = null;
@@ -132,7 +130,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      * Either the age of onset, range of approximate age or descriptive string can be
      * recorded. For conditions with multiple occurrences, this describes the first
      * known occurrence.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity\FHIRAge
      */
     protected null|FHIRAge $onsetAge = null;
@@ -144,7 +141,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      * Either the age of onset, range of approximate age or descriptive string can be
      * recorded. For conditions with multiple occurrences, this describes the first
      * known occurrence.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $onsetRange = null;
@@ -156,7 +152,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      * Either the age of onset, range of approximate age or descriptive string can be
      * recorded. For conditions with multiple occurrences, this describes the first
      * known occurrence.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $onsetPeriod = null;
@@ -168,7 +163,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      * Either the age of onset, range of approximate age or descriptive string can be
      * recorded. For conditions with multiple occurrences, this describes the first
      * known occurrence.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $onsetString = null;
@@ -179,7 +173,6 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * An area where general notes can be placed about this specific condition.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -188,10 +181,14 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      * Validation map for fields in type FamilyMemberHistory.Condition
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CODE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRFamilyMemberHistoryCondition Constructor
@@ -501,16 +498,16 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOnsetString(null|string|FHIRStringPrimitive|FHIRString $onsetString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOnsetString(null|string|FHIRStringPrimitive|FHIRString $onsetString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $onsetString && !($onsetString instanceof FHIRString)) {
             $onsetString = new FHIRString($onsetString);
         }
         $this->_trackValueSet($this->onsetString, $onsetString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ONSET_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ONSET_STRING])) {
+            $this->_xmlLocations[self::FIELD_ONSET_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ONSET_STRING][0] = $xmlLocation;
         $this->onsetString = $onsetString;
         return $this;
     }
@@ -548,6 +545,32 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->note[] = $note;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An area where general notes can be placed about this specific condition.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
         return $this;
     }
 
@@ -834,7 +857,7 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'FamilyMemberHistoryCondition', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOnsetString())) {
             $xw->writeAttribute(self::FIELD_ONSET_STRING, $v->getValue()?->getFormattedValue());
         }
@@ -864,7 +887,7 @@ class FHIRFamilyMemberHistoryCondition extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOnsetString())) {
             $xw->startElement(self::FIELD_ONSET_STRING);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRProvenance;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,7 +109,6 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * How the entity was used during the activity.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRProvenanceEntityRole
      */
     protected null|FHIRProvenanceEntityRole $role = null;
@@ -120,7 +119,6 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
      *
      * Identity of the Entity used. May be a logical or physical uri and maybe absolute
      * or relative.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $whatUri = null;
@@ -131,7 +129,6 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
      *
      * Identity of the Entity used. May be a logical or physical uri and maybe absolute
      * or relative.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $whatReference = null;
@@ -142,7 +139,6 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
      *
      * Identity of the Entity used. May be a logical or physical uri and maybe absolute
      * or relative.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $whatIdentifier = null;
@@ -161,7 +157,6 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
      * that entity, possibly along with other agents. This description can be
      * understood as shorthand for saying that the agent was responsible for the
      * activity which generated the entity.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceAgent[]
      */
     protected null|array $agent = [];
@@ -170,10 +165,23 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
      * Validation map for fields in type Provenance.Entity
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_ROLE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_WHAT_IDENTIFIER => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_WHAT_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_WHAT_URI => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRProvenanceEntity Constructor
@@ -317,16 +325,16 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setWhatUri(null|string|FHIRUriPrimitive|FHIRUri $whatUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setWhatUri(null|string|FHIRUriPrimitive|FHIRUri $whatUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $whatUri && !($whatUri instanceof FHIRUri)) {
             $whatUri = new FHIRUri($whatUri);
         }
         $this->_trackValueSet($this->whatUri, $whatUri);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_WHAT_URI])) {
-            $this->_primitiveXmlLocations[self::FIELD_WHAT_URI] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_WHAT_URI])) {
+            $this->_xmlLocations[self::FIELD_WHAT_URI] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_WHAT_URI][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_WHAT_URI][0] = $xmlLocation;
         $this->whatUri = $whatUri;
         return $this;
     }
@@ -452,6 +460,40 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->agent[] = $agent;
+        return $this;
+    }
+
+    /**
+     * Provenance of a resource is a record that describes entities and processes
+     * involved in producing and delivering or otherwise influencing that resource.
+     * Provenance provides a critical foundation for assessing authenticity, enabling
+     * trust, and allowing reproducibility. Provenance assertions are a form of
+     * contextual metadata and can themselves become important records with their own
+     * provenance. Provenance statement indicates clinical significance in terms of
+     * confidence in authenticity, reliability, and trustworthiness, integrity, and
+     * stage in lifecycle (e.g. Document Completion - has the artifact been legally
+     * authenticated), all of which may impact security, privacy, and trust policies.
+     *
+     * The entity is attributed to an agent to express the agent's responsibility for
+     * that entity, possibly along with other agents. This description can be
+     * understood as shorthand for saying that the agent was responsible for the
+     * activity which generated the entity.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceAgent ...$agent
+     * @return static
+     */
+    public function setAgent(FHIRProvenanceAgent ...$agent): self
+    {
+        if ([] !== $this->agent) {
+            $this->_trackValuesRemoved(count($this->agent));
+            $this->agent = [];
+        }
+        if ([] === $agent) {
+            return $this;
+        }
+        foreach($agent as $v) {
+            $this->addAgent($v);
+        }
         return $this;
     }
 
@@ -700,7 +742,7 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ProvenanceEntity', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WHAT_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WHAT_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getWhatUri())) {
             $xw->writeAttribute(self::FIELD_WHAT_URI, $v->getValue()?->getFormattedValue());
         }
@@ -710,7 +752,7 @@ class FHIRProvenanceEntity extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WHAT_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WHAT_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getWhatUri())) {
             $xw->startElement(self::FIELD_WHAT_URI);
             $v->xmlSerialize($xw, $config);

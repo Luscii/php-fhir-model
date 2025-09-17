@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSpecimen;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,7 +103,6 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Textual description of procedure.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -114,7 +113,6 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A coded value specifying the procedure used to process the specimen.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $procedure = null;
@@ -124,7 +122,6 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Material used in the processing step.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $additive = [];
@@ -139,7 +136,6 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * A record of the time or period when the specimen processing occurred. For
      * example the time of sample fixation or the period of time the sample was in
      * formalin.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $timeDateTime = null;
@@ -151,7 +147,6 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * A record of the time or period when the specimen processing occurred. For
      * example the time of sample fixation or the period of time the sample was in
      * formalin.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $timePeriod = null;
@@ -160,10 +155,10 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * Validation map for fields in type Specimen.Processing
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSpecimenProcessing Constructor
@@ -273,16 +268,16 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -358,6 +353,31 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Material used in the processing step.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$additive
+     * @return static
+     */
+    public function setAdditive(FHIRReference ...$additive): self
+    {
+        if ([] !== $this->additive) {
+            $this->_trackValuesRemoved(count($this->additive));
+            $this->additive = [];
+        }
+        if ([] === $additive) {
+            return $this;
+        }
+        foreach($additive as $v) {
+            $this->addAdditive($v);
+        }
+        return $this;
+    }
+
+    /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
      * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
@@ -392,16 +412,16 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTimeDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $timeDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTimeDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $timeDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $timeDateTime && !($timeDateTime instanceof FHIRDateTime)) {
             $timeDateTime = new FHIRDateTime($timeDateTime);
         }
         $this->_trackValueSet($this->timeDateTime, $timeDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TIME_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_TIME_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TIME_DATE_TIME][0] = $xmlLocation;
         $this->timeDateTime = $timeDateTime;
         return $this;
     }
@@ -697,16 +717,16 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SpecimenProcessing', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTimeDateTime())) {
             $xw->writeAttribute(self::FIELD_TIME_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
@@ -722,7 +742,7 @@ class FHIRSpecimenProcessing extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTimeDateTime())) {
             $xw->startElement(self::FIELD_TIME_DATE_TIME);
             $v->xmlSerialize($xw, $config);

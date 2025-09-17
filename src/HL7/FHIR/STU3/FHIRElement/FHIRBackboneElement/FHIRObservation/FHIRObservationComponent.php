@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRObservation;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -121,7 +121,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Describes what was observed. Sometimes this is called the observation "code".
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -134,7 +133,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $valueQuantity = null;
@@ -146,7 +144,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $valueCodeableConcept = null;
@@ -157,7 +154,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $valueString = null;
@@ -168,7 +164,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $valueRange = null;
@@ -180,7 +175,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio
      */
     protected null|FHIRRatio $valueRatio = null;
@@ -192,7 +186,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRSampledData
      */
     protected null|FHIRSampledData $valueSampledData = null;
@@ -203,7 +196,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment
      */
     protected null|FHIRAttachment $valueAttachment = null;
@@ -213,7 +205,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTime
      */
     protected null|FHIRTime $valueTime = null;
@@ -227,7 +218,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $valueDateTime = null;
@@ -238,7 +228,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * The information determined as a result of making the observation, if the
      * information has a simple value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $valuePeriod = null;
@@ -250,7 +239,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * Provides a reason why the expected value in the element Observation.value[x] is
      * missing.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $dataAbsentReason = null;
@@ -264,7 +252,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * compact code often placed adjacent to the result value in reports and flow
      * sheets to signal the meaning/normalcy status of the result. Otherwise known as
      * abnormal flag.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $interpretation = null;
@@ -274,7 +261,6 @@ class FHIRObservationComponent extends FHIRBackboneElement
      *
      * Guidance on how to interpret the value by comparison to a normal or recommended
      * range.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRObservation\FHIRObservationReferenceRange[]
      */
     protected null|array $referenceRange = [];
@@ -283,10 +269,14 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * Validation map for fields in type Observation.Component
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CODE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRObservationComponent Constructor
@@ -585,16 +575,16 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValueString(null|string|FHIRStringPrimitive|FHIRString $valueString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValueString(null|string|FHIRStringPrimitive|FHIRString $valueString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $valueString && !($valueString instanceof FHIRString)) {
             $valueString = new FHIRString($valueString);
         }
         $this->_trackValueSet($this->valueString, $valueString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALUE_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALUE_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALUE_STRING])) {
+            $this->_xmlLocations[self::FIELD_VALUE_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALUE_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VALUE_STRING][0] = $xmlLocation;
         $this->valueString = $valueString;
         return $this;
     }
@@ -772,16 +762,16 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValueTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $valueTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValueTime(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $valueTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $valueTime && !($valueTime instanceof FHIRTime)) {
             $valueTime = new FHIRTime($valueTime);
         }
         $this->_trackValueSet($this->valueTime, $valueTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALUE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALUE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALUE_TIME])) {
+            $this->_xmlLocations[self::FIELD_VALUE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALUE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VALUE_TIME][0] = $xmlLocation;
         $this->valueTime = $valueTime;
         return $this;
     }
@@ -819,16 +809,16 @@ class FHIRObservationComponent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValueDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $valueDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValueDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $valueDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $valueDateTime && !($valueDateTime instanceof FHIRDateTime)) {
             $valueDateTime = new FHIRDateTime($valueDateTime);
         }
         $this->_trackValueSet($this->valueDateTime, $valueDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALUE_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALUE_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALUE_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_VALUE_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALUE_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VALUE_DATE_TIME][0] = $xmlLocation;
         $this->valueDateTime = $valueDateTime;
         return $this;
     }
@@ -980,6 +970,31 @@ class FHIRObservationComponent extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->referenceRange[] = $referenceRange;
+        return $this;
+    }
+
+    /**
+     * Measurements and simple assertions made about a patient, device or other
+     * subject.
+     *
+     * Guidance on how to interpret the value by comparison to a normal or recommended
+     * range.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRObservation\FHIRObservationReferenceRange ...$referenceRange
+     * @return static
+     */
+    public function setReferenceRange(FHIRObservationReferenceRange ...$referenceRange): self
+    {
+        if ([] !== $this->referenceRange) {
+            $this->_trackValuesRemoved(count($this->referenceRange));
+            $this->referenceRange = [];
+        }
+        if ([] === $referenceRange) {
+            return $this;
+        }
+        foreach($referenceRange as $v) {
+            $this->addReferenceRange($v);
+        }
         return $this;
     }
 
@@ -1415,15 +1430,15 @@ class FHIRObservationComponent extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ObservationComponent', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getValueString())) {
             $xw->writeAttribute(self::FIELD_VALUE_STRING, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getValueTime())) {
             $xw->writeAttribute(self::FIELD_VALUE_TIME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getValueDateTime())) {
             $xw->writeAttribute(self::FIELD_VALUE_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
@@ -1443,7 +1458,7 @@ class FHIRObservationComponent extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getValueString())) {
             $xw->startElement(self::FIELD_VALUE_STRING);
             $v->xmlSerialize($xw, $config);
@@ -1469,13 +1484,13 @@ class FHIRObservationComponent extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getValueTime())) {
             $xw->startElement(self::FIELD_VALUE_TIME);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getValueDateTime())) {
             $xw->startElement(self::FIELD_VALUE_DATE_TIME);
             $v->xmlSerialize($xw, $config);

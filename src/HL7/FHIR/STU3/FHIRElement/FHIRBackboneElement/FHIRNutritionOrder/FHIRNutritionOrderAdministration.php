@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,7 +103,6 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
      *
      * The time period and frequency at which the enteral formula should be delivered
      * to the patient.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming
      */
     protected null|FHIRTiming $schedule = null;
@@ -116,7 +115,6 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
      *
      * The volume of formula to provide to the patient per the specified administration
      * schedule.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $quantity = null;
@@ -129,7 +127,6 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
      *
      * The rate of administration of formula via a feeding pump, e.g. 60 mL per hour,
      * according to the specified schedule.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $rateQuantity = null;
@@ -141,7 +138,6 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
      *
      * The rate of administration of formula via a feeding pump, e.g. 60 mL per hour,
      * according to the specified schedule.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio
      */
     protected null|FHIRRatio $rateRatio = null;
@@ -150,10 +146,10 @@ class FHIRNutritionOrderAdministration extends FHIRBackboneElement
      * Validation map for fields in type NutritionOrder.Administration
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRNutritionOrderAdministration Constructor

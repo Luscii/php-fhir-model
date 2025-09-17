@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,7 +104,6 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      *
      * Customary unit used to report quantitative results of observations conforming to
      * this ObservationDefinition.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $customaryUnit = null;
@@ -116,7 +115,6 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      *
      * SI unit used to report quantitative results of observations conforming to this
      * ObservationDefinition.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $unit = null;
@@ -128,7 +126,6 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      *
      * Factor for converting value expressed with SI unit to value expressed with
      * customary unit.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $conversionFactor = null;
@@ -139,7 +136,6 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      *
      * Number of digits after decimal separator when the results of such observations
      * are of type Quantity.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $decimalPrecision = null;
@@ -148,10 +144,10 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * Validation map for fields in type ObservationDefinition.QuantitativeDetails
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRObservationDefinitionQuantitativeDetails Constructor
@@ -326,16 +322,16 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setConversionFactor(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $conversionFactor = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setConversionFactor(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $conversionFactor = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $conversionFactor && !($conversionFactor instanceof FHIRDecimal)) {
             $conversionFactor = new FHIRDecimal($conversionFactor);
         }
         $this->_trackValueSet($this->conversionFactor, $conversionFactor);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CONVERSION_FACTOR])) {
-            $this->_primitiveXmlLocations[self::FIELD_CONVERSION_FACTOR] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CONVERSION_FACTOR])) {
+            $this->_xmlLocations[self::FIELD_CONVERSION_FACTOR] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CONVERSION_FACTOR][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CONVERSION_FACTOR][0] = $xmlLocation;
         $this->conversionFactor = $conversionFactor;
         return $this;
     }
@@ -367,16 +363,16 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDecimalPrecision(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $decimalPrecision = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDecimalPrecision(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $decimalPrecision = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $decimalPrecision && !($decimalPrecision instanceof FHIRInteger)) {
             $decimalPrecision = new FHIRInteger($decimalPrecision);
         }
         $this->_trackValueSet($this->decimalPrecision, $decimalPrecision);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DECIMAL_PRECISION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DECIMAL_PRECISION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DECIMAL_PRECISION])) {
+            $this->_xmlLocations[self::FIELD_DECIMAL_PRECISION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DECIMAL_PRECISION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DECIMAL_PRECISION][0] = $xmlLocation;
         $this->decimalPrecision = $decimalPrecision;
         return $this;
     }
@@ -613,11 +609,11 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ObservationDefinitionQuantitativeDetails', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONVERSION_FACTOR] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONVERSION_FACTOR] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getConversionFactor())) {
             $xw->writeAttribute(self::FIELD_CONVERSION_FACTOR, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DECIMAL_PRECISION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DECIMAL_PRECISION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDecimalPrecision())) {
             $xw->writeAttribute(self::FIELD_DECIMAL_PRECISION, $v->getValue()?->getFormattedValue());
         }
@@ -632,13 +628,13 @@ class FHIRObservationDefinitionQuantitativeDetails extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONVERSION_FACTOR] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONVERSION_FACTOR] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getConversionFactor())) {
             $xw->startElement(self::FIELD_CONVERSION_FACTOR);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DECIMAL_PRECISION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DECIMAL_PRECISION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDecimalPrecision())) {
             $xw->startElement(self::FIELD_DECIMAL_PRECISION);
             $v->xmlSerialize($xw, $config);

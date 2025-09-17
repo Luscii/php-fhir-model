@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,7 +112,6 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $comment = null;
@@ -120,7 +119,6 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
      * Todo.
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationGene[]
      */
     protected null|array $gene = [];
@@ -128,7 +126,6 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
      * Todo.
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationGeneElement[]
      */
     protected null|array $geneElement = [];
@@ -136,7 +133,6 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
      * Todo.
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationClassification[]
      */
     protected null|array $classification = [];
@@ -144,7 +140,6 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
      * Todo.
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationTarget[]
      */
     protected null|array $target = [];
@@ -153,10 +148,10 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
      * Validation map for fields in type SubstanceReferenceInformation
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceReferenceInformation Constructor
@@ -288,16 +283,16 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $comment && !($comment instanceof FHIRString)) {
             $comment = new FHIRString($comment);
         }
         $this->_trackValueSet($this->comment, $comment);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_COMMENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_COMMENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_COMMENT])) {
+            $this->_xmlLocations[self::FIELD_COMMENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_COMMENT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_COMMENT][0] = $xmlLocation;
         $this->comment = $comment;
         return $this;
     }
@@ -337,6 +332,29 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
      *
      * Todo.
      *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationGene ...$gene
+     * @return static
+     */
+    public function setGene(FHIRSubstanceReferenceInformationGene ...$gene): self
+    {
+        if ([] !== $this->gene) {
+            $this->_trackValuesRemoved(count($this->gene));
+            $this->gene = [];
+        }
+        if ([] === $gene) {
+            return $this;
+        }
+        foreach($gene as $v) {
+            $this->addGene($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Todo.
+     *
+     * Todo.
+     *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationGeneElement[]
      */
     public function getGeneElement(): null|array
@@ -359,6 +377,29 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
         }
         $this->_trackValueAdded();
         $this->geneElement[] = $geneElement;
+        return $this;
+    }
+
+    /**
+     * Todo.
+     *
+     * Todo.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationGeneElement ...$geneElement
+     * @return static
+     */
+    public function setGeneElement(FHIRSubstanceReferenceInformationGeneElement ...$geneElement): self
+    {
+        if ([] !== $this->geneElement) {
+            $this->_trackValuesRemoved(count($this->geneElement));
+            $this->geneElement = [];
+        }
+        if ([] === $geneElement) {
+            return $this;
+        }
+        foreach($geneElement as $v) {
+            $this->addGeneElement($v);
+        }
         return $this;
     }
 
@@ -397,6 +438,29 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
      *
      * Todo.
      *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationClassification ...$classification
+     * @return static
+     */
+    public function setClassification(FHIRSubstanceReferenceInformationClassification ...$classification): self
+    {
+        if ([] !== $this->classification) {
+            $this->_trackValuesRemoved(count($this->classification));
+            $this->classification = [];
+        }
+        if ([] === $classification) {
+            return $this;
+        }
+        foreach($classification as $v) {
+            $this->addClassification($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Todo.
+     *
+     * Todo.
+     *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationTarget[]
      */
     public function getTarget(): null|array
@@ -419,6 +483,29 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
         }
         $this->_trackValueAdded();
         $this->target[] = $target;
+        return $this;
+    }
+
+    /**
+     * Todo.
+     *
+     * Todo.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceReferenceInformation\FHIRSubstanceReferenceInformationTarget ...$target
+     * @return static
+     */
+    public function setTarget(FHIRSubstanceReferenceInformationTarget ...$target): self
+    {
+        if ([] !== $this->target) {
+            $this->_trackValuesRemoved(count($this->target));
+            $this->target = [];
+        }
+        if ([] === $target) {
+            return $this;
+        }
+        foreach($target as $v) {
+            $this->addTarget($v);
+        }
         return $this;
     }
 
@@ -761,12 +848,12 @@ class FHIRSubstanceReferenceInformation extends FHIRDomainResource implements PH
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceReferenceInformation', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COMMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getComment())) {
             $xw->writeAttribute(self::FIELD_COMMENT, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COMMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getComment())) {
             $xw->startElement(self::FIELD_COMMENT);
             $v->xmlSerialize($xw, $config);

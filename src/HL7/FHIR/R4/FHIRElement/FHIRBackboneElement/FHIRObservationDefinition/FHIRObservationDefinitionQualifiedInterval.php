@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRObservationDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * The category of interval of values for continuous or ordinal observations
      * conforming to this ObservationDefinition.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRObservationRangeCategory
      */
     protected null|FHIRObservationRangeCategory $category = null;
@@ -118,7 +117,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * The low and high values determining the interval. There may be only one of the
      * two.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $range = null;
@@ -130,7 +128,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * Codes to indicate the health context the range applies to. For example, the
      * normal or therapeutic range.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $context = null;
@@ -141,7 +138,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Codes to indicate the target population this reference range applies to.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $appliesTo = [];
@@ -149,7 +145,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Sex of the population the range applies to.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAdministrativeGender
      */
     protected null|FHIRAdministrativeGender $gender = null;
@@ -160,7 +155,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * The age at which this reference range is applicable. This is a neonatal age
      * (e.g. number of weeks at term) if the meaning says so.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $age = null;
@@ -171,7 +165,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      *
      * The gestational age to which this reference range is applicable, in the context
      * of pregnancy.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $gestationalAge = null;
@@ -181,7 +174,6 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Text based condition for which the reference range is valid.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $condition = null;
@@ -190,10 +182,10 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * Validation map for fields in type ObservationDefinition.QualifiedInterval
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRObservationDefinitionQualifiedInterval Constructor
@@ -454,6 +446,32 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Codes to indicate the target population this reference range applies to.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$appliesTo
+     * @return static
+     */
+    public function setAppliesTo(FHIRCodeableConcept ...$appliesTo): self
+    {
+        if ([] !== $this->appliesTo) {
+            $this->_trackValuesRemoved(count($this->appliesTo));
+            $this->appliesTo = [];
+        }
+        if ([] === $appliesTo) {
+            return $this;
+        }
+        foreach($appliesTo as $v) {
+            $this->addAppliesTo($v);
+        }
+        return $this;
+    }
+
+    /**
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Sex of the population the range applies to.
@@ -580,16 +598,16 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCondition(null|string|FHIRStringPrimitive|FHIRString $condition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCondition(null|string|FHIRStringPrimitive|FHIRString $condition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $condition && !($condition instanceof FHIRString)) {
             $condition = new FHIRString($condition);
         }
         $this->_trackValueSet($this->condition, $condition);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CONDITION])) {
-            $this->_primitiveXmlLocations[self::FIELD_CONDITION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CONDITION])) {
+            $this->_xmlLocations[self::FIELD_CONDITION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CONDITION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CONDITION][0] = $xmlLocation;
         $this->condition = $condition;
         return $this;
     }
@@ -896,7 +914,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ObservationDefinitionQualifiedInterval', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONDITION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCondition())) {
             $xw->writeAttribute(self::FIELD_CONDITION, $v->getValue()?->getFormattedValue());
         }
@@ -936,7 +954,7 @@ class FHIRObservationDefinitionQualifiedInterval extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONDITION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCondition())) {
             $xw->startElement(self::FIELD_CONDITION);
             $v->xmlSerialize($xw, $config);

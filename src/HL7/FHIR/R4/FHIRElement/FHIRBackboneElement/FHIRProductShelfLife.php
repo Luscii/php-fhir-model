@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,6 @@ class FHIRProductShelfLife extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Unique identifier for the packaged Medicinal Product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -117,7 +116,6 @@ class FHIRProductShelfLife extends FHIRBackboneElement
      * bottle, etc. The shelf life type shall be specified using an appropriate
      * controlled vocabulary The controlled term and the controlled term identifier
      * shall be specified.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -132,7 +130,6 @@ class FHIRProductShelfLife extends FHIRBackboneElement
      * period of time and its unit of time measurement The unit of measurement shall be
      * specified in accordance with ISO 11240 and the resulting terminology The symbol
      * and the symbol identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $period = null;
@@ -145,7 +142,6 @@ class FHIRProductShelfLife extends FHIRBackboneElement
      * Special precautions for storage, if any, can be specified using an appropriate
      * controlled vocabulary The controlled term and the controlled term identifier
      * shall be specified.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $specialPrecautionsForStorage = [];
@@ -154,10 +150,17 @@ class FHIRProductShelfLife extends FHIRBackboneElement
      * Validation map for fields in type ProductShelfLife
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_PERIOD => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRProductShelfLife Constructor
@@ -378,6 +381,34 @@ class FHIRProductShelfLife extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->specialPrecautionsForStorage[] = $specialPrecautionsForStorage;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Special precautions for storage, if any, can be specified using an appropriate
+     * controlled vocabulary The controlled term and the controlled term identifier
+     * shall be specified.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$specialPrecautionsForStorage
+     * @return static
+     */
+    public function setSpecialPrecautionsForStorage(FHIRCodeableConcept ...$specialPrecautionsForStorage): self
+    {
+        if ([] !== $this->specialPrecautionsForStorage) {
+            $this->_trackValuesRemoved(count($this->specialPrecautionsForStorage));
+            $this->specialPrecautionsForStorage = [];
+        }
+        if ([] === $specialPrecautionsForStorage) {
+            return $this;
+        }
+        foreach($specialPrecautionsForStorage as $v) {
+            $this->addSpecialPrecautionsForStorage($v);
+        }
         return $this;
     }
 

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,7 +96,6 @@ class FHIRMedicinalProductName extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The full product name.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $productName = null;
@@ -105,7 +104,6 @@ class FHIRMedicinalProductName extends FHIRBackboneElement
      * patient care (e.g. regulatory use).
      *
      * Coding words or phrases of the name.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct\FHIRMedicinalProductNamePart[]
      */
     protected null|array $namePart = [];
@@ -114,7 +112,6 @@ class FHIRMedicinalProductName extends FHIRBackboneElement
      * patient care (e.g. regulatory use).
      *
      * Country where the name applies.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct\FHIRMedicinalProductCountryLanguage[]
      */
     protected null|array $countryLanguage = [];
@@ -123,10 +120,14 @@ class FHIRMedicinalProductName extends FHIRBackboneElement
      * Validation map for fields in type MedicinalProduct.Name
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_PRODUCT_NAME => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductName Constructor
@@ -220,16 +221,16 @@ class FHIRMedicinalProductName extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setProductName(null|string|FHIRStringPrimitive|FHIRString $productName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setProductName(null|string|FHIRStringPrimitive|FHIRString $productName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $productName && !($productName instanceof FHIRString)) {
             $productName = new FHIRString($productName);
         }
         $this->_trackValueSet($this->productName, $productName);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PRODUCT_NAME])) {
+            $this->_xmlLocations[self::FIELD_PRODUCT_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PRODUCT_NAME][0] = $xmlLocation;
         $this->productName = $productName;
         return $this;
     }
@@ -270,6 +271,30 @@ class FHIRMedicinalProductName extends FHIRBackboneElement
      * Detailed definition of a medicinal product, typically for uses other than direct
      * patient care (e.g. regulatory use).
      *
+     * Coding words or phrases of the name.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct\FHIRMedicinalProductNamePart ...$namePart
+     * @return static
+     */
+    public function setNamePart(FHIRMedicinalProductNamePart ...$namePart): self
+    {
+        if ([] !== $this->namePart) {
+            $this->_trackValuesRemoved(count($this->namePart));
+            $this->namePart = [];
+        }
+        if ([] === $namePart) {
+            return $this;
+        }
+        foreach($namePart as $v) {
+            $this->addNamePart($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Detailed definition of a medicinal product, typically for uses other than direct
+     * patient care (e.g. regulatory use).
+     *
      * Country where the name applies.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct\FHIRMedicinalProductCountryLanguage[]
@@ -295,6 +320,30 @@ class FHIRMedicinalProductName extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->countryLanguage[] = $countryLanguage;
+        return $this;
+    }
+
+    /**
+     * Detailed definition of a medicinal product, typically for uses other than direct
+     * patient care (e.g. regulatory use).
+     *
+     * Country where the name applies.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProduct\FHIRMedicinalProductCountryLanguage ...$countryLanguage
+     * @return static
+     */
+    public function setCountryLanguage(FHIRMedicinalProductCountryLanguage ...$countryLanguage): self
+    {
+        if ([] !== $this->countryLanguage) {
+            $this->_trackValuesRemoved(count($this->countryLanguage));
+            $this->countryLanguage = [];
+        }
+        if ([] === $countryLanguage) {
+            return $this;
+        }
+        foreach($countryLanguage as $v) {
+            $this->addCountryLanguage($v);
+        }
         return $this;
     }
 
@@ -507,12 +556,12 @@ class FHIRMedicinalProductName extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicinalProductName', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRODUCT_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getProductName())) {
             $xw->writeAttribute(self::FIELD_PRODUCT_NAME, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRODUCT_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getProductName())) {
             $xw->startElement(self::FIELD_PRODUCT_NAME);
             $v->xmlSerialize($xw, $config);

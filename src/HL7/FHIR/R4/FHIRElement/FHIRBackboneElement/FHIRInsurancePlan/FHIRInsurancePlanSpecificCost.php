@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ class FHIRInsurancePlanSpecificCost extends FHIRBackboneElement
      *
      * General category of benefit (Medical; Dental; Vision; Drug; Mental Health;
      * Substance Abuse; Hospice, Home Health).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $category = null;
@@ -103,7 +102,6 @@ class FHIRInsurancePlanSpecificCost extends FHIRBackboneElement
      * Details of a Health Insurance product/plan provided by an organization.
      *
      * List of the specific benefits under this category of benefit.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanBenefit1[]
      */
     protected null|array $benefit = [];
@@ -112,10 +110,14 @@ class FHIRInsurancePlanSpecificCost extends FHIRBackboneElement
      * Validation map for fields in type InsurancePlan.SpecificCost
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CATEGORY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRInsurancePlanSpecificCost Constructor
@@ -224,6 +226,29 @@ class FHIRInsurancePlanSpecificCost extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->benefit[] = $benefit;
+        return $this;
+    }
+
+    /**
+     * Details of a Health Insurance product/plan provided by an organization.
+     *
+     * List of the specific benefits under this category of benefit.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanBenefit1 ...$benefit
+     * @return static
+     */
+    public function setBenefit(FHIRInsurancePlanBenefit1 ...$benefit): self
+    {
+        if ([] !== $this->benefit) {
+            $this->_trackValuesRemoved(count($this->benefit));
+            $this->benefit = [];
+        }
+        if ([] === $benefit) {
+            return $this;
+        }
+        foreach($benefit as $v) {
+            $this->addBenefit($v);
+        }
         return $this;
     }
 

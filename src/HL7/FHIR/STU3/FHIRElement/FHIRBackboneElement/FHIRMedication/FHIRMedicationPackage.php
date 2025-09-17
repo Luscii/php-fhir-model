@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,7 +96,6 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The kind of container that this package comes as.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $container = null;
@@ -105,7 +104,6 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      * medication. It covers the ingredients and the packaging for a medication.
      *
      * A set of components that go to make up the described item.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationContent[]
      */
     protected null|array $content = [];
@@ -115,7 +113,6 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      *
      * Information about a group of medication produced or packaged from one production
      * run.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch[]
      */
     protected null|array $batch = [];
@@ -124,10 +121,10 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      * Validation map for fields in type Medication.Package
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationPackage Constructor
@@ -258,6 +255,30 @@ class FHIRMedicationPackage extends FHIRBackboneElement
      * This resource is primarily used for the identification and definition of a
      * medication. It covers the ingredients and the packaging for a medication.
      *
+     * A set of components that go to make up the described item.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationContent ...$content
+     * @return static
+     */
+    public function setContent(FHIRMedicationContent ...$content): self
+    {
+        if ([] !== $this->content) {
+            $this->_trackValuesRemoved(count($this->content));
+            $this->content = [];
+        }
+        if ([] === $content) {
+            return $this;
+        }
+        foreach($content as $v) {
+            $this->addContent($v);
+        }
+        return $this;
+    }
+
+    /**
+     * This resource is primarily used for the identification and definition of a
+     * medication. It covers the ingredients and the packaging for a medication.
+     *
      * Information about a group of medication produced or packaged from one production
      * run.
      *
@@ -285,6 +306,31 @@ class FHIRMedicationPackage extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->batch[] = $batch;
+        return $this;
+    }
+
+    /**
+     * This resource is primarily used for the identification and definition of a
+     * medication. It covers the ingredients and the packaging for a medication.
+     *
+     * Information about a group of medication produced or packaged from one production
+     * run.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationBatch ...$batch
+     * @return static
+     */
+    public function setBatch(FHIRMedicationBatch ...$batch): self
+    {
+        if ([] !== $this->batch) {
+            $this->_trackValuesRemoved(count($this->batch));
+            $this->batch = [];
+        }
+        if ([] === $batch) {
+            return $this;
+        }
+        foreach($batch as $v) {
+            $this->addBatch($v);
+        }
         return $this;
     }
 

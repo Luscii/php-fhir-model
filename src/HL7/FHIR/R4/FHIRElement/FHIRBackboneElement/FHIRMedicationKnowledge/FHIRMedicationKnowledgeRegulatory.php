@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ class FHIRMedicationKnowledgeRegulatory extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The authority that is specifying the regulations.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $regulatoryAuthority = null;
@@ -104,7 +103,6 @@ class FHIRMedicationKnowledgeRegulatory extends FHIRBackboneElement
      *
      * Specifies if changes are allowed when dispensing a medication from a regulatory
      * perspective.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeSubstitution[]
      */
     protected null|array $substitution = [];
@@ -112,7 +110,6 @@ class FHIRMedicationKnowledgeRegulatory extends FHIRBackboneElement
      * Information about a medication that is used to support knowledge.
      *
      * Specifies the schedule of a medication in jurisdiction.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeSchedule[]
      */
     protected null|array $schedule = [];
@@ -120,7 +117,6 @@ class FHIRMedicationKnowledgeRegulatory extends FHIRBackboneElement
      * Information about a medication that is used to support knowledge.
      *
      * The maximum number of units of the medication that can be dispensed in a period.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeMaxDispense
      */
     protected null|FHIRMedicationKnowledgeMaxDispense $maxDispense = null;
@@ -129,10 +125,14 @@ class FHIRMedicationKnowledgeRegulatory extends FHIRBackboneElement
      * Validation map for fields in type MedicationKnowledge.Regulatory
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_REGULATORY_AUTHORITY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationKnowledgeRegulatory Constructor
@@ -267,6 +267,30 @@ class FHIRMedicationKnowledgeRegulatory extends FHIRBackboneElement
     /**
      * Information about a medication that is used to support knowledge.
      *
+     * Specifies if changes are allowed when dispensing a medication from a regulatory
+     * perspective.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeSubstitution ...$substitution
+     * @return static
+     */
+    public function setSubstitution(FHIRMedicationKnowledgeSubstitution ...$substitution): self
+    {
+        if ([] !== $this->substitution) {
+            $this->_trackValuesRemoved(count($this->substitution));
+            $this->substitution = [];
+        }
+        if ([] === $substitution) {
+            return $this;
+        }
+        foreach($substitution as $v) {
+            $this->addSubstitution($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Information about a medication that is used to support knowledge.
+     *
      * Specifies the schedule of a medication in jurisdiction.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeSchedule[]
@@ -291,6 +315,29 @@ class FHIRMedicationKnowledgeRegulatory extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->schedule[] = $schedule;
+        return $this;
+    }
+
+    /**
+     * Information about a medication that is used to support knowledge.
+     *
+     * Specifies the schedule of a medication in jurisdiction.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeSchedule ...$schedule
+     * @return static
+     */
+    public function setSchedule(FHIRMedicationKnowledgeSchedule ...$schedule): self
+    {
+        if ([] !== $this->schedule) {
+            $this->_trackValuesRemoved(count($this->schedule));
+            $this->schedule = [];
+        }
+        if ([] === $schedule) {
+            return $this;
+        }
+        foreach($schedule as $v) {
+            $this->addSchedule($v);
+        }
         return $this;
     }
 

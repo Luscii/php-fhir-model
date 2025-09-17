@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,7 +128,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Business identifier associated with the detected issue record.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -137,7 +136,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Indicates the status of the detected issue.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRObservationStatus
      */
     protected null|FHIRObservationStatus $status = null;
@@ -148,7 +146,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Identifies the general type of issue identified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $category = null;
@@ -158,7 +155,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * Indicates the degree of importance associated with the identified issue based on
      * the potential impact on the patient.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDetectedIssueSeverity
      */
     protected null|FHIRDetectedIssueSeverity $severity = null;
@@ -168,7 +164,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indicates the patient whose record the detected issue is associated with.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $patient = null;
@@ -181,7 +176,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date or date-time when the detected issue was initially identified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $date = null;
@@ -192,7 +186,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * Individual or device responsible for the issue being raised. For example, a
      * decision support application or a pharmacist conducting a medication review.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $author = null;
@@ -203,7 +196,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * Indicates the resource representing the current activity or proposed activity
      * that is potentially problematic.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $implicated = [];
@@ -213,7 +205,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A textual explanation of the detected issue.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $detail = null;
@@ -224,7 +215,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      *
      * The literature, knowledge-base or similar reference that describes the
      * propensity for the detected issue identified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $reference = null;
@@ -237,7 +227,6 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * eliminate the likelihood of the risk identified by the detected issue from
      * manifesting. Can also reflect an observation of known mitigating factors that
      * may reduce/eliminate the need for any action.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDetectedIssue\FHIRDetectedIssueMitigation[]
      */
     protected null|array $mitigation = [];
@@ -246,10 +235,14 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * Validation map for fields in type DetectedIssue
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRDetectedIssue Constructor
@@ -623,16 +616,16 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
         }
         $this->_trackValueSet($this->date, $date);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DATE])) {
+            $this->_xmlLocations[self::FIELD_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DATE][0] = $xmlLocation;
         $this->date = $date;
         return $this;
     }
@@ -710,6 +703,32 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates the resource representing the current activity or proposed activity
+     * that is potentially problematic.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$implicated
+     * @return static
+     */
+    public function setImplicated(FHIRReference ...$implicated): self
+    {
+        if ([] !== $this->implicated) {
+            $this->_trackValuesRemoved(count($this->implicated));
+            $this->implicated = [];
+        }
+        if ([] === $implicated) {
+            return $this;
+        }
+        foreach($implicated as $v) {
+            $this->addImplicated($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -734,16 +753,16 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDetail(null|string|FHIRStringPrimitive|FHIRString $detail = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDetail(null|string|FHIRStringPrimitive|FHIRString $detail = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $detail && !($detail instanceof FHIRString)) {
             $detail = new FHIRString($detail);
         }
         $this->_trackValueSet($this->detail, $detail);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DETAIL])) {
-            $this->_primitiveXmlLocations[self::FIELD_DETAIL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DETAIL])) {
+            $this->_xmlLocations[self::FIELD_DETAIL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DETAIL][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DETAIL][0] = $xmlLocation;
         $this->detail = $detail;
         return $this;
     }
@@ -775,16 +794,16 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setReference(null|string|FHIRUriPrimitive|FHIRUri $reference = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setReference(null|string|FHIRUriPrimitive|FHIRUri $reference = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $reference && !($reference instanceof FHIRUri)) {
             $reference = new FHIRUri($reference);
         }
         $this->_trackValueSet($this->reference, $reference);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_REFERENCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_REFERENCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_REFERENCE])) {
+            $this->_xmlLocations[self::FIELD_REFERENCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_REFERENCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_REFERENCE][0] = $xmlLocation;
         $this->reference = $reference;
         return $this;
     }
@@ -826,6 +845,34 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
         }
         $this->_trackValueAdded();
         $this->mitigation[] = $mitigation;
+        return $this;
+    }
+
+    /**
+     * Indicates an actual or potential clinical issue with or between one or more
+     * active or proposed clinical actions for a patient; e.g. Drug-drug interaction,
+     * Ineffective treatment frequency, Procedure-condition conflict, etc.
+     *
+     * Indicates an action that has been taken or is committed to to reduce or
+     * eliminate the likelihood of the risk identified by the detected issue from
+     * manifesting. Can also reflect an observation of known mitigating factors that
+     * may reduce/eliminate the need for any action.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDetectedIssue\FHIRDetectedIssueMitigation ...$mitigation
+     * @return static
+     */
+    public function setMitigation(FHIRDetectedIssueMitigation ...$mitigation): self
+    {
+        if ([] !== $this->mitigation) {
+            $this->_trackValuesRemoved(count($this->mitigation));
+            $this->mitigation = [];
+        }
+        if ([] === $mitigation) {
+            return $this;
+        }
+        foreach($mitigation as $v) {
+            $this->addMitigation($v);
+        }
         return $this;
     }
 
@@ -1294,15 +1341,15 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
             $openedRoot = true;
             $xw->openRootNode($config, 'DetectedIssue', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->writeAttribute(self::FIELD_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DETAIL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DETAIL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDetail())) {
             $xw->writeAttribute(self::FIELD_DETAIL, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REFERENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REFERENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getReference())) {
             $xw->writeAttribute(self::FIELD_REFERENCE, $v->getValue()?->getFormattedValue());
         }
@@ -1332,7 +1379,7 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->startElement(self::FIELD_DATE);
             $v->xmlSerialize($xw, $config);
@@ -1348,13 +1395,13 @@ class FHIRDetectedIssue extends FHIRDomainResource implements PHPFHIRContainedTy
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DETAIL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DETAIL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDetail())) {
             $xw->startElement(self::FIELD_DETAIL);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REFERENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REFERENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getReference())) {
             $xw->startElement(self::FIELD_REFERENCE);
             $v->xmlSerialize($xw, $config);

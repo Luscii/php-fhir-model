@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -135,7 +135,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * A unique identifier for this particular sequence instance. This is a
      * FHIR-defined id.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -144,7 +143,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Amino Acid Sequence/ DNA Sequence / RNA Sequence.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSequenceType
      */
     protected null|FHIRSequenceType $type = null;
@@ -156,7 +154,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Whether the sequence is numbered starting at (0-based numbering or coordinates,
      * inclusive start, exclusive end) or starting at 1 (1-based numbering, inclusive
      * start and inclusive end).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $coordinateSystem = null;
@@ -166,7 +163,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The patient whose sequencing results are described by this resource.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $patient = null;
@@ -176,7 +172,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Specimen used for sequencing.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $specimen = null;
@@ -186,7 +181,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The method for sequencing, for example, chip information.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $device = null;
@@ -196,7 +190,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The organization or lab that should be responsible for this result.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $performer = null;
@@ -208,7 +201,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The number of copies of the sequence of interest. (RNASeq).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $quantity = null;
@@ -217,7 +209,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * A sequence that is used as a reference to describe variants that are present in
      * a sequence analyzed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceReferenceSeq
      */
     protected null|FHIRMolecularSequenceReferenceSeq $referenceSeq = null;
@@ -229,7 +220,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * This element can represent amino acid or nucleic sequence change(including
      * insertion,deletion,SNP,etc.) It can represent some complex mutation or segment
      * variation with the assist of CIGAR string.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant[]
      */
     protected null|array $variant = [];
@@ -241,7 +231,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Sequence that was observed. It is the result marked by referenceSeq along with
      * variant records on referenceSeq. This shall start from referenceSeq.windowStart
      * and end by referenceSeq.windowEnd.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $observedSeq = null;
@@ -251,7 +240,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * An experimental feature attribute that defines the quality of the feature in a
      * quantitative way, such as a phred quality score
      * ([SO:0001686](http://www.sequenceontology.org/browser/current_svn/term/SO:0001686)).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality[]
      */
     protected null|array $quality = [];
@@ -262,7 +250,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * Coverage (read depth or depth) is the average number of reads representing a
      * given nucleotide in the reconstructed sequence.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $readCoverage = null;
@@ -271,7 +258,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      *
      * Configurations of the external repository. The repository shall store target's
      * observedSeq or records related with target's observedSeq.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository[]
      */
     protected null|array $repository = [];
@@ -281,7 +267,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Pointer to next atomic sequence which at most contains one variant.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $pointer = [];
@@ -289,7 +274,6 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Raw data describing a biological sequence.
      *
      * Information about chromosome structure variation.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant[]
      */
     protected null|array $structureVariant = [];
@@ -298,10 +282,14 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * Validation map for fields in type MolecularSequence
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_COORDINATE_SYSTEM => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMolecularSequence Constructor
@@ -570,6 +558,33 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A unique identifier for this particular sequence instance. This is a
+     * FHIR-defined id.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * Type if a sequence -- DNA, RNA, or amino acid sequence.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -630,16 +645,16 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCoordinateSystem(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $coordinateSystem = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCoordinateSystem(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $coordinateSystem = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $coordinateSystem && !($coordinateSystem instanceof FHIRInteger)) {
             $coordinateSystem = new FHIRInteger($coordinateSystem);
         }
         $this->_trackValueSet($this->coordinateSystem, $coordinateSystem);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM])) {
-            $this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_COORDINATE_SYSTEM])) {
+            $this->_xmlLocations[self::FIELD_COORDINATE_SYSTEM] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_COORDINATE_SYSTEM][0] = $xmlLocation;
         $this->coordinateSystem = $coordinateSystem;
         return $this;
     }
@@ -889,6 +904,33 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
+     * Raw data describing a biological sequence.
+     *
+     * The definition of variant here originates from Sequence ontology
+     * ([variant_of](http://www.sequenceontology.org/browser/current_svn/term/variant_of)).
+     * This element can represent amino acid or nucleic sequence change(including
+     * insertion,deletion,SNP,etc.) It can represent some complex mutation or segment
+     * variation with the assist of CIGAR string.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceVariant ...$variant
+     * @return static
+     */
+    public function setVariant(FHIRMolecularSequenceVariant ...$variant): self
+    {
+        if ([] !== $this->variant) {
+            $this->_trackValuesRemoved(count($this->variant));
+            $this->variant = [];
+        }
+        if ([] === $variant) {
+            return $this;
+        }
+        foreach($variant as $v) {
+            $this->addVariant($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -917,16 +959,16 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setObservedSeq(null|string|FHIRStringPrimitive|FHIRString $observedSeq = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setObservedSeq(null|string|FHIRStringPrimitive|FHIRString $observedSeq = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $observedSeq && !($observedSeq instanceof FHIRString)) {
             $observedSeq = new FHIRString($observedSeq);
         }
         $this->_trackValueSet($this->observedSeq, $observedSeq);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ])) {
-            $this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_OBSERVED_SEQ])) {
+            $this->_xmlLocations[self::FIELD_OBSERVED_SEQ] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_OBSERVED_SEQ][0] = $xmlLocation;
         $this->observedSeq = $observedSeq;
         return $this;
     }
@@ -966,6 +1008,31 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
+     * Raw data describing a biological sequence.
+     *
+     * An experimental feature attribute that defines the quality of the feature in a
+     * quantitative way, such as a phred quality score
+     * ([SO:0001686](http://www.sequenceontology.org/browser/current_svn/term/SO:0001686)).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceQuality ...$quality
+     * @return static
+     */
+    public function setQuality(FHIRMolecularSequenceQuality ...$quality): self
+    {
+        if ([] !== $this->quality) {
+            $this->_trackValuesRemoved(count($this->quality));
+            $this->quality = [];
+        }
+        if ([] === $quality) {
+            return $this;
+        }
+        foreach($quality as $v) {
+            $this->addQuality($v);
+        }
+        return $this;
+    }
+
+    /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -992,16 +1059,16 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setReadCoverage(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $readCoverage = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setReadCoverage(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $readCoverage = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $readCoverage && !($readCoverage instanceof FHIRInteger)) {
             $readCoverage = new FHIRInteger($readCoverage);
         }
         $this->_trackValueSet($this->readCoverage, $readCoverage);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE])) {
-            $this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_READ_COVERAGE])) {
+            $this->_xmlLocations[self::FIELD_READ_COVERAGE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_READ_COVERAGE][0] = $xmlLocation;
         $this->readCoverage = $readCoverage;
         return $this;
     }
@@ -1035,6 +1102,30 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
         }
         $this->_trackValueAdded();
         $this->repository[] = $repository;
+        return $this;
+    }
+
+    /**
+     * Raw data describing a biological sequence.
+     *
+     * Configurations of the external repository. The repository shall store target's
+     * observedSeq or records related with target's observedSeq.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceRepository ...$repository
+     * @return static
+     */
+    public function setRepository(FHIRMolecularSequenceRepository ...$repository): self
+    {
+        if ([] !== $this->repository) {
+            $this->_trackValuesRemoved(count($this->repository));
+            $this->repository = [];
+        }
+        if ([] === $repository) {
+            return $this;
+        }
+        foreach($repository as $v) {
+            $this->addRepository($v);
+        }
         return $this;
     }
 
@@ -1073,6 +1164,31 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Pointer to next atomic sequence which at most contains one variant.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$pointer
+     * @return static
+     */
+    public function setPointer(FHIRReference ...$pointer): self
+    {
+        if ([] !== $this->pointer) {
+            $this->_trackValuesRemoved(count($this->pointer));
+            $this->pointer = [];
+        }
+        if ([] === $pointer) {
+            return $this;
+        }
+        foreach($pointer as $v) {
+            $this->addPointer($v);
+        }
+        return $this;
+    }
+
+    /**
      * Raw data describing a biological sequence.
      *
      * Information about chromosome structure variation.
@@ -1099,6 +1215,29 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
         }
         $this->_trackValueAdded();
         $this->structureVariant[] = $structureVariant;
+        return $this;
+    }
+
+    /**
+     * Raw data describing a biological sequence.
+     *
+     * Information about chromosome structure variation.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence\FHIRMolecularSequenceStructureVariant ...$structureVariant
+     * @return static
+     */
+    public function setStructureVariant(FHIRMolecularSequenceStructureVariant ...$structureVariant): self
+    {
+        if ([] !== $this->structureVariant) {
+            $this->_trackValuesRemoved(count($this->structureVariant));
+            $this->structureVariant = [];
+        }
+        if ([] === $structureVariant) {
+            return $this;
+        }
+        foreach($structureVariant as $v) {
+            $this->addStructureVariant($v);
+        }
         return $this;
     }
 
@@ -1670,15 +1809,15 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
             $openedRoot = true;
             $xw->openRootNode($config, 'MolecularSequence', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COORDINATE_SYSTEM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCoordinateSystem())) {
             $xw->writeAttribute(self::FIELD_COORDINATE_SYSTEM, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_OBSERVED_SEQ] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getObservedSeq())) {
             $xw->writeAttribute(self::FIELD_OBSERVED_SEQ, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_READ_COVERAGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getReadCoverage())) {
             $xw->writeAttribute(self::FIELD_READ_COVERAGE, $v->getValue()?->getFormattedValue());
         }
@@ -1693,7 +1832,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COORDINATE_SYSTEM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COORDINATE_SYSTEM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCoordinateSystem())) {
             $xw->startElement(self::FIELD_COORDINATE_SYSTEM);
             $v->xmlSerialize($xw, $config);
@@ -1734,7 +1873,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_OBSERVED_SEQ] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_OBSERVED_SEQ] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getObservedSeq())) {
             $xw->startElement(self::FIELD_OBSERVED_SEQ);
             $v->xmlSerialize($xw, $config);
@@ -1745,7 +1884,7 @@ class FHIRMolecularSequence extends FHIRDomainResource implements PHPFHIRContain
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_READ_COVERAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_READ_COVERAGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getReadCoverage())) {
             $xw->startElement(self::FIELD_READ_COVERAGE);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBiologicallyDerivedPro
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,7 +104,6 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Description of of processing.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -115,7 +114,6 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Procesing code.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $procedure = null;
@@ -125,7 +123,6 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Substance added during processing.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $additive = null;
@@ -138,7 +135,6 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Time of processing.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $timeDateTime = null;
@@ -148,7 +144,6 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Time of processing.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $timePeriod = null;
@@ -157,10 +152,10 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
      * Validation map for fields in type BiologicallyDerivedProduct.Processing
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRBiologicallyDerivedProductProcessing Constructor
@@ -262,16 +257,16 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -377,16 +372,16 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTimeDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $timeDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTimeDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $timeDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $timeDateTime && !($timeDateTime instanceof FHIRDateTime)) {
             $timeDateTime = new FHIRDateTime($timeDateTime);
         }
         $this->_trackValueSet($this->timeDateTime, $timeDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TIME_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_TIME_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TIME_DATE_TIME][0] = $xmlLocation;
         $this->timeDateTime = $timeDateTime;
         return $this;
     }
@@ -676,16 +671,16 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'BiologicallyDerivedProductProcessing', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTimeDateTime())) {
             $xw->writeAttribute(self::FIELD_TIME_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
@@ -701,7 +696,7 @@ class FHIRBiologicallyDerivedProductProcessing extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTimeDateTime())) {
             $xw->startElement(self::FIELD_TIME_DATE_TIME);
             $v->xmlSerialize($xw, $config);

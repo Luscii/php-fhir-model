@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSpecimenDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIRSpecimenDefinitionHandling extends FHIRBackboneElement
      * It qualifies the interval of temperature, which characterizes an occurrence of
      * handling. Conditions that are not related to temperature may be handled in the
      * instruction element.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $temperatureQualifier = null;
@@ -112,7 +111,6 @@ class FHIRSpecimenDefinitionHandling extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The temperature interval for this set of handling instructions.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $temperatureRange = null;
@@ -122,7 +120,6 @@ class FHIRSpecimenDefinitionHandling extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The maximum time interval of preservation of the specimen with these conditions.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $maxDuration = null;
@@ -133,7 +130,6 @@ class FHIRSpecimenDefinitionHandling extends FHIRBackboneElement
      *
      * Additional textual instructions for the preservation or transport of the
      * specimen. For instance, 'Protect from light exposure'.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $instruction = null;
@@ -142,10 +138,10 @@ class FHIRSpecimenDefinitionHandling extends FHIRBackboneElement
      * Validation map for fields in type SpecimenDefinition.Handling
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSpecimenDefinitionHandling Constructor
@@ -340,16 +336,16 @@ class FHIRSpecimenDefinitionHandling extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setInstruction(null|string|FHIRStringPrimitive|FHIRString $instruction = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setInstruction(null|string|FHIRStringPrimitive|FHIRString $instruction = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $instruction && !($instruction instanceof FHIRString)) {
             $instruction = new FHIRString($instruction);
         }
         $this->_trackValueSet($this->instruction, $instruction);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_INSTRUCTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_INSTRUCTION])) {
+            $this->_xmlLocations[self::FIELD_INSTRUCTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_INSTRUCTION][0] = $xmlLocation;
         $this->instruction = $instruction;
         return $this;
     }
@@ -578,7 +574,7 @@ class FHIRSpecimenDefinitionHandling extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SpecimenDefinitionHandling', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INSTRUCTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getInstruction())) {
             $xw->writeAttribute(self::FIELD_INSTRUCTION, $v->getValue()?->getFormattedValue());
         }
@@ -598,7 +594,7 @@ class FHIRSpecimenDefinitionHandling extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INSTRUCTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getInstruction())) {
             $xw->startElement(self::FIELD_INSTRUCTION);
             $v->xmlSerialize($xw, $config);

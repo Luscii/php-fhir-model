@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMessageDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
      *
      * A reference to the message definition that must be adhered to by this supported
      * response.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $message = null;
@@ -116,7 +115,6 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
      *
      * Provides a description of the circumstances in which this response should be
      * used (as opposed to one of the alternative responses).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $situation = null;
@@ -125,10 +123,14 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
      * Validation map for fields in type MessageDefinition.AllowedResponse
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_MESSAGE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMessageDefinitionAllowedResponse Constructor
@@ -249,16 +251,16 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSituation(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $situation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSituation(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $situation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $situation && !($situation instanceof FHIRMarkdown)) {
             $situation = new FHIRMarkdown($situation);
         }
         $this->_trackValueSet($this->situation, $situation);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SITUATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_SITUATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SITUATION])) {
+            $this->_xmlLocations[self::FIELD_SITUATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SITUATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SITUATION][0] = $xmlLocation;
         $this->situation = $situation;
         return $this;
     }
@@ -449,7 +451,7 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MessageDefinitionAllowedResponse', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SITUATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SITUATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSituation())) {
             $xw->writeAttribute(self::FIELD_SITUATION, $v->getValue()?->getFormattedValue());
         }
@@ -459,7 +461,7 @@ class FHIRMessageDefinitionAllowedResponse extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SITUATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SITUATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSituation())) {
             $xw->startElement(self::FIELD_SITUATION);
             $v->xmlSerialize($xw, $config);

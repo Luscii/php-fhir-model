@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRSubstance;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,6 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The amount of the ingredient in the substance - a concentration ratio.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio
      */
     protected null|FHIRRatio $quantity = null;
@@ -108,7 +107,6 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Another substance that is a component of this substance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $substanceCodeableConcept = null;
@@ -118,7 +116,6 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Another substance that is a component of this substance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $substanceReference = null;
@@ -127,10 +124,17 @@ class FHIRSubstanceIngredient extends FHIRBackboneElement
      * Validation map for fields in type Substance.Ingredient
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_SUBSTANCE_CODEABLE_CONCEPT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_SUBSTANCE_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceIngredient Constructor

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -117,7 +117,6 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * Unique identifier of the DICOM Key Object Selection (KOS) that this resource
      * represents.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -128,7 +127,6 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * A patient resource reference which is the patient subject of all DICOM SOP
      * Instances in this ImagingManifest.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $patient = null;
@@ -144,7 +142,6 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * (typically) different from the creation date of the selection resource, and from
      * dates associated with the referenced instances (e.g. capture time of the
      * referenced image).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $authoringTime = null;
@@ -158,7 +155,6 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * set of imaging SOP instances to attach in a diagnostic report, and a CAD
      * application may author a selection to describe SOP instances it used to generate
      * a detection conclusion.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $author = null;
@@ -173,7 +169,6 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * the DICOM Key Object Selection object, several of which are not supported by
      * ImagingManifest. Specifically, there is no expected behavior associated with
      * descriptions that suggest referenced images be removed or not used.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -183,7 +178,6 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      *
      * Study identity and locating information of the DICOM SOP instances in the
      * selection.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingManifest\FHIRImagingManifestStudy[]
      */
     protected null|array $study = [];
@@ -193,13 +187,16 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * @var array
      */
     private const _VALIDATION_RULES = [
+        self::FIELD_PATIENT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
         self::FIELD_STUDY => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRImagingManifest Constructor
@@ -408,16 +405,16 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAuthoringTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authoringTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAuthoringTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authoringTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $authoringTime && !($authoringTime instanceof FHIRDateTime)) {
             $authoringTime = new FHIRDateTime($authoringTime);
         }
         $this->_trackValueSet($this->authoringTime, $authoringTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AUTHORING_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_AUTHORING_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AUTHORING_TIME])) {
+            $this->_xmlLocations[self::FIELD_AUTHORING_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AUTHORING_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AUTHORING_TIME][0] = $xmlLocation;
         $this->authoringTime = $authoringTime;
         return $this;
     }
@@ -499,16 +496,16 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -544,6 +541,31 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
         }
         $this->_trackValueAdded();
         $this->study[] = $study;
+        return $this;
+    }
+
+    /**
+     * A text description of the DICOM SOP instances selected in the ImagingManifest;
+     * or the reason for, or significance of, the selection.
+     *
+     * Study identity and locating information of the DICOM SOP instances in the
+     * selection.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingManifest\FHIRImagingManifestStudy ...$study
+     * @return static
+     */
+    public function setStudy(FHIRImagingManifestStudy ...$study): self
+    {
+        if ([] !== $this->study) {
+            $this->_trackValuesRemoved(count($this->study));
+            $this->study = [];
+        }
+        if ([] === $study) {
+            return $this;
+        }
+        foreach($study as $v) {
+            $this->addStudy($v);
+        }
         return $this;
     }
 
@@ -907,11 +929,11 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
             $openedRoot = true;
             $xw->openRootNode($config, 'ImagingManifest', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHORING_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHORING_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAuthoringTime())) {
             $xw->writeAttribute(self::FIELD_AUTHORING_TIME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
@@ -926,7 +948,7 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHORING_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHORING_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAuthoringTime())) {
             $xw->startElement(self::FIELD_AUTHORING_TIME);
             $v->xmlSerialize($xw, $config);
@@ -937,7 +959,7 @@ class FHIRImagingManifest extends FHIRDomainResource implements PHPFHIRContained
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);

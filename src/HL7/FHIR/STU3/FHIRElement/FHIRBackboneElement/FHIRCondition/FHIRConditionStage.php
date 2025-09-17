@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCondition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,6 @@ class FHIRConditionStage extends FHIRBackboneElement
      *
      * A simple summary of the stage such as "Stage 3". The determination of the stage
      * is disease-specific.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $summary = null;
@@ -108,7 +107,6 @@ class FHIRConditionStage extends FHIRBackboneElement
      *
      * Reference to a formal record of the evidence on which the staging assessment is
      * based.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $assessment = [];
@@ -117,10 +115,10 @@ class FHIRConditionStage extends FHIRBackboneElement
      * Validation map for fields in type Condition.Stage
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRConditionStage Constructor
@@ -235,6 +233,32 @@ class FHIRConditionStage extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->assessment[] = $assessment;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Reference to a formal record of the evidence on which the staging assessment is
+     * based.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$assessment
+     * @return static
+     */
+    public function setAssessment(FHIRReference ...$assessment): self
+    {
+        if ([] !== $this->assessment) {
+            $this->_trackValuesRemoved(count($this->assessment));
+            $this->assessment = [];
+        }
+        if ([] === $assessment) {
+            return $this;
+        }
+        foreach($assessment as $v) {
+            $this->addAssessment($v);
+        }
         return $this;
     }
 

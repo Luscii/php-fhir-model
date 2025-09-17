@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,7 +92,6 @@ class FHIRTestScriptMetadata extends FHIRBackboneElement
      * compliance against the FHIR specification.
      *
      * A link to the FHIR specification that this test is covering.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptLink[]
      */
     protected null|array $link = [];
@@ -102,7 +101,6 @@ class FHIRTestScriptMetadata extends FHIRBackboneElement
      *
      * Capabilities that must exist and are assumed to function correctly on the FHIR
      * server being tested.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptCapability[]
      */
     protected null|array $capability = [];
@@ -118,7 +116,7 @@ class FHIRTestScriptMetadata extends FHIRBackboneElement
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRTestScriptMetadata Constructor
@@ -206,6 +204,30 @@ class FHIRTestScriptMetadata extends FHIRBackboneElement
      * A structured set of tests against a FHIR server implementation to determine
      * compliance against the FHIR specification.
      *
+     * A link to the FHIR specification that this test is covering.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptLink ...$link
+     * @return static
+     */
+    public function setLink(FHIRTestScriptLink ...$link): self
+    {
+        if ([] !== $this->link) {
+            $this->_trackValuesRemoved(count($this->link));
+            $this->link = [];
+        }
+        if ([] === $link) {
+            return $this;
+        }
+        foreach($link as $v) {
+            $this->addLink($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A structured set of tests against a FHIR server implementation to determine
+     * compliance against the FHIR specification.
+     *
      * Capabilities that must exist and are assumed to function correctly on the FHIR
      * server being tested.
      *
@@ -233,6 +255,31 @@ class FHIRTestScriptMetadata extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->capability[] = $capability;
+        return $this;
+    }
+
+    /**
+     * A structured set of tests against a FHIR server implementation to determine
+     * compliance against the FHIR specification.
+     *
+     * Capabilities that must exist and are assumed to function correctly on the FHIR
+     * server being tested.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptCapability ...$capability
+     * @return static
+     */
+    public function setCapability(FHIRTestScriptCapability ...$capability): self
+    {
+        if ([] !== $this->capability) {
+            $this->_trackValuesRemoved(count($this->capability));
+            $this->capability = [];
+        }
+        if ([] === $capability) {
+            return $this;
+        }
+        foreach($capability as $v) {
+            $this->addCapability($v);
+        }
         return $this;
     }
 

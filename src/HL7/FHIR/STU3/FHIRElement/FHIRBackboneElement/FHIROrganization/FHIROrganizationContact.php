@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIROrganization;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIROrganizationContact extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indicates a purpose for which the contact can be reached.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $purpose = null;
@@ -112,7 +111,6 @@ class FHIROrganizationContact extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A name associated with the contact.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRHumanName
      */
     protected null|FHIRHumanName $name = null;
@@ -124,7 +122,6 @@ class FHIROrganizationContact extends FHIRBackboneElement
      *
      * A contact detail (e.g. a telephone number or an email address) by which the
      * party may be contacted.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPoint[]
      */
     protected null|array $telecom = [];
@@ -138,7 +135,6 @@ class FHIROrganizationContact extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Visiting or postal addresses for the contact.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAddress
      */
     protected null|FHIRAddress $address = null;
@@ -147,10 +143,10 @@ class FHIROrganizationContact extends FHIRBackboneElement
      * Validation map for fields in type Organization.Contact
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIROrganizationContact Constructor
@@ -313,6 +309,33 @@ class FHIROrganizationContact extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->telecom[] = $telecom;
+        return $this;
+    }
+
+    /**
+     * Details for all kinds of technology mediated contact points for a person or
+     * organization, including telephone, email, etc.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A contact detail (e.g. a telephone number or an email address) by which the
+     * party may be contacted.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactPoint ...$telecom
+     * @return static
+     */
+    public function setTelecom(FHIRContactPoint ...$telecom): self
+    {
+        if ([] !== $this->telecom) {
+            $this->_trackValuesRemoved(count($this->telecom));
+            $this->telecom = [];
+        }
+        if ([] === $telecom) {
+            return $this;
+        }
+        foreach($telecom as $v) {
+            $this->addTelecom($v);
+        }
         return $this;
     }
 

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,6 @@ class FHIRQuantity extends FHIRElement
      *
      * The value of the measured amount. The value includes an implicit precision in
      * the presentation of the value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $value = null;
@@ -119,7 +118,6 @@ class FHIRQuantity extends FHIRElement
      * How the value should be understood and represented - whether the actual value is
      * greater or less than the stated value due to measurement issues; e.g. if the
      * comparator is "<" , then the real value is < stated value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantityComparator
      */
     protected null|FHIRQuantityComparator $comparator = null;
@@ -129,7 +127,6 @@ class FHIRQuantity extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A human-readable form of the unit.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $unit = null;
@@ -139,7 +136,6 @@ class FHIRQuantity extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The identification of the system that provides the coded form of the unit.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $system = null;
@@ -150,7 +146,6 @@ class FHIRQuantity extends FHIRElement
      * the Narrative, or extensions
      *
      * A computer processable form of the unit in some unit representation system.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
     protected null|FHIRCode $code = null;
@@ -159,10 +154,10 @@ class FHIRQuantity extends FHIRElement
      * Validation map for fields in type Quantity
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRQuantity Constructor
@@ -298,16 +293,16 @@ class FHIRQuantity extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValue(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $value = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValue(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $value = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $value && !($value instanceof FHIRDecimal)) {
             $value = new FHIRDecimal($value);
         }
         $this->_trackValueSet($this->value, $value);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALUE])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALUE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALUE])) {
+            $this->_xmlLocations[self::FIELD_VALUE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALUE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VALUE][0] = $xmlLocation;
         $this->value = $value;
         return $this;
     }
@@ -373,16 +368,16 @@ class FHIRQuantity extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUnit(null|string|FHIRStringPrimitive|FHIRString $unit = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setUnit(null|string|FHIRStringPrimitive|FHIRString $unit = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $unit && !($unit instanceof FHIRString)) {
             $unit = new FHIRString($unit);
         }
         $this->_trackValueSet($this->unit, $unit);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_UNIT])) {
-            $this->_primitiveXmlLocations[self::FIELD_UNIT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_UNIT])) {
+            $this->_xmlLocations[self::FIELD_UNIT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_UNIT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_UNIT][0] = $xmlLocation;
         $this->unit = $unit;
         return $this;
     }
@@ -412,16 +407,16 @@ class FHIRQuantity extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSystem(null|string|FHIRUriPrimitive|FHIRUri $system = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSystem(null|string|FHIRUriPrimitive|FHIRUri $system = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $system && !($system instanceof FHIRUri)) {
             $system = new FHIRUri($system);
         }
         $this->_trackValueSet($this->system, $system);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SYSTEM])) {
-            $this->_primitiveXmlLocations[self::FIELD_SYSTEM] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SYSTEM])) {
+            $this->_xmlLocations[self::FIELD_SYSTEM] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SYSTEM][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SYSTEM][0] = $xmlLocation;
         $this->system = $system;
         return $this;
     }
@@ -453,16 +448,16 @@ class FHIRQuantity extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCode(null|string|FHIRCodePrimitive|FHIRCode $code = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCode(null|string|FHIRCodePrimitive|FHIRCode $code = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $code && !($code instanceof FHIRCode)) {
             $code = new FHIRCode($code);
         }
         $this->_trackValueSet($this->code, $code);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CODE])) {
-            $this->_primitiveXmlLocations[self::FIELD_CODE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CODE])) {
+            $this->_xmlLocations[self::FIELD_CODE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CODE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CODE][0] = $xmlLocation;
         $this->code = $code;
         return $this;
     }
@@ -720,24 +715,24 @@ class FHIRQuantity extends FHIRElement
             $openedRoot = true;
             $xw->openRootNode($config, 'Quantity', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getValue())) {
             $xw->writeAttribute(self::FIELD_VALUE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_UNIT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_UNIT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUnit())) {
             $xw->writeAttribute(self::FIELD_UNIT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SYSTEM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SYSTEM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSystem())) {
             $xw->writeAttribute(self::FIELD_SYSTEM, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CODE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CODE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCode())) {
             $xw->writeAttribute(self::FIELD_CODE, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getValue())) {
             $xw->startElement(self::FIELD_VALUE);
             $v->xmlSerialize($xw, $config);
@@ -748,19 +743,19 @@ class FHIRQuantity extends FHIRElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_UNIT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_UNIT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUnit())) {
             $xw->startElement(self::FIELD_UNIT);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SYSTEM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SYSTEM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSystem())) {
             $xw->startElement(self::FIELD_SYSTEM);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CODE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CODE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCode())) {
             $xw->startElement(self::FIELD_CODE);
             $v->xmlSerialize($xw, $config);

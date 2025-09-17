@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A suite of updated or additional Coverages from the Insurer.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $coverage = null;
@@ -105,7 +104,6 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The contract resource which may provide more detailed information.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $contract = null;
@@ -114,7 +112,6 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
      * Eligibility resource.
      *
      * Benefits and optionally current balances by Category.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance[]
      */
     protected null|array $benefitBalance = [];
@@ -123,10 +120,10 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
      * Validation map for fields in type EligibilityResponse.Insurance
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIREligibilityResponseInsurance Constructor
@@ -274,6 +271,30 @@ class FHIREligibilityResponseInsurance extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->benefitBalance[] = $benefitBalance;
+        return $this;
+    }
+
+    /**
+     * This resource provides eligibility and plan details from the processing of an
+     * Eligibility resource.
+     *
+     * Benefits and optionally current balances by Category.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse\FHIREligibilityResponseBenefitBalance ...$benefitBalance
+     * @return static
+     */
+    public function setBenefitBalance(FHIREligibilityResponseBenefitBalance ...$benefitBalance): self
+    {
+        if ([] !== $this->benefitBalance) {
+            $this->_trackValuesRemoved(count($this->benefitBalance));
+            $this->benefitBalance = [];
+        }
+        if ([] === $benefitBalance) {
+            return $this;
+        }
+        foreach($benefitBalance as $v) {
+            $this->addBenefitBalance($v);
+        }
         return $this;
     }
 

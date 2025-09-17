@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,7 +93,6 @@ class FHIRMeasureReportStratifier extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The identifier of this stratifier, as defined in the measure definition.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -103,7 +102,6 @@ class FHIRMeasureReportStratifier extends FHIRBackboneElement
      * This element contains the results for a single stratum within the stratifier.
      * For example, when stratifying on administrative gender, there will be four
      * strata, one for each possible gender value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport\FHIRMeasureReportStratum[]
      */
     protected null|array $stratum = [];
@@ -112,10 +110,10 @@ class FHIRMeasureReportStratifier extends FHIRBackboneElement
      * Validation map for fields in type MeasureReport.Stratifier
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMeasureReportStratifier Constructor
@@ -224,6 +222,31 @@ class FHIRMeasureReportStratifier extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->stratum[] = $stratum;
+        return $this;
+    }
+
+    /**
+     * The MeasureReport resource contains the results of evaluating a measure.
+     *
+     * This element contains the results for a single stratum within the stratifier.
+     * For example, when stratifying on administrative gender, there will be four
+     * strata, one for each possible gender value.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport\FHIRMeasureReportStratum ...$stratum
+     * @return static
+     */
+    public function setStratum(FHIRMeasureReportStratum ...$stratum): self
+    {
+        if ([] !== $this->stratum) {
+            $this->_trackValuesRemoved(count($this->stratum));
+            $this->stratum = [];
+        }
+        if ([] === $stratum) {
+            return $this;
+        }
+        foreach($stratum as $v) {
+            $this->addStratum($v);
+        }
         return $this;
     }
 

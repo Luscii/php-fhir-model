@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -129,7 +129,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * Used in supporting different identifiers for the same product, e.g. manufacturer
      * code and retailer code.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -140,7 +139,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The type of item - medication, device, service, protocol or other.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -149,7 +147,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Whether the entry represents an orderable item.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $orderable = null;
@@ -159,7 +156,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The item in a catalog or definition.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $referencedItem = null;
@@ -170,7 +166,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Used in supporting related concepts, e.g. NDC to RxNorm.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $additionalIdentifier = [];
@@ -181,7 +176,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Classes of devices, or ATC for medication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $classification = [];
@@ -190,7 +184,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * Used to support catalog exchange even for unsupported products, e.g. getting
      * list of medications even if not prescribable.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPublicationStatus
      */
     protected null|FHIRPublicationStatus $status = null;
@@ -200,7 +193,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The time period in which this catalog entry is expected to be active.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $validityPeriod = null;
@@ -213,7 +205,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date until which this catalog entry is expected to be active.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $validTo = null;
@@ -227,7 +218,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * Typically date of issue is different from the beginning of the validity. This
      * can be used to see when an item was last updated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $lastUpdated = null;
@@ -238,7 +228,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Used for examplefor Out of Formulary, or any specifics.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $additionalCharacteristic = [];
@@ -249,7 +238,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * User for example for ATC classification, or.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $additionalClassification = [];
@@ -258,7 +246,6 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * Used for example, to point to a substance, or to a device used to administer a
      * medication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCatalogEntry\FHIRCatalogEntryRelatedEntry[]
      */
     protected null|array $relatedEntry = [];
@@ -267,10 +254,17 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * Validation map for fields in type CatalogEntry
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_ORDERABLE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_REFERENCED_ITEM => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCatalogEntry Constructor
@@ -518,6 +512,33 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Used in supporting different identifiers for the same product, e.g. manufacturer
+     * code and retailer code.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -576,16 +597,16 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOrderable(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $orderable = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOrderable(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $orderable = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $orderable && !($orderable instanceof FHIRBoolean)) {
             $orderable = new FHIRBoolean($orderable);
         }
         $this->_trackValueSet($this->orderable, $orderable);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ORDERABLE])) {
-            $this->_primitiveXmlLocations[self::FIELD_ORDERABLE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ORDERABLE])) {
+            $this->_xmlLocations[self::FIELD_ORDERABLE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ORDERABLE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ORDERABLE][0] = $xmlLocation;
         $this->orderable = $orderable;
         return $this;
     }
@@ -661,6 +682,32 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Used in supporting related concepts, e.g. NDC to RxNorm.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$additionalIdentifier
+     * @return static
+     */
+    public function setAdditionalIdentifier(FHIRIdentifier ...$additionalIdentifier): self
+    {
+        if ([] !== $this->additionalIdentifier) {
+            $this->_trackValuesRemoved(count($this->additionalIdentifier));
+            $this->additionalIdentifier = [];
+        }
+        if ([] === $additionalIdentifier) {
+            return $this;
+        }
+        foreach($additionalIdentifier as $v) {
+            $this->addAdditionalIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -693,6 +740,32 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         $this->_trackValueAdded();
         $this->classification[] = $classification;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Classes of devices, or ATC for medication.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$classification
+     * @return static
+     */
+    public function setClassification(FHIRCodeableConcept ...$classification): self
+    {
+        if ([] !== $this->classification) {
+            $this->_trackValuesRemoved(count($this->classification));
+            $this->classification = [];
+        }
+        if ([] === $classification) {
+            return $this;
+        }
+        foreach($classification as $v) {
+            $this->addClassification($v);
+        }
         return $this;
     }
 
@@ -793,16 +866,16 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValidTo(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $validTo = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValidTo(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $validTo = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $validTo && !($validTo instanceof FHIRDateTime)) {
             $validTo = new FHIRDateTime($validTo);
         }
         $this->_trackValueSet($this->validTo, $validTo);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALID_TO])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALID_TO] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALID_TO])) {
+            $this->_xmlLocations[self::FIELD_VALID_TO] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALID_TO][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VALID_TO][0] = $xmlLocation;
         $this->validTo = $validTo;
         return $this;
     }
@@ -840,16 +913,16 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLastUpdated(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $lastUpdated = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLastUpdated(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $lastUpdated = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $lastUpdated && !($lastUpdated instanceof FHIRDateTime)) {
             $lastUpdated = new FHIRDateTime($lastUpdated);
         }
         $this->_trackValueSet($this->lastUpdated, $lastUpdated);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED])) {
-            $this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LAST_UPDATED])) {
+            $this->_xmlLocations[self::FIELD_LAST_UPDATED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LAST_UPDATED][0] = $xmlLocation;
         $this->lastUpdated = $lastUpdated;
         return $this;
     }
@@ -896,6 +969,32 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Used for examplefor Out of Formulary, or any specifics.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$additionalCharacteristic
+     * @return static
+     */
+    public function setAdditionalCharacteristic(FHIRCodeableConcept ...$additionalCharacteristic): self
+    {
+        if ([] !== $this->additionalCharacteristic) {
+            $this->_trackValuesRemoved(count($this->additionalCharacteristic));
+            $this->additionalCharacteristic = [];
+        }
+        if ([] === $additionalCharacteristic) {
+            return $this;
+        }
+        foreach($additionalCharacteristic as $v) {
+            $this->addAdditionalCharacteristic($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * User for example for ATC classification, or.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
@@ -923,6 +1022,32 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         $this->_trackValueAdded();
         $this->additionalClassification[] = $additionalClassification;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * User for example for ATC classification, or.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$additionalClassification
+     * @return static
+     */
+    public function setAdditionalClassification(FHIRCodeableConcept ...$additionalClassification): self
+    {
+        if ([] !== $this->additionalClassification) {
+            $this->_trackValuesRemoved(count($this->additionalClassification));
+            $this->additionalClassification = [];
+        }
+        if ([] === $additionalClassification) {
+            return $this;
+        }
+        foreach($additionalClassification as $v) {
+            $this->addAdditionalClassification($v);
+        }
         return $this;
     }
 
@@ -955,6 +1080,30 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         $this->_trackValueAdded();
         $this->relatedEntry[] = $relatedEntry;
+        return $this;
+    }
+
+    /**
+     * Catalog entries are wrappers that contextualize items included in a catalog.
+     *
+     * Used for example, to point to a substance, or to a device used to administer a
+     * medication.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCatalogEntry\FHIRCatalogEntryRelatedEntry ...$relatedEntry
+     * @return static
+     */
+    public function setRelatedEntry(FHIRCatalogEntryRelatedEntry ...$relatedEntry): self
+    {
+        if ([] !== $this->relatedEntry) {
+            $this->_trackValuesRemoved(count($this->relatedEntry));
+            $this->relatedEntry = [];
+        }
+        if ([] === $relatedEntry) {
+            return $this;
+        }
+        foreach($relatedEntry as $v) {
+            $this->addRelatedEntry($v);
+        }
         return $this;
     }
 
@@ -1469,15 +1618,15 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
             $openedRoot = true;
             $xw->openRootNode($config, 'CatalogEntry', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ORDERABLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ORDERABLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOrderable())) {
             $xw->writeAttribute(self::FIELD_ORDERABLE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALID_TO] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALID_TO] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getValidTo())) {
             $xw->writeAttribute(self::FIELD_VALID_TO, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_UPDATED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLastUpdated())) {
             $xw->writeAttribute(self::FIELD_LAST_UPDATED, $v->getValue()?->getFormattedValue());
         }
@@ -1492,7 +1641,7 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ORDERABLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ORDERABLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOrderable())) {
             $xw->startElement(self::FIELD_ORDERABLE);
             $v->xmlSerialize($xw, $config);
@@ -1523,13 +1672,13 @@ class FHIRCatalogEntry extends FHIRDomainResource implements PHPFHIRContainedTyp
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALID_TO] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALID_TO] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getValidTo())) {
             $xw->startElement(self::FIELD_VALID_TO);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_UPDATED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLastUpdated())) {
             $xw->startElement(self::FIELD_LAST_UPDATED);
             $v->xmlSerialize($xw, $config);

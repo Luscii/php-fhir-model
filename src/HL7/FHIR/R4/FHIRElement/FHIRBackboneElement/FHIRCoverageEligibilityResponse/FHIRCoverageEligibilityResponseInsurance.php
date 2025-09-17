@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityRes
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIRCoverageEligibilityResponseInsurance extends FHIRBackboneElement
      * Reference to the insurance card level information contained in the Coverage
      * resource. The coverage issuing insurer will use these details to locate the
      * patient's actual coverage within the insurer's information system.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $coverage = null;
@@ -112,7 +111,6 @@ class FHIRCoverageEligibilityResponseInsurance extends FHIRBackboneElement
      *
      * Flag indicating if the coverage provided is inforce currently if no service
      * date(s) specified or for the whole duration of the service dates.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $inforce = null;
@@ -122,7 +120,6 @@ class FHIRCoverageEligibilityResponseInsurance extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The term of the benefits documented in this response.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $benefitPeriod = null;
@@ -132,7 +129,6 @@ class FHIRCoverageEligibilityResponseInsurance extends FHIRBackboneElement
      *
      * Benefits and optionally current balances, and authorization details by category
      * or service.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityResponse\FHIRCoverageEligibilityResponseItem[]
      */
     protected null|array $item = [];
@@ -141,10 +137,14 @@ class FHIRCoverageEligibilityResponseInsurance extends FHIRBackboneElement
      * Validation map for fields in type CoverageEligibilityResponse.Insurance
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_COVERAGE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCoverageEligibilityResponseInsurance Constructor
@@ -275,16 +275,16 @@ class FHIRCoverageEligibilityResponseInsurance extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setInforce(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $inforce = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setInforce(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $inforce = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $inforce && !($inforce instanceof FHIRBoolean)) {
             $inforce = new FHIRBoolean($inforce);
         }
         $this->_trackValueSet($this->inforce, $inforce);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_INFORCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_INFORCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_INFORCE])) {
+            $this->_xmlLocations[self::FIELD_INFORCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_INFORCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_INFORCE][0] = $xmlLocation;
         $this->inforce = $inforce;
         return $this;
     }
@@ -354,6 +354,31 @@ class FHIRCoverageEligibilityResponseInsurance extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->item[] = $item;
+        return $this;
+    }
+
+    /**
+     * This resource provides eligibility and plan details from the processing of an
+     * CoverageEligibilityRequest resource.
+     *
+     * Benefits and optionally current balances, and authorization details by category
+     * or service.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityResponse\FHIRCoverageEligibilityResponseItem ...$item
+     * @return static
+     */
+    public function setItem(FHIRCoverageEligibilityResponseItem ...$item): self
+    {
+        if ([] !== $this->item) {
+            $this->_trackValuesRemoved(count($this->item));
+            $this->item = [];
+        }
+        if ([] === $item) {
+            return $this;
+        }
+        foreach($item as $v) {
+            $this->addItem($v);
+        }
         return $this;
     }
 
@@ -583,7 +608,7 @@ class FHIRCoverageEligibilityResponseInsurance extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'CoverageEligibilityResponseInsurance', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INFORCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INFORCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getInforce())) {
             $xw->writeAttribute(self::FIELD_INFORCE, $v->getValue()?->getFormattedValue());
         }
@@ -593,7 +618,7 @@ class FHIRCoverageEligibilityResponseInsurance extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INFORCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INFORCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getInforce())) {
             $xw->startElement(self::FIELD_INFORCE);
             $v->xmlSerialize($xw, $config);

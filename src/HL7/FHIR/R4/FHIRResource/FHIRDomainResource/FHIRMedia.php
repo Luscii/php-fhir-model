@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -152,7 +152,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * Identifiers associated with the image - these may include identifiers for the
      * image itself, identifiers for the context of its collection (e.g. series ids)
      * and context ids such as accession numbers or other workflow identifiers.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -162,7 +161,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A procedure that is fulfilled in whole or in part by the creation of this media.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $basedOn = [];
@@ -172,7 +170,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A larger event of which this particular event is a component or step.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $partOf = [];
@@ -181,7 +178,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The current state of the {{title}}.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIREventStatus
      */
     protected null|FHIREventStatus $status = null;
@@ -193,7 +189,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * A code that classifies whether the media is an image, video or audio recording
      * or some other media category.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -206,7 +201,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * Details of the type of the media - usually, how it was acquired (what type of
      * device). If images sourced from a DICOM system, are wrapped in a Media resource,
      * then this is the modality.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $modality = null;
@@ -217,7 +211,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The name of the imaging view e.g. Lateral or Antero-posterior (AP).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $view = null;
@@ -227,7 +220,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Who/What this Media is a record of.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -237,7 +229,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The encounter that establishes the context for this media.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $encounter = null;
@@ -250,7 +241,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date and time(s) at which the media was collected.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $createdDateTime = null;
@@ -260,7 +250,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The date and time(s) at which the media was collected.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $createdPeriod = null;
@@ -274,7 +263,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The date and time this version of the media was made available to providers,
      * typically after having been reviewed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
     protected null|FHIRInstant $issued = null;
@@ -284,7 +272,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The person who administered the collection of the image.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $operator = null;
@@ -295,7 +282,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Describes why the event occurred in coded or textual form.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $reasonCode = [];
@@ -307,7 +293,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * Indicates the site on the subject's body where the observation was made (i.e.
      * the target site).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $bodySite = null;
@@ -318,7 +303,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The name of the device / manufacturer of the device that was used to make the
      * recording.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $deviceName = null;
@@ -328,7 +312,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The device used to collect the media.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $device = null;
@@ -338,7 +321,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * the Narrative, or extensions
      *
      * Height of the image in pixels (photo/video).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $height = null;
@@ -348,7 +330,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * the Narrative, or extensions
      *
      * Width of the image in pixels (photo/video).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $width = null;
@@ -362,7 +343,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * animated gif. If there is more than one frame, this SHALL have a value in order
      * to alert interface software that a multi-frame capable rendering widget is
      * required.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $frames = null;
@@ -373,7 +353,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The duration of the recording in seconds - for audio and video.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $duration = null;
@@ -384,7 +363,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      *
      * The actual content of the media - inline or by direct reference to the media
      * source file.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment
      */
     protected null|FHIRAttachment $content = null;
@@ -395,7 +373,6 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Comments made about the media by the performer, subject or other participants.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -404,10 +381,17 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * Validation map for fields in type Media
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CONTENT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedia Constructor
@@ -759,6 +743,34 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifiers associated with the image - these may include identifiers for the
+     * image itself, identifiers for the context of its collection (e.g. series ids)
+     * and context ids such as accession numbers or other workflow identifiers.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -797,6 +809,31 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * A procedure that is fulfilled in whole or in part by the creation of this media.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$basedOn
+     * @return static
+     */
+    public function setBasedOn(FHIRReference ...$basedOn): self
+    {
+        if ([] !== $this->basedOn) {
+            $this->_trackValuesRemoved(count($this->basedOn));
+            $this->basedOn = [];
+        }
+        if ([] === $basedOn) {
+            return $this;
+        }
+        foreach($basedOn as $v) {
+            $this->addBasedOn($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * A larger event of which this particular event is a component or step.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
@@ -823,6 +860,31 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
         }
         $this->_trackValueAdded();
         $this->partOf[] = $partOf;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A larger event of which this particular event is a component or step.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$partOf
+     * @return static
+     */
+    public function setPartOf(FHIRReference ...$partOf): self
+    {
+        if ([] !== $this->partOf) {
+            $this->_trackValuesRemoved(count($this->partOf));
+            $this->partOf = [];
+        }
+        if ([] === $partOf) {
+            return $this;
+        }
+        foreach($partOf as $v) {
+            $this->addPartOf($v);
+        }
         return $this;
     }
 
@@ -1071,16 +1133,16 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCreatedDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $createdDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCreatedDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $createdDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $createdDateTime && !($createdDateTime instanceof FHIRDateTime)) {
             $createdDateTime = new FHIRDateTime($createdDateTime);
         }
         $this->_trackValueSet($this->createdDateTime, $createdDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CREATED_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_CREATED_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CREATED_DATE_TIME][0] = $xmlLocation;
         $this->createdDateTime = $createdDateTime;
         return $this;
     }
@@ -1152,16 +1214,16 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIssued(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $issued = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setIssued(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $issued = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $issued && !($issued instanceof FHIRInstant)) {
             $issued = new FHIRInstant($issued);
         }
         $this->_trackValueSet($this->issued, $issued);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ISSUED])) {
-            $this->_primitiveXmlLocations[self::FIELD_ISSUED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ISSUED])) {
+            $this->_xmlLocations[self::FIELD_ISSUED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ISSUED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ISSUED][0] = $xmlLocation;
         $this->issued = $issued;
         return $this;
     }
@@ -1242,6 +1304,32 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Describes why the event occurred in coded or textual form.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$reasonCode
+     * @return static
+     */
+    public function setReasonCode(FHIRCodeableConcept ...$reasonCode): self
+    {
+        if ([] !== $this->reasonCode) {
+            $this->_trackValuesRemoved(count($this->reasonCode));
+            $this->reasonCode = [];
+        }
+        if ([] === $reasonCode) {
+            return $this;
+        }
+        foreach($reasonCode as $v) {
+            $this->addReasonCode($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Indicates the site on the subject's body where the observation was made (i.e.
      * the target site).
      *
@@ -1301,16 +1389,16 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDeviceName(null|string|FHIRStringPrimitive|FHIRString $deviceName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDeviceName(null|string|FHIRStringPrimitive|FHIRString $deviceName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $deviceName && !($deviceName instanceof FHIRString)) {
             $deviceName = new FHIRString($deviceName);
         }
         $this->_trackValueSet($this->deviceName, $deviceName);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DEVICE_NAME])) {
+            $this->_xmlLocations[self::FIELD_DEVICE_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DEVICE_NAME][0] = $xmlLocation;
         $this->deviceName = $deviceName;
         return $this;
     }
@@ -1374,16 +1462,16 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setHeight(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $height = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setHeight(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $height = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $height && !($height instanceof FHIRPositiveInt)) {
             $height = new FHIRPositiveInt($height);
         }
         $this->_trackValueSet($this->height, $height);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_HEIGHT])) {
-            $this->_primitiveXmlLocations[self::FIELD_HEIGHT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_HEIGHT])) {
+            $this->_xmlLocations[self::FIELD_HEIGHT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_HEIGHT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_HEIGHT][0] = $xmlLocation;
         $this->height = $height;
         return $this;
     }
@@ -1413,16 +1501,16 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setWidth(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $width = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setWidth(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $width = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $width && !($width instanceof FHIRPositiveInt)) {
             $width = new FHIRPositiveInt($width);
         }
         $this->_trackValueSet($this->width, $width);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_WIDTH])) {
-            $this->_primitiveXmlLocations[self::FIELD_WIDTH] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_WIDTH])) {
+            $this->_xmlLocations[self::FIELD_WIDTH] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_WIDTH][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_WIDTH][0] = $xmlLocation;
         $this->width = $width;
         return $this;
     }
@@ -1460,16 +1548,16 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFrames(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $frames = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setFrames(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $frames = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $frames && !($frames instanceof FHIRPositiveInt)) {
             $frames = new FHIRPositiveInt($frames);
         }
         $this->_trackValueSet($this->frames, $frames);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_FRAMES])) {
-            $this->_primitiveXmlLocations[self::FIELD_FRAMES] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_FRAMES])) {
+            $this->_xmlLocations[self::FIELD_FRAMES] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_FRAMES][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_FRAMES][0] = $xmlLocation;
         $this->frames = $frames;
         return $this;
     }
@@ -1501,16 +1589,16 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDuration(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $duration = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDuration(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $duration = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $duration && !($duration instanceof FHIRDecimal)) {
             $duration = new FHIRDecimal($duration);
         }
         $this->_trackValueSet($this->duration, $duration);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DURATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DURATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DURATION])) {
+            $this->_xmlLocations[self::FIELD_DURATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DURATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DURATION][0] = $xmlLocation;
         $this->duration = $duration;
         return $this;
     }
@@ -1584,6 +1672,32 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
         }
         $this->_trackValueAdded();
         $this->note[] = $note;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Comments made about the media by the performer, subject or other participants.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
         return $this;
     }
 
@@ -2318,31 +2432,31 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
             $openedRoot = true;
             $xw->openRootNode($config, 'Media', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CREATED_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCreatedDateTime())) {
             $xw->writeAttribute(self::FIELD_CREATED_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ISSUED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ISSUED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIssued())) {
             $xw->writeAttribute(self::FIELD_ISSUED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DEVICE_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDeviceName())) {
             $xw->writeAttribute(self::FIELD_DEVICE_NAME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_HEIGHT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_HEIGHT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getHeight())) {
             $xw->writeAttribute(self::FIELD_HEIGHT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WIDTH] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WIDTH] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getWidth())) {
             $xw->writeAttribute(self::FIELD_WIDTH, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FRAMES] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FRAMES] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFrames())) {
             $xw->writeAttribute(self::FIELD_FRAMES, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DURATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DURATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDuration())) {
             $xw->writeAttribute(self::FIELD_DURATION, $v->getValue()?->getFormattedValue());
         }
@@ -2392,7 +2506,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CREATED_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CREATED_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCreatedDateTime())) {
             $xw->startElement(self::FIELD_CREATED_DATE_TIME);
             $v->xmlSerialize($xw, $config);
@@ -2403,7 +2517,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ISSUED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ISSUED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIssued())) {
             $xw->startElement(self::FIELD_ISSUED);
             $v->xmlSerialize($xw, $config);
@@ -2424,7 +2538,7 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DEVICE_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DEVICE_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDeviceName())) {
             $xw->startElement(self::FIELD_DEVICE_NAME);
             $v->xmlSerialize($xw, $config);
@@ -2435,25 +2549,25 @@ class FHIRMedia extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_HEIGHT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_HEIGHT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getHeight())) {
             $xw->startElement(self::FIELD_HEIGHT);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WIDTH] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WIDTH] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getWidth())) {
             $xw->startElement(self::FIELD_WIDTH);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FRAMES] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FRAMES] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFrames())) {
             $xw->startElement(self::FIELD_FRAMES);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DURATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DURATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDuration())) {
             $xw->startElement(self::FIELD_DURATION);
             $v->xmlSerialize($xw, $config);

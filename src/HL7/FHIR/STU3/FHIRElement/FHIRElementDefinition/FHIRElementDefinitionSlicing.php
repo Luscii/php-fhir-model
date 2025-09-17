@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,6 @@ class FHIRElementDefinitionSlicing extends FHIRElement
      * the child elements in the instance data SHALL completely distinguish which slice
      * the element in the resource matches based on the allowed values for those
      * elements in each of the slices.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition\FHIRElementDefinitionDiscriminator[]
      */
     protected null|array $discriminator = [];
@@ -119,7 +118,6 @@ class FHIRElementDefinitionSlicing extends FHIRElement
      * A human-readable text description of how the slicing works. If there is no
      * discriminator, this is required to be present to provide whatever information is
      * possible about how the slices can be differentiated.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -129,7 +127,6 @@ class FHIRElementDefinitionSlicing extends FHIRElement
      *
      * If the matching elements have to occur in the same order as defined in the
      * profile.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $ordered = null;
@@ -139,7 +136,6 @@ class FHIRElementDefinitionSlicing extends FHIRElement
      *
      * Whether additional slices are allowed or not. When the slices are ordered,
      * profile authors can also say that additional slices are only allowed at the end.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRSlicingRules
      */
     protected null|FHIRSlicingRules $rules = null;
@@ -148,10 +144,14 @@ class FHIRElementDefinitionSlicing extends FHIRElement
      * Validation map for fields in type ElementDefinition.Slicing
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_RULES => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRElementDefinitionSlicing Constructor
@@ -282,6 +282,35 @@ class FHIRElementDefinitionSlicing extends FHIRElement
     }
 
     /**
+     * Captures constraints on each element within the resource, profile, or extension.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Designates which child elements are used to discriminate between the slices when
+     * processing an instance. If one or more discriminators are provided, the value of
+     * the child elements in the instance data SHALL completely distinguish which slice
+     * the element in the resource matches based on the allowed values for those
+     * elements in each of the slices.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition\FHIRElementDefinitionDiscriminator ...$discriminator
+     * @return static
+     */
+    public function setDiscriminator(FHIRElementDefinitionDiscriminator ...$discriminator): self
+    {
+        if ([] !== $this->discriminator) {
+            $this->_trackValuesRemoved(count($this->discriminator));
+            $this->discriminator = [];
+        }
+        if ([] === $discriminator) {
+            return $this;
+        }
+        foreach($discriminator as $v) {
+            $this->addDiscriminator($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -310,16 +339,16 @@ class FHIRElementDefinitionSlicing extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -349,16 +378,16 @@ class FHIRElementDefinitionSlicing extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOrdered(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $ordered = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOrdered(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $ordered = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $ordered && !($ordered instanceof FHIRBoolean)) {
             $ordered = new FHIRBoolean($ordered);
         }
         $this->_trackValueSet($this->ordered, $ordered);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ORDERED])) {
-            $this->_primitiveXmlLocations[self::FIELD_ORDERED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ORDERED])) {
+            $this->_xmlLocations[self::FIELD_ORDERED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ORDERED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ORDERED][0] = $xmlLocation;
         $this->ordered = $ordered;
         return $this;
     }
@@ -617,11 +646,11 @@ class FHIRElementDefinitionSlicing extends FHIRElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ElementDefinitionSlicing', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ORDERED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ORDERED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOrdered())) {
             $xw->writeAttribute(self::FIELD_ORDERED, $v->getValue()?->getFormattedValue());
         }
@@ -631,13 +660,13 @@ class FHIRElementDefinitionSlicing extends FHIRElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ORDERED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ORDERED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOrdered())) {
             $xw->startElement(self::FIELD_ORDERED);
             $v->xmlSerialize($xw, $config);

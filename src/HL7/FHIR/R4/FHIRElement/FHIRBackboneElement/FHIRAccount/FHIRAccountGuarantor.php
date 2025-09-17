@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAccount;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The entity who is responsible.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $party = null;
@@ -109,7 +108,6 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      *
      * A guarantor may be placed on credit hold or otherwise have their role
      * temporarily suspended.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $onHold = null;
@@ -119,7 +117,6 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The timeframe during which the guarantor accepts responsibility for the account.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $period = null;
@@ -128,10 +125,14 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      * Validation map for fields in type Account.Guarantor
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_PARTY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRAccountGuarantor Constructor
@@ -243,16 +244,16 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOnHold(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $onHold = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOnHold(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $onHold = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $onHold && !($onHold instanceof FHIRBoolean)) {
             $onHold = new FHIRBoolean($onHold);
         }
         $this->_trackValueSet($this->onHold, $onHold);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ON_HOLD])) {
-            $this->_primitiveXmlLocations[self::FIELD_ON_HOLD] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ON_HOLD])) {
+            $this->_xmlLocations[self::FIELD_ON_HOLD] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ON_HOLD][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ON_HOLD][0] = $xmlLocation;
         $this->onHold = $onHold;
         return $this;
     }
@@ -496,7 +497,7 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'AccountGuarantor', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ON_HOLD] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ON_HOLD] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOnHold())) {
             $xw->writeAttribute(self::FIELD_ON_HOLD, $v->getValue()?->getFormattedValue());
         }
@@ -506,7 +507,7 @@ class FHIRAccountGuarantor extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ON_HOLD] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ON_HOLD] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOnHold())) {
             $xw->startElement(self::FIELD_ON_HOLD);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,7 +114,6 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * Used to capture quantitative values for a variety of elements. If only limits
      * are given, the arithmetic mean would be the average. If only a single definite
      * value for a given element is given, it would be captured in this field.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $amountQuantity = null;
@@ -126,7 +125,6 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * Used to capture quantitative values for a variety of elements. If only limits
      * are given, the arithmetic mean would be the average. If only a single definite
      * value for a given element is given, it would be captured in this field.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $amountRange = null;
@@ -138,7 +136,6 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * Used to capture quantitative values for a variety of elements. If only limits
      * are given, the arithmetic mean would be the average. If only a single definite
      * value for a given element is given, it would be captured in this field.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $amountString = null;
@@ -155,7 +152,6 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * the amount refers to a mole ratio or weight ratio. For any given element an
      * effort should be made to use same the amount type for all related definitional
      * elements.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $amountType = null;
@@ -165,7 +161,6 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A textual comment on a numeric value.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $amountText = null;
@@ -180,7 +175,6 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Reference range of possible or expected values.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceAmount\FHIRSubstanceAmountReferenceRange
      */
     protected null|FHIRSubstanceAmountReferenceRange $referenceRange = null;
@@ -189,10 +183,10 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * Validation map for fields in type SubstanceAmount
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceAmount Constructor
@@ -385,16 +379,16 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAmountString(null|string|FHIRStringPrimitive|FHIRString $amountString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAmountString(null|string|FHIRStringPrimitive|FHIRString $amountString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $amountString && !($amountString instanceof FHIRString)) {
             $amountString = new FHIRString($amountString);
         }
         $this->_trackValueSet($this->amountString, $amountString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AMOUNT_STRING])) {
+            $this->_xmlLocations[self::FIELD_AMOUNT_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AMOUNT_STRING][0] = $xmlLocation;
         $this->amountString = $amountString;
         return $this;
     }
@@ -472,16 +466,16 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAmountText(null|string|FHIRStringPrimitive|FHIRString $amountText = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAmountText(null|string|FHIRStringPrimitive|FHIRString $amountText = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $amountText && !($amountText instanceof FHIRString)) {
             $amountText = new FHIRString($amountText);
         }
         $this->_trackValueSet($this->amountText, $amountText);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AMOUNT_TEXT])) {
-            $this->_primitiveXmlLocations[self::FIELD_AMOUNT_TEXT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AMOUNT_TEXT])) {
+            $this->_xmlLocations[self::FIELD_AMOUNT_TEXT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AMOUNT_TEXT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AMOUNT_TEXT][0] = $xmlLocation;
         $this->amountText = $amountText;
         return $this;
     }
@@ -800,11 +794,11 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceAmount', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAmountString())) {
             $xw->writeAttribute(self::FIELD_AMOUNT_STRING, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT_TEXT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT_TEXT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAmountText())) {
             $xw->writeAttribute(self::FIELD_AMOUNT_TEXT, $v->getValue()?->getFormattedValue());
         }
@@ -819,7 +813,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAmountString())) {
             $xw->startElement(self::FIELD_AMOUNT_STRING);
             $v->xmlSerialize($xw, $config);
@@ -830,7 +824,7 @@ class FHIRSubstanceAmount extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT_TEXT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT_TEXT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAmountText())) {
             $xw->startElement(self::FIELD_AMOUNT_TEXT);
             $v->xmlSerialize($xw, $config);

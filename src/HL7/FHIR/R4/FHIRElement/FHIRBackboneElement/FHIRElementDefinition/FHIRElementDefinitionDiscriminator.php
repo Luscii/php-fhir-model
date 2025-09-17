@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRElementDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,6 @@ class FHIRElementDefinitionDiscriminator extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * How the element value is interpreted when discrimination is evaluated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDiscriminatorType
      */
     protected null|FHIRDiscriminatorType $type = null;
@@ -109,7 +108,6 @@ class FHIRElementDefinitionDiscriminator extends FHIRBackboneElement
      * A FHIRPath expression, using [the simple subset of
      * FHIRPath](fhirpath.html#simple), that is used to identify the element on which
      * discrimination is based.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $path = null;
@@ -118,10 +116,17 @@ class FHIRElementDefinitionDiscriminator extends FHIRBackboneElement
      * Validation map for fields in type ElementDefinition.Discriminator
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_PATH => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRElementDefinitionDiscriminator Constructor
@@ -238,16 +243,16 @@ class FHIRElementDefinitionDiscriminator extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPath(null|string|FHIRStringPrimitive|FHIRString $path = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPath(null|string|FHIRStringPrimitive|FHIRString $path = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $path && !($path instanceof FHIRString)) {
             $path = new FHIRString($path);
         }
         $this->_trackValueSet($this->path, $path);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATH])) {
-            $this->_primitiveXmlLocations[self::FIELD_PATH] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PATH])) {
+            $this->_xmlLocations[self::FIELD_PATH] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PATH][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PATH][0] = $xmlLocation;
         $this->path = $path;
         return $this;
     }
@@ -438,7 +443,7 @@ class FHIRElementDefinitionDiscriminator extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ElementDefinitionDiscriminator', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PATH] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PATH] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPath())) {
             $xw->writeAttribute(self::FIELD_PATH, $v->getValue()?->getFormattedValue());
         }
@@ -448,7 +453,7 @@ class FHIRElementDefinitionDiscriminator extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PATH] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PATH] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPath())) {
             $xw->startElement(self::FIELD_PATH);
             $v->xmlSerialize($xw, $config);

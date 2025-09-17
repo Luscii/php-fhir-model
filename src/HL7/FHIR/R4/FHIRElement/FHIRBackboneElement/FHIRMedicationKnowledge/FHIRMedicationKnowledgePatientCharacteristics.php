@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRMedicationKnowledgePatientCharacteristics extends FHIRBackboneElement
      *
      * Specific characteristic that is relevant to the administration guideline (e.g.
      * height, weight, gender).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $characteristicCodeableConcept = null;
@@ -112,7 +111,6 @@ class FHIRMedicationKnowledgePatientCharacteristics extends FHIRBackboneElement
      *
      * Specific characteristic that is relevant to the administration guideline (e.g.
      * height, weight, gender).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $characteristicQuantity = null;
@@ -122,7 +120,6 @@ class FHIRMedicationKnowledgePatientCharacteristics extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The specific characteristic (e.g. height, weight, gender, etc.).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $value = [];
@@ -131,10 +128,17 @@ class FHIRMedicationKnowledgePatientCharacteristics extends FHIRBackboneElement
      * Validation map for fields in type MedicationKnowledge.PatientCharacteristics
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CHARACTERISTIC_CODEABLE_CONCEPT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_CHARACTERISTIC_QUANTITY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationKnowledgePatientCharacteristics Constructor
@@ -305,16 +309,20 @@ class FHIRMedicationKnowledgePatientCharacteristics extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addValue(null|string|FHIRStringPrimitive|FHIRString $value = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addValue(null|string|FHIRStringPrimitive|FHIRString $value = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $value && !($value instanceof FHIRString)) {
             $value = new FHIRString($value);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALUE])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALUE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALUE])) {
+            $this->_xmlLocations[self::FIELD_VALUE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALUE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_VALUE]) {
+            $this->_xmlLocations[self::FIELD_VALUE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_VALUE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->value[] = $value;
         return $this;
     }
@@ -330,9 +338,9 @@ class FHIRMedicationKnowledgePatientCharacteristics extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValue(array $value = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValue(array $value = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_VALUE]);
+        unset($this->_xmlLocations[self::FIELD_VALUE]);
         if ([] !== $this->value) {
             $this->_trackValuesRemoved(count($this->value));
             $this->value = [];
@@ -552,7 +560,7 @@ class FHIRMedicationKnowledgePatientCharacteristics extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicationKnowledgePatientCharacteristics', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getValue())) {
             $xw->writeAttribute(self::FIELD_VALUE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getValue()) && isset($vs[$idx])) {
@@ -569,7 +577,7 @@ class FHIRMedicationKnowledgePatientCharacteristics extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getValue())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

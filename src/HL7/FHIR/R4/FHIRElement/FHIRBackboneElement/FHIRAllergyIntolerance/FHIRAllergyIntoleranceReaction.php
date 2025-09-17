@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAllergyIntolerance;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -117,7 +117,6 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
      * to confirm that AllergyIntolerance.reaction.substance falls within the semantic
      * scope of AllergyIntolerance.code, then the receiving system should ignore
      * AllergyIntolerance.reaction.substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $substance = null;
@@ -129,7 +128,6 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
      *
      * Clinical symptoms and/or signs that are observed or associated with the adverse
      * reaction event.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $manifestation = [];
@@ -140,7 +138,6 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
      *
      * Text description about the reaction as a whole, including details of the
      * manifestation if required.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -153,7 +150,6 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Record of the date and/or time of the onset of the Reaction.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $onset = null;
@@ -164,7 +160,6 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
      *
      * Clinical assessment of the severity of the reaction event as a whole,
      * potentially considering multiple different manifestations.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAllergyIntoleranceSeverity
      */
     protected null|FHIRAllergyIntoleranceSeverity $severity = null;
@@ -175,7 +170,6 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Identification of the route by which the subject was exposed to the substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $exposureRoute = null;
@@ -186,7 +180,6 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Additional text about the adverse reaction event not captured in other fields.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -202,7 +195,7 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRAllergyIntoleranceReaction Constructor
@@ -412,6 +405,33 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Clinical symptoms and/or signs that are observed or associated with the adverse
+     * reaction event.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$manifestation
+     * @return static
+     */
+    public function setManifestation(FHIRCodeableConcept ...$manifestation): self
+    {
+        if ([] !== $this->manifestation) {
+            $this->_trackValuesRemoved(count($this->manifestation));
+            $this->manifestation = [];
+        }
+        if ([] === $manifestation) {
+            return $this;
+        }
+        foreach($manifestation as $v) {
+            $this->addManifestation($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -438,16 +458,16 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -483,16 +503,16 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOnset(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $onset = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOnset(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $onset = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $onset && !($onset instanceof FHIRDateTime)) {
             $onset = new FHIRDateTime($onset);
         }
         $this->_trackValueSet($this->onset, $onset);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ONSET])) {
-            $this->_primitiveXmlLocations[self::FIELD_ONSET] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ONSET])) {
+            $this->_xmlLocations[self::FIELD_ONSET] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ONSET][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ONSET][0] = $xmlLocation;
         $this->onset = $onset;
         return $this;
     }
@@ -602,6 +622,32 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->note[] = $note;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Additional text about the adverse reaction event not captured in other fields.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
         return $this;
     }
 
@@ -898,11 +944,11 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'AllergyIntoleranceReaction', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOnset())) {
             $xw->writeAttribute(self::FIELD_ONSET, $v->getValue()?->getFormattedValue());
         }
@@ -917,13 +963,13 @@ class FHIRAllergyIntoleranceReaction extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOnset())) {
             $xw->startElement(self::FIELD_ONSET);
             $v->xmlSerialize($xw, $config);

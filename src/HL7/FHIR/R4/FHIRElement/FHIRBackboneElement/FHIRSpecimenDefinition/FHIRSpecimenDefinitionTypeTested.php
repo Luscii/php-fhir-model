@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSpecimenDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -106,7 +106,6 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Primary of secondary specimen.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $isDerived = null;
@@ -117,7 +116,6 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The kind of specimen conditioned for testing expected by lab.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -126,7 +124,6 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The preference for this type of conditioned specimen.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSpecimenContainedPreference
      */
     protected null|FHIRSpecimenContainedPreference $preference = null;
@@ -134,7 +131,6 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      * A kind of specimen with associated set of requirements.
      *
      * The specimen's container.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSpecimenDefinition\FHIRSpecimenDefinitionContainer
      */
     protected null|FHIRSpecimenDefinitionContainer $container = null;
@@ -145,7 +141,6 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      *
      * Requirements for delivery and special handling of this kind of conditioned
      * specimen.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $requirement = null;
@@ -156,7 +151,6 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      *
      * The usual time that a specimen of this kind is retained after the ordered tests
      * are completed, for the purpose of additional testing.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $retentionTime = null;
@@ -167,7 +161,6 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Criterion for rejection of the specimen in its container by the laboratory.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $rejectionCriterion = [];
@@ -176,7 +169,6 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      *
      * Set of instructions for preservation/transport of the specimen at a defined
      * temperature interval, prior the testing process.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSpecimenDefinition\FHIRSpecimenDefinitionHandling[]
      */
     protected null|array $handling = [];
@@ -185,10 +177,14 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      * Validation map for fields in type SpecimenDefinition.TypeTested
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_PREFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSpecimenDefinitionTypeTested Constructor
@@ -335,16 +331,16 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIsDerived(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isDerived = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setIsDerived(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isDerived = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $isDerived && !($isDerived instanceof FHIRBoolean)) {
             $isDerived = new FHIRBoolean($isDerived);
         }
         $this->_trackValueSet($this->isDerived, $isDerived);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_IS_DERIVED])) {
-            $this->_primitiveXmlLocations[self::FIELD_IS_DERIVED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_IS_DERIVED])) {
+            $this->_xmlLocations[self::FIELD_IS_DERIVED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_IS_DERIVED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_IS_DERIVED][0] = $xmlLocation;
         $this->isDerived = $isDerived;
         return $this;
     }
@@ -474,16 +470,16 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRequirement(null|string|FHIRStringPrimitive|FHIRString $requirement = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRequirement(null|string|FHIRStringPrimitive|FHIRString $requirement = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $requirement && !($requirement instanceof FHIRString)) {
             $requirement = new FHIRString($requirement);
         }
         $this->_trackValueSet($this->requirement, $requirement);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_REQUIREMENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_REQUIREMENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_REQUIREMENT])) {
+            $this->_xmlLocations[self::FIELD_REQUIREMENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_REQUIREMENT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_REQUIREMENT][0] = $xmlLocation;
         $this->requirement = $requirement;
         return $this;
     }
@@ -561,6 +557,32 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Criterion for rejection of the specimen in its container by the laboratory.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$rejectionCriterion
+     * @return static
+     */
+    public function setRejectionCriterion(FHIRCodeableConcept ...$rejectionCriterion): self
+    {
+        if ([] !== $this->rejectionCriterion) {
+            $this->_trackValuesRemoved(count($this->rejectionCriterion));
+            $this->rejectionCriterion = [];
+        }
+        if ([] === $rejectionCriterion) {
+            return $this;
+        }
+        foreach($rejectionCriterion as $v) {
+            $this->addRejectionCriterion($v);
+        }
+        return $this;
+    }
+
+    /**
      * A kind of specimen with associated set of requirements.
      *
      * Set of instructions for preservation/transport of the specimen at a defined
@@ -589,6 +611,30 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->handling[] = $handling;
+        return $this;
+    }
+
+    /**
+     * A kind of specimen with associated set of requirements.
+     *
+     * Set of instructions for preservation/transport of the specimen at a defined
+     * temperature interval, prior the testing process.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSpecimenDefinition\FHIRSpecimenDefinitionHandling ...$handling
+     * @return static
+     */
+    public function setHandling(FHIRSpecimenDefinitionHandling ...$handling): self
+    {
+        if ([] !== $this->handling) {
+            $this->_trackValuesRemoved(count($this->handling));
+            $this->handling = [];
+        }
+        if ([] === $handling) {
+            return $this;
+        }
+        foreach($handling as $v) {
+            $this->addHandling($v);
+        }
         return $this;
     }
 
@@ -904,16 +950,16 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SpecimenDefinitionTypeTested', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_DERIVED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IS_DERIVED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIsDerived())) {
             $xw->writeAttribute(self::FIELD_IS_DERIVED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REQUIREMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REQUIREMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRequirement())) {
             $xw->writeAttribute(self::FIELD_REQUIREMENT, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_DERIVED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IS_DERIVED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIsDerived())) {
             $xw->startElement(self::FIELD_IS_DERIVED);
             $v->xmlSerialize($xw, $config);
@@ -934,7 +980,7 @@ class FHIRSpecimenDefinitionTypeTested extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REQUIREMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REQUIREMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRequirement())) {
             $xw->startElement(self::FIELD_REQUIREMENT);
             $v->xmlSerialize($xw, $config);

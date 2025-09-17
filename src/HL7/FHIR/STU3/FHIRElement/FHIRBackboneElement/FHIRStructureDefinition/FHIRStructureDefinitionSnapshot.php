@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRStructureDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,7 +94,6 @@ class FHIRStructureDefinitionSnapshot extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Captures constraints on each element within the resource.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition[]
      */
     protected null|array $element = [];
@@ -110,7 +109,7 @@ class FHIRStructureDefinitionSnapshot extends FHIRBackboneElement
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRStructureDefinitionSnapshot Constructor
@@ -178,6 +177,31 @@ class FHIRStructureDefinitionSnapshot extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->element[] = $element;
+        return $this;
+    }
+
+    /**
+     * Captures constraints on each element within the resource, profile, or extension.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Captures constraints on each element within the resource.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition ...$element
+     * @return static
+     */
+    public function setElement(FHIRElementDefinition ...$element): self
+    {
+        if ([] !== $this->element) {
+            $this->_trackValuesRemoved(count($this->element));
+            $this->element = [];
+        }
+        if ([] === $element) {
+            return $this;
+        }
+        foreach($element as $v) {
+            $this->addElement($v);
+        }
         return $this;
     }
 

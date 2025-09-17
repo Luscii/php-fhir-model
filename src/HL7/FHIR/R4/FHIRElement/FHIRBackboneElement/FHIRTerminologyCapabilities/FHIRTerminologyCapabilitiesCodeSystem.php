@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilitie
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIRTerminologyCapabilitiesCodeSystem extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * URI for the Code System.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
     protected null|FHIRCanonical $uri = null;
@@ -112,7 +111,6 @@ class FHIRTerminologyCapabilitiesCodeSystem extends FHIRBackboneElement
      * functionality or a statement of required or desired server implementation.
      *
      * For the code system, a list of versions that are supported by the server.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilities\FHIRTerminologyCapabilitiesVersion[]
      */
     protected null|array $version = [];
@@ -121,7 +119,6 @@ class FHIRTerminologyCapabilitiesCodeSystem extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * True if subsumption is supported for this version of the code system.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $subsumption = null;
@@ -130,10 +127,10 @@ class FHIRTerminologyCapabilitiesCodeSystem extends FHIRBackboneElement
      * Validation map for fields in type TerminologyCapabilities.CodeSystem
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRTerminologyCapabilitiesCodeSystem Constructor
@@ -231,16 +228,16 @@ class FHIRTerminologyCapabilitiesCodeSystem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUri(null|string|FHIRCanonicalPrimitive|FHIRCanonical $uri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setUri(null|string|FHIRCanonicalPrimitive|FHIRCanonical $uri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $uri && !($uri instanceof FHIRCanonical)) {
             $uri = new FHIRCanonical($uri);
         }
         $this->_trackValueSet($this->uri, $uri);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_URI])) {
-            $this->_primitiveXmlLocations[self::FIELD_URI] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_URI])) {
+            $this->_xmlLocations[self::FIELD_URI] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_URI][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_URI][0] = $xmlLocation;
         $this->uri = $uri;
         return $this;
     }
@@ -280,6 +277,31 @@ class FHIRTerminologyCapabilitiesCodeSystem extends FHIRBackboneElement
     }
 
     /**
+     * A TerminologyCapabilities resource documents a set of capabilities (behaviors)
+     * of a FHIR Terminology Server that may be used as a statement of actual server
+     * functionality or a statement of required or desired server implementation.
+     *
+     * For the code system, a list of versions that are supported by the server.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTerminologyCapabilities\FHIRTerminologyCapabilitiesVersion ...$version
+     * @return static
+     */
+    public function setVersion(FHIRTerminologyCapabilitiesVersion ...$version): self
+    {
+        if ([] !== $this->version) {
+            $this->_trackValuesRemoved(count($this->version));
+            $this->version = [];
+        }
+        if ([] === $version) {
+            return $this;
+        }
+        foreach($version as $v) {
+            $this->addVersion($v);
+        }
+        return $this;
+    }
+
+    /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -302,16 +324,16 @@ class FHIRTerminologyCapabilitiesCodeSystem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSubsumption(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $subsumption = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSubsumption(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $subsumption = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $subsumption && !($subsumption instanceof FHIRBoolean)) {
             $subsumption = new FHIRBoolean($subsumption);
         }
         $this->_trackValueSet($this->subsumption, $subsumption);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SUBSUMPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_SUBSUMPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SUBSUMPTION])) {
+            $this->_xmlLocations[self::FIELD_SUBSUMPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SUBSUMPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SUBSUMPTION][0] = $xmlLocation;
         $this->subsumption = $subsumption;
         return $this;
     }
@@ -531,16 +553,16 @@ class FHIRTerminologyCapabilitiesCodeSystem extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'TerminologyCapabilitiesCodeSystem', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUri())) {
             $xw->writeAttribute(self::FIELD_URI, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUBSUMPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUBSUMPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSubsumption())) {
             $xw->writeAttribute(self::FIELD_SUBSUMPTION, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUri())) {
             $xw->startElement(self::FIELD_URI);
             $v->xmlSerialize($xw, $config);
@@ -551,7 +573,7 @@ class FHIRTerminologyCapabilitiesCodeSystem extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUBSUMPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUBSUMPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSubsumption())) {
             $xw->startElement(self::FIELD_SUBSUMPTION);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,7 +103,6 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Reference to the primary source.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $who = null;
@@ -116,7 +115,6 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      * Type of primary source (License Board; Primary Education; Continuing Education;
      * Postal Service; Relationship owner; Registration Authority; legal source;
      * issuing source; authoritative source).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $type = [];
@@ -127,7 +125,6 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Method for communicating with the primary source (manual; API; Push).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $communicationMethod = [];
@@ -139,7 +136,6 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      *
      * Status of the validation of the target against the primary source (successful;
      * failed; unknown).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $validationStatus = null;
@@ -152,7 +148,6 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * When the target was validated against the primary source.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $validationDate = null;
@@ -163,7 +158,6 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Ability of the primary source to push updates/alerts (yes; no; undetermined).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $canPushUpdates = null;
@@ -175,7 +169,6 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      *
      * Type of alerts/updates the primary source can send (specific requested changes;
      * any changes; as defined by source).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $pushTypeAvailable = [];
@@ -184,10 +177,10 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      * Validation map for fields in type VerificationResult.PrimarySource
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRVerificationResultPrimarySource Constructor
@@ -372,6 +365,34 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Type of primary source (License Board; Primary Education; Continuing Education;
+     * Postal Service; Relationship owner; Registration Authority; legal source;
+     * issuing source; authoritative source).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$type
+     * @return static
+     */
+    public function setType(FHIRCodeableConcept ...$type): self
+    {
+        if ([] !== $this->type) {
+            $this->_trackValuesRemoved(count($this->type));
+            $this->type = [];
+        }
+        if ([] === $type) {
+            return $this;
+        }
+        foreach($type as $v) {
+            $this->addType($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Method for communicating with the primary source (manual; API; Push).
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
@@ -399,6 +420,32 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->communicationMethod[] = $communicationMethod;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Method for communicating with the primary source (manual; API; Push).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$communicationMethod
+     * @return static
+     */
+    public function setCommunicationMethod(FHIRCodeableConcept ...$communicationMethod): self
+    {
+        if ([] !== $this->communicationMethod) {
+            $this->_trackValuesRemoved(count($this->communicationMethod));
+            $this->communicationMethod = [];
+        }
+        if ([] === $communicationMethod) {
+            return $this;
+        }
+        foreach($communicationMethod as $v) {
+            $this->addCommunicationMethod($v);
+        }
         return $this;
     }
 
@@ -471,16 +518,16 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValidationDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $validationDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValidationDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $validationDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $validationDate && !($validationDate instanceof FHIRDateTime)) {
             $validationDate = new FHIRDateTime($validationDate);
         }
         $this->_trackValueSet($this->validationDate, $validationDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALIDATION_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALIDATION_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALIDATION_DATE])) {
+            $this->_xmlLocations[self::FIELD_VALIDATION_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALIDATION_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VALIDATION_DATE][0] = $xmlLocation;
         $this->validationDate = $validationDate;
         return $this;
     }
@@ -556,6 +603,33 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->pushTypeAvailable[] = $pushTypeAvailable;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Type of alerts/updates the primary source can send (specific requested changes;
+     * any changes; as defined by source).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$pushTypeAvailable
+     * @return static
+     */
+    public function setPushTypeAvailable(FHIRCodeableConcept ...$pushTypeAvailable): self
+    {
+        if ([] !== $this->pushTypeAvailable) {
+            $this->_trackValuesRemoved(count($this->pushTypeAvailable));
+            $this->pushTypeAvailable = [];
+        }
+        if ([] === $pushTypeAvailable) {
+            return $this;
+        }
+        foreach($pushTypeAvailable as $v) {
+            $this->addPushTypeAvailable($v);
+        }
         return $this;
     }
 
@@ -846,7 +920,7 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'VerificationResultPrimarySource', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALIDATION_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALIDATION_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getValidationDate())) {
             $xw->writeAttribute(self::FIELD_VALIDATION_DATE, $v->getValue()?->getFormattedValue());
         }
@@ -871,7 +945,7 @@ class FHIRVerificationResultPrimarySource extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALIDATION_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALIDATION_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getValidationDate())) {
             $xw->startElement(self::FIELD_VALIDATION_DATE);
             $v->xmlSerialize($xw, $config);

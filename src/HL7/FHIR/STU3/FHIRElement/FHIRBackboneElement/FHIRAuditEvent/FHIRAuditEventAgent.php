@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,7 +119,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * The security role that the user was acting under, that come from local codes
      * defined by the access control security system (e.g. RBAC, ABAC) used in the
      * local context.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $role = [];
@@ -129,7 +128,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Direct reference to a resource that identifies the agent.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $reference = null;
@@ -139,7 +137,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Unique identifier for the user actively participating in the event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $userId = null;
@@ -151,7 +148,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * Alternative agent Identifier. For a human, this should be a user identifier text
      * string from authentication system. This identifier would be one known to a
      * common authentication system (e.g. single sign-on), if available.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $altId = null;
@@ -161,7 +157,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Human-meaningful name for the agent.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $name = null;
@@ -171,7 +166,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * Indicator that the user is or is not the requestor, or initiator, for the event
      * being audited.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $requestor = null;
@@ -181,7 +175,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Where the event occurred.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $location = null;
@@ -193,7 +186,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * The policy or plan that authorized the activity being recorded. Typically, a
      * single activity may have multiple applicable policies, such as patient consent,
      * guarantor funding, etc. The policy would also indicate the security token used.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri[]
      */
     protected null|array $policy = [];
@@ -204,7 +196,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * Type of media involved. Used when the event is about exporting/importing onto
      * media.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
      */
     protected null|FHIRCoding $media = null;
@@ -215,7 +206,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * Logical network location for application activity, if the activity has a network
      * location.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent\FHIRAuditEventNetwork
      */
     protected null|FHIRAuditEventNetwork $network = null;
@@ -227,7 +217,6 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      *
      * The reason (purpose of use), specific to this agent, that was used during the
      * event being recorded.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $purposeOfUse = [];
@@ -236,10 +225,14 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * Validation map for fields in type AuditEvent.Agent
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_REQUESTOR => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRAuditEventAgent Constructor
@@ -450,6 +443,34 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The security role that the user was acting under, that come from local codes
+     * defined by the access control security system (e.g. RBAC, ABAC) used in the
+     * local context.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$role
+     * @return static
+     */
+    public function setRole(FHIRCodeableConcept ...$role): self
+    {
+        if ([] !== $this->role) {
+            $this->_trackValuesRemoved(count($this->role));
+            $this->role = [];
+        }
+        if ([] === $role) {
+            return $this;
+        }
+        foreach($role as $v) {
+            $this->addRole($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -546,16 +567,16 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAltId(null|string|FHIRStringPrimitive|FHIRString $altId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAltId(null|string|FHIRStringPrimitive|FHIRString $altId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $altId && !($altId instanceof FHIRString)) {
             $altId = new FHIRString($altId);
         }
         $this->_trackValueSet($this->altId, $altId);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ALT_ID])) {
-            $this->_primitiveXmlLocations[self::FIELD_ALT_ID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ALT_ID])) {
+            $this->_xmlLocations[self::FIELD_ALT_ID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ALT_ID][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ALT_ID][0] = $xmlLocation;
         $this->altId = $altId;
         return $this;
     }
@@ -585,16 +606,16 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
         }
         $this->_trackValueSet($this->name, $name);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NAME])) {
+            $this->_xmlLocations[self::FIELD_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NAME][0] = $xmlLocation;
         $this->name = $name;
         return $this;
     }
@@ -624,16 +645,16 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRequestor(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $requestor = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRequestor(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $requestor = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $requestor && !($requestor instanceof FHIRBoolean)) {
             $requestor = new FHIRBoolean($requestor);
         }
         $this->_trackValueSet($this->requestor, $requestor);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_REQUESTOR])) {
-            $this->_primitiveXmlLocations[self::FIELD_REQUESTOR] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_REQUESTOR])) {
+            $this->_xmlLocations[self::FIELD_REQUESTOR] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_REQUESTOR][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_REQUESTOR][0] = $xmlLocation;
         $this->requestor = $requestor;
         return $this;
     }
@@ -701,16 +722,20 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addPolicy(null|string|FHIRUriPrimitive|FHIRUri $policy = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addPolicy(null|string|FHIRUriPrimitive|FHIRUri $policy = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $policy && !($policy instanceof FHIRUri)) {
             $policy = new FHIRUri($policy);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_POLICY])) {
-            $this->_primitiveXmlLocations[self::FIELD_POLICY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_POLICY])) {
+            $this->_xmlLocations[self::FIELD_POLICY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_POLICY][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_POLICY]) {
+            $this->_xmlLocations[self::FIELD_POLICY][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_POLICY][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->policy[] = $policy;
         return $this;
     }
@@ -728,9 +753,9 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPolicy(array $policy = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPolicy(array $policy = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_POLICY]);
+        unset($this->_xmlLocations[self::FIELD_POLICY]);
         if ([] !== $this->policy) {
             $this->_trackValuesRemoved(count($this->policy));
             $this->policy = [];
@@ -855,6 +880,33 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->purposeOfUse[] = $purposeOfUse;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The reason (purpose of use), specific to this agent, that was used during the
+     * event being recorded.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$purposeOfUse
+     * @return static
+     */
+    public function setPurposeOfUse(FHIRCodeableConcept ...$purposeOfUse): self
+    {
+        if ([] !== $this->purposeOfUse) {
+            $this->_trackValuesRemoved(count($this->purposeOfUse));
+            $this->purposeOfUse = [];
+        }
+        if ([] === $purposeOfUse) {
+            return $this;
+        }
+        foreach($purposeOfUse as $v) {
+            $this->addPurposeOfUse($v);
+        }
         return $this;
     }
 
@@ -1240,19 +1292,19 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'AuditEventAgent', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALT_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALT_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAltId())) {
             $xw->writeAttribute(self::FIELD_ALT_ID, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->writeAttribute(self::FIELD_NAME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REQUESTOR] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REQUESTOR] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRequestor())) {
             $xw->writeAttribute(self::FIELD_REQUESTOR, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_POLICY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_POLICY] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getPolicy())) {
             $xw->writeAttribute(self::FIELD_POLICY, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getPolicy()) && isset($vs[$idx])) {
@@ -1274,19 +1326,19 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALT_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALT_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAltId())) {
             $xw->startElement(self::FIELD_ALT_ID);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->startElement(self::FIELD_NAME);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REQUESTOR] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REQUESTOR] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRequestor())) {
             $xw->startElement(self::FIELD_REQUESTOR);
             $v->xmlSerialize($xw, $config);
@@ -1297,7 +1349,7 @@ class FHIRAuditEventAgent extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_POLICY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_POLICY] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getPolicy())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

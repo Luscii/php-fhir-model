@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPatient;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,6 @@ class FHIRPatientContact extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The nature of the relationship between the patient and the contact person.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $relationship = [];
@@ -117,7 +116,6 @@ class FHIRPatientContact extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A name associated with the contact person.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName
      */
     protected null|FHIRHumanName $name = null;
@@ -128,7 +126,6 @@ class FHIRPatientContact extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A contact detail for the person, e.g. a telephone number or an email address.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint[]
      */
     protected null|array $telecom = [];
@@ -142,7 +139,6 @@ class FHIRPatientContact extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Address for the contact person.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAddress
      */
     protected null|FHIRAddress $address = null;
@@ -151,7 +147,6 @@ class FHIRPatientContact extends FHIRBackboneElement
      *
      * Administrative Gender - the gender that the contact person is considered to have
      * for administration and record keeping purposes.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAdministrativeGender
      */
     protected null|FHIRAdministrativeGender $gender = null;
@@ -162,7 +157,6 @@ class FHIRPatientContact extends FHIRBackboneElement
      *
      * Organization on behalf of which the contact is acting or for which the contact
      * is working.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $organization = null;
@@ -173,7 +167,6 @@ class FHIRPatientContact extends FHIRBackboneElement
      *
      * The period during which this contact person or organization is valid to be
      * contacted relating to this patient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $period = null;
@@ -182,10 +175,10 @@ class FHIRPatientContact extends FHIRBackboneElement
      * Validation map for fields in type Patient.Contact
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRPatientContact Constructor
@@ -319,6 +312,32 @@ class FHIRPatientContact extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The nature of the relationship between the patient and the contact person.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$relationship
+     * @return static
+     */
+    public function setRelationship(FHIRCodeableConcept ...$relationship): self
+    {
+        if ([] !== $this->relationship) {
+            $this->_trackValuesRemoved(count($this->relationship));
+            $this->relationship = [];
+        }
+        if ([] === $relationship) {
+            return $this;
+        }
+        foreach($relationship as $v) {
+            $this->addRelationship($v);
+        }
+        return $this;
+    }
+
+    /**
      * A human's name with the ability to identify parts and usage.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -385,6 +404,32 @@ class FHIRPatientContact extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->telecom[] = $telecom;
+        return $this;
+    }
+
+    /**
+     * Details for all kinds of technology mediated contact points for a person or
+     * organization, including telephone, email, etc.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A contact detail for the person, e.g. a telephone number or an email address.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRContactPoint ...$telecom
+     * @return static
+     */
+    public function setTelecom(FHIRContactPoint ...$telecom): self
+    {
+        if ([] !== $this->telecom) {
+            $this->_trackValuesRemoved(count($this->telecom));
+            $this->telecom = [];
+        }
+        if ([] === $telecom) {
+            return $this;
+        }
+        foreach($telecom as $v) {
+            $this->addTelecom($v);
+        }
         return $this;
     }
 

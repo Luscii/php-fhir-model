@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,7 +104,6 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
      *
      * The kind of nutritional supplement product required such as a high protein or
      * pediatric clear liquid supplement.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -115,7 +114,6 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
      *
      * The product or brand name of the nutritional supplement such as "Acme Protein
      * Shake".
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $productName = null;
@@ -131,7 +129,6 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
      * The time period and frequency at which the supplement(s) should be given. The
      * supplement should be given for the combination of all schedules if more than one
      * schedule is present.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming[]
      */
     protected null|array $schedule = [];
@@ -143,7 +140,6 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The amount of the nutritional supplement to be given.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $quantity = null;
@@ -154,7 +150,6 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
      *
      * Free text or additional instructions or information pertaining to the oral
      * supplement.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $instruction = null;
@@ -163,10 +158,10 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
      * Validation map for fields in type NutritionOrder.Supplement
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRNutritionOrderSupplement Constructor
@@ -316,16 +311,16 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setProductName(null|string|FHIRStringPrimitive|FHIRString $productName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setProductName(null|string|FHIRStringPrimitive|FHIRString $productName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $productName && !($productName instanceof FHIRString)) {
             $productName = new FHIRString($productName);
         }
         $this->_trackValueSet($this->productName, $productName);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PRODUCT_NAME])) {
+            $this->_xmlLocations[self::FIELD_PRODUCT_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PRODUCT_NAME][0] = $xmlLocation;
         $this->productName = $productName;
         return $this;
     }
@@ -373,6 +368,37 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->schedule[] = $schedule;
+        return $this;
+    }
+
+    /**
+     * Specifies an event that may occur multiple times. Timing schedules are used to
+     * record when things are planned, expected or requested to occur. The most common
+     * usage is in dosage instructions for medications. They are also used when
+     * planning care of various kinds, and may be used for reporting the schedule to
+     * which past regular activities were carried out.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The time period and frequency at which the supplement(s) should be given. The
+     * supplement should be given for the combination of all schedules if more than one
+     * schedule is present.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRTiming ...$schedule
+     * @return static
+     */
+    public function setSchedule(FHIRTiming ...$schedule): self
+    {
+        if ([] !== $this->schedule) {
+            $this->_trackValuesRemoved(count($this->schedule));
+            $this->schedule = [];
+        }
+        if ([] === $schedule) {
+            return $this;
+        }
+        foreach($schedule as $v) {
+            $this->addSchedule($v);
+        }
         return $this;
     }
 
@@ -441,16 +467,16 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setInstruction(null|string|FHIRStringPrimitive|FHIRString $instruction = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setInstruction(null|string|FHIRStringPrimitive|FHIRString $instruction = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $instruction && !($instruction instanceof FHIRString)) {
             $instruction = new FHIRString($instruction);
         }
         $this->_trackValueSet($this->instruction, $instruction);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_INSTRUCTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_INSTRUCTION])) {
+            $this->_xmlLocations[self::FIELD_INSTRUCTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_INSTRUCTION][0] = $xmlLocation;
         $this->instruction = $instruction;
         return $this;
     }
@@ -708,11 +734,11 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'NutritionOrderSupplement', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRODUCT_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getProductName())) {
             $xw->writeAttribute(self::FIELD_PRODUCT_NAME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INSTRUCTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getInstruction())) {
             $xw->writeAttribute(self::FIELD_INSTRUCTION, $v->getValue()?->getFormattedValue());
         }
@@ -722,7 +748,7 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRODUCT_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRODUCT_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getProductName())) {
             $xw->startElement(self::FIELD_PRODUCT_NAME);
             $v->xmlSerialize($xw, $config);
@@ -738,7 +764,7 @@ class FHIRNutritionOrderSupplement extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INSTRUCTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getInstruction())) {
             $xw->startElement(self::FIELD_INSTRUCTION);
             $v->xmlSerialize($xw, $config);

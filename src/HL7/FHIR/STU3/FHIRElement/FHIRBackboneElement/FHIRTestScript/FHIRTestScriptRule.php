@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ class FHIRTestScriptRule extends FHIRBackboneElement
      *
      * Reference to the resource (containing the contents of the rule needed for
      * assertions).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $resource = null;
@@ -104,7 +103,6 @@ class FHIRTestScriptRule extends FHIRBackboneElement
      * compliance against the FHIR specification.
      *
      * Each rule template can take one or more parameters for rule evaluation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptParam[]
      */
     protected null|array $param = [];
@@ -113,10 +111,14 @@ class FHIRTestScriptRule extends FHIRBackboneElement
      * Validation map for fields in type TestScript.Rule
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_RESOURCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRTestScriptRule Constructor
@@ -225,6 +227,30 @@ class FHIRTestScriptRule extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->param[] = $param;
+        return $this;
+    }
+
+    /**
+     * A structured set of tests against a FHIR server implementation to determine
+     * compliance against the FHIR specification.
+     *
+     * Each rule template can take one or more parameters for rule evaluation.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTestScript\FHIRTestScriptParam ...$param
+     * @return static
+     */
+    public function setParam(FHIRTestScriptParam ...$param): self
+    {
+        if ([] !== $this->param) {
+            $this->_trackValuesRemoved(count($this->param));
+            $this->param = [];
+        }
+        if ([] === $param) {
+            return $this;
+        }
+        foreach($param as $v) {
+            $this->addParam($v);
+        }
         return $this;
     }
 

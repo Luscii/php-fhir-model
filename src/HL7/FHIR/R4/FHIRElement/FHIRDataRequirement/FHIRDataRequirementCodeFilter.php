@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRDataRequirement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -111,7 +111,6 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
      * Profile](fhirpath.html#simple) for full details). Note that the index must be an
      * integer constant. The path must resolve to an element of type code, Coding, or
      * CodeableConcept.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $path = null;
@@ -123,7 +122,6 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
      * A token parameter that refers to a search parameter defined on the specified
      * type of the DataRequirement, and which searches on elements of type code,
      * Coding, or CodeableConcept.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $searchParam = null;
@@ -137,7 +135,6 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
      * If valueSet is specified, the filter will return only those data items for which
      * the value of the code-valued element specified in the path is a member of the
      * specified valueset.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical
      */
     protected null|FHIRCanonical $valueSet = null;
@@ -151,7 +148,6 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
      * value that is one of the specified codes. If codes are specified in addition to
      * a value set, the filter returns items matching a code in the value set or one of
      * the specified codes.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
     protected null|array $code = [];
@@ -160,10 +156,10 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
      * Validation map for fields in type DataRequirement.CodeFilter
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRDataRequirementCodeFilter Constructor
@@ -290,16 +286,16 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPath(null|string|FHIRStringPrimitive|FHIRString $path = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPath(null|string|FHIRStringPrimitive|FHIRString $path = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $path && !($path instanceof FHIRString)) {
             $path = new FHIRString($path);
         }
         $this->_trackValueSet($this->path, $path);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PATH])) {
-            $this->_primitiveXmlLocations[self::FIELD_PATH] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PATH])) {
+            $this->_xmlLocations[self::FIELD_PATH] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PATH][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PATH][0] = $xmlLocation;
         $this->path = $path;
         return $this;
     }
@@ -333,16 +329,16 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSearchParam(null|string|FHIRStringPrimitive|FHIRString $searchParam = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSearchParam(null|string|FHIRStringPrimitive|FHIRString $searchParam = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $searchParam && !($searchParam instanceof FHIRString)) {
             $searchParam = new FHIRString($searchParam);
         }
         $this->_trackValueSet($this->searchParam, $searchParam);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SEARCH_PARAM])) {
-            $this->_primitiveXmlLocations[self::FIELD_SEARCH_PARAM] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SEARCH_PARAM])) {
+            $this->_xmlLocations[self::FIELD_SEARCH_PARAM] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SEARCH_PARAM][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SEARCH_PARAM][0] = $xmlLocation;
         $this->searchParam = $searchParam;
         return $this;
     }
@@ -380,16 +376,16 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValueSet(null|string|FHIRCanonicalPrimitive|FHIRCanonical $valueSet = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValueSet(null|string|FHIRCanonicalPrimitive|FHIRCanonical $valueSet = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $valueSet && !($valueSet instanceof FHIRCanonical)) {
             $valueSet = new FHIRCanonical($valueSet);
         }
         $this->_trackValueSet($this->valueSet, $valueSet);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALUE_SET])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALUE_SET] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALUE_SET])) {
+            $this->_xmlLocations[self::FIELD_VALUE_SET] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALUE_SET][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VALUE_SET][0] = $xmlLocation;
         $this->valueSet = $valueSet;
         return $this;
     }
@@ -433,6 +429,35 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
         }
         $this->_trackValueAdded();
         $this->code[] = $code;
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The codes for the code filter. If values are given, the filter will return only
+     * those data items for which the code-valued attribute specified by the path has a
+     * value that is one of the specified codes. If codes are specified in addition to
+     * a value set, the filter returns items matching a code in the value set or one of
+     * the specified codes.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCoding ...$code
+     * @return static
+     */
+    public function setCode(FHIRCoding ...$code): self
+    {
+        if ([] !== $this->code) {
+            $this->_trackValuesRemoved(count($this->code));
+            $this->code = [];
+        }
+        if ([] === $code) {
+            return $this;
+        }
+        foreach($code as $v) {
+            $this->addCode($v);
+        }
         return $this;
     }
 
@@ -664,32 +689,32 @@ class FHIRDataRequirementCodeFilter extends FHIRElement
             $openedRoot = true;
             $xw->openRootNode($config, 'DataRequirementCodeFilter', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PATH] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PATH] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPath())) {
             $xw->writeAttribute(self::FIELD_PATH, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEARCH_PARAM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEARCH_PARAM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSearchParam())) {
             $xw->writeAttribute(self::FIELD_SEARCH_PARAM, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_SET] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_SET] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getValueSet())) {
             $xw->writeAttribute(self::FIELD_VALUE_SET, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PATH] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PATH] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPath())) {
             $xw->startElement(self::FIELD_PATH);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEARCH_PARAM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEARCH_PARAM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSearchParam())) {
             $xw->startElement(self::FIELD_SEARCH_PARAM);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_SET] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_SET] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getValueSet())) {
             $xw->startElement(self::FIELD_VALUE_SET);
             $v->xmlSerialize($xw, $config);

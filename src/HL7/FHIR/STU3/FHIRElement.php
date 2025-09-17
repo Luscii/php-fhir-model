@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,23 +96,20 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
      * use of extensions. Though any implementer is allowed to define an extension,
      * there is a set of requirements that SHALL be met as part of the definition of
      * the extension.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRExtension[]
      */
     protected null|array $extension = [];
-    /**
-     * @var null|\HL7\FHIR\STU3\FHIRStringPrimitive
-     */
+    /** @var null|\HL7\FHIR\STU3\FHIRStringPrimitive */
     protected null|FHIRStringPrimitive $id = null;
 
     /**
      * Validation map for fields in type Element
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRElement Constructor
@@ -208,6 +205,36 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
     }
 
     /**
+     * Optional Extension Element - found in all resources.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * May be used to represent additional information that is not part of the basic
+     * definition of the element. In order to make the use of extensions safe and
+     * manageable, there is a strict set of governance applied to the definition and
+     * use of extensions. Though any implementer is allowed to define an extension,
+     * there is a set of requirements that SHALL be met as part of the definition of
+     * the extension.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRExtension ...$extension
+     * @return static
+     */
+    public function setExtension(FHIRExtension ...$extension): self
+    {
+        if ([] !== $this->extension) {
+            $this->_trackValuesRemoved(count($this->extension));
+            $this->extension = [];
+        }
+        if ([] === $extension) {
+            return $this;
+        }
+        foreach($extension as $v) {
+            $this->addExtension($v);
+        }
+        return $this;
+    }
+
+    /**
      * @return null|\HL7\FHIR\STU3\FHIRStringPrimitive
      */
     public function getId(): null|FHIRStringPrimitive
@@ -226,10 +253,10 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
             $id = new FHIRStringPrimitive($id);
         }
         $this->_trackValueSet($this->id, $id);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ID])) {
-            $this->_primitiveXmlLocations[self::FIELD_ID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ID])) {
+            $this->_xmlLocations[self::FIELD_ID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ID][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ID][0] = $xmlLocation;
         $this->id = $id;
         return $this;
     }
@@ -348,7 +375,7 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
             $openedRoot = true;
             $xw->openRootNode($config, 'Element', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getId())) {
             $xw->writeAttribute(self::FIELD_ID, $v->getFormattedValue());
         }
@@ -357,7 +384,7 @@ class FHIRElement implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInterf
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getId())) {
             $xw->startElement(self::FIELD_ID);
             $v->xmlSerialize($xw, $config);

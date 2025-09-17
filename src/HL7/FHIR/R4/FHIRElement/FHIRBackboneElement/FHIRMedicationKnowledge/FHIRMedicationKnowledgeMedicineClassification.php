@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ class FHIRMedicationKnowledgeMedicineClassification extends FHIRBackboneElement
      *
      * The type of category for the medication (for example, therapeutic
      * classification, therapeutic sub-classification).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -107,7 +106,6 @@ class FHIRMedicationKnowledgeMedicineClassification extends FHIRBackboneElement
      *
      * Specific category assigned to the medication (e.g. anti-infective,
      * anti-hypertensive, antibiotic, etc.).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $classification = [];
@@ -116,10 +114,14 @@ class FHIRMedicationKnowledgeMedicineClassification extends FHIRBackboneElement
      * Validation map for fields in type MedicationKnowledge.MedicineClassification
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationKnowledgeMedicineClassification Constructor
@@ -236,6 +238,33 @@ class FHIRMedicationKnowledgeMedicineClassification extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->classification[] = $classification;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Specific category assigned to the medication (e.g. anti-infective,
+     * anti-hypertensive, antibiotic, etc.).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$classification
+     * @return static
+     */
+    public function setClassification(FHIRCodeableConcept ...$classification): self
+    {
+        if ([] !== $this->classification) {
+            $this->_trackValuesRemoved(count($this->classification));
+            $this->classification = [];
+        }
+        if ([] === $classification) {
+            return $this;
+        }
+        foreach($classification as $v) {
+            $this->addClassification($v);
+        }
         return $this;
     }
 

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,19 +85,17 @@ class FHIRResourceType extends FHIRElement
 
     const FIELD_VALUE = 'value';
 
-    /**
-     * @var null|string
-     */
+    /** @var null|string */
     protected null|string $value = null;
 
     /**
      * Validation map for fields in type ResourceType
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRResourceType Constructor
@@ -181,9 +179,9 @@ class FHIRResourceType extends FHIRElement
     {
         $errs = parent::_getValidationErrors();
         $validationRules = $this->_getValidationRules();
-        if (isset($validationRules[self::FIELD_VALUE]) && null !== ($v = $this->getValue())) {
+        if (isset($validationRules[self::FIELD_VALUE]) && null !== $this->value) {
             foreach($validationRules[self::FIELD_VALUE] as $rule => $constraint) {
-                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE_TYPE, self::FIELD_VALUE, $rule, $constraint, $v);
+                $err = $this->_performValidation(PHPFHIRConstants::TYPE_NAME_RESOURCE_TYPE, self::FIELD_VALUE, $rule, $constraint, $this->getFormattedValue());
                 if (null !== $err) {
                     if (!isset($errs[self::FIELD_VALUE])) {
                         $errs[self::FIELD_VALUE] = [];
@@ -321,13 +319,8 @@ class FHIRResourceType extends FHIRElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ResourceType', $this->_getSourceXmlns());
         }
-        if (($this->_primitiveXmlLocations[self::FIELD_VALUE] ?? PHPFHIRXmlLocationEnum::ATTRIBUTE) === PHPFHIRXmlLocationEnum::ATTRIBUTE) {
-            $xw->writeAttribute(self::FIELD_VALUE, $this->getFormattedValue());
-        }
+        $xw->writeAttribute(self::FIELD_VALUE, $this->getFormattedValue());
         parent::xmlSerialize($xw, $config);
-        if (($this->_primitiveXmlLocations[self::FIELD_VALUE] ?? PHPFHIRXmlLocationEnum::ATTRIBUTE) === PHPFHIRXmlLocationEnum::ELEMENT) {
-            $xw->writeSimpleElement(self::FIELD_VALUE, $this->getFormattedValue());
-        }
         if (isset($openedRoot) && $openedRoot) {
             $xw->endElement();
         }

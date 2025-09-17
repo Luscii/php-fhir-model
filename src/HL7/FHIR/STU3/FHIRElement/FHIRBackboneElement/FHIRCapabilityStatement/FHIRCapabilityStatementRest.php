@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,6 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      *
      * Identifies whether this portion of the statement is describing the ability to
      * initiate or receive restful operations.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRestfulCapabilityMode
      */
     protected null|FHIRRestfulCapabilityMode $mode = null;
@@ -118,7 +117,6 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      *
      * Information about the system's restful capabilities that apply across all
      * applications, such as security.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $documentation = null;
@@ -129,7 +127,6 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      *
      * Information about security implementation from an interface perspective - what a
      * client needs to know.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSecurity
      */
     protected null|FHIRCapabilityStatementSecurity $security = null;
@@ -140,7 +137,6 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      *
      * A specification of the restful capabilities of the solution for a specific
      * resource type.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementResource[]
      */
     protected null|array $resource = [];
@@ -150,7 +146,6 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      * statement of required or desired server implementation.
      *
      * A specification of restful operations supported by the system.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementInteraction1[]
      */
     protected null|array $interaction = [];
@@ -163,7 +158,6 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      * implementations to support and/or make use of - either references to ones
      * defined in the specification, or additional ones defined for/by the
      * implementation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSearchParam[]
      */
     protected null|array $searchParam = [];
@@ -174,7 +168,6 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      *
      * Definition of an operation or a named query together with its parameters and
      * their meaning and type.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementOperation[]
      */
     protected null|array $operation = [];
@@ -186,7 +179,6 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      * An absolute URI which is a reference to the definition of a compartment that the
      * system supports. The reference is to a CompartmentDefinition resource by its
      * canonical URL .
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri[]
      */
     protected null|array $compartment = [];
@@ -195,10 +187,14 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      * Validation map for fields in type CapabilityStatement.Rest
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_MODE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCapabilityStatementRest Constructor
@@ -414,16 +410,16 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDocumentation(null|string|FHIRStringPrimitive|FHIRString $documentation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDocumentation(null|string|FHIRStringPrimitive|FHIRString $documentation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $documentation && !($documentation instanceof FHIRString)) {
             $documentation = new FHIRString($documentation);
         }
         $this->_trackValueSet($this->documentation, $documentation);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DOCUMENTATION])) {
+            $this->_xmlLocations[self::FIELD_DOCUMENTATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DOCUMENTATION][0] = $xmlLocation;
         $this->documentation = $documentation;
         return $this;
     }
@@ -505,6 +501,32 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      * Server that may be used as a statement of actual server functionality or a
      * statement of required or desired server implementation.
      *
+     * A specification of the restful capabilities of the solution for a specific
+     * resource type.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementResource ...$resource
+     * @return static
+     */
+    public function setResource(FHIRCapabilityStatementResource ...$resource): self
+    {
+        if ([] !== $this->resource) {
+            $this->_trackValuesRemoved(count($this->resource));
+            $this->resource = [];
+        }
+        if ([] === $resource) {
+            return $this;
+        }
+        foreach($resource as $v) {
+            $this->addResource($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
      * A specification of restful operations supported by the system.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementInteraction1[]
@@ -531,6 +553,31 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->interaction[] = $interaction;
+        return $this;
+    }
+
+    /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
+     * A specification of restful operations supported by the system.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementInteraction1 ...$interaction
+     * @return static
+     */
+    public function setInteraction(FHIRCapabilityStatementInteraction1 ...$interaction): self
+    {
+        if ([] !== $this->interaction) {
+            $this->_trackValuesRemoved(count($this->interaction));
+            $this->interaction = [];
+        }
+        if ([] === $interaction) {
+            return $this;
+        }
+        foreach($interaction as $v) {
+            $this->addInteraction($v);
+        }
         return $this;
     }
 
@@ -579,6 +626,34 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      * Server that may be used as a statement of actual server functionality or a
      * statement of required or desired server implementation.
      *
+     * Search parameters that are supported for searching all resources for
+     * implementations to support and/or make use of - either references to ones
+     * defined in the specification, or additional ones defined for/by the
+     * implementation.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSearchParam ...$searchParam
+     * @return static
+     */
+    public function setSearchParam(FHIRCapabilityStatementSearchParam ...$searchParam): self
+    {
+        if ([] !== $this->searchParam) {
+            $this->_trackValuesRemoved(count($this->searchParam));
+            $this->searchParam = [];
+        }
+        if ([] === $searchParam) {
+            return $this;
+        }
+        foreach($searchParam as $v) {
+            $this->addSearchParam($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
      * Definition of an operation or a named query together with its parameters and
      * their meaning and type.
      *
@@ -611,6 +686,32 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
     }
 
     /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
+     * Definition of an operation or a named query together with its parameters and
+     * their meaning and type.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementOperation ...$operation
+     * @return static
+     */
+    public function setOperation(FHIRCapabilityStatementOperation ...$operation): self
+    {
+        if ([] !== $this->operation) {
+            $this->_trackValuesRemoved(count($this->operation));
+            $this->operation = [];
+        }
+        if ([] === $operation) {
+            return $this;
+        }
+        foreach($operation as $v) {
+            $this->addOperation($v);
+        }
+        return $this;
+    }
+
+    /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -639,16 +740,20 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addCompartment(null|string|FHIRUriPrimitive|FHIRUri $compartment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addCompartment(null|string|FHIRUriPrimitive|FHIRUri $compartment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $compartment && !($compartment instanceof FHIRUri)) {
             $compartment = new FHIRUri($compartment);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_COMPARTMENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_COMPARTMENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_COMPARTMENT])) {
+            $this->_xmlLocations[self::FIELD_COMPARTMENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_COMPARTMENT][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_COMPARTMENT]) {
+            $this->_xmlLocations[self::FIELD_COMPARTMENT][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_COMPARTMENT][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->compartment[] = $compartment;
         return $this;
     }
@@ -666,9 +771,9 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCompartment(array $compartment = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCompartment(array $compartment = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_COMPARTMENT]);
+        unset($this->_xmlLocations[self::FIELD_COMPARTMENT]);
         if ([] !== $this->compartment) {
             $this->_trackValuesRemoved(count($this->compartment));
             $this->compartment = [];
@@ -999,11 +1104,11 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'CapabilityStatementRest', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DOCUMENTATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDocumentation())) {
             $xw->writeAttribute(self::FIELD_DOCUMENTATION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COMPARTMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COMPARTMENT] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getCompartment())) {
             $xw->writeAttribute(self::FIELD_COMPARTMENT, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getCompartment()) && isset($vs[$idx])) {
@@ -1015,7 +1120,7 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DOCUMENTATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDocumentation())) {
             $xw->startElement(self::FIELD_DOCUMENTATION);
             $v->xmlSerialize($xw, $config);
@@ -1046,7 +1151,7 @@ class FHIRCapabilityStatementRest extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COMPARTMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COMPARTMENT] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getCompartment())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

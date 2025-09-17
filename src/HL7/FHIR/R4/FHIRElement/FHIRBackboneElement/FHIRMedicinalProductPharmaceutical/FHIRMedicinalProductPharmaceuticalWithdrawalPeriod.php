@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPharma
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRMedicinalProductPharmaceuticalWithdrawalPeriod extends FHIRBackboneEle
      *
      * Coded expression for the type of tissue for which the withdrawal period applues,
      * e.g. meat, milk.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $tissue = null;
@@ -111,7 +110,6 @@ class FHIRMedicinalProductPharmaceuticalWithdrawalPeriod extends FHIRBackboneEle
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A value for the time.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $value = null;
@@ -121,7 +119,6 @@ class FHIRMedicinalProductPharmaceuticalWithdrawalPeriod extends FHIRBackboneEle
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Extra information about the withdrawal period.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $supportingInformation = null;
@@ -130,10 +127,17 @@ class FHIRMedicinalProductPharmaceuticalWithdrawalPeriod extends FHIRBackboneEle
      * Validation map for fields in type MedicinalProductPharmaceutical.WithdrawalPeriod
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_TISSUE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_VALUE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductPharmaceuticalWithdrawalPeriod Constructor
@@ -287,16 +291,16 @@ class FHIRMedicinalProductPharmaceuticalWithdrawalPeriod extends FHIRBackboneEle
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSupportingInformation(null|string|FHIRStringPrimitive|FHIRString $supportingInformation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSupportingInformation(null|string|FHIRStringPrimitive|FHIRString $supportingInformation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $supportingInformation && !($supportingInformation instanceof FHIRString)) {
             $supportingInformation = new FHIRString($supportingInformation);
         }
         $this->_trackValueSet($this->supportingInformation, $supportingInformation);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFORMATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFORMATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SUPPORTING_INFORMATION])) {
+            $this->_xmlLocations[self::FIELD_SUPPORTING_INFORMATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFORMATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SUPPORTING_INFORMATION][0] = $xmlLocation;
         $this->supportingInformation = $supportingInformation;
         return $this;
     }
@@ -506,7 +510,7 @@ class FHIRMedicinalProductPharmaceuticalWithdrawalPeriod extends FHIRBackboneEle
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicinalProductPharmaceuticalWithdrawalPeriod', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFORMATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUPPORTING_INFORMATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSupportingInformation())) {
             $xw->writeAttribute(self::FIELD_SUPPORTING_INFORMATION, $v->getValue()?->getFormattedValue());
         }
@@ -521,7 +525,7 @@ class FHIRMedicinalProductPharmaceuticalWithdrawalPeriod extends FHIRBackboneEle
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFORMATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUPPORTING_INFORMATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSupportingInformation())) {
             $xw->startElement(self::FIELD_SUPPORTING_INFORMATION);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,19 +73,20 @@ trait PHPFHIRValidationAssertionsTrait
      * @param string $typeName
      * @param string $fieldName
      * @param int $expected
-     * @param null|array $value)
+     * @param null|array|\HL7\FHIR\STU3\PHPFHIRTypeInterface $value
      * @return null|string
      */
-    protected function _assertMinOccurs(string $typeName, string $fieldName, int $expected, null|array $value): null|string
+    protected function _assertMinOccurs(string $typeName, string $fieldName, int $expected, null|array|PHPFHIRTypeInterface $value): null|string
     {
-        if (0 >= $expected) {
+        if (0 >= $expected || (1 === $expected && $value instanceof PHPFHIRTypeInterface)) {
             return null;
         }
-        if (!is_array($value) || [] === $value) {
+        if (null === $value || [] === $value) {
             return sprintf('Field "%s" on type "%s" must have at least %d elements, but it is empty', $fieldName, $typeName, $expected);
         }
-        if ($expected > ($cnt = count($value))) {
-            return sprintf('Field "%s" on type "%s" must have at least %d elements, %d seen.', $fieldName, $typeName, $expected, $cnt);
+        $len = count($value);
+        if ($expected > $len) {
+            return sprintf('Field "%s" on type "%s" must have at least %d elements, %d seen.', $fieldName, $typeName, $expected, $len);
         }
         return null;
     }
@@ -95,15 +96,19 @@ trait PHPFHIRValidationAssertionsTrait
      * @param string $typeName
      * @param string $fieldName
      * @param int $expected
-     * @param null|array $value
+     * @param null|array|\HL7\FHIR\STU3\PHPFHIRTypeInterface $value
      * @return null|string
      */
-    protected function _assertMaxOccurs(string $typeName, string $fieldName, int $expected, null|array $value): null|string
+    protected function _assertMaxOccurs(string $typeName, string $fieldName, int $expected, null|array|PHPFHIRTypeInterface $value): null|string
     {
-        if (PHPFHIRConstants::UNLIMITED === $expected || null === $value || [] === $value || $expected >= ($cnt = count($value))) {
+        if (PHPFHIRConstants::UNLIMITED === $expected || null === $value || [] === $value || $value instanceof PHPFHIRTypeInterface) {
             return null;
         }
-        return sprintf('Field "%s" on type "%s" must have no more than %d elements, %d seen', $fieldName, $typeName, $expected, $cnt);
+        $len = count($value);
+        if ($expected >= $len) {
+            return null;
+        }
+        return sprintf('Field "%s" on type "%s" must have no more than %d elements, %d seen', $fieldName, $typeName, $expected, $len);
     }
 
     /**
@@ -119,14 +124,14 @@ trait PHPFHIRValidationAssertionsTrait
         if (0 >= $expected) {
             return null;
         }
-        if (!is_string($value) || '' === $value) {
+        if (null === $value || '' === $value) {
             return sprintf('Field "%s" on type "%s" must be at least %d characters long, but it is empty', $fieldName, $typeName, $expected);
         }
-        $cnt = strlen($value);
-        if ($expected <= $cnt) {
+        $len = strlen($value);
+        if ($expected <= $len) {
             return null;
         }
-        return sprintf('Field "%s" on type "%s" must be at least %d characters long, %d seen.', $fieldName, $typeName, $expected, $cnt);
+        return sprintf('Field "%s" on type "%s" must be at least %d characters long, %d seen.', $fieldName, $typeName, $expected, $len);
     }
 
     /**
@@ -139,14 +144,14 @@ trait PHPFHIRValidationAssertionsTrait
      */
     protected function _assertMaxLength(string $typeName, string $fieldName, int $expected, null|string $value): null|string
     {
-        if (PHPFHIRConstants::UNLIMITED === $expected || !is_string($value) || '' === $value) {
+        if (PHPFHIRConstants::UNLIMITED === $expected || null === $value || '' === $value) {
             return null;
         }
-        $cnt = strlen($value);
-        if ($expected >= $cnt) {
+        $len = strlen($value);
+        if ($expected >= $len) {
             return null;
         }
-        return sprintf('Field "%s" on type "%s" must be no more than %d characters long, %d seen', $fieldName, $typeName, $expected, $cnt);
+        return sprintf('Field "%s" on type "%s" must be no more than %d characters long, %d seen', $fieldName, $typeName, $expected, $len);
     }
 
     /**
@@ -182,12 +187,18 @@ trait PHPFHIRValidationAssertionsTrait
      * @param string $typeName
      * @param string $fieldName
      * @param string $pattern
-     * @param null|float|int|string|bool $value
+     * @param null|string|\HL7\FHIR\STU3\PHPFHIRPrimitiveTypeInterface $value
      * @return null|string
      */
-    protected function _assertPatternMatch(string $typeName, string $fieldName, string $pattern, null|float|int|string|bool $value): null|string
+    protected function _assertPatternMatch(string $typeName, string $fieldName, string $pattern, null|string|PHPFHIRPrimitiveTypeInterface $value): null|string
     {
-        if ('' === $pattern || (bool)preg_match($pattern, (string)$value)) {
+        if ('' === $pattern || null === $value) {
+            return null;
+        }
+        if ($value instanceof PHPFHIRPrimitiveTypeInterface) {
+            $value = (string)$value;
+        }
+        if ('' === $value || (bool)preg_match($pattern, $value)) {
             return null;
         }
         return sprintf('Field "%s" on type "%s" value of "%s" does not match pattern: %s', $fieldName, $typeName, $value, $pattern);

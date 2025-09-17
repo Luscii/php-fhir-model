@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,7 +113,6 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
      *
      * Dose form as manufactured and before any transformation into the pharmaceutical
      * product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $manufacturedDoseForm = null;
@@ -125,7 +124,6 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
      *
      * The “real world” units in which the quantity of the manufactured item is
      * described.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $unitOfPresentation = null;
@@ -137,7 +135,6 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The quantity or "count number" of the manufactured item.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $quantity = null;
@@ -148,7 +145,6 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
      *
      * Manufacturer of the item (Note that this should be named "manufacturer" but it
      * currently causes technical issues).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $manufacturer = [];
@@ -158,7 +154,6 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Ingredient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $ingredient = [];
@@ -169,7 +164,6 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Dimensions, color etc.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProdCharacteristic
      */
     protected null|FHIRProdCharacteristic $physicalCharacteristics = null;
@@ -180,7 +174,6 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Other codeable characteristics.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $otherCharacteristics = [];
@@ -189,10 +182,17 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
      * Validation map for fields in type MedicinalProductManufactured
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_MANUFACTURED_DOSE_FORM => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_QUANTITY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductManufactured Constructor
@@ -450,6 +450,32 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Manufacturer of the item (Note that this should be named "manufacturer" but it
+     * currently causes technical issues).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$manufacturer
+     * @return static
+     */
+    public function setManufacturer(FHIRReference ...$manufacturer): self
+    {
+        if ([] !== $this->manufacturer) {
+            $this->_trackValuesRemoved(count($this->manufacturer));
+            $this->manufacturer = [];
+        }
+        if ([] === $manufacturer) {
+            return $this;
+        }
+        foreach($manufacturer as $v) {
+            $this->addManufacturer($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Ingredient.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
@@ -476,6 +502,31 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
         }
         $this->_trackValueAdded();
         $this->ingredient[] = $ingredient;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Ingredient.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$ingredient
+     * @return static
+     */
+    public function setIngredient(FHIRReference ...$ingredient): self
+    {
+        if ([] !== $this->ingredient) {
+            $this->_trackValuesRemoved(count($this->ingredient));
+            $this->ingredient = [];
+        }
+        if ([] === $ingredient) {
+            return $this;
+        }
+        foreach($ingredient as $v) {
+            $this->addIngredient($v);
+        }
         return $this;
     }
 
@@ -548,6 +599,32 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
         }
         $this->_trackValueAdded();
         $this->otherCharacteristics[] = $otherCharacteristics;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Other codeable characteristics.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$otherCharacteristics
+     * @return static
+     */
+    public function setOtherCharacteristics(FHIRCodeableConcept ...$otherCharacteristics): self
+    {
+        if ([] !== $this->otherCharacteristics) {
+            $this->_trackValuesRemoved(count($this->otherCharacteristics));
+            $this->otherCharacteristics = [];
+        }
+        if ([] === $otherCharacteristics) {
+            return $this;
+        }
+        foreach($otherCharacteristics as $v) {
+            $this->addOtherCharacteristics($v);
+        }
         return $this;
     }
 

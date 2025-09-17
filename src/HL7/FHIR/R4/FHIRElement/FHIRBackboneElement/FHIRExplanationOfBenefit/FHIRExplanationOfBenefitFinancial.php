@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,6 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Classification of benefit being provided.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -117,7 +116,6 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * The quantity of the benefit which is permitted under the coverage.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
     protected null|FHIRUnsignedInt $allowedUnsignedInt = null;
@@ -127,7 +125,6 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The quantity of the benefit which is permitted under the coverage.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $allowedString = null;
@@ -137,7 +134,6 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The quantity of the benefit which is permitted under the coverage.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
     protected null|FHIRMoney $allowedMoney = null;
@@ -147,7 +143,6 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * The quantity of the benefit which have been consumed to date.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
     protected null|FHIRUnsignedInt $usedUnsignedInt = null;
@@ -157,7 +152,6 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The quantity of the benefit which have been consumed to date.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
     protected null|FHIRMoney $usedMoney = null;
@@ -166,10 +160,14 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * Validation map for fields in type ExplanationOfBenefit.Financial
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRExplanationOfBenefitFinancial Constructor
@@ -324,16 +322,16 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAllowedUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $allowedUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAllowedUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $allowedUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $allowedUnsignedInt && !($allowedUnsignedInt instanceof FHIRUnsignedInt)) {
             $allowedUnsignedInt = new FHIRUnsignedInt($allowedUnsignedInt);
         }
         $this->_trackValueSet($this->allowedUnsignedInt, $allowedUnsignedInt);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT])) {
-            $this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT])) {
+            $this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT][0] = $xmlLocation;
         $this->allowedUnsignedInt = $allowedUnsignedInt;
         return $this;
     }
@@ -363,16 +361,16 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAllowedString(null|string|FHIRStringPrimitive|FHIRString $allowedString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAllowedString(null|string|FHIRStringPrimitive|FHIRString $allowedString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $allowedString && !($allowedString instanceof FHIRString)) {
             $allowedString = new FHIRString($allowedString);
         }
         $this->_trackValueSet($this->allowedString, $allowedString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ALLOWED_STRING])) {
+            $this->_xmlLocations[self::FIELD_ALLOWED_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ALLOWED_STRING][0] = $xmlLocation;
         $this->allowedString = $allowedString;
         return $this;
     }
@@ -436,16 +434,16 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUsedUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $usedUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setUsedUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $usedUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $usedUnsignedInt && !($usedUnsignedInt instanceof FHIRUnsignedInt)) {
             $usedUnsignedInt = new FHIRUnsignedInt($usedUnsignedInt);
         }
         $this->_trackValueSet($this->usedUnsignedInt, $usedUnsignedInt);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT])) {
-            $this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT])) {
+            $this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT][0] = $xmlLocation;
         $this->usedUnsignedInt = $usedUnsignedInt;
         return $this;
     }
@@ -762,15 +760,15 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ExplanationOfBenefitFinancial', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAllowedUnsignedInt())) {
             $xw->writeAttribute(self::FIELD_ALLOWED_UNSIGNED_INT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAllowedString())) {
             $xw->writeAttribute(self::FIELD_ALLOWED_STRING, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUsedUnsignedInt())) {
             $xw->writeAttribute(self::FIELD_USED_UNSIGNED_INT, $v->getValue()?->getFormattedValue());
         }
@@ -780,13 +778,13 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAllowedUnsignedInt())) {
             $xw->startElement(self::FIELD_ALLOWED_UNSIGNED_INT);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAllowedString())) {
             $xw->startElement(self::FIELD_ALLOWED_STRING);
             $v->xmlSerialize($xw, $config);
@@ -797,7 +795,7 @@ class FHIRExplanationOfBenefitFinancial extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUsedUnsignedInt())) {
             $xw->startElement(self::FIELD_USED_UNSIGNED_INT);
             $v->xmlSerialize($xw, $config);

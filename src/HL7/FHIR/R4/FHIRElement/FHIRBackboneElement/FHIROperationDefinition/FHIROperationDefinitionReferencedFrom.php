@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIROperationDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,6 @@ class FHIROperationDefinitionReferencedFrom extends FHIRBackboneElement
      *
      * The name of the parameter or dot-separated path of parameter names pointing to
      * the resource parameter that is expected to contain a reference to this resource.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $source = null;
@@ -108,7 +107,6 @@ class FHIROperationDefinitionReferencedFrom extends FHIRBackboneElement
      *
      * The id of the element in the referencing resource that is expected to resolve to
      * this resource.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $sourceId = null;
@@ -117,10 +115,14 @@ class FHIROperationDefinitionReferencedFrom extends FHIRBackboneElement
      * Validation map for fields in type OperationDefinition.ReferencedFrom
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_SOURCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIROperationDefinitionReferencedFrom Constructor
@@ -203,16 +205,16 @@ class FHIROperationDefinitionReferencedFrom extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSource(null|string|FHIRStringPrimitive|FHIRString $source = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSource(null|string|FHIRStringPrimitive|FHIRString $source = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $source && !($source instanceof FHIRString)) {
             $source = new FHIRString($source);
         }
         $this->_trackValueSet($this->source, $source);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SOURCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SOURCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SOURCE])) {
+            $this->_xmlLocations[self::FIELD_SOURCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SOURCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SOURCE][0] = $xmlLocation;
         $this->source = $source;
         return $this;
     }
@@ -244,16 +246,16 @@ class FHIROperationDefinitionReferencedFrom extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSourceId(null|string|FHIRStringPrimitive|FHIRString $sourceId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSourceId(null|string|FHIRStringPrimitive|FHIRString $sourceId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $sourceId && !($sourceId instanceof FHIRString)) {
             $sourceId = new FHIRString($sourceId);
         }
         $this->_trackValueSet($this->sourceId, $sourceId);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SOURCE_ID])) {
-            $this->_primitiveXmlLocations[self::FIELD_SOURCE_ID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SOURCE_ID])) {
+            $this->_xmlLocations[self::FIELD_SOURCE_ID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SOURCE_ID][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SOURCE_ID][0] = $xmlLocation;
         $this->sourceId = $sourceId;
         return $this;
     }
@@ -452,22 +454,22 @@ class FHIROperationDefinitionReferencedFrom extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'OperationDefinitionReferencedFrom', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SOURCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SOURCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSource())) {
             $xw->writeAttribute(self::FIELD_SOURCE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SOURCE_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SOURCE_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSourceId())) {
             $xw->writeAttribute(self::FIELD_SOURCE_ID, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SOURCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SOURCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSource())) {
             $xw->startElement(self::FIELD_SOURCE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SOURCE_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SOURCE_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSourceId())) {
             $xw->startElement(self::FIELD_SOURCE_ID);
             $v->xmlSerialize($xw, $config);

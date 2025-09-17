@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAuditEvent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ class FHIRAuditEventSource extends FHIRBackboneElement
      *
      * Logical source location within the healthcare enterprise network. For example, a
      * hospital or other provider location within a multi-entity provider group.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $site = null;
@@ -110,7 +109,6 @@ class FHIRAuditEventSource extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Identifier of the source where the event was detected.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $observer = null;
@@ -120,7 +118,6 @@ class FHIRAuditEventSource extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Code specifying the type of source where event originated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
     protected null|array $type = [];
@@ -129,10 +126,14 @@ class FHIRAuditEventSource extends FHIRBackboneElement
      * Validation map for fields in type AuditEvent.Source
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_OBSERVER => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRAuditEventSource Constructor
@@ -220,16 +221,16 @@ class FHIRAuditEventSource extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSite(null|string|FHIRStringPrimitive|FHIRString $site = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSite(null|string|FHIRStringPrimitive|FHIRString $site = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $site && !($site instanceof FHIRString)) {
             $site = new FHIRString($site);
         }
         $this->_trackValueSet($this->site, $site);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SITE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SITE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SITE])) {
+            $this->_xmlLocations[self::FIELD_SITE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SITE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SITE][0] = $xmlLocation;
         $this->site = $site;
         return $this;
     }
@@ -299,6 +300,31 @@ class FHIRAuditEventSource extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->type[] = $type;
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Code specifying the type of source where event originated.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCoding ...$type
+     * @return static
+     */
+    public function setType(FHIRCoding ...$type): self
+    {
+        if ([] !== $this->type) {
+            $this->_trackValuesRemoved(count($this->type));
+            $this->type = [];
+        }
+        if ([] === $type) {
+            return $this;
+        }
+        foreach($type as $v) {
+            $this->addType($v);
+        }
         return $this;
     }
 
@@ -509,12 +535,12 @@ class FHIRAuditEventSource extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'AuditEventSource', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SITE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SITE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSite())) {
             $xw->writeAttribute(self::FIELD_SITE, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SITE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SITE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSite())) {
             $xw->startElement(self::FIELD_SITE);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -116,7 +116,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      *
      * The label for this particular section. This will be part of the rendered content
      * for the document, and is often used to build a table of contents.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $title = null;
@@ -128,7 +127,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      *
      * A code identifying the kind of content contained within the section. This must
      * be consistent with the section title.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -139,7 +137,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      *
      * Identifies who is responsible for the information in this section, not
      * necessarily who typed it in.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $author = [];
@@ -156,7 +153,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      * a focus SHALL only include resources where the logical subject (patient,
      * subject, focus, etc.) matches the section focus, or the resources have no
      * logical subject (few resources).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $focus = null;
@@ -170,7 +166,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      * used to represent the content of the resource to a human. The narrative need not
      * encode all the structured data, but is required to contain sufficient detail to
      * make it "clinically safe" for a human to just read the narrative.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRNarrative
      */
     protected null|FHIRNarrative $text = null;
@@ -182,7 +177,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      * for being maintained on an ongoing basis, or if it represents a snapshot of a
      * list of items from another source, or whether it is a prepared list where items
      * may be marked as added, modified or deleted.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRListMode
      */
     protected null|FHIRListMode $mode = null;
@@ -193,7 +187,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Specifies the order applied to the items in the section entries.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $orderedBy = null;
@@ -204,7 +197,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      *
      * A reference to the actual resource from which the narrative in the section is
      * derived.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $entry = [];
@@ -216,7 +208,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      *
      * If the section is empty, why the list is empty. An empty section typically has
      * some text explaining the empty reason.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $emptyReason = null;
@@ -232,7 +223,6 @@ class FHIRCompositionSection extends FHIRBackboneElement
      * Patient, Practitioner, Encounter, etc.).
      *
      * A nested sub-section within this section.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionSection[]
      */
     protected null|array $section = [];
@@ -241,10 +231,10 @@ class FHIRCompositionSection extends FHIRBackboneElement
      * Validation map for fields in type Composition.Section
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCompositionSection Constructor
@@ -407,16 +397,16 @@ class FHIRCompositionSection extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
         }
         $this->_trackValueSet($this->title, $title);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TITLE])) {
-            $this->_primitiveXmlLocations[self::FIELD_TITLE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TITLE])) {
+            $this->_xmlLocations[self::FIELD_TITLE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TITLE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TITLE][0] = $xmlLocation;
         $this->title = $title;
         return $this;
     }
@@ -492,6 +482,32 @@ class FHIRCompositionSection extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->author[] = $author;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifies who is responsible for the information in this section, not
+     * necessarily who typed it in.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$author
+     * @return static
+     */
+    public function setAuthor(FHIRReference ...$author): self
+    {
+        if ([] !== $this->author) {
+            $this->_trackValuesRemoved(count($this->author));
+            $this->author = [];
+        }
+        if ([] === $author) {
+            return $this;
+        }
+        foreach($author as $v) {
+            $this->addAuthor($v);
+        }
         return $this;
     }
 
@@ -696,6 +712,32 @@ class FHIRCompositionSection extends FHIRBackboneElement
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A reference to the actual resource from which the narrative in the section is
+     * derived.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$entry
+     * @return static
+     */
+    public function setEntry(FHIRReference ...$entry): self
+    {
+        if ([] !== $this->entry) {
+            $this->_trackValuesRemoved(count($this->entry));
+            $this->entry = [];
+        }
+        if ([] === $entry) {
+            return $this;
+        }
+        foreach($entry as $v) {
+            $this->addEntry($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -776,6 +818,37 @@ class FHIRCompositionSection extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->section[] = $section;
+        return $this;
+    }
+
+    /**
+     * A set of healthcare-related information that is assembled together into a single
+     * logical package that provides a single coherent statement of meaning,
+     * establishes its own context and that has clinical attestation with regard to who
+     * is making the statement. A Composition defines the structure and narrative
+     * content necessary for a document. However, a Composition alone does not
+     * constitute a document. Rather, the Composition must be the first entry in a
+     * Bundle where Bundle.type=document, and any other resources referenced from
+     * Composition must be included as subsequent entries in the Bundle (for example
+     * Patient, Practitioner, Encounter, etc.).
+     *
+     * A nested sub-section within this section.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionSection ...$section
+     * @return static
+     */
+    public function setSection(FHIRCompositionSection ...$section): self
+    {
+        if ([] !== $this->section) {
+            $this->_trackValuesRemoved(count($this->section));
+            $this->section = [];
+        }
+        if ([] === $section) {
+            return $this;
+        }
+        foreach($section as $v) {
+            $this->addSection($v);
+        }
         return $this;
     }
 
@@ -1123,12 +1196,12 @@ class FHIRCompositionSection extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'CompositionSection', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TITLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTitle())) {
             $xw->writeAttribute(self::FIELD_TITLE, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TITLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTitle())) {
             $xw->startElement(self::FIELD_TITLE);
             $v->xmlSerialize($xw, $config);

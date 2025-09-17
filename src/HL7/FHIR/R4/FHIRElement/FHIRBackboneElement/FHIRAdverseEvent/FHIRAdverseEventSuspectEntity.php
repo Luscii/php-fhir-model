@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAdverseEvent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,6 @@ class FHIRAdverseEventSuspectEntity extends FHIRBackboneElement
      * Identifies the actual instance of what caused the adverse event. May be a
      * substance, medication, medication administration, medication statement or a
      * device.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $instance = null;
@@ -109,7 +108,6 @@ class FHIRAdverseEventSuspectEntity extends FHIRBackboneElement
      * hospitalization, or that results in death.
      *
      * Information on the possible cause of the event.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAdverseEvent\FHIRAdverseEventCausality[]
      */
     protected null|array $causality = [];
@@ -118,10 +116,14 @@ class FHIRAdverseEventSuspectEntity extends FHIRBackboneElement
      * Validation map for fields in type AdverseEvent.SuspectEntity
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_INSTANCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRAdverseEventSuspectEntity Constructor
@@ -236,6 +238,32 @@ class FHIRAdverseEventSuspectEntity extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->causality[] = $causality;
+        return $this;
+    }
+
+    /**
+     * Actual or potential/avoided event causing unintended physical injury resulting
+     * from or contributed to by medical care, a research study or other healthcare
+     * setting factors that requires additional monitoring, treatment, or
+     * hospitalization, or that results in death.
+     *
+     * Information on the possible cause of the event.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRAdverseEvent\FHIRAdverseEventCausality ...$causality
+     * @return static
+     */
+    public function setCausality(FHIRAdverseEventCausality ...$causality): self
+    {
+        if ([] !== $this->causality) {
+            $this->_trackValuesRemoved(count($this->causality));
+            $this->causality = [];
+        }
+        if ([] === $causality) {
+            return $this;
+        }
+        foreach($causality as $v) {
+            $this->addCausality($v);
+        }
         return $this;
     }
 

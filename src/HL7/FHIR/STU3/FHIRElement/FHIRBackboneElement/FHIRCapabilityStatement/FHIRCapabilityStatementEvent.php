@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,6 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A coded identifier of a supported messaging event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
      */
     protected null|FHIRCoding $code = null;
@@ -117,7 +116,6 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The impact of the content of the message.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMessageSignificanceCategory
      */
     protected null|FHIRMessageSignificanceCategory $category = null;
@@ -127,7 +125,6 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
      *
      * The mode of this event declaration - whether an application is a sender or
      * receiver.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIREventCapabilityMode
      */
     protected null|FHIREventCapabilityMode $mode = null;
@@ -137,7 +134,6 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
      *
      * A resource associated with the event. This is the resource that defines the
      * event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRResourceType
      */
     protected null|FHIRResourceType $focus = null;
@@ -147,7 +143,6 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Information about the request for this event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $request = null;
@@ -157,7 +152,6 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Information about the response for this event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $response = null;
@@ -168,7 +162,6 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
      *
      * Guidance on how this event is handled, such as internal system trigger points,
      * business rules, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $documentation = null;
@@ -177,10 +170,26 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
      * Validation map for fields in type CapabilityStatement.Event
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CODE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_FOCUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_MODE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_REQUEST => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_RESPONSE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCapabilityStatementEvent Constructor
@@ -412,10 +421,10 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
             $focus = new FHIRResourceType($focus);
         }
         $this->_trackValueSet($this->focus, $focus);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_FOCUS])) {
-            $this->_primitiveXmlLocations[self::FIELD_FOCUS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_FOCUS])) {
+            $this->_xmlLocations[self::FIELD_FOCUS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_FOCUS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_FOCUS][0] = $xmlLocation;
         $this->focus = $focus;
         return $this;
     }
@@ -515,16 +524,16 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDocumentation(null|string|FHIRStringPrimitive|FHIRString $documentation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDocumentation(null|string|FHIRStringPrimitive|FHIRString $documentation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $documentation && !($documentation instanceof FHIRString)) {
             $documentation = new FHIRString($documentation);
         }
         $this->_trackValueSet($this->documentation, $documentation);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DOCUMENTATION])) {
+            $this->_xmlLocations[self::FIELD_DOCUMENTATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DOCUMENTATION][0] = $xmlLocation;
         $this->documentation = $documentation;
         return $this;
     }
@@ -818,11 +827,11 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'CapabilityStatementEvent', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FOCUS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FOCUS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFocus())) {
             $xw->writeAttribute(self::FIELD_FOCUS, $v->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DOCUMENTATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDocumentation())) {
             $xw->writeAttribute(self::FIELD_DOCUMENTATION, $v->getValue()?->getFormattedValue());
         }
@@ -842,7 +851,7 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FOCUS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FOCUS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFocus())) {
             $xw->startElement(self::FIELD_FOCUS);
             $v->xmlSerialize($xw, $config);
@@ -858,7 +867,7 @@ class FHIRCapabilityStatementEvent extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DOCUMENTATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDocumentation())) {
             $xw->startElement(self::FIELD_DOCUMENTATION);
             $v->xmlSerialize($xw, $config);

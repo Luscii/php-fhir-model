@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,7 +114,6 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The medication for which this is a described interaction.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $subject = [];
@@ -124,7 +123,6 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The interaction described.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -133,7 +131,6 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
      * other forms of interactions.
      *
      * The specific medication, food or laboratory test that interacts.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductInteraction\FHIRMedicinalProductInteractionInteractant[]
      */
     protected null|array $interactant = [];
@@ -145,7 +142,6 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
      *
      * The type of the interaction e.g. drug-drug interaction, drug-food interaction,
      * drug-lab test interaction.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -157,7 +153,6 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
      *
      * The effect of the interaction, for example "reduced gastric absorption of
      * primary medication".
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $effect = null;
@@ -168,7 +163,6 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The incidence of the interaction, e.g. theoretical, observed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $incidence = null;
@@ -179,7 +173,6 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Actions for managing the interaction.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $management = null;
@@ -188,10 +181,10 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
      * Validation map for fields in type MedicinalProductInteraction
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductInteraction Constructor
@@ -331,6 +324,31 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The medication for which this is a described interaction.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$subject
+     * @return static
+     */
+    public function setSubject(FHIRReference ...$subject): self
+    {
+        if ([] !== $this->subject) {
+            $this->_trackValuesRemoved(count($this->subject));
+            $this->subject = [];
+        }
+        if ([] === $subject) {
+            return $this;
+        }
+        foreach($subject as $v) {
+            $this->addSubject($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -355,16 +373,16 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -398,6 +416,30 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
         }
         $this->_trackValueAdded();
         $this->interactant[] = $interactant;
+        return $this;
+    }
+
+    /**
+     * The interactions of the medicinal product with other medicinal products, or
+     * other forms of interactions.
+     *
+     * The specific medication, food or laboratory test that interacts.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductInteraction\FHIRMedicinalProductInteractionInteractant ...$interactant
+     * @return static
+     */
+    public function setInteractant(FHIRMedicinalProductInteractionInteractant ...$interactant): self
+    {
+        if ([] !== $this->interactant) {
+            $this->_trackValuesRemoved(count($this->interactant));
+            $this->interactant = [];
+        }
+        if ([] === $interactant) {
+            return $this;
+        }
+        foreach($interactant as $v) {
+            $this->addInteractant($v);
+        }
         return $this;
     }
 
@@ -922,7 +964,7 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicinalProductInteraction', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
@@ -932,7 +974,7 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Stereochemistry type.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $stereochemistry = null;
@@ -116,7 +115,6 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Optical activity type.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $opticalActivity = null;
@@ -126,7 +124,6 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Molecular formula.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $molecularFormula = null;
@@ -137,7 +134,6 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      *
      * Specified per moiety according to the Hill system, i.e. first C, then H, then
      * alphabetical, each moiety separated by a dot.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $molecularFormulaByMoiety = null;
@@ -147,7 +143,6 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      *
      * Applicable for single substances that contain a radionuclide or a non-natural
      * isotopic ratio.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationIsotope[]
      */
     protected null|array $isotope = [];
@@ -156,7 +151,6 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      * used for prescribing.
      *
      * The molecular weight or weight range (for proteins, polymers or nucleic acids).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMolecularWeight
      */
     protected null|FHIRSubstanceSpecificationMolecularWeight $molecularWeight = null;
@@ -166,7 +160,6 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Supporting literature.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $source = [];
@@ -175,7 +168,6 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      * used for prescribing.
      *
      * Molecular structural representation.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRepresentation[]
      */
     protected null|array $representation = [];
@@ -184,10 +176,10 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      * Validation map for fields in type SubstanceSpecification.Structure
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceSpecificationStructure Constructor
@@ -406,16 +398,16 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMolecularFormula(null|string|FHIRStringPrimitive|FHIRString $molecularFormula = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setMolecularFormula(null|string|FHIRStringPrimitive|FHIRString $molecularFormula = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $molecularFormula && !($molecularFormula instanceof FHIRString)) {
             $molecularFormula = new FHIRString($molecularFormula);
         }
         $this->_trackValueSet($this->molecularFormula, $molecularFormula);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA])) {
-            $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA])) {
+            $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA][0] = $xmlLocation;
         $this->molecularFormula = $molecularFormula;
         return $this;
     }
@@ -447,16 +439,16 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMolecularFormulaByMoiety(null|string|FHIRStringPrimitive|FHIRString $molecularFormulaByMoiety = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setMolecularFormulaByMoiety(null|string|FHIRStringPrimitive|FHIRString $molecularFormulaByMoiety = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $molecularFormulaByMoiety && !($molecularFormulaByMoiety instanceof FHIRString)) {
             $molecularFormulaByMoiety = new FHIRString($molecularFormulaByMoiety);
         }
         $this->_trackValueSet($this->molecularFormulaByMoiety, $molecularFormulaByMoiety);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY])) {
-            $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY])) {
+            $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY][0] = $xmlLocation;
         $this->molecularFormulaByMoiety = $molecularFormulaByMoiety;
         return $this;
     }
@@ -492,6 +484,31 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->isotope[] = $isotope;
+        return $this;
+    }
+
+    /**
+     * The detailed description of a substance, typically at a level beyond what is
+     * used for prescribing.
+     *
+     * Applicable for single substances that contain a radionuclide or a non-natural
+     * isotopic ratio.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationIsotope ...$isotope
+     * @return static
+     */
+    public function setIsotope(FHIRSubstanceSpecificationIsotope ...$isotope): self
+    {
+        if ([] !== $this->isotope) {
+            $this->_trackValuesRemoved(count($this->isotope));
+            $this->isotope = [];
+        }
+        if ([] === $isotope) {
+            return $this;
+        }
+        foreach($isotope as $v) {
+            $this->addIsotope($v);
+        }
         return $this;
     }
 
@@ -562,6 +579,31 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Supporting literature.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$source
+     * @return static
+     */
+    public function setSource(FHIRReference ...$source): self
+    {
+        if ([] !== $this->source) {
+            $this->_trackValuesRemoved(count($this->source));
+            $this->source = [];
+        }
+        if ([] === $source) {
+            return $this;
+        }
+        foreach($source as $v) {
+            $this->addSource($v);
+        }
+        return $this;
+    }
+
+    /**
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
      *
@@ -590,6 +632,30 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->representation[] = $representation;
+        return $this;
+    }
+
+    /**
+     * The detailed description of a substance, typically at a level beyond what is
+     * used for prescribing.
+     *
+     * Molecular structural representation.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRepresentation ...$representation
+     * @return static
+     */
+    public function setRepresentation(FHIRSubstanceSpecificationRepresentation ...$representation): self
+    {
+        if ([] !== $this->representation) {
+            $this->_trackValuesRemoved(count($this->representation));
+            $this->representation = [];
+        }
+        if ([] === $representation) {
+            return $this;
+        }
+        foreach($representation as $v) {
+            $this->addRepresentation($v);
+        }
         return $this;
     }
 
@@ -907,11 +973,11 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceSpecificationStructure', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMolecularFormula())) {
             $xw->writeAttribute(self::FIELD_MOLECULAR_FORMULA, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMolecularFormulaByMoiety())) {
             $xw->writeAttribute(self::FIELD_MOLECULAR_FORMULA_BY_MOIETY, $v->getValue()?->getFormattedValue());
         }
@@ -926,13 +992,13 @@ class FHIRSubstanceSpecificationStructure extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMolecularFormula())) {
             $xw->startElement(self::FIELD_MOLECULAR_FORMULA);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MOLECULAR_FORMULA_BY_MOIETY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMolecularFormulaByMoiety())) {
             $xw->startElement(self::FIELD_MOLECULAR_FORMULA_BY_MOIETY);
             $v->xmlSerialize($xw, $config);

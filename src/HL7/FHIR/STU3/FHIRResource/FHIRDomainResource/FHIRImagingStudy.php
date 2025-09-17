@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -144,7 +144,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * the Narrative, or extensions
      *
      * Formal identifier for the study.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIROid
      */
     protected null|FHIROid $uid = null;
@@ -157,7 +156,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * data management. Usage may vary across different institutions. See for instance
      * [IHE Radiology Technical Framework Volume 1 Appendix
      * A](http://www.ihe.net/uploadedFiles/Documents/Radiology/IHE_RAD_TF_Rev13.0_Vol1_FT_2014-07-30.pdf).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $accession = null;
@@ -167,7 +165,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Other identifiers for the study.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -176,7 +173,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Availability of study (online, offline, or nearline).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInstanceAvailability
      */
     protected null|FHIRInstanceAvailability $availability = null;
@@ -188,7 +184,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * A list of all the Series.ImageModality values that are actual acquisition
      * modalities, i.e. those in the DICOM Context Group 29 (value set OID
      * 1.2.840.10008.6.1.19).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding[]
      */
     protected null|array $modalityList = [];
@@ -198,7 +193,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The patient imaged in the study.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $patient = null;
@@ -208,7 +202,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The encounter or episode at which the request is initiated.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $context = null;
@@ -221,7 +214,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Date and time the study started.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $started = null;
@@ -232,7 +224,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      *
      * A list of the diagnostic requests that resulted in this imaging study being
      * performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $basedOn = [];
@@ -242,7 +233,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The requesting/referring physician.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $referrer = null;
@@ -252,7 +242,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Who read the study and interpreted the images or other content.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $interpreter = [];
@@ -265,7 +254,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * study. See implementation notes for information about using DICOM endpoints. A
      * study-level endpoint applies to each series in the study, unless overridden by a
      * series-level endpoint with the same Endpoint.type.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $endpoint = [];
@@ -278,7 +266,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * series elements this Resource contains due to resource availability, security,
      * or other factors. This element should be present if any series elements are
      * present.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
     protected null|FHIRUnsignedInt $numberOfSeries = null;
@@ -291,7 +278,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * of instance elements this resource contains due to resource availability,
      * security, or other factors. This element should be present if any instance
      * elements are present.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
     protected null|FHIRUnsignedInt $numberOfInstances = null;
@@ -301,7 +287,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A reference to the performed Procedure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $procedureReference = [];
@@ -312,7 +297,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The code for the performed procedure type.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $procedureCode = [];
@@ -323,7 +307,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Description of clinical condition indicating why the ImagingStudy was requested.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $reason = null;
@@ -333,7 +316,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Institution-generated description or classification of the Study performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -345,7 +327,6 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * ultrasound), but a study may have multiple series of different modalities.
      *
      * Each study has one or more series of images or other content.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingStudy\FHIRImagingStudySeries[]
      */
     protected null|array $series = [];
@@ -354,10 +335,17 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * Validation map for fields in type ImagingStudy
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_PATIENT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_UID => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRImagingStudy Constructor
@@ -671,16 +659,16 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUid(null|string|FHIROidPrimitive|FHIROid $uid = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setUid(null|string|FHIROidPrimitive|FHIROid $uid = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $uid && !($uid instanceof FHIROid)) {
             $uid = new FHIROid($uid);
         }
         $this->_trackValueSet($this->uid, $uid);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_UID])) {
-            $this->_primitiveXmlLocations[self::FIELD_UID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_UID])) {
+            $this->_xmlLocations[self::FIELD_UID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_UID][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_UID][0] = $xmlLocation;
         $this->uid = $uid;
         return $this;
     }
@@ -760,6 +748,31 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
     }
 
     /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Other identifiers for the study.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * Availability of the resource
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -826,6 +839,33 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         $this->_trackValueAdded();
         $this->modalityList[] = $modalityList;
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A list of all the Series.ImageModality values that are actual acquisition
+     * modalities, i.e. those in the DICOM Context Group 29 (value set OID
+     * 1.2.840.10008.6.1.19).
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCoding ...$modalityList
+     * @return static
+     */
+    public function setModalityList(FHIRCoding ...$modalityList): self
+    {
+        if ([] !== $this->modalityList) {
+            $this->_trackValuesRemoved(count($this->modalityList));
+            $this->modalityList = [];
+        }
+        if ([] === $modalityList) {
+            return $this;
+        }
+        foreach($modalityList as $v) {
+            $this->addModalityList($v);
+        }
         return $this;
     }
 
@@ -928,16 +968,16 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setStarted(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $started = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setStarted(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $started = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $started && !($started instanceof FHIRDateTime)) {
             $started = new FHIRDateTime($started);
         }
         $this->_trackValueSet($this->started, $started);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_STARTED])) {
-            $this->_primitiveXmlLocations[self::FIELD_STARTED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_STARTED])) {
+            $this->_xmlLocations[self::FIELD_STARTED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_STARTED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_STARTED][0] = $xmlLocation;
         $this->started = $started;
         return $this;
     }
@@ -975,6 +1015,32 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         $this->_trackValueAdded();
         $this->basedOn[] = $basedOn;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A list of the diagnostic requests that resulted in this imaging study being
+     * performed.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$basedOn
+     * @return static
+     */
+    public function setBasedOn(FHIRReference ...$basedOn): self
+    {
+        if ([] !== $this->basedOn) {
+            $this->_trackValuesRemoved(count($this->basedOn));
+            $this->basedOn = [];
+        }
+        if ([] === $basedOn) {
+            return $this;
+        }
+        foreach($basedOn as $v) {
+            $this->addBasedOn($v);
+        }
         return $this;
     }
 
@@ -1051,6 +1117,31 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Who read the study and interpreted the images or other content.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$interpreter
+     * @return static
+     */
+    public function setInterpreter(FHIRReference ...$interpreter): self
+    {
+        if ([] !== $this->interpreter) {
+            $this->_trackValuesRemoved(count($this->interpreter));
+            $this->interpreter = [];
+        }
+        if ([] === $interpreter) {
+            return $this;
+        }
+        foreach($interpreter as $v) {
+            $this->addInterpreter($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * The network service providing access (e.g., query, view, or retrieval) for the
      * study. See implementation notes for information about using DICOM endpoints. A
      * study-level endpoint applies to each series in the study, unless overridden by a
@@ -1087,6 +1178,34 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The network service providing access (e.g., query, view, or retrieval) for the
+     * study. See implementation notes for information about using DICOM endpoints. A
+     * study-level endpoint applies to each series in the study, unless overridden by a
+     * series-level endpoint with the same Endpoint.type.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$endpoint
+     * @return static
+     */
+    public function setEndpoint(FHIRReference ...$endpoint): self
+    {
+        if ([] !== $this->endpoint) {
+            $this->_trackValuesRemoved(count($this->endpoint));
+            $this->endpoint = [];
+        }
+        if ([] === $endpoint) {
+            return $this;
+        }
+        foreach($endpoint as $v) {
+            $this->addEndpoint($v);
+        }
+        return $this;
+    }
+
+    /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
      * the Narrative, or extensions
@@ -1117,16 +1236,16 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumberOfSeries(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $numberOfSeries = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumberOfSeries(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $numberOfSeries = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $numberOfSeries && !($numberOfSeries instanceof FHIRUnsignedInt)) {
             $numberOfSeries = new FHIRUnsignedInt($numberOfSeries);
         }
         $this->_trackValueSet($this->numberOfSeries, $numberOfSeries);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SERIES])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SERIES] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUMBER_OF_SERIES])) {
+            $this->_xmlLocations[self::FIELD_NUMBER_OF_SERIES] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SERIES][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NUMBER_OF_SERIES][0] = $xmlLocation;
         $this->numberOfSeries = $numberOfSeries;
         return $this;
     }
@@ -1162,16 +1281,16 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumberOfInstances(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $numberOfInstances = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumberOfInstances(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $numberOfInstances = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $numberOfInstances && !($numberOfInstances instanceof FHIRUnsignedInt)) {
             $numberOfInstances = new FHIRUnsignedInt($numberOfInstances);
         }
         $this->_trackValueSet($this->numberOfInstances, $numberOfInstances);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_INSTANCES])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_INSTANCES] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUMBER_OF_INSTANCES])) {
+            $this->_xmlLocations[self::FIELD_NUMBER_OF_INSTANCES] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_INSTANCES][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NUMBER_OF_INSTANCES][0] = $xmlLocation;
         $this->numberOfInstances = $numberOfInstances;
         return $this;
     }
@@ -1211,6 +1330,31 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A reference to the performed Procedure.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$procedureReference
+     * @return static
+     */
+    public function setProcedureReference(FHIRReference ...$procedureReference): self
+    {
+        if ([] !== $this->procedureReference) {
+            $this->_trackValuesRemoved(count($this->procedureReference));
+            $this->procedureReference = [];
+        }
+        if ([] === $procedureReference) {
+            return $this;
+        }
+        foreach($procedureReference as $v) {
+            $this->addProcedureReference($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -1243,6 +1387,32 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         $this->_trackValueAdded();
         $this->procedureCode[] = $procedureCode;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The code for the performed procedure type.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$procedureCode
+     * @return static
+     */
+    public function setProcedureCode(FHIRCodeableConcept ...$procedureCode): self
+    {
+        if ([] !== $this->procedureCode) {
+            $this->_trackValuesRemoved(count($this->procedureCode));
+            $this->procedureCode = [];
+        }
+        if ([] === $procedureCode) {
+            return $this;
+        }
+        foreach($procedureCode as $v) {
+            $this->addProcedureCode($v);
+        }
         return $this;
     }
 
@@ -1307,16 +1477,16 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -1356,6 +1526,33 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
         }
         $this->_trackValueAdded();
         $this->series[] = $series;
+        return $this;
+    }
+
+    /**
+     * Representation of the content produced in a DICOM imaging study. A study
+     * comprises a set of series, each of which includes a set of Service-Object Pair
+     * Instances (SOP Instances - images or other data) acquired or produced in a
+     * common context. A series is of only one modality (e.g. X-ray, CT, MR,
+     * ultrasound), but a study may have multiple series of different modalities.
+     *
+     * Each study has one or more series of images or other content.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImagingStudy\FHIRImagingStudySeries ...$series
+     * @return static
+     */
+    public function setSeries(FHIRImagingStudySeries ...$series): self
+    {
+        if ([] !== $this->series) {
+            $this->_trackValuesRemoved(count($this->series));
+            $this->series = [];
+        }
+        if ([] === $series) {
+            return $this;
+        }
+        foreach($series as $v) {
+            $this->addSeries($v);
+        }
         return $this;
     }
 
@@ -2004,28 +2201,28 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
             $openedRoot = true;
             $xw->openRootNode($config, 'ImagingStudy', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_UID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_UID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUid())) {
             $xw->writeAttribute(self::FIELD_UID, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_STARTED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_STARTED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getStarted())) {
             $xw->writeAttribute(self::FIELD_STARTED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SERIES] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_SERIES] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getNumberOfSeries())) {
             $xw->writeAttribute(self::FIELD_NUMBER_OF_SERIES, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_INSTANCES] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_INSTANCES] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getNumberOfInstances())) {
             $xw->writeAttribute(self::FIELD_NUMBER_OF_INSTANCES, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_UID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_UID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUid())) {
             $xw->startElement(self::FIELD_UID);
             $v->xmlSerialize($xw, $config);
@@ -2061,7 +2258,7 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_STARTED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_STARTED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getStarted())) {
             $xw->startElement(self::FIELD_STARTED);
             $v->xmlSerialize($xw, $config);
@@ -2087,13 +2284,13 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SERIES] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_SERIES] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getNumberOfSeries())) {
             $xw->startElement(self::FIELD_NUMBER_OF_SERIES);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_INSTANCES] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_INSTANCES] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getNumberOfInstances())) {
             $xw->startElement(self::FIELD_NUMBER_OF_INSTANCES);
             $v->xmlSerialize($xw, $config);
@@ -2114,7 +2311,7 @@ class FHIRImagingStudy extends FHIRDomainResource implements PHPFHIRContainedTyp
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);

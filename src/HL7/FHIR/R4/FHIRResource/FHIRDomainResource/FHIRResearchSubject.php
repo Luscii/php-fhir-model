@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,7 +119,6 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Identifiers assigned to this research subject for a study.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -128,7 +127,6 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The current state of the subject.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRResearchSubjectStatus
      */
     protected null|FHIRResearchSubjectStatus $status = null;
@@ -138,7 +136,6 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The dates the subject began and ended their participation in the study.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $period = null;
@@ -148,7 +145,6 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Reference to the study the subject is participating in.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $study = null;
@@ -158,7 +154,6 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The record of the person or animal who is involved in the study.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $individual = null;
@@ -169,7 +164,6 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      *
      * The name of the arm in the study the subject is expected to follow as part of
      * this study.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $assignedArm = null;
@@ -180,7 +174,6 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      *
      * The name of the arm in the study the subject actually followed as part of this
      * study.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $actualArm = null;
@@ -190,7 +183,6 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A record of the patient's informed agreement to participate in the study.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $consent = null;
@@ -199,10 +191,20 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      * Validation map for fields in type ResearchSubject
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_INDIVIDUAL => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_STUDY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRResearchSubject Constructor
@@ -359,6 +361,32 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
         }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
+        return $this;
+    }
+
+    /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifiers assigned to this research subject for a study.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
         return $this;
     }
 
@@ -523,16 +551,16 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAssignedArm(null|string|FHIRStringPrimitive|FHIRString $assignedArm = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAssignedArm(null|string|FHIRStringPrimitive|FHIRString $assignedArm = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $assignedArm && !($assignedArm instanceof FHIRString)) {
             $assignedArm = new FHIRString($assignedArm);
         }
         $this->_trackValueSet($this->assignedArm, $assignedArm);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ASSIGNED_ARM])) {
-            $this->_primitiveXmlLocations[self::FIELD_ASSIGNED_ARM] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ASSIGNED_ARM])) {
+            $this->_xmlLocations[self::FIELD_ASSIGNED_ARM] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ASSIGNED_ARM][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ASSIGNED_ARM][0] = $xmlLocation;
         $this->assignedArm = $assignedArm;
         return $this;
     }
@@ -564,16 +592,16 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setActualArm(null|string|FHIRStringPrimitive|FHIRString $actualArm = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setActualArm(null|string|FHIRStringPrimitive|FHIRString $actualArm = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $actualArm && !($actualArm instanceof FHIRString)) {
             $actualArm = new FHIRString($actualArm);
         }
         $this->_trackValueSet($this->actualArm, $actualArm);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ACTUAL_ARM])) {
-            $this->_primitiveXmlLocations[self::FIELD_ACTUAL_ARM] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ACTUAL_ARM])) {
+            $this->_xmlLocations[self::FIELD_ACTUAL_ARM] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ACTUAL_ARM][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ACTUAL_ARM][0] = $xmlLocation;
         $this->actualArm = $actualArm;
         return $this;
     }
@@ -1010,11 +1038,11 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
             $openedRoot = true;
             $xw->openRootNode($config, 'ResearchSubject', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ASSIGNED_ARM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ASSIGNED_ARM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAssignedArm())) {
             $xw->writeAttribute(self::FIELD_ASSIGNED_ARM, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTUAL_ARM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ACTUAL_ARM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getActualArm())) {
             $xw->writeAttribute(self::FIELD_ACTUAL_ARM, $v->getValue()?->getFormattedValue());
         }
@@ -1044,13 +1072,13 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ASSIGNED_ARM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ASSIGNED_ARM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAssignedArm())) {
             $xw->startElement(self::FIELD_ASSIGNED_ARM);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTUAL_ARM] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ACTUAL_ARM] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getActualArm())) {
             $xw->startElement(self::FIELD_ACTUAL_ARM);
             $v->xmlSerialize($xw, $config);

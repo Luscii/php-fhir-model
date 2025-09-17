@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -136,7 +136,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * a Member Id, Certificate number, Personal Health Number or Case ID. May be
      * constructed as the concatination of the Coverage.SubscriberID and the
      * Coverage.dependant.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -145,7 +144,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The status of the resource instance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRFinancialResourceStatusCodes
      */
     protected null|FHIRFinancialResourceStatusCodes $status = null;
@@ -157,7 +155,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * The type of coverage: social program, medical plan, accident coverage (workers
      * compensation, auto), group health or payment by an individual or organization.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -168,7 +165,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * The party who 'owns' the insurance policy, may be an individual, corporation or
      * the subscriber's employer.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $policyHolder = null;
@@ -180,7 +176,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * The party who has signed-up for or 'owns' the contractual relationship to the
      * policy or to whom the benefit of the policy for services rendered to them or
      * their family is due.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subscriber = null;
@@ -190,7 +185,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The insurer assigned ID for the Subscriber.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $subscriberId = null;
@@ -201,7 +195,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * The party who benefits from the insurance coverage., the patient when services
      * are provided.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $beneficiary = null;
@@ -212,7 +205,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The relationship of beneficiary (patient) to the subscriber.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $relationship = null;
@@ -224,7 +216,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Time period during which the coverage is in force. A missing start date
      * indicates the start date isn't known, a missing end date means the coverage is
      * continuing to be in force.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $period = null;
@@ -237,7 +228,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * non-insurance agreements, such as patient-pay agreements. May provide multiple
      * identifiers such as insurance company identifier or business identifier (BIN
      * number).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $payor = [];
@@ -247,7 +237,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * A suite of underwrite specific classifiers, for example may be used to identify
      * a class of coverage or employer group, Policy, Plan.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCoverage\FHIRCoverageGrouping
      */
     protected null|FHIRCoverageGrouping $grouping = null;
@@ -257,7 +246,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A unique identifier for a dependent under the coverage.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $dependent = null;
@@ -268,7 +256,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * An optional counter for a particular instance of the identified coverage which
      * increments upon each renewal.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $sequence = null;
@@ -281,7 +268,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * are currently inforce. Note, there may be gaps in the numbering and this does
      * not imply primary, secondard etc. as the specific positioning of coverages
      * depends upon the episode of care.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $order = null;
@@ -293,7 +279,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * The insurer-specific identifier for the insurer-defined network of providers to
      * which the beneficiary may seek treatment which will be covered at the
      * 'in-network' rate, otherwise 'out of network' terms and conditions apply.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $network = null;
@@ -303,7 +288,6 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The policy(s) which constitute this insurance coverage.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $contract = [];
@@ -312,10 +296,10 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * Validation map for fields in type Coverage
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCoverage Constructor
@@ -582,6 +566,34 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     }
 
     /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The main (and possibly only) identifier for the coverage - often referred to as
+     * a Member Id, Certificate number, Personal Health Number or Case ID. May be
+     * constructed as the concatination of the Coverage.SubscriberID and the
+     * Coverage.dependant.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A code specifying the state of the resource instance.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -750,16 +762,16 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSubscriberId(null|string|FHIRStringPrimitive|FHIRString $subscriberId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSubscriberId(null|string|FHIRStringPrimitive|FHIRString $subscriberId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $subscriberId && !($subscriberId instanceof FHIRString)) {
             $subscriberId = new FHIRString($subscriberId);
         }
         $this->_trackValueSet($this->subscriberId, $subscriberId);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SUBSCRIBER_ID])) {
-            $this->_primitiveXmlLocations[self::FIELD_SUBSCRIBER_ID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SUBSCRIBER_ID])) {
+            $this->_xmlLocations[self::FIELD_SUBSCRIBER_ID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SUBSCRIBER_ID][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SUBSCRIBER_ID][0] = $xmlLocation;
         $this->subscriberId = $subscriberId;
         return $this;
     }
@@ -915,6 +927,34 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The program or plan underwriter or payor including both insurance and
+     * non-insurance agreements, such as patient-pay agreements. May provide multiple
+     * identifiers such as insurance company identifier or business identifier (BIN
+     * number).
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$payor
+     * @return static
+     */
+    public function setPayor(FHIRReference ...$payor): self
+    {
+        if ([] !== $this->payor) {
+            $this->_trackValuesRemoved(count($this->payor));
+            $this->payor = [];
+        }
+        if ([] === $payor) {
+            return $this;
+        }
+        foreach($payor as $v) {
+            $this->addPayor($v);
+        }
+        return $this;
+    }
+
+    /**
      * Financial instrument which may be used to reimburse or pay for health care
      * products and services.
      *
@@ -973,16 +1013,16 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDependent(null|string|FHIRStringPrimitive|FHIRString $dependent = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDependent(null|string|FHIRStringPrimitive|FHIRString $dependent = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $dependent && !($dependent instanceof FHIRString)) {
             $dependent = new FHIRString($dependent);
         }
         $this->_trackValueSet($this->dependent, $dependent);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEPENDENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_DEPENDENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DEPENDENT])) {
+            $this->_xmlLocations[self::FIELD_DEPENDENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DEPENDENT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DEPENDENT][0] = $xmlLocation;
         $this->dependent = $dependent;
         return $this;
     }
@@ -1014,16 +1054,16 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSequence(null|string|FHIRStringPrimitive|FHIRString $sequence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSequence(null|string|FHIRStringPrimitive|FHIRString $sequence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $sequence && !($sequence instanceof FHIRString)) {
             $sequence = new FHIRString($sequence);
         }
         $this->_trackValueSet($this->sequence, $sequence);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SEQUENCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SEQUENCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SEQUENCE])) {
+            $this->_xmlLocations[self::FIELD_SEQUENCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SEQUENCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SEQUENCE][0] = $xmlLocation;
         $this->sequence = $sequence;
         return $this;
     }
@@ -1059,16 +1099,16 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOrder(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $order = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOrder(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $order = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $order && !($order instanceof FHIRPositiveInt)) {
             $order = new FHIRPositiveInt($order);
         }
         $this->_trackValueSet($this->order, $order);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ORDER])) {
-            $this->_primitiveXmlLocations[self::FIELD_ORDER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ORDER])) {
+            $this->_xmlLocations[self::FIELD_ORDER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ORDER][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ORDER][0] = $xmlLocation;
         $this->order = $order;
         return $this;
     }
@@ -1102,16 +1142,16 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNetwork(null|string|FHIRStringPrimitive|FHIRString $network = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNetwork(null|string|FHIRStringPrimitive|FHIRString $network = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $network && !($network instanceof FHIRString)) {
             $network = new FHIRString($network);
         }
         $this->_trackValueSet($this->network, $network);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NETWORK])) {
-            $this->_primitiveXmlLocations[self::FIELD_NETWORK] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NETWORK])) {
+            $this->_xmlLocations[self::FIELD_NETWORK] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NETWORK][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NETWORK][0] = $xmlLocation;
         $this->network = $network;
         return $this;
     }
@@ -1147,6 +1187,31 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
         }
         $this->_trackValueAdded();
         $this->contract[] = $contract;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The policy(s) which constitute this insurance coverage.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$contract
+     * @return static
+     */
+    public function setContract(FHIRReference ...$contract): self
+    {
+        if ([] !== $this->contract) {
+            $this->_trackValuesRemoved(count($this->contract));
+            $this->contract = [];
+        }
+        if ([] === $contract) {
+            return $this;
+        }
+        foreach($contract as $v) {
+            $this->addContract($v);
+        }
         return $this;
     }
 
@@ -1728,23 +1793,23 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
             $openedRoot = true;
             $xw->openRootNode($config, 'Coverage', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUBSCRIBER_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUBSCRIBER_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSubscriberId())) {
             $xw->writeAttribute(self::FIELD_SUBSCRIBER_ID, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DEPENDENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DEPENDENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDependent())) {
             $xw->writeAttribute(self::FIELD_DEPENDENT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEQUENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEQUENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSequence())) {
             $xw->writeAttribute(self::FIELD_SEQUENCE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ORDER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ORDER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOrder())) {
             $xw->writeAttribute(self::FIELD_ORDER, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NETWORK] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NETWORK] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getNetwork())) {
             $xw->writeAttribute(self::FIELD_NETWORK, $v->getValue()?->getFormattedValue());
         }
@@ -1774,7 +1839,7 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUBSCRIBER_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUBSCRIBER_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSubscriberId())) {
             $xw->startElement(self::FIELD_SUBSCRIBER_ID);
             $v->xmlSerialize($xw, $config);
@@ -1805,25 +1870,25 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DEPENDENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DEPENDENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDependent())) {
             $xw->startElement(self::FIELD_DEPENDENT);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEQUENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEQUENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSequence())) {
             $xw->startElement(self::FIELD_SEQUENCE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ORDER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ORDER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOrder())) {
             $xw->startElement(self::FIELD_ORDER);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NETWORK] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NETWORK] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getNetwork())) {
             $xw->startElement(self::FIELD_NETWORK);
             $v->xmlSerialize($xw, $config);

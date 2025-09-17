@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRClinicalImpression;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
      *
      * Specific text, code or reference for finding or diagnosis, which may include
      * ruled-out or resolved conditions.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $itemCodeableConcept = null;
@@ -116,7 +115,6 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
      *
      * Specific text, code or reference for finding or diagnosis, which may include
      * ruled-out or resolved conditions.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $itemReference = null;
@@ -126,7 +124,6 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Which investigations support finding or diagnosis.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $basis = null;
@@ -135,10 +132,17 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
      * Validation map for fields in type ClinicalImpression.Finding
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_ITEM_CODEABLE_CONCEPT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_ITEM_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRClinicalImpressionFinding Constructor
@@ -290,16 +294,16 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setBasis(null|string|FHIRStringPrimitive|FHIRString $basis = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setBasis(null|string|FHIRStringPrimitive|FHIRString $basis = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $basis && !($basis instanceof FHIRString)) {
             $basis = new FHIRString($basis);
         }
         $this->_trackValueSet($this->basis, $basis);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_BASIS])) {
-            $this->_primitiveXmlLocations[self::FIELD_BASIS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_BASIS])) {
+            $this->_xmlLocations[self::FIELD_BASIS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_BASIS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_BASIS][0] = $xmlLocation;
         $this->basis = $basis;
         return $this;
     }
@@ -509,7 +513,7 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ClinicalImpressionFinding', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_BASIS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_BASIS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getBasis())) {
             $xw->writeAttribute(self::FIELD_BASIS, $v->getValue()?->getFormattedValue());
         }
@@ -524,7 +528,7 @@ class FHIRClinicalImpressionFinding extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_BASIS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_BASIS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getBasis())) {
             $xw->startElement(self::FIELD_BASIS);
             $v->xmlSerialize($xw, $config);

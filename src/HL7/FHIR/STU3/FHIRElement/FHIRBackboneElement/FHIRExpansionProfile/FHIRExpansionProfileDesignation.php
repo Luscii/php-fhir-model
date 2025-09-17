@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRExpansionProfile;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,6 @@ class FHIRExpansionProfileDesignation extends FHIRBackboneElement
      * Resource to define constraints on the Expansion of a FHIR ValueSet.
      *
      * Designations to be included.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRExpansionProfile\FHIRExpansionProfileInclude
      */
     protected null|FHIRExpansionProfileInclude $include = null;
@@ -98,7 +97,6 @@ class FHIRExpansionProfileDesignation extends FHIRBackboneElement
      * Resource to define constraints on the Expansion of a FHIR ValueSet.
      *
      * Designations to be excluded.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRExpansionProfile\FHIRExpansionProfileExclude
      */
     protected null|FHIRExpansionProfileExclude $exclude = null;
@@ -107,10 +105,10 @@ class FHIRExpansionProfileDesignation extends FHIRBackboneElement
      * Validation map for fields in type ExpansionProfile.Designation
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRExpansionProfileDesignation Constructor

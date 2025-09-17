@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -121,7 +121,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      *
      * The locally assigned unique identification by the software. For example: handle
      * ID.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -133,7 +132,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      *
      * The component type as defined in the object-oriented or metric nomenclature
      * partition.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -146,7 +144,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      *
      * The timestamp for the most recent system change which includes device
      * configuration or setting change.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
      */
     protected null|FHIRInstant $lastSystemChange = null;
@@ -157,7 +154,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      *
      * The link to the source Device that contains administrative device information
      * such as manufacture, serial number, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $source = null;
@@ -168,7 +164,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      *
      * The link to the parent resource. For example: Channel is linked to its VMD
      * parent.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $parent = null;
@@ -180,7 +175,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      *
      * The current operational status of the device. For example: On, Off, Standby,
      * etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $operationalStatus = [];
@@ -192,7 +186,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      *
      * The parameter group supported by the current device component that is based on
      * some nomenclature, e.g. cardiovascular.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $parameterGroup = null;
@@ -202,7 +195,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      *
      * The physical principle of the measurement. For example: thermal, chemical,
      * acoustical, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMeasmntPrinciple
      */
     protected null|FHIRMeasmntPrinciple $measurementPrinciple = null;
@@ -211,7 +203,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      * component of a medical device.
      *
      * The production specification such as component revision, serial number, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceComponent\FHIRDeviceComponentProductionSpecification[]
      */
     protected null|array $productionSpecification = [];
@@ -223,7 +214,6 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      *
      * The language code for the human-readable text string produced by the device.
      * This language code will follow the IETF language tag. Example: en-US.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $languageCode = null;
@@ -232,10 +222,17 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      * Validation map for fields in type DeviceComponent
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_IDENTIFIER => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRDeviceComponent Constructor
@@ -476,16 +473,16 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLastSystemChange(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $lastSystemChange = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLastSystemChange(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $lastSystemChange = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $lastSystemChange && !($lastSystemChange instanceof FHIRInstant)) {
             $lastSystemChange = new FHIRInstant($lastSystemChange);
         }
         $this->_trackValueSet($this->lastSystemChange, $lastSystemChange);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LAST_SYSTEM_CHANGE])) {
-            $this->_primitiveXmlLocations[self::FIELD_LAST_SYSTEM_CHANGE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LAST_SYSTEM_CHANGE])) {
+            $this->_xmlLocations[self::FIELD_LAST_SYSTEM_CHANGE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LAST_SYSTEM_CHANGE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LAST_SYSTEM_CHANGE][0] = $xmlLocation;
         $this->lastSystemChange = $lastSystemChange;
         return $this;
     }
@@ -606,6 +603,33 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * The current operational status of the device. For example: On, Off, Standby,
+     * etc.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$operationalStatus
+     * @return static
+     */
+    public function setOperationalStatus(FHIRCodeableConcept ...$operationalStatus): self
+    {
+        if ([] !== $this->operationalStatus) {
+            $this->_trackValuesRemoved(count($this->operationalStatus));
+            $this->operationalStatus = [];
+        }
+        if ([] === $operationalStatus) {
+            return $this;
+        }
+        foreach($operationalStatus as $v) {
+            $this->addOperationalStatus($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * The parameter group supported by the current device component that is based on
      * some nomenclature, e.g. cardiovascular.
      *
@@ -701,6 +725,30 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
         }
         $this->_trackValueAdded();
         $this->productionSpecification[] = $productionSpecification;
+        return $this;
+    }
+
+    /**
+     * The characteristics, operational status and capabilities of a medical-related
+     * component of a medical device.
+     *
+     * The production specification such as component revision, serial number, etc.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceComponent\FHIRDeviceComponentProductionSpecification ...$productionSpecification
+     * @return static
+     */
+    public function setProductionSpecification(FHIRDeviceComponentProductionSpecification ...$productionSpecification): self
+    {
+        if ([] !== $this->productionSpecification) {
+            $this->_trackValuesRemoved(count($this->productionSpecification));
+            $this->productionSpecification = [];
+        }
+        if ([] === $productionSpecification) {
+            return $this;
+        }
+        foreach($productionSpecification as $v) {
+            $this->addProductionSpecification($v);
+        }
         return $this;
     }
 
@@ -1172,7 +1220,7 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
             $openedRoot = true;
             $xw->openRootNode($config, 'DeviceComponent', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_SYSTEM_CHANGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_SYSTEM_CHANGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLastSystemChange())) {
             $xw->writeAttribute(self::FIELD_LAST_SYSTEM_CHANGE, $v->getValue()?->getFormattedValue());
         }
@@ -1187,7 +1235,7 @@ class FHIRDeviceComponent extends FHIRDomainResource implements PHPFHIRContained
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_SYSTEM_CHANGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_SYSTEM_CHANGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLastSystemChange())) {
             $xw->startElement(self::FIELD_LAST_SYSTEM_CHANGE);
             $v->xmlSerialize($xw, $config);

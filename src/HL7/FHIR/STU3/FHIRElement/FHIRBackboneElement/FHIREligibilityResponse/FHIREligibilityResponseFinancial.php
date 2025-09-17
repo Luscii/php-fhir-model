@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREligibilityResponse;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -106,7 +106,6 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Deductable, visits, benefit amount.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -116,7 +115,6 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Benefits allowed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
     protected null|FHIRUnsignedInt $allowedUnsignedInt = null;
@@ -126,7 +124,6 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Benefits allowed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $allowedString = null;
@@ -136,7 +133,6 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Benefits allowed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity\FHIRMoney
      */
     protected null|FHIRMoney $allowedMoney = null;
@@ -146,7 +142,6 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Benefits used.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
     protected null|FHIRUnsignedInt $usedUnsignedInt = null;
@@ -156,7 +151,6 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Benefits used.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity\FHIRMoney
      */
     protected null|FHIRMoney $usedMoney = null;
@@ -165,10 +159,14 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * Validation map for fields in type EligibilityResponse.Financial
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIREligibilityResponseFinancial Constructor
@@ -323,16 +321,16 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAllowedUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $allowedUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAllowedUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $allowedUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $allowedUnsignedInt && !($allowedUnsignedInt instanceof FHIRUnsignedInt)) {
             $allowedUnsignedInt = new FHIRUnsignedInt($allowedUnsignedInt);
         }
         $this->_trackValueSet($this->allowedUnsignedInt, $allowedUnsignedInt);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT])) {
-            $this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT])) {
+            $this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT][0] = $xmlLocation;
         $this->allowedUnsignedInt = $allowedUnsignedInt;
         return $this;
     }
@@ -362,16 +360,16 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAllowedString(null|string|FHIRStringPrimitive|FHIRString $allowedString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAllowedString(null|string|FHIRStringPrimitive|FHIRString $allowedString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $allowedString && !($allowedString instanceof FHIRString)) {
             $allowedString = new FHIRString($allowedString);
         }
         $this->_trackValueSet($this->allowedString, $allowedString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ALLOWED_STRING])) {
+            $this->_xmlLocations[self::FIELD_ALLOWED_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ALLOWED_STRING][0] = $xmlLocation;
         $this->allowedString = $allowedString;
         return $this;
     }
@@ -435,16 +433,16 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUsedUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $usedUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setUsedUnsignedInt(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $usedUnsignedInt = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $usedUnsignedInt && !($usedUnsignedInt instanceof FHIRUnsignedInt)) {
             $usedUnsignedInt = new FHIRUnsignedInt($usedUnsignedInt);
         }
         $this->_trackValueSet($this->usedUnsignedInt, $usedUnsignedInt);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT])) {
-            $this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT])) {
+            $this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT][0] = $xmlLocation;
         $this->usedUnsignedInt = $usedUnsignedInt;
         return $this;
     }
@@ -761,15 +759,15 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'EligibilityResponseFinancial', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAllowedUnsignedInt())) {
             $xw->writeAttribute(self::FIELD_ALLOWED_UNSIGNED_INT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAllowedString())) {
             $xw->writeAttribute(self::FIELD_ALLOWED_STRING, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUsedUnsignedInt())) {
             $xw->writeAttribute(self::FIELD_USED_UNSIGNED_INT, $v->getValue()?->getFormattedValue());
         }
@@ -779,13 +777,13 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED_UNSIGNED_INT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAllowedUnsignedInt())) {
             $xw->startElement(self::FIELD_ALLOWED_UNSIGNED_INT);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAllowedString())) {
             $xw->startElement(self::FIELD_ALLOWED_STRING);
             $v->xmlSerialize($xw, $config);
@@ -796,7 +794,7 @@ class FHIREligibilityResponseFinancial extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_USED_UNSIGNED_INT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_USED_UNSIGNED_INT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUsedUnsignedInt())) {
             $xw->startElement(self::FIELD_USED_UNSIGNED_INT);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A category for this property, e.g. Physical, Chemical, Enzymatic.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $category = null;
@@ -116,7 +115,6 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Property type e.g. viscosity, pH, isoelectric point.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -127,7 +125,6 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      *
      * Parameters that were used in the measurement of a property (e.g. for viscosity:
      * measured at 20C with a pH of 7.1).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $parameters = null;
@@ -138,7 +135,6 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      *
      * A substance upon which a defining property depends (e.g. for solubility: in
      * water, in alcohol).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $definingSubstanceReference = null;
@@ -150,7 +146,6 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      *
      * A substance upon which a defining property depends (e.g. for solubility: in
      * water, in alcohol).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $definingSubstanceCodeableConcept = null;
@@ -162,7 +157,6 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Quantitative value for this property.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $amountQuantity = null;
@@ -172,7 +166,6 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Quantitative value for this property.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $amountString = null;
@@ -181,10 +174,10 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      * Validation map for fields in type SubstanceSpecification.Property
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceSpecificationProperty Constructor
@@ -374,16 +367,16 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setParameters(null|string|FHIRStringPrimitive|FHIRString $parameters = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setParameters(null|string|FHIRStringPrimitive|FHIRString $parameters = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $parameters && !($parameters instanceof FHIRString)) {
             $parameters = new FHIRString($parameters);
         }
         $this->_trackValueSet($this->parameters, $parameters);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PARAMETERS])) {
-            $this->_primitiveXmlLocations[self::FIELD_PARAMETERS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PARAMETERS])) {
+            $this->_xmlLocations[self::FIELD_PARAMETERS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PARAMETERS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PARAMETERS][0] = $xmlLocation;
         $this->parameters = $parameters;
         return $this;
     }
@@ -525,16 +518,16 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAmountString(null|string|FHIRStringPrimitive|FHIRString $amountString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAmountString(null|string|FHIRStringPrimitive|FHIRString $amountString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $amountString && !($amountString instanceof FHIRString)) {
             $amountString = new FHIRString($amountString);
         }
         $this->_trackValueSet($this->amountString, $amountString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AMOUNT_STRING])) {
+            $this->_xmlLocations[self::FIELD_AMOUNT_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AMOUNT_STRING][0] = $xmlLocation;
         $this->amountString = $amountString;
         return $this;
     }
@@ -828,11 +821,11 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceSpecificationProperty', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PARAMETERS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PARAMETERS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getParameters())) {
             $xw->writeAttribute(self::FIELD_PARAMETERS, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAmountString())) {
             $xw->writeAttribute(self::FIELD_AMOUNT_STRING, $v->getValue()?->getFormattedValue());
         }
@@ -847,7 +840,7 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PARAMETERS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PARAMETERS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getParameters())) {
             $xw->startElement(self::FIELD_PARAMETERS);
             $v->xmlSerialize($xw, $config);
@@ -868,7 +861,7 @@ class FHIRSubstanceSpecificationProperty extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAmountString())) {
             $xw->startElement(self::FIELD_AMOUNT_STRING);
             $v->xmlSerialize($xw, $config);

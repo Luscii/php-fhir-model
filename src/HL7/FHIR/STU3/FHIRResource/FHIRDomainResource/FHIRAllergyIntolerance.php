@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -149,7 +149,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * are defined by business processes and/or used to refer to it when a direct URL
      * reference to the resource itself is not appropriate (e.g. in CDA documents, or
      * in written / printed documentation).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -158,7 +157,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The clinical status of the allergy or intolerance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAllergyIntoleranceClinicalStatus
      */
     protected null|FHIRAllergyIntoleranceClinicalStatus $clinicalStatus = null;
@@ -169,7 +167,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Assertion about certainty associated with the propensity, or potential risk, of
      * a reaction to the identified substance (including pharmaceutical product).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAllergyIntoleranceVerificationStatus
      */
     protected null|FHIRAllergyIntoleranceVerificationStatus $verificationStatus = null;
@@ -178,7 +175,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Identification of the underlying physiological mechanism for the reaction risk.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAllergyIntoleranceType
      */
     protected null|FHIRAllergyIntoleranceType $type = null;
@@ -187,7 +183,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Category of the identified substance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAllergyIntoleranceCategory[]
      */
     protected null|array $category = [];
@@ -198,7 +193,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Estimate of the potential clinical harm, or seriousness, of the reaction to the
      * identified substance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAllergyIntoleranceCriticality
      */
     protected null|FHIRAllergyIntoleranceCriticality $criticality = null;
@@ -215,7 +209,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * allergy"), or a negated/excluded code for a specific substance or class (e.g.,
      * "No latex allergy") or a general or categorical negated statement (e.g., "No
      * known allergy", "No known drug allergies").
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -225,7 +218,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The patient who has the allergy or intolerance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $patient = null;
@@ -239,7 +231,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Estimated or actual date, date-time, or age when allergy or intolerance was
      * identified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $onsetDateTime = null;
@@ -250,7 +241,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Estimated or actual date, date-time, or age when allergy or intolerance was
      * identified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity\FHIRAge
      */
     protected null|FHIRAge $onsetAge = null;
@@ -261,7 +251,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Estimated or actual date, date-time, or age when allergy or intolerance was
      * identified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $onsetPeriod = null;
@@ -272,7 +261,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Estimated or actual date, date-time, or age when allergy or intolerance was
      * identified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $onsetRange = null;
@@ -283,7 +271,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Estimated or actual date, date-time, or age when allergy or intolerance was
      * identified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $onsetString = null;
@@ -297,7 +284,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * The date on which the existance of the AllergyIntolerance was first asserted or
      * acknowledged.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $assertedDate = null;
@@ -307,7 +293,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Individual who recorded the record and takes responsibility for its content.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $recorder = null;
@@ -317,7 +302,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The source of the information about the allergy that is recorded.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $asserter = null;
@@ -331,7 +315,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Represents the date and/or time of the last known occurrence of a reaction
      * event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $lastOccurrence = null;
@@ -343,7 +326,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Additional narrative about the propensity for the Adverse Reaction, not captured
      * in other fields.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -353,7 +335,6 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      *
      * Details about each adverse reaction event linked to exposure to the identified
      * substance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAllergyIntolerance\FHIRAllergyIntoleranceReaction[]
      */
     protected null|array $reaction = [];
@@ -362,10 +343,17 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * Validation map for fields in type AllergyIntolerance
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_PATIENT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_VERIFICATION_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRAllergyIntolerance Constructor
@@ -698,6 +686,34 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This records identifiers associated with this allergy/intolerance concern that
+     * are defined by business processes and/or used to refer to it when a direct URL
+     * reference to the resource itself is not appropriate (e.g. in CDA documents, or
+     * in written / printed documentation).
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * The clinical status of the allergy or intolerance.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -826,6 +842,30 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->category[] = $category;
+        return $this;
+    }
+
+    /**
+     * Category of an identified substance.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Category of the identified substance.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAllergyIntoleranceCategory ...$category
+     * @return static
+     */
+    public function setCategory(FHIRAllergyIntoleranceCategory ...$category): self
+    {
+        if ([] !== $this->category) {
+            $this->_trackValuesRemoved(count($this->category));
+            $this->category = [];
+        }
+        if ([] === $category) {
+            return $this;
+        }
+        foreach($category as $v) {
+            $this->addCategory($v);
+        }
         return $this;
     }
 
@@ -980,16 +1020,16 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOnsetDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $onsetDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOnsetDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $onsetDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $onsetDateTime && !($onsetDateTime instanceof FHIRDateTime)) {
             $onsetDateTime = new FHIRDateTime($onsetDateTime);
         }
         $this->_trackValueSet($this->onsetDateTime, $onsetDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ONSET_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_ONSET_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ONSET_DATE_TIME][0] = $xmlLocation;
         $this->onsetDateTime = $onsetDateTime;
         return $this;
     }
@@ -1129,16 +1169,16 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOnsetString(null|string|FHIRStringPrimitive|FHIRString $onsetString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOnsetString(null|string|FHIRStringPrimitive|FHIRString $onsetString = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $onsetString && !($onsetString instanceof FHIRString)) {
             $onsetString = new FHIRString($onsetString);
         }
         $this->_trackValueSet($this->onsetString, $onsetString);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ONSET_STRING])) {
-            $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ONSET_STRING])) {
+            $this->_xmlLocations[self::FIELD_ONSET_STRING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ONSET_STRING][0] = $xmlLocation;
         $this->onsetString = $onsetString;
         return $this;
     }
@@ -1176,16 +1216,16 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAssertedDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $assertedDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAssertedDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $assertedDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $assertedDate && !($assertedDate instanceof FHIRDateTime)) {
             $assertedDate = new FHIRDateTime($assertedDate);
         }
         $this->_trackValueSet($this->assertedDate, $assertedDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ASSERTED_DATE])) {
+            $this->_xmlLocations[self::FIELD_ASSERTED_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ASSERTED_DATE][0] = $xmlLocation;
         $this->assertedDate = $assertedDate;
         return $this;
     }
@@ -1291,16 +1331,16 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLastOccurrence(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $lastOccurrence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLastOccurrence(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $lastOccurrence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $lastOccurrence && !($lastOccurrence instanceof FHIRDateTime)) {
             $lastOccurrence = new FHIRDateTime($lastOccurrence);
         }
         $this->_trackValueSet($this->lastOccurrence, $lastOccurrence);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LAST_OCCURRENCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_LAST_OCCURRENCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LAST_OCCURRENCE])) {
+            $this->_xmlLocations[self::FIELD_LAST_OCCURRENCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LAST_OCCURRENCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LAST_OCCURRENCE][0] = $xmlLocation;
         $this->lastOccurrence = $lastOccurrence;
         return $this;
     }
@@ -1344,6 +1384,33 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Additional narrative about the propensity for the Adverse Reaction, not captured
+     * in other fields.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
+        return $this;
+    }
+
+    /**
      * Risk of harmful or undesirable, physiological response which is unique to an
      * individual and associated with exposure to a substance.
      *
@@ -1374,6 +1441,31 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->reaction[] = $reaction;
+        return $this;
+    }
+
+    /**
+     * Risk of harmful or undesirable, physiological response which is unique to an
+     * individual and associated with exposure to a substance.
+     *
+     * Details about each adverse reaction event linked to exposure to the identified
+     * substance.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAllergyIntolerance\FHIRAllergyIntoleranceReaction ...$reaction
+     * @return static
+     */
+    public function setReaction(FHIRAllergyIntoleranceReaction ...$reaction): self
+    {
+        if ([] !== $this->reaction) {
+            $this->_trackValuesRemoved(count($this->reaction));
+            $this->reaction = [];
+        }
+        if ([] === $reaction) {
+            return $this;
+        }
+        foreach($reaction as $v) {
+            $this->addReaction($v);
+        }
         return $this;
     }
 
@@ -2006,19 +2098,19 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
             $openedRoot = true;
             $xw->openRootNode($config, 'AllergyIntolerance', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOnsetDateTime())) {
             $xw->writeAttribute(self::FIELD_ONSET_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOnsetString())) {
             $xw->writeAttribute(self::FIELD_ONSET_STRING, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ASSERTED_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAssertedDate())) {
             $xw->writeAttribute(self::FIELD_ASSERTED_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_OCCURRENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_OCCURRENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLastOccurrence())) {
             $xw->writeAttribute(self::FIELD_LAST_OCCURRENCE, $v->getValue()?->getFormattedValue());
         }
@@ -2063,7 +2155,7 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOnsetDateTime())) {
             $xw->startElement(self::FIELD_ONSET_DATE_TIME);
             $v->xmlSerialize($xw, $config);
@@ -2084,13 +2176,13 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ONSET_STRING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ONSET_STRING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOnsetString())) {
             $xw->startElement(self::FIELD_ONSET_STRING);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ASSERTED_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ASSERTED_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAssertedDate())) {
             $xw->startElement(self::FIELD_ASSERTED_DATE);
             $v->xmlSerialize($xw, $config);
@@ -2106,7 +2198,7 @@ class FHIRAllergyIntolerance extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_OCCURRENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_OCCURRENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLastOccurrence())) {
             $xw->startElement(self::FIELD_LAST_OCCURRENCE);
             $v->xmlSerialize($xw, $config);

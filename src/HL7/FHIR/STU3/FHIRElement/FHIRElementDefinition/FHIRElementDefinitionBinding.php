@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRElementDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ class FHIRElementDefinitionBinding extends FHIRElement
      * Indicates the degree of conformance expectations associated with this binding -
      * that is, the degree to which the provided value set must be adhered to in the
      * instances.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBindingStrength
      */
     protected null|FHIRBindingStrength $strength = null;
@@ -115,7 +114,6 @@ class FHIRElementDefinitionBinding extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Describes the intended use of this particular set of codes.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -130,7 +128,6 @@ class FHIRElementDefinitionBinding extends FHIRElement
      * containing the canonical URL for the value set. If the reference is to an
      * implicit value set - usually, an IETF RFC that defines a grammar, such as mime
      * types - then use a uri.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $valueSetUri = null;
@@ -145,7 +142,6 @@ class FHIRElementDefinitionBinding extends FHIRElement
      * containing the canonical URL for the value set. If the reference is to an
      * implicit value set - usually, an IETF RFC that defines a grammar, such as mime
      * types - then use a uri.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $valueSetReference = null;
@@ -154,10 +150,14 @@ class FHIRElementDefinitionBinding extends FHIRElement
      * Validation map for fields in type ElementDefinition.Binding
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_STRENGTH => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRElementDefinitionBinding Constructor
@@ -298,16 +298,16 @@ class FHIRElementDefinitionBinding extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -347,16 +347,16 @@ class FHIRElementDefinitionBinding extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValueSetUri(null|string|FHIRUriPrimitive|FHIRUri $valueSetUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValueSetUri(null|string|FHIRUriPrimitive|FHIRUri $valueSetUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $valueSetUri && !($valueSetUri instanceof FHIRUri)) {
             $valueSetUri = new FHIRUri($valueSetUri);
         }
         $this->_trackValueSet($this->valueSetUri, $valueSetUri);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALUE_SET_URI])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALUE_SET_URI] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALUE_SET_URI])) {
+            $this->_xmlLocations[self::FIELD_VALUE_SET_URI] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALUE_SET_URI][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VALUE_SET_URI][0] = $xmlLocation;
         $this->valueSetUri = $valueSetUri;
         return $this;
     }
@@ -623,11 +623,11 @@ class FHIRElementDefinitionBinding extends FHIRElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ElementDefinitionBinding', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_SET_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_SET_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getValueSetUri())) {
             $xw->writeAttribute(self::FIELD_VALUE_SET_URI, $v->getValue()?->getFormattedValue());
         }
@@ -637,13 +637,13 @@ class FHIRElementDefinitionBinding extends FHIRElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE_SET_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE_SET_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getValueSetUri())) {
             $xw->startElement(self::FIELD_VALUE_SET_URI);
             $v->xmlSerialize($xw, $config);

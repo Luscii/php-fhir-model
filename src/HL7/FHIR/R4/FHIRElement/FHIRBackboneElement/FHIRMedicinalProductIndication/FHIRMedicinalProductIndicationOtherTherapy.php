@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductIndica
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,6 @@ class FHIRMedicinalProductIndicationOtherTherapy extends FHIRBackboneElement
      *
      * The type of relationship between the medicinal product indication or
      * contraindication and another therapy.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $therapyRelationshipType = null;
@@ -109,7 +108,6 @@ class FHIRMedicinalProductIndicationOtherTherapy extends FHIRBackboneElement
      *
      * Reference to a specific medication (active substance, medicinal product or class
      * of products) as part of an indication or contraindication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $medicationCodeableConcept = null;
@@ -120,7 +118,6 @@ class FHIRMedicinalProductIndicationOtherTherapy extends FHIRBackboneElement
      *
      * Reference to a specific medication (active substance, medicinal product or class
      * of products) as part of an indication or contraindication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $medicationReference = null;
@@ -129,10 +126,20 @@ class FHIRMedicinalProductIndicationOtherTherapy extends FHIRBackboneElement
      * Validation map for fields in type MedicinalProductIndication.OtherTherapy
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_MEDICATION_CODEABLE_CONCEPT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_MEDICATION_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_THERAPY_RELATIONSHIP_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductIndicationOtherTherapy Constructor

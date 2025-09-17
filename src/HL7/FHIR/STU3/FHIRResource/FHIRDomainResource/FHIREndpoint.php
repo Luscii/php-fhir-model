@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,7 +128,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * Identifier for the organization that is used to identify the endpoint across
      * multiple disparate systems.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -137,7 +136,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * active | suspended | error | off | test.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIREndpointStatus
      */
     protected null|FHIREndpointStatus $status = null;
@@ -149,7 +147,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * A coded value that represents the technical details of the usage of this
      * endpoint, such as what WSDLs should be used in what way. (e.g.
      * XDS.b/DICOM/cds-hook).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
      */
     protected null|FHIRCoding $connectionType = null;
@@ -159,7 +156,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A friendly name that this endpoint can be referred to with.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $name = null;
@@ -171,7 +167,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * The organization that manages this endpoint (even if technically another
      * organisation is hosting this in the cloud, it is the organisation associated
      * with the data).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $managingOrganization = null;
@@ -183,7 +178,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * Contact details for a human to contact about the subscription. The primary use
      * of this for system administrator troubleshooting.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContactPoint[]
      */
     protected null|array $contact = [];
@@ -193,7 +187,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The interval during which the endpoint is expected to be operational.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $period = null;
@@ -205,7 +198,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      *
      * The payload type describes the acceptable content that can be communicated on
      * the endpoint.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $payloadType = [];
@@ -218,7 +210,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * The mime type to send the payload in - e.g. application/fhir+xml,
      * application/fhir+json. If the mime type is not specified, then the sender could
      * send any content (including no content depending on the connectionType).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode[]
      */
     protected null|array $payloadMimeType = [];
@@ -228,7 +219,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The uri that describes the actual end-point to connect to.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $address = null;
@@ -238,7 +228,6 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Additional headers / information to send as part of the notification.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
     protected null|array $header = [];
@@ -248,13 +237,22 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @var array
      */
     private const _VALIDATION_RULES = [
+        self::FIELD_ADDRESS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_CONNECTION_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
         self::FIELD_PAYLOAD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_STATUS => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIREndpoint Constructor
@@ -502,6 +500,32 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     }
 
     /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifier for the organization that is used to identify the endpoint across
+     * multiple disparate systems.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * The status of the endpoint
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -596,16 +620,16 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
         }
         $this->_trackValueSet($this->name, $name);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NAME])) {
+            $this->_xmlLocations[self::FIELD_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NAME][0] = $xmlLocation;
         $this->name = $name;
         return $this;
     }
@@ -687,6 +711,33 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     }
 
     /**
+     * Details for all kinds of technology mediated contact points for a person or
+     * organization, including telephone, email, etc.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Contact details for a human to contact about the subscription. The primary use
+     * of this for system administrator troubleshooting.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactPoint ...$contact
+     * @return static
+     */
+    public function setContact(FHIRContactPoint ...$contact): self
+    {
+        if ([] !== $this->contact) {
+            $this->_trackValuesRemoved(count($this->contact));
+            $this->contact = [];
+        }
+        if ([] === $contact) {
+            return $this;
+        }
+        foreach($contact as $v) {
+            $this->addContact($v);
+        }
+        return $this;
+    }
+
+    /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -759,6 +810,33 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The payload type describes the acceptable content that can be communicated on
+     * the endpoint.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$payloadType
+     * @return static
+     */
+    public function setPayloadType(FHIRCodeableConcept ...$payloadType): self
+    {
+        if ([] !== $this->payloadType) {
+            $this->_trackValuesRemoved(count($this->payloadType));
+            $this->payloadType = [];
+        }
+        if ([] === $payloadType) {
+            return $this;
+        }
+        foreach($payloadType as $v) {
+            $this->addPayloadType($v);
+        }
+        return $this;
+    }
+
+    /**
      * A string which has at least one character and no leading or trailing whitespace
      * and where there is no whitespace other than single spaces in the contents
      * If the element is present, it must have either a \@value, an \@id referenced from
@@ -789,16 +867,20 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addPayloadMimeType(null|string|FHIRCodePrimitive|FHIRCode $payloadMimeType = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addPayloadMimeType(null|string|FHIRCodePrimitive|FHIRCode $payloadMimeType = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $payloadMimeType && !($payloadMimeType instanceof FHIRCode)) {
             $payloadMimeType = new FHIRCode($payloadMimeType);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PAYLOAD_MIME_TYPE])) {
-            $this->_primitiveXmlLocations[self::FIELD_PAYLOAD_MIME_TYPE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PAYLOAD_MIME_TYPE])) {
+            $this->_xmlLocations[self::FIELD_PAYLOAD_MIME_TYPE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PAYLOAD_MIME_TYPE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_PAYLOAD_MIME_TYPE]) {
+            $this->_xmlLocations[self::FIELD_PAYLOAD_MIME_TYPE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_PAYLOAD_MIME_TYPE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->payloadMimeType[] = $payloadMimeType;
         return $this;
     }
@@ -817,9 +899,9 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPayloadMimeType(array $payloadMimeType = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPayloadMimeType(array $payloadMimeType = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_PAYLOAD_MIME_TYPE]);
+        unset($this->_xmlLocations[self::FIELD_PAYLOAD_MIME_TYPE]);
         if ([] !== $this->payloadMimeType) {
             $this->_trackValuesRemoved(count($this->payloadMimeType));
             $this->payloadMimeType = [];
@@ -862,16 +944,16 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAddress(null|string|FHIRUriPrimitive|FHIRUri $address = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAddress(null|string|FHIRUriPrimitive|FHIRUri $address = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $address && !($address instanceof FHIRUri)) {
             $address = new FHIRUri($address);
         }
         $this->_trackValueSet($this->address, $address);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ADDRESS])) {
-            $this->_primitiveXmlLocations[self::FIELD_ADDRESS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ADDRESS])) {
+            $this->_xmlLocations[self::FIELD_ADDRESS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ADDRESS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ADDRESS][0] = $xmlLocation;
         $this->address = $address;
         return $this;
     }
@@ -901,16 +983,20 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addHeader(null|string|FHIRStringPrimitive|FHIRString $header = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addHeader(null|string|FHIRStringPrimitive|FHIRString $header = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $header && !($header instanceof FHIRString)) {
             $header = new FHIRString($header);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_HEADER])) {
-            $this->_primitiveXmlLocations[self::FIELD_HEADER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_HEADER])) {
+            $this->_xmlLocations[self::FIELD_HEADER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_HEADER][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_HEADER]) {
+            $this->_xmlLocations[self::FIELD_HEADER][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_HEADER][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->header[] = $header;
         return $this;
     }
@@ -926,9 +1012,9 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setHeader(array $header = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setHeader(array $header = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_HEADER]);
+        unset($this->_xmlLocations[self::FIELD_HEADER]);
         if ([] !== $this->header) {
             $this->_trackValuesRemoved(count($this->header));
             $this->header = [];
@@ -1415,21 +1501,21 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
             $openedRoot = true;
             $xw->openRootNode($config, 'Endpoint', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->writeAttribute(self::FIELD_NAME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PAYLOAD_MIME_TYPE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PAYLOAD_MIME_TYPE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getPayloadMimeType())) {
             $xw->writeAttribute(self::FIELD_PAYLOAD_MIME_TYPE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getPayloadMimeType()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_PAYLOAD_MIME_TYPE, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ADDRESS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ADDRESS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAddress())) {
             $xw->writeAttribute(self::FIELD_ADDRESS, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_HEADER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_HEADER] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getHeader())) {
             $xw->writeAttribute(self::FIELD_HEADER, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getHeader()) && isset($vs[$idx])) {
@@ -1451,7 +1537,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->startElement(self::FIELD_NAME);
             $v->xmlSerialize($xw, $config);
@@ -1477,7 +1563,7 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PAYLOAD_MIME_TYPE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PAYLOAD_MIME_TYPE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getPayloadMimeType())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1487,13 +1573,13 @@ class FHIREndpoint extends FHIRDomainResource implements PHPFHIRContainedTypeInt
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ADDRESS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ADDRESS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAddress())) {
             $xw->startElement(self::FIELD_ADDRESS);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_HEADER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_HEADER] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getHeader())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

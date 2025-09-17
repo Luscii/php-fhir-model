@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMateria
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,6 @@ class FHIRSubstanceSourceMaterialFractionDescription extends FHIRBackboneElement
      *
      * This element is capturing information about the fraction of a plant part, or
      * human plasma for fractionation.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $fraction = null;
@@ -121,7 +120,6 @@ class FHIRSubstanceSourceMaterialFractionDescription extends FHIRBackboneElement
      * The specific type of the material constituting the component. For Herbal
      * preparations the particulars of the extracts (liquid/dry) is described in
      * Specified Substance Group 1.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $materialType = null;
@@ -130,10 +128,10 @@ class FHIRSubstanceSourceMaterialFractionDescription extends FHIRBackboneElement
      * Validation map for fields in type SubstanceSourceMaterial.FractionDescription
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceSourceMaterialFractionDescription Constructor
@@ -206,16 +204,16 @@ class FHIRSubstanceSourceMaterialFractionDescription extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFraction(null|string|FHIRStringPrimitive|FHIRString $fraction = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setFraction(null|string|FHIRStringPrimitive|FHIRString $fraction = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $fraction && !($fraction instanceof FHIRString)) {
             $fraction = new FHIRString($fraction);
         }
         $this->_trackValueSet($this->fraction, $fraction);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_FRACTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_FRACTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_FRACTION])) {
+            $this->_xmlLocations[self::FIELD_FRACTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_FRACTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_FRACTION][0] = $xmlLocation;
         $this->fraction = $fraction;
         return $this;
     }
@@ -446,12 +444,12 @@ class FHIRSubstanceSourceMaterialFractionDescription extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceSourceMaterialFractionDescription', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FRACTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FRACTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFraction())) {
             $xw->writeAttribute(self::FIELD_FRACTION, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FRACTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FRACTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFraction())) {
             $xw->startElement(self::FIELD_FRACTION);
             $v->xmlSerialize($xw, $config);

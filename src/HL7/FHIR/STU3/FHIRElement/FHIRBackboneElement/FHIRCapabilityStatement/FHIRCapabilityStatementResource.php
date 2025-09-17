@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,7 +128,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A type of resource exposed via the restful interface.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRResourceType
      */
     protected null|FHIRResourceType $type = null;
@@ -141,7 +140,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * the resource, including any constraints on cardinality, bindings, lengths or
      * other limitations. See further discussion in [Using
      * Profiles](profiling.html#profile-uses).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $profile = null;
@@ -157,7 +155,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Additional information about the resource type used by the system.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $documentation = null;
@@ -167,7 +164,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * statement of required or desired server implementation.
      *
      * Identifies a restful operation supported by the solution.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementInteraction[]
      */
     protected null|array $interaction = [];
@@ -181,7 +177,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * meta-property on resources. If the value is 'versioned-update', then the server
      * supports all the versioning features, including using e-tags for version
      * integrity in the API.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRResourceVersionPolicy
      */
     protected null|FHIRResourceVersionPolicy $versioning = null;
@@ -191,7 +186,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      *
      * A flag for whether the server is able to return past versions as part of the
      * vRead operation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $readHistory = null;
@@ -203,7 +197,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * new identities on the server (e.g. that is, the client PUTs to a location where
      * there is no existing resource). Allowing this operation means that the server
      * allows the client to create new identities on the server.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $updateCreate = null;
@@ -212,7 +205,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A flag that indicates that the server supports conditional create.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $conditionalCreate = null;
@@ -221,7 +213,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A code that indicates how the server supports conditional read.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRConditionalReadStatus
      */
     protected null|FHIRConditionalReadStatus $conditionalRead = null;
@@ -230,7 +221,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A flag that indicates that the server supports conditional update.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $conditionalUpdate = null;
@@ -239,7 +229,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A code that indicates how the server supports conditional delete.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRConditionalDeleteStatus
      */
     protected null|FHIRConditionalDeleteStatus $conditionalDelete = null;
@@ -248,7 +237,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A set of flags that defines how references are supported.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReferenceHandlingPolicy[]
      */
     protected null|array $referencePolicy = [];
@@ -258,7 +246,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A list of _include values supported by the server.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
     protected null|array $searchInclude = [];
@@ -268,7 +255,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A list of _revinclude (reverse include) values supported by the server.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString[]
      */
     protected null|array $searchRevInclude = [];
@@ -280,7 +266,6 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * Search parameters for implementations to support and/or make use of - either
      * references to ones defined in the specification, or additional ones defined
      * for/by the implementation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSearchParam[]
      */
     protected null|array $searchParam = [];
@@ -293,10 +278,13 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
         self::FIELD_INTERACTION => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCapabilityStatementResource Constructor
@@ -623,10 +611,10 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
             $type = new FHIRResourceType($type);
         }
         $this->_trackValueSet($this->type, $type);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TYPE])) {
-            $this->_primitiveXmlLocations[self::FIELD_TYPE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TYPE])) {
+            $this->_xmlLocations[self::FIELD_TYPE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TYPE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TYPE][0] = $xmlLocation;
         $this->type = $type;
         return $this;
     }
@@ -708,16 +696,16 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDocumentation(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $documentation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDocumentation(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $documentation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $documentation && !($documentation instanceof FHIRMarkdown)) {
             $documentation = new FHIRMarkdown($documentation);
         }
         $this->_trackValueSet($this->documentation, $documentation);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DOCUMENTATION])) {
+            $this->_xmlLocations[self::FIELD_DOCUMENTATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DOCUMENTATION][0] = $xmlLocation;
         $this->documentation = $documentation;
         return $this;
     }
@@ -753,6 +741,31 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->interaction[] = $interaction;
+        return $this;
+    }
+
+    /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
+     * Identifies a restful operation supported by the solution.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementInteraction ...$interaction
+     * @return static
+     */
+    public function setInteraction(FHIRCapabilityStatementInteraction ...$interaction): self
+    {
+        if ([] !== $this->interaction) {
+            $this->_trackValuesRemoved(count($this->interaction));
+            $this->interaction = [];
+        }
+        if ([] === $interaction) {
+            return $this;
+        }
+        foreach($interaction as $v) {
+            $this->addInteraction($v);
+        }
         return $this;
     }
 
@@ -823,16 +836,16 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setReadHistory(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $readHistory = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setReadHistory(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $readHistory = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $readHistory && !($readHistory instanceof FHIRBoolean)) {
             $readHistory = new FHIRBoolean($readHistory);
         }
         $this->_trackValueSet($this->readHistory, $readHistory);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_READ_HISTORY])) {
-            $this->_primitiveXmlLocations[self::FIELD_READ_HISTORY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_READ_HISTORY])) {
+            $this->_xmlLocations[self::FIELD_READ_HISTORY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_READ_HISTORY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_READ_HISTORY][0] = $xmlLocation;
         $this->readHistory = $readHistory;
         return $this;
     }
@@ -866,16 +879,16 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUpdateCreate(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $updateCreate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setUpdateCreate(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $updateCreate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $updateCreate && !($updateCreate instanceof FHIRBoolean)) {
             $updateCreate = new FHIRBoolean($updateCreate);
         }
         $this->_trackValueSet($this->updateCreate, $updateCreate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_UPDATE_CREATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_UPDATE_CREATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_UPDATE_CREATE])) {
+            $this->_xmlLocations[self::FIELD_UPDATE_CREATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_UPDATE_CREATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_UPDATE_CREATE][0] = $xmlLocation;
         $this->updateCreate = $updateCreate;
         return $this;
     }
@@ -903,16 +916,16 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setConditionalCreate(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $conditionalCreate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setConditionalCreate(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $conditionalCreate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $conditionalCreate && !($conditionalCreate instanceof FHIRBoolean)) {
             $conditionalCreate = new FHIRBoolean($conditionalCreate);
         }
         $this->_trackValueSet($this->conditionalCreate, $conditionalCreate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_CREATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_CREATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CONDITIONAL_CREATE])) {
+            $this->_xmlLocations[self::FIELD_CONDITIONAL_CREATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_CREATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CONDITIONAL_CREATE][0] = $xmlLocation;
         $this->conditionalCreate = $conditionalCreate;
         return $this;
     }
@@ -972,16 +985,16 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setConditionalUpdate(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $conditionalUpdate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setConditionalUpdate(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $conditionalUpdate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $conditionalUpdate && !($conditionalUpdate instanceof FHIRBoolean)) {
             $conditionalUpdate = new FHIRBoolean($conditionalUpdate);
         }
         $this->_trackValueSet($this->conditionalUpdate, $conditionalUpdate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_UPDATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_UPDATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CONDITIONAL_UPDATE])) {
+            $this->_xmlLocations[self::FIELD_CONDITIONAL_UPDATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_UPDATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CONDITIONAL_UPDATE][0] = $xmlLocation;
         $this->conditionalUpdate = $conditionalUpdate;
         return $this;
     }
@@ -1051,6 +1064,30 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
     }
 
     /**
+     * A set of flags that defines how references are supported.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * A set of flags that defines how references are supported.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReferenceHandlingPolicy ...$referencePolicy
+     * @return static
+     */
+    public function setReferencePolicy(FHIRReferenceHandlingPolicy ...$referencePolicy): self
+    {
+        if ([] !== $this->referencePolicy) {
+            $this->_trackValuesRemoved(count($this->referencePolicy));
+            $this->referencePolicy = [];
+        }
+        if ([] === $referencePolicy) {
+            return $this;
+        }
+        foreach($referencePolicy as $v) {
+            $this->addReferencePolicy($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -1075,16 +1112,20 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addSearchInclude(null|string|FHIRStringPrimitive|FHIRString $searchInclude = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addSearchInclude(null|string|FHIRStringPrimitive|FHIRString $searchInclude = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $searchInclude && !($searchInclude instanceof FHIRString)) {
             $searchInclude = new FHIRString($searchInclude);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SEARCH_INCLUDE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SEARCH_INCLUDE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SEARCH_INCLUDE])) {
+            $this->_xmlLocations[self::FIELD_SEARCH_INCLUDE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SEARCH_INCLUDE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_SEARCH_INCLUDE]) {
+            $this->_xmlLocations[self::FIELD_SEARCH_INCLUDE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_SEARCH_INCLUDE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->searchInclude[] = $searchInclude;
         return $this;
     }
@@ -1100,9 +1141,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSearchInclude(array $searchInclude = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSearchInclude(array $searchInclude = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_SEARCH_INCLUDE]);
+        unset($this->_xmlLocations[self::FIELD_SEARCH_INCLUDE]);
         if ([] !== $this->searchInclude) {
             $this->_trackValuesRemoved(count($this->searchInclude));
             $this->searchInclude = [];
@@ -1145,16 +1186,20 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addSearchRevInclude(null|string|FHIRStringPrimitive|FHIRString $searchRevInclude = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addSearchRevInclude(null|string|FHIRStringPrimitive|FHIRString $searchRevInclude = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $searchRevInclude && !($searchRevInclude instanceof FHIRString)) {
             $searchRevInclude = new FHIRString($searchRevInclude);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SEARCH_REV_INCLUDE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SEARCH_REV_INCLUDE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SEARCH_REV_INCLUDE])) {
+            $this->_xmlLocations[self::FIELD_SEARCH_REV_INCLUDE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SEARCH_REV_INCLUDE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_SEARCH_REV_INCLUDE]) {
+            $this->_xmlLocations[self::FIELD_SEARCH_REV_INCLUDE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_SEARCH_REV_INCLUDE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->searchRevInclude[] = $searchRevInclude;
         return $this;
     }
@@ -1170,9 +1215,9 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSearchRevInclude(array $searchRevInclude = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSearchRevInclude(array $searchRevInclude = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_SEARCH_REV_INCLUDE]);
+        unset($this->_xmlLocations[self::FIELD_SEARCH_REV_INCLUDE]);
         if ([] !== $this->searchRevInclude) {
             $this->_trackValuesRemoved(count($this->searchRevInclude));
             $this->searchRevInclude = [];
@@ -1225,6 +1270,33 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->searchParam[] = $searchParam;
+        return $this;
+    }
+
+    /**
+     * A Capability Statement documents a set of capabilities (behaviors) of a FHIR
+     * Server that may be used as a statement of actual server functionality or a
+     * statement of required or desired server implementation.
+     *
+     * Search parameters for implementations to support and/or make use of - either
+     * references to ones defined in the specification, or additional ones defined
+     * for/by the implementation.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRCapabilityStatement\FHIRCapabilityStatementSearchParam ...$searchParam
+     * @return static
+     */
+    public function setSearchParam(FHIRCapabilityStatementSearchParam ...$searchParam): self
+    {
+        if ([] !== $this->searchParam) {
+            $this->_trackValuesRemoved(count($this->searchParam));
+            $this->searchParam = [];
+        }
+        if ([] === $searchParam) {
+            return $this;
+        }
+        foreach($searchParam as $v) {
+            $this->addSearchParam($v);
+        }
         return $this;
     }
 
@@ -1717,44 +1789,44 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'CapabilityStatementResource', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TYPE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TYPE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getType())) {
             $xw->writeAttribute(self::FIELD_TYPE, $v->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DOCUMENTATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDocumentation())) {
             $xw->writeAttribute(self::FIELD_DOCUMENTATION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_READ_HISTORY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_READ_HISTORY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getReadHistory())) {
             $xw->writeAttribute(self::FIELD_READ_HISTORY, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_UPDATE_CREATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_UPDATE_CREATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUpdateCreate())) {
             $xw->writeAttribute(self::FIELD_UPDATE_CREATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_CREATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONDITIONAL_CREATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getConditionalCreate())) {
             $xw->writeAttribute(self::FIELD_CONDITIONAL_CREATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_UPDATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONDITIONAL_UPDATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getConditionalUpdate())) {
             $xw->writeAttribute(self::FIELD_CONDITIONAL_UPDATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEARCH_INCLUDE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEARCH_INCLUDE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getSearchInclude())) {
             $xw->writeAttribute(self::FIELD_SEARCH_INCLUDE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getSearchInclude()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_SEARCH_INCLUDE, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEARCH_REV_INCLUDE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEARCH_REV_INCLUDE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getSearchRevInclude())) {
             $xw->writeAttribute(self::FIELD_SEARCH_REV_INCLUDE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getSearchRevInclude()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_SEARCH_REV_INCLUDE, $vs[$idx]->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TYPE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TYPE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getType())) {
             $xw->startElement(self::FIELD_TYPE);
             $v->xmlSerialize($xw, $config);
@@ -1765,7 +1837,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DOCUMENTATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DOCUMENTATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDocumentation())) {
             $xw->startElement(self::FIELD_DOCUMENTATION);
             $v->xmlSerialize($xw, $config);
@@ -1781,19 +1853,19 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_READ_HISTORY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_READ_HISTORY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getReadHistory())) {
             $xw->startElement(self::FIELD_READ_HISTORY);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_UPDATE_CREATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_UPDATE_CREATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUpdateCreate())) {
             $xw->startElement(self::FIELD_UPDATE_CREATE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_CREATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONDITIONAL_CREATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getConditionalCreate())) {
             $xw->startElement(self::FIELD_CONDITIONAL_CREATE);
             $v->xmlSerialize($xw, $config);
@@ -1804,7 +1876,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CONDITIONAL_UPDATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CONDITIONAL_UPDATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getConditionalUpdate())) {
             $xw->startElement(self::FIELD_CONDITIONAL_UPDATE);
             $v->xmlSerialize($xw, $config);
@@ -1820,7 +1892,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEARCH_INCLUDE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEARCH_INCLUDE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getSearchInclude())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1830,7 +1902,7 @@ class FHIRCapabilityStatementResource extends FHIRBackboneElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEARCH_REV_INCLUDE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEARCH_REV_INCLUDE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getSearchRevInclude())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

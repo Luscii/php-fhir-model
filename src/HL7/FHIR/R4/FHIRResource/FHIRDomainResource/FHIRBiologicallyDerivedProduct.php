@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -130,7 +130,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * instance that are defined by business processes and/or used to refer to it when
      * a direct URL reference to the resource itself is not appropriate (e.g. in CDA
      * documents, or in written / printed documentation).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -139,7 +138,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Broad category of this product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBiologicallyDerivedProductCategory
      */
     protected null|FHIRBiologicallyDerivedProductCategory $productCategory = null;
@@ -151,7 +149,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      *
      * A code that identifies the kind of this biologically derived product (SNOMED
      * Ctcode).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $productCode = null;
@@ -160,7 +157,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Whether the product is currently available.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBiologicallyDerivedProductStatus
      */
     protected null|FHIRBiologicallyDerivedProductStatus $status = null;
@@ -170,7 +166,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Procedure request to obtain this biologically derived product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $request = [];
@@ -180,7 +175,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Number of discrete units within this product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $quantity = null;
@@ -190,7 +184,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Parent product (if any).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $parent = [];
@@ -199,7 +192,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * transplanted or infused into another (possibly the same) biological entity.
      *
      * How this product was collected.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBiologicallyDerivedProduct\FHIRBiologicallyDerivedProductCollection
      */
     protected null|FHIRBiologicallyDerivedProductCollection $collection = null;
@@ -210,7 +202,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * Any processing of the product during collection that does not change the
      * fundamental nature of the product. For example adding anti-coagulants during the
      * collection of Peripheral Blood Stem Cells.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBiologicallyDerivedProduct\FHIRBiologicallyDerivedProductProcessing[]
      */
     protected null|array $processing = [];
@@ -221,7 +212,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * Any manipulation of product post-collection that is intended to alter the
      * product. For example a buffy-coat enrichment or CD8 reduction of Peripheral
      * Blood Stem Cells to make it more suitable for infusion.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBiologicallyDerivedProduct\FHIRBiologicallyDerivedProductManipulation
      */
     protected null|FHIRBiologicallyDerivedProductManipulation $manipulation = null;
@@ -230,7 +220,6 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * transplanted or infused into another (possibly the same) biological entity.
      *
      * Product storage.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBiologicallyDerivedProduct\FHIRBiologicallyDerivedProductStorage[]
      */
     protected null|array $storage = [];
@@ -239,10 +228,10 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * Validation map for fields in type BiologicallyDerivedProduct
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRBiologicallyDerivedProduct Constructor
@@ -462,6 +451,35 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This records identifiers associated with this biologically derived product
+     * instance that are defined by business processes and/or used to refer to it when
+     * a direct URL reference to the resource itself is not appropriate (e.g. in CDA
+     * documents, or in written / printed documentation).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * Biologically Derived Product Category.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -598,6 +616,31 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Procedure request to obtain this biologically derived product.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$request
+     * @return static
+     */
+    public function setRequest(FHIRReference ...$request): self
+    {
+        if ([] !== $this->request) {
+            $this->_trackValuesRemoved(count($this->request));
+            $this->request = [];
+        }
+        if ([] === $request) {
+            return $this;
+        }
+        foreach($request as $v) {
+            $this->addRequest($v);
+        }
+        return $this;
+    }
+
+    /**
      * A whole number
      * 32 bit number; for values larger than this, use decimal
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -622,16 +665,16 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setQuantity(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $quantity = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setQuantity(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $quantity = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $quantity && !($quantity instanceof FHIRInteger)) {
             $quantity = new FHIRInteger($quantity);
         }
         $this->_trackValueSet($this->quantity, $quantity);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_QUANTITY])) {
-            $this->_primitiveXmlLocations[self::FIELD_QUANTITY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_QUANTITY])) {
+            $this->_xmlLocations[self::FIELD_QUANTITY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_QUANTITY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_QUANTITY][0] = $xmlLocation;
         $this->quantity = $quantity;
         return $this;
     }
@@ -667,6 +710,31 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
         }
         $this->_trackValueAdded();
         $this->parent[] = $parent;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Parent product (if any).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$parent
+     * @return static
+     */
+    public function setParent(FHIRReference ...$parent): self
+    {
+        if ([] !== $this->parent) {
+            $this->_trackValuesRemoved(count($this->parent));
+            $this->parent = [];
+        }
+        if ([] === $parent) {
+            return $this;
+        }
+        foreach($parent as $v) {
+            $this->addParent($v);
+        }
         return $this;
     }
 
@@ -742,6 +810,32 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
      * A material substance originating from a biological entity intended to be
      * transplanted or infused into another (possibly the same) biological entity.
      *
+     * Any processing of the product during collection that does not change the
+     * fundamental nature of the product. For example adding anti-coagulants during the
+     * collection of Peripheral Blood Stem Cells.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBiologicallyDerivedProduct\FHIRBiologicallyDerivedProductProcessing ...$processing
+     * @return static
+     */
+    public function setProcessing(FHIRBiologicallyDerivedProductProcessing ...$processing): self
+    {
+        if ([] !== $this->processing) {
+            $this->_trackValuesRemoved(count($this->processing));
+            $this->processing = [];
+        }
+        if ([] === $processing) {
+            return $this;
+        }
+        foreach($processing as $v) {
+            $this->addProcessing($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A material substance originating from a biological entity intended to be
+     * transplanted or infused into another (possibly the same) biological entity.
+     *
      * Any manipulation of product post-collection that is intended to alter the
      * product. For example a buffy-coat enrichment or CD8 reduction of Peripheral
      * Blood Stem Cells to make it more suitable for infusion.
@@ -803,6 +897,30 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
         }
         $this->_trackValueAdded();
         $this->storage[] = $storage;
+        return $this;
+    }
+
+    /**
+     * A material substance originating from a biological entity intended to be
+     * transplanted or infused into another (possibly the same) biological entity.
+     *
+     * Product storage.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBiologicallyDerivedProduct\FHIRBiologicallyDerivedProductStorage ...$storage
+     * @return static
+     */
+    public function setStorage(FHIRBiologicallyDerivedProductStorage ...$storage): self
+    {
+        if ([] !== $this->storage) {
+            $this->_trackValuesRemoved(count($this->storage));
+            $this->storage = [];
+        }
+        if ([] === $storage) {
+            return $this;
+        }
+        foreach($storage as $v) {
+            $this->addStorage($v);
+        }
         return $this;
     }
 
@@ -1261,7 +1379,7 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
             $openedRoot = true;
             $xw->openRootNode($config, 'BiologicallyDerivedProduct', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_QUANTITY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_QUANTITY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getQuantity())) {
             $xw->writeAttribute(self::FIELD_QUANTITY, $v->getValue()?->getFormattedValue());
         }
@@ -1291,7 +1409,7 @@ class FHIRBiologicallyDerivedProduct extends FHIRDomainResource implements PHPFH
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_QUANTITY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_QUANTITY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getQuantity())) {
             $xw->startElement(self::FIELD_QUANTITY);
             $v->xmlSerialize($xw, $config);

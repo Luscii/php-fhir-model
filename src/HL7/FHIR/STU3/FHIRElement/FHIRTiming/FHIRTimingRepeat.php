@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRTiming;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -143,7 +143,6 @@ class FHIRTimingRepeat extends FHIRElement
      *
      * Either a duration for the length of the timing schedule, a range of possible
      * length, or outer bounds for start and/or end limits of the timing schedule.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $boundsDuration = null;
@@ -154,7 +153,6 @@ class FHIRTimingRepeat extends FHIRElement
      *
      * Either a duration for the length of the timing schedule, a range of possible
      * length, or outer bounds for start and/or end limits of the timing schedule.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $boundsRange = null;
@@ -165,7 +163,6 @@ class FHIRTimingRepeat extends FHIRElement
      *
      * Either a duration for the length of the timing schedule, a range of possible
      * length, or outer bounds for start and/or end limits of the timing schedule.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $boundsPeriod = null;
@@ -175,7 +172,6 @@ class FHIRTimingRepeat extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A total count of the desired number of repetitions.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $count = null;
@@ -186,7 +182,6 @@ class FHIRTimingRepeat extends FHIRElement
      *
      * A maximum value for the count of the desired repetitions (e.g. do something 6-8
      * times).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $countMax = null;
@@ -197,7 +192,6 @@ class FHIRTimingRepeat extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * How long this thing happens for when it happens.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $duration = null;
@@ -208,7 +202,6 @@ class FHIRTimingRepeat extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The upper limit of how long this thing happens for when it happens.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $durationMax = null;
@@ -217,7 +210,6 @@ class FHIRTimingRepeat extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The units of time for the duration, in UCUM units.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnitsOfTime
      */
     protected null|FHIRUnitsOfTime $durationUnit = null;
@@ -228,7 +220,6 @@ class FHIRTimingRepeat extends FHIRElement
      *
      * The number of times to repeat the action within the specified period / period
      * range (i.e. both period and periodMax provided).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $frequency = null;
@@ -239,7 +230,6 @@ class FHIRTimingRepeat extends FHIRElement
      *
      * If present, indicates that the frequency is a range - so to repeat between
      * [frequency] and [frequencyMax] times within the period or period range.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $frequencyMax = null;
@@ -252,7 +242,6 @@ class FHIRTimingRepeat extends FHIRElement
      * Indicates the duration of time over which repetitions are to occur; e.g. to
      * express "3 times per day", 3 would be the frequency and "1 day" would be the
      * period.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $period = null;
@@ -264,7 +253,6 @@ class FHIRTimingRepeat extends FHIRElement
      *
      * If present, indicates that the period is a range from [period] to [periodMax],
      * allowing expressing concepts such as "do this once every 3-5 days.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $periodMax = null;
@@ -273,7 +261,6 @@ class FHIRTimingRepeat extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The units of time for the period in UCUM units.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnitsOfTime
      */
     protected null|FHIRUnitsOfTime $periodUnit = null;
@@ -285,7 +272,6 @@ class FHIRTimingRepeat extends FHIRElement
      *
      * If one or more days of week is provided, then the action happens only on the
      * specified day(s).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode[]
      */
     protected null|array $dayOfWeek = [];
@@ -294,7 +280,6 @@ class FHIRTimingRepeat extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Specified time of day for action to take place.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTime[]
      */
     protected null|array $timeOfDay = [];
@@ -303,7 +288,6 @@ class FHIRTimingRepeat extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Real world events that the occurrence of the event should be tied to.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIREventTiming[]
      */
     protected null|array $when = [];
@@ -315,7 +299,6 @@ class FHIRTimingRepeat extends FHIRElement
      * The number of minutes from the event. If the event code does not indicate
      * whether the minutes is before or after the event, then the offset is assumed to
      * be after the event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUnsignedInt
      */
     protected null|FHIRUnsignedInt $offset = null;
@@ -324,10 +307,10 @@ class FHIRTimingRepeat extends FHIRElement
      * Validation map for fields in type Timing.Repeat
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRTimingRepeat Constructor
@@ -786,16 +769,16 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCount(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $count = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCount(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $count = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $count && !($count instanceof FHIRInteger)) {
             $count = new FHIRInteger($count);
         }
         $this->_trackValueSet($this->count, $count);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_COUNT])) {
-            $this->_primitiveXmlLocations[self::FIELD_COUNT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_COUNT])) {
+            $this->_xmlLocations[self::FIELD_COUNT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_COUNT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_COUNT][0] = $xmlLocation;
         $this->count = $count;
         return $this;
     }
@@ -827,16 +810,16 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCountMax(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $countMax = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCountMax(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $countMax = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $countMax && !($countMax instanceof FHIRInteger)) {
             $countMax = new FHIRInteger($countMax);
         }
         $this->_trackValueSet($this->countMax, $countMax);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_COUNT_MAX])) {
-            $this->_primitiveXmlLocations[self::FIELD_COUNT_MAX] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_COUNT_MAX])) {
+            $this->_xmlLocations[self::FIELD_COUNT_MAX] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_COUNT_MAX][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_COUNT_MAX][0] = $xmlLocation;
         $this->countMax = $countMax;
         return $this;
     }
@@ -868,16 +851,16 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDuration(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $duration = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDuration(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $duration = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $duration && !($duration instanceof FHIRDecimal)) {
             $duration = new FHIRDecimal($duration);
         }
         $this->_trackValueSet($this->duration, $duration);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DURATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DURATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DURATION])) {
+            $this->_xmlLocations[self::FIELD_DURATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DURATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DURATION][0] = $xmlLocation;
         $this->duration = $duration;
         return $this;
     }
@@ -909,16 +892,16 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDurationMax(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $durationMax = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDurationMax(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $durationMax = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $durationMax && !($durationMax instanceof FHIRDecimal)) {
             $durationMax = new FHIRDecimal($durationMax);
         }
         $this->_trackValueSet($this->durationMax, $durationMax);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DURATION_MAX])) {
-            $this->_primitiveXmlLocations[self::FIELD_DURATION_MAX] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DURATION_MAX])) {
+            $this->_xmlLocations[self::FIELD_DURATION_MAX] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DURATION_MAX][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DURATION_MAX][0] = $xmlLocation;
         $this->durationMax = $durationMax;
         return $this;
     }
@@ -982,16 +965,16 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFrequency(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $frequency = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setFrequency(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $frequency = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $frequency && !($frequency instanceof FHIRInteger)) {
             $frequency = new FHIRInteger($frequency);
         }
         $this->_trackValueSet($this->frequency, $frequency);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_FREQUENCY])) {
-            $this->_primitiveXmlLocations[self::FIELD_FREQUENCY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_FREQUENCY])) {
+            $this->_xmlLocations[self::FIELD_FREQUENCY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_FREQUENCY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_FREQUENCY][0] = $xmlLocation;
         $this->frequency = $frequency;
         return $this;
     }
@@ -1023,16 +1006,16 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFrequencyMax(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $frequencyMax = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setFrequencyMax(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $frequencyMax = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $frequencyMax && !($frequencyMax instanceof FHIRInteger)) {
             $frequencyMax = new FHIRInteger($frequencyMax);
         }
         $this->_trackValueSet($this->frequencyMax, $frequencyMax);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_FREQUENCY_MAX])) {
-            $this->_primitiveXmlLocations[self::FIELD_FREQUENCY_MAX] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_FREQUENCY_MAX])) {
+            $this->_xmlLocations[self::FIELD_FREQUENCY_MAX] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_FREQUENCY_MAX][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_FREQUENCY_MAX][0] = $xmlLocation;
         $this->frequencyMax = $frequencyMax;
         return $this;
     }
@@ -1068,16 +1051,16 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPeriod(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $period = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPeriod(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $period = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $period && !($period instanceof FHIRDecimal)) {
             $period = new FHIRDecimal($period);
         }
         $this->_trackValueSet($this->period, $period);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PERIOD])) {
-            $this->_primitiveXmlLocations[self::FIELD_PERIOD] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PERIOD])) {
+            $this->_xmlLocations[self::FIELD_PERIOD] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PERIOD][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PERIOD][0] = $xmlLocation;
         $this->period = $period;
         return $this;
     }
@@ -1111,16 +1094,16 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPeriodMax(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $periodMax = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPeriodMax(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $periodMax = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $periodMax && !($periodMax instanceof FHIRDecimal)) {
             $periodMax = new FHIRDecimal($periodMax);
         }
         $this->_trackValueSet($this->periodMax, $periodMax);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PERIOD_MAX])) {
-            $this->_primitiveXmlLocations[self::FIELD_PERIOD_MAX] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PERIOD_MAX])) {
+            $this->_xmlLocations[self::FIELD_PERIOD_MAX] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PERIOD_MAX][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PERIOD_MAX][0] = $xmlLocation;
         $this->periodMax = $periodMax;
         return $this;
     }
@@ -1186,16 +1169,20 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addDayOfWeek(null|string|FHIRCodePrimitive|FHIRCode $dayOfWeek = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addDayOfWeek(null|string|FHIRCodePrimitive|FHIRCode $dayOfWeek = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $dayOfWeek && !($dayOfWeek instanceof FHIRCode)) {
             $dayOfWeek = new FHIRCode($dayOfWeek);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DAY_OF_WEEK])) {
-            $this->_primitiveXmlLocations[self::FIELD_DAY_OF_WEEK] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DAY_OF_WEEK])) {
+            $this->_xmlLocations[self::FIELD_DAY_OF_WEEK] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DAY_OF_WEEK][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_DAY_OF_WEEK]) {
+            $this->_xmlLocations[self::FIELD_DAY_OF_WEEK][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_DAY_OF_WEEK][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->dayOfWeek[] = $dayOfWeek;
         return $this;
     }
@@ -1213,9 +1200,9 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDayOfWeek(array $dayOfWeek = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDayOfWeek(array $dayOfWeek = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_DAY_OF_WEEK]);
+        unset($this->_xmlLocations[self::FIELD_DAY_OF_WEEK]);
         if ([] !== $this->dayOfWeek) {
             $this->_trackValuesRemoved(count($this->dayOfWeek));
             $this->dayOfWeek = [];
@@ -1256,16 +1243,20 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addTimeOfDay(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $timeOfDay = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addTimeOfDay(null|string|\DateTimeInterface|FHIRTimePrimitive|FHIRTime $timeOfDay = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $timeOfDay && !($timeOfDay instanceof FHIRTime)) {
             $timeOfDay = new FHIRTime($timeOfDay);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TIME_OF_DAY])) {
-            $this->_primitiveXmlLocations[self::FIELD_TIME_OF_DAY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TIME_OF_DAY])) {
+            $this->_xmlLocations[self::FIELD_TIME_OF_DAY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TIME_OF_DAY][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_TIME_OF_DAY]) {
+            $this->_xmlLocations[self::FIELD_TIME_OF_DAY][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_TIME_OF_DAY][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->timeOfDay[] = $timeOfDay;
         return $this;
     }
@@ -1280,9 +1271,9 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTimeOfDay(array $timeOfDay = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTimeOfDay(array $timeOfDay = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_TIME_OF_DAY]);
+        unset($this->_xmlLocations[self::FIELD_TIME_OF_DAY]);
         if ([] !== $this->timeOfDay) {
             $this->_trackValuesRemoved(count($this->timeOfDay));
             $this->timeOfDay = [];
@@ -1333,6 +1324,30 @@ class FHIRTimingRepeat extends FHIRElement
     }
 
     /**
+     * Real world event relating to the schedule.
+     * If the element is present, it must have either a \@value, an \@id, or extensions
+     *
+     * Real world events that the occurrence of the event should be tied to.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIREventTiming ...$when
+     * @return static
+     */
+    public function setWhen(FHIREventTiming ...$when): self
+    {
+        if ([] !== $this->when) {
+            $this->_trackValuesRemoved(count($this->when));
+            $this->when = [];
+        }
+        if ([] === $when) {
+            return $this;
+        }
+        foreach($when as $v) {
+            $this->addWhen($v);
+        }
+        return $this;
+    }
+
+    /**
      * An integer with a value that is not negative (e.g. >= 0)
      * If the element is present, it must have either a \@value, an \@id referenced from
      * the Narrative, or extensions
@@ -1361,16 +1376,16 @@ class FHIRTimingRepeat extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOffset(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $offset = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOffset(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $offset = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $offset && !($offset instanceof FHIRUnsignedInt)) {
             $offset = new FHIRUnsignedInt($offset);
         }
         $this->_trackValueSet($this->offset, $offset);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_OFFSET])) {
-            $this->_primitiveXmlLocations[self::FIELD_OFFSET] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_OFFSET])) {
+            $this->_xmlLocations[self::FIELD_OFFSET] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_OFFSET][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_OFFSET][0] = $xmlLocation;
         $this->offset = $offset;
         return $this;
     }
@@ -1908,51 +1923,51 @@ class FHIRTimingRepeat extends FHIRElement
             $openedRoot = true;
             $xw->openRootNode($config, 'TimingRepeat', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COUNT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COUNT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCount())) {
             $xw->writeAttribute(self::FIELD_COUNT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COUNT_MAX] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COUNT_MAX] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCountMax())) {
             $xw->writeAttribute(self::FIELD_COUNT_MAX, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DURATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DURATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDuration())) {
             $xw->writeAttribute(self::FIELD_DURATION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DURATION_MAX] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DURATION_MAX] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDurationMax())) {
             $xw->writeAttribute(self::FIELD_DURATION_MAX, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FREQUENCY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FREQUENCY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFrequency())) {
             $xw->writeAttribute(self::FIELD_FREQUENCY, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FREQUENCY_MAX] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FREQUENCY_MAX] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFrequencyMax())) {
             $xw->writeAttribute(self::FIELD_FREQUENCY_MAX, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PERIOD] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PERIOD] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPeriod())) {
             $xw->writeAttribute(self::FIELD_PERIOD, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PERIOD_MAX] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PERIOD_MAX] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPeriodMax())) {
             $xw->writeAttribute(self::FIELD_PERIOD_MAX, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DAY_OF_WEEK] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DAY_OF_WEEK] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getDayOfWeek())) {
             $xw->writeAttribute(self::FIELD_DAY_OF_WEEK, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getDayOfWeek()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_DAY_OF_WEEK, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME_OF_DAY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME_OF_DAY] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getTimeOfDay())) {
             $xw->writeAttribute(self::FIELD_TIME_OF_DAY, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getTimeOfDay()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_TIME_OF_DAY, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_OFFSET] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_OFFSET] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOffset())) {
             $xw->writeAttribute(self::FIELD_OFFSET, $v->getValue()?->getFormattedValue());
         }
@@ -1972,25 +1987,25 @@ class FHIRTimingRepeat extends FHIRElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COUNT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COUNT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCount())) {
             $xw->startElement(self::FIELD_COUNT);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COUNT_MAX] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COUNT_MAX] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCountMax())) {
             $xw->startElement(self::FIELD_COUNT_MAX);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DURATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DURATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDuration())) {
             $xw->startElement(self::FIELD_DURATION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DURATION_MAX] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DURATION_MAX] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDurationMax())) {
             $xw->startElement(self::FIELD_DURATION_MAX);
             $v->xmlSerialize($xw, $config);
@@ -2001,25 +2016,25 @@ class FHIRTimingRepeat extends FHIRElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FREQUENCY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FREQUENCY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFrequency())) {
             $xw->startElement(self::FIELD_FREQUENCY);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FREQUENCY_MAX] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FREQUENCY_MAX] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFrequencyMax())) {
             $xw->startElement(self::FIELD_FREQUENCY_MAX);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PERIOD] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PERIOD] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPeriod())) {
             $xw->startElement(self::FIELD_PERIOD);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PERIOD_MAX] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PERIOD_MAX] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPeriodMax())) {
             $xw->startElement(self::FIELD_PERIOD_MAX);
             $v->xmlSerialize($xw, $config);
@@ -2030,7 +2045,7 @@ class FHIRTimingRepeat extends FHIRElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DAY_OF_WEEK] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DAY_OF_WEEK] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getDayOfWeek())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -2040,7 +2055,7 @@ class FHIRTimingRepeat extends FHIRElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME_OF_DAY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME_OF_DAY] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getTimeOfDay())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -2055,7 +2070,7 @@ class FHIRTimingRepeat extends FHIRElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_OFFSET] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_OFFSET] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOffset())) {
             $xw->startElement(self::FIELD_OFFSET);
             $v->xmlSerialize($xw, $config);

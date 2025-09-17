@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRVisionPrescriptionPrism extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Amount of prism to compensate for eye alignment in fractional units.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $amount = null;
@@ -108,7 +107,6 @@ class FHIRVisionPrescriptionPrism extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The relative base, or reference lens edge, for the prism.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRVisionBase
      */
     protected null|FHIRVisionBase $base = null;
@@ -117,10 +115,17 @@ class FHIRVisionPrescriptionPrism extends FHIRBackboneElement
      * Validation map for fields in type VisionPrescription.Prism
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_AMOUNT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_BASE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRVisionPrescriptionPrism Constructor
@@ -203,16 +208,16 @@ class FHIRVisionPrescriptionPrism extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAmount(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $amount = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAmount(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $amount = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $amount && !($amount instanceof FHIRDecimal)) {
             $amount = new FHIRDecimal($amount);
         }
         $this->_trackValueSet($this->amount, $amount);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AMOUNT])) {
-            $this->_primitiveXmlLocations[self::FIELD_AMOUNT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AMOUNT])) {
+            $this->_xmlLocations[self::FIELD_AMOUNT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AMOUNT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AMOUNT][0] = $xmlLocation;
         $this->amount = $amount;
         return $this;
     }
@@ -435,12 +440,12 @@ class FHIRVisionPrescriptionPrism extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'VisionPrescriptionPrism', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAmount())) {
             $xw->writeAttribute(self::FIELD_AMOUNT, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AMOUNT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AMOUNT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAmount())) {
             $xw->startElement(self::FIELD_AMOUNT);
             $v->xmlSerialize($xw, $config);

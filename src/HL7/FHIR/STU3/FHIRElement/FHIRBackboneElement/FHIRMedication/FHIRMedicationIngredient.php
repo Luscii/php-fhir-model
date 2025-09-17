@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,7 +103,6 @@ class FHIRMedicationIngredient extends FHIRBackboneElement
      *
      * The actual ingredient - either a substance (simple ingredient) or another
      * medication.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $itemCodeableConcept = null;
@@ -114,7 +113,6 @@ class FHIRMedicationIngredient extends FHIRBackboneElement
      *
      * The actual ingredient - either a substance (simple ingredient) or another
      * medication.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $itemReference = null;
@@ -124,7 +122,6 @@ class FHIRMedicationIngredient extends FHIRBackboneElement
      *
      * Indication of whether this ingredient affects the therapeutic action of the
      * drug.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $isActive = null;
@@ -137,7 +134,6 @@ class FHIRMedicationIngredient extends FHIRBackboneElement
      * Specifies how many (or how much) of the items there are in this Medication. For
      * example, 250 mg per tablet. This is expressed as a ratio where the numerator is
      * 250mg and the denominator is 1 tablet.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRatio
      */
     protected null|FHIRRatio $amount = null;
@@ -146,10 +142,17 @@ class FHIRMedicationIngredient extends FHIRBackboneElement
      * Validation map for fields in type Medication.Ingredient
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_ITEM_CODEABLE_CONCEPT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_ITEM_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationIngredient Constructor
@@ -308,16 +311,16 @@ class FHIRMedicationIngredient extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIsActive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isActive = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setIsActive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isActive = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $isActive && !($isActive instanceof FHIRBoolean)) {
             $isActive = new FHIRBoolean($isActive);
         }
         $this->_trackValueSet($this->isActive, $isActive);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_IS_ACTIVE])) {
-            $this->_primitiveXmlLocations[self::FIELD_IS_ACTIVE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_IS_ACTIVE])) {
+            $this->_xmlLocations[self::FIELD_IS_ACTIVE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_IS_ACTIVE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_IS_ACTIVE][0] = $xmlLocation;
         $this->isActive = $isActive;
         return $this;
     }
@@ -586,7 +589,7 @@ class FHIRMedicationIngredient extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicationIngredient', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_ACTIVE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IS_ACTIVE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIsActive())) {
             $xw->writeAttribute(self::FIELD_IS_ACTIVE, $v->getValue()?->getFormattedValue());
         }
@@ -601,7 +604,7 @@ class FHIRMedicationIngredient extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_ACTIVE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IS_ACTIVE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIsActive())) {
             $xw->startElement(self::FIELD_IS_ACTIVE);
             $v->xmlSerialize($xw, $config);

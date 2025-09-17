@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -129,7 +129,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Business identifier for the marketing authorization, as assigned by a regulator.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -139,7 +138,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The medicinal product that is being authorized.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -150,7 +148,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The country in which the marketing authorization has been granted.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $country = [];
@@ -161,7 +158,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Jurisdiction within a country.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $jurisdiction = [];
@@ -172,7 +168,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The status of the marketing authorization.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $status = null;
@@ -185,7 +180,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date at which the given status has become applicable.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $statusDate = null;
@@ -199,7 +193,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      *
      * The date when a suspended the marketing or the marketing authorization of the
      * product is anticipated to be restored.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $restoreDate = null;
@@ -211,7 +204,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * The beginning of the time period in which the marketing authorization is in the
      * specific status shall be specified A complete date consisting of day, month and
      * year shall be specified using the ISO 8601 date format.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $validityPeriod = null;
@@ -222,7 +214,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      *
      * A period of time after authorization before generic product applicatiosn can be
      * submitted.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $dataExclusivityPeriod = null;
@@ -236,7 +227,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      *
      * The date when the first authorization was granted by a Medicines Regulatory
      * Agency.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $dateOfFirstAuthorization = null;
@@ -250,7 +240,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      *
      * Date of first marketing authorization for a company's new medicinal product in
      * any country in the World.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $internationalBirthDate = null;
@@ -261,7 +250,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The legal framework against which this authorization is granted.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $legalBasis = null;
@@ -269,7 +257,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * The regulatory authorization of a medicinal product.
      *
      * Authorization in areas within a country.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductAuthorization\FHIRMedicinalProductAuthorizationJurisdictionalAuthorization[]
      */
     protected null|array $jurisdictionalAuthorization = [];
@@ -279,7 +266,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Marketing Authorization Holder.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $holder = null;
@@ -289,7 +275,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Medicines Regulatory Agency.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $regulator = null;
@@ -297,7 +282,6 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * The regulatory authorization of a medicinal product.
      *
      * The regulatory procedure for granting or amending a marketing authorization.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductAuthorization\FHIRMedicinalProductAuthorizationProcedure
      */
     protected null|FHIRMedicinalProductAuthorizationProcedure $procedure = null;
@@ -306,10 +290,10 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * Validation map for fields in type MedicinalProductAuthorization
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductAuthorization Constructor
@@ -560,6 +544,32 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Business identifier for the marketing authorization, as assigned by a regulator.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -635,6 +645,32 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * The country in which the marketing authorization has been granted.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$country
+     * @return static
+     */
+    public function setCountry(FHIRCodeableConcept ...$country): self
+    {
+        if ([] !== $this->country) {
+            $this->_trackValuesRemoved(count($this->country));
+            $this->country = [];
+        }
+        if ([] === $country) {
+            return $this;
+        }
+        foreach($country as $v) {
+            $this->addCountry($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Jurisdiction within a country.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
@@ -662,6 +698,32 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
         }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Jurisdiction within a country.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$jurisdiction
+     * @return static
+     */
+    public function setJurisdiction(FHIRCodeableConcept ...$jurisdiction): self
+    {
+        if ([] !== $this->jurisdiction) {
+            $this->_trackValuesRemoved(count($this->jurisdiction));
+            $this->jurisdiction = [];
+        }
+        if ([] === $jurisdiction) {
+            return $this;
+        }
+        foreach($jurisdiction as $v) {
+            $this->addJurisdiction($v);
+        }
         return $this;
     }
 
@@ -732,16 +794,16 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setStatusDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $statusDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setStatusDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $statusDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $statusDate && !($statusDate instanceof FHIRDateTime)) {
             $statusDate = new FHIRDateTime($statusDate);
         }
         $this->_trackValueSet($this->statusDate, $statusDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_STATUS_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_STATUS_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_STATUS_DATE])) {
+            $this->_xmlLocations[self::FIELD_STATUS_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_STATUS_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_STATUS_DATE][0] = $xmlLocation;
         $this->statusDate = $statusDate;
         return $this;
     }
@@ -779,16 +841,16 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRestoreDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $restoreDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRestoreDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $restoreDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $restoreDate && !($restoreDate instanceof FHIRDateTime)) {
             $restoreDate = new FHIRDateTime($restoreDate);
         }
         $this->_trackValueSet($this->restoreDate, $restoreDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RESTORE_DATE])) {
+            $this->_xmlLocations[self::FIELD_RESTORE_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RESTORE_DATE][0] = $xmlLocation;
         $this->restoreDate = $restoreDate;
         return $this;
     }
@@ -900,16 +962,16 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDateOfFirstAuthorization(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $dateOfFirstAuthorization = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDateOfFirstAuthorization(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $dateOfFirstAuthorization = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $dateOfFirstAuthorization && !($dateOfFirstAuthorization instanceof FHIRDateTime)) {
             $dateOfFirstAuthorization = new FHIRDateTime($dateOfFirstAuthorization);
         }
         $this->_trackValueSet($this->dateOfFirstAuthorization, $dateOfFirstAuthorization);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION])) {
+            $this->_xmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION][0] = $xmlLocation;
         $this->dateOfFirstAuthorization = $dateOfFirstAuthorization;
         return $this;
     }
@@ -947,16 +1009,16 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setInternationalBirthDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $internationalBirthDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setInternationalBirthDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $internationalBirthDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $internationalBirthDate && !($internationalBirthDate instanceof FHIRDateTime)) {
             $internationalBirthDate = new FHIRDateTime($internationalBirthDate);
         }
         $this->_trackValueSet($this->internationalBirthDate, $internationalBirthDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE])) {
+            $this->_xmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE][0] = $xmlLocation;
         $this->internationalBirthDate = $internationalBirthDate;
         return $this;
     }
@@ -1024,6 +1086,29 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
         }
         $this->_trackValueAdded();
         $this->jurisdictionalAuthorization[] = $jurisdictionalAuthorization;
+        return $this;
+    }
+
+    /**
+     * The regulatory authorization of a medicinal product.
+     *
+     * Authorization in areas within a country.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductAuthorization\FHIRMedicinalProductAuthorizationJurisdictionalAuthorization ...$jurisdictionalAuthorization
+     * @return static
+     */
+    public function setJurisdictionalAuthorization(FHIRMedicinalProductAuthorizationJurisdictionalAuthorization ...$jurisdictionalAuthorization): self
+    {
+        if ([] !== $this->jurisdictionalAuthorization) {
+            $this->_trackValuesRemoved(count($this->jurisdictionalAuthorization));
+            $this->jurisdictionalAuthorization = [];
+        }
+        if ([] === $jurisdictionalAuthorization) {
+            return $this;
+        }
+        foreach($jurisdictionalAuthorization as $v) {
+            $this->addJurisdictionalAuthorization($v);
+        }
         return $this;
     }
 
@@ -1697,19 +1782,19 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicinalProductAuthorization', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_STATUS_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_STATUS_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getStatusDate())) {
             $xw->writeAttribute(self::FIELD_STATUS_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RESTORE_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRestoreDate())) {
             $xw->writeAttribute(self::FIELD_RESTORE_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDateOfFirstAuthorization())) {
             $xw->writeAttribute(self::FIELD_DATE_OF_FIRST_AUTHORIZATION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getInternationalBirthDate())) {
             $xw->writeAttribute(self::FIELD_INTERNATIONAL_BIRTH_DATE, $v->getValue()?->getFormattedValue());
         }
@@ -1739,13 +1824,13 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_STATUS_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_STATUS_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getStatusDate())) {
             $xw->startElement(self::FIELD_STATUS_DATE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RESTORE_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRestoreDate())) {
             $xw->startElement(self::FIELD_RESTORE_DATE);
             $v->xmlSerialize($xw, $config);
@@ -1761,13 +1846,13 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE_OF_FIRST_AUTHORIZATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDateOfFirstAuthorization())) {
             $xw->startElement(self::FIELD_DATE_OF_FIRST_AUTHORIZATION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INTERNATIONAL_BIRTH_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getInternationalBirthDate())) {
             $xw->startElement(self::FIELD_INTERNATIONAL_BIRTH_DATE);
             $v->xmlSerialize($xw, $config);

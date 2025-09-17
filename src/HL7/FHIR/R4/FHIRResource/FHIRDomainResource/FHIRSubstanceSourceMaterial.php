@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -137,7 +137,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      *
      * General high level classification of the source material specific to the origin
      * of the material.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $sourceMaterialClass = null;
@@ -150,7 +149,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * The type of the source material shall be specified based on a controlled
      * vocabulary. For vaccines, this subclause refers to the class of infectious
      * agent.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $sourceMaterialType = null;
@@ -161,7 +159,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The state of the source material when extracted.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $sourceMaterialState = null;
@@ -173,7 +170,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      *
      * The unique identifier associated with the source material parent organism shall
      * be specified.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $organismId = null;
@@ -184,7 +180,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      *
      * The organism accepted Scientific name shall be provided based on the organism
      * taxonomy.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $organismName = null;
@@ -196,7 +191,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      *
      * The parent of the herbal drug Ginkgo biloba, Leaf is the substance ID of the
      * substance (fresh) of Ginkgo biloba L. or Ginkgo biloba L. (Whole plant).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $parentSubstanceId = [];
@@ -206,7 +200,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The parent substance of the Herbal Drug, or Herbal preparation.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $parentSubstanceName = [];
@@ -221,7 +214,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * For “Plasma-derived substances” the attribute country of origin provides
      * information about the countries used for the manufacturing of the Cryopoor plama
      * or Crioprecipitate.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $countryOfOrigin = [];
@@ -232,7 +224,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      *
      * The place/region where the plant is harvested or the places/regions where the
      * animal source material has its habitat.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $geographicalLocation = [];
@@ -245,7 +236,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * Stage of life for animals, plants, insects and microorganisms. This information
      * shall be provided only when the substance is significantly different in these
      * stages (e.g. foetal bovine serum).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $developmentStage = null;
@@ -272,7 +262,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * composition, will be captured at the Specified Substance Group 1 information
      * level. For plasma-derived products fraction information will be captured at the
      * Substance and the Specified Substance Group 1 levels.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMaterial\FHIRSubstanceSourceMaterialFractionDescription[]
      */
     protected null|array $fractionDescription = [];
@@ -295,7 +284,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * vaccines, the parent organism shall be specified based on these subclause
      * elements. As an example, full taxonomy will be described for the Substance Name:
      * ., Leaf.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMaterial\FHIRSubstanceSourceMaterialOrganism
      */
     protected null|FHIRSubstanceSourceMaterialOrganism $organism = null;
@@ -315,7 +303,6 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * explanation the Substance Class: Structurally Diverse and the herbal annex.
      *
      * To do.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMaterial\FHIRSubstanceSourceMaterialPartDescription[]
      */
     protected null|array $partDescription = [];
@@ -324,10 +311,10 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * Validation map for fields in type SubstanceSourceMaterial
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceSourceMaterial Constructor
@@ -719,16 +706,16 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOrganismName(null|string|FHIRStringPrimitive|FHIRString $organismName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOrganismName(null|string|FHIRStringPrimitive|FHIRString $organismName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $organismName && !($organismName instanceof FHIRString)) {
             $organismName = new FHIRString($organismName);
         }
         $this->_trackValueSet($this->organismName, $organismName);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ORGANISM_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_ORGANISM_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ORGANISM_NAME])) {
+            $this->_xmlLocations[self::FIELD_ORGANISM_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ORGANISM_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ORGANISM_NAME][0] = $xmlLocation;
         $this->organismName = $organismName;
         return $this;
     }
@@ -772,6 +759,33 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The parent of the herbal drug Ginkgo biloba, Leaf is the substance ID of the
+     * substance (fresh) of Ginkgo biloba L. or Ginkgo biloba L. (Whole plant).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$parentSubstanceId
+     * @return static
+     */
+    public function setParentSubstanceId(FHIRIdentifier ...$parentSubstanceId): self
+    {
+        if ([] !== $this->parentSubstanceId) {
+            $this->_trackValuesRemoved(count($this->parentSubstanceId));
+            $this->parentSubstanceId = [];
+        }
+        if ([] === $parentSubstanceId) {
+            return $this;
+        }
+        foreach($parentSubstanceId as $v) {
+            $this->addParentSubstanceId($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -796,16 +810,20 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addParentSubstanceName(null|string|FHIRStringPrimitive|FHIRString $parentSubstanceName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addParentSubstanceName(null|string|FHIRStringPrimitive|FHIRString $parentSubstanceName = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $parentSubstanceName && !($parentSubstanceName instanceof FHIRString)) {
             $parentSubstanceName = new FHIRString($parentSubstanceName);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME])) {
+            $this->_xmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME]) {
+            $this->_xmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->parentSubstanceName[] = $parentSubstanceName;
         return $this;
     }
@@ -821,9 +839,9 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setParentSubstanceName(array $parentSubstanceName = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setParentSubstanceName(array $parentSubstanceName = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME]);
+        unset($this->_xmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME]);
         if ([] !== $this->parentSubstanceName) {
             $this->_trackValuesRemoved(count($this->parentSubstanceName));
             $this->parentSubstanceName = [];
@@ -886,6 +904,36 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The country where the plant material is harvested or the countries where the
+     * plasma is sourced from as laid down in accordance with the Plasma Master File.
+     * For “Plasma-derived substances” the attribute country of origin provides
+     * information about the countries used for the manufacturing of the Cryopoor plama
+     * or Crioprecipitate.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$countryOfOrigin
+     * @return static
+     */
+    public function setCountryOfOrigin(FHIRCodeableConcept ...$countryOfOrigin): self
+    {
+        if ([] !== $this->countryOfOrigin) {
+            $this->_trackValuesRemoved(count($this->countryOfOrigin));
+            $this->countryOfOrigin = [];
+        }
+        if ([] === $countryOfOrigin) {
+            return $this;
+        }
+        foreach($countryOfOrigin as $v) {
+            $this->addCountryOfOrigin($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -912,16 +960,20 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addGeographicalLocation(null|string|FHIRStringPrimitive|FHIRString $geographicalLocation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addGeographicalLocation(null|string|FHIRStringPrimitive|FHIRString $geographicalLocation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $geographicalLocation && !($geographicalLocation instanceof FHIRString)) {
             $geographicalLocation = new FHIRString($geographicalLocation);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION])) {
+            $this->_xmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION]) {
+            $this->_xmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->geographicalLocation[] = $geographicalLocation;
         return $this;
     }
@@ -938,9 +990,9 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setGeographicalLocation(array $geographicalLocation = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setGeographicalLocation(array $geographicalLocation = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION]);
+        unset($this->_xmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION]);
         if ([] !== $this->geographicalLocation) {
             $this->_trackValuesRemoved(count($this->geographicalLocation));
             $this->geographicalLocation = [];
@@ -1081,6 +1133,48 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
      * captured at the Specified Substance Group 1 information level. See for further
      * explanation the Substance Class: Structurally Diverse and the herbal annex.
      *
+     * Many complex materials are fractions of parts of plants, animals, or minerals.
+     * Fraction elements are often necessary to define both Substances and Specified
+     * Group 1 Substances. For substances derived from Plants, fraction information
+     * will be captured at the Substance information level ( . Oils, Juices and
+     * Exudates). Additional information for Extracts, such as extraction solvent
+     * composition, will be captured at the Specified Substance Group 1 information
+     * level. For plasma-derived products fraction information will be captured at the
+     * Substance and the Specified Substance Group 1 levels.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMaterial\FHIRSubstanceSourceMaterialFractionDescription ...$fractionDescription
+     * @return static
+     */
+    public function setFractionDescription(FHIRSubstanceSourceMaterialFractionDescription ...$fractionDescription): self
+    {
+        if ([] !== $this->fractionDescription) {
+            $this->_trackValuesRemoved(count($this->fractionDescription));
+            $this->fractionDescription = [];
+        }
+        if ([] === $fractionDescription) {
+            return $this;
+        }
+        foreach($fractionDescription as $v) {
+            $this->addFractionDescription($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Source material shall capture information on the taxonomic and anatomical
+     * origins as well as the fraction of a material that can result in or can be
+     * modified to form a substance. This set of data elements shall be used to define
+     * polymer substances isolated from biological matrices. Taxonomic and anatomical
+     * origins shall be described using a controlled vocabulary as required. This
+     * information is captured for naturally derived polymers ( . starch) and
+     * structurally diverse substances. For Organisms belonging to the Kingdom Plantae
+     * the Substance level defines the fresh material of a single species or
+     * infraspecies, the Herbal Drug and the Herbal preparation. For Herbal
+     * preparations, the fraction information will be captured at the Substance
+     * information level and additional information for herbal extracts will be
+     * captured at the Specified Substance Group 1 information level. See for further
+     * explanation the Substance Class: Structurally Diverse and the herbal annex.
+     *
      * This subclause describes the organism which the substance is derived from. For
      * vaccines, the parent organism shall be specified based on these subclause
      * elements. As an example, full taxonomy will be described for the Substance Name:
@@ -1177,6 +1271,41 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
         }
         $this->_trackValueAdded();
         $this->partDescription[] = $partDescription;
+        return $this;
+    }
+
+    /**
+     * Source material shall capture information on the taxonomic and anatomical
+     * origins as well as the fraction of a material that can result in or can be
+     * modified to form a substance. This set of data elements shall be used to define
+     * polymer substances isolated from biological matrices. Taxonomic and anatomical
+     * origins shall be described using a controlled vocabulary as required. This
+     * information is captured for naturally derived polymers ( . starch) and
+     * structurally diverse substances. For Organisms belonging to the Kingdom Plantae
+     * the Substance level defines the fresh material of a single species or
+     * infraspecies, the Herbal Drug and the Herbal preparation. For Herbal
+     * preparations, the fraction information will be captured at the Substance
+     * information level and additional information for herbal extracts will be
+     * captured at the Specified Substance Group 1 information level. See for further
+     * explanation the Substance Class: Structurally Diverse and the herbal annex.
+     *
+     * To do.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMaterial\FHIRSubstanceSourceMaterialPartDescription ...$partDescription
+     * @return static
+     */
+    public function setPartDescription(FHIRSubstanceSourceMaterialPartDescription ...$partDescription): self
+    {
+        if ([] !== $this->partDescription) {
+            $this->_trackValuesRemoved(count($this->partDescription));
+            $this->partDescription = [];
+        }
+        if ([] === $partDescription) {
+            return $this;
+        }
+        foreach($partDescription as $v) {
+            $this->addPartDescription($v);
+        }
         return $this;
     }
 
@@ -1681,17 +1810,17 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceSourceMaterial', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ORGANISM_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ORGANISM_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOrganismName())) {
             $xw->writeAttribute(self::FIELD_ORGANISM_NAME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getParentSubstanceName())) {
             $xw->writeAttribute(self::FIELD_PARENT_SUBSTANCE_NAME, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getParentSubstanceName()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_PARENT_SUBSTANCE_NAME, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getGeographicalLocation())) {
             $xw->writeAttribute(self::FIELD_GEOGRAPHICAL_LOCATION, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getGeographicalLocation()) && isset($vs[$idx])) {
@@ -1718,7 +1847,7 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ORGANISM_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ORGANISM_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOrganismName())) {
             $xw->startElement(self::FIELD_ORGANISM_NAME);
             $v->xmlSerialize($xw, $config);
@@ -1729,7 +1858,7 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PARENT_SUBSTANCE_NAME] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getParentSubstanceName())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1744,7 +1873,7 @@ class FHIRSubstanceSourceMaterial extends FHIRDomainResource implements PHPFHIRC
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_GEOGRAPHICAL_LOCATION] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getGeographicalLocation())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

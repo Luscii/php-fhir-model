@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -151,7 +151,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The business identifier for this task.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -162,7 +161,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      *
      * A reference to a formal or informal definition of the task. For example, a
      * protocol, a step within a defined workflow definition, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $definitionUri = null;
@@ -173,7 +171,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      *
      * A reference to a formal or informal definition of the task. For example, a
      * protocol, a step within a defined workflow definition, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $definitionReference = null;
@@ -189,7 +186,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * referenced by FocusOn. For example, based on a ProcedureRequest (= BasedOn), a
      * task is created to fulfil a procedureRequest ( = FocusOn ) to collect a specimen
      * from a patient.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $basedOn = [];
@@ -200,7 +196,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      *
      * An identifier that links together multiple tasks and other requests that were
      * created in the same context.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $groupIdentifier = null;
@@ -210,7 +205,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Task that this particular task is part of.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $partOf = [];
@@ -219,7 +213,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The current status of the task.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTaskStatus
      */
     protected null|FHIRTaskStatus $status = null;
@@ -230,7 +223,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * An explanation as to why this task is held, failed, was refused, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $statusReason = null;
@@ -241,7 +233,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Contains business-specific nuances of the business state.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $businessStatus = null;
@@ -251,7 +242,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      *
      * Indicates the "level" of actionability associated with the Task. I.e. Is this a
      * proposed task, a planned task, an actionable task, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestIntent
      */
     protected null|FHIRRequestIntent $intent = null;
@@ -261,7 +251,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      *
      * Indicates how quickly the Task should be addressed with respect to other
      * requests.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRequestPriority
      */
     protected null|FHIRRequestPriority $priority = null;
@@ -272,7 +261,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A name or code (or both) briefly describing what the task involves.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -282,7 +270,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A free-text description of what is to be performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -292,7 +279,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The request being actioned or the resource being manipulated by this task.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $focus = null;
@@ -303,7 +289,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      *
      * The entity who benefits from the performance of the service specified in the
      * task (e.g., the patient).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $for = null;
@@ -314,7 +299,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      *
      * The healthcare event (e.g. a patient and healthcare provider interaction) during
      * which this task was created.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $context = null;
@@ -326,7 +310,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * Identifies the time action was first taken against the task (start) and/or the
      * time final action was taken against the task prior to marking it as completed
      * (end).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $executionPeriod = null;
@@ -339,7 +322,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date and time this task was created.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $authoredOn = null;
@@ -352,7 +334,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date and time of last modification to this task.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $lastModified = null;
@@ -360,7 +341,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * A task to be performed.
      *
      * The creator of the task.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTask\FHIRTaskRequester
      */
     protected null|FHIRTaskRequester $requester = null;
@@ -371,7 +351,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The type of participant that can execute the task.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $performerType = [];
@@ -381,7 +360,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Individual organization or Device currently responsible for task execution.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $owner = null;
@@ -392,7 +370,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A description or code indicating why this task needs to be performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $reason = null;
@@ -403,7 +380,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Free-text information captured about the task as it progresses.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -415,7 +391,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * Links to Provenance records for past versions of this Task that identify key
      * state transitions or updates that are likely to be relevant to a user looking at
      * the current version of the task.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $relevantHistory = [];
@@ -425,7 +400,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * If the Task.focus is a request resource and the task is seeking fulfillment (i.e
      * is asking for the request to be actioned), this element identifies any
      * limitations on what parts of the referenced request should be actioned.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTask\FHIRTaskRestriction
      */
     protected null|FHIRTaskRestriction $restriction = null;
@@ -433,7 +407,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * A task to be performed.
      *
      * Additional information that may be needed in the execution of the task.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTask\FHIRTaskInput[]
      */
     protected null|array $input = [];
@@ -441,7 +414,6 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * A task to be performed.
      *
      * Outputs produced by the Task.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTask\FHIRTaskOutput[]
      */
     protected null|array $output = [];
@@ -450,10 +422,17 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * Validation map for fields in type Task
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_INTENT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRTask Constructor
@@ -848,6 +827,31 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
     }
 
     /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The business identifier for this task.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -874,16 +878,16 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefinitionUri(null|string|FHIRUriPrimitive|FHIRUri $definitionUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDefinitionUri(null|string|FHIRUriPrimitive|FHIRUri $definitionUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $definitionUri && !($definitionUri instanceof FHIRUri)) {
             $definitionUri = new FHIRUri($definitionUri);
         }
         $this->_trackValueSet($this->definitionUri, $definitionUri);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFINITION_URI])) {
-            $this->_primitiveXmlLocations[self::FIELD_DEFINITION_URI] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DEFINITION_URI])) {
+            $this->_xmlLocations[self::FIELD_DEFINITION_URI] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DEFINITION_URI][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DEFINITION_URI][0] = $xmlLocation;
         $this->definitionUri = $definitionUri;
         return $this;
     }
@@ -971,6 +975,37 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * BasedOn refers to a higher-level authorization that triggered the creation of
+     * the task. It references a "request" resource such as a ProcedureRequest,
+     * MedicationRequest, ProcedureRequest, CarePlan, etc. which is distinct from the
+     * "request" resource the task is seeking to fulfil. This latter resource is
+     * referenced by FocusOn. For example, based on a ProcedureRequest (= BasedOn), a
+     * task is created to fulfil a procedureRequest ( = FocusOn ) to collect a specimen
+     * from a patient.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$basedOn
+     * @return static
+     */
+    public function setBasedOn(FHIRReference ...$basedOn): self
+    {
+        if ([] !== $this->basedOn) {
+            $this->_trackValuesRemoved(count($this->basedOn));
+            $this->basedOn = [];
+        }
+        if ([] === $basedOn) {
+            return $this;
+        }
+        foreach($basedOn as $v) {
+            $this->addBasedOn($v);
+        }
+        return $this;
+    }
+
+    /**
      * A technical identifier - identifies some entity uniquely and unambiguously.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -1037,6 +1072,31 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
         }
         $this->_trackValueAdded();
         $this->partOf[] = $partOf;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Task that this particular task is part of.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$partOf
+     * @return static
+     */
+    public function setPartOf(FHIRReference ...$partOf): self
+    {
+        if ([] !== $this->partOf) {
+            $this->_trackValuesRemoved(count($this->partOf));
+            $this->partOf = [];
+        }
+        if ([] === $partOf) {
+            return $this;
+        }
+        foreach($partOf as $v) {
+            $this->addPartOf($v);
+        }
         return $this;
     }
 
@@ -1273,16 +1333,16 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -1462,16 +1522,16 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAuthoredOn(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authoredOn = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAuthoredOn(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authoredOn = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $authoredOn && !($authoredOn instanceof FHIRDateTime)) {
             $authoredOn = new FHIRDateTime($authoredOn);
         }
         $this->_trackValueSet($this->authoredOn, $authoredOn);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON])) {
-            $this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AUTHORED_ON])) {
+            $this->_xmlLocations[self::FIELD_AUTHORED_ON] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AUTHORED_ON][0] = $xmlLocation;
         $this->authoredOn = $authoredOn;
         return $this;
     }
@@ -1507,16 +1567,16 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLastModified(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $lastModified = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLastModified(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $lastModified = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $lastModified && !($lastModified instanceof FHIRDateTime)) {
             $lastModified = new FHIRDateTime($lastModified);
         }
         $this->_trackValueSet($this->lastModified, $lastModified);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LAST_MODIFIED])) {
-            $this->_primitiveXmlLocations[self::FIELD_LAST_MODIFIED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LAST_MODIFIED])) {
+            $this->_xmlLocations[self::FIELD_LAST_MODIFIED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LAST_MODIFIED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LAST_MODIFIED][0] = $xmlLocation;
         $this->lastModified = $lastModified;
         return $this;
     }
@@ -1584,6 +1644,32 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
         }
         $this->_trackValueAdded();
         $this->performerType[] = $performerType;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The type of participant that can execute the task.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$performerType
+     * @return static
+     */
+    public function setPerformerType(FHIRCodeableConcept ...$performerType): self
+    {
+        if ([] !== $this->performerType) {
+            $this->_trackValuesRemoved(count($this->performerType));
+            $this->performerType = [];
+        }
+        if ([] === $performerType) {
+            return $this;
+        }
+        foreach($performerType as $v) {
+            $this->addPerformerType($v);
+        }
         return $this;
     }
 
@@ -1694,6 +1780,32 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
     }
 
     /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Free-text information captured about the task as it progresses.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -1728,6 +1840,33 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
         }
         $this->_trackValueAdded();
         $this->relevantHistory[] = $relevantHistory;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Links to Provenance records for past versions of this Task that identify key
+     * state transitions or updates that are likely to be relevant to a user looking at
+     * the current version of the task.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$relevantHistory
+     * @return static
+     */
+    public function setRelevantHistory(FHIRReference ...$relevantHistory): self
+    {
+        if ([] !== $this->relevantHistory) {
+            $this->_trackValuesRemoved(count($this->relevantHistory));
+            $this->relevantHistory = [];
+        }
+        if ([] === $relevantHistory) {
+            return $this;
+        }
+        foreach($relevantHistory as $v) {
+            $this->addRelevantHistory($v);
+        }
         return $this;
     }
 
@@ -1798,6 +1937,29 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
     /**
      * A task to be performed.
      *
+     * Additional information that may be needed in the execution of the task.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTask\FHIRTaskInput ...$input
+     * @return static
+     */
+    public function setInput(FHIRTaskInput ...$input): self
+    {
+        if ([] !== $this->input) {
+            $this->_trackValuesRemoved(count($this->input));
+            $this->input = [];
+        }
+        if ([] === $input) {
+            return $this;
+        }
+        foreach($input as $v) {
+            $this->addInput($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A task to be performed.
+     *
      * Outputs produced by the Task.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTask\FHIRTaskOutput[]
@@ -1822,6 +1984,29 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
         }
         $this->_trackValueAdded();
         $this->output[] = $output;
+        return $this;
+    }
+
+    /**
+     * A task to be performed.
+     *
+     * Outputs produced by the Task.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTask\FHIRTaskOutput ...$output
+     * @return static
+     */
+    public function setOutput(FHIRTaskOutput ...$output): self
+    {
+        if ([] !== $this->output) {
+            $this->_trackValuesRemoved(count($this->output));
+            $this->output = [];
+        }
+        if ([] === $output) {
+            return $this;
+        }
+        foreach($output as $v) {
+            $this->addOutput($v);
+        }
         return $this;
     }
 
@@ -2633,19 +2818,19 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
             $openedRoot = true;
             $xw->openRootNode($config, 'Task', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFINITION_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DEFINITION_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDefinitionUri())) {
             $xw->writeAttribute(self::FIELD_DEFINITION_URI, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHORED_ON] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAuthoredOn())) {
             $xw->writeAttribute(self::FIELD_AUTHORED_ON, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_MODIFIED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_MODIFIED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLastModified())) {
             $xw->writeAttribute(self::FIELD_LAST_MODIFIED, $v->getValue()?->getFormattedValue());
         }
@@ -2655,7 +2840,7 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFINITION_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DEFINITION_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDefinitionUri())) {
             $xw->startElement(self::FIELD_DEFINITION_URI);
             $v->xmlSerialize($xw, $config);
@@ -2711,7 +2896,7 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
@@ -2737,13 +2922,13 @@ class FHIRTask extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHORED_ON] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAuthoredOn())) {
             $xw->startElement(self::FIELD_AUTHORED_ON);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_MODIFIED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_MODIFIED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLastModified())) {
             $xw->startElement(self::FIELD_LAST_MODIFIED);
             $v->xmlSerialize($xw, $config);

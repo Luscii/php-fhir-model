@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,6 @@ class FHIRInsurancePlanBenefit extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Type of benefit (primary care; speciality care; inpatient; outpatient).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -107,7 +106,6 @@ class FHIRInsurancePlanBenefit extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The referral requirements to have access/coverage for this benefit.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $requirement = null;
@@ -115,7 +113,6 @@ class FHIRInsurancePlanBenefit extends FHIRBackboneElement
      * Details of a Health Insurance product/plan provided by an organization.
      *
      * The specific limits on the benefit.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanLimit[]
      */
     protected null|array $limit = [];
@@ -124,10 +121,14 @@ class FHIRInsurancePlanBenefit extends FHIRBackboneElement
      * Validation map for fields in type InsurancePlan.Benefit
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRInsurancePlanBenefit Constructor
@@ -249,16 +250,16 @@ class FHIRInsurancePlanBenefit extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRequirement(null|string|FHIRStringPrimitive|FHIRString $requirement = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRequirement(null|string|FHIRStringPrimitive|FHIRString $requirement = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $requirement && !($requirement instanceof FHIRString)) {
             $requirement = new FHIRString($requirement);
         }
         $this->_trackValueSet($this->requirement, $requirement);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_REQUIREMENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_REQUIREMENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_REQUIREMENT])) {
+            $this->_xmlLocations[self::FIELD_REQUIREMENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_REQUIREMENT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_REQUIREMENT][0] = $xmlLocation;
         $this->requirement = $requirement;
         return $this;
     }
@@ -290,6 +291,29 @@ class FHIRInsurancePlanBenefit extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->limit[] = $limit;
+        return $this;
+    }
+
+    /**
+     * Details of a Health Insurance product/plan provided by an organization.
+     *
+     * The specific limits on the benefit.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanLimit ...$limit
+     * @return static
+     */
+    public function setLimit(FHIRInsurancePlanLimit ...$limit): self
+    {
+        if ([] !== $this->limit) {
+            $this->_trackValuesRemoved(count($this->limit));
+            $this->limit = [];
+        }
+        if ([] === $limit) {
+            return $this;
+        }
+        foreach($limit as $v) {
+            $this->addLimit($v);
+        }
         return $this;
     }
 
@@ -500,7 +524,7 @@ class FHIRInsurancePlanBenefit extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'InsurancePlanBenefit', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REQUIREMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REQUIREMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRequirement())) {
             $xw->writeAttribute(self::FIELD_REQUIREMENT, $v->getValue()?->getFormattedValue());
         }
@@ -510,7 +534,7 @@ class FHIRInsurancePlanBenefit extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REQUIREMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REQUIREMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRequirement())) {
             $xw->startElement(self::FIELD_REQUIREMENT);
             $v->xmlSerialize($xw, $config);

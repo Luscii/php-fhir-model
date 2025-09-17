@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRelatedPerson;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIRRelatedPersonCommunication extends FHIRBackboneElement
      * by a hyphen and the ISO-3166-1 alpha 2 code for the region in upper case; e.g.
      * "en" for English, or "en-US" for American English versus "en-EN" for England
      * English.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $language = null;
@@ -112,7 +111,6 @@ class FHIRRelatedPersonCommunication extends FHIRBackboneElement
      *
      * Indicates whether or not the patient prefers this language (over other languages
      * he masters up a certain level).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $preferred = null;
@@ -121,10 +119,14 @@ class FHIRRelatedPersonCommunication extends FHIRBackboneElement
      * Validation map for fields in type RelatedPerson.Communication
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_LANGUAGE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRRelatedPersonCommunication Constructor
@@ -237,16 +239,16 @@ class FHIRRelatedPersonCommunication extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPreferred(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $preferred = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPreferred(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $preferred = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $preferred && !($preferred instanceof FHIRBoolean)) {
             $preferred = new FHIRBoolean($preferred);
         }
         $this->_trackValueSet($this->preferred, $preferred);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PREFERRED])) {
-            $this->_primitiveXmlLocations[self::FIELD_PREFERRED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PREFERRED])) {
+            $this->_xmlLocations[self::FIELD_PREFERRED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PREFERRED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PREFERRED][0] = $xmlLocation;
         $this->preferred = $preferred;
         return $this;
     }
@@ -437,7 +439,7 @@ class FHIRRelatedPersonCommunication extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'RelatedPersonCommunication', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PREFERRED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PREFERRED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPreferred())) {
             $xw->writeAttribute(self::FIELD_PREFERRED, $v->getValue()?->getFormattedValue());
         }
@@ -447,7 +449,7 @@ class FHIRRelatedPersonCommunication extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PREFERRED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PREFERRED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPreferred())) {
             $xw->startElement(self::FIELD_PREFERRED);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,7 +112,6 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The medication for which this is an indication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $subject = [];
@@ -123,7 +122,6 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The disease, symptom or procedure for the contraindication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $disease = null;
@@ -134,7 +132,6 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The status of the disease or symptom for the contraindication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $diseaseStatus = null;
@@ -145,7 +142,6 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A comorbidity (concurrent condition) or coinfection.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $comorbidity = [];
@@ -156,7 +152,6 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
      *
      * Information about the use of the medicinal product in relation to other
      * therapies as part of the indication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $therapeuticIndication = [];
@@ -166,7 +161,6 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
      *
      * Information about the use of the medicinal product in relation to other
      * therapies described as part of the indication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductContraindication\FHIRMedicinalProductContraindicationOtherTherapy[]
      */
     protected null|array $otherTherapy = [];
@@ -176,7 +170,6 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The population group to which this applies.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPopulation[]
      */
     protected null|array $population = [];
@@ -185,10 +178,10 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
      * Validation map for fields in type MedicinalProductContraindication
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductContraindication Constructor
@@ -342,6 +335,31 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The medication for which this is an indication.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$subject
+     * @return static
+     */
+    public function setSubject(FHIRReference ...$subject): self
+    {
+        if ([] !== $this->subject) {
+            $this->_trackValuesRemoved(count($this->subject));
+            $this->subject = [];
+        }
+        if ([] === $subject) {
+            return $this;
+        }
+        foreach($subject as $v) {
+            $this->addSubject($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -450,6 +468,32 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A comorbidity (concurrent condition) or coinfection.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$comorbidity
+     * @return static
+     */
+    public function setComorbidity(FHIRCodeableConcept ...$comorbidity): self
+    {
+        if ([] !== $this->comorbidity) {
+            $this->_trackValuesRemoved(count($this->comorbidity));
+            $this->comorbidity = [];
+        }
+        if ([] === $comorbidity) {
+            return $this;
+        }
+        foreach($comorbidity as $v) {
+            $this->addComorbidity($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -482,6 +526,32 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
         }
         $this->_trackValueAdded();
         $this->therapeuticIndication[] = $therapeuticIndication;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Information about the use of the medicinal product in relation to other
+     * therapies as part of the indication.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$therapeuticIndication
+     * @return static
+     */
+    public function setTherapeuticIndication(FHIRReference ...$therapeuticIndication): self
+    {
+        if ([] !== $this->therapeuticIndication) {
+            $this->_trackValuesRemoved(count($this->therapeuticIndication));
+            $this->therapeuticIndication = [];
+        }
+        if ([] === $therapeuticIndication) {
+            return $this;
+        }
+        foreach($therapeuticIndication as $v) {
+            $this->addTherapeuticIndication($v);
+        }
         return $this;
     }
 
@@ -520,6 +590,31 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
     }
 
     /**
+     * The clinical particulars - indications, contraindications etc. of a medicinal
+     * product, including for regulatory purposes.
+     *
+     * Information about the use of the medicinal product in relation to other
+     * therapies described as part of the indication.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductContraindication\FHIRMedicinalProductContraindicationOtherTherapy ...$otherTherapy
+     * @return static
+     */
+    public function setOtherTherapy(FHIRMedicinalProductContraindicationOtherTherapy ...$otherTherapy): self
+    {
+        if ([] !== $this->otherTherapy) {
+            $this->_trackValuesRemoved(count($this->otherTherapy));
+            $this->otherTherapy = [];
+        }
+        if ([] === $otherTherapy) {
+            return $this;
+        }
+        foreach($otherTherapy as $v) {
+            $this->addOtherTherapy($v);
+        }
+        return $this;
+    }
+
+    /**
      * A populatioof people with some set of grouping criteria.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -550,6 +645,31 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
         }
         $this->_trackValueAdded();
         $this->population[] = $population;
+        return $this;
+    }
+
+    /**
+     * A populatioof people with some set of grouping criteria.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The population group to which this applies.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPopulation ...$population
+     * @return static
+     */
+    public function setPopulation(FHIRPopulation ...$population): self
+    {
+        if ([] !== $this->population) {
+            $this->_trackValuesRemoved(count($this->population));
+            $this->population = [];
+        }
+        if ([] === $population) {
+            return $this;
+        }
+        foreach($population as $v) {
+            $this->addPopulation($v);
+        }
         return $this;
     }
 

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstance;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ class FHIRSubstanceInstance extends FHIRBackboneElement
      *
      * Identifier associated with the package/container (usually a label affixed
      * directly).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -114,7 +113,6 @@ class FHIRSubstanceInstance extends FHIRBackboneElement
      *
      * When the substance is no longer valid to use. For some substances, a single
      * arbitrary date is used for expiry.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $expiry = null;
@@ -126,7 +124,6 @@ class FHIRSubstanceInstance extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The amount of the substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $quantity = null;
@@ -135,10 +132,10 @@ class FHIRSubstanceInstance extends FHIRBackboneElement
      * Validation map for fields in type Substance.Instance
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceInstance Constructor
@@ -262,16 +259,16 @@ class FHIRSubstanceInstance extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setExpiry(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $expiry = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setExpiry(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $expiry = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $expiry && !($expiry instanceof FHIRDateTime)) {
             $expiry = new FHIRDateTime($expiry);
         }
         $this->_trackValueSet($this->expiry, $expiry);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_EXPIRY])) {
-            $this->_primitiveXmlLocations[self::FIELD_EXPIRY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_EXPIRY])) {
+            $this->_xmlLocations[self::FIELD_EXPIRY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_EXPIRY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_EXPIRY][0] = $xmlLocation;
         $this->expiry = $expiry;
         return $this;
     }
@@ -519,7 +516,7 @@ class FHIRSubstanceInstance extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceInstance', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXPIRY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXPIRY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getExpiry())) {
             $xw->writeAttribute(self::FIELD_EXPIRY, $v->getValue()?->getFormattedValue());
         }
@@ -529,7 +526,7 @@ class FHIRSubstanceInstance extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXPIRY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXPIRY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getExpiry())) {
             $xw->startElement(self::FIELD_EXPIRY);
             $v->xmlSerialize($xw, $config);

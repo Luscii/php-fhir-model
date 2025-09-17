@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ class FHIRContractSubject extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The entity the action is performed or not performed on or for.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $reference = [];
@@ -106,7 +105,6 @@ class FHIRContractSubject extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Role type of agent assigned roles in this Contract.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $role = null;
@@ -122,7 +120,7 @@ class FHIRContractSubject extends FHIRBackboneElement
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRContractSubject Constructor
@@ -197,6 +195,31 @@ class FHIRContractSubject extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->reference[] = $reference;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The entity the action is performed or not performed on or for.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$reference
+     * @return static
+     */
+    public function setReference(FHIRReference ...$reference): self
+    {
+        if ([] !== $this->reference) {
+            $this->_trackValuesRemoved(count($this->reference));
+            $this->reference = [];
+        }
+        if ([] === $reference) {
+            return $this;
+        }
+        foreach($reference as $v) {
+            $this->addReference($v);
+        }
         return $this;
     }
 

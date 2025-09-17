@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMateria
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,7 +114,6 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The family of an organism shall be specified.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $family = null;
@@ -127,7 +126,6 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * The genus of an organism shall be specified; refers to the Latin epithet of the
      * genus element of the plant/animal scientific name; it is present in names for
      * genera, species and infraspecies.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $genus = null;
@@ -140,7 +138,6 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * The species of an organism shall be specified; refers to the Latin epithet of
      * the species of the plant/animal; it is present in names for species and
      * infraspecies.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $species = null;
@@ -151,7 +148,6 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The Intraspecific type of an organism shall be specified.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $intraspecificType = null;
@@ -163,7 +159,6 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * The intraspecific description of an organism shall be specified based on a
      * controlled vocabulary. For Influenza Vaccine, the intraspecific description
      * shall contain the syntax of the antigen in line with the WHO convention.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $intraspecificDescription = null;
@@ -183,7 +178,6 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * explanation the Substance Class: Structurally Diverse and the herbal annex.
      *
      * 4.9.13.6.1 Author type (Conditional).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMaterial\FHIRSubstanceSourceMaterialAuthor[]
      */
     protected null|array $author = [];
@@ -203,7 +197,6 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * explanation the Substance Class: Structurally Diverse and the herbal annex.
      *
      * 4.9.13.8.1 Hybrid species maternal organism ID (Optional).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMaterial\FHIRSubstanceSourceMaterialHybrid
      */
     protected null|FHIRSubstanceSourceMaterialHybrid $hybrid = null;
@@ -223,7 +216,6 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * explanation the Substance Class: Structurally Diverse and the herbal annex.
      *
      * 4.9.13.7.1 Kingdom (Conditional).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMaterial\FHIRSubstanceSourceMaterialOrganismGeneral
      */
     protected null|FHIRSubstanceSourceMaterialOrganismGeneral $organismGeneral = null;
@@ -232,10 +224,10 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * Validation map for fields in type SubstanceSourceMaterial.Organism
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceSourceMaterialOrganism Constructor
@@ -512,16 +504,16 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIntraspecificDescription(null|string|FHIRStringPrimitive|FHIRString $intraspecificDescription = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setIntraspecificDescription(null|string|FHIRStringPrimitive|FHIRString $intraspecificDescription = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $intraspecificDescription && !($intraspecificDescription instanceof FHIRString)) {
             $intraspecificDescription = new FHIRString($intraspecificDescription);
         }
         $this->_trackValueSet($this->intraspecificDescription, $intraspecificDescription);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION][0] = $xmlLocation;
         $this->intraspecificDescription = $intraspecificDescription;
         return $this;
     }
@@ -577,6 +569,41 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->author[] = $author;
+        return $this;
+    }
+
+    /**
+     * Source material shall capture information on the taxonomic and anatomical
+     * origins as well as the fraction of a material that can result in or can be
+     * modified to form a substance. This set of data elements shall be used to define
+     * polymer substances isolated from biological matrices. Taxonomic and anatomical
+     * origins shall be described using a controlled vocabulary as required. This
+     * information is captured for naturally derived polymers ( . starch) and
+     * structurally diverse substances. For Organisms belonging to the Kingdom Plantae
+     * the Substance level defines the fresh material of a single species or
+     * infraspecies, the Herbal Drug and the Herbal preparation. For Herbal
+     * preparations, the fraction information will be captured at the Substance
+     * information level and additional information for herbal extracts will be
+     * captured at the Specified Substance Group 1 information level. See for further
+     * explanation the Substance Class: Structurally Diverse and the herbal annex.
+     *
+     * 4.9.13.6.1 Author type (Conditional).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSourceMaterial\FHIRSubstanceSourceMaterialAuthor ...$author
+     * @return static
+     */
+    public function setAuthor(FHIRSubstanceSourceMaterialAuthor ...$author): self
+    {
+        if ([] !== $this->author) {
+            $this->_trackValuesRemoved(count($this->author));
+            $this->author = [];
+        }
+        if ([] === $author) {
+            return $this;
+        }
+        foreach($author as $v) {
+            $this->addAuthor($v);
+        }
         return $this;
     }
 
@@ -990,7 +1017,7 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceSourceMaterialOrganism', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIntraspecificDescription())) {
             $xw->writeAttribute(self::FIELD_INTRASPECIFIC_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
@@ -1015,7 +1042,7 @@ class FHIRSubstanceSourceMaterialOrganism extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INTRASPECIFIC_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIntraspecificDescription())) {
             $xw->startElement(self::FIELD_INTRASPECIFIC_DESCRIPTION);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -138,7 +138,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Identifier of this Invoice, often used for reference in correspondence about
      * this invoice or for tracking of payments.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -147,7 +146,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The current state of the Invoice.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInvoiceStatus
      */
     protected null|FHIRInvoiceStatus $status = null;
@@ -158,7 +156,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * In case of Invoice cancellation a reason must be given (entered in error,
      * superseded by corrected invoice etc.).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $cancelledReason = null;
@@ -170,7 +167,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Type of Invoice depending on domain, realm an usage (e.g. internal/external,
      * dental, preliminary).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -181,7 +177,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * The individual or set of individuals receiving the goods and services billed in
      * this invoice.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -191,7 +186,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The individual or Organization responsible for balancing of this invoice.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $recipient = null;
@@ -204,7 +198,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Date/time(s) of when this Invoice was posted.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $date = null;
@@ -213,7 +206,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * individual and total price for Billing purpose.
      *
      * Indicates who or what performed or participated in the charged service.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceParticipant[]
      */
     protected null|array $participant = [];
@@ -223,7 +215,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The organizationissuing the Invoice.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $issuer = null;
@@ -233,7 +224,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Account which is supposed to be balanced with this Invoice.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $account = null;
@@ -243,7 +233,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Each line item represents one charge for goods and services rendered. Details
      * such as date, code and amount are found in the referenced ChargeItem resource.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceLineItem[]
      */
     protected null|array $lineItem = [];
@@ -255,7 +244,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * with surcharges/deductions that apply in certain conditions. The priceComponent
      * element can be used to offer transparency to the recipient of the Invoice of how
      * the total price was calculated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoicePriceComponent[]
      */
     protected null|array $totalPriceComponent = [];
@@ -265,7 +253,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Invoice total , taxes excluded.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
     protected null|FHIRMoney $totalNet = null;
@@ -275,7 +262,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Invoice total, tax included.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
     protected null|FHIRMoney $totalGross = null;
@@ -290,7 +276,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Payment details such as banking details, period of payment, deductibles, methods
      * of payment.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $paymentTerms = null;
@@ -301,7 +286,6 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Comments made about the invoice by the issuer, subject, or other participants.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -310,10 +294,14 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Validation map for fields in type Invoice
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRInvoice Constructor
@@ -574,6 +562,33 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifier of this Invoice, often used for reference in correspondence about
+     * this invoice or for tracking of payments.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * Codes identifying the lifecycle stage of an Invoice.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -632,16 +647,16 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCancelledReason(null|string|FHIRStringPrimitive|FHIRString $cancelledReason = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCancelledReason(null|string|FHIRStringPrimitive|FHIRString $cancelledReason = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $cancelledReason && !($cancelledReason instanceof FHIRString)) {
             $cancelledReason = new FHIRString($cancelledReason);
         }
         $this->_trackValueSet($this->cancelledReason, $cancelledReason);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CANCELLED_REASON])) {
-            $this->_primitiveXmlLocations[self::FIELD_CANCELLED_REASON] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CANCELLED_REASON])) {
+            $this->_xmlLocations[self::FIELD_CANCELLED_REASON] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CANCELLED_REASON][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CANCELLED_REASON][0] = $xmlLocation;
         $this->cancelledReason = $cancelledReason;
         return $this;
     }
@@ -785,16 +800,16 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
         }
         $this->_trackValueSet($this->date, $date);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DATE])) {
+            $this->_xmlLocations[self::FIELD_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DATE][0] = $xmlLocation;
         $this->date = $date;
         return $this;
     }
@@ -828,6 +843,30 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->participant[] = $participant;
+        return $this;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * Indicates who or what performed or participated in the charged service.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceParticipant ...$participant
+     * @return static
+     */
+    public function setParticipant(FHIRInvoiceParticipant ...$participant): self
+    {
+        if ([] !== $this->participant) {
+            $this->_trackValuesRemoved(count($this->participant));
+            $this->participant = [];
+        }
+        if ([] === $participant) {
+            return $this;
+        }
+        foreach($participant as $v) {
+            $this->addParticipant($v);
+        }
         return $this;
     }
 
@@ -937,6 +976,31 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Invoice containing collected ChargeItems from an Account with calculated
      * individual and total price for Billing purpose.
      *
+     * Each line item represents one charge for goods and services rendered. Details
+     * such as date, code and amount are found in the referenced ChargeItem resource.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoiceLineItem ...$lineItem
+     * @return static
+     */
+    public function setLineItem(FHIRInvoiceLineItem ...$lineItem): self
+    {
+        if ([] !== $this->lineItem) {
+            $this->_trackValuesRemoved(count($this->lineItem));
+            $this->lineItem = [];
+        }
+        if ([] === $lineItem) {
+            return $this;
+        }
+        foreach($lineItem as $v) {
+            $this->addLineItem($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
      * The total amount for the Invoice may be calculated as the sum of the line items
      * with surcharges/deductions that apply in certain conditions. The priceComponent
      * element can be used to offer transparency to the recipient of the Invoice of how
@@ -968,6 +1032,33 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->totalPriceComponent[] = $totalPriceComponent;
+        return $this;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * The total amount for the Invoice may be calculated as the sum of the line items
+     * with surcharges/deductions that apply in certain conditions. The priceComponent
+     * element can be used to offer transparency to the recipient of the Invoice of how
+     * the total price was calculated.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoicePriceComponent ...$totalPriceComponent
+     * @return static
+     */
+    public function setTotalPriceComponent(FHIRInvoicePriceComponent ...$totalPriceComponent): self
+    {
+        if ([] !== $this->totalPriceComponent) {
+            $this->_trackValuesRemoved(count($this->totalPriceComponent));
+            $this->totalPriceComponent = [];
+        }
+        if ([] === $totalPriceComponent) {
+            return $this;
+        }
+        foreach($totalPriceComponent as $v) {
+            $this->addTotalPriceComponent($v);
+        }
         return $this;
     }
 
@@ -1074,16 +1165,16 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPaymentTerms(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $paymentTerms = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPaymentTerms(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $paymentTerms = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $paymentTerms && !($paymentTerms instanceof FHIRMarkdown)) {
             $paymentTerms = new FHIRMarkdown($paymentTerms);
         }
         $this->_trackValueSet($this->paymentTerms, $paymentTerms);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PAYMENT_TERMS])) {
-            $this->_primitiveXmlLocations[self::FIELD_PAYMENT_TERMS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PAYMENT_TERMS])) {
+            $this->_xmlLocations[self::FIELD_PAYMENT_TERMS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PAYMENT_TERMS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PAYMENT_TERMS][0] = $xmlLocation;
         $this->paymentTerms = $paymentTerms;
         return $this;
     }
@@ -1121,6 +1212,32 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->note[] = $note;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Comments made about the invoice by the issuer, subject, or other participants.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
         return $this;
     }
 
@@ -1690,15 +1807,15 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $openedRoot = true;
             $xw->openRootNode($config, 'Invoice', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CANCELLED_REASON] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CANCELLED_REASON] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCancelledReason())) {
             $xw->writeAttribute(self::FIELD_CANCELLED_REASON, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->writeAttribute(self::FIELD_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PAYMENT_TERMS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PAYMENT_TERMS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPaymentTerms())) {
             $xw->writeAttribute(self::FIELD_PAYMENT_TERMS, $v->getValue()?->getFormattedValue());
         }
@@ -1713,7 +1830,7 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CANCELLED_REASON] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CANCELLED_REASON] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCancelledReason())) {
             $xw->startElement(self::FIELD_CANCELLED_REASON);
             $v->xmlSerialize($xw, $config);
@@ -1734,7 +1851,7 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->startElement(self::FIELD_DATE);
             $v->xmlSerialize($xw, $config);
@@ -1775,7 +1892,7 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PAYMENT_TERMS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PAYMENT_TERMS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPaymentTerms())) {
             $xw->startElement(self::FIELD_PAYMENT_TERMS);
             $v->xmlSerialize($xw, $config);

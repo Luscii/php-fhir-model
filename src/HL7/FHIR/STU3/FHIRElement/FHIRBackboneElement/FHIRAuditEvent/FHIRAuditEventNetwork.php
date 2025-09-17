@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAuditEvent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRAuditEventNetwork extends FHIRBackboneElement
      *
      * An identifier for the network access point of the user device for the audit
      * event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $address = null;
@@ -109,7 +108,6 @@ class FHIRAuditEventNetwork extends FHIRBackboneElement
      *
      * An identifier for the type of network access point that originated the audit
      * event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAuditEventAgentNetworkType
      */
     protected null|FHIRAuditEventAgentNetworkType $type = null;
@@ -118,10 +116,10 @@ class FHIRAuditEventNetwork extends FHIRBackboneElement
      * Validation map for fields in type AuditEvent.Network
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRAuditEventNetwork Constructor
@@ -204,16 +202,16 @@ class FHIRAuditEventNetwork extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAddress(null|string|FHIRStringPrimitive|FHIRString $address = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAddress(null|string|FHIRStringPrimitive|FHIRString $address = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $address && !($address instanceof FHIRString)) {
             $address = new FHIRString($address);
         }
         $this->_trackValueSet($this->address, $address);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ADDRESS])) {
-            $this->_primitiveXmlLocations[self::FIELD_ADDRESS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ADDRESS])) {
+            $this->_xmlLocations[self::FIELD_ADDRESS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ADDRESS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ADDRESS][0] = $xmlLocation;
         $this->address = $address;
         return $this;
     }
@@ -438,12 +436,12 @@ class FHIRAuditEventNetwork extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'AuditEventNetwork', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ADDRESS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ADDRESS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAddress())) {
             $xw->writeAttribute(self::FIELD_ADDRESS, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ADDRESS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ADDRESS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAddress())) {
             $xw->startElement(self::FIELD_ADDRESS);
             $v->xmlSerialize($xw, $config);

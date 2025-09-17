@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -130,7 +130,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * The Reference(s) that were generated or updated by the activity described in
      * this resource. A provenance can point to more than one target if multiple
      * resources were created/updated by the same activity.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $target = [];
@@ -140,7 +139,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The period during which the activity occurred.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $period = null;
@@ -152,7 +150,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The instant of time at which the activity was recorded.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
      */
     protected null|FHIRInstant $recorded = null;
@@ -164,7 +161,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * Policy or plan the activity was defined by. Typically, a single activity may
      * have multiple applicable policy documents, such as patient consent, guarantor
      * funding, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri[]
      */
     protected null|array $policy = [];
@@ -174,7 +170,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Where the activity occurred, if relevant.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $location = null;
@@ -184,7 +179,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The reason that the activity was taking place.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding[]
      */
     protected null|array $reason = [];
@@ -196,7 +190,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * An activity is something that occurs over a period of time and acts upon or with
      * entities; it may include consuming, processing, transforming, modifying,
      * relocating, using, or generating entities.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
      */
     protected null|FHIRCoding $activity = null;
@@ -213,7 +206,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * An actor taking a role in an activity for which it can be assigned some degree
      * of responsibility for the activity taking place.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceAgent[]
      */
     protected null|array $agent = [];
@@ -229,7 +221,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * authenticated), all of which may impact security, privacy, and trust policies.
      *
      * An entity used in this activity.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceEntity[]
      */
     protected null|array $entity = [];
@@ -243,7 +234,6 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * A digital signature on the target Reference(s). The signer should match a
      * Provenance.agent. The purpose of the signature is indicated.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRSignature[]
      */
     protected null|array $signature = [];
@@ -256,14 +246,16 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
         self::FIELD_AGENT => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
-
+        self::FIELD_RECORDED => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
         self::FIELD_TARGET => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRProvenance Constructor
@@ -477,6 +469,33 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The Reference(s) that were generated or updated by the activity described in
+     * this resource. A provenance can point to more than one target if multiple
+     * resources were created/updated by the same activity.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$target
+     * @return static
+     */
+    public function setTarget(FHIRReference ...$target): self
+    {
+        if ([] !== $this->target) {
+            $this->_trackValuesRemoved(count($this->target));
+            $this->target = [];
+        }
+        if ([] === $target) {
+            return $this;
+        }
+        foreach($target as $v) {
+            $this->addTarget($v);
+        }
+        return $this;
+    }
+
+    /**
      * A time period defined by a start and end date and optionally time.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -539,16 +558,16 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRecorded(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $recorded = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRecorded(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $recorded = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $recorded && !($recorded instanceof FHIRInstant)) {
             $recorded = new FHIRInstant($recorded);
         }
         $this->_trackValueSet($this->recorded, $recorded);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RECORDED])) {
-            $this->_primitiveXmlLocations[self::FIELD_RECORDED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RECORDED])) {
+            $this->_xmlLocations[self::FIELD_RECORDED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RECORDED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RECORDED][0] = $xmlLocation;
         $this->recorded = $recorded;
         return $this;
     }
@@ -582,16 +601,20 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addPolicy(null|string|FHIRUriPrimitive|FHIRUri $policy = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addPolicy(null|string|FHIRUriPrimitive|FHIRUri $policy = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $policy && !($policy instanceof FHIRUri)) {
             $policy = new FHIRUri($policy);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_POLICY])) {
-            $this->_primitiveXmlLocations[self::FIELD_POLICY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_POLICY])) {
+            $this->_xmlLocations[self::FIELD_POLICY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_POLICY][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_POLICY]) {
+            $this->_xmlLocations[self::FIELD_POLICY][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_POLICY][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->policy[] = $policy;
         return $this;
     }
@@ -609,9 +632,9 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPolicy(array $policy = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPolicy(array $policy = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_POLICY]);
+        unset($this->_xmlLocations[self::FIELD_POLICY]);
         if ([] !== $this->policy) {
             $this->_trackValuesRemoved(count($this->policy));
             $this->policy = [];
@@ -694,6 +717,31 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
         }
         $this->_trackValueAdded();
         $this->reason[] = $reason;
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The reason that the activity was taking place.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCoding ...$reason
+     * @return static
+     */
+    public function setReason(FHIRCoding ...$reason): self
+    {
+        if ([] !== $this->reason) {
+            $this->_trackValuesRemoved(count($this->reason));
+            $this->reason = [];
+        }
+        if ([] === $reason) {
+            return $this;
+        }
+        foreach($reason as $v) {
+            $this->addReason($v);
+        }
         return $this;
     }
 
@@ -794,6 +842,38 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * stage in lifecycle (e.g. Document Completion - has the artifact been legally
      * authenticated), all of which may impact security, privacy, and trust policies.
      *
+     * An actor taking a role in an activity for which it can be assigned some degree
+     * of responsibility for the activity taking place.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceAgent ...$agent
+     * @return static
+     */
+    public function setAgent(FHIRProvenanceAgent ...$agent): self
+    {
+        if ([] !== $this->agent) {
+            $this->_trackValuesRemoved(count($this->agent));
+            $this->agent = [];
+        }
+        if ([] === $agent) {
+            return $this;
+        }
+        foreach($agent as $v) {
+            $this->addAgent($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Provenance of a resource is a record that describes entities and processes
+     * involved in producing and delivering or otherwise influencing that resource.
+     * Provenance provides a critical foundation for assessing authenticity, enabling
+     * trust, and allowing reproducibility. Provenance assertions are a form of
+     * contextual metadata and can themselves become important records with their own
+     * provenance. Provenance statement indicates clinical significance in terms of
+     * confidence in authenticity, reliability, and trustworthiness, integrity, and
+     * stage in lifecycle (e.g. Document Completion - has the artifact been legally
+     * authenticated), all of which may impact security, privacy, and trust policies.
+     *
      * An entity used in this activity.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceEntity[]
@@ -826,6 +906,37 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
         }
         $this->_trackValueAdded();
         $this->entity[] = $entity;
+        return $this;
+    }
+
+    /**
+     * Provenance of a resource is a record that describes entities and processes
+     * involved in producing and delivering or otherwise influencing that resource.
+     * Provenance provides a critical foundation for assessing authenticity, enabling
+     * trust, and allowing reproducibility. Provenance assertions are a form of
+     * contextual metadata and can themselves become important records with their own
+     * provenance. Provenance statement indicates clinical significance in terms of
+     * confidence in authenticity, reliability, and trustworthiness, integrity, and
+     * stage in lifecycle (e.g. Document Completion - has the artifact been legally
+     * authenticated), all of which may impact security, privacy, and trust policies.
+     *
+     * An entity used in this activity.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRProvenance\FHIRProvenanceEntity ...$entity
+     * @return static
+     */
+    public function setEntity(FHIRProvenanceEntity ...$entity): self
+    {
+        if ([] !== $this->entity) {
+            $this->_trackValuesRemoved(count($this->entity));
+            $this->entity = [];
+        }
+        if ([] === $entity) {
+            return $this;
+        }
+        foreach($entity as $v) {
+            $this->addEntity($v);
+        }
         return $this;
     }
 
@@ -868,6 +979,35 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
         }
         $this->_trackValueAdded();
         $this->signature[] = $signature;
+        return $this;
+    }
+
+    /**
+     * A digital signature along with supporting context. The signature may be
+     * electronic/cryptographic in nature, or a graphical image representing a
+     * hand-written signature, or a signature process. Different signature approaches
+     * have different utilities.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A digital signature on the target Reference(s). The signer should match a
+     * Provenance.agent. The purpose of the signature is indicated.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRSignature ...$signature
+     * @return static
+     */
+    public function setSignature(FHIRSignature ...$signature): self
+    {
+        if ([] !== $this->signature) {
+            $this->_trackValuesRemoved(count($this->signature));
+            $this->signature = [];
+        }
+        if ([] === $signature) {
+            return $this;
+        }
+        foreach($signature as $v) {
+            $this->addSignature($v);
+        }
         return $this;
     }
 
@@ -1312,11 +1452,11 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
             $openedRoot = true;
             $xw->openRootNode($config, 'Provenance', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RECORDED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RECORDED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRecorded())) {
             $xw->writeAttribute(self::FIELD_RECORDED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_POLICY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_POLICY] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getPolicy())) {
             $xw->writeAttribute(self::FIELD_POLICY, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getPolicy()) && isset($vs[$idx])) {
@@ -1333,13 +1473,13 @@ class FHIRProvenance extends FHIRDomainResource implements PHPFHIRContainedTypeI
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RECORDED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RECORDED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRecorded())) {
             $xw->startElement(self::FIELD_RECORDED);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_POLICY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_POLICY] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getPolicy())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

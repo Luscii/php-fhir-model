@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,7 +110,6 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
      * plans, etc., and to harmonize with workflow patterns.
      *
      * Indicates the quantity or duration for the first dispense of the medication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest\FHIRMedicationRequestInitialFill
      */
     protected null|FHIRMedicationRequestInitialFill $initialFill = null;
@@ -120,7 +119,6 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The minimum period of time that must occur between dispenses of the medication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $dispenseInterval = null;
@@ -131,7 +129,6 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
      *
      * This indicates the validity period of a prescription (stale dating the
      * Prescription).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $validityPeriod = null;
@@ -147,7 +144,6 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
      * order can be dispensed a total of 4 times and the patient can receive a total of
      * 120 tablets. A prescriber may explicitly say that zero refills are permitted
      * after the initial dispense.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
     protected null|FHIRUnsignedInt $numberOfRepeatsAllowed = null;
@@ -159,7 +155,6 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The amount that is to be dispensed for one fill.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $quantity = null;
@@ -170,7 +165,6 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
      *
      * Identifies the period time over which the supplied product is expected to be
      * used, or the length of time the dispense is expected to last.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $expectedSupplyDuration = null;
@@ -180,7 +174,6 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indicates the intended dispensing Organization specified by the prescriber.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $performer = null;
@@ -189,10 +182,10 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
      * Validation map for fields in type MedicationRequest.DispenseRequest
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationRequestDispenseRequest Constructor
@@ -418,16 +411,16 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumberOfRepeatsAllowed(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $numberOfRepeatsAllowed = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumberOfRepeatsAllowed(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $numberOfRepeatsAllowed = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $numberOfRepeatsAllowed && !($numberOfRepeatsAllowed instanceof FHIRUnsignedInt)) {
             $numberOfRepeatsAllowed = new FHIRUnsignedInt($numberOfRepeatsAllowed);
         }
         $this->_trackValueSet($this->numberOfRepeatsAllowed, $numberOfRepeatsAllowed);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED])) {
+            $this->_xmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED][0] = $xmlLocation;
         $this->numberOfRepeatsAllowed = $numberOfRepeatsAllowed;
         return $this;
     }
@@ -821,7 +814,7 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicationRequestDispenseRequest', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getNumberOfRepeatsAllowed())) {
             $xw->writeAttribute(self::FIELD_NUMBER_OF_REPEATS_ALLOWED, $v->getValue()?->getFormattedValue());
         }
@@ -841,7 +834,7 @@ class FHIRMedicationRequestDispenseRequest extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_REPEATS_ALLOWED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getNumberOfRepeatsAllowed())) {
             $xw->startElement(self::FIELD_NUMBER_OF_REPEATS_ALLOWED);
             $v->xmlSerialize($xw, $config);

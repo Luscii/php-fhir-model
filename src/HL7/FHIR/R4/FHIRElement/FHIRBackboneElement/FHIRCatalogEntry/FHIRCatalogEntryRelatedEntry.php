@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCatalogEntry;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ class FHIRCatalogEntryRelatedEntry extends FHIRBackboneElement
      *
      * The type of relation to the related item: child, parent, packageContent,
      * containerPackage, usedIn, uses, requires, etc.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCatalogEntryRelationType
      */
     protected null|FHIRCatalogEntryRelationType $relationtype = null;
@@ -105,7 +104,6 @@ class FHIRCatalogEntryRelatedEntry extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The reference to the related item.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $item = null;
@@ -114,10 +112,17 @@ class FHIRCatalogEntryRelatedEntry extends FHIRBackboneElement
      * Validation map for fields in type CatalogEntry.RelatedEntry
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_ITEM => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_RELATIONTYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCatalogEntryRelatedEntry Constructor

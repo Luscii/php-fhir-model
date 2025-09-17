@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -111,7 +111,6 @@ class FHIRMeta extends FHIRElement
      *
      * The version specific identifier, as it appears in the version portion of the
      * URL. This value changes when the resource is created, updated, or deleted.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
     protected null|FHIRId $versionId = null;
@@ -124,7 +123,6 @@ class FHIRMeta extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * When the resource last changed - e.g. when the version changed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
     protected null|FHIRInstant $lastUpdated = null;
@@ -137,7 +135,6 @@ class FHIRMeta extends FHIRElement
      * amount of [[[Provenance]]] information that can be used to track or
      * differentiate the source of information in the resource. The source may identify
      * another FHIR server, document, message, database, etc.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $source = null;
@@ -150,7 +147,6 @@ class FHIRMeta extends FHIRElement
      * A list of profiles (references to [[[StructureDefinition]]] resources) that this
      * resource claims to conform to. The URL is a reference to
      * [[[StructureDefinition.url]]].
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCanonical[]
      */
     protected null|array $profile = [];
@@ -161,7 +157,6 @@ class FHIRMeta extends FHIRElement
      *
      * Security labels applied to this resource. These tags connect specific resources
      * to the overall security policy and infrastructure.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
     protected null|array $security = [];
@@ -173,7 +168,6 @@ class FHIRMeta extends FHIRElement
      * Tags applied to this resource. Tags are intended to be used to identify and
      * relate resources to process and workflow, and applications are not required to
      * consider the tags when interpreting the meaning of a resource.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
     protected null|array $tag = [];
@@ -182,10 +176,10 @@ class FHIRMeta extends FHIRElement
      * Validation map for fields in type Meta
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMeta Constructor
@@ -353,16 +347,16 @@ class FHIRMeta extends FHIRElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setVersionId(null|string|FHIRIdPrimitive|FHIRId $versionId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setVersionId(null|string|FHIRIdPrimitive|FHIRId $versionId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $versionId && !($versionId instanceof FHIRId)) {
             $versionId = new FHIRId($versionId);
         }
         $this->_trackValueSet($this->versionId, $versionId);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VERSION_ID])) {
-            $this->_primitiveXmlLocations[self::FIELD_VERSION_ID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VERSION_ID])) {
+            $this->_xmlLocations[self::FIELD_VERSION_ID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VERSION_ID][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VERSION_ID][0] = $xmlLocation;
         $this->versionId = $versionId;
         return $this;
     }
@@ -398,16 +392,16 @@ class FHIRMeta extends FHIRElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLastUpdated(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $lastUpdated = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLastUpdated(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $lastUpdated = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $lastUpdated && !($lastUpdated instanceof FHIRInstant)) {
             $lastUpdated = new FHIRInstant($lastUpdated);
         }
         $this->_trackValueSet($this->lastUpdated, $lastUpdated);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED])) {
-            $this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LAST_UPDATED])) {
+            $this->_xmlLocations[self::FIELD_LAST_UPDATED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LAST_UPDATED][0] = $xmlLocation;
         $this->lastUpdated = $lastUpdated;
         return $this;
     }
@@ -443,16 +437,16 @@ class FHIRMeta extends FHIRElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSource(null|string|FHIRUriPrimitive|FHIRUri $source = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSource(null|string|FHIRUriPrimitive|FHIRUri $source = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $source && !($source instanceof FHIRUri)) {
             $source = new FHIRUri($source);
         }
         $this->_trackValueSet($this->source, $source);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SOURCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SOURCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SOURCE])) {
+            $this->_xmlLocations[self::FIELD_SOURCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SOURCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SOURCE][0] = $xmlLocation;
         $this->source = $source;
         return $this;
     }
@@ -488,16 +482,20 @@ class FHIRMeta extends FHIRElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addProfile(null|string|FHIRCanonicalPrimitive|FHIRCanonical $profile = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addProfile(null|string|FHIRCanonicalPrimitive|FHIRCanonical $profile = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $profile && !($profile instanceof FHIRCanonical)) {
             $profile = new FHIRCanonical($profile);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PROFILE])) {
-            $this->_primitiveXmlLocations[self::FIELD_PROFILE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PROFILE])) {
+            $this->_xmlLocations[self::FIELD_PROFILE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PROFILE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_PROFILE]) {
+            $this->_xmlLocations[self::FIELD_PROFILE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_PROFILE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->profile[] = $profile;
         return $this;
     }
@@ -516,9 +514,9 @@ class FHIRMeta extends FHIRElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setProfile(array $profile = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setProfile(array $profile = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_PROFILE]);
+        unset($this->_xmlLocations[self::FIELD_PROFILE]);
         if ([] !== $this->profile) {
             $this->_trackValuesRemoved(count($this->profile));
             $this->profile = [];
@@ -577,6 +575,32 @@ class FHIRMeta extends FHIRElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Security labels applied to this resource. These tags connect specific resources
+     * to the overall security policy and infrastructure.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCoding ...$security
+     * @return static
+     */
+    public function setSecurity(FHIRCoding ...$security): self
+    {
+        if ([] !== $this->security) {
+            $this->_trackValuesRemoved(count($this->security));
+            $this->security = [];
+        }
+        if ([] === $security) {
+            return $this;
+        }
+        foreach($security as $v) {
+            $this->addSecurity($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Tags applied to this resource. Tags are intended to be used to identify and
      * relate resources to process and workflow, and applications are not required to
      * consider the tags when interpreting the meaning of a resource.
@@ -607,6 +631,33 @@ class FHIRMeta extends FHIRElement
         }
         $this->_trackValueAdded();
         $this->tag[] = $tag;
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Tags applied to this resource. Tags are intended to be used to identify and
+     * relate resources to process and workflow, and applications are not required to
+     * consider the tags when interpreting the meaning of a resource.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCoding ...$tag
+     * @return static
+     */
+    public function setTag(FHIRCoding ...$tag): self
+    {
+        if ([] !== $this->tag) {
+            $this->_trackValuesRemoved(count($this->tag));
+            $this->tag = [];
+        }
+        if ([] === $tag) {
+            return $this;
+        }
+        foreach($tag as $v) {
+            $this->addTag($v);
+        }
         return $this;
     }
 
@@ -883,44 +934,44 @@ class FHIRMeta extends FHIRElement
             $openedRoot = true;
             $xw->openRootNode($config, 'Meta', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERSION_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERSION_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getVersionId())) {
             $xw->writeAttribute(self::FIELD_VERSION_ID, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_UPDATED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLastUpdated())) {
             $xw->writeAttribute(self::FIELD_LAST_UPDATED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SOURCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SOURCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSource())) {
             $xw->writeAttribute(self::FIELD_SOURCE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PROFILE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PROFILE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getProfile())) {
             $xw->writeAttribute(self::FIELD_PROFILE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getProfile()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_PROFILE, $vs[$idx]->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERSION_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERSION_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getVersionId())) {
             $xw->startElement(self::FIELD_VERSION_ID);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_UPDATED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_UPDATED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLastUpdated())) {
             $xw->startElement(self::FIELD_LAST_UPDATED);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SOURCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SOURCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSource())) {
             $xw->startElement(self::FIELD_SOURCE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PROFILE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PROFILE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getProfile())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

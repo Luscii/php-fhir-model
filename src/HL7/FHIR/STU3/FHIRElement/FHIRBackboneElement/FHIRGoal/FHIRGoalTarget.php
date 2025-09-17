@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRGoal;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,6 @@ class FHIRGoalTarget extends FHIRBackboneElement
      *
      * The parameter whose value is being tracked, e.g. body weight, blood pressure, or
      * hemoglobin A1c level.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $measure = null;
@@ -124,7 +123,6 @@ class FHIRGoalTarget extends FHIRBackboneElement
      * achieved at any focus value at or below the high value. Similarly, if the high
      * value is missing, it indicates that the goal is achieved at any focus value at
      * or above the low value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $detailQuantity = null;
@@ -139,7 +137,6 @@ class FHIRGoalTarget extends FHIRBackboneElement
      * achieved at any focus value at or below the high value. Similarly, if the high
      * value is missing, it indicates that the goal is achieved at any focus value at
      * or above the low value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $detailRange = null;
@@ -155,7 +152,6 @@ class FHIRGoalTarget extends FHIRBackboneElement
      * achieved at any focus value at or below the high value. Similarly, if the high
      * value is missing, it indicates that the goal is achieved at any focus value at
      * or above the low value.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $detailCodeableConcept = null;
@@ -167,7 +163,6 @@ class FHIRGoalTarget extends FHIRBackboneElement
      *
      * Indicates either the date or the duration after start by which the goal should
      * be met.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDate
      */
     protected null|FHIRDate $dueDate = null;
@@ -178,7 +173,6 @@ class FHIRGoalTarget extends FHIRBackboneElement
      *
      * Indicates either the date or the duration after start by which the goal should
      * be met.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $dueDuration = null;
@@ -187,10 +181,10 @@ class FHIRGoalTarget extends FHIRBackboneElement
      * Validation map for fields in type Goal.Target
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRGoalTarget Constructor
@@ -469,16 +463,16 @@ class FHIRGoalTarget extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDueDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $dueDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDueDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $dueDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $dueDate && !($dueDate instanceof FHIRDate)) {
             $dueDate = new FHIRDate($dueDate);
         }
         $this->_trackValueSet($this->dueDate, $dueDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DUE_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DUE_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DUE_DATE])) {
+            $this->_xmlLocations[self::FIELD_DUE_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DUE_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DUE_DATE][0] = $xmlLocation;
         $this->dueDate = $dueDate;
         return $this;
     }
@@ -781,7 +775,7 @@ class FHIRGoalTarget extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'GoalTarget', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DUE_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DUE_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDueDate())) {
             $xw->writeAttribute(self::FIELD_DUE_DATE, $v->getValue()?->getFormattedValue());
         }
@@ -806,7 +800,7 @@ class FHIRGoalTarget extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DUE_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DUE_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDueDate())) {
             $xw->startElement(self::FIELD_DUE_DATE);
             $v->xmlSerialize($xw, $config);

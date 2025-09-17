@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ class FHIRMarketingStatus extends FHIRBackboneElement
      *
      * The country in which the marketing authorisation has been granted shall be
      * specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $country = null;
@@ -119,7 +118,6 @@ class FHIRMarketingStatus extends FHIRBackboneElement
      * which specific provisions within a jurisdiction apply, the jurisdiction can be
      * specified using an appropriate controlled terminology The controlled term and
      * the controlled term identifier shall be specified.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $jurisdiction = null;
@@ -131,7 +129,6 @@ class FHIRMarketingStatus extends FHIRBackboneElement
      *
      * This attribute provides information on the status of the marketing of the
      * medicinal product See ISO/TS 20443 for more information and examples.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $status = null;
@@ -146,7 +143,6 @@ class FHIRMarketingStatus extends FHIRBackboneElement
      * month and year shall be specified using the ISO 8601 date format NOTE “Placed
      * on the market” refers to the release of the Medicinal Product into the
      * distribution chain.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $dateRange = null;
@@ -164,7 +160,6 @@ class FHIRMarketingStatus extends FHIRBackboneElement
      * month and year shall be specified using the ISO 8601 date format NOTE “Placed
      * on the market” refers to the release of the Medicinal Product into the
      * distribution chain.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $restoreDate = null;
@@ -173,10 +168,20 @@ class FHIRMarketingStatus extends FHIRBackboneElement
      * Validation map for fields in type MarketingStatus
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_COUNTRY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_DATE_RANGE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMarketingStatus Constructor
@@ -446,16 +451,16 @@ class FHIRMarketingStatus extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRestoreDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $restoreDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRestoreDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $restoreDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $restoreDate && !($restoreDate instanceof FHIRDateTime)) {
             $restoreDate = new FHIRDateTime($restoreDate);
         }
         $this->_trackValueSet($this->restoreDate, $restoreDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RESTORE_DATE])) {
+            $this->_xmlLocations[self::FIELD_RESTORE_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RESTORE_DATE][0] = $xmlLocation;
         $this->restoreDate = $restoreDate;
         return $this;
     }
@@ -703,7 +708,7 @@ class FHIRMarketingStatus extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MarketingStatus', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RESTORE_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRestoreDate())) {
             $xw->writeAttribute(self::FIELD_RESTORE_DATE, $v->getValue()?->getFormattedValue());
         }
@@ -728,7 +733,7 @@ class FHIRMarketingStatus extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RESTORE_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RESTORE_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRestoreDate())) {
             $xw->startElement(self::FIELD_RESTORE_DATE);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Type of cost.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -112,7 +111,6 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Number of participants enrolled in the plan.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $groupSize = null;
@@ -122,7 +120,6 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Value of the cost.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
     protected null|FHIRMoney $cost = null;
@@ -132,7 +129,6 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Additional information about the general costs associated with this plan.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $comment = null;
@@ -141,10 +137,10 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
      * Validation map for fields in type InsurancePlan.GeneralCost
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRInsurancePlanGeneralCost Constructor
@@ -275,16 +271,16 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setGroupSize(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $groupSize = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setGroupSize(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $groupSize = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $groupSize && !($groupSize instanceof FHIRPositiveInt)) {
             $groupSize = new FHIRPositiveInt($groupSize);
         }
         $this->_trackValueSet($this->groupSize, $groupSize);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_GROUP_SIZE])) {
-            $this->_primitiveXmlLocations[self::FIELD_GROUP_SIZE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_GROUP_SIZE])) {
+            $this->_xmlLocations[self::FIELD_GROUP_SIZE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_GROUP_SIZE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_GROUP_SIZE][0] = $xmlLocation;
         $this->groupSize = $groupSize;
         return $this;
     }
@@ -348,16 +344,16 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $comment && !($comment instanceof FHIRString)) {
             $comment = new FHIRString($comment);
         }
         $this->_trackValueSet($this->comment, $comment);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_COMMENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_COMMENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_COMMENT])) {
+            $this->_xmlLocations[self::FIELD_COMMENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_COMMENT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_COMMENT][0] = $xmlLocation;
         $this->comment = $comment;
         return $this;
     }
@@ -594,11 +590,11 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'InsurancePlanGeneralCost', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_GROUP_SIZE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_GROUP_SIZE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getGroupSize())) {
             $xw->writeAttribute(self::FIELD_GROUP_SIZE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COMMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getComment())) {
             $xw->writeAttribute(self::FIELD_COMMENT, $v->getValue()?->getFormattedValue());
         }
@@ -608,7 +604,7 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_GROUP_SIZE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_GROUP_SIZE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getGroupSize())) {
             $xw->startElement(self::FIELD_GROUP_SIZE);
             $v->xmlSerialize($xw, $config);
@@ -619,7 +615,7 @@ class FHIRInsurancePlanGeneralCost extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COMMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getComment())) {
             $xw->startElement(self::FIELD_COMMENT);
             $v->xmlSerialize($xw, $config);

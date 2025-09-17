@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRiskEvidenceSynthesis;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,6 @@ class FHIRRiskEvidenceSynthesisCertainty extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A rating of the certainty of the effect estimate.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $rating = [];
@@ -109,7 +108,6 @@ class FHIRRiskEvidenceSynthesisCertainty extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A human-readable string to clarify or explain concepts about the resource.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -119,7 +117,6 @@ class FHIRRiskEvidenceSynthesisCertainty extends FHIRBackboneElement
      * combination of research studies.
      *
      * A description of a component of the overall certainty.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRiskEvidenceSynthesis\FHIRRiskEvidenceSynthesisCertaintySubcomponent[]
      */
     protected null|array $certaintySubcomponent = [];
@@ -128,10 +125,10 @@ class FHIRRiskEvidenceSynthesisCertainty extends FHIRBackboneElement
      * Validation map for fields in type RiskEvidenceSynthesis.Certainty
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRRiskEvidenceSynthesisCertainty Constructor
@@ -235,6 +232,32 @@ class FHIRRiskEvidenceSynthesisCertainty extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A rating of the certainty of the effect estimate.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$rating
+     * @return static
+     */
+    public function setRating(FHIRCodeableConcept ...$rating): self
+    {
+        if ([] !== $this->rating) {
+            $this->_trackValuesRemoved(count($this->rating));
+            $this->rating = [];
+        }
+        if ([] === $rating) {
+            return $this;
+        }
+        foreach($rating as $v) {
+            $this->addRating($v);
+        }
+        return $this;
+    }
+
+    /**
      * A text note which also contains information about who made the statement and
      * when.
      * If the element is present, it must have a value for at least one of the defined
@@ -271,6 +294,32 @@ class FHIRRiskEvidenceSynthesisCertainty extends FHIRBackboneElement
     }
 
     /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A human-readable string to clarify or explain concepts about the resource.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
+        return $this;
+    }
+
+    /**
      * The RiskEvidenceSynthesis resource describes the likelihood of an outcome in a
      * population plus exposure state where the risk estimate is derived from a
      * combination of research studies.
@@ -301,6 +350,31 @@ class FHIRRiskEvidenceSynthesisCertainty extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->certaintySubcomponent[] = $certaintySubcomponent;
+        return $this;
+    }
+
+    /**
+     * The RiskEvidenceSynthesis resource describes the likelihood of an outcome in a
+     * population plus exposure state where the risk estimate is derived from a
+     * combination of research studies.
+     *
+     * A description of a component of the overall certainty.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRiskEvidenceSynthesis\FHIRRiskEvidenceSynthesisCertaintySubcomponent ...$certaintySubcomponent
+     * @return static
+     */
+    public function setCertaintySubcomponent(FHIRRiskEvidenceSynthesisCertaintySubcomponent ...$certaintySubcomponent): self
+    {
+        if ([] !== $this->certaintySubcomponent) {
+            $this->_trackValuesRemoved(count($this->certaintySubcomponent));
+            $this->certaintySubcomponent = [];
+        }
+        if ([] === $certaintySubcomponent) {
+            return $this;
+        }
+        foreach($certaintySubcomponent as $v) {
+            $this->addCertaintySubcomponent($v);
+        }
         return $this;
     }
 

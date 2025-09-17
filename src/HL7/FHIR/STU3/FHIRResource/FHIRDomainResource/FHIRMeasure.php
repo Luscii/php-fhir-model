@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -185,7 +185,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * globally unique, and SHOULD be an address at which this measure is (or will be)
      * published. The URL SHOULD include the major version of the measure. For more
      * information see [Technical and Business Versions](resource.html#versions).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $url = null;
@@ -197,7 +196,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A formal identifier that is used to identify this measure when it is represented
      * in other formats, or referenced in a specification, model, design or an
      * instance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -216,7 +214,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * For more information on versioning knowledge assets, refer to the Decision
      * Support Service specification. Note that a version is required for
      * non-experimental active artifacts.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $version = null;
@@ -228,7 +225,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A natural language name identifying the measure. This name should be usable as
      * an identifier for the module by machine processing applications such as code
      * generation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $name = null;
@@ -238,7 +234,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A short, descriptive, user-friendly title for the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $title = null;
@@ -246,7 +241,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The status of this measure. Enables tracking the life-cycle of the content.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPublicationStatus
      */
     protected null|FHIRPublicationStatus $status = null;
@@ -257,7 +251,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A boolean value to indicate that this measure is authored for testing purposes
      * (or education/evaluation/marketing), and is not intended to be used for genuine
      * usage.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $experimental = null;
@@ -273,7 +266,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * change if and when the business version changes and it must change if the status
      * code changes. In addition, it should change when the substantive content of the
      * measure changes.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $date = null;
@@ -283,7 +275,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The name of the individual or organization that published the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $publisher = null;
@@ -300,7 +291,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A free text natural language description of the measure from a consumer's
      * perspective.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $description = null;
@@ -317,7 +307,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Explaination of why this measure is needed and why it has been designed as it
      * has.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $purpose = null;
@@ -327,7 +316,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A detailed description of how the measure is used from a clinical perspective.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $usage = null;
@@ -339,7 +327,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * The date on which the resource content was approved by the publisher. Approval
      * happens once when the content is officially approved for usage.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDate
      */
     protected null|FHIRDate $approvalDate = null;
@@ -351,7 +338,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * The date on which the resource content was last reviewed. Review happens
      * periodically after approval, but doesn't change the original approval date.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDate
      */
     protected null|FHIRDate $lastReviewDate = null;
@@ -362,7 +348,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * The period during which the measure content was or is planned to be in active
      * use.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $effectivePeriod = null;
@@ -377,7 +362,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * The content was developed with a focus and intent of supporting the contexts
      * that are listed. These terms may be used to assist with indexing and searching
      * for appropriate measure instances.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUsageContext[]
      */
     protected null|array $useContext = [];
@@ -388,7 +372,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A legal or geographic region in which the measure is intended to be used.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $jurisdiction = [];
@@ -401,7 +384,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Descriptive topics related to the content of the measure. Topics provide a
      * high-level categorization of the type of the measure that can be useful for
      * filtering and searching.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $topic = [];
@@ -413,7 +395,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A contributor to the content of the measure, including authors, editors,
      * reviewers, and endorsers.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContributor[]
      */
     protected null|array $contributor = [];
@@ -424,7 +405,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Contact details to assist a user in finding and communicating with the
      * publisher.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContactDetail[]
      */
     protected null|array $contact = [];
@@ -442,7 +422,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A copyright statement relating to the measure and/or its contents. Copyright
      * statements are generally legal restrictions on the use and publishing of the
      * measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $copyright = null;
@@ -454,7 +433,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Related artifacts such as additional documentation, justification, or
      * bibliographic references.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRelatedArtifact[]
      */
     protected null|array $relatedArtifact = [];
@@ -465,7 +443,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A reference to a Library resource containing the formal logic used by the
      * measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $library = [];
@@ -482,7 +459,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Notices and disclaimers regarding the use of the measure, or related to
      * intellectual property (such as code systems) referenced by the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $disclaimer = null;
@@ -495,7 +471,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Indicates how the calculation is performed for the measure, including
      * proportion, ratio, continuous variable, and cohort. The value set is extensible,
      * allowing additional measure scoring types to be represented.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $scoring = null;
@@ -507,7 +482,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * If this is a composite measure, the scoring method used to combine the component
      * measures to determine the composite score.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $compositeScoring = null;
@@ -519,7 +493,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Indicates whether the measure is used to examine a process, an outcome over
      * time, a patient-reported outcome, or a structure measure such as utilization.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $type = [];
@@ -531,7 +504,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * A description of the risk adjustment factors that may impact the resulting score
      * for the measure and how they may be accounted for when computing and reporting
      * measure results.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $riskAdjustment = null;
@@ -542,7 +514,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Describes how to combine the information calculated, based on logic in each of
      * several populations, into one summarized result.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $rateAggregation = null;
@@ -560,7 +531,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Provides a succint statement of the need for the measure. Usually includes
      * statements pertaining to importance criterion: impact, gap in care, and
      * evidence.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $rationale = null;
@@ -577,7 +547,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Provides a summary of relevant clinical guidelines or other clinical
      * recommendations supporting the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $clinicalRecommendationStatement = null;
@@ -589,7 +558,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Information on whether an increase or decrease in score is the preferred result
      * (e.g., a higher score indicates better quality OR a lower score indicates better
      * quality OR quality is whthin a range).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $improvementNotation = null;
@@ -605,7 +573,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * the Narrative, or extensions
      *
      * Provides a description of an individual term used within the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown[]
      */
     protected null|array $definition = [];
@@ -622,7 +589,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Additional guidance for the measure including how it can be used in a clinical
      * context, and the intent of the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $guidance = null;
@@ -632,7 +598,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The measure set, e.g. Preventive Care and Screening.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $set = null;
@@ -640,7 +605,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * The Measure resource provides the definition of a quality measure.
      *
      * A group of population criteria for the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureGroup[]
      */
     protected null|array $group = [];
@@ -650,7 +614,6 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * The supplemental data criteria for the measure report, specified as either the
      * name of a valid CQL expression within a referenced library, or a valid FHIR
      * Resource Path.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureSupplementalData[]
      */
     protected null|array $supplementalData = [];
@@ -659,10 +622,14 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Validation map for fields in type Measure
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMeasure Constructor
@@ -1317,16 +1284,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
         }
         $this->_trackValueSet($this->url, $url);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_URL])) {
-            $this->_primitiveXmlLocations[self::FIELD_URL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_URL])) {
+            $this->_xmlLocations[self::FIELD_URL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_URL][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_URL][0] = $xmlLocation;
         $this->url = $url;
         return $this;
     }
@@ -1366,6 +1333,33 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->identifier[] = $identifier;
+        return $this;
+    }
+
+    /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A formal identifier that is used to identify this measure when it is represented
+     * in other formats, or referenced in a specification, model, design or an
+     * instance.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
         return $this;
     }
 
@@ -1412,16 +1406,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
         }
         $this->_trackValueSet($this->version, $version);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VERSION])) {
-            $this->_primitiveXmlLocations[self::FIELD_VERSION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VERSION])) {
+            $this->_xmlLocations[self::FIELD_VERSION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VERSION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VERSION][0] = $xmlLocation;
         $this->version = $version;
         return $this;
     }
@@ -1455,16 +1449,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
         }
         $this->_trackValueSet($this->name, $name);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NAME])) {
+            $this->_xmlLocations[self::FIELD_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NAME][0] = $xmlLocation;
         $this->name = $name;
         return $this;
     }
@@ -1494,16 +1488,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
         }
         $this->_trackValueSet($this->title, $title);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TITLE])) {
-            $this->_primitiveXmlLocations[self::FIELD_TITLE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TITLE])) {
+            $this->_xmlLocations[self::FIELD_TITLE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TITLE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TITLE][0] = $xmlLocation;
         $this->title = $title;
         return $this;
     }
@@ -1565,16 +1559,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $experimental && !($experimental instanceof FHIRBoolean)) {
             $experimental = new FHIRBoolean($experimental);
         }
         $this->_trackValueSet($this->experimental, $experimental);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL])) {
-            $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_EXPERIMENTAL])) {
+            $this->_xmlLocations[self::FIELD_EXPERIMENTAL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_EXPERIMENTAL][0] = $xmlLocation;
         $this->experimental = $experimental;
         return $this;
     }
@@ -1616,16 +1610,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
         }
         $this->_trackValueSet($this->date, $date);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DATE])) {
+            $this->_xmlLocations[self::FIELD_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DATE][0] = $xmlLocation;
         $this->date = $date;
         return $this;
     }
@@ -1655,16 +1649,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $publisher && !($publisher instanceof FHIRString)) {
             $publisher = new FHIRString($publisher);
         }
         $this->_trackValueSet($this->publisher, $publisher);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PUBLISHER])) {
-            $this->_primitiveXmlLocations[self::FIELD_PUBLISHER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PUBLISHER])) {
+            $this->_xmlLocations[self::FIELD_PUBLISHER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PUBLISHER][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PUBLISHER][0] = $xmlLocation;
         $this->publisher = $publisher;
         return $this;
     }
@@ -1708,16 +1702,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -1761,16 +1755,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPurpose(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $purpose = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPurpose(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $purpose = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $purpose && !($purpose instanceof FHIRMarkdown)) {
             $purpose = new FHIRMarkdown($purpose);
         }
         $this->_trackValueSet($this->purpose, $purpose);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PURPOSE])) {
-            $this->_primitiveXmlLocations[self::FIELD_PURPOSE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PURPOSE])) {
+            $this->_xmlLocations[self::FIELD_PURPOSE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PURPOSE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PURPOSE][0] = $xmlLocation;
         $this->purpose = $purpose;
         return $this;
     }
@@ -1800,16 +1794,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUsage(null|string|FHIRStringPrimitive|FHIRString $usage = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setUsage(null|string|FHIRStringPrimitive|FHIRString $usage = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $usage && !($usage instanceof FHIRString)) {
             $usage = new FHIRString($usage);
         }
         $this->_trackValueSet($this->usage, $usage);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_USAGE])) {
-            $this->_primitiveXmlLocations[self::FIELD_USAGE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_USAGE])) {
+            $this->_xmlLocations[self::FIELD_USAGE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_USAGE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_USAGE][0] = $xmlLocation;
         $this->usage = $usage;
         return $this;
     }
@@ -1843,16 +1837,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setApprovalDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $approvalDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setApprovalDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $approvalDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $approvalDate && !($approvalDate instanceof FHIRDate)) {
             $approvalDate = new FHIRDate($approvalDate);
         }
         $this->_trackValueSet($this->approvalDate, $approvalDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_APPROVAL_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_APPROVAL_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_APPROVAL_DATE])) {
+            $this->_xmlLocations[self::FIELD_APPROVAL_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_APPROVAL_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_APPROVAL_DATE][0] = $xmlLocation;
         $this->approvalDate = $approvalDate;
         return $this;
     }
@@ -1886,16 +1880,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLastReviewDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $lastReviewDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLastReviewDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $lastReviewDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $lastReviewDate && !($lastReviewDate instanceof FHIRDate)) {
             $lastReviewDate = new FHIRDate($lastReviewDate);
         }
         $this->_trackValueSet($this->lastReviewDate, $lastReviewDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LAST_REVIEW_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_LAST_REVIEW_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LAST_REVIEW_DATE])) {
+            $this->_xmlLocations[self::FIELD_LAST_REVIEW_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LAST_REVIEW_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LAST_REVIEW_DATE][0] = $xmlLocation;
         $this->lastReviewDate = $lastReviewDate;
         return $this;
     }
@@ -1981,6 +1975,36 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * Specifies clinical/business/etc metadata that can be used to retrieve, index
+     * and/or categorize an artifact. This metadata can either be specific to the
+     * applicable population (e.g., age category, DRG) or the specific context of care
+     * (e.g., venue, care setting, provider of care).
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The content was developed with a focus and intent of supporting the contexts
+     * that are listed. These terms may be used to assist with indexing and searching
+     * for appropriate measure instances.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUsageContext ...$useContext
+     * @return static
+     */
+    public function setUseContext(FHIRUsageContext ...$useContext): self
+    {
+        if ([] !== $this->useContext) {
+            $this->_trackValuesRemoved(count($this->useContext));
+            $this->useContext = [];
+        }
+        if ([] === $useContext) {
+            return $this;
+        }
+        foreach($useContext as $v) {
+            $this->addUseContext($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -2013,6 +2037,32 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->jurisdiction[] = $jurisdiction;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A legal or geographic region in which the measure is intended to be used.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$jurisdiction
+     * @return static
+     */
+    public function setJurisdiction(FHIRCodeableConcept ...$jurisdiction): self
+    {
+        if ([] !== $this->jurisdiction) {
+            $this->_trackValuesRemoved(count($this->jurisdiction));
+            $this->jurisdiction = [];
+        }
+        if ([] === $jurisdiction) {
+            return $this;
+        }
+        foreach($jurisdiction as $v) {
+            $this->addJurisdiction($v);
+        }
         return $this;
     }
 
@@ -2057,6 +2107,34 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Descriptive topics related to the content of the measure. Topics provide a
+     * high-level categorization of the type of the measure that can be useful for
+     * filtering and searching.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$topic
+     * @return static
+     */
+    public function setTopic(FHIRCodeableConcept ...$topic): self
+    {
+        if ([] !== $this->topic) {
+            $this->_trackValuesRemoved(count($this->topic));
+            $this->topic = [];
+        }
+        if ([] === $topic) {
+            return $this;
+        }
+        foreach($topic as $v) {
+            $this->addTopic($v);
+        }
+        return $this;
+    }
+
+    /**
      * A contributor to the content of a knowledge asset, including authors, editors,
      * reviewers, and endorsers.
      * If the element is present, it must have a value for at least one of the defined
@@ -2095,6 +2173,33 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * A contributor to the content of a knowledge asset, including authors, editors,
+     * reviewers, and endorsers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A contributor to the content of the measure, including authors, editors,
+     * reviewers, and endorsers.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContributor ...$contributor
+     * @return static
+     */
+    public function setContributor(FHIRContributor ...$contributor): self
+    {
+        if ([] !== $this->contributor) {
+            $this->_trackValuesRemoved(count($this->contributor));
+            $this->contributor = [];
+        }
+        if ([] === $contributor) {
+            return $this;
+        }
+        foreach($contributor as $v) {
+            $this->addContributor($v);
+        }
+        return $this;
+    }
+
+    /**
      * Specifies contact information for a person or organization.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -2127,6 +2232,32 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
+        return $this;
+    }
+
+    /**
+     * Specifies contact information for a person or organization.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Contact details to assist a user in finding and communicating with the
+     * publisher.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactDetail ...$contact
+     * @return static
+     */
+    public function setContact(FHIRContactDetail ...$contact): self
+    {
+        if ([] !== $this->contact) {
+            $this->_trackValuesRemoved(count($this->contact));
+            $this->contact = [];
+        }
+        if ([] === $contact) {
+            return $this;
+        }
+        foreach($contact as $v) {
+            $this->addContact($v);
+        }
         return $this;
     }
 
@@ -2171,16 +2302,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setCopyright(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $copyright = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setCopyright(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $copyright = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $copyright && !($copyright instanceof FHIRMarkdown)) {
             $copyright = new FHIRMarkdown($copyright);
         }
         $this->_trackValueSet($this->copyright, $copyright);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_COPYRIGHT])) {
-            $this->_primitiveXmlLocations[self::FIELD_COPYRIGHT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_COPYRIGHT])) {
+            $this->_xmlLocations[self::FIELD_COPYRIGHT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_COPYRIGHT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_COPYRIGHT][0] = $xmlLocation;
         $this->copyright = $copyright;
         return $this;
     }
@@ -2224,6 +2355,33 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * Related artifacts such as additional documentation, justification, or
+     * bibliographic references.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Related artifacts such as additional documentation, justification, or
+     * bibliographic references.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRRelatedArtifact ...$relatedArtifact
+     * @return static
+     */
+    public function setRelatedArtifact(FHIRRelatedArtifact ...$relatedArtifact): self
+    {
+        if ([] !== $this->relatedArtifact) {
+            $this->_trackValuesRemoved(count($this->relatedArtifact));
+            $this->relatedArtifact = [];
+        }
+        if ([] === $relatedArtifact) {
+            return $this;
+        }
+        foreach($relatedArtifact as $v) {
+            $this->addRelatedArtifact($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -2256,6 +2414,32 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->library[] = $library;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A reference to a Library resource containing the formal logic used by the
+     * measure.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$library
+     * @return static
+     */
+    public function setLibrary(FHIRReference ...$library): self
+    {
+        if ([] !== $this->library) {
+            $this->_trackValuesRemoved(count($this->library));
+            $this->library = [];
+        }
+        if ([] === $library) {
+            return $this;
+        }
+        foreach($library as $v) {
+            $this->addLibrary($v);
+        }
         return $this;
     }
 
@@ -2298,16 +2482,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDisclaimer(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $disclaimer = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDisclaimer(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $disclaimer = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $disclaimer && !($disclaimer instanceof FHIRMarkdown)) {
             $disclaimer = new FHIRMarkdown($disclaimer);
         }
         $this->_trackValueSet($this->disclaimer, $disclaimer);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DISCLAIMER])) {
-            $this->_primitiveXmlLocations[self::FIELD_DISCLAIMER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DISCLAIMER])) {
+            $this->_xmlLocations[self::FIELD_DISCLAIMER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DISCLAIMER][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DISCLAIMER][0] = $xmlLocation;
         $this->disclaimer = $disclaimer;
         return $this;
     }
@@ -2429,6 +2613,33 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates whether the measure is used to examine a process, an outcome over
+     * time, a patient-reported outcome, or a structure measure such as utilization.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$type
+     * @return static
+     */
+    public function setType(FHIRCodeableConcept ...$type): self
+    {
+        if ([] !== $this->type) {
+            $this->_trackValuesRemoved(count($this->type));
+            $this->type = [];
+        }
+        if ([] === $type) {
+            return $this;
+        }
+        foreach($type as $v) {
+            $this->addType($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings may not exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -2457,16 +2668,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRiskAdjustment(null|string|FHIRStringPrimitive|FHIRString $riskAdjustment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRiskAdjustment(null|string|FHIRStringPrimitive|FHIRString $riskAdjustment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $riskAdjustment && !($riskAdjustment instanceof FHIRString)) {
             $riskAdjustment = new FHIRString($riskAdjustment);
         }
         $this->_trackValueSet($this->riskAdjustment, $riskAdjustment);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RISK_ADJUSTMENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_RISK_ADJUSTMENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RISK_ADJUSTMENT])) {
+            $this->_xmlLocations[self::FIELD_RISK_ADJUSTMENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RISK_ADJUSTMENT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RISK_ADJUSTMENT][0] = $xmlLocation;
         $this->riskAdjustment = $riskAdjustment;
         return $this;
     }
@@ -2498,16 +2709,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRateAggregation(null|string|FHIRStringPrimitive|FHIRString $rateAggregation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRateAggregation(null|string|FHIRStringPrimitive|FHIRString $rateAggregation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $rateAggregation && !($rateAggregation instanceof FHIRString)) {
             $rateAggregation = new FHIRString($rateAggregation);
         }
         $this->_trackValueSet($this->rateAggregation, $rateAggregation);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RATE_AGGREGATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_RATE_AGGREGATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RATE_AGGREGATION])) {
+            $this->_xmlLocations[self::FIELD_RATE_AGGREGATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RATE_AGGREGATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RATE_AGGREGATION][0] = $xmlLocation;
         $this->rateAggregation = $rateAggregation;
         return $this;
     }
@@ -2553,16 +2764,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRationale(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $rationale = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRationale(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $rationale = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $rationale && !($rationale instanceof FHIRMarkdown)) {
             $rationale = new FHIRMarkdown($rationale);
         }
         $this->_trackValueSet($this->rationale, $rationale);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RATIONALE])) {
-            $this->_primitiveXmlLocations[self::FIELD_RATIONALE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RATIONALE])) {
+            $this->_xmlLocations[self::FIELD_RATIONALE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RATIONALE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RATIONALE][0] = $xmlLocation;
         $this->rationale = $rationale;
         return $this;
     }
@@ -2606,16 +2817,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setClinicalRecommendationStatement(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $clinicalRecommendationStatement = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setClinicalRecommendationStatement(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $clinicalRecommendationStatement = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $clinicalRecommendationStatement && !($clinicalRecommendationStatement instanceof FHIRMarkdown)) {
             $clinicalRecommendationStatement = new FHIRMarkdown($clinicalRecommendationStatement);
         }
         $this->_trackValueSet($this->clinicalRecommendationStatement, $clinicalRecommendationStatement);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT])) {
+            $this->_xmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT][0] = $xmlLocation;
         $this->clinicalRecommendationStatement = $clinicalRecommendationStatement;
         return $this;
     }
@@ -2649,16 +2860,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setImprovementNotation(null|string|FHIRStringPrimitive|FHIRString $improvementNotation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setImprovementNotation(null|string|FHIRStringPrimitive|FHIRString $improvementNotation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $improvementNotation && !($improvementNotation instanceof FHIRString)) {
             $improvementNotation = new FHIRString($improvementNotation);
         }
         $this->_trackValueSet($this->improvementNotation, $improvementNotation);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_IMPROVEMENT_NOTATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_IMPROVEMENT_NOTATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_IMPROVEMENT_NOTATION])) {
+            $this->_xmlLocations[self::FIELD_IMPROVEMENT_NOTATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_IMPROVEMENT_NOTATION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_IMPROVEMENT_NOTATION][0] = $xmlLocation;
         $this->improvementNotation = $improvementNotation;
         return $this;
     }
@@ -2700,16 +2911,20 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addDefinition(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $definition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addDefinition(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $definition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $definition && !($definition instanceof FHIRMarkdown)) {
             $definition = new FHIRMarkdown($definition);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DEFINITION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DEFINITION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DEFINITION])) {
+            $this->_xmlLocations[self::FIELD_DEFINITION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DEFINITION][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_DEFINITION]) {
+            $this->_xmlLocations[self::FIELD_DEFINITION][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_DEFINITION][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->definition[] = $definition;
         return $this;
     }
@@ -2731,9 +2946,9 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDefinition(array $definition = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDefinition(array $definition = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_DEFINITION]);
+        unset($this->_xmlLocations[self::FIELD_DEFINITION]);
         if ([] !== $this->definition) {
             $this->_trackValuesRemoved(count($this->definition));
             $this->definition = [];
@@ -2790,16 +3005,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setGuidance(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $guidance = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setGuidance(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $guidance = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $guidance && !($guidance instanceof FHIRMarkdown)) {
             $guidance = new FHIRMarkdown($guidance);
         }
         $this->_trackValueSet($this->guidance, $guidance);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_GUIDANCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_GUIDANCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_GUIDANCE])) {
+            $this->_xmlLocations[self::FIELD_GUIDANCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_GUIDANCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_GUIDANCE][0] = $xmlLocation;
         $this->guidance = $guidance;
         return $this;
     }
@@ -2829,16 +3044,16 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSet(null|string|FHIRStringPrimitive|FHIRString $set = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSet(null|string|FHIRStringPrimitive|FHIRString $set = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $set && !($set instanceof FHIRString)) {
             $set = new FHIRString($set);
         }
         $this->_trackValueSet($this->set, $set);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SET])) {
-            $this->_primitiveXmlLocations[self::FIELD_SET] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SET])) {
+            $this->_xmlLocations[self::FIELD_SET] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SET][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SET][0] = $xmlLocation;
         $this->set = $set;
         return $this;
     }
@@ -2876,6 +3091,29 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     /**
      * The Measure resource provides the definition of a quality measure.
      *
+     * A group of population criteria for the measure.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureGroup ...$group
+     * @return static
+     */
+    public function setGroup(FHIRMeasureGroup ...$group): self
+    {
+        if ([] !== $this->group) {
+            $this->_trackValuesRemoved(count($this->group));
+            $this->group = [];
+        }
+        if ([] === $group) {
+            return $this;
+        }
+        foreach($group as $v) {
+            $this->addGroup($v);
+        }
+        return $this;
+    }
+
+    /**
+     * The Measure resource provides the definition of a quality measure.
+     *
      * The supplemental data criteria for the measure report, specified as either the
      * name of a valid CQL expression within a referenced library, or a valid FHIR
      * Resource Path.
@@ -2904,6 +3142,31 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->supplementalData[] = $supplementalData;
+        return $this;
+    }
+
+    /**
+     * The Measure resource provides the definition of a quality measure.
+     *
+     * The supplemental data criteria for the measure report, specified as either the
+     * name of a valid CQL expression within a referenced library, or a valid FHIR
+     * Resource Path.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasure\FHIRMeasureSupplementalData ...$supplementalData
+     * @return static
+     */
+    public function setSupplementalData(FHIRMeasureSupplementalData ...$supplementalData): self
+    {
+        if ([] !== $this->supplementalData) {
+            $this->_trackValuesRemoved(count($this->supplementalData));
+            $this->supplementalData = [];
+        }
+        if ([] === $supplementalData) {
+            return $this;
+        }
+        foreach($supplementalData as $v) {
+            $this->addSupplementalData($v);
+        }
         return $this;
     }
 
@@ -4033,98 +4296,98 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $openedRoot = true;
             $xw->openRootNode($config, 'Measure', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_URL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_URL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUrl())) {
             $xw->writeAttribute(self::FIELD_URL, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERSION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERSION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getVersion())) {
             $xw->writeAttribute(self::FIELD_VERSION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->writeAttribute(self::FIELD_NAME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TITLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTitle())) {
             $xw->writeAttribute(self::FIELD_TITLE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getExperimental())) {
             $xw->writeAttribute(self::FIELD_EXPERIMENTAL, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->writeAttribute(self::FIELD_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PUBLISHER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PUBLISHER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPublisher())) {
             $xw->writeAttribute(self::FIELD_PUBLISHER, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PURPOSE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PURPOSE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPurpose())) {
             $xw->writeAttribute(self::FIELD_PURPOSE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_USAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_USAGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUsage())) {
             $xw->writeAttribute(self::FIELD_USAGE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_APPROVAL_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_APPROVAL_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getApprovalDate())) {
             $xw->writeAttribute(self::FIELD_APPROVAL_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_REVIEW_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_REVIEW_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLastReviewDate())) {
             $xw->writeAttribute(self::FIELD_LAST_REVIEW_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COPYRIGHT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COPYRIGHT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getCopyright())) {
             $xw->writeAttribute(self::FIELD_COPYRIGHT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISCLAIMER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISCLAIMER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDisclaimer())) {
             $xw->writeAttribute(self::FIELD_DISCLAIMER, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RISK_ADJUSTMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RISK_ADJUSTMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRiskAdjustment())) {
             $xw->writeAttribute(self::FIELD_RISK_ADJUSTMENT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RATE_AGGREGATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RATE_AGGREGATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRateAggregation())) {
             $xw->writeAttribute(self::FIELD_RATE_AGGREGATION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RATIONALE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RATIONALE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRationale())) {
             $xw->writeAttribute(self::FIELD_RATIONALE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getClinicalRecommendationStatement())) {
             $xw->writeAttribute(self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IMPROVEMENT_NOTATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IMPROVEMENT_NOTATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getImprovementNotation())) {
             $xw->writeAttribute(self::FIELD_IMPROVEMENT_NOTATION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFINITION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DEFINITION] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getDefinition())) {
             $xw->writeAttribute(self::FIELD_DEFINITION, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getDefinition()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_DEFINITION, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_GUIDANCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_GUIDANCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getGuidance())) {
             $xw->writeAttribute(self::FIELD_GUIDANCE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SET] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SET] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSet())) {
             $xw->writeAttribute(self::FIELD_SET, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_URL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_URL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUrl())) {
             $xw->startElement(self::FIELD_URL);
             $v->xmlSerialize($xw, $config);
@@ -4135,19 +4398,19 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERSION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERSION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getVersion())) {
             $xw->startElement(self::FIELD_VERSION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->startElement(self::FIELD_NAME);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TITLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTitle())) {
             $xw->startElement(self::FIELD_TITLE);
             $v->xmlSerialize($xw, $config);
@@ -4158,49 +4421,49 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getExperimental())) {
             $xw->startElement(self::FIELD_EXPERIMENTAL);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->startElement(self::FIELD_DATE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PUBLISHER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PUBLISHER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPublisher())) {
             $xw->startElement(self::FIELD_PUBLISHER);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PURPOSE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PURPOSE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPurpose())) {
             $xw->startElement(self::FIELD_PURPOSE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_USAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_USAGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUsage())) {
             $xw->startElement(self::FIELD_USAGE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_APPROVAL_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_APPROVAL_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getApprovalDate())) {
             $xw->startElement(self::FIELD_APPROVAL_DATE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_REVIEW_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_REVIEW_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLastReviewDate())) {
             $xw->startElement(self::FIELD_LAST_REVIEW_DATE);
             $v->xmlSerialize($xw, $config);
@@ -4236,7 +4499,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COPYRIGHT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COPYRIGHT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getCopyright())) {
             $xw->startElement(self::FIELD_COPYRIGHT);
             $v->xmlSerialize($xw, $config);
@@ -4252,7 +4515,7 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISCLAIMER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISCLAIMER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDisclaimer())) {
             $xw->startElement(self::FIELD_DISCLAIMER);
             $v->xmlSerialize($xw, $config);
@@ -4273,37 +4536,37 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RISK_ADJUSTMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RISK_ADJUSTMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRiskAdjustment())) {
             $xw->startElement(self::FIELD_RISK_ADJUSTMENT);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RATE_AGGREGATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RATE_AGGREGATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRateAggregation())) {
             $xw->startElement(self::FIELD_RATE_AGGREGATION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RATIONALE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RATIONALE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRationale())) {
             $xw->startElement(self::FIELD_RATIONALE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getClinicalRecommendationStatement())) {
             $xw->startElement(self::FIELD_CLINICAL_RECOMMENDATION_STATEMENT);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IMPROVEMENT_NOTATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IMPROVEMENT_NOTATION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getImprovementNotation())) {
             $xw->startElement(self::FIELD_IMPROVEMENT_NOTATION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DEFINITION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DEFINITION] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getDefinition())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -4313,13 +4576,13 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_GUIDANCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_GUIDANCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getGuidance())) {
             $xw->startElement(self::FIELD_GUIDANCE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SET] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SET] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSet())) {
             $xw->startElement(self::FIELD_SET);
             $v->xmlSerialize($xw, $config);

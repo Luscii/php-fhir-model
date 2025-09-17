@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackag
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,7 +109,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Including possibly Data Carrier Identifier.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -120,7 +119,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The physical type of the container of the medicine.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -133,7 +131,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      *
      * The quantity of this package in the medicinal product, at the current level of
      * packaging. The outermost is always 1.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $quantity = null;
@@ -144,7 +141,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Material type of the package item.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $material = [];
@@ -155,7 +151,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A possible alternate material for the packaging.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $alternateMaterial = [];
@@ -165,7 +160,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A device accompanying a medicinal product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $device = [];
@@ -175,7 +169,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The manufactured item as contained in the packaged medicinal product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $manufacturedItem = [];
@@ -183,7 +176,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * A medicinal product in a container or package.
      *
      * Allows containers within containers.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackaged\FHIRMedicinalProductPackagedPackageItem[]
      */
     protected null|array $packageItem = [];
@@ -194,7 +186,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Dimensions, color etc.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProdCharacteristic
      */
     protected null|FHIRProdCharacteristic $physicalCharacteristics = null;
@@ -205,7 +196,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Other codeable characteristics.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $otherCharacteristics = [];
@@ -216,7 +206,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Shelf Life and storage information.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife[]
      */
     protected null|array $shelfLifeStorage = [];
@@ -226,7 +215,6 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Manufacturer of this Package Item.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $manufacturer = [];
@@ -235,10 +223,17 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * Validation map for fields in type MedicinalProductPackaged.PackageItem
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_QUANTITY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductPackagedPackageItem Constructor
@@ -453,6 +448,32 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Including possibly Data Carrier Identifier.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -570,6 +591,32 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Material type of the package item.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$material
+     * @return static
+     */
+    public function setMaterial(FHIRCodeableConcept ...$material): self
+    {
+        if ([] !== $this->material) {
+            $this->_trackValuesRemoved(count($this->material));
+            $this->material = [];
+        }
+        if ([] === $material) {
+            return $this;
+        }
+        foreach($material as $v) {
+            $this->addMaterial($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * A possible alternate material for the packaging.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
@@ -597,6 +644,32 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->alternateMaterial[] = $alternateMaterial;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A possible alternate material for the packaging.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$alternateMaterial
+     * @return static
+     */
+    public function setAlternateMaterial(FHIRCodeableConcept ...$alternateMaterial): self
+    {
+        if ([] !== $this->alternateMaterial) {
+            $this->_trackValuesRemoved(count($this->alternateMaterial));
+            $this->alternateMaterial = [];
+        }
+        if ([] === $alternateMaterial) {
+            return $this;
+        }
+        foreach($alternateMaterial as $v) {
+            $this->addAlternateMaterial($v);
+        }
         return $this;
     }
 
@@ -639,6 +712,31 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * A device accompanying a medicinal product.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$device
+     * @return static
+     */
+    public function setDevice(FHIRReference ...$device): self
+    {
+        if ([] !== $this->device) {
+            $this->_trackValuesRemoved(count($this->device));
+            $this->device = [];
+        }
+        if ([] === $device) {
+            return $this;
+        }
+        foreach($device as $v) {
+            $this->addDevice($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * The manufactured item as contained in the packaged medicinal product.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
@@ -669,6 +767,31 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The manufactured item as contained in the packaged medicinal product.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$manufacturedItem
+     * @return static
+     */
+    public function setManufacturedItem(FHIRReference ...$manufacturedItem): self
+    {
+        if ([] !== $this->manufacturedItem) {
+            $this->_trackValuesRemoved(count($this->manufacturedItem));
+            $this->manufacturedItem = [];
+        }
+        if ([] === $manufacturedItem) {
+            return $this;
+        }
+        foreach($manufacturedItem as $v) {
+            $this->addManufacturedItem($v);
+        }
+        return $this;
+    }
+
+    /**
      * A medicinal product in a container or package.
      *
      * Allows containers within containers.
@@ -695,6 +818,29 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->packageItem[] = $packageItem;
+        return $this;
+    }
+
+    /**
+     * A medicinal product in a container or package.
+     *
+     * Allows containers within containers.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPackaged\FHIRMedicinalProductPackagedPackageItem ...$packageItem
+     * @return static
+     */
+    public function setPackageItem(FHIRMedicinalProductPackagedPackageItem ...$packageItem): self
+    {
+        if ([] !== $this->packageItem) {
+            $this->_trackValuesRemoved(count($this->packageItem));
+            $this->packageItem = [];
+        }
+        if ([] === $packageItem) {
+            return $this;
+        }
+        foreach($packageItem as $v) {
+            $this->addPackageItem($v);
+        }
         return $this;
     }
 
@@ -771,6 +917,32 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Other codeable characteristics.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$otherCharacteristics
+     * @return static
+     */
+    public function setOtherCharacteristics(FHIRCodeableConcept ...$otherCharacteristics): self
+    {
+        if ([] !== $this->otherCharacteristics) {
+            $this->_trackValuesRemoved(count($this->otherCharacteristics));
+            $this->otherCharacteristics = [];
+        }
+        if ([] === $otherCharacteristics) {
+            return $this;
+        }
+        foreach($otherCharacteristics as $v) {
+            $this->addOtherCharacteristics($v);
+        }
+        return $this;
+    }
+
+    /**
      * The shelf-life and storage information for a medicinal product item or container
      * can be described using this class.
      * If the element is present, it must have a value for at least one of the defined
@@ -807,6 +979,32 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
     }
 
     /**
+     * The shelf-life and storage information for a medicinal product item or container
+     * can be described using this class.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Shelf Life and storage information.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRProductShelfLife ...$shelfLifeStorage
+     * @return static
+     */
+    public function setShelfLifeStorage(FHIRProductShelfLife ...$shelfLifeStorage): self
+    {
+        if ([] !== $this->shelfLifeStorage) {
+            $this->_trackValuesRemoved(count($this->shelfLifeStorage));
+            $this->shelfLifeStorage = [];
+        }
+        if ([] === $shelfLifeStorage) {
+            return $this;
+        }
+        foreach($shelfLifeStorage as $v) {
+            $this->addShelfLifeStorage($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -837,6 +1035,31 @@ class FHIRMedicinalProductPackagedPackageItem extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->manufacturer[] = $manufacturer;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Manufacturer of this Package Item.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$manufacturer
+     * @return static
+     */
+    public function setManufacturer(FHIRReference ...$manufacturer): self
+    {
+        if ([] !== $this->manufacturer) {
+            $this->_trackValuesRemoved(count($this->manufacturer));
+            $this->manufacturer = [];
+        }
+        if ([] === $manufacturer) {
+            return $this;
+        }
+        foreach($manufacturer as $v) {
+            $this->addManufacturer($v);
+        }
         return $this;
     }
 

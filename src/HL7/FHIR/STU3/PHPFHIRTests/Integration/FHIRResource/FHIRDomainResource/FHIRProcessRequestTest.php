@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\PHPFHIRTests\Integration\FHIRResource\FHIRDomainResource
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,6 +66,7 @@ use HL7\FHIR\STU3\FHIRResource\FHIRBundle;
 use HL7\FHIR\STU3\FHIRResource\FHIRDomainResource\FHIRProcessRequest;
 use HL7\FHIR\STU3\PHPFHIRDebugClient;
 use HL7\FHIR\STU3\PHPFHIRTypeEnum;
+use HL7\FHIR\STU3\PHPFHIRResponseParser;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 
@@ -90,12 +91,12 @@ class FHIRProcessRequestTest extends TestCase
      * @param string $format Either xml or json
      * @return string
      */
-    protected function fetchResource(string $format): string
+    protected function fetchResourceBundle(string $format): string
     {
         if (isset($this->_fetchedResources[$format])) {
             return $this->_fetchedResources[$format];
         }
-        $rc = $this->client->get(sprintf('/%s', PHPFHIRTypeEnum::PROCESS_REQUEST->value), ['_count' => '1', '_format' => $format]);
+        $rc = $this->client->get(sprintf('/%s', PHPFHIRTypeEnum::PROCESS_REQUEST->value), ['_count' => '5', '_format' => $format]);
         $this->assertEmpty($rc->err, sprintf('curl error seen: %s', $rc->err));
         if (404 === $rc->code) {
             $this->markTestSkipped(sprintf('Endpoint "%s" has no resources of type "%s"', $this->client->_getBaseUrl(), PHPFHIRTypeEnum::PROCESS_REQUEST->value));
@@ -132,7 +133,7 @@ class FHIRProcessRequestTest extends TestCase
 
     public function testXML(): void
     {
-        $sourceXML = $this->fetchResource('xml');
+        $sourceXML = $this->fetchResourceBundle('xml');
         try {
             $bundle = FHIRBundle::xmlUnserialize($sourceXML);
         } catch(\Exception $e) {
@@ -154,33 +155,34 @@ class FHIRProcessRequestTest extends TestCase
                 $sourceXML
             ));
         }
-        $this->assertCount(1, $entry);
-        $resource = $entry[0]->getResource();
-        $resourceXmlWriter = $resource->xmlSerialize();
-        $resourceXml = $resourceXmlWriter->outputMemory();
-        try {
-            $type = FHIRProcessRequest::xmlUnserialize($resourceXml);
-        } catch (\Exception $e) {
-            throw new AssertionFailedError(
-                sprintf(
-                    'Error building type "ProcessRequest" from XML: %s; XML: %s',
-                    $e->getMessage(),
-                    $resourceXml
-                ),
-                $e->getCode(),
-                $e
-            );
+        foreach ($entry as $ent) {
+            $resource = $ent->getResource();
+            $resourceXmlWriter = $resource->xmlSerialize();
+            $resourceXml = $resourceXmlWriter->outputMemory();
+            try {
+                $type = FHIRProcessRequest::xmlUnserialize($resourceXml);
+            } catch (\Exception $e) {
+                throw new AssertionFailedError(
+                    sprintf(
+                        'Error building type "ProcessRequest" from XML: %s; XML: %s',
+                        $e->getMessage(),
+                        $resourceXml
+                    ),
+                    $e->getCode(),
+                    $e
+                );
+            }
+            $this->assertInstanceOf(FHIRProcessRequest::class, $type);
+            $typeXmlWriter = $type->xmlSerialize();
+            $this->assertEquals($resourceXml, $typeXmlWriter->outputMemory());
+            $bundleXmlWriter = $bundle->xmlSerialize();
+            $this->assertXmlStringEqualsXmlString($sourceXML, $bundleXmlWriter->outputMemory());
         }
-        $this->assertInstanceOf(FHIRProcessRequest::class, $type);
-        $typeXmlWriter = $type->xmlSerialize();
-        $this->assertEquals($resourceXml, $typeXmlWriter->outputMemory());
-        $bundleXmlWriter = $bundle->xmlSerialize();
-        $this->assertXmlStringEqualsXmlString($sourceXML, $bundleXmlWriter->outputMemory());
     }
 
     public function testJSON(): void
     {
-        $sourceJSON = $this->fetchResource('json');
+        $sourceJSON = $this->fetchResourceBundle('json');
         $decoded = $this->decodeJson($sourceJSON, true);
         try {
             $bundle = new FHIRBundle($decoded);
@@ -222,7 +224,7 @@ class FHIRProcessRequestTest extends TestCase
 
     public function testValidationXML(): void
     {
-        $sourceXML = $this->fetchResource('xml');
+        $sourceXML = $this->fetchResourceBundle('xml');
         try {
             $bundle = FHIRBundle::xmlUnserialize($sourceXML);
         } catch(\Exception $e) {
@@ -253,7 +255,7 @@ class FHIRProcessRequestTest extends TestCase
 
     public function testValidationJSON(): void
     {
-        $sourceJSON = $this->fetchResource('json');
+        $sourceJSON = $this->fetchResourceBundle('json');
         $decoded = $this->decodeJson($sourceJSON, true);
         try {
             $bundle = new FHIRBundle($decoded);
@@ -280,6 +282,98 @@ class FHIRProcessRequestTest extends TestCase
             $this->assertCount(0, $errs);
         } catch (\Exception $e) {
             $this->markTestSkipped(sprintf('Validation errors seen: %s', json_encode($errs, JSON_PRETTY_PRINT)));
+        }
+    }
+
+    public function testResponseParserXML(): void
+    {
+        $sourceXML = $this->fetchResourceBundle('xml');
+        $parser = new PHPFHIRResponseParser();
+        try {
+            $bundle = $parser->parse($sourceXML);
+        } catch(\Exception $e) {
+            throw new AssertionFailedError(
+                sprintf(
+                    'Error building type "Bundle" from XML: %s; Returned XML: %s',
+                    $e->getMessage(),
+                    $sourceXML
+                ),
+                $e->getCode(),
+                $e
+            );
+        }
+        $this->assertInstanceOf(FHIRBundle::class, $bundle);
+        $entry = $bundle->getEntry();
+        if (0 === count($entry)) {
+            $this->markTestSkipped(sprintf(
+                'Provided test endpoint "https://hapi.fhir.org/baseDstu3" does not have any "ProcessRequest" entries to test against (returned xml: %s)',
+                $sourceXML
+            ));
+        }
+        foreach ($entry as $ent) {
+            $resource = $ent->getResource();
+            $resourceXmlWriter = $resource->xmlSerialize();
+            $resourceXml = $resourceXmlWriter->outputMemory();
+            try {
+                $type = FHIRProcessRequest::xmlUnserialize($resourceXml);
+            } catch (\Exception $e) {
+                throw new AssertionFailedError(
+                    sprintf(
+                        'Error building type "ProcessRequest" from XML: %s; XML: %s',
+                        $e->getMessage(),
+                        $resourceXml
+                    ),
+                    $e->getCode(),
+                    $e
+                );
+            }
+            $this->assertInstanceOf(FHIRProcessRequest::class, $type);
+            $typeXmlWriter = $type->xmlSerialize();
+            $this->assertEquals($resourceXml, $typeXmlWriter->outputMemory());
+            $bundleXmlWriter = $bundle->xmlSerialize();
+            $this->assertXmlStringEqualsXmlString($sourceXML, $bundleXmlWriter->outputMemory());
+        }
+    }
+
+    public function testResponseParserJSON(): void
+    {
+        $sourceJSON = $this->fetchResourceBundle('json');
+        $parser = new PHPFHIRResponseParser();
+        try {
+            $bundle = $parser->parse($sourceJSON);
+        } catch(\Exception $e) {
+            throw new AssertionFailedError(
+                sprintf(
+                    'Error building type "Bundle" from JSON: %s; Returned JSON: %s',
+                    $e->getMessage(),
+                    $sourceJSON
+                ),
+                $e->getCode(),
+                $e
+            );
+        }
+        $entry = $bundle->getEntry();
+        if (0 === count($entry)) {
+            $this->markTestSkipped(sprintf(
+                'Provided test endpoint "https://hapi.fhir.org/baseDstu3" does not have any ProcessRequest" entries to test against (returned json: %s)',
+                $sourceJSON
+            ));
+        }
+
+        $reEncoded = json_encode($bundle);
+        try {
+            $this->assertJsonStringEqualsJsonString($sourceJSON, $reEncoded);
+        } catch (\Exception $e) {
+            throw new AssertionFailedError(
+                sprintf(
+                    "json_encode output of \"FHIRProcessRequest\" does not match input: %s\nSource:\n%s\nRe-encoded:\n%s\n",
+                    $e->getMessage(),
+                    $sourceJSON,
+                    $reEncoded
+                ),
+                $e->getCode(),
+                $e
+            );
         }
     }
 }

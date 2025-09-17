@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -106,7 +106,6 @@ class FHIRCompositionAttester extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The type of attestation the authenticator offers.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCompositionAttestationMode
      */
     protected null|FHIRCompositionAttestationMode $mode = null;
@@ -119,7 +118,6 @@ class FHIRCompositionAttester extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * When the composition was attested by the party.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $time = null;
@@ -129,7 +127,6 @@ class FHIRCompositionAttester extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Who attested the composition in the specified way.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $party = null;
@@ -138,10 +135,14 @@ class FHIRCompositionAttester extends FHIRBackboneElement
      * Validation map for fields in type Composition.Attester
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_MODE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCompositionAttester Constructor
@@ -267,16 +268,16 @@ class FHIRCompositionAttester extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $time = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $time = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $time && !($time instanceof FHIRDateTime)) {
             $time = new FHIRDateTime($time);
         }
         $this->_trackValueSet($this->time, $time);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TIME])) {
+            $this->_xmlLocations[self::FIELD_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TIME][0] = $xmlLocation;
         $this->time = $time;
         return $this;
     }
@@ -520,7 +521,7 @@ class FHIRCompositionAttester extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'CompositionAttester', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTime())) {
             $xw->writeAttribute(self::FIELD_TIME, $v->getValue()?->getFormattedValue());
         }
@@ -530,7 +531,7 @@ class FHIRCompositionAttester extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTime())) {
             $xw->startElement(self::FIELD_TIME);
             $v->xmlSerialize($xw, $config);

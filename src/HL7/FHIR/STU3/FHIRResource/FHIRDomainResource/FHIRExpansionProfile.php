@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -160,7 +160,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * profile is (or will be) published. The URL SHOULD include the major version of
      * the expansion profile. For more information see [Technical and Business
      * Versions](resource.html#versions).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $url = null;
@@ -172,7 +171,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * A formal identifier that is used to identify this expansion profile when it is
      * represented in other formats, or referenced in a specification, model, design or
      * an instance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -187,7 +185,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a
      * managed version is not available. There is also no expectation that versions can
      * be placed in a lexicographical sequence.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $version = null;
@@ -199,7 +196,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * A natural language name identifying the expansion profile. This name should be
      * usable as an identifier for the module by machine processing applications such
      * as code generation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $name = null;
@@ -208,7 +204,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * The status of this expansion profile. Enables tracking the life-cycle of the
      * content.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPublicationStatus
      */
     protected null|FHIRPublicationStatus $status = null;
@@ -219,7 +214,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * A boolean value to indicate that this expansion profile is authored for testing
      * purposes (or education/evaluation/marketing), and is not intended to be used for
      * genuine usage.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $experimental = null;
@@ -235,7 +229,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * date must change if and when the business version changes and it must change if
      * the status code changes. In addition, it should change when the substantive
      * content of the expansion profile changes.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $date = null;
@@ -245,7 +238,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The name of the individual or organization that published the expansion profile.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $publisher = null;
@@ -256,7 +248,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Contact details to assist a user in finding and communicating with the
      * publisher.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRContactDetail[]
      */
     protected null|array $contact = [];
@@ -273,7 +264,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * A free text natural language description of the expansion profile from a
      * consumer's perspective.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMarkdown
      */
     protected null|FHIRMarkdown $description = null;
@@ -288,7 +278,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * The content was developed with a focus and intent of supporting the contexts
      * that are listed. These terms may be used to assist with indexing and searching
      * for appropriate expansion profile instances.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUsageContext[]
      */
     protected null|array $useContext = [];
@@ -300,7 +289,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * A legal or geographic region in which the expansion profile is intended to be
      * used.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $jurisdiction = [];
@@ -308,7 +296,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * Resource to define constraints on the Expansion of a FHIR ValueSet.
      *
      * Fix use of a particular code system to a particular version.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRExpansionProfile\FHIRExpansionProfileFixedVersion[]
      */
     protected null|array $fixedVersion = [];
@@ -317,7 +304,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Code system, or a particular version of a code system to be excluded from value
      * set expansions.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRExpansionProfile\FHIRExpansionProfileExcludedSystem
      */
     protected null|FHIRExpansionProfileExcludedSystem $excludedSystem = null;
@@ -327,7 +313,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Controls whether concept designations are to be included or excluded in value
      * set expansions.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $includeDesignations = null;
@@ -336,7 +321,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * A set of criteria that provide the constraints imposed on the value set
      * expansion by including or excluding designations.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRExpansionProfile\FHIRExpansionProfileDesignation
      */
     protected null|FHIRExpansionProfileDesignation $designation = null;
@@ -346,7 +330,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Controls whether the value set definition is included or excluded in value set
      * expansions.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $includeDefinition = null;
@@ -356,7 +339,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Controls whether inactive concepts are included or excluded in value set
      * expansions.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $activeOnly = null;
@@ -366,7 +348,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Controls whether or not the value set expansion nests codes or not (i.e.
      * ValueSet.expansion.contains.contains).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $excludeNested = null;
@@ -376,7 +357,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Controls whether or not the value set expansion includes codes which cannot be
      * displayed in user interfaces.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $excludeNotForUI = null;
@@ -385,7 +365,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Controls whether or not the value set expansion includes post coordinated codes.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $excludePostCoordinated = null;
@@ -397,7 +376,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Specifies the language to be used for description in the expansions i.e. the
      * language to be used for ValueSet.expansion.contains.display.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCode
      */
     protected null|FHIRCode $displayLanguage = null;
@@ -409,7 +387,6 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * return a limited expansion (a subset) with an indicator that expansion is
      * incomplete, using the extension
      * [http://hl7.org/fhir/StructureDefinition/valueset-toocostly](extension-valueset-toocostly.html).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $limitedExpansion = null;
@@ -418,10 +395,14 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * Validation map for fields in type ExpansionProfile
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRExpansionProfile Constructor
@@ -839,16 +820,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setUrl(null|string|FHIRUriPrimitive|FHIRUri $url = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $url && !($url instanceof FHIRUri)) {
             $url = new FHIRUri($url);
         }
         $this->_trackValueSet($this->url, $url);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_URL])) {
-            $this->_primitiveXmlLocations[self::FIELD_URL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_URL])) {
+            $this->_xmlLocations[self::FIELD_URL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_URL][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_URL][0] = $xmlLocation;
         $this->url = $url;
         return $this;
     }
@@ -926,16 +907,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setVersion(null|string|FHIRStringPrimitive|FHIRString $version = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $version && !($version instanceof FHIRString)) {
             $version = new FHIRString($version);
         }
         $this->_trackValueSet($this->version, $version);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VERSION])) {
-            $this->_primitiveXmlLocations[self::FIELD_VERSION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VERSION])) {
+            $this->_xmlLocations[self::FIELD_VERSION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VERSION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VERSION][0] = $xmlLocation;
         $this->version = $version;
         return $this;
     }
@@ -969,16 +950,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setName(null|string|FHIRStringPrimitive|FHIRString $name = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $name && !($name instanceof FHIRString)) {
             $name = new FHIRString($name);
         }
         $this->_trackValueSet($this->name, $name);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NAME])) {
-            $this->_primitiveXmlLocations[self::FIELD_NAME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NAME])) {
+            $this->_xmlLocations[self::FIELD_NAME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NAME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NAME][0] = $xmlLocation;
         $this->name = $name;
         return $this;
     }
@@ -1042,16 +1023,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setExperimental(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $experimental = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $experimental && !($experimental instanceof FHIRBoolean)) {
             $experimental = new FHIRBoolean($experimental);
         }
         $this->_trackValueSet($this->experimental, $experimental);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL])) {
-            $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_EXPERIMENTAL])) {
+            $this->_xmlLocations[self::FIELD_EXPERIMENTAL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_EXPERIMENTAL][0] = $xmlLocation;
         $this->experimental = $experimental;
         return $this;
     }
@@ -1093,16 +1074,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
         }
         $this->_trackValueSet($this->date, $date);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DATE])) {
+            $this->_xmlLocations[self::FIELD_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DATE][0] = $xmlLocation;
         $this->date = $date;
         return $this;
     }
@@ -1132,16 +1113,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPublisher(null|string|FHIRStringPrimitive|FHIRString $publisher = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $publisher && !($publisher instanceof FHIRString)) {
             $publisher = new FHIRString($publisher);
         }
         $this->_trackValueSet($this->publisher, $publisher);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PUBLISHER])) {
-            $this->_primitiveXmlLocations[self::FIELD_PUBLISHER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PUBLISHER])) {
+            $this->_xmlLocations[self::FIELD_PUBLISHER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PUBLISHER][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PUBLISHER][0] = $xmlLocation;
         $this->publisher = $publisher;
         return $this;
     }
@@ -1179,6 +1160,32 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
         }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
+        return $this;
+    }
+
+    /**
+     * Specifies contact information for a person or organization.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Contact details to assist a user in finding and communicating with the
+     * publisher.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRContactDetail ...$contact
+     * @return static
+     */
+    public function setContact(FHIRContactDetail ...$contact): self
+    {
+        if ([] !== $this->contact) {
+            $this->_trackValuesRemoved(count($this->contact));
+            $this->contact = [];
+        }
+        if ([] === $contact) {
+            return $this;
+        }
+        foreach($contact as $v) {
+            $this->addContact($v);
+        }
         return $this;
     }
 
@@ -1221,16 +1228,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRMarkdownPrimitive|FHIRMarkdown $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRMarkdown)) {
             $description = new FHIRMarkdown($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -1280,6 +1287,36 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
     }
 
     /**
+     * Specifies clinical/business/etc metadata that can be used to retrieve, index
+     * and/or categorize an artifact. This metadata can either be specific to the
+     * applicable population (e.g., age category, DRG) or the specific context of care
+     * (e.g., venue, care setting, provider of care).
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The content was developed with a focus and intent of supporting the contexts
+     * that are listed. These terms may be used to assist with indexing and searching
+     * for appropriate expansion profile instances.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRUsageContext ...$useContext
+     * @return static
+     */
+    public function setUseContext(FHIRUsageContext ...$useContext): self
+    {
+        if ([] !== $this->useContext) {
+            $this->_trackValuesRemoved(count($this->useContext));
+            $this->useContext = [];
+        }
+        if ([] === $useContext) {
+            return $this;
+        }
+        foreach($useContext as $v) {
+            $this->addUseContext($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -1318,6 +1355,33 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A legal or geographic region in which the expansion profile is intended to be
+     * used.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$jurisdiction
+     * @return static
+     */
+    public function setJurisdiction(FHIRCodeableConcept ...$jurisdiction): self
+    {
+        if ([] !== $this->jurisdiction) {
+            $this->_trackValuesRemoved(count($this->jurisdiction));
+            $this->jurisdiction = [];
+        }
+        if ([] === $jurisdiction) {
+            return $this;
+        }
+        foreach($jurisdiction as $v) {
+            $this->addJurisdiction($v);
+        }
+        return $this;
+    }
+
+    /**
      * Resource to define constraints on the Expansion of a FHIR ValueSet.
      *
      * Fix use of a particular code system to a particular version.
@@ -1344,6 +1408,29 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
         }
         $this->_trackValueAdded();
         $this->fixedVersion[] = $fixedVersion;
+        return $this;
+    }
+
+    /**
+     * Resource to define constraints on the Expansion of a FHIR ValueSet.
+     *
+     * Fix use of a particular code system to a particular version.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRExpansionProfile\FHIRExpansionProfileFixedVersion ...$fixedVersion
+     * @return static
+     */
+    public function setFixedVersion(FHIRExpansionProfileFixedVersion ...$fixedVersion): self
+    {
+        if ([] !== $this->fixedVersion) {
+            $this->_trackValuesRemoved(count($this->fixedVersion));
+            $this->fixedVersion = [];
+        }
+        if ([] === $fixedVersion) {
+            return $this;
+        }
+        foreach($fixedVersion as $v) {
+            $this->addFixedVersion($v);
+        }
         return $this;
     }
 
@@ -1404,16 +1491,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIncludeDesignations(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $includeDesignations = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setIncludeDesignations(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $includeDesignations = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $includeDesignations && !($includeDesignations instanceof FHIRBoolean)) {
             $includeDesignations = new FHIRBoolean($includeDesignations);
         }
         $this->_trackValueSet($this->includeDesignations, $includeDesignations);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_INCLUDE_DESIGNATIONS])) {
-            $this->_primitiveXmlLocations[self::FIELD_INCLUDE_DESIGNATIONS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_INCLUDE_DESIGNATIONS])) {
+            $this->_xmlLocations[self::FIELD_INCLUDE_DESIGNATIONS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_INCLUDE_DESIGNATIONS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_INCLUDE_DESIGNATIONS][0] = $xmlLocation;
         $this->includeDesignations = $includeDesignations;
         return $this;
     }
@@ -1475,16 +1562,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIncludeDefinition(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $includeDefinition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setIncludeDefinition(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $includeDefinition = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $includeDefinition && !($includeDefinition instanceof FHIRBoolean)) {
             $includeDefinition = new FHIRBoolean($includeDefinition);
         }
         $this->_trackValueSet($this->includeDefinition, $includeDefinition);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_INCLUDE_DEFINITION])) {
-            $this->_primitiveXmlLocations[self::FIELD_INCLUDE_DEFINITION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_INCLUDE_DEFINITION])) {
+            $this->_xmlLocations[self::FIELD_INCLUDE_DEFINITION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_INCLUDE_DEFINITION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_INCLUDE_DEFINITION][0] = $xmlLocation;
         $this->includeDefinition = $includeDefinition;
         return $this;
     }
@@ -1514,16 +1601,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setActiveOnly(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $activeOnly = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setActiveOnly(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $activeOnly = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $activeOnly && !($activeOnly instanceof FHIRBoolean)) {
             $activeOnly = new FHIRBoolean($activeOnly);
         }
         $this->_trackValueSet($this->activeOnly, $activeOnly);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ACTIVE_ONLY])) {
-            $this->_primitiveXmlLocations[self::FIELD_ACTIVE_ONLY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ACTIVE_ONLY])) {
+            $this->_xmlLocations[self::FIELD_ACTIVE_ONLY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ACTIVE_ONLY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ACTIVE_ONLY][0] = $xmlLocation;
         $this->activeOnly = $activeOnly;
         return $this;
     }
@@ -1553,16 +1640,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setExcludeNested(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $excludeNested = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setExcludeNested(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $excludeNested = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $excludeNested && !($excludeNested instanceof FHIRBoolean)) {
             $excludeNested = new FHIRBoolean($excludeNested);
         }
         $this->_trackValueSet($this->excludeNested, $excludeNested);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NESTED])) {
-            $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NESTED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_EXCLUDE_NESTED])) {
+            $this->_xmlLocations[self::FIELD_EXCLUDE_NESTED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NESTED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_EXCLUDE_NESTED][0] = $xmlLocation;
         $this->excludeNested = $excludeNested;
         return $this;
     }
@@ -1592,16 +1679,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setExcludeNotForUI(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $excludeNotForUI = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setExcludeNotForUI(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $excludeNotForUI = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $excludeNotForUI && !($excludeNotForUI instanceof FHIRBoolean)) {
             $excludeNotForUI = new FHIRBoolean($excludeNotForUI);
         }
         $this->_trackValueSet($this->excludeNotForUI, $excludeNotForUI);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI])) {
-            $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI])) {
+            $this->_xmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI][0] = $xmlLocation;
         $this->excludeNotForUI = $excludeNotForUI;
         return $this;
     }
@@ -1629,16 +1716,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setExcludePostCoordinated(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $excludePostCoordinated = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setExcludePostCoordinated(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $excludePostCoordinated = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $excludePostCoordinated && !($excludePostCoordinated instanceof FHIRBoolean)) {
             $excludePostCoordinated = new FHIRBoolean($excludePostCoordinated);
         }
         $this->_trackValueSet($this->excludePostCoordinated, $excludePostCoordinated);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED])) {
-            $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED])) {
+            $this->_xmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED][0] = $xmlLocation;
         $this->excludePostCoordinated = $excludePostCoordinated;
         return $this;
     }
@@ -1672,16 +1759,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDisplayLanguage(null|string|FHIRCodePrimitive|FHIRCode $displayLanguage = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDisplayLanguage(null|string|FHIRCodePrimitive|FHIRCode $displayLanguage = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $displayLanguage && !($displayLanguage instanceof FHIRCode)) {
             $displayLanguage = new FHIRCode($displayLanguage);
         }
         $this->_trackValueSet($this->displayLanguage, $displayLanguage);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DISPLAY_LANGUAGE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DISPLAY_LANGUAGE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DISPLAY_LANGUAGE])) {
+            $this->_xmlLocations[self::FIELD_DISPLAY_LANGUAGE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DISPLAY_LANGUAGE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DISPLAY_LANGUAGE][0] = $xmlLocation;
         $this->displayLanguage = $displayLanguage;
         return $this;
     }
@@ -1715,16 +1802,16 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLimitedExpansion(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $limitedExpansion = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLimitedExpansion(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $limitedExpansion = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $limitedExpansion && !($limitedExpansion instanceof FHIRBoolean)) {
             $limitedExpansion = new FHIRBoolean($limitedExpansion);
         }
         $this->_trackValueSet($this->limitedExpansion, $limitedExpansion);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LIMITED_EXPANSION])) {
-            $this->_primitiveXmlLocations[self::FIELD_LIMITED_EXPANSION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LIMITED_EXPANSION])) {
+            $this->_xmlLocations[self::FIELD_LIMITED_EXPANSION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LIMITED_EXPANSION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LIMITED_EXPANSION][0] = $xmlLocation;
         $this->limitedExpansion = $limitedExpansion;
         return $this;
     }
@@ -2522,68 +2609,68 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
             $openedRoot = true;
             $xw->openRootNode($config, 'ExpansionProfile', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_URL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_URL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getUrl())) {
             $xw->writeAttribute(self::FIELD_URL, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERSION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERSION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getVersion())) {
             $xw->writeAttribute(self::FIELD_VERSION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->writeAttribute(self::FIELD_NAME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getExperimental())) {
             $xw->writeAttribute(self::FIELD_EXPERIMENTAL, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->writeAttribute(self::FIELD_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PUBLISHER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PUBLISHER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPublisher())) {
             $xw->writeAttribute(self::FIELD_PUBLISHER, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INCLUDE_DESIGNATIONS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INCLUDE_DESIGNATIONS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIncludeDesignations())) {
             $xw->writeAttribute(self::FIELD_INCLUDE_DESIGNATIONS, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INCLUDE_DEFINITION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INCLUDE_DEFINITION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIncludeDefinition())) {
             $xw->writeAttribute(self::FIELD_INCLUDE_DEFINITION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTIVE_ONLY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ACTIVE_ONLY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getActiveOnly())) {
             $xw->writeAttribute(self::FIELD_ACTIVE_ONLY, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NESTED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXCLUDE_NESTED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getExcludeNested())) {
             $xw->writeAttribute(self::FIELD_EXCLUDE_NESTED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getExcludeNotForUI())) {
             $xw->writeAttribute(self::FIELD_EXCLUDE_NOT_FOR_UI, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getExcludePostCoordinated())) {
             $xw->writeAttribute(self::FIELD_EXCLUDE_POST_COORDINATED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISPLAY_LANGUAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISPLAY_LANGUAGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDisplayLanguage())) {
             $xw->writeAttribute(self::FIELD_DISPLAY_LANGUAGE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LIMITED_EXPANSION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LIMITED_EXPANSION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLimitedExpansion())) {
             $xw->writeAttribute(self::FIELD_LIMITED_EXPANSION, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_URL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_URL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getUrl())) {
             $xw->startElement(self::FIELD_URL);
             $v->xmlSerialize($xw, $config);
@@ -2594,13 +2681,13 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERSION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERSION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getVersion())) {
             $xw->startElement(self::FIELD_VERSION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NAME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NAME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getName())) {
             $xw->startElement(self::FIELD_NAME);
             $v->xmlSerialize($xw, $config);
@@ -2611,19 +2698,19 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXPERIMENTAL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getExperimental())) {
             $xw->startElement(self::FIELD_EXPERIMENTAL);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->startElement(self::FIELD_DATE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PUBLISHER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PUBLISHER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPublisher())) {
             $xw->startElement(self::FIELD_PUBLISHER);
             $v->xmlSerialize($xw, $config);
@@ -2634,7 +2721,7 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
@@ -2660,7 +2747,7 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INCLUDE_DESIGNATIONS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INCLUDE_DESIGNATIONS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIncludeDesignations())) {
             $xw->startElement(self::FIELD_INCLUDE_DESIGNATIONS);
             $v->xmlSerialize($xw, $config);
@@ -2671,43 +2758,43 @@ class FHIRExpansionProfile extends FHIRDomainResource implements PHPFHIRContaine
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INCLUDE_DEFINITION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INCLUDE_DEFINITION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIncludeDefinition())) {
             $xw->startElement(self::FIELD_INCLUDE_DEFINITION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTIVE_ONLY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ACTIVE_ONLY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getActiveOnly())) {
             $xw->startElement(self::FIELD_ACTIVE_ONLY);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NESTED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXCLUDE_NESTED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getExcludeNested())) {
             $xw->startElement(self::FIELD_EXCLUDE_NESTED);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXCLUDE_NOT_FOR_UI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getExcludeNotForUI())) {
             $xw->startElement(self::FIELD_EXCLUDE_NOT_FOR_UI);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EXCLUDE_POST_COORDINATED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getExcludePostCoordinated())) {
             $xw->startElement(self::FIELD_EXCLUDE_POST_COORDINATED);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISPLAY_LANGUAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISPLAY_LANGUAGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDisplayLanguage())) {
             $xw->startElement(self::FIELD_DISPLAY_LANGUAGE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LIMITED_EXPANSION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LIMITED_EXPANSION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLimitedExpansion())) {
             $xw->startElement(self::FIELD_LIMITED_EXPANSION);
             $v->xmlSerialize($xw, $config);

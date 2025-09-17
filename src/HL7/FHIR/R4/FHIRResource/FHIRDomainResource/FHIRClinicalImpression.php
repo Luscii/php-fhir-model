@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -148,7 +148,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * Business identifiers assigned to this clinical impression by the performer or
      * other systems which remain constant as the resource is updated and propagates
      * from server to server.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -157,7 +156,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Identifies the workflow status of the assessment.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRClinicalImpressionStatus
      */
     protected null|FHIRClinicalImpressionStatus $status = null;
@@ -168,7 +166,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Captures the reason for the current state of the ClinicalImpression.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $statusReason = null;
@@ -179,7 +176,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Categorizes the type of clinical assessment performed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -190,7 +186,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      *
      * A summary of the context and/or cause of the assessment - why / where it was
      * performed, and what patient events/status prompted it.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -200,7 +195,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The patient or group of individuals assessed as part of this record.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -211,7 +205,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      *
      * The Encounter during which this ClinicalImpression was created or to which the
      * creation of this record is tightly associated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $encounter = null;
@@ -224,7 +217,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The point in time or period over which the subject was assessed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $effectiveDateTime = null;
@@ -234,7 +226,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The point in time or period over which the subject was assessed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $effectivePeriod = null;
@@ -247,7 +238,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Indicates when the documentation of the assessment was complete.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $date = null;
@@ -257,7 +247,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The clinician performing the assessment.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $assessor = null;
@@ -270,7 +259,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * Assessments are often/usually ongoing in nature; a care provider (practitioner
      * or team) will make new assessments on an ongoing basis as new data arises or the
      * patient's conditions changes.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $previous = null;
@@ -280,7 +268,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A list of the relevant problems/conditions for a patient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $problem = [];
@@ -298,7 +285,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * assessment. These investigations may include data generated during the
      * assessment process, or data previously generated and recorded that is pertinent
      * to the outcomes.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClinicalImpression\FHIRClinicalImpressionInvestigation[]
      */
     protected null|array $investigation = [];
@@ -309,7 +295,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      *
      * Reference to a specific published clinical protocol that was followed during
      * this assessment, and/or that provides evidence in support of the diagnosis.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri[]
      */
     protected null|array $protocol = [];
@@ -319,7 +304,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A text summary of the investigations and the diagnosis.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $summary = null;
@@ -334,7 +318,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      *
      * Specific findings or diagnoses that were considered likely or relevant to
      * ongoing treatment.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClinicalImpression\FHIRClinicalImpressionFinding[]
      */
     protected null|array $finding = [];
@@ -345,7 +328,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Estimate of likely outcome.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $prognosisCodeableConcept = [];
@@ -355,7 +337,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * RiskAssessment expressing likely outcome.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $prognosisReference = [];
@@ -365,7 +346,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Information supporting the clinical impression.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $supportingInfo = [];
@@ -377,7 +357,6 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      *
      * Commentary about the impression, typically recorded after the impression itself
      * was made, though supplemental notes by the original author could also appear.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -386,10 +365,17 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * Validation map for fields in type ClinicalImpression
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_SUBJECT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRClinicalImpression Constructor
@@ -746,6 +732,34 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Business identifiers assigned to this clinical impression by the performer or
+     * other systems which remain constant as the resource is updated and propagates
+     * from server to server.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * The workflow state of a clinical impression.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -876,16 +890,16 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -991,16 +1005,16 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setEffectiveDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $effectiveDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setEffectiveDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $effectiveDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $effectiveDateTime && !($effectiveDateTime instanceof FHIRDateTime)) {
             $effectiveDateTime = new FHIRDateTime($effectiveDateTime);
         }
         $this->_trackValueSet($this->effectiveDateTime, $effectiveDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_EFFECTIVE_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_EFFECTIVE_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_EFFECTIVE_DATE_TIME][0] = $xmlLocation;
         $this->effectiveDateTime = $effectiveDateTime;
         return $this;
     }
@@ -1070,16 +1084,16 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
         }
         $this->_trackValueSet($this->date, $date);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DATE])) {
+            $this->_xmlLocations[self::FIELD_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DATE][0] = $xmlLocation;
         $this->date = $date;
         return $this;
     }
@@ -1193,6 +1207,31 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A list of the relevant problems/conditions for a patient.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$problem
+     * @return static
+     */
+    public function setProblem(FHIRReference ...$problem): self
+    {
+        if ([] !== $this->problem) {
+            $this->_trackValuesRemoved(count($this->problem));
+            $this->problem = [];
+        }
+        if ([] === $problem) {
+            return $this;
+        }
+        foreach($problem as $v) {
+            $this->addProblem($v);
+        }
+        return $this;
+    }
+
+    /**
      * A record of a clinical assessment performed to determine what problem(s) may
      * affect the patient and before planning the treatments or management strategies
      * that are best to manage a patient's condition. Assessments are often 1:1 with a
@@ -1243,6 +1282,39 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A record of a clinical assessment performed to determine what problem(s) may
+     * affect the patient and before planning the treatments or management strategies
+     * that are best to manage a patient's condition. Assessments are often 1:1 with a
+     * clinical consultation / encounter, but this varies greatly depending on the
+     * clinical workflow. This resource is called "ClinicalImpression" rather than
+     * "ClinicalAssessment" to avoid confusion with the recording of assessment tools
+     * such as Apgar score.
+     *
+     * One or more sets of investigations (signs, symptoms, etc.). The actual grouping
+     * of investigations varies greatly depending on the type and context of the
+     * assessment. These investigations may include data generated during the
+     * assessment process, or data previously generated and recorded that is pertinent
+     * to the outcomes.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClinicalImpression\FHIRClinicalImpressionInvestigation ...$investigation
+     * @return static
+     */
+    public function setInvestigation(FHIRClinicalImpressionInvestigation ...$investigation): self
+    {
+        if ([] !== $this->investigation) {
+            $this->_trackValuesRemoved(count($this->investigation));
+            $this->investigation = [];
+        }
+        if ([] === $investigation) {
+            return $this;
+        }
+        foreach($investigation as $v) {
+            $this->addInvestigation($v);
+        }
+        return $this;
+    }
+
+    /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -1269,16 +1341,20 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addProtocol(null|string|FHIRUriPrimitive|FHIRUri $protocol = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addProtocol(null|string|FHIRUriPrimitive|FHIRUri $protocol = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $protocol && !($protocol instanceof FHIRUri)) {
             $protocol = new FHIRUri($protocol);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PROTOCOL])) {
-            $this->_primitiveXmlLocations[self::FIELD_PROTOCOL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PROTOCOL])) {
+            $this->_xmlLocations[self::FIELD_PROTOCOL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PROTOCOL][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_PROTOCOL]) {
+            $this->_xmlLocations[self::FIELD_PROTOCOL][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_PROTOCOL][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->protocol[] = $protocol;
         return $this;
     }
@@ -1295,9 +1371,9 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setProtocol(array $protocol = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setProtocol(array $protocol = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_PROTOCOL]);
+        unset($this->_xmlLocations[self::FIELD_PROTOCOL]);
         if ([] !== $this->protocol) {
             $this->_trackValuesRemoved(count($this->protocol));
             $this->protocol = [];
@@ -1340,16 +1416,16 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSummary(null|string|FHIRStringPrimitive|FHIRString $summary = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSummary(null|string|FHIRStringPrimitive|FHIRString $summary = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $summary && !($summary instanceof FHIRString)) {
             $summary = new FHIRString($summary);
         }
         $this->_trackValueSet($this->summary, $summary);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SUMMARY])) {
-            $this->_primitiveXmlLocations[self::FIELD_SUMMARY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SUMMARY])) {
+            $this->_xmlLocations[self::FIELD_SUMMARY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SUMMARY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SUMMARY][0] = $xmlLocation;
         $this->summary = $summary;
         return $this;
     }
@@ -1399,6 +1475,36 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A record of a clinical assessment performed to determine what problem(s) may
+     * affect the patient and before planning the treatments or management strategies
+     * that are best to manage a patient's condition. Assessments are often 1:1 with a
+     * clinical consultation / encounter, but this varies greatly depending on the
+     * clinical workflow. This resource is called "ClinicalImpression" rather than
+     * "ClinicalAssessment" to avoid confusion with the recording of assessment tools
+     * such as Apgar score.
+     *
+     * Specific findings or diagnoses that were considered likely or relevant to
+     * ongoing treatment.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRClinicalImpression\FHIRClinicalImpressionFinding ...$finding
+     * @return static
+     */
+    public function setFinding(FHIRClinicalImpressionFinding ...$finding): self
+    {
+        if ([] !== $this->finding) {
+            $this->_trackValuesRemoved(count($this->finding));
+            $this->finding = [];
+        }
+        if ([] === $finding) {
+            return $this;
+        }
+        foreach($finding as $v) {
+            $this->addFinding($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -1431,6 +1537,32 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->prognosisCodeableConcept[] = $prognosisCodeableConcept;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Estimate of likely outcome.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$prognosisCodeableConcept
+     * @return static
+     */
+    public function setPrognosisCodeableConcept(FHIRCodeableConcept ...$prognosisCodeableConcept): self
+    {
+        if ([] !== $this->prognosisCodeableConcept) {
+            $this->_trackValuesRemoved(count($this->prognosisCodeableConcept));
+            $this->prognosisCodeableConcept = [];
+        }
+        if ([] === $prognosisCodeableConcept) {
+            return $this;
+        }
+        foreach($prognosisCodeableConcept as $v) {
+            $this->addPrognosisCodeableConcept($v);
+        }
         return $this;
     }
 
@@ -1473,6 +1605,31 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * RiskAssessment expressing likely outcome.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$prognosisReference
+     * @return static
+     */
+    public function setPrognosisReference(FHIRReference ...$prognosisReference): self
+    {
+        if ([] !== $this->prognosisReference) {
+            $this->_trackValuesRemoved(count($this->prognosisReference));
+            $this->prognosisReference = [];
+        }
+        if ([] === $prognosisReference) {
+            return $this;
+        }
+        foreach($prognosisReference as $v) {
+            $this->addPrognosisReference($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Information supporting the clinical impression.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
@@ -1499,6 +1656,31 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->supportingInfo[] = $supportingInfo;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Information supporting the clinical impression.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$supportingInfo
+     * @return static
+     */
+    public function setSupportingInfo(FHIRReference ...$supportingInfo): self
+    {
+        if ([] !== $this->supportingInfo) {
+            $this->_trackValuesRemoved(count($this->supportingInfo));
+            $this->supportingInfo = [];
+        }
+        if ([] === $supportingInfo) {
+            return $this;
+        }
+        foreach($supportingInfo as $v) {
+            $this->addSupportingInfo($v);
+        }
         return $this;
     }
 
@@ -1537,6 +1719,33 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->note[] = $note;
+        return $this;
+    }
+
+    /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Commentary about the impression, typically recorded after the impression itself
+     * was made, though supplemental notes by the original author could also appear.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
         return $this;
     }
 
@@ -2220,25 +2429,25 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
             $openedRoot = true;
             $xw->openRootNode($config, 'ClinicalImpression', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EFFECTIVE_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getEffectiveDateTime())) {
             $xw->writeAttribute(self::FIELD_EFFECTIVE_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->writeAttribute(self::FIELD_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PROTOCOL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PROTOCOL] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getProtocol())) {
             $xw->writeAttribute(self::FIELD_PROTOCOL, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getProtocol()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_PROTOCOL, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUMMARY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUMMARY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSummary())) {
             $xw->writeAttribute(self::FIELD_SUMMARY, $v->getValue()?->getFormattedValue());
         }
@@ -2263,7 +2472,7 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
@@ -2279,7 +2488,7 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EFFECTIVE_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EFFECTIVE_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getEffectiveDateTime())) {
             $xw->startElement(self::FIELD_EFFECTIVE_DATE_TIME);
             $v->xmlSerialize($xw, $config);
@@ -2290,7 +2499,7 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->startElement(self::FIELD_DATE);
             $v->xmlSerialize($xw, $config);
@@ -2316,7 +2525,7 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PROTOCOL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PROTOCOL] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getProtocol())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -2326,7 +2535,7 @@ class FHIRClinicalImpression extends FHIRDomainResource implements PHPFHIRContai
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUMMARY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUMMARY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSummary())) {
             $xw->startElement(self::FIELD_SUMMARY);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRConsent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,6 @@ class FHIRConsentVerification extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Has the instruction been verified.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $verified = null;
@@ -111,7 +110,6 @@ class FHIRConsentVerification extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Who verified the instruction (Patient, Relative or other Authorized Person).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $verifiedWith = null;
@@ -124,7 +122,6 @@ class FHIRConsentVerification extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Date verification was collected.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $verificationDate = null;
@@ -133,10 +130,14 @@ class FHIRConsentVerification extends FHIRBackboneElement
      * Validation map for fields in type Consent.Verification
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_VERIFIED => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRConsentVerification Constructor
@@ -222,16 +223,16 @@ class FHIRConsentVerification extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setVerified(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $verified = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setVerified(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $verified = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $verified && !($verified instanceof FHIRBoolean)) {
             $verified = new FHIRBoolean($verified);
         }
         $this->_trackValueSet($this->verified, $verified);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VERIFIED])) {
-            $this->_primitiveXmlLocations[self::FIELD_VERIFIED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VERIFIED])) {
+            $this->_xmlLocations[self::FIELD_VERIFIED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VERIFIED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VERIFIED][0] = $xmlLocation;
         $this->verified = $verified;
         return $this;
     }
@@ -301,16 +302,16 @@ class FHIRConsentVerification extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setVerificationDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $verificationDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setVerificationDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $verificationDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $verificationDate && !($verificationDate instanceof FHIRDateTime)) {
             $verificationDate = new FHIRDateTime($verificationDate);
         }
         $this->_trackValueSet($this->verificationDate, $verificationDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VERIFICATION_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_VERIFICATION_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VERIFICATION_DATE])) {
+            $this->_xmlLocations[self::FIELD_VERIFICATION_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VERIFICATION_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VERIFICATION_DATE][0] = $xmlLocation;
         $this->verificationDate = $verificationDate;
         return $this;
     }
@@ -528,16 +529,16 @@ class FHIRConsentVerification extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ConsentVerification', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERIFIED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERIFIED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getVerified())) {
             $xw->writeAttribute(self::FIELD_VERIFIED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERIFICATION_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERIFICATION_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getVerificationDate())) {
             $xw->writeAttribute(self::FIELD_VERIFICATION_DATE, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERIFIED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERIFIED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getVerified())) {
             $xw->startElement(self::FIELD_VERIFIED);
             $v->xmlSerialize($xw, $config);
@@ -548,7 +549,7 @@ class FHIRConsentVerification extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VERIFICATION_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VERIFICATION_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getVerificationDate())) {
             $xw->startElement(self::FIELD_VERIFICATION_DATE);
             $v->xmlSerialize($xw, $config);

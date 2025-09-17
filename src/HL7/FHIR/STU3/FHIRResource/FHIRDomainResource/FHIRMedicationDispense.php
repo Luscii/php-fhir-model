@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -147,7 +147,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      *
      * Identifier assigned by the dispensing facility - this is an identifier assigned
      * outside FHIR.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -157,7 +156,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The procedure that the dispense is done because of.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $partOf = [];
@@ -166,7 +164,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A code specifying the state of the set of dispense events.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMedicationDispenseStatus
      */
     protected null|FHIRMedicationDispenseStatus $status = null;
@@ -178,7 +175,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      *
      * Indicates type of medication dispense and where the medication is expected to be
      * consumed or administered.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $category = null;
@@ -191,7 +187,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * Identifies the medication being administered. This is either a link to a
      * resource representing the details of the medication or a simple attribute
      * carrying a code that identifies the medication from a known list of medications.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $medicationCodeableConcept = null;
@@ -203,7 +198,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * Identifies the medication being administered. This is either a link to a
      * resource representing the details of the medication or a simple attribute
      * carrying a code that identifies the medication from a known list of medications.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $medicationReference = null;
@@ -214,7 +208,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      *
      * A link to a resource representing the person or the group to whom the medication
      * will be given.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -224,7 +217,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The encounter or episode of care that establishes the context for this event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $context = null;
@@ -234,7 +226,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Additional information that supports the medication being dispensed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $supportingInformation = [];
@@ -246,7 +237,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      *
      * Indicates who or what performed the event. It should be assumed that the
      * performer is the dispenser of the medication.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationDispense\FHIRMedicationDispensePerformer[]
      */
     protected null|array $performer = [];
@@ -256,7 +246,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indicates the medication order that is being dispensed against.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $authorizingPrescription = [];
@@ -268,7 +257,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      *
      * Indicates the type of dispensing event that is performed. For example, Trial
      * Fill, Completion of Trial, Partial Fill, Emergency Fill, Samples, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -280,7 +268,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The amount of medication that has been dispensed. Includes unit of measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $quantity = null;
@@ -292,7 +279,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The amount of medication expressed as a timing amount.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $daysSupply = null;
@@ -305,7 +291,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The time when the dispensed product was packaged and reviewed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $whenPrepared = null;
@@ -319,7 +304,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      *
      * The time the dispensed product was provided to the patient or their
      * representative.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $whenHandedOver = null;
@@ -330,7 +314,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      *
      * Identification of the facility/location where the medication was shipped to, as
      * part of the dispense event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $destination = null;
@@ -342,7 +325,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * Identifies the person who picked up the medication. This will usually be a
      * patient or their caregiver, but some cases exist where it can be a healthcare
      * professional.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $receiver = [];
@@ -354,7 +336,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      *
      * Extra information about the dispense that could not be conveyed in the other
      * attributes.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -364,7 +345,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indicates how the medication is to be used by the patient.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDosage[]
      */
     protected null|array $dosageInstruction = [];
@@ -379,7 +359,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * substitution is not expected but does happen. This block explains what
      * substitution did or did not happen and why. If nothing is specified,
      * substitution was not done.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationDispense\FHIRMedicationDispenseSubstitution
      */
     protected null|FHIRMedicationDispenseSubstitution $substitution = null;
@@ -391,7 +370,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * Indicates an actual or potential clinical issue with or between one or more
      * active or proposed clinical actions for a patient; e.g. Drug-drug interaction,
      * duplicate therapy, dosage alert etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $detectedIssue = [];
@@ -400,7 +378,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * True if the dispense was not performed for some reason.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $notDone = null;
@@ -411,7 +388,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indicates the reason why a dispense was not performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $notDoneReasonCodeableConcept = null;
@@ -421,7 +397,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indicates the reason why a dispense was not performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $notDoneReasonReference = null;
@@ -432,7 +407,6 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      *
      * A summary of the events of interest that have occurred, such as when the
      * dispense was verified.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $eventHistory = [];
@@ -441,10 +415,17 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * Validation map for fields in type MedicationDispense
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_MEDICATION_CODEABLE_CONCEPT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_MEDICATION_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationDispense Constructor
@@ -813,6 +794,32 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifier assigned by the dispensing facility - this is an identifier assigned
+     * outside FHIR.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -843,6 +850,31 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->partOf[] = $partOf;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The procedure that the dispense is done because of.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$partOf
+     * @return static
+     */
+    public function setPartOf(FHIRReference ...$partOf): self
+    {
+        if ([] !== $this->partOf) {
+            $this->_trackValuesRemoved(count($this->partOf));
+            $this->partOf = [];
+        }
+        if ([] === $partOf) {
+            return $this;
+        }
+        foreach($partOf as $v) {
+            $this->addPartOf($v);
+        }
         return $this;
     }
 
@@ -1099,6 +1131,31 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Additional information that supports the medication being dispensed.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$supportingInformation
+     * @return static
+     */
+    public function setSupportingInformation(FHIRReference ...$supportingInformation): self
+    {
+        if ([] !== $this->supportingInformation) {
+            $this->_trackValuesRemoved(count($this->supportingInformation));
+            $this->supportingInformation = [];
+        }
+        if ([] === $supportingInformation) {
+            return $this;
+        }
+        foreach($supportingInformation as $v) {
+            $this->addSupportingInformation($v);
+        }
+        return $this;
+    }
+
+    /**
      * Indicates that a medication product is to be or has been dispensed for a named
      * person/patient. This includes a description of the medication product (supply)
      * provided and the instructions for administering the medication. The medication
@@ -1137,6 +1194,33 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * Indicates that a medication product is to be or has been dispensed for a named
+     * person/patient. This includes a description of the medication product (supply)
+     * provided and the instructions for administering the medication. The medication
+     * dispense is the result of a pharmacy system responding to a medication order.
+     *
+     * Indicates who or what performed the event. It should be assumed that the
+     * performer is the dispenser of the medication.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationDispense\FHIRMedicationDispensePerformer ...$performer
+     * @return static
+     */
+    public function setPerformer(FHIRMedicationDispensePerformer ...$performer): self
+    {
+        if ([] !== $this->performer) {
+            $this->_trackValuesRemoved(count($this->performer));
+            $this->performer = [];
+        }
+        if ([] === $performer) {
+            return $this;
+        }
+        foreach($performer as $v) {
+            $this->addPerformer($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -1167,6 +1251,31 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->authorizingPrescription[] = $authorizingPrescription;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates the medication order that is being dispensed against.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$authorizingPrescription
+     * @return static
+     */
+    public function setAuthorizingPrescription(FHIRReference ...$authorizingPrescription): self
+    {
+        if ([] !== $this->authorizingPrescription) {
+            $this->_trackValuesRemoved(count($this->authorizingPrescription));
+            $this->authorizingPrescription = [];
+        }
+        if ([] === $authorizingPrescription) {
+            return $this;
+        }
+        foreach($authorizingPrescription as $v) {
+            $this->addAuthorizingPrescription($v);
+        }
         return $this;
     }
 
@@ -1315,16 +1424,16 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setWhenPrepared(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $whenPrepared = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setWhenPrepared(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $whenPrepared = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $whenPrepared && !($whenPrepared instanceof FHIRDateTime)) {
             $whenPrepared = new FHIRDateTime($whenPrepared);
         }
         $this->_trackValueSet($this->whenPrepared, $whenPrepared);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_WHEN_PREPARED])) {
-            $this->_primitiveXmlLocations[self::FIELD_WHEN_PREPARED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_WHEN_PREPARED])) {
+            $this->_xmlLocations[self::FIELD_WHEN_PREPARED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_WHEN_PREPARED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_WHEN_PREPARED][0] = $xmlLocation;
         $this->whenPrepared = $whenPrepared;
         return $this;
     }
@@ -1362,16 +1471,16 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setWhenHandedOver(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $whenHandedOver = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setWhenHandedOver(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $whenHandedOver = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $whenHandedOver && !($whenHandedOver instanceof FHIRDateTime)) {
             $whenHandedOver = new FHIRDateTime($whenHandedOver);
         }
         $this->_trackValueSet($this->whenHandedOver, $whenHandedOver);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_WHEN_HANDED_OVER])) {
-            $this->_primitiveXmlLocations[self::FIELD_WHEN_HANDED_OVER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_WHEN_HANDED_OVER])) {
+            $this->_xmlLocations[self::FIELD_WHEN_HANDED_OVER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_WHEN_HANDED_OVER][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_WHEN_HANDED_OVER][0] = $xmlLocation;
         $this->whenHandedOver = $whenHandedOver;
         return $this;
     }
@@ -1451,6 +1560,33 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifies the person who picked up the medication. This will usually be a
+     * patient or their caregiver, but some cases exist where it can be a healthcare
+     * professional.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$receiver
+     * @return static
+     */
+    public function setReceiver(FHIRReference ...$receiver): self
+    {
+        if ([] !== $this->receiver) {
+            $this->_trackValuesRemoved(count($this->receiver));
+            $this->receiver = [];
+        }
+        if ([] === $receiver) {
+            return $this;
+        }
+        foreach($receiver as $v) {
+            $this->addReceiver($v);
+        }
+        return $this;
+    }
+
+    /**
      * A text note which also contains information about who made the statement and
      * when.
      * If the element is present, it must have a value for at least one of the defined
@@ -1489,6 +1625,33 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Extra information about the dispense that could not be conveyed in the other
+     * attributes.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
+        return $this;
+    }
+
+    /**
      * Indicates how the medication is/was taken or should be taken by the patient.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -1519,6 +1682,31 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->dosageInstruction[] = $dosageInstruction;
+        return $this;
+    }
+
+    /**
+     * Indicates how the medication is/was taken or should be taken by the patient.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates how the medication is to be used by the patient.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDosage ...$dosageInstruction
+     * @return static
+     */
+    public function setDosageInstruction(FHIRDosage ...$dosageInstruction): self
+    {
+        if ([] !== $this->dosageInstruction) {
+            $this->_trackValuesRemoved(count($this->dosageInstruction));
+            $this->dosageInstruction = [];
+        }
+        if ([] === $dosageInstruction) {
+            return $this;
+        }
+        foreach($dosageInstruction as $v) {
+            $this->addDosageInstruction($v);
+        }
         return $this;
     }
 
@@ -1605,6 +1793,33 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates an actual or potential clinical issue with or between one or more
+     * active or proposed clinical actions for a patient; e.g. Drug-drug interaction,
+     * duplicate therapy, dosage alert etc.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$detectedIssue
+     * @return static
+     */
+    public function setDetectedIssue(FHIRReference ...$detectedIssue): self
+    {
+        if ([] !== $this->detectedIssue) {
+            $this->_trackValuesRemoved(count($this->detectedIssue));
+            $this->detectedIssue = [];
+        }
+        if ([] === $detectedIssue) {
+            return $this;
+        }
+        foreach($detectedIssue as $v) {
+            $this->addDetectedIssue($v);
+        }
+        return $this;
+    }
+
+    /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -1627,16 +1842,16 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNotDone(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $notDone = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNotDone(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $notDone = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $notDone && !($notDone instanceof FHIRBoolean)) {
             $notDone = new FHIRBoolean($notDone);
         }
         $this->_trackValueSet($this->notDone, $notDone);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NOT_DONE])) {
-            $this->_primitiveXmlLocations[self::FIELD_NOT_DONE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NOT_DONE])) {
+            $this->_xmlLocations[self::FIELD_NOT_DONE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NOT_DONE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NOT_DONE][0] = $xmlLocation;
         $this->notDone = $notDone;
         return $this;
     }
@@ -1744,6 +1959,32 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->eventHistory[] = $eventHistory;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A summary of the events of interest that have occurred, such as when the
+     * dispense was verified.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$eventHistory
+     * @return static
+     */
+    public function setEventHistory(FHIRReference ...$eventHistory): self
+    {
+        if ([] !== $this->eventHistory) {
+            $this->_trackValuesRemoved(count($this->eventHistory));
+            $this->eventHistory = [];
+        }
+        if ([] === $eventHistory) {
+            return $this;
+        }
+        foreach($eventHistory as $v) {
+            $this->addEventHistory($v);
+        }
         return $this;
     }
 
@@ -2513,15 +2754,15 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicationDispense', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WHEN_PREPARED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WHEN_PREPARED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getWhenPrepared())) {
             $xw->writeAttribute(self::FIELD_WHEN_PREPARED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WHEN_HANDED_OVER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WHEN_HANDED_OVER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getWhenHandedOver())) {
             $xw->writeAttribute(self::FIELD_WHEN_HANDED_OVER, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NOT_DONE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NOT_DONE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getNotDone())) {
             $xw->writeAttribute(self::FIELD_NOT_DONE, $v->getValue()?->getFormattedValue());
         }
@@ -2596,13 +2837,13 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WHEN_PREPARED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WHEN_PREPARED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getWhenPrepared())) {
             $xw->startElement(self::FIELD_WHEN_PREPARED);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WHEN_HANDED_OVER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WHEN_HANDED_OVER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getWhenHandedOver())) {
             $xw->startElement(self::FIELD_WHEN_HANDED_OVER);
             $v->xmlSerialize($xw, $config);
@@ -2638,7 +2879,7 @@ class FHIRMedicationDispense extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NOT_DONE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NOT_DONE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getNotDone())) {
             $xw->startElement(self::FIELD_NOT_DONE);
             $v->xmlSerialize($xw, $config);

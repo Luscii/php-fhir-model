@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -118,7 +118,6 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * A persistent identifier for the bundle that won't change as a bundle is copied
      * from server to server.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -127,7 +126,6 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Indicates the purpose of this bundle - how it is intended to be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBundleType
      */
     protected null|FHIRBundleType $type = null;
@@ -141,7 +139,6 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * The date/time that the bundle was assembled - i.e. when the resources were
      * placed in the bundle.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInstant
      */
     protected null|FHIRInstant $timestamp = null;
@@ -154,7 +151,6 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      * across all pages in the search. It does not include search.mode = 'include' or
      * 'outcome' entries and it does not provide a count of the number of entries in
      * the Bundle.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt
      */
     protected null|FHIRUnsignedInt $total = null;
@@ -162,7 +158,6 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      * A container for a collection of resources.
      *
      * A series of links that provide context to this bundle.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleLink[]
      */
     protected null|array $link = [];
@@ -171,7 +166,6 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      *
      * An entry in a bundle resource - will either contain a resource or information
      * about a resource (transactions and history only).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleEntry[]
      */
     protected null|array $entry = [];
@@ -185,7 +179,6 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Digital Signature - base64 encoded. XML-DSig or a JWT.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRSignature
      */
     protected null|FHIRSignature $signature = null;
@@ -194,10 +187,14 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      * Validation map for fields in type Bundle
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRBundle Constructor
@@ -425,16 +422,16 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTimestamp(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $timestamp = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTimestamp(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $timestamp = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $timestamp && !($timestamp instanceof FHIRInstant)) {
             $timestamp = new FHIRInstant($timestamp);
         }
         $this->_trackValueSet($this->timestamp, $timestamp);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TIMESTAMP])) {
-            $this->_primitiveXmlLocations[self::FIELD_TIMESTAMP] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TIMESTAMP])) {
+            $this->_xmlLocations[self::FIELD_TIMESTAMP] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TIMESTAMP][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TIMESTAMP][0] = $xmlLocation;
         $this->timestamp = $timestamp;
         return $this;
     }
@@ -470,16 +467,16 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTotal(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $total = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTotal(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $total = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $total && !($total instanceof FHIRUnsignedInt)) {
             $total = new FHIRUnsignedInt($total);
         }
         $this->_trackValueSet($this->total, $total);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TOTAL])) {
-            $this->_primitiveXmlLocations[self::FIELD_TOTAL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TOTAL])) {
+            $this->_xmlLocations[self::FIELD_TOTAL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TOTAL][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TOTAL][0] = $xmlLocation;
         $this->total = $total;
         return $this;
     }
@@ -517,6 +514,29 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
     /**
      * A container for a collection of resources.
      *
+     * A series of links that provide context to this bundle.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleLink ...$link
+     * @return static
+     */
+    public function setLink(FHIRBundleLink ...$link): self
+    {
+        if ([] !== $this->link) {
+            $this->_trackValuesRemoved(count($this->link));
+            $this->link = [];
+        }
+        if ([] === $link) {
+            return $this;
+        }
+        foreach($link as $v) {
+            $this->addLink($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A container for a collection of resources.
+     *
      * An entry in a bundle resource - will either contain a resource or information
      * about a resource (transactions and history only).
      *
@@ -543,6 +563,30 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
         }
         $this->_trackValueAdded();
         $this->entry[] = $entry;
+        return $this;
+    }
+
+    /**
+     * A container for a collection of resources.
+     *
+     * An entry in a bundle resource - will either contain a resource or information
+     * about a resource (transactions and history only).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRBundle\FHIRBundleEntry ...$entry
+     * @return static
+     */
+    public function setEntry(FHIRBundleEntry ...$entry): self
+    {
+        if ([] !== $this->entry) {
+            $this->_trackValuesRemoved(count($this->entry));
+            $this->entry = [];
+        }
+        if ([] === $entry) {
+            return $this;
+        }
+        foreach($entry as $v) {
+            $this->addEntry($v);
+        }
         return $this;
     }
 
@@ -911,11 +955,11 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
             $openedRoot = true;
             $xw->openRootNode($config, 'Bundle', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIMESTAMP] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIMESTAMP] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTimestamp())) {
             $xw->writeAttribute(self::FIELD_TIMESTAMP, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TOTAL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TOTAL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTotal())) {
             $xw->writeAttribute(self::FIELD_TOTAL, $v->getValue()?->getFormattedValue());
         }
@@ -930,13 +974,13 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIMESTAMP] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIMESTAMP] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTimestamp())) {
             $xw->startElement(self::FIELD_TIMESTAMP);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TOTAL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TOTAL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTotal())) {
             $xw->startElement(self::FIELD_TOTAL);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceMetric;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRDeviceMetricCalibration extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Describes the type of the calibration method.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDeviceMetricCalibrationType
      */
     protected null|FHIRDeviceMetricCalibrationType $type = null;
@@ -108,7 +107,6 @@ class FHIRDeviceMetricCalibration extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Describes the state of the calibration.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDeviceMetricCalibrationState
      */
     protected null|FHIRDeviceMetricCalibrationState $state = null;
@@ -120,7 +118,6 @@ class FHIRDeviceMetricCalibration extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Describes the time last calibration has been performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRInstant
      */
     protected null|FHIRInstant $time = null;
@@ -129,10 +126,10 @@ class FHIRDeviceMetricCalibration extends FHIRBackboneElement
      * Validation map for fields in type DeviceMetric.Calibration
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRDeviceMetricCalibration Constructor
@@ -298,16 +295,16 @@ class FHIRDeviceMetricCalibration extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTime(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $time = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTime(null|string|\DateTimeInterface|FHIRInstantPrimitive|FHIRInstant $time = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $time && !($time instanceof FHIRInstant)) {
             $time = new FHIRInstant($time);
         }
         $this->_trackValueSet($this->time, $time);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TIME])) {
+            $this->_xmlLocations[self::FIELD_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TIME][0] = $xmlLocation;
         $this->time = $time;
         return $this;
     }
@@ -517,7 +514,7 @@ class FHIRDeviceMetricCalibration extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'DeviceMetricCalibration', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTime())) {
             $xw->writeAttribute(self::FIELD_TIME, $v->getValue()?->getFormattedValue());
         }
@@ -532,7 +529,7 @@ class FHIRDeviceMetricCalibration extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTime())) {
             $xw->startElement(self::FIELD_TIME);
             $v->xmlSerialize($xw, $config);

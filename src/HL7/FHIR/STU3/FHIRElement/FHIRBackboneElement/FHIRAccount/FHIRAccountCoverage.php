@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRAccount;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ class FHIRAccountCoverage extends FHIRBackboneElement
      * this account (including self-pay). A coverage may only be resposible for
      * specific types of charges, and the sequence of the coverages in the account
      * could be important when processing billing.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $coverage = null;
@@ -110,7 +109,6 @@ class FHIRAccountCoverage extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * The priority of the coverage in the context of this account.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $priority = null;
@@ -119,10 +117,14 @@ class FHIRAccountCoverage extends FHIRBackboneElement
      * Validation map for fields in type Account.Coverage
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_COVERAGE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRAccountCoverage Constructor
@@ -233,16 +235,16 @@ class FHIRAccountCoverage extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPriority(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $priority = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPriority(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $priority = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $priority && !($priority instanceof FHIRPositiveInt)) {
             $priority = new FHIRPositiveInt($priority);
         }
         $this->_trackValueSet($this->priority, $priority);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PRIORITY])) {
-            $this->_primitiveXmlLocations[self::FIELD_PRIORITY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PRIORITY])) {
+            $this->_xmlLocations[self::FIELD_PRIORITY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PRIORITY][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PRIORITY][0] = $xmlLocation;
         $this->priority = $priority;
         return $this;
     }
@@ -433,7 +435,7 @@ class FHIRAccountCoverage extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'AccountCoverage', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRIORITY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRIORITY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPriority())) {
             $xw->writeAttribute(self::FIELD_PRIORITY, $v->getValue()?->getFormattedValue());
         }
@@ -443,7 +445,7 @@ class FHIRAccountCoverage extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRIORITY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRIORITY] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPriority())) {
             $xw->startElement(self::FIELD_PRIORITY);
             $v->xmlSerialize($xw, $config);

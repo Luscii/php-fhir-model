@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -151,7 +151,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * re-imbursement system might issue its own id for each prescription that is
      * created. This is particularly important where FHIR only provides part of an
      * entire workflow process where records must be tracked through an entire system.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -161,7 +160,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Protocol or definition followed by this request.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $definition = [];
@@ -172,7 +170,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * A plan or request that is fulfilled in whole or in part by this medication
      * request.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $basedOn = [];
@@ -184,7 +181,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * A shared identifier common to all requests that were authorized more or less
      * simultaneously by a single author, representing the identifier of the
      * requisition or prescription.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $groupIdentifier = null;
@@ -195,7 +191,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * A code specifying the current state of the order. Generally this will be active
      * or completed state.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMedicationRequestStatus
      */
     protected null|FHIRMedicationRequestStatus $status = null;
@@ -204,7 +199,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Whether the request is a proposal, plan, or an original order.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMedicationRequestIntent
      */
     protected null|FHIRMedicationRequestIntent $intent = null;
@@ -216,7 +210,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * Indicates the type of medication order and where the medication is expected to
      * be consumed or administered.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $category = null;
@@ -226,7 +219,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * Indicates how quickly the Medication Request should be addressed with respect to
      * other requests.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMedicationRequestPriority
      */
     protected null|FHIRMedicationRequestPriority $priority = null;
@@ -240,7 +232,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * represents the medication which may be the details of the medication or simply
      * an attribute carrying a code that identifies the medication from a known list of
      * medications.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $medicationCodeableConcept = null;
@@ -253,7 +244,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * represents the medication which may be the details of the medication or simply
      * an attribute carrying a code that identifies the medication from a known list of
      * medications.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $medicationReference = null;
@@ -264,7 +254,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * A link to a resource representing the person or set of individuals to whom the
      * medication will be given.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -276,7 +265,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * A link to an encounter, or episode of care, that identifies the particular
      * occurrence or set occurrences of contact between patient and health care
      * provider.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $context = null;
@@ -287,7 +275,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * Include additional information (for example, patient height and weight) that
      * supports the ordering of the medication.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $supportingInformation = [];
@@ -301,7 +288,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * The date (and perhaps time) when the prescription was initially written or
      * authored on.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $authoredOn = null;
@@ -314,7 +300,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * The individual, organization or device that initiated the request and has
      * responsibility for its activation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest\FHIRMedicationRequestRequester
      */
     protected null|FHIRMedicationRequestRequester $requester = null;
@@ -325,7 +310,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * The person who entered the order on behalf of another individual for example in
      * the case of a verbal or a telephone order.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $recorder = null;
@@ -336,7 +320,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The reason or the indication for ordering the medication.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $reasonCode = [];
@@ -346,7 +329,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Condition or observation that supports why the medication was ordered.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $reasonReference = [];
@@ -358,7 +340,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * Extra information about the prescription that could not be conveyed by the other
      * attributes.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAnnotation[]
      */
     protected null|array $note = [];
@@ -368,7 +349,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indicates how the medication is to be used by the patient.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDosage[]
      */
     protected null|array $dosageInstruction = [];
@@ -384,7 +364,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * Order). Note that this information is not always sent with the order. There may
      * be in some settings (e.g. hospitals) institutional or system support for
      * completing the dispense details in the pharmacy department.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest\FHIRMedicationRequestDispenseRequest
      */
     protected null|FHIRMedicationRequestDispenseRequest $dispenseRequest = null;
@@ -399,7 +378,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * some cases substitution must happen, in other cases substitution must not
      * happen. This block explains the prescriber's intent. If nothing is specified
      * substitution may be done.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest\FHIRMedicationRequestSubstitution
      */
     protected null|FHIRMedicationRequestSubstitution $substitution = null;
@@ -410,7 +388,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      *
      * A link to a resource representing an earlier order related order or
      * prescription.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $priorPrescription = null;
@@ -422,7 +399,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * Indicates an actual or potential clinical issue with or between one or more
      * active or proposed clinical actions for a patient; e.g. Drug-drug interaction,
      * duplicate therapy, dosage alert etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $detectedIssue = [];
@@ -435,7 +411,6 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * request or event resources that identify key state transitions or updates that
      * are likely to be relevant to a user looking at the current version of the
      * resource.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $eventHistory = [];
@@ -444,10 +419,23 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * Validation map for fields in type MedicationRequest
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_INTENT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_MEDICATION_CODEABLE_CONCEPT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_MEDICATION_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_SUBJECT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationRequest Constructor
@@ -817,6 +805,36 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This records identifiers associated with this medication request that are
+     * defined by business processes and/or used to refer to it when a direct URL
+     * reference to the resource itself is not appropriate. For example a
+     * re-imbursement system might issue its own id for each prescription that is
+     * created. This is particularly important where FHIR only provides part of an
+     * entire workflow process where records must be tracked through an entire system.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -855,6 +873,31 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Protocol or definition followed by this request.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$definition
+     * @return static
+     */
+    public function setDefinition(FHIRReference ...$definition): self
+    {
+        if ([] !== $this->definition) {
+            $this->_trackValuesRemoved(count($this->definition));
+            $this->definition = [];
+        }
+        if ([] === $definition) {
+            return $this;
+        }
+        foreach($definition as $v) {
+            $this->addDefinition($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * A plan or request that is fulfilled in whole or in part by this medication
      * request.
      *
@@ -883,6 +926,32 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
         }
         $this->_trackValueAdded();
         $this->basedOn[] = $basedOn;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A plan or request that is fulfilled in whole or in part by this medication
+     * request.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$basedOn
+     * @return static
+     */
+    public function setBasedOn(FHIRReference ...$basedOn): self
+    {
+        if ([] !== $this->basedOn) {
+            $this->_trackValuesRemoved(count($this->basedOn));
+            $this->basedOn = [];
+        }
+        if ([] === $basedOn) {
+            return $this;
+        }
+        foreach($basedOn as $v) {
+            $this->addBasedOn($v);
+        }
         return $this;
     }
 
@@ -1257,6 +1326,32 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Include additional information (for example, patient height and weight) that
+     * supports the ordering of the medication.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$supportingInformation
+     * @return static
+     */
+    public function setSupportingInformation(FHIRReference ...$supportingInformation): self
+    {
+        if ([] !== $this->supportingInformation) {
+            $this->_trackValuesRemoved(count($this->supportingInformation));
+            $this->supportingInformation = [];
+        }
+        if ([] === $supportingInformation) {
+            return $this;
+        }
+        foreach($supportingInformation as $v) {
+            $this->addSupportingInformation($v);
+        }
+        return $this;
+    }
+
+    /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
      * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
@@ -1289,16 +1384,16 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAuthoredOn(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authoredOn = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAuthoredOn(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authoredOn = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $authoredOn && !($authoredOn instanceof FHIRDateTime)) {
             $authoredOn = new FHIRDateTime($authoredOn);
         }
         $this->_trackValueSet($this->authoredOn, $authoredOn);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON])) {
-            $this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AUTHORED_ON])) {
+            $this->_xmlLocations[self::FIELD_AUTHORED_ON] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AUTHORED_ON][0] = $xmlLocation;
         $this->authoredOn = $authoredOn;
         return $this;
     }
@@ -1416,6 +1511,32 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The reason or the indication for ordering the medication.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$reasonCode
+     * @return static
+     */
+    public function setReasonCode(FHIRCodeableConcept ...$reasonCode): self
+    {
+        if ([] !== $this->reasonCode) {
+            $this->_trackValuesRemoved(count($this->reasonCode));
+            $this->reasonCode = [];
+        }
+        if ([] === $reasonCode) {
+            return $this;
+        }
+        foreach($reasonCode as $v) {
+            $this->addReasonCode($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -1446,6 +1567,31 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
         }
         $this->_trackValueAdded();
         $this->reasonReference[] = $reasonReference;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Condition or observation that supports why the medication was ordered.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$reasonReference
+     * @return static
+     */
+    public function setReasonReference(FHIRReference ...$reasonReference): self
+    {
+        if ([] !== $this->reasonReference) {
+            $this->_trackValuesRemoved(count($this->reasonReference));
+            $this->reasonReference = [];
+        }
+        if ([] === $reasonReference) {
+            return $this;
+        }
+        foreach($reasonReference as $v) {
+            $this->addReasonReference($v);
+        }
         return $this;
     }
 
@@ -1488,6 +1634,33 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
     }
 
     /**
+     * A text note which also contains information about who made the statement and
+     * when.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Extra information about the prescription that could not be conveyed by the other
+     * attributes.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAnnotation ...$note
+     * @return static
+     */
+    public function setNote(FHIRAnnotation ...$note): self
+    {
+        if ([] !== $this->note) {
+            $this->_trackValuesRemoved(count($this->note));
+            $this->note = [];
+        }
+        if ([] === $note) {
+            return $this;
+        }
+        foreach($note as $v) {
+            $this->addNote($v);
+        }
+        return $this;
+    }
+
+    /**
      * Indicates how the medication is/was taken or should be taken by the patient.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -1518,6 +1691,31 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
         }
         $this->_trackValueAdded();
         $this->dosageInstruction[] = $dosageInstruction;
+        return $this;
+    }
+
+    /**
+     * Indicates how the medication is/was taken or should be taken by the patient.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates how the medication is to be used by the patient.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDosage ...$dosageInstruction
+     * @return static
+     */
+    public function setDosageInstruction(FHIRDosage ...$dosageInstruction): self
+    {
+        if ([] !== $this->dosageInstruction) {
+            $this->_trackValuesRemoved(count($this->dosageInstruction));
+            $this->dosageInstruction = [];
+        }
+        if ([] === $dosageInstruction) {
+            return $this;
+        }
+        foreach($dosageInstruction as $v) {
+            $this->addDosageInstruction($v);
+        }
         return $this;
     }
 
@@ -1690,6 +1888,33 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Indicates an actual or potential clinical issue with or between one or more
+     * active or proposed clinical actions for a patient; e.g. Drug-drug interaction,
+     * duplicate therapy, dosage alert etc.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$detectedIssue
+     * @return static
+     */
+    public function setDetectedIssue(FHIRReference ...$detectedIssue): self
+    {
+        if ([] !== $this->detectedIssue) {
+            $this->_trackValuesRemoved(count($this->detectedIssue));
+            $this->detectedIssue = [];
+        }
+        if ([] === $detectedIssue) {
+            return $this;
+        }
+        foreach($detectedIssue as $v) {
+            $this->addDetectedIssue($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Links to Provenance records for past versions of this resource or fulfilling
      * request or event resources that identify key state transitions or updates that
      * are likely to be relevant to a user looking at the current version of the
@@ -1722,6 +1947,34 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
         }
         $this->_trackValueAdded();
         $this->eventHistory[] = $eventHistory;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Links to Provenance records for past versions of this resource or fulfilling
+     * request or event resources that identify key state transitions or updates that
+     * are likely to be relevant to a user looking at the current version of the
+     * resource.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$eventHistory
+     * @return static
+     */
+    public function setEventHistory(FHIRReference ...$eventHistory): self
+    {
+        if ([] !== $this->eventHistory) {
+            $this->_trackValuesRemoved(count($this->eventHistory));
+            $this->eventHistory = [];
+        }
+        if ([] === $eventHistory) {
+            return $this;
+        }
+        foreach($eventHistory as $v) {
+            $this->addEventHistory($v);
+        }
         return $this;
     }
 
@@ -2456,7 +2709,7 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicationRequest', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHORED_ON] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAuthoredOn())) {
             $xw->writeAttribute(self::FIELD_AUTHORED_ON, $v->getValue()?->getFormattedValue());
         }
@@ -2526,7 +2779,7 @@ class FHIRMedicationRequest extends FHIRDomainResource implements PHPFHIRContain
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHORED_ON] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHORED_ON] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAuthoredOn())) {
             $xw->startElement(self::FIELD_AUTHORED_ON);
             $v->xmlSerialize($xw, $config);

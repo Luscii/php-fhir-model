@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,7 +113,6 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $class = null;
@@ -124,7 +123,6 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $geometry = null;
@@ -135,7 +133,6 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $copolymerConnectivity = [];
@@ -145,7 +142,6 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $modification = [];
@@ -153,7 +149,6 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      * Todo.
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstancePolymer\FHIRSubstancePolymerMonomerSet[]
      */
     protected null|array $monomerSet = [];
@@ -161,7 +156,6 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      * Todo.
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstancePolymer\FHIRSubstancePolymerRepeat[]
      */
     protected null|array $repeat = [];
@@ -170,10 +164,10 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      * Validation map for fields in type SubstancePolymer
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstancePolymer Constructor
@@ -403,6 +397,32 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Todo.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$copolymerConnectivity
+     * @return static
+     */
+    public function setCopolymerConnectivity(FHIRCodeableConcept ...$copolymerConnectivity): self
+    {
+        if ([] !== $this->copolymerConnectivity) {
+            $this->_trackValuesRemoved(count($this->copolymerConnectivity));
+            $this->copolymerConnectivity = [];
+        }
+        if ([] === $copolymerConnectivity) {
+            return $this;
+        }
+        foreach($copolymerConnectivity as $v) {
+            $this->addCopolymerConnectivity($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -427,16 +447,20 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addModification(null|string|FHIRStringPrimitive|FHIRString $modification = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addModification(null|string|FHIRStringPrimitive|FHIRString $modification = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $modification && !($modification instanceof FHIRString)) {
             $modification = new FHIRString($modification);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_MODIFICATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_MODIFICATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_MODIFICATION])) {
+            $this->_xmlLocations[self::FIELD_MODIFICATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_MODIFICATION][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_MODIFICATION]) {
+            $this->_xmlLocations[self::FIELD_MODIFICATION][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_MODIFICATION][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->modification[] = $modification;
         return $this;
     }
@@ -452,9 +476,9 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setModification(array $modification = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setModification(array $modification = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_MODIFICATION]);
+        unset($this->_xmlLocations[self::FIELD_MODIFICATION]);
         if ([] !== $this->modification) {
             $this->_trackValuesRemoved(count($this->modification));
             $this->modification = [];
@@ -507,6 +531,29 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
      *
      * Todo.
      *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstancePolymer\FHIRSubstancePolymerMonomerSet ...$monomerSet
+     * @return static
+     */
+    public function setMonomerSet(FHIRSubstancePolymerMonomerSet ...$monomerSet): self
+    {
+        if ([] !== $this->monomerSet) {
+            $this->_trackValuesRemoved(count($this->monomerSet));
+            $this->monomerSet = [];
+        }
+        if ([] === $monomerSet) {
+            return $this;
+        }
+        foreach($monomerSet as $v) {
+            $this->addMonomerSet($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Todo.
+     *
+     * Todo.
+     *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstancePolymer\FHIRSubstancePolymerRepeat[]
      */
     public function getRepeat(): null|array
@@ -529,6 +576,29 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
         }
         $this->_trackValueAdded();
         $this->repeat[] = $repeat;
+        return $this;
+    }
+
+    /**
+     * Todo.
+     *
+     * Todo.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstancePolymer\FHIRSubstancePolymerRepeat ...$repeat
+     * @return static
+     */
+    public function setRepeat(FHIRSubstancePolymerRepeat ...$repeat): self
+    {
+        if ([] !== $this->repeat) {
+            $this->_trackValuesRemoved(count($this->repeat));
+            $this->repeat = [];
+        }
+        if ([] === $repeat) {
+            return $this;
+        }
+        foreach($repeat as $v) {
+            $this->addRepeat($v);
+        }
         return $this;
     }
 
@@ -885,7 +955,7 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstancePolymer', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MODIFICATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MODIFICATION] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getModification())) {
             $xw->writeAttribute(self::FIELD_MODIFICATION, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getModification()) && isset($vs[$idx])) {
@@ -907,7 +977,7 @@ class FHIRSubstancePolymer extends FHIRDomainResource implements PHPFHIRContaine
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MODIFICATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MODIFICATION] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getModification())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

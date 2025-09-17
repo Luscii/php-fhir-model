@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,6 @@ class FHIRDomainResource extends FHIRResource
      * make it "clinically safe" for a human to just read the narrative. Resource
      * definitions may define what content should be represented in the narrative to
      * ensure clinical safety.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRNarrative
      */
     protected null|FHIRNarrative $text = null;
@@ -116,7 +115,6 @@ class FHIRDomainResource extends FHIRResource
      * These resources do not have an independent existence apart from the resource
      * that contains them - they cannot be identified independently, and nor can they
      * have their own independent transaction scope.
-     *
      * @var null|\HL7\FHIR\STU3\[]|PHPFHIRContainedTypeInterface[]
      */
     protected null|array $contained = [];
@@ -131,7 +129,6 @@ class FHIRDomainResource extends FHIRResource
      * use of extensions. Though any implementer is allowed to define an extension,
      * there is a set of requirements that SHALL be met as part of the definition of
      * the extension.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRExtension[]
      */
     protected null|array $extension = [];
@@ -148,7 +145,6 @@ class FHIRDomainResource extends FHIRResource
      * implementer is allowed to define an extension, there is a set of requirements
      * that SHALL be met as part of the definition of the extension. Applications
      * processing a resource are required to check for modifier extensions.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRExtension[]
      */
     protected null|array $modifierExtension = [];
@@ -157,10 +153,10 @@ class FHIRDomainResource extends FHIRResource
      * Validation map for fields in type DomainResource
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRDomainResource Constructor
@@ -404,6 +400,36 @@ class FHIRDomainResource extends FHIRResource
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * May be used to represent additional information that is not part of the basic
+     * definition of the resource. In order to make the use of extensions safe and
+     * manageable, there is a strict set of governance applied to the definition and
+     * use of extensions. Though any implementer is allowed to define an extension,
+     * there is a set of requirements that SHALL be met as part of the definition of
+     * the extension.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRExtension ...$extension
+     * @return static
+     */
+    public function setExtension(FHIRExtension ...$extension): self
+    {
+        if ([] !== $this->extension) {
+            $this->_trackValuesRemoved(count($this->extension));
+            $this->extension = [];
+        }
+        if ([] === $extension) {
+            return $this;
+        }
+        foreach($extension as $v) {
+            $this->addExtension($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Optional Extension Element - found in all resources.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * May be used to represent additional information that is not part of the basic
      * definition of the resource, and that modifies the understanding of the element
      * that contains it. Usually modifier elements provide negation or qualification.
      * In order to make the use of extensions safe and manageable, there is a strict
@@ -443,6 +469,38 @@ class FHIRDomainResource extends FHIRResource
         }
         $this->_trackValueAdded();
         $this->modifierExtension[] = $modifierExtension;
+        return $this;
+    }
+
+    /**
+     * Optional Extension Element - found in all resources.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * May be used to represent additional information that is not part of the basic
+     * definition of the resource, and that modifies the understanding of the element
+     * that contains it. Usually modifier elements provide negation or qualification.
+     * In order to make the use of extensions safe and manageable, there is a strict
+     * set of governance applied to the definition and use of extensions. Though any
+     * implementer is allowed to define an extension, there is a set of requirements
+     * that SHALL be met as part of the definition of the extension. Applications
+     * processing a resource are required to check for modifier extensions.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRExtension ...$modifierExtension
+     * @return static
+     */
+    public function setModifierExtension(FHIRExtension ...$modifierExtension): self
+    {
+        if ([] !== $this->modifierExtension) {
+            $this->_trackValuesRemoved(count($this->modifierExtension));
+            $this->modifierExtension = [];
+        }
+        if ([] === $modifierExtension) {
+            return $this;
+        }
+        foreach($modifierExtension as $v) {
+            $this->addModifierExtension($v);
+        }
         return $this;
     }
 

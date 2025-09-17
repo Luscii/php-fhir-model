@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,7 +104,6 @@ class FHIRTiming extends FHIRElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Identifies specific times when the event occurs.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime[]
      */
     protected null|array $event = [];
@@ -118,7 +117,6 @@ class FHIRTiming extends FHIRElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A set of rules that describe when the event is scheduled.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming\FHIRTimingRepeat
      */
     protected null|FHIRTimingRepeat $repeat = null;
@@ -134,7 +132,6 @@ class FHIRTiming extends FHIRElement
      * structured timing data, and either the code or the data may be used to interpret
      * the Timing, with the exception that .repeat.bounds still applies over the code
      * (and is not contained in the code).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -143,10 +140,10 @@ class FHIRTiming extends FHIRElement
      * Validation map for fields in type Timing
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRTiming Constructor
@@ -245,16 +242,20 @@ class FHIRTiming extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addEvent(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $event = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addEvent(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $event = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $event && !($event instanceof FHIRDateTime)) {
             $event = new FHIRDateTime($event);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_EVENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_EVENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_EVENT])) {
+            $this->_xmlLocations[self::FIELD_EVENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_EVENT][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_EVENT]) {
+            $this->_xmlLocations[self::FIELD_EVENT][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_EVENT][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->event[] = $event;
         return $this;
     }
@@ -273,9 +274,9 @@ class FHIRTiming extends FHIRElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setEvent(array $event = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setEvent(array $event = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_EVENT]);
+        unset($this->_xmlLocations[self::FIELD_EVENT]);
         if ([] !== $this->event) {
             $this->_trackValuesRemoved(count($this->event));
             $this->event = [];
@@ -569,14 +570,14 @@ class FHIRTiming extends FHIRElement
             $openedRoot = true;
             $xw->openRootNode($config, 'Timing', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EVENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EVENT] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getEvent())) {
             $xw->writeAttribute(self::FIELD_EVENT, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getEvent()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_EVENT, $vs[$idx]->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_EVENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_EVENT] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getEvent())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationDispense;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIRMedicationDispenseSubstitution extends FHIRBackboneElement
      *
      * True if the dispenser dispensed a different drug or product from what was
      * prescribed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $wasSubstituted = null;
@@ -114,7 +113,6 @@ class FHIRMedicationDispenseSubstitution extends FHIRBackboneElement
      *
      * A code signifying whether a different drug was dispensed from what was
      * prescribed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -126,7 +124,6 @@ class FHIRMedicationDispenseSubstitution extends FHIRBackboneElement
      *
      * Indicates the reason for the substitution (or lack of substitution) from what
      * was prescribed.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $reason = [];
@@ -136,7 +133,6 @@ class FHIRMedicationDispenseSubstitution extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The person or organization that has primary responsibility for the substitution.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $responsibleParty = [];
@@ -145,10 +141,14 @@ class FHIRMedicationDispenseSubstitution extends FHIRBackboneElement
      * Validation map for fields in type MedicationDispense.Substitution
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_WAS_SUBSTITUTED => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationDispenseSubstitution Constructor
@@ -249,16 +249,16 @@ class FHIRMedicationDispenseSubstitution extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setWasSubstituted(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $wasSubstituted = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setWasSubstituted(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $wasSubstituted = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $wasSubstituted && !($wasSubstituted instanceof FHIRBoolean)) {
             $wasSubstituted = new FHIRBoolean($wasSubstituted);
         }
         $this->_trackValueSet($this->wasSubstituted, $wasSubstituted);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_WAS_SUBSTITUTED])) {
-            $this->_primitiveXmlLocations[self::FIELD_WAS_SUBSTITUTED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_WAS_SUBSTITUTED])) {
+            $this->_xmlLocations[self::FIELD_WAS_SUBSTITUTED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_WAS_SUBSTITUTED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_WAS_SUBSTITUTED][0] = $xmlLocation;
         $this->wasSubstituted = $wasSubstituted;
         return $this;
     }
@@ -340,6 +340,33 @@ class FHIRMedicationDispenseSubstitution extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Indicates the reason for the substitution (or lack of substitution) from what
+     * was prescribed.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$reason
+     * @return static
+     */
+    public function setReason(FHIRCodeableConcept ...$reason): self
+    {
+        if ([] !== $this->reason) {
+            $this->_trackValuesRemoved(count($this->reason));
+            $this->reason = [];
+        }
+        if ([] === $reason) {
+            return $this;
+        }
+        foreach($reason as $v) {
+            $this->addReason($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -370,6 +397,31 @@ class FHIRMedicationDispenseSubstitution extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->responsibleParty[] = $responsibleParty;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The person or organization that has primary responsibility for the substitution.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$responsibleParty
+     * @return static
+     */
+    public function setResponsibleParty(FHIRReference ...$responsibleParty): self
+    {
+        if ([] !== $this->responsibleParty) {
+            $this->_trackValuesRemoved(count($this->responsibleParty));
+            $this->responsibleParty = [];
+        }
+        if ([] === $responsibleParty) {
+            return $this;
+        }
+        foreach($responsibleParty as $v) {
+            $this->addResponsibleParty($v);
+        }
         return $this;
     }
 
@@ -601,12 +653,12 @@ class FHIRMedicationDispenseSubstitution extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicationDispenseSubstitution', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WAS_SUBSTITUTED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WAS_SUBSTITUTED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getWasSubstituted())) {
             $xw->writeAttribute(self::FIELD_WAS_SUBSTITUTED, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WAS_SUBSTITUTED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WAS_SUBSTITUTED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getWasSubstituted())) {
             $xw->startElement(self::FIELD_WAS_SUBSTITUTED);
             $v->xmlSerialize($xw, $config);

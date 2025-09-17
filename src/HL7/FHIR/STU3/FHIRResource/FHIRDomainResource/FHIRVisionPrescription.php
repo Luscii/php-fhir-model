@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,7 +119,6 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      *
      * Business identifier which may be used by other parties to reference or identify
      * the prescription.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -128,7 +127,6 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The status of the resource instance.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRFinancialResourceStatusCodes
      */
     protected null|FHIRFinancialResourceStatusCodes $status = null;
@@ -139,7 +137,6 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      *
      * A link to a resource representing the person to whom the vision products will be
      * supplied.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $patient = null;
@@ -150,7 +147,6 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      *
      * A link to a resource that identifies the particular occurrence of contact
      * between patient and health care provider.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $encounter = null;
@@ -163,7 +159,6 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date (and perhaps time) when the prescription was written.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $dateWritten = null;
@@ -173,7 +168,6 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The healthcare professional responsible for authorizing the prescription.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $prescriber = null;
@@ -184,7 +178,6 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Can be the reason or the indication for writing the prescription.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $reasonCodeableConcept = null;
@@ -194,7 +187,6 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Can be the reason or the indication for writing the prescription.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $reasonReference = null;
@@ -202,7 +194,6 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      * An authorization for the supply of glasses and/or contact lenses to a patient.
      *
      * Deals with details of the dispense part of the supply specification.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionDispense[]
      */
     protected null|array $dispense = [];
@@ -211,10 +202,10 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      * Validation map for fields in type VisionPrescription
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRVisionPrescription Constructor
@@ -380,6 +371,32 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A technical identifier - identifies some entity uniquely and unambiguously.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Business identifier which may be used by other parties to reference or identify
+     * the prescription.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A code specifying the state of the resource instance.
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -514,16 +531,16 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDateWritten(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $dateWritten = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDateWritten(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $dateWritten = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $dateWritten && !($dateWritten instanceof FHIRDateTime)) {
             $dateWritten = new FHIRDateTime($dateWritten);
         }
         $this->_trackValueSet($this->dateWritten, $dateWritten);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE_WRITTEN])) {
-            $this->_primitiveXmlLocations[self::FIELD_DATE_WRITTEN] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DATE_WRITTEN])) {
+            $this->_xmlLocations[self::FIELD_DATE_WRITTEN] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DATE_WRITTEN][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DATE_WRITTEN][0] = $xmlLocation;
         $this->dateWritten = $dateWritten;
         return $this;
     }
@@ -659,6 +676,29 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->dispense[] = $dispense;
+        return $this;
+    }
+
+    /**
+     * An authorization for the supply of glasses and/or contact lenses to a patient.
+     *
+     * Deals with details of the dispense part of the supply specification.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRVisionPrescription\FHIRVisionPrescriptionDispense ...$dispense
+     * @return static
+     */
+    public function setDispense(FHIRVisionPrescriptionDispense ...$dispense): self
+    {
+        if ([] !== $this->dispense) {
+            $this->_trackValuesRemoved(count($this->dispense));
+            $this->dispense = [];
+        }
+        if ([] === $dispense) {
+            return $this;
+        }
+        foreach($dispense as $v) {
+            $this->addDispense($v);
+        }
         return $this;
     }
 
@@ -1073,7 +1113,7 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
             $openedRoot = true;
             $xw->openRootNode($config, 'VisionPrescription', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE_WRITTEN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE_WRITTEN] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDateWritten())) {
             $xw->writeAttribute(self::FIELD_DATE_WRITTEN, $v->getValue()?->getFormattedValue());
         }
@@ -1098,7 +1138,7 @@ class FHIRVisionPrescription extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE_WRITTEN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE_WRITTEN] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDateWritten())) {
             $xw->startElement(self::FIELD_DATE_WRITTEN);
             $v->xmlSerialize($xw, $config);

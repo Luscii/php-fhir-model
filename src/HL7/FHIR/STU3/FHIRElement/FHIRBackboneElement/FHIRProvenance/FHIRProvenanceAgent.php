@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRProvenance;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,7 +112,6 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
      *
      * The function of the agent with respect to the activity. The security role
      * enabling the agent with respect to the activity.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $role = [];
@@ -122,7 +121,6 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The individual, device or organization that participated in the event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $whoUri = null;
@@ -132,7 +130,6 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The individual, device or organization that participated in the event.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $whoReference = null;
@@ -142,7 +139,6 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The individual, device, or organization for whom the change was made.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $onBehalfOfUri = null;
@@ -152,7 +148,6 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The individual, device, or organization for whom the change was made.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $onBehalfOfReference = null;
@@ -163,7 +158,6 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The type of relationship between agents.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $relatedAgentType = null;
@@ -172,10 +166,17 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
      * Validation map for fields in type Provenance.Agent
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_WHO_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_WHO_URI => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRProvenanceAgent Constructor
@@ -306,6 +307,33 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The function of the agent with respect to the activity. The security role
+     * enabling the agent with respect to the activity.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$role
+     * @return static
+     */
+    public function setRole(FHIRCodeableConcept ...$role): self
+    {
+        if ([] !== $this->role) {
+            $this->_trackValuesRemoved(count($this->role));
+            $this->role = [];
+        }
+        if ([] === $role) {
+            return $this;
+        }
+        foreach($role as $v) {
+            $this->addRole($v);
+        }
+        return $this;
+    }
+
+    /**
      * String of characters used to identify a name or a resource
      * see http://en.wikipedia.org/wiki/Uniform_resource_identifier
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -330,16 +358,16 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setWhoUri(null|string|FHIRUriPrimitive|FHIRUri $whoUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setWhoUri(null|string|FHIRUriPrimitive|FHIRUri $whoUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $whoUri && !($whoUri instanceof FHIRUri)) {
             $whoUri = new FHIRUri($whoUri);
         }
         $this->_trackValueSet($this->whoUri, $whoUri);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_WHO_URI])) {
-            $this->_primitiveXmlLocations[self::FIELD_WHO_URI] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_WHO_URI])) {
+            $this->_xmlLocations[self::FIELD_WHO_URI] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_WHO_URI][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_WHO_URI][0] = $xmlLocation;
         $this->whoUri = $whoUri;
         return $this;
     }
@@ -403,16 +431,16 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOnBehalfOfUri(null|string|FHIRUriPrimitive|FHIRUri $onBehalfOfUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOnBehalfOfUri(null|string|FHIRUriPrimitive|FHIRUri $onBehalfOfUri = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $onBehalfOfUri && !($onBehalfOfUri instanceof FHIRUri)) {
             $onBehalfOfUri = new FHIRUri($onBehalfOfUri);
         }
         $this->_trackValueSet($this->onBehalfOfUri, $onBehalfOfUri);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ON_BEHALF_OF_URI])) {
-            $this->_primitiveXmlLocations[self::FIELD_ON_BEHALF_OF_URI] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ON_BEHALF_OF_URI])) {
+            $this->_xmlLocations[self::FIELD_ON_BEHALF_OF_URI] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ON_BEHALF_OF_URI][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ON_BEHALF_OF_URI][0] = $xmlLocation;
         $this->onBehalfOfUri = $onBehalfOfUri;
         return $this;
     }
@@ -759,11 +787,11 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ProvenanceAgent', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WHO_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WHO_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getWhoUri())) {
             $xw->writeAttribute(self::FIELD_WHO_URI, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ON_BEHALF_OF_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ON_BEHALF_OF_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getOnBehalfOfUri())) {
             $xw->writeAttribute(self::FIELD_ON_BEHALF_OF_URI, $v->getValue()?->getFormattedValue());
         }
@@ -773,7 +801,7 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_WHO_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_WHO_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getWhoUri())) {
             $xw->startElement(self::FIELD_WHO_URI);
             $v->xmlSerialize($xw, $config);
@@ -784,7 +812,7 @@ class FHIRProvenanceAgent extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ON_BEHALF_OF_URI] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ON_BEHALF_OF_URI] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getOnBehalfOfUri())) {
             $xw->startElement(self::FIELD_ON_BEHALF_OF_URI);
             $v->xmlSerialize($xw, $config);

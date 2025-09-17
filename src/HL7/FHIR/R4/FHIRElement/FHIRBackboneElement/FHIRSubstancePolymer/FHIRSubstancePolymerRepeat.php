@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstancePolymer;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ class FHIRSubstancePolymerRepeat extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $numberOfUnits = null;
@@ -110,7 +109,6 @@ class FHIRSubstancePolymerRepeat extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $averageMolecularFormula = null;
@@ -121,7 +119,6 @@ class FHIRSubstancePolymerRepeat extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $repeatUnitAmountType = null;
@@ -129,7 +126,6 @@ class FHIRSubstancePolymerRepeat extends FHIRBackboneElement
      * Todo.
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstancePolymer\FHIRSubstancePolymerRepeatUnit[]
      */
     protected null|array $repeatUnit = [];
@@ -138,10 +134,10 @@ class FHIRSubstancePolymerRepeat extends FHIRBackboneElement
      * Validation map for fields in type SubstancePolymer.Repeat
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstancePolymerRepeat Constructor
@@ -244,16 +240,16 @@ class FHIRSubstancePolymerRepeat extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumberOfUnits(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numberOfUnits = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumberOfUnits(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numberOfUnits = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $numberOfUnits && !($numberOfUnits instanceof FHIRInteger)) {
             $numberOfUnits = new FHIRInteger($numberOfUnits);
         }
         $this->_trackValueSet($this->numberOfUnits, $numberOfUnits);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_UNITS])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_UNITS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUMBER_OF_UNITS])) {
+            $this->_xmlLocations[self::FIELD_NUMBER_OF_UNITS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_UNITS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NUMBER_OF_UNITS][0] = $xmlLocation;
         $this->numberOfUnits = $numberOfUnits;
         return $this;
     }
@@ -283,16 +279,16 @@ class FHIRSubstancePolymerRepeat extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAverageMolecularFormula(null|string|FHIRStringPrimitive|FHIRString $averageMolecularFormula = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAverageMolecularFormula(null|string|FHIRStringPrimitive|FHIRString $averageMolecularFormula = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $averageMolecularFormula && !($averageMolecularFormula instanceof FHIRString)) {
             $averageMolecularFormula = new FHIRString($averageMolecularFormula);
         }
         $this->_trackValueSet($this->averageMolecularFormula, $averageMolecularFormula);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA])) {
-            $this->_primitiveXmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA])) {
+            $this->_xmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA][0] = $xmlLocation;
         $this->averageMolecularFormula = $averageMolecularFormula;
         return $this;
     }
@@ -360,6 +356,29 @@ class FHIRSubstancePolymerRepeat extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->repeatUnit[] = $repeatUnit;
+        return $this;
+    }
+
+    /**
+     * Todo.
+     *
+     * Todo.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstancePolymer\FHIRSubstancePolymerRepeatUnit ...$repeatUnit
+     * @return static
+     */
+    public function setRepeatUnit(FHIRSubstancePolymerRepeatUnit ...$repeatUnit): self
+    {
+        if ([] !== $this->repeatUnit) {
+            $this->_trackValuesRemoved(count($this->repeatUnit));
+            $this->repeatUnit = [];
+        }
+        if ([] === $repeatUnit) {
+            return $this;
+        }
+        foreach($repeatUnit as $v) {
+            $this->addRepeatUnit($v);
+        }
         return $this;
     }
 
@@ -597,22 +616,22 @@ class FHIRSubstancePolymerRepeat extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstancePolymerRepeat', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_UNITS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_UNITS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getNumberOfUnits())) {
             $xw->writeAttribute(self::FIELD_NUMBER_OF_UNITS, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAverageMolecularFormula())) {
             $xw->writeAttribute(self::FIELD_AVERAGE_MOLECULAR_FORMULA, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_UNITS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_UNITS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getNumberOfUnits())) {
             $xw->startElement(self::FIELD_NUMBER_OF_UNITS);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AVERAGE_MOLECULAR_FORMULA] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAverageMolecularFormula())) {
             $xw->startElement(self::FIELD_AVERAGE_MOLECULAR_FORMULA);
             $v->xmlSerialize($xw, $config);

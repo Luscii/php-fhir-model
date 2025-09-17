@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInvoice;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ class FHIRInvoiceLineItem extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Sequence in which the items appear on the invoice.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $sequence = null;
@@ -112,7 +111,6 @@ class FHIRInvoiceLineItem extends FHIRBackboneElement
      * The ChargeItem contains information such as the billing code, date, amount etc.
      * If no further details are required for the lineItem, inline billing codes can be
      * added using the CodeableConcept data type instead of the Reference.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $chargeItemReference = null;
@@ -125,7 +123,6 @@ class FHIRInvoiceLineItem extends FHIRBackboneElement
      * The ChargeItem contains information such as the billing code, date, amount etc.
      * If no further details are required for the lineItem, inline billing codes can be
      * added using the CodeableConcept data type instead of the Reference.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $chargeItemCodeableConcept = null;
@@ -139,7 +136,6 @@ class FHIRInvoiceLineItem extends FHIRBackboneElement
      * code is currently under development. The priceComponent element can be used to
      * offer transparency to the recipient of the Invoice as to how the prices have
      * been calculated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoicePriceComponent[]
      */
     protected null|array $priceComponent = [];
@@ -148,10 +144,17 @@ class FHIRInvoiceLineItem extends FHIRBackboneElement
      * Validation map for fields in type Invoice.LineItem
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CHARGE_ITEM_CODEABLE_CONCEPT => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_CHARGE_ITEM_REFERENCE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRInvoiceLineItem Constructor
@@ -244,16 +247,16 @@ class FHIRInvoiceLineItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSequence(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $sequence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSequence(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $sequence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $sequence && !($sequence instanceof FHIRPositiveInt)) {
             $sequence = new FHIRPositiveInt($sequence);
         }
         $this->_trackValueSet($this->sequence, $sequence);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SEQUENCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SEQUENCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SEQUENCE])) {
+            $this->_xmlLocations[self::FIELD_SEQUENCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SEQUENCE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SEQUENCE][0] = $xmlLocation;
         $this->sequence = $sequence;
         return $this;
     }
@@ -375,6 +378,35 @@ class FHIRInvoiceLineItem extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->priceComponent[] = $priceComponent;
+        return $this;
+    }
+
+    /**
+     * Invoice containing collected ChargeItems from an Account with calculated
+     * individual and total price for Billing purpose.
+     *
+     * The price for a ChargeItem may be calculated as a base price with
+     * surcharges/deductions that apply in certain conditions. A ChargeItemDefinition
+     * resource that defines the prices, factors and conditions that apply to a billing
+     * code is currently under development. The priceComponent element can be used to
+     * offer transparency to the recipient of the Invoice as to how the prices have
+     * been calculated.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInvoice\FHIRInvoicePriceComponent ...$priceComponent
+     * @return static
+     */
+    public function setPriceComponent(FHIRInvoicePriceComponent ...$priceComponent): self
+    {
+        if ([] !== $this->priceComponent) {
+            $this->_trackValuesRemoved(count($this->priceComponent));
+            $this->priceComponent = [];
+        }
+        if ([] === $priceComponent) {
+            return $this;
+        }
+        foreach($priceComponent as $v) {
+            $this->addPriceComponent($v);
+        }
         return $this;
     }
 
@@ -604,12 +636,12 @@ class FHIRInvoiceLineItem extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'InvoiceLineItem', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEQUENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEQUENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getSequence())) {
             $xw->writeAttribute(self::FIELD_SEQUENCE, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SEQUENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SEQUENCE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getSequence())) {
             $xw->startElement(self::FIELD_SEQUENCE);
             $v->xmlSerialize($xw, $config);

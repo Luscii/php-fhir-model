@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityReq
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,7 +112,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      *
      * Exceptions, special conditions and supporting information applicable for this
      * service or product line.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPositiveInt[]
      */
     protected null|array $supportingInfoSequence = [];
@@ -124,7 +123,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      *
      * Code to identify the general type of benefits under which products and services
      * are provided.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $category = null;
@@ -135,7 +133,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * This contains the product, service, drug or other billing code for the item.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $productOrService = null;
@@ -147,7 +144,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      *
      * Item typification or modifiers codes to convey additional context for the
      * product or service.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $modifier = [];
@@ -158,7 +154,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      *
      * The practitioner who is responsible for the product or service to be rendered to
      * the patient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $provider = null;
@@ -170,7 +165,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The number of repetitions of a service or product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $quantity = null;
@@ -180,7 +174,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The amount charged to the patient by the provider for a single unit.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMoney
      */
     protected null|FHIRMoney $unitPrice = null;
@@ -190,7 +183,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Facility where the services will be provided.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $facility = null;
@@ -202,7 +194,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      * of the policy.
      *
      * Patient diagnosis for which care is sought.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityRequest\FHIRCoverageEligibilityRequestDiagnosis[]
      */
     protected null|array $diagnosis = [];
@@ -212,7 +203,6 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The plan/proposal/order describing the proposed service in detail.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $detail = [];
@@ -221,10 +211,10 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      * Validation map for fields in type CoverageEligibilityRequest.Item
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRCoverageEligibilityRequestItem Constructor
@@ -392,16 +382,20 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addSupportingInfoSequence(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $supportingInfoSequence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addSupportingInfoSequence(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $supportingInfoSequence = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $supportingInfoSequence && !($supportingInfoSequence instanceof FHIRPositiveInt)) {
             $supportingInfoSequence = new FHIRPositiveInt($supportingInfoSequence);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE])) {
+            $this->_xmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE]) {
+            $this->_xmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->supportingInfoSequence[] = $supportingInfoSequence;
         return $this;
     }
@@ -418,9 +412,9 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSupportingInfoSequence(array $supportingInfoSequence = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSupportingInfoSequence(array $supportingInfoSequence = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE]);
+        unset($this->_xmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE]);
         if ([] !== $this->supportingInfoSequence) {
             $this->_trackValuesRemoved(count($this->supportingInfoSequence));
             $this->supportingInfoSequence = [];
@@ -547,6 +541,33 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->modifier[] = $modifier;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Item typification or modifiers codes to convey additional context for the
+     * product or service.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$modifier
+     * @return static
+     */
+    public function setModifier(FHIRCodeableConcept ...$modifier): self
+    {
+        if ([] !== $this->modifier) {
+            $this->_trackValuesRemoved(count($this->modifier));
+            $this->modifier = [];
+        }
+        if ([] === $modifier) {
+            return $this;
+        }
+        foreach($modifier as $v) {
+            $this->addModifier($v);
+        }
         return $this;
     }
 
@@ -731,6 +752,33 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
     }
 
     /**
+     * The CoverageEligibilityRequest provides patient and insurance coverage
+     * information to an insurer for them to respond, in the form of an
+     * CoverageEligibilityResponse, with information regarding whether the stated
+     * coverage is valid and in-force and optionally to provide the insurance details
+     * of the policy.
+     *
+     * Patient diagnosis for which care is sought.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRCoverageEligibilityRequest\FHIRCoverageEligibilityRequestDiagnosis ...$diagnosis
+     * @return static
+     */
+    public function setDiagnosis(FHIRCoverageEligibilityRequestDiagnosis ...$diagnosis): self
+    {
+        if ([] !== $this->diagnosis) {
+            $this->_trackValuesRemoved(count($this->diagnosis));
+            $this->diagnosis = [];
+        }
+        if ([] === $diagnosis) {
+            return $this;
+        }
+        foreach($diagnosis as $v) {
+            $this->addDiagnosis($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -761,6 +809,31 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->detail[] = $detail;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The plan/proposal/order describing the proposed service in detail.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$detail
+     * @return static
+     */
+    public function setDetail(FHIRReference ...$detail): self
+    {
+        if ([] !== $this->detail) {
+            $this->_trackValuesRemoved(count($this->detail));
+            $this->detail = [];
+        }
+        if ([] === $detail) {
+            return $this;
+        }
+        foreach($detail as $v) {
+            $this->addDetail($v);
+        }
         return $this;
     }
 
@@ -1105,14 +1178,14 @@ class FHIRCoverageEligibilityRequestItem extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'CoverageEligibilityRequestItem', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getSupportingInfoSequence())) {
             $xw->writeAttribute(self::FIELD_SUPPORTING_INFO_SEQUENCE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getSupportingInfoSequence()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_SUPPORTING_INFO_SEQUENCE, $vs[$idx]->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SUPPORTING_INFO_SEQUENCE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getSupportingInfoSequence())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

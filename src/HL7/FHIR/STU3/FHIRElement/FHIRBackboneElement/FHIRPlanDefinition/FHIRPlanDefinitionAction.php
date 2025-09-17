@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -153,7 +153,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A user-visible label for the action.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $label = null;
@@ -163,7 +162,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The title of the action displayed to a user.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $title = null;
@@ -174,7 +172,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      *
      * A short description of the action used to provide a summary to display to the
      * user.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -186,7 +183,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * A text equivalent of the action to be performed. This provides a
      * human-interpretable description of the action when the definition is consumed by
      * a system that may not be capable of interpreting it dynamically.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $textEquivalent = null;
@@ -198,7 +194,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      *
      * A code that provides meaning for the action or action group. For example, a
      * section may have a LOINC code for a the section of a documentation template.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $code = [];
@@ -209,7 +204,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A description of why this action is necessary or appropriate.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $reason = [];
@@ -222,7 +216,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * Didactic or other informational resources associated with the action that can be
      * provided to the CDS recipient. Information resources can include inline text
      * commentary and links to web resources.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRelatedArtifact[]
      */
     protected null|array $documentation = [];
@@ -236,7 +229,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      *
      * Identifies goals that this action supports. The reference must be to a goal
      * element defined within this plan definition.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRId[]
      */
     protected null|array $goalId = [];
@@ -246,7 +238,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A description of when the action should be triggered.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTriggerDefinition[]
      */
     protected null|array $triggerDefinition = [];
@@ -258,7 +249,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      *
      * An expression that describes applicability criteria, or start/stop conditions
      * for the action.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionCondition[]
      */
     protected null|array $condition = [];
@@ -269,7 +259,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Defines input data requirements for the action.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement[]
      */
     protected null|array $input = [];
@@ -280,7 +269,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Defines the outputs of the action, if any.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement[]
      */
     protected null|array $output = [];
@@ -292,7 +280,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      *
      * A relationship to another action such as "before" or "30-60 minutes after start
      * of".
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionRelatedAction[]
      */
     protected null|array $relatedAction = [];
@@ -305,7 +292,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * An optional value describing when the action should be performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $timingDateTime = null;
@@ -315,7 +301,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * An optional value describing when the action should be performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $timingPeriod = null;
@@ -325,7 +310,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * An optional value describing when the action should be performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $timingDuration = null;
@@ -335,7 +319,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * An optional value describing when the action should be performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $timingRange = null;
@@ -349,7 +332,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * An optional value describing when the action should be performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRTiming
      */
     protected null|FHIRTiming $timingTiming = null;
@@ -360,7 +342,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * support rules, order sets and protocols.
      *
      * Indicates who should participate in performing the action described.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionParticipant[]
      */
     protected null|array $participant = [];
@@ -370,7 +351,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The type of action to perform (create, update, remove).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCoding
      */
     protected null|FHIRCoding $type = null;
@@ -379,7 +359,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Defines the grouping behavior for the action and its children.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRActionGroupingBehavior
      */
     protected null|FHIRActionGroupingBehavior $groupingBehavior = null;
@@ -388,7 +367,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Defines the selection behavior for the action and its children.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRActionSelectionBehavior
      */
     protected null|FHIRActionSelectionBehavior $selectionBehavior = null;
@@ -397,7 +375,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Defines the requiredness behavior for the action.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRActionRequiredBehavior
      */
     protected null|FHIRActionRequiredBehavior $requiredBehavior = null;
@@ -406,7 +383,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Defines whether the action should usually be preselected.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRActionPrecheckBehavior
      */
     protected null|FHIRActionPrecheckBehavior $precheckBehavior = null;
@@ -416,7 +392,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Defines whether the action can be selected multiple times.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRActionCardinalityBehavior
      */
     protected null|FHIRActionCardinalityBehavior $cardinalityBehavior = null;
@@ -427,7 +402,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      *
      * A reference to an ActivityDefinition that describes the action to be taken in
      * detail, or a PlanDefinition that describes a series of actions to be taken.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $definition = null;
@@ -439,7 +413,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * A reference to a StructureMap resource that defines a transform that can be
      * executed to produce the intent resource using the ActivityDefinition instance as
      * the input.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $transform = null;
@@ -453,7 +426,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * example, if the dosage of a medication must be computed based on the patient's
      * weight, a customization would be used to specify an expression that calculated
      * the weight, and the path on the resource that would contain the result.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionDynamicValue[]
      */
     protected null|array $dynamicValue = [];
@@ -467,7 +439,6 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * determines the functionality of the sub-actions. For example, a selection
      * behavior of at-most-one indicates that of the sub-actions, at most one may be
      * chosen as part of realizing the action definition.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionAction[]
      */
     protected null|array $action = [];
@@ -476,10 +447,10 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * Validation map for fields in type PlanDefinition.Action
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRPlanDefinitionAction Constructor
@@ -942,16 +913,16 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLabel(null|string|FHIRStringPrimitive|FHIRString $label = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLabel(null|string|FHIRStringPrimitive|FHIRString $label = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $label && !($label instanceof FHIRString)) {
             $label = new FHIRString($label);
         }
         $this->_trackValueSet($this->label, $label);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LABEL])) {
-            $this->_primitiveXmlLocations[self::FIELD_LABEL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LABEL])) {
+            $this->_xmlLocations[self::FIELD_LABEL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LABEL][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LABEL][0] = $xmlLocation;
         $this->label = $label;
         return $this;
     }
@@ -981,16 +952,16 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
         }
         $this->_trackValueSet($this->title, $title);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TITLE])) {
-            $this->_primitiveXmlLocations[self::FIELD_TITLE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TITLE])) {
+            $this->_xmlLocations[self::FIELD_TITLE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TITLE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TITLE][0] = $xmlLocation;
         $this->title = $title;
         return $this;
     }
@@ -1022,16 +993,16 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -1065,16 +1036,16 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTextEquivalent(null|string|FHIRStringPrimitive|FHIRString $textEquivalent = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTextEquivalent(null|string|FHIRStringPrimitive|FHIRString $textEquivalent = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $textEquivalent && !($textEquivalent instanceof FHIRString)) {
             $textEquivalent = new FHIRString($textEquivalent);
         }
         $this->_trackValueSet($this->textEquivalent, $textEquivalent);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TEXT_EQUIVALENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_TEXT_EQUIVALENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TEXT_EQUIVALENT])) {
+            $this->_xmlLocations[self::FIELD_TEXT_EQUIVALENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TEXT_EQUIVALENT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TEXT_EQUIVALENT][0] = $xmlLocation;
         $this->textEquivalent = $textEquivalent;
         return $this;
     }
@@ -1123,6 +1094,33 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * A code that provides meaning for the action or action group. For example, a
+     * section may have a LOINC code for a the section of a documentation template.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$code
+     * @return static
+     */
+    public function setCode(FHIRCodeableConcept ...$code): self
+    {
+        if ([] !== $this->code) {
+            $this->_trackValuesRemoved(count($this->code));
+            $this->code = [];
+        }
+        if ([] === $code) {
+            return $this;
+        }
+        foreach($code as $v) {
+            $this->addCode($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * A description of why this action is necessary or appropriate.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
@@ -1150,6 +1148,32 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->reason[] = $reason;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A description of why this action is necessary or appropriate.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$reason
+     * @return static
+     */
+    public function setReason(FHIRCodeableConcept ...$reason): self
+    {
+        if ([] !== $this->reason) {
+            $this->_trackValuesRemoved(count($this->reason));
+            $this->reason = [];
+        }
+        if ([] === $reason) {
+            return $this;
+        }
+        foreach($reason as $v) {
+            $this->addReason($v);
+        }
         return $this;
     }
 
@@ -1194,6 +1218,34 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
     }
 
     /**
+     * Related artifacts such as additional documentation, justification, or
+     * bibliographic references.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Didactic or other informational resources associated with the action that can be
+     * provided to the CDS recipient. Information resources can include inline text
+     * commentary and links to web resources.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRRelatedArtifact ...$documentation
+     * @return static
+     */
+    public function setDocumentation(FHIRRelatedArtifact ...$documentation): self
+    {
+        if ([] !== $this->documentation) {
+            $this->_trackValuesRemoved(count($this->documentation));
+            $this->documentation = [];
+        }
+        if ([] === $documentation) {
+            return $this;
+        }
+        foreach($documentation as $v) {
+            $this->addDocumentation($v);
+        }
+        return $this;
+    }
+
+    /**
      * Any combination of letters, numerals, "-" and ".", with a length limit of 64
      * characters. (This might be an integer, an unprefixed OID, UUID or any other
      * identifier pattern that meets these constraints.) Ids are case-insensitive.
@@ -1226,16 +1278,20 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addGoalId(null|string|FHIRIdPrimitive|FHIRId $goalId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addGoalId(null|string|FHIRIdPrimitive|FHIRId $goalId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $goalId && !($goalId instanceof FHIRId)) {
             $goalId = new FHIRId($goalId);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_GOAL_ID])) {
-            $this->_primitiveXmlLocations[self::FIELD_GOAL_ID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_GOAL_ID])) {
+            $this->_xmlLocations[self::FIELD_GOAL_ID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_GOAL_ID][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_GOAL_ID]) {
+            $this->_xmlLocations[self::FIELD_GOAL_ID][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_GOAL_ID][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->goalId[] = $goalId;
         return $this;
     }
@@ -1255,9 +1311,9 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setGoalId(array $goalId = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setGoalId(array $goalId = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_GOAL_ID]);
+        unset($this->_xmlLocations[self::FIELD_GOAL_ID]);
         if ([] !== $this->goalId) {
             $this->_trackValuesRemoved(count($this->goalId));
             $this->goalId = [];
@@ -1310,6 +1366,31 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
     }
 
     /**
+     * A description of a triggering event.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A description of when the action should be triggered.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRTriggerDefinition ...$triggerDefinition
+     * @return static
+     */
+    public function setTriggerDefinition(FHIRTriggerDefinition ...$triggerDefinition): self
+    {
+        if ([] !== $this->triggerDefinition) {
+            $this->_trackValuesRemoved(count($this->triggerDefinition));
+            $this->triggerDefinition = [];
+        }
+        if ([] === $triggerDefinition) {
+            return $this;
+        }
+        foreach($triggerDefinition as $v) {
+            $this->addTriggerDefinition($v);
+        }
+        return $this;
+    }
+
+    /**
      * This resource allows for the definition of various types of plans as a sharable,
      * consumable, and executable artifact. The resource is general enough to support
      * the description of a broad range of clinical artifacts such as clinical decision
@@ -1344,6 +1425,33 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->condition[] = $condition;
+        return $this;
+    }
+
+    /**
+     * This resource allows for the definition of various types of plans as a sharable,
+     * consumable, and executable artifact. The resource is general enough to support
+     * the description of a broad range of clinical artifacts such as clinical decision
+     * support rules, order sets and protocols.
+     *
+     * An expression that describes applicability criteria, or start/stop conditions
+     * for the action.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionCondition ...$condition
+     * @return static
+     */
+    public function setCondition(FHIRPlanDefinitionCondition ...$condition): self
+    {
+        if ([] !== $this->condition) {
+            $this->_trackValuesRemoved(count($this->condition));
+            $this->condition = [];
+        }
+        if ([] === $condition) {
+            return $this;
+        }
+        foreach($condition as $v) {
+            $this->addCondition($v);
+        }
         return $this;
     }
 
@@ -1389,6 +1497,32 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Defines input data requirements for the action.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement ...$input
+     * @return static
+     */
+    public function setInput(FHIRDataRequirement ...$input): self
+    {
+        if ([] !== $this->input) {
+            $this->_trackValuesRemoved(count($this->input));
+            $this->input = [];
+        }
+        if ([] === $input) {
+            return $this;
+        }
+        foreach($input as $v) {
+            $this->addInput($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Defines the outputs of the action, if any.
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement[]
@@ -1416,6 +1550,32 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->output[] = $output;
+        return $this;
+    }
+
+    /**
+     * Describes a required data item for evaluation in terms of the type of data, and
+     * optional code or date-based filters of the data.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Defines the outputs of the action, if any.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRDataRequirement ...$output
+     * @return static
+     */
+    public function setOutput(FHIRDataRequirement ...$output): self
+    {
+        if ([] !== $this->output) {
+            $this->_trackValuesRemoved(count($this->output));
+            $this->output = [];
+        }
+        if ([] === $output) {
+            return $this;
+        }
+        foreach($output as $v) {
+            $this->addOutput($v);
+        }
         return $this;
     }
 
@@ -1458,6 +1618,33 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
     }
 
     /**
+     * This resource allows for the definition of various types of plans as a sharable,
+     * consumable, and executable artifact. The resource is general enough to support
+     * the description of a broad range of clinical artifacts such as clinical decision
+     * support rules, order sets and protocols.
+     *
+     * A relationship to another action such as "before" or "30-60 minutes after start
+     * of".
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionRelatedAction ...$relatedAction
+     * @return static
+     */
+    public function setRelatedAction(FHIRPlanDefinitionRelatedAction ...$relatedAction): self
+    {
+        if ([] !== $this->relatedAction) {
+            $this->_trackValuesRemoved(count($this->relatedAction));
+            $this->relatedAction = [];
+        }
+        if ([] === $relatedAction) {
+            return $this;
+        }
+        foreach($relatedAction as $v) {
+            $this->addRelatedAction($v);
+        }
+        return $this;
+    }
+
+    /**
      * A date, date-time or partial date (e.g. just year or year + month). If hours and
      * minutes are specified, a time zone SHALL be populated. The format is a union of
      * the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided
@@ -1488,16 +1675,16 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTimingDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $timingDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTimingDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $timingDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $timingDateTime && !($timingDateTime instanceof FHIRDateTime)) {
             $timingDateTime = new FHIRDateTime($timingDateTime);
         }
         $this->_trackValueSet($this->timingDateTime, $timingDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TIMING_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_TIMING_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TIMING_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_TIMING_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TIMING_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TIMING_DATE_TIME][0] = $xmlLocation;
         $this->timingDateTime = $timingDateTime;
         return $this;
     }
@@ -1679,6 +1866,32 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->participant[] = $participant;
+        return $this;
+    }
+
+    /**
+     * This resource allows for the definition of various types of plans as a sharable,
+     * consumable, and executable artifact. The resource is general enough to support
+     * the description of a broad range of clinical artifacts such as clinical decision
+     * support rules, order sets and protocols.
+     *
+     * Indicates who should participate in performing the action described.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionParticipant ...$participant
+     * @return static
+     */
+    public function setParticipant(FHIRPlanDefinitionParticipant ...$participant): self
+    {
+        if ([] !== $this->participant) {
+            $this->_trackValuesRemoved(count($this->participant));
+            $this->participant = [];
+        }
+        if ([] === $participant) {
+            return $this;
+        }
+        foreach($participant as $v) {
+            $this->addParticipant($v);
+        }
         return $this;
     }
 
@@ -2000,6 +2213,35 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
      * the description of a broad range of clinical artifacts such as clinical decision
      * support rules, order sets and protocols.
      *
+     * Customizations that should be applied to the statically defined resource. For
+     * example, if the dosage of a medication must be computed based on the patient's
+     * weight, a customization would be used to specify an expression that calculated
+     * the weight, and the path on the resource that would contain the result.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionDynamicValue ...$dynamicValue
+     * @return static
+     */
+    public function setDynamicValue(FHIRPlanDefinitionDynamicValue ...$dynamicValue): self
+    {
+        if ([] !== $this->dynamicValue) {
+            $this->_trackValuesRemoved(count($this->dynamicValue));
+            $this->dynamicValue = [];
+        }
+        if ([] === $dynamicValue) {
+            return $this;
+        }
+        foreach($dynamicValue as $v) {
+            $this->addDynamicValue($v);
+        }
+        return $this;
+    }
+
+    /**
+     * This resource allows for the definition of various types of plans as a sharable,
+     * consumable, and executable artifact. The resource is general enough to support
+     * the description of a broad range of clinical artifacts such as clinical decision
+     * support rules, order sets and protocols.
+     *
      * Sub actions that are contained within the action. The behavior of this action
      * determines the functionality of the sub-actions. For example, a selection
      * behavior of at-most-one indicates that of the sub-actions, at most one may be
@@ -2033,6 +2275,35 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->action[] = $action;
+        return $this;
+    }
+
+    /**
+     * This resource allows for the definition of various types of plans as a sharable,
+     * consumable, and executable artifact. The resource is general enough to support
+     * the description of a broad range of clinical artifacts such as clinical decision
+     * support rules, order sets and protocols.
+     *
+     * Sub actions that are contained within the action. The behavior of this action
+     * determines the functionality of the sub-actions. For example, a selection
+     * behavior of at-most-one indicates that of the sub-actions, at most one may be
+     * chosen as part of realizing the action definition.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRPlanDefinition\FHIRPlanDefinitionAction ...$action
+     * @return static
+     */
+    public function setAction(FHIRPlanDefinitionAction ...$action): self
+    {
+        if ([] !== $this->action) {
+            $this->_trackValuesRemoved(count($this->action));
+            $this->action = [];
+        }
+        if ([] === $action) {
+            return $this;
+        }
+        foreach($action as $v) {
+            $this->addAction($v);
+        }
         return $this;
     }
 
@@ -2794,52 +3065,52 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'PlanDefinitionAction', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LABEL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LABEL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLabel())) {
             $xw->writeAttribute(self::FIELD_LABEL, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TITLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTitle())) {
             $xw->writeAttribute(self::FIELD_TITLE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TEXT_EQUIVALENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TEXT_EQUIVALENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTextEquivalent())) {
             $xw->writeAttribute(self::FIELD_TEXT_EQUIVALENT, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_GOAL_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_GOAL_ID] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getGoalId())) {
             $xw->writeAttribute(self::FIELD_GOAL_ID, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getGoalId()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_GOAL_ID, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIMING_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIMING_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTimingDateTime())) {
             $xw->writeAttribute(self::FIELD_TIMING_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LABEL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LABEL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLabel())) {
             $xw->startElement(self::FIELD_LABEL);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TITLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTitle())) {
             $xw->startElement(self::FIELD_TITLE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TEXT_EQUIVALENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TEXT_EQUIVALENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTextEquivalent())) {
             $xw->startElement(self::FIELD_TEXT_EQUIVALENT);
             $v->xmlSerialize($xw, $config);
@@ -2860,7 +3131,7 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_GOAL_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_GOAL_ID] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getGoalId())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -2895,7 +3166,7 @@ class FHIRPlanDefinitionAction extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TIMING_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TIMING_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTimingDateTime())) {
             $xw->startElement(self::FIELD_TIMING_DATE_TIME);
             $v->xmlSerialize($xw, $config);

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -116,7 +116,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * unit of measurement The unit of measurement shall be specified in accordance
      * with ISO 11240 and the resulting terminology The symbol and the symbol
      * identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $height = null;
@@ -131,7 +130,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * unit of measurement The unit of measurement shall be specified in accordance
      * with ISO 11240 and the resulting terminology The symbol and the symbol
      * identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $width = null;
@@ -146,7 +144,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * unit of measurement The unit of measurement shall be specified in accordance
      * with ISO 11240 and the resulting terminology The symbol and the symbol
      * identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $depth = null;
@@ -161,7 +158,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * unit of measurement The unit of measurement shall be specified in accordance
      * with ISO 11240 and the resulting terminology The symbol and the symbol
      * identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $weight = null;
@@ -176,7 +172,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * and its unit of measurement The unit of measurement shall be specified in
      * accordance with ISO 11240 and the resulting terminology The symbol and the
      * symbol identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $nominalVolume = null;
@@ -191,7 +186,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * and its unit of measurement The unit of measurement shall be specified in
      * accordance with ISO 11240 and the resulting terminology The symbol and the
      * symbol identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $externalDiameter = null;
@@ -202,7 +196,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      *
      * Where applicable, the shape can be specified An appropriate controlled
      * vocabulary shall be used The term and the term identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $shape = null;
@@ -213,7 +206,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      *
      * Where applicable, the color can be specified An appropriate controlled
      * vocabulary shall be used The term and the term identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $color = [];
@@ -223,7 +215,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Where applicable, the imprint can be specified as text.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $imprint = [];
@@ -234,7 +225,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      *
      * Where applicable, the image can be provided The format of the image attachment
      * shall be specified by regional implementations.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment[]
      */
     protected null|array $image = [];
@@ -246,7 +236,6 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      *
      * Where applicable, the scoring can be specified An appropriate controlled
      * vocabulary shall be used The term and the term identifier shall be used.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $scoring = null;
@@ -255,10 +244,10 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * Validation map for fields in type ProdCharacteristic
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRProdCharacteristic Constructor
@@ -716,16 +705,16 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setShape(null|string|FHIRStringPrimitive|FHIRString $shape = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setShape(null|string|FHIRStringPrimitive|FHIRString $shape = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $shape && !($shape instanceof FHIRString)) {
             $shape = new FHIRString($shape);
         }
         $this->_trackValueSet($this->shape, $shape);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SHAPE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SHAPE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SHAPE])) {
+            $this->_xmlLocations[self::FIELD_SHAPE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SHAPE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_SHAPE][0] = $xmlLocation;
         $this->shape = $shape;
         return $this;
     }
@@ -757,16 +746,20 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addColor(null|string|FHIRStringPrimitive|FHIRString $color = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addColor(null|string|FHIRStringPrimitive|FHIRString $color = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $color && !($color instanceof FHIRString)) {
             $color = new FHIRString($color);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_COLOR])) {
-            $this->_primitiveXmlLocations[self::FIELD_COLOR] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_COLOR])) {
+            $this->_xmlLocations[self::FIELD_COLOR] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_COLOR][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_COLOR]) {
+            $this->_xmlLocations[self::FIELD_COLOR][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_COLOR][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->color[] = $color;
         return $this;
     }
@@ -783,9 +776,9 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setColor(array $color = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setColor(array $color = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_COLOR]);
+        unset($this->_xmlLocations[self::FIELD_COLOR]);
         if ([] !== $this->color) {
             $this->_trackValuesRemoved(count($this->color));
             $this->color = [];
@@ -828,16 +821,20 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addImprint(null|string|FHIRStringPrimitive|FHIRString $imprint = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addImprint(null|string|FHIRStringPrimitive|FHIRString $imprint = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $imprint && !($imprint instanceof FHIRString)) {
             $imprint = new FHIRString($imprint);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_IMPRINT])) {
-            $this->_primitiveXmlLocations[self::FIELD_IMPRINT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_IMPRINT])) {
+            $this->_xmlLocations[self::FIELD_IMPRINT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_IMPRINT][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_IMPRINT]) {
+            $this->_xmlLocations[self::FIELD_IMPRINT][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_IMPRINT][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->imprint[] = $imprint;
         return $this;
     }
@@ -853,9 +850,9 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setImprint(array $imprint = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setImprint(array $imprint = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_IMPRINT]);
+        unset($this->_xmlLocations[self::FIELD_IMPRINT]);
         if ([] !== $this->imprint) {
             $this->_trackValuesRemoved(count($this->imprint));
             $this->imprint = [];
@@ -906,6 +903,32 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->image[] = $image;
+        return $this;
+    }
+
+    /**
+     * For referring to data content defined in other formats.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Where applicable, the image can be provided The format of the image attachment
+     * shall be specified by regional implementations.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRAttachment ...$image
+     * @return static
+     */
+    public function setImage(FHIRAttachment ...$image): self
+    {
+        if ([] !== $this->image) {
+            $this->_trackValuesRemoved(count($this->image));
+            $this->image = [];
+        }
+        if ([] === $image) {
+            return $this;
+        }
+        foreach($image as $v) {
+            $this->addImage($v);
+        }
         return $this;
     }
 
@@ -1316,17 +1339,17 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ProdCharacteristic', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SHAPE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SHAPE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getShape())) {
             $xw->writeAttribute(self::FIELD_SHAPE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COLOR] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COLOR] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getColor())) {
             $xw->writeAttribute(self::FIELD_COLOR, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getColor()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_COLOR, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IMPRINT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IMPRINT] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getImprint())) {
             $xw->writeAttribute(self::FIELD_IMPRINT, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getImprint()) && isset($vs[$idx])) {
@@ -1363,13 +1386,13 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SHAPE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SHAPE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getShape())) {
             $xw->startElement(self::FIELD_SHAPE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COLOR] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COLOR] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getColor())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1379,7 +1402,7 @@ class FHIRProdCharacteristic extends FHIRBackboneElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IMPRINT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IMPRINT] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getImprint())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -142,7 +142,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * A version-independent identifier for the Composition. This identifier stays
      * constant as the composition is changed over time.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -152,7 +151,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * The workflow/clinical status of this composition. The status is a marker for the
      * clinical standing of the document.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCompositionStatus
      */
     protected null|FHIRCompositionStatus $status = null;
@@ -165,7 +163,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * Specifies the particular kind of composition (e.g. History and Physical,
      * Discharge Summary, Progress Note). This usually equates to the purpose of making
      * the composition.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -178,7 +175,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * A categorization for the type of the composition - helps for indexing and
      * searching. This may be implied by or derived from the code specified in the
      * Composition Type.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $category = [];
@@ -191,7 +187,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * (patient or healthcare practitioner), a device (e.g. a machine) or even a group
      * of subjects (such as a document about a herd of livestock, or a set of patients
      * that share a common exposure).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -202,7 +197,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * Describes the clinical encounter or type of care this documentation is
      * associated with.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $encounter = null;
@@ -216,7 +210,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * The composition editing time, when the composition was last logically changed by
      * the author.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $date = null;
@@ -227,7 +220,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * Identifies who is responsible for the information in the composition, not
      * necessarily who typed it in.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $author = [];
@@ -237,7 +229,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Official human-readable label for the composition.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $title = null;
@@ -246,7 +237,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The code specifying the level of confidentiality of the Composition.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRVConfidentialityClassification
      */
     protected null|FHIRVConfidentialityClassification $confidentiality = null;
@@ -262,7 +252,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * Patient, Practitioner, Encounter, etc.).
      *
      * A participant who has attested to the accuracy of the composition/document.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionAttester[]
      */
     protected null|array $attester = [];
@@ -273,7 +262,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * Identifies the organization or group who is responsible for ongoing maintenance
      * of and access to the composition/document information.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $custodian = null;
@@ -290,7 +278,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * Relationships that this composition has with other compositions or documents
      * that already exist.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionRelatesTo[]
      */
     protected null|array $relatesTo = [];
@@ -307,7 +294,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      *
      * The clinical service, such as a colonoscopy or an appendectomy, being
      * documented.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionEvent[]
      */
     protected null|array $event = [];
@@ -323,7 +309,6 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * Patient, Practitioner, Encounter, etc.).
      *
      * The root of the sections that make up the composition.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionSection[]
      */
     protected null|array $section = [];
@@ -336,10 +321,22 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
         self::FIELD_AUTHOR => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
+        self::FIELD_DATE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_TITLE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRComposition Constructor
@@ -715,6 +712,34 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A categorization for the type of the composition - helps for indexing and
+     * searching. This may be implied by or derived from the code specified in the
+     * Composition Type.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$category
+     * @return static
+     */
+    public function setCategory(FHIRCodeableConcept ...$category): self
+    {
+        if ([] !== $this->category) {
+            $this->_trackValuesRemoved(count($this->category));
+            $this->category = [];
+        }
+        if ([] === $category) {
+            return $this;
+        }
+        foreach($category as $v) {
+            $this->addCategory($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -823,16 +848,16 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
         }
         $this->_trackValueSet($this->date, $date);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DATE])) {
+            $this->_xmlLocations[self::FIELD_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DATE][0] = $xmlLocation;
         $this->date = $date;
         return $this;
     }
@@ -874,6 +899,32 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Identifies who is responsible for the information in the composition, not
+     * necessarily who typed it in.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$author
+     * @return static
+     */
+    public function setAuthor(FHIRReference ...$author): self
+    {
+        if ([] !== $this->author) {
+            $this->_trackValuesRemoved(count($this->author));
+            $this->author = [];
+        }
+        if ([] === $author) {
+            return $this;
+        }
+        foreach($author as $v) {
+            $this->addAuthor($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -898,16 +949,16 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTitle(null|string|FHIRStringPrimitive|FHIRString $title = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $title && !($title instanceof FHIRString)) {
             $title = new FHIRString($title);
         }
         $this->_trackValueSet($this->title, $title);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TITLE])) {
-            $this->_primitiveXmlLocations[self::FIELD_TITLE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TITLE])) {
+            $this->_xmlLocations[self::FIELD_TITLE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TITLE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_TITLE][0] = $xmlLocation;
         $this->title = $title;
         return $this;
     }
@@ -987,6 +1038,37 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
         }
         $this->_trackValueAdded();
         $this->attester[] = $attester;
+        return $this;
+    }
+
+    /**
+     * A set of healthcare-related information that is assembled together into a single
+     * logical package that provides a single coherent statement of meaning,
+     * establishes its own context and that has clinical attestation with regard to who
+     * is making the statement. A Composition defines the structure and narrative
+     * content necessary for a document. However, a Composition alone does not
+     * constitute a document. Rather, the Composition must be the first entry in a
+     * Bundle where Bundle.type=document, and any other resources referenced from
+     * Composition must be included as subsequent entries in the Bundle (for example
+     * Patient, Practitioner, Encounter, etc.).
+     *
+     * A participant who has attested to the accuracy of the composition/document.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionAttester ...$attester
+     * @return static
+     */
+    public function setAttester(FHIRCompositionAttester ...$attester): self
+    {
+        if ([] !== $this->attester) {
+            $this->_trackValuesRemoved(count($this->attester));
+            $this->attester = [];
+        }
+        if ([] === $attester) {
+            return $this;
+        }
+        foreach($attester as $v) {
+            $this->addAttester($v);
+        }
         return $this;
     }
 
@@ -1085,6 +1167,38 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * Composition must be included as subsequent entries in the Bundle (for example
      * Patient, Practitioner, Encounter, etc.).
      *
+     * Relationships that this composition has with other compositions or documents
+     * that already exist.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionRelatesTo ...$relatesTo
+     * @return static
+     */
+    public function setRelatesTo(FHIRCompositionRelatesTo ...$relatesTo): self
+    {
+        if ([] !== $this->relatesTo) {
+            $this->_trackValuesRemoved(count($this->relatesTo));
+            $this->relatesTo = [];
+        }
+        if ([] === $relatesTo) {
+            return $this;
+        }
+        foreach($relatesTo as $v) {
+            $this->addRelatesTo($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A set of healthcare-related information that is assembled together into a single
+     * logical package that provides a single coherent statement of meaning,
+     * establishes its own context and that has clinical attestation with regard to who
+     * is making the statement. A Composition defines the structure and narrative
+     * content necessary for a document. However, a Composition alone does not
+     * constitute a document. Rather, the Composition must be the first entry in a
+     * Bundle where Bundle.type=document, and any other resources referenced from
+     * Composition must be included as subsequent entries in the Bundle (for example
+     * Patient, Practitioner, Encounter, etc.).
+     *
      * The clinical service, such as a colonoscopy or an appendectomy, being
      * documented.
      *
@@ -1133,6 +1247,38 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
      * Composition must be included as subsequent entries in the Bundle (for example
      * Patient, Practitioner, Encounter, etc.).
      *
+     * The clinical service, such as a colonoscopy or an appendectomy, being
+     * documented.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionEvent ...$event
+     * @return static
+     */
+    public function setEvent(FHIRCompositionEvent ...$event): self
+    {
+        if ([] !== $this->event) {
+            $this->_trackValuesRemoved(count($this->event));
+            $this->event = [];
+        }
+        if ([] === $event) {
+            return $this;
+        }
+        foreach($event as $v) {
+            $this->addEvent($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A set of healthcare-related information that is assembled together into a single
+     * logical package that provides a single coherent statement of meaning,
+     * establishes its own context and that has clinical attestation with regard to who
+     * is making the statement. A Composition defines the structure and narrative
+     * content necessary for a document. However, a Composition alone does not
+     * constitute a document. Rather, the Composition must be the first entry in a
+     * Bundle where Bundle.type=document, and any other resources referenced from
+     * Composition must be included as subsequent entries in the Bundle (for example
+     * Patient, Practitioner, Encounter, etc.).
+     *
      * The root of the sections that make up the composition.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionSection[]
@@ -1165,6 +1311,37 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
         }
         $this->_trackValueAdded();
         $this->section[] = $section;
+        return $this;
+    }
+
+    /**
+     * A set of healthcare-related information that is assembled together into a single
+     * logical package that provides a single coherent statement of meaning,
+     * establishes its own context and that has clinical attestation with regard to who
+     * is making the statement. A Composition defines the structure and narrative
+     * content necessary for a document. However, a Composition alone does not
+     * constitute a document. Rather, the Composition must be the first entry in a
+     * Bundle where Bundle.type=document, and any other resources referenced from
+     * Composition must be included as subsequent entries in the Bundle (for example
+     * Patient, Practitioner, Encounter, etc.).
+     *
+     * The root of the sections that make up the composition.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRComposition\FHIRCompositionSection ...$section
+     * @return static
+     */
+    public function setSection(FHIRCompositionSection ...$section): self
+    {
+        if ([] !== $this->section) {
+            $this->_trackValuesRemoved(count($this->section));
+            $this->section = [];
+        }
+        if ([] === $section) {
+            return $this;
+        }
+        foreach($section as $v) {
+            $this->addSection($v);
+        }
         return $this;
     }
 
@@ -1709,11 +1886,11 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
             $openedRoot = true;
             $xw->openRootNode($config, 'Composition', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->writeAttribute(self::FIELD_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TITLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getTitle())) {
             $xw->writeAttribute(self::FIELD_TITLE, $v->getValue()?->getFormattedValue());
         }
@@ -1748,7 +1925,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->startElement(self::FIELD_DATE);
             $v->xmlSerialize($xw, $config);
@@ -1759,7 +1936,7 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TITLE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TITLE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getTitle())) {
             $xw->startElement(self::FIELD_TITLE);
             $v->xmlSerialize($xw, $config);

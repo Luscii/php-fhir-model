@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -133,7 +133,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A resource that was validated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $target = [];
@@ -143,7 +142,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The fhirpath location(s) within the resource that was validated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $targetLocation = [];
@@ -154,7 +152,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The frequency with which the target must be validated (none; initial; periodic).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $need = null;
@@ -164,7 +161,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The validation status of the target (attested; validated; in process; requires
      * revalidation; validation failed; revalidation failed).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRStatus
      */
     protected null|FHIRStatus $status = null;
@@ -177,7 +173,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * When the validation status was updated.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $statusDate = null;
@@ -189,7 +184,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * What the target is validated against (nothing; primary source; multiple
      * sources).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $validationType = null;
@@ -201,7 +195,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      *
      * The primary process by which the target is validated (edit check; value set;
      * primary source; multiple sources; standalone; in context).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $validationProcess = [];
@@ -215,7 +208,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Frequency of revalidation.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming
      */
     protected null|FHIRTiming $frequency = null;
@@ -228,7 +220,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date/time validation was last completed (including failed validations).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $lastPerformed = null;
@@ -239,7 +230,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date when target is next validated, if appropriate.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
     protected null|FHIRDate $nextScheduled = null;
@@ -250,7 +240,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The result if validation fails (fatal; warning; record only; none).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $failureAction = null;
@@ -259,7 +248,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * elements.
      *
      * Information about the primary source(s) involved in validation.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultPrimarySource[]
      */
     protected null|array $primarySource = [];
@@ -268,7 +256,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * elements.
      *
      * Information about the entity attesting to information.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultAttestation
      */
     protected null|FHIRVerificationResultAttestation $attestation = null;
@@ -277,7 +264,6 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * elements.
      *
      * Information about the entity validating information.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultValidator[]
      */
     protected null|array $validator = [];
@@ -286,10 +272,14 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * Validation map for fields in type VerificationResult
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRVerificationResult Constructor
@@ -549,6 +539,31 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A resource that was validated.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$target
+     * @return static
+     */
+    public function setTarget(FHIRReference ...$target): self
+    {
+        if ([] !== $this->target) {
+            $this->_trackValuesRemoved(count($this->target));
+            $this->target = [];
+        }
+        if ([] === $target) {
+            return $this;
+        }
+        foreach($target as $v) {
+            $this->addTarget($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -573,16 +588,20 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addTargetLocation(null|string|FHIRStringPrimitive|FHIRString $targetLocation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addTargetLocation(null|string|FHIRStringPrimitive|FHIRString $targetLocation = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $targetLocation && !($targetLocation instanceof FHIRString)) {
             $targetLocation = new FHIRString($targetLocation);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_TARGET_LOCATION])) {
-            $this->_primitiveXmlLocations[self::FIELD_TARGET_LOCATION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_TARGET_LOCATION])) {
+            $this->_xmlLocations[self::FIELD_TARGET_LOCATION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_TARGET_LOCATION][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_TARGET_LOCATION]) {
+            $this->_xmlLocations[self::FIELD_TARGET_LOCATION][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_TARGET_LOCATION][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->targetLocation[] = $targetLocation;
         return $this;
     }
@@ -598,9 +617,9 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setTargetLocation(array $targetLocation = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setTargetLocation(array $targetLocation = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_TARGET_LOCATION]);
+        unset($this->_xmlLocations[self::FIELD_TARGET_LOCATION]);
         if ([] !== $this->targetLocation) {
             $this->_trackValuesRemoved(count($this->targetLocation));
             $this->targetLocation = [];
@@ -719,16 +738,16 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setStatusDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $statusDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setStatusDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $statusDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $statusDate && !($statusDate instanceof FHIRDateTime)) {
             $statusDate = new FHIRDateTime($statusDate);
         }
         $this->_trackValueSet($this->statusDate, $statusDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_STATUS_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_STATUS_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_STATUS_DATE])) {
+            $this->_xmlLocations[self::FIELD_STATUS_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_STATUS_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_STATUS_DATE][0] = $xmlLocation;
         $this->statusDate = $statusDate;
         return $this;
     }
@@ -810,6 +829,33 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The primary process by which the target is validated (edit check; value set;
+     * primary source; multiple sources; standalone; in context).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$validationProcess
+     * @return static
+     */
+    public function setValidationProcess(FHIRCodeableConcept ...$validationProcess): self
+    {
+        if ([] !== $this->validationProcess) {
+            $this->_trackValuesRemoved(count($this->validationProcess));
+            $this->validationProcess = [];
+        }
+        if ([] === $validationProcess) {
+            return $this;
+        }
+        foreach($validationProcess as $v) {
+            $this->addValidationProcess($v);
+        }
+        return $this;
+    }
+
+    /**
      * Specifies an event that may occur multiple times. Timing schedules are used to
      * record when things are planned, expected or requested to occur. The most common
      * usage is in dosage instructions for medications. They are also used when
@@ -882,16 +928,16 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLastPerformed(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $lastPerformed = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLastPerformed(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $lastPerformed = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $lastPerformed && !($lastPerformed instanceof FHIRDateTime)) {
             $lastPerformed = new FHIRDateTime($lastPerformed);
         }
         $this->_trackValueSet($this->lastPerformed, $lastPerformed);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LAST_PERFORMED])) {
-            $this->_primitiveXmlLocations[self::FIELD_LAST_PERFORMED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LAST_PERFORMED])) {
+            $this->_xmlLocations[self::FIELD_LAST_PERFORMED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LAST_PERFORMED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LAST_PERFORMED][0] = $xmlLocation;
         $this->lastPerformed = $lastPerformed;
         return $this;
     }
@@ -923,16 +969,16 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNextScheduled(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $nextScheduled = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNextScheduled(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $nextScheduled = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $nextScheduled && !($nextScheduled instanceof FHIRDate)) {
             $nextScheduled = new FHIRDate($nextScheduled);
         }
         $this->_trackValueSet($this->nextScheduled, $nextScheduled);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NEXT_SCHEDULED])) {
-            $this->_primitiveXmlLocations[self::FIELD_NEXT_SCHEDULED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NEXT_SCHEDULED])) {
+            $this->_xmlLocations[self::FIELD_NEXT_SCHEDULED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NEXT_SCHEDULED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NEXT_SCHEDULED][0] = $xmlLocation;
         $this->nextScheduled = $nextScheduled;
         return $this;
     }
@@ -1009,6 +1055,30 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
      * Describes validation requirements, source(s), status and dates for one or more
      * elements.
      *
+     * Information about the primary source(s) involved in validation.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultPrimarySource ...$primarySource
+     * @return static
+     */
+    public function setPrimarySource(FHIRVerificationResultPrimarySource ...$primarySource): self
+    {
+        if ([] !== $this->primarySource) {
+            $this->_trackValuesRemoved(count($this->primarySource));
+            $this->primarySource = [];
+        }
+        if ([] === $primarySource) {
+            return $this;
+        }
+        foreach($primarySource as $v) {
+            $this->addPrimarySource($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Describes validation requirements, source(s), status and dates for one or more
+     * elements.
+     *
      * Information about the entity attesting to information.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultAttestation
@@ -1066,6 +1136,30 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
         }
         $this->_trackValueAdded();
         $this->validator[] = $validator;
+        return $this;
+    }
+
+    /**
+     * Describes validation requirements, source(s), status and dates for one or more
+     * elements.
+     *
+     * Information about the entity validating information.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRVerificationResult\FHIRVerificationResultValidator ...$validator
+     * @return static
+     */
+    public function setValidator(FHIRVerificationResultValidator ...$validator): self
+    {
+        if ([] !== $this->validator) {
+            $this->_trackValuesRemoved(count($this->validator));
+            $this->validator = [];
+        }
+        if ([] === $validator) {
+            return $this;
+        }
+        foreach($validator as $v) {
+            $this->addValidator($v);
+        }
         return $this;
     }
 
@@ -1600,21 +1694,21 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
             $openedRoot = true;
             $xw->openRootNode($config, 'VerificationResult', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TARGET_LOCATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TARGET_LOCATION] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getTargetLocation())) {
             $xw->writeAttribute(self::FIELD_TARGET_LOCATION, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getTargetLocation()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_TARGET_LOCATION, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_STATUS_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_STATUS_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getStatusDate())) {
             $xw->writeAttribute(self::FIELD_STATUS_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_PERFORMED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_PERFORMED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLastPerformed())) {
             $xw->writeAttribute(self::FIELD_LAST_PERFORMED, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NEXT_SCHEDULED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NEXT_SCHEDULED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getNextScheduled())) {
             $xw->writeAttribute(self::FIELD_NEXT_SCHEDULED, $v->getValue()?->getFormattedValue());
         }
@@ -1624,7 +1718,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_TARGET_LOCATION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_TARGET_LOCATION] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getTargetLocation())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1644,7 +1738,7 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_STATUS_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_STATUS_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getStatusDate())) {
             $xw->startElement(self::FIELD_STATUS_DATE);
             $v->xmlSerialize($xw, $config);
@@ -1665,13 +1759,13 @@ class FHIRVerificationResult extends FHIRDomainResource implements PHPFHIRContai
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LAST_PERFORMED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LAST_PERFORMED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLastPerformed())) {
             $xw->startElement(self::FIELD_LAST_PERFORMED);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NEXT_SCHEDULED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NEXT_SCHEDULED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getNextScheduled())) {
             $xw->startElement(self::FIELD_NEXT_SCHEDULED);
             $v->xmlSerialize($xw, $config);

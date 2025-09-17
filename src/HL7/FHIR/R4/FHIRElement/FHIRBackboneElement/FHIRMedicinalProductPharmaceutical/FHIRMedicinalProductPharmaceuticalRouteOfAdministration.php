@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPharma
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIRMedicinalProductPharmaceuticalRouteOfAdministration extends FHIRBackbo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Coded expression for the route.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -116,7 +115,6 @@ class FHIRMedicinalProductPharmaceuticalRouteOfAdministration extends FHIRBackbo
      * The first dose (dose quantity) administered in humans can be specified, for a
      * product under investigation, using a numerical value and its unit of
      * measurement.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $firstDose = null;
@@ -130,7 +128,6 @@ class FHIRMedicinalProductPharmaceuticalRouteOfAdministration extends FHIRBackbo
      * The maximum single dose that can be administered as per the protocol of a
      * clinical trial can be specified using a numerical value and its unit of
      * measurement.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $maxSingleDose = null;
@@ -144,7 +141,6 @@ class FHIRMedicinalProductPharmaceuticalRouteOfAdministration extends FHIRBackbo
      * The maximum dose per day (maximum dose quantity to be administered in any one
      * 24-h period) that can be administered as per the protocol referenced in the
      * clinical trial authorisation.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity
      */
     protected null|FHIRQuantity $maxDosePerDay = null;
@@ -156,7 +152,6 @@ class FHIRMedicinalProductPharmaceuticalRouteOfAdministration extends FHIRBackbo
      *
      * The maximum dose per treatment period that can be administered as per the
      * protocol referenced in the clinical trial authorisation.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRatio
      */
     protected null|FHIRRatio $maxDosePerTreatmentPeriod = null;
@@ -168,7 +163,6 @@ class FHIRMedicinalProductPharmaceuticalRouteOfAdministration extends FHIRBackbo
      * The maximum treatment period during which an Investigational Medicinal Product
      * can be administered as per the protocol referenced in the clinical trial
      * authorisation.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $maxTreatmentPeriod = null;
@@ -176,7 +170,6 @@ class FHIRMedicinalProductPharmaceuticalRouteOfAdministration extends FHIRBackbo
      * A pharmaceutical product described in terms of its composition and dose form.
      *
      * A species for which this route applies.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPharmaceutical\FHIRMedicinalProductPharmaceuticalTargetSpecies[]
      */
     protected null|array $targetSpecies = [];
@@ -185,10 +178,14 @@ class FHIRMedicinalProductPharmaceuticalRouteOfAdministration extends FHIRBackbo
      * Validation map for fields in type MedicinalProductPharmaceutical.RouteOfAdministration
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CODE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductPharmaceuticalRouteOfAdministration Constructor
@@ -532,6 +529,29 @@ class FHIRMedicinalProductPharmaceuticalRouteOfAdministration extends FHIRBackbo
         }
         $this->_trackValueAdded();
         $this->targetSpecies[] = $targetSpecies;
+        return $this;
+    }
+
+    /**
+     * A pharmaceutical product described in terms of its composition and dose form.
+     *
+     * A species for which this route applies.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPharmaceutical\FHIRMedicinalProductPharmaceuticalTargetSpecies ...$targetSpecies
+     * @return static
+     */
+    public function setTargetSpecies(FHIRMedicinalProductPharmaceuticalTargetSpecies ...$targetSpecies): self
+    {
+        if ([] !== $this->targetSpecies) {
+            $this->_trackValuesRemoved(count($this->targetSpecies));
+            $this->targetSpecies = [];
+        }
+        if ([] === $targetSpecies) {
+            return $this;
+        }
+        foreach($targetSpecies as $v) {
+            $this->addTargetSpecies($v);
+        }
         return $this;
     }
 

@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      *
      * A pointer to official web page, PDF or other rendering of the implementation
      * guide.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUrl
      */
     protected null|FHIRUrl $rendering = null;
@@ -119,7 +118,6 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * (value set, structure definition, capability statements etc.) are obvious
      * candidates for inclusion, but any kind of resource can be included as an example
      * resource.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuideResource1[]
      */
     protected null|array $resource = [];
@@ -130,7 +128,6 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * publish a computable definition of all the parts.
      *
      * Information about a page within the IG.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuidePage1[]
      */
     protected null|array $page = [];
@@ -140,7 +137,6 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Indicates a relative path to an image that exists within the IG.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $image = [];
@@ -152,7 +148,6 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * Indicates the relative path of an additional non-page, non-image file that is
      * part of the IG - e.g. zip, jar and similar files that could be the target of a
      * hyperlink in a derived IG.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $other = [];
@@ -168,7 +163,7 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRImplementationGuideManifest Constructor
@@ -328,16 +323,16 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRendering(null|string|FHIRUrlPrimitive|FHIRUrl $rendering = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRendering(null|string|FHIRUrlPrimitive|FHIRUrl $rendering = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $rendering && !($rendering instanceof FHIRUrl)) {
             $rendering = new FHIRUrl($rendering);
         }
         $this->_trackValueSet($this->rendering, $rendering);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_RENDERING])) {
-            $this->_primitiveXmlLocations[self::FIELD_RENDERING] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_RENDERING])) {
+            $this->_xmlLocations[self::FIELD_RENDERING] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_RENDERING][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_RENDERING][0] = $xmlLocation;
         $this->rendering = $rendering;
         return $this;
     }
@@ -390,6 +385,35 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * gather all the parts of an implementation guide into a logical whole and to
      * publish a computable definition of all the parts.
      *
+     * A resource that is part of the implementation guide. Conformance resources
+     * (value set, structure definition, capability statements etc.) are obvious
+     * candidates for inclusion, but any kind of resource can be included as an example
+     * resource.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuideResource1 ...$resource
+     * @return static
+     */
+    public function setResource(FHIRImplementationGuideResource1 ...$resource): self
+    {
+        if ([] !== $this->resource) {
+            $this->_trackValuesRemoved(count($this->resource));
+            $this->resource = [];
+        }
+        if ([] === $resource) {
+            return $this;
+        }
+        foreach($resource as $v) {
+            $this->addResource($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A set of rules of how a particular interoperability or standards problem is
+     * solved - typically through the use of FHIR resources. This resource is used to
+     * gather all the parts of an implementation guide into a logical whole and to
+     * publish a computable definition of all the parts.
+     *
      * Information about a page within the IG.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuidePage1[]
@@ -421,6 +445,32 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
     }
 
     /**
+     * A set of rules of how a particular interoperability or standards problem is
+     * solved - typically through the use of FHIR resources. This resource is used to
+     * gather all the parts of an implementation guide into a logical whole and to
+     * publish a computable definition of all the parts.
+     *
+     * Information about a page within the IG.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRImplementationGuide\FHIRImplementationGuidePage1 ...$page
+     * @return static
+     */
+    public function setPage(FHIRImplementationGuidePage1 ...$page): self
+    {
+        if ([] !== $this->page) {
+            $this->_trackValuesRemoved(count($this->page));
+            $this->page = [];
+        }
+        if ([] === $page) {
+            return $this;
+        }
+        foreach($page as $v) {
+            $this->addPage($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -445,16 +495,20 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addImage(null|string|FHIRStringPrimitive|FHIRString $image = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addImage(null|string|FHIRStringPrimitive|FHIRString $image = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $image && !($image instanceof FHIRString)) {
             $image = new FHIRString($image);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_IMAGE])) {
-            $this->_primitiveXmlLocations[self::FIELD_IMAGE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_IMAGE])) {
+            $this->_xmlLocations[self::FIELD_IMAGE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_IMAGE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_IMAGE]) {
+            $this->_xmlLocations[self::FIELD_IMAGE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_IMAGE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->image[] = $image;
         return $this;
     }
@@ -470,9 +524,9 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setImage(array $image = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setImage(array $image = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_IMAGE]);
+        unset($this->_xmlLocations[self::FIELD_IMAGE]);
         if ([] !== $this->image) {
             $this->_trackValuesRemoved(count($this->image));
             $this->image = [];
@@ -519,16 +573,20 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addOther(null|string|FHIRStringPrimitive|FHIRString $other = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addOther(null|string|FHIRStringPrimitive|FHIRString $other = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $other && !($other instanceof FHIRString)) {
             $other = new FHIRString($other);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_OTHER])) {
-            $this->_primitiveXmlLocations[self::FIELD_OTHER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_OTHER])) {
+            $this->_xmlLocations[self::FIELD_OTHER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_OTHER][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_OTHER]) {
+            $this->_xmlLocations[self::FIELD_OTHER][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_OTHER][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->other[] = $other;
         return $this;
     }
@@ -546,9 +604,9 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setOther(array $other = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setOther(array $other = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_OTHER]);
+        unset($this->_xmlLocations[self::FIELD_OTHER]);
         if ([] !== $this->other) {
             $this->_trackValuesRemoved(count($this->other));
             $this->other = [];
@@ -823,24 +881,24 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ImplementationGuideManifest', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RENDERING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RENDERING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRendering())) {
             $xw->writeAttribute(self::FIELD_RENDERING, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IMAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IMAGE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getImage())) {
             $xw->writeAttribute(self::FIELD_IMAGE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getImage()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_IMAGE, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_OTHER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_OTHER] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getOther())) {
             $xw->writeAttribute(self::FIELD_OTHER, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getOther()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_OTHER, $vs[$idx]->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_RENDERING] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_RENDERING] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRendering())) {
             $xw->startElement(self::FIELD_RENDERING);
             $v->xmlSerialize($xw, $config);
@@ -856,7 +914,7 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IMAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IMAGE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getImage())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -866,7 +924,7 @@ class FHIRImplementationGuideManifest extends FHIRBackboneElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_OTHER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_OTHER] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getOther())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

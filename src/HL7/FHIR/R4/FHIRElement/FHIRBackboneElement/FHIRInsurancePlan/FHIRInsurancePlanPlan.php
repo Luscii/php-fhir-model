@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,6 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
      *
      * Business identifiers assigned to this health insurance plan which remain
      * constant as the resource is updated and propagates from server to server.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -112,7 +111,6 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Type of plan. For example, "Platinum" or "High Deductable".
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -122,7 +120,6 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The geographic region in which a health insurance plan's benefits apply.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $coverageArea = [];
@@ -132,7 +129,6 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Reference to the network that providing the type of coverage.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $network = [];
@@ -140,7 +136,6 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
      * Details of a Health Insurance product/plan provided by an organization.
      *
      * Overall costs associated with the plan.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanGeneralCost[]
      */
     protected null|array $generalCost = [];
@@ -148,7 +143,6 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
      * Details of a Health Insurance product/plan provided by an organization.
      *
      * Costs associated with the coverage provided by the product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanSpecificCost[]
      */
     protected null|array $specificCost = [];
@@ -157,10 +151,10 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
      * Validation map for fields in type InsurancePlan.Plan
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRInsurancePlanPlan Constructor
@@ -303,6 +297,33 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Business identifiers assigned to this health insurance plan which remain
+     * constant as the resource is updated and propagates from server to server.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -377,6 +398,31 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * The geographic region in which a health insurance plan's benefits apply.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$coverageArea
+     * @return static
+     */
+    public function setCoverageArea(FHIRReference ...$coverageArea): self
+    {
+        if ([] !== $this->coverageArea) {
+            $this->_trackValuesRemoved(count($this->coverageArea));
+            $this->coverageArea = [];
+        }
+        if ([] === $coverageArea) {
+            return $this;
+        }
+        foreach($coverageArea as $v) {
+            $this->addCoverageArea($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Reference to the network that providing the type of coverage.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
@@ -403,6 +449,31 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->network[] = $network;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Reference to the network that providing the type of coverage.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$network
+     * @return static
+     */
+    public function setNetwork(FHIRReference ...$network): self
+    {
+        if ([] !== $this->network) {
+            $this->_trackValuesRemoved(count($this->network));
+            $this->network = [];
+        }
+        if ([] === $network) {
+            return $this;
+        }
+        foreach($network as $v) {
+            $this->addNetwork($v);
+        }
         return $this;
     }
 
@@ -439,6 +510,29 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
     /**
      * Details of a Health Insurance product/plan provided by an organization.
      *
+     * Overall costs associated with the plan.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanGeneralCost ...$generalCost
+     * @return static
+     */
+    public function setGeneralCost(FHIRInsurancePlanGeneralCost ...$generalCost): self
+    {
+        if ([] !== $this->generalCost) {
+            $this->_trackValuesRemoved(count($this->generalCost));
+            $this->generalCost = [];
+        }
+        if ([] === $generalCost) {
+            return $this;
+        }
+        foreach($generalCost as $v) {
+            $this->addGeneralCost($v);
+        }
+        return $this;
+    }
+
+    /**
+     * Details of a Health Insurance product/plan provided by an organization.
+     *
      * Costs associated with the coverage provided by the product.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanSpecificCost[]
@@ -463,6 +557,29 @@ class FHIRInsurancePlanPlan extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->specificCost[] = $specificCost;
+        return $this;
+    }
+
+    /**
+     * Details of a Health Insurance product/plan provided by an organization.
+     *
+     * Costs associated with the coverage provided by the product.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanSpecificCost ...$specificCost
+     * @return static
+     */
+    public function setSpecificCost(FHIRInsurancePlanSpecificCost ...$specificCost): self
+    {
+        if ([] !== $this->specificCost) {
+            $this->_trackValuesRemoved(count($this->specificCost));
+            $this->specificCost = [];
+        }
+        if ([] === $specificCost) {
+            return $this;
+        }
+        foreach($specificCost as $v) {
+            $this->addSpecificCost($v);
+        }
         return $this;
     }
 

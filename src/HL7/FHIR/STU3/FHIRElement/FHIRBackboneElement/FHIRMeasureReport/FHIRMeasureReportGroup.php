@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,6 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The identifier of the population group as defined in the measure definition.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -107,7 +106,6 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
      *
      * The populations that make up the population group, one for each type of
      * population appropriate for the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport\FHIRMeasureReportPopulation[]
      */
     protected null|array $population = [];
@@ -120,7 +118,6 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
      * The measure score for this population group, calculated as appropriate for the
      * measure type and scoring method, and based on the contents of the populations
      * defined in the group.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $measureScore = null;
@@ -129,7 +126,6 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
      *
      * When a measure includes multiple stratifiers, there will be a stratifier group
      * for each stratifier defined by the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport\FHIRMeasureReportStratifier[]
      */
     protected null|array $stratifier = [];
@@ -138,10 +134,14 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
      * Validation map for fields in type MeasureReport.Group
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_IDENTIFIER => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMeasureReportGroup Constructor
@@ -284,6 +284,30 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
     }
 
     /**
+     * The MeasureReport resource contains the results of evaluating a measure.
+     *
+     * The populations that make up the population group, one for each type of
+     * population appropriate for the measure.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport\FHIRMeasureReportPopulation ...$population
+     * @return static
+     */
+    public function setPopulation(FHIRMeasureReportPopulation ...$population): self
+    {
+        if ([] !== $this->population) {
+            $this->_trackValuesRemoved(count($this->population));
+            $this->population = [];
+        }
+        if ([] === $population) {
+            return $this;
+        }
+        foreach($population as $v) {
+            $this->addPopulation($v);
+        }
+        return $this;
+    }
+
+    /**
      * A rational number with implicit precision
      * Do not use a IEEE type floating point type, instead use something that works
      * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
@@ -314,16 +338,16 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMeasureScore(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $measureScore = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setMeasureScore(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $measureScore = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $measureScore && !($measureScore instanceof FHIRDecimal)) {
             $measureScore = new FHIRDecimal($measureScore);
         }
         $this->_trackValueSet($this->measureScore, $measureScore);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE])) {
-            $this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_MEASURE_SCORE])) {
+            $this->_xmlLocations[self::FIELD_MEASURE_SCORE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_MEASURE_SCORE][0] = $xmlLocation;
         $this->measureScore = $measureScore;
         return $this;
     }
@@ -357,6 +381,30 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->stratifier[] = $stratifier;
+        return $this;
+    }
+
+    /**
+     * The MeasureReport resource contains the results of evaluating a measure.
+     *
+     * When a measure includes multiple stratifiers, there will be a stratifier group
+     * for each stratifier defined by the measure.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport\FHIRMeasureReportStratifier ...$stratifier
+     * @return static
+     */
+    public function setStratifier(FHIRMeasureReportStratifier ...$stratifier): self
+    {
+        if ([] !== $this->stratifier) {
+            $this->_trackValuesRemoved(count($this->stratifier));
+            $this->stratifier = [];
+        }
+        if ([] === $stratifier) {
+            return $this;
+        }
+        foreach($stratifier as $v) {
+            $this->addStratifier($v);
+        }
         return $this;
     }
 
@@ -588,7 +636,7 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MeasureReportGroup', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MEASURE_SCORE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMeasureScore())) {
             $xw->writeAttribute(self::FIELD_MEASURE_SCORE, $v->getValue()?->getFormattedValue());
         }
@@ -603,7 +651,7 @@ class FHIRMeasureReportGroup extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MEASURE_SCORE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMeasureScore())) {
             $xw->startElement(self::FIELD_MEASURE_SCORE);
             $v->xmlSerialize($xw, $config);

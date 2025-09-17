@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * Example of workflow instance.
      *
      * Nested process.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioProcess[]
      */
     protected null|array $process = [];
@@ -104,7 +103,6 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * If there is a pause in the flow.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $pause = null;
@@ -112,7 +110,6 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * Example of workflow instance.
      *
      * Each interaction or action.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioOperation
      */
     protected null|FHIRExampleScenarioOperation $operation = null;
@@ -121,7 +118,6 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      *
      * Indicates an alternative step that can be taken instead of the operations on the
      * base step in exceptional/atypical circumstances.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioAlternative[]
      */
     protected null|array $alternative = [];
@@ -130,10 +126,10 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * Validation map for fields in type ExampleScenario.Step
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRExampleScenarioStep Constructor
@@ -240,6 +236,29 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
     }
 
     /**
+     * Example of workflow instance.
+     *
+     * Nested process.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioProcess ...$process
+     * @return static
+     */
+    public function setProcess(FHIRExampleScenarioProcess ...$process): self
+    {
+        if ([] !== $this->process) {
+            $this->_trackValuesRemoved(count($this->process));
+            $this->process = [];
+        }
+        if ([] === $process) {
+            return $this;
+        }
+        foreach($process as $v) {
+            $this->addProcess($v);
+        }
+        return $this;
+    }
+
+    /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -262,16 +281,16 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPause(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $pause = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPause(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $pause = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $pause && !($pause instanceof FHIRBoolean)) {
             $pause = new FHIRBoolean($pause);
         }
         $this->_trackValueSet($this->pause, $pause);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PAUSE])) {
-            $this->_primitiveXmlLocations[self::FIELD_PAUSE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PAUSE])) {
+            $this->_xmlLocations[self::FIELD_PAUSE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PAUSE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PAUSE][0] = $xmlLocation;
         $this->pause = $pause;
         return $this;
     }
@@ -335,6 +354,30 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->alternative[] = $alternative;
+        return $this;
+    }
+
+    /**
+     * Example of workflow instance.
+     *
+     * Indicates an alternative step that can be taken instead of the operations on the
+     * base step in exceptional/atypical circumstances.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExampleScenario\FHIRExampleScenarioAlternative ...$alternative
+     * @return static
+     */
+    public function setAlternative(FHIRExampleScenarioAlternative ...$alternative): self
+    {
+        if ([] !== $this->alternative) {
+            $this->_trackValuesRemoved(count($this->alternative));
+            $this->alternative = [];
+        }
+        if ([] === $alternative) {
+            return $this;
+        }
+        foreach($alternative as $v) {
+            $this->addAlternative($v);
+        }
         return $this;
     }
 
@@ -566,7 +609,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ExampleScenarioStep', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PAUSE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PAUSE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getPause())) {
             $xw->writeAttribute(self::FIELD_PAUSE, $v->getValue()?->getFormattedValue());
         }
@@ -576,7 +619,7 @@ class FHIRExampleScenarioStep extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PAUSE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PAUSE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getPause())) {
             $xw->startElement(self::FIELD_PAUSE);
             $v->xmlSerialize($xw, $config);

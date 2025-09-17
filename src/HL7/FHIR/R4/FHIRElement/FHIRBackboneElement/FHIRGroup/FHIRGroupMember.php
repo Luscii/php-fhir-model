@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRGroup;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,6 @@ class FHIRGroupMember extends FHIRBackboneElement
      *
      * A reference to the entity that is a member of the group. Must be consistent with
      * Group.type. If the entity is another group, then the type must be the same.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $entity = null;
@@ -112,7 +111,6 @@ class FHIRGroupMember extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The period that the member was in the group, if known.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $period = null;
@@ -122,7 +120,6 @@ class FHIRGroupMember extends FHIRBackboneElement
      *
      * A flag to indicate that the member is no longer in the group, but previously may
      * have been a member.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $inactive = null;
@@ -131,10 +128,14 @@ class FHIRGroupMember extends FHIRBackboneElement
      * Validation map for fields in type Group.Member
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_ENTITY => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRGroupMember Constructor
@@ -282,16 +283,16 @@ class FHIRGroupMember extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setInactive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $inactive = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setInactive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $inactive = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $inactive && !($inactive instanceof FHIRBoolean)) {
             $inactive = new FHIRBoolean($inactive);
         }
         $this->_trackValueSet($this->inactive, $inactive);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_INACTIVE])) {
-            $this->_primitiveXmlLocations[self::FIELD_INACTIVE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_INACTIVE])) {
+            $this->_xmlLocations[self::FIELD_INACTIVE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_INACTIVE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_INACTIVE][0] = $xmlLocation;
         $this->inactive = $inactive;
         return $this;
     }
@@ -501,7 +502,7 @@ class FHIRGroupMember extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'GroupMember', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INACTIVE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INACTIVE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getInactive())) {
             $xw->writeAttribute(self::FIELD_INACTIVE, $v->getValue()?->getFormattedValue());
         }
@@ -516,7 +517,7 @@ class FHIRGroupMember extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INACTIVE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INACTIVE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getInactive())) {
             $xw->startElement(self::FIELD_INACTIVE);
             $v->xmlSerialize($xw, $config);

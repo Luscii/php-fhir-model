@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,7 +122,6 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
      * The SubstanceProtein descriptive elements will only be used when a complete or
      * partial amino acid sequence is available or derivable from a nucleic acid
      * sequence.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $sequenceType = null;
@@ -134,7 +133,6 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
      * Number of linear sequences of amino acids linked through peptide bonds. The
      * number of subunits constituting the SubstanceProtein shall be described. It is
      * possible that the number of subunits can be variable.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $numberOfSubunits = null;
@@ -149,7 +147,6 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
      * number and position within subunit followed by the abbreviation of the amino
      * acids involved. The disulfide linkage positions shall actually contain the amino
      * acid Cysteine at the respective positions.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $disulfideLinkage = [];
@@ -171,7 +168,6 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
      * decreasing length; sequences of the same length will be ordered by decreasing
      * molecular weight; subunits that have identical sequences will be repeated
      * multiple times.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceProtein\FHIRSubstanceProteinSubunit[]
      */
     protected null|array $subunit = [];
@@ -180,10 +176,10 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
      * Validation map for fields in type SubstanceProtein
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceProtein Constructor
@@ -353,16 +349,16 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumberOfSubunits(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numberOfSubunits = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumberOfSubunits(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numberOfSubunits = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $numberOfSubunits && !($numberOfSubunits instanceof FHIRInteger)) {
             $numberOfSubunits = new FHIRInteger($numberOfSubunits);
         }
         $this->_trackValueSet($this->numberOfSubunits, $numberOfSubunits);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS])) {
+            $this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS][0] = $xmlLocation;
         $this->numberOfSubunits = $numberOfSubunits;
         return $this;
     }
@@ -402,16 +398,20 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addDisulfideLinkage(null|string|FHIRStringPrimitive|FHIRString $disulfideLinkage = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addDisulfideLinkage(null|string|FHIRStringPrimitive|FHIRString $disulfideLinkage = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $disulfideLinkage && !($disulfideLinkage instanceof FHIRString)) {
             $disulfideLinkage = new FHIRString($disulfideLinkage);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DISULFIDE_LINKAGE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DISULFIDE_LINKAGE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DISULFIDE_LINKAGE])) {
+            $this->_xmlLocations[self::FIELD_DISULFIDE_LINKAGE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DISULFIDE_LINKAGE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_DISULFIDE_LINKAGE]) {
+            $this->_xmlLocations[self::FIELD_DISULFIDE_LINKAGE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_DISULFIDE_LINKAGE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->disulfideLinkage[] = $disulfideLinkage;
         return $this;
     }
@@ -432,9 +432,9 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDisulfideLinkage(array $disulfideLinkage = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDisulfideLinkage(array $disulfideLinkage = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_DISULFIDE_LINKAGE]);
+        unset($this->_xmlLocations[self::FIELD_DISULFIDE_LINKAGE]);
         if ([] !== $this->disulfideLinkage) {
             $this->_trackValuesRemoved(count($this->disulfideLinkage));
             $this->disulfideLinkage = [];
@@ -507,6 +507,43 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
         }
         $this->_trackValueAdded();
         $this->subunit[] = $subunit;
+        return $this;
+    }
+
+    /**
+     * A SubstanceProtein is defined as a single unit of a linear amino acid sequence,
+     * or a combination of subunits that are either covalently linked or have a defined
+     * invariant stoichiometric relationship. This includes all synthetic, recombinant
+     * and purified SubstanceProteins of defined sequence, whether the use is
+     * therapeutic or prophylactic. This set of elements will be used to describe
+     * albumins, coagulation factors, cytokines, growth factors,
+     * peptide/SubstanceProtein hormones, enzymes, toxins, toxoids, recombinant
+     * vaccines, and immunomodulators.
+     *
+     * This subclause refers to the description of each subunit constituting the
+     * SubstanceProtein. A subunit is a linear sequence of amino acids linked through
+     * peptide bonds. The Subunit information shall be provided when the finished
+     * SubstanceProtein is a complex of multiple sequences; subunits are not used to
+     * delineate domains within a single sequence. Subunits are listed in order of
+     * decreasing length; sequences of the same length will be ordered by decreasing
+     * molecular weight; subunits that have identical sequences will be repeated
+     * multiple times.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceProtein\FHIRSubstanceProteinSubunit ...$subunit
+     * @return static
+     */
+    public function setSubunit(FHIRSubstanceProteinSubunit ...$subunit): self
+    {
+        if ([] !== $this->subunit) {
+            $this->_trackValuesRemoved(count($this->subunit));
+            $this->subunit = [];
+        }
+        if ([] === $subunit) {
+            return $this;
+        }
+        foreach($subunit as $v) {
+            $this->addSubunit($v);
+        }
         return $this;
     }
 
@@ -829,11 +866,11 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceProtein', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getNumberOfSubunits())) {
             $xw->writeAttribute(self::FIELD_NUMBER_OF_SUBUNITS, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISULFIDE_LINKAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISULFIDE_LINKAGE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getDisulfideLinkage())) {
             $xw->writeAttribute(self::FIELD_DISULFIDE_LINKAGE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getDisulfideLinkage()) && isset($vs[$idx])) {
@@ -845,13 +882,13 @@ class FHIRSubstanceProtein extends FHIRDomainResource implements PHPFHIRContaine
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER_OF_SUBUNITS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getNumberOfSubunits())) {
             $xw->startElement(self::FIELD_NUMBER_OF_SUBUNITS);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DISULFIDE_LINKAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DISULFIDE_LINKAGE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getDisulfideLinkage())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

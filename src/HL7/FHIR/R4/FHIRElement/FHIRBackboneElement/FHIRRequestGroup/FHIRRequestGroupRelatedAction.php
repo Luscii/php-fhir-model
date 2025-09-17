@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRRequestGroup;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ class FHIRRequestGroupRelatedAction extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * The element id of the action this is related to.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
     protected null|FHIRId $actionId = null;
@@ -114,7 +113,6 @@ class FHIRRequestGroupRelatedAction extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The relationship of this action to the related action.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRActionRelationshipType
      */
     protected null|FHIRActionRelationshipType $relationship = null;
@@ -125,7 +123,6 @@ class FHIRRequestGroupRelatedAction extends FHIRBackboneElement
      *
      * A duration or range of durations to apply to the relationship. For example,
      * 30-60 minutes before.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $offsetDuration = null;
@@ -136,7 +133,6 @@ class FHIRRequestGroupRelatedAction extends FHIRBackboneElement
      *
      * A duration or range of durations to apply to the relationship. For example,
      * 30-60 minutes before.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRRange
      */
     protected null|FHIRRange $offsetRange = null;
@@ -145,10 +141,17 @@ class FHIRRequestGroupRelatedAction extends FHIRBackboneElement
      * Validation map for fields in type RequestGroup.RelatedAction
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_ACTION_ID => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_RELATIONSHIP => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRRequestGroupRelatedAction Constructor
@@ -249,16 +252,16 @@ class FHIRRequestGroupRelatedAction extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setActionId(null|string|FHIRIdPrimitive|FHIRId $actionId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setActionId(null|string|FHIRIdPrimitive|FHIRId $actionId = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $actionId && !($actionId instanceof FHIRId)) {
             $actionId = new FHIRId($actionId);
         }
         $this->_trackValueSet($this->actionId, $actionId);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ACTION_ID])) {
-            $this->_primitiveXmlLocations[self::FIELD_ACTION_ID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ACTION_ID])) {
+            $this->_xmlLocations[self::FIELD_ACTION_ID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ACTION_ID][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ACTION_ID][0] = $xmlLocation;
         $this->actionId = $actionId;
         return $this;
     }
@@ -591,12 +594,12 @@ class FHIRRequestGroupRelatedAction extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'RequestGroupRelatedAction', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTION_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ACTION_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getActionId())) {
             $xw->writeAttribute(self::FIELD_ACTION_ID, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTION_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ACTION_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getActionId())) {
             $xw->startElement(self::FIELD_ACTION_ID);
             $v->xmlSerialize($xw, $config);

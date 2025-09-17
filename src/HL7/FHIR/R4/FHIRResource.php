@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,6 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
      *
      * The logical id of the resource, as used in the URL for the resource. Once
      * assigned, this value never changes.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRId
      */
     protected null|FHIRId $id = null;
@@ -115,7 +114,6 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
      * The metadata about the resource. This is content that is maintained by the
      * infrastructure. Changes to the content might not always be associated with
      * version changes to the resource.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRMeta
      */
     protected null|FHIRMeta $meta = null;
@@ -128,7 +126,6 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
      * constructed, and which must be understood when processing the content. Often,
      * this is a reference to an implementation guide that defines the special rules
      * along with other profiles etc.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUri
      */
     protected null|FHIRUri $implicitRules = null;
@@ -139,7 +136,6 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
      * the Narrative, or extensions
      *
      * The base language in which the resource is written.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCode
      */
     protected null|FHIRCode $language = null;
@@ -148,10 +144,10 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
      * Validation map for fields in type Resource
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRResource Constructor
@@ -271,16 +267,16 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setId(null|string|FHIRIdPrimitive|FHIRId $id = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setId(null|string|FHIRIdPrimitive|FHIRId $id = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $id && !($id instanceof FHIRId)) {
             $id = new FHIRId($id);
         }
         $this->_trackValueSet($this->id, $id);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ID])) {
-            $this->_primitiveXmlLocations[self::FIELD_ID] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ID])) {
+            $this->_xmlLocations[self::FIELD_ID] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ID][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ID][0] = $xmlLocation;
         $this->id = $id;
         return $this;
     }
@@ -358,16 +354,16 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setImplicitRules(null|string|FHIRUriPrimitive|FHIRUri $implicitRules = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setImplicitRules(null|string|FHIRUriPrimitive|FHIRUri $implicitRules = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $implicitRules && !($implicitRules instanceof FHIRUri)) {
             $implicitRules = new FHIRUri($implicitRules);
         }
         $this->_trackValueSet($this->implicitRules, $implicitRules);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_IMPLICIT_RULES])) {
-            $this->_primitiveXmlLocations[self::FIELD_IMPLICIT_RULES] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_IMPLICIT_RULES])) {
+            $this->_xmlLocations[self::FIELD_IMPLICIT_RULES] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_IMPLICIT_RULES][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_IMPLICIT_RULES][0] = $xmlLocation;
         $this->implicitRules = $implicitRules;
         return $this;
     }
@@ -399,16 +395,16 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setLanguage(null|string|FHIRCodePrimitive|FHIRCode $language = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setLanguage(null|string|FHIRCodePrimitive|FHIRCode $language = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $language && !($language instanceof FHIRCode)) {
             $language = new FHIRCode($language);
         }
         $this->_trackValueSet($this->language, $language);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_LANGUAGE])) {
-            $this->_primitiveXmlLocations[self::FIELD_LANGUAGE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_LANGUAGE])) {
+            $this->_xmlLocations[self::FIELD_LANGUAGE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_LANGUAGE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_LANGUAGE][0] = $xmlLocation;
         $this->language = $language;
         return $this;
     }
@@ -555,19 +551,19 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
             $openedRoot = true;
             $xw->openRootNode($config, 'Resource', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getId())) {
             $xw->writeAttribute(self::FIELD_ID, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IMPLICIT_RULES] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IMPLICIT_RULES] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getImplicitRules())) {
             $xw->writeAttribute(self::FIELD_IMPLICIT_RULES, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LANGUAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LANGUAGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getLanguage())) {
             $xw->writeAttribute(self::FIELD_LANGUAGE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ID] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ID] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getId())) {
             $xw->startElement(self::FIELD_ID);
             $v->xmlSerialize($xw, $config);
@@ -578,13 +574,13 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IMPLICIT_RULES] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IMPLICIT_RULES] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getImplicitRules())) {
             $xw->startElement(self::FIELD_IMPLICIT_RULES);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_LANGUAGE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_LANGUAGE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getLanguage())) {
             $xw->startElement(self::FIELD_LANGUAGE);
             $v->xmlSerialize($xw, $config);

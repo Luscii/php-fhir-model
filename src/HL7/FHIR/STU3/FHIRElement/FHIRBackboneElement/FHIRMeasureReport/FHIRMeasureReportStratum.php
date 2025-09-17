@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ class FHIRMeasureReportStratum extends FHIRBackboneElement
      * The value for this stratum, expressed as a string. When defining stratifiers on
      * complex values, the value must be rendered such that the value for each stratum
      * within the stratifier is unique.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $value = null;
@@ -109,7 +108,6 @@ class FHIRMeasureReportStratum extends FHIRBackboneElement
      *
      * The populations that make up the stratum, one for each type of population
      * appropriate to the measure.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport\FHIRMeasureReportPopulation1[]
      */
     protected null|array $population = [];
@@ -121,7 +119,6 @@ class FHIRMeasureReportStratum extends FHIRBackboneElement
      *
      * The measure score for this stratum, calculated as appropriate for the measure
      * type and scoring method, and based on only the members of this stratum.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDecimal
      */
     protected null|FHIRDecimal $measureScore = null;
@@ -130,10 +127,14 @@ class FHIRMeasureReportStratum extends FHIRBackboneElement
      * Validation map for fields in type MeasureReport.Stratum
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_VALUE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMeasureReportStratum Constructor
@@ -233,16 +234,16 @@ class FHIRMeasureReportStratum extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setValue(null|string|FHIRStringPrimitive|FHIRString $value = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setValue(null|string|FHIRStringPrimitive|FHIRString $value = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $value && !($value instanceof FHIRString)) {
             $value = new FHIRString($value);
         }
         $this->_trackValueSet($this->value, $value);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_VALUE])) {
-            $this->_primitiveXmlLocations[self::FIELD_VALUE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_VALUE])) {
+            $this->_xmlLocations[self::FIELD_VALUE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_VALUE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_VALUE][0] = $xmlLocation;
         $this->value = $value;
         return $this;
     }
@@ -280,6 +281,30 @@ class FHIRMeasureReportStratum extends FHIRBackboneElement
     }
 
     /**
+     * The MeasureReport resource contains the results of evaluating a measure.
+     *
+     * The populations that make up the stratum, one for each type of population
+     * appropriate to the measure.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMeasureReport\FHIRMeasureReportPopulation1 ...$population
+     * @return static
+     */
+    public function setPopulation(FHIRMeasureReportPopulation1 ...$population): self
+    {
+        if ([] !== $this->population) {
+            $this->_trackValuesRemoved(count($this->population));
+            $this->population = [];
+        }
+        if ([] === $population) {
+            return $this;
+        }
+        foreach($population as $v) {
+            $this->addPopulation($v);
+        }
+        return $this;
+    }
+
+    /**
      * A rational number with implicit precision
      * Do not use a IEEE type floating point type, instead use something that works
      * like a true decimal, with inbuilt precision (e.g. Java BigInteger)
@@ -308,16 +333,16 @@ class FHIRMeasureReportStratum extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMeasureScore(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $measureScore = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setMeasureScore(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $measureScore = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $measureScore && !($measureScore instanceof FHIRDecimal)) {
             $measureScore = new FHIRDecimal($measureScore);
         }
         $this->_trackValueSet($this->measureScore, $measureScore);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE])) {
-            $this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_MEASURE_SCORE])) {
+            $this->_xmlLocations[self::FIELD_MEASURE_SCORE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_MEASURE_SCORE][0] = $xmlLocation;
         $this->measureScore = $measureScore;
         return $this;
     }
@@ -537,16 +562,16 @@ class FHIRMeasureReportStratum extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MeasureReportStratum', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getValue())) {
             $xw->writeAttribute(self::FIELD_VALUE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MEASURE_SCORE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMeasureScore())) {
             $xw->writeAttribute(self::FIELD_MEASURE_SCORE, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_VALUE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_VALUE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getValue())) {
             $xw->startElement(self::FIELD_VALUE);
             $v->xmlSerialize($xw, $config);
@@ -557,7 +582,7 @@ class FHIRMeasureReportStratum extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MEASURE_SCORE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MEASURE_SCORE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMeasureScore())) {
             $xw->startElement(self::FIELD_MEASURE_SCORE);
             $v->xmlSerialize($xw, $config);

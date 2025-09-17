@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ class FHIRInsurancePlanBenefit1 extends FHIRBackboneElement
      *
      * Type of specific benefit (preventative; primary care office visit; speciality
      * office visit; hospitalization; emergency room; urgent care).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -103,7 +102,6 @@ class FHIRInsurancePlanBenefit1 extends FHIRBackboneElement
      * Details of a Health Insurance product/plan provided by an organization.
      *
      * List of the costs associated with a specific benefit.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanCost[]
      */
     protected null|array $cost = [];
@@ -112,10 +110,14 @@ class FHIRInsurancePlanBenefit1 extends FHIRBackboneElement
      * Validation map for fields in type InsurancePlan.Benefit1
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRInsurancePlanBenefit1 Constructor
@@ -224,6 +226,29 @@ class FHIRInsurancePlanBenefit1 extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->cost[] = $cost;
+        return $this;
+    }
+
+    /**
+     * Details of a Health Insurance product/plan provided by an organization.
+     *
+     * List of the costs associated with a specific benefit.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRInsurancePlan\FHIRInsurancePlanCost ...$cost
+     * @return static
+     */
+    public function setCost(FHIRInsurancePlanCost ...$cost): self
+    {
+        if ([] !== $this->cost) {
+            $this->_trackValuesRemoved(count($this->cost));
+            $this->cost = [];
+        }
+        if ([] === $cost) {
+            return $this;
+        }
+        foreach($cost as $v) {
+            $this->addCost($v);
+        }
         return $this;
     }
 

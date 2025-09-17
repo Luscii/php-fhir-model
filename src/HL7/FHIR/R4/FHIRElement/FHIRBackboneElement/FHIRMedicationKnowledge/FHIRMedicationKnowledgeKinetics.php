@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,6 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The drug concentration measured at certain discrete points in time.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity[]
      */
     protected null|array $areaUnderCurve = [];
@@ -109,7 +108,6 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The median lethal dose of a drug.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity[]
      */
     protected null|array $lethalDose50 = [];
@@ -120,7 +118,6 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      *
      * The time required for any specified property (e.g., the concentration of a
      * substance in the body) to decrease by half.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity\FHIRDuration
      */
     protected null|FHIRDuration $halfLifePeriod = null;
@@ -129,10 +126,10 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      * Validation map for fields in type MedicationKnowledge.Kinetics
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationKnowledgeKinetics Constructor
@@ -236,6 +233,33 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * The drug concentration measured at certain discrete points in time.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRQuantity ...$areaUnderCurve
+     * @return static
+     */
+    public function setAreaUnderCurve(FHIRQuantity ...$areaUnderCurve): self
+    {
+        if ([] !== $this->areaUnderCurve) {
+            $this->_trackValuesRemoved(count($this->areaUnderCurve));
+            $this->areaUnderCurve = [];
+        }
+        if ([] === $areaUnderCurve) {
+            return $this;
+        }
+        foreach($areaUnderCurve as $v) {
+            $this->addAreaUnderCurve($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * The median lethal dose of a drug.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity[]
@@ -264,6 +288,33 @@ class FHIRMedicationKnowledgeKinetics extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->lethalDose50[] = $lethalDose50;
+        return $this;
+    }
+
+    /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The median lethal dose of a drug.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRQuantity ...$lethalDose50
+     * @return static
+     */
+    public function setLethalDose50(FHIRQuantity ...$lethalDose50): self
+    {
+        if ([] !== $this->lethalDose50) {
+            $this->_trackValuesRemoved(count($this->lethalDose50));
+            $this->lethalDose50 = [];
+        }
+        if ([] === $lethalDose50) {
+            return $this;
+        }
+        foreach($lethalDose50 as $v) {
+            $this->addLethalDose50($v);
+        }
         return $this;
     }
 

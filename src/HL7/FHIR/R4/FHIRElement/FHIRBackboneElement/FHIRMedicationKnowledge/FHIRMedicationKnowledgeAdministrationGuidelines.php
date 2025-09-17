@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,7 +94,6 @@ class FHIRMedicationKnowledgeAdministrationGuidelines extends FHIRBackboneElemen
      * Information about a medication that is used to support knowledge.
      *
      * Dosage for the medication for the specific guidelines.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeDosage[]
      */
     protected null|array $dosage = [];
@@ -105,7 +104,6 @@ class FHIRMedicationKnowledgeAdministrationGuidelines extends FHIRBackboneElemen
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indication for use that apply to the specific administration guidelines.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $indicationCodeableConcept = null;
@@ -115,7 +113,6 @@ class FHIRMedicationKnowledgeAdministrationGuidelines extends FHIRBackboneElemen
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Indication for use that apply to the specific administration guidelines.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $indicationReference = null;
@@ -124,7 +121,6 @@ class FHIRMedicationKnowledgeAdministrationGuidelines extends FHIRBackboneElemen
      *
      * Characteristics of the patient that are relevant to the administration
      * guidelines (for example, height, weight, gender, etc.).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgePatientCharacteristics[]
      */
     protected null|array $patientCharacteristics = [];
@@ -133,10 +129,10 @@ class FHIRMedicationKnowledgeAdministrationGuidelines extends FHIRBackboneElemen
      * Validation map for fields in type MedicationKnowledge.AdministrationGuidelines
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationKnowledgeAdministrationGuidelines Constructor
@@ -229,6 +225,29 @@ class FHIRMedicationKnowledgeAdministrationGuidelines extends FHIRBackboneElemen
         }
         $this->_trackValueAdded();
         $this->dosage[] = $dosage;
+        return $this;
+    }
+
+    /**
+     * Information about a medication that is used to support knowledge.
+     *
+     * Dosage for the medication for the specific guidelines.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgeDosage ...$dosage
+     * @return static
+     */
+    public function setDosage(FHIRMedicationKnowledgeDosage ...$dosage): self
+    {
+        if ([] !== $this->dosage) {
+            $this->_trackValuesRemoved(count($this->dosage));
+            $this->dosage = [];
+        }
+        if ([] === $dosage) {
+            return $this;
+        }
+        foreach($dosage as $v) {
+            $this->addDosage($v);
+        }
         return $this;
     }
 
@@ -331,6 +350,30 @@ class FHIRMedicationKnowledgeAdministrationGuidelines extends FHIRBackboneElemen
         }
         $this->_trackValueAdded();
         $this->patientCharacteristics[] = $patientCharacteristics;
+        return $this;
+    }
+
+    /**
+     * Information about a medication that is used to support knowledge.
+     *
+     * Characteristics of the patient that are relevant to the administration
+     * guidelines (for example, height, weight, gender, etc.).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicationKnowledge\FHIRMedicationKnowledgePatientCharacteristics ...$patientCharacteristics
+     * @return static
+     */
+    public function setPatientCharacteristics(FHIRMedicationKnowledgePatientCharacteristics ...$patientCharacteristics): self
+    {
+        if ([] !== $this->patientCharacteristics) {
+            $this->_trackValuesRemoved(count($this->patientCharacteristics));
+            $this->patientCharacteristics = [];
+        }
+        if ([] === $patientCharacteristics) {
+            return $this;
+        }
+        foreach($patientCharacteristics as $v) {
+            $this->addPatientCharacteristics($v);
+        }
         return $this;
     }
 

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,7 +122,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      *
      * A business identifier assigned to a particular completed (or partially
      * completed) questionnaire.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -135,7 +134,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      * QuestionnaireResponse. For example, a ProcedureRequest seeking an intake
      * assessment or a decision support recommendation to assess for post-partum
      * depression.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $basedOn = [];
@@ -146,7 +144,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      *
      * A procedure or observation that this questionnaire was performed as part of the
      * execution of. For example, the surgery a checklist was executed as part of.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $parent = [];
@@ -157,7 +154,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      *
      * The Questionnaire that defines and organizes the questions for which answers are
      * being provided.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $questionnaire = null;
@@ -166,7 +162,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The position of the questionnaire response within its overall lifecycle.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRQuestionnaireResponseStatus
      */
     protected null|FHIRQuestionnaireResponseStatus $status = null;
@@ -178,7 +173,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      * The subject of the questionnaire response. This could be a patient,
      * organization, practitioner, device, etc. This is who/what the answers apply to,
      * but is not necessarily the source of information.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $subject = null;
@@ -189,7 +183,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      *
      * The encounter or episode of care with primary association to the questionnaire
      * response.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $context = null;
@@ -202,7 +195,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date and/or time that this set of answers were last changed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $authored = null;
@@ -213,7 +205,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      *
      * Person who received the answers to the questions in the QuestionnaireResponse
      * and recorded them in the system.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $author = null;
@@ -223,7 +214,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The person who answered the questions about the subject.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $source = null;
@@ -234,7 +224,6 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      *
      * A group or question item from the original questionnaire for which answers are
      * provided.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRQuestionnaireResponse\FHIRQuestionnaireResponseItem[]
      */
     protected null|array $item = [];
@@ -243,10 +232,14 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      * Validation map for fields in type QuestionnaireResponse
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRQuestionnaireResponse Constructor
@@ -478,6 +471,34 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * The order, proposal or plan that is fulfilled in whole or in part by this
+     * QuestionnaireResponse. For example, a ProcedureRequest seeking an intake
+     * assessment or a decision support recommendation to assess for post-partum
+     * depression.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$basedOn
+     * @return static
+     */
+    public function setBasedOn(FHIRReference ...$basedOn): self
+    {
+        if ([] !== $this->basedOn) {
+            $this->_trackValuesRemoved(count($this->basedOn));
+            $this->basedOn = [];
+        }
+        if ([] === $basedOn) {
+            return $this;
+        }
+        foreach($basedOn as $v) {
+            $this->addBasedOn($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * A procedure or observation that this questionnaire was performed as part of the
      * execution of. For example, the surgery a checklist was executed as part of.
      *
@@ -506,6 +527,32 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
         }
         $this->_trackValueAdded();
         $this->parent[] = $parent;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A procedure or observation that this questionnaire was performed as part of the
+     * execution of. For example, the surgery a checklist was executed as part of.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$parent
+     * @return static
+     */
+    public function setParent(FHIRReference ...$parent): self
+    {
+        if ([] !== $this->parent) {
+            $this->_trackValuesRemoved(count($this->parent));
+            $this->parent = [];
+        }
+        if ([] === $parent) {
+            return $this;
+        }
+        foreach($parent as $v) {
+            $this->addParent($v);
+        }
         return $this;
     }
 
@@ -682,16 +729,16 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAuthored(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authored = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAuthored(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $authored = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $authored && !($authored instanceof FHIRDateTime)) {
             $authored = new FHIRDateTime($authored);
         }
         $this->_trackValueSet($this->authored, $authored);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_AUTHORED])) {
-            $this->_primitiveXmlLocations[self::FIELD_AUTHORED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_AUTHORED])) {
+            $this->_xmlLocations[self::FIELD_AUTHORED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_AUTHORED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_AUTHORED][0] = $xmlLocation;
         $this->authored = $authored;
         return $this;
     }
@@ -799,6 +846,32 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
         }
         $this->_trackValueAdded();
         $this->item[] = $item;
+        return $this;
+    }
+
+    /**
+     * A structured set of questions and their answers. The questions are ordered and
+     * grouped into coherent subsets, corresponding to the structure of the grouping of
+     * the questionnaire being responded to.
+     *
+     * A group or question item from the original questionnaire for which answers are
+     * provided.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRQuestionnaireResponse\FHIRQuestionnaireResponseItem ...$item
+     * @return static
+     */
+    public function setItem(FHIRQuestionnaireResponseItem ...$item): self
+    {
+        if ([] !== $this->item) {
+            $this->_trackValuesRemoved(count($this->item));
+            $this->item = [];
+        }
+        if ([] === $item) {
+            return $this;
+        }
+        foreach($item as $v) {
+            $this->addItem($v);
+        }
         return $this;
     }
 
@@ -1253,7 +1326,7 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
             $openedRoot = true;
             $xw->openRootNode($config, 'QuestionnaireResponse', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHORED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHORED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAuthored())) {
             $xw->writeAttribute(self::FIELD_AUTHORED, $v->getValue()?->getFormattedValue());
         }
@@ -1293,7 +1366,7 @@ class FHIRQuestionnaireResponse extends FHIRDomainResource implements PHPFHIRCon
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_AUTHORED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_AUTHORED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAuthored())) {
             $xw->startElement(self::FIELD_AUTHORED);
             $v->xmlSerialize($xw, $config);

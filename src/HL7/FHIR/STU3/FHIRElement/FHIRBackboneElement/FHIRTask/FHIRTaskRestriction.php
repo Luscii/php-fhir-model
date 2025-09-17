@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRTask;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,6 @@ class FHIRTaskRestriction extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Indicates the number of times the requested action should occur.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $repetitions = null;
@@ -108,7 +107,6 @@ class FHIRTaskRestriction extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Over what time-period is fulfillment sought.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $period = null;
@@ -119,7 +117,6 @@ class FHIRTaskRestriction extends FHIRBackboneElement
      *
      * For requests that are targeted to more than on potential recipient/target, for
      * whom is fulfillment sought?
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $recipient = [];
@@ -128,10 +125,10 @@ class FHIRTaskRestriction extends FHIRBackboneElement
      * Validation map for fields in type Task.Restriction
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRTaskRestriction Constructor
@@ -217,16 +214,16 @@ class FHIRTaskRestriction extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setRepetitions(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $repetitions = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setRepetitions(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $repetitions = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $repetitions && !($repetitions instanceof FHIRPositiveInt)) {
             $repetitions = new FHIRPositiveInt($repetitions);
         }
         $this->_trackValueSet($this->repetitions, $repetitions);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_REPETITIONS])) {
-            $this->_primitiveXmlLocations[self::FIELD_REPETITIONS] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_REPETITIONS])) {
+            $this->_xmlLocations[self::FIELD_REPETITIONS] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_REPETITIONS][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_REPETITIONS][0] = $xmlLocation;
         $this->repetitions = $repetitions;
         return $this;
     }
@@ -298,6 +295,32 @@ class FHIRTaskRestriction extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->recipient[] = $recipient;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * For requests that are targeted to more than on potential recipient/target, for
+     * whom is fulfillment sought?
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$recipient
+     * @return static
+     */
+    public function setRecipient(FHIRReference ...$recipient): self
+    {
+        if ([] !== $this->recipient) {
+            $this->_trackValuesRemoved(count($this->recipient));
+            $this->recipient = [];
+        }
+        if ([] === $recipient) {
+            return $this;
+        }
+        foreach($recipient as $v) {
+            $this->addRecipient($v);
+        }
         return $this;
     }
 
@@ -508,12 +531,12 @@ class FHIRTaskRestriction extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'TaskRestriction', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REPETITIONS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REPETITIONS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getRepetitions())) {
             $xw->writeAttribute(self::FIELD_REPETITIONS, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_REPETITIONS] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_REPETITIONS] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getRepetitions())) {
             $xw->startElement(self::FIELD_REPETITIONS);
             $v->xmlSerialize($xw, $config);

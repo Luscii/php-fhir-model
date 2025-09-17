@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDocumentReference;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * Describes the clinical encounter or type of care that the document content is
      * associated with.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $encounter = [];
@@ -119,7 +118,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * an appendectomy, being documented. In some cases, the event is inherent in the
      * type Code, such as a "History and Physical Report" in which the procedure being
      * documented is necessarily a "History and Physical" act.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $event = [];
@@ -130,7 +128,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * The time period over which the service that is described by the document was
      * provided.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRPeriod
      */
     protected null|FHIRPeriod $period = null;
@@ -141,7 +138,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The kind of facility where the patient was seen.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $facilityType = null;
@@ -153,7 +149,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * This property may convey specifics about the practice setting where the content
      * was created, often reflecting the clinical specialty.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $practiceSetting = null;
@@ -164,7 +159,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      *
      * The Patient Information as known when the document was published. May be a
      * reference to a version specific, or contained.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $sourcePatientInfo = null;
@@ -174,7 +168,6 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Related identifiers or resources associated with the DocumentReference.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $related = [];
@@ -183,10 +176,10 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
      * Validation map for fields in type DocumentReference.Context
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRDocumentReferenceContext Constructor
@@ -318,6 +311,32 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Describes the clinical encounter or type of care that the document content is
+     * associated with.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$encounter
+     * @return static
+     */
+    public function setEncounter(FHIRReference ...$encounter): self
+    {
+        if ([] !== $this->encounter) {
+            $this->_trackValuesRemoved(count($this->encounter));
+            $this->encounter = [];
+        }
+        if ([] === $encounter) {
+            return $this;
+        }
+        foreach($encounter as $v) {
+            $this->addEncounter($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -356,6 +375,35 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->event[] = $event;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * This list of codes represents the main clinical acts, such as a colonoscopy or
+     * an appendectomy, being documented. In some cases, the event is inherent in the
+     * type Code, such as a "History and Physical Report" in which the procedure being
+     * documented is necessarily a "History and Physical" act.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$event
+     * @return static
+     */
+    public function setEvent(FHIRCodeableConcept ...$event): self
+    {
+        if ([] !== $this->event) {
+            $this->_trackValuesRemoved(count($this->event));
+            $this->event = [];
+        }
+        if ([] === $event) {
+            return $this;
+        }
+        foreach($event as $v) {
+            $this->addEvent($v);
+        }
         return $this;
     }
 
@@ -536,6 +584,31 @@ class FHIRDocumentReferenceContext extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->related[] = $related;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Related identifiers or resources associated with the DocumentReference.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$related
+     * @return static
+     */
+    public function setRelated(FHIRReference ...$related): self
+    {
+        if ([] !== $this->related) {
+            $this->_trackValuesRemoved(count($this->related));
+            $this->related = [];
+        }
+        if ([] === $related) {
+            return $this;
+        }
+        foreach($related as $v) {
+            $this->addRelated($v);
+        }
         return $this;
     }
 

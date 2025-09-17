@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,7 +103,6 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * The kind of diet or dietary restriction such as fiber restricted diet or
      * diabetic diet.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $type = [];
@@ -119,7 +118,6 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * The time period and frequency at which the diet should be given. The diet should
      * be given for the combination of all schedules if more than one schedule is
      * present.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming[]
      */
     protected null|array $schedule = [];
@@ -129,7 +127,6 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * Class that defines the quantity and type of nutrient modifications (for example
      * carbohydrate, fiber or sodium) required for the oral diet.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderNutrient[]
      */
     protected null|array $nutrient = [];
@@ -139,7 +136,6 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * Class that describes any texture modifications required for the patient to
      * safely consume various types of solid foods.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderTexture[]
      */
     protected null|array $texture = [];
@@ -151,7 +147,6 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      *
      * The required consistency (e.g. honey-thick, nectar-thick, thin, thickened.) of
      * liquids or fluids served to the patient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $fluidConsistencyType = [];
@@ -161,7 +156,6 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Free text or additional instructions or information pertaining to the oral diet.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $instruction = null;
@@ -170,10 +164,10 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * Validation map for fields in type NutritionOrder.OralDiet
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRNutritionOrderOralDiet Constructor
@@ -326,6 +320,33 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The kind of diet or dietary restriction such as fiber restricted diet or
+     * diabetic diet.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$type
+     * @return static
+     */
+    public function setType(FHIRCodeableConcept ...$type): self
+    {
+        if ([] !== $this->type) {
+            $this->_trackValuesRemoved(count($this->type));
+            $this->type = [];
+        }
+        if ([] === $type) {
+            return $this;
+        }
+        foreach($type as $v) {
+            $this->addType($v);
+        }
+        return $this;
+    }
+
+    /**
      * Specifies an event that may occur multiple times. Timing schedules are used to
      * record when things are planned, expected or requested to occur. The most common
      * usage is in dosage instructions for medications. They are also used when
@@ -372,6 +393,37 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
     }
 
     /**
+     * Specifies an event that may occur multiple times. Timing schedules are used to
+     * record when things are planned, expected or requested to occur. The most common
+     * usage is in dosage instructions for medications. They are also used when
+     * planning care of various kinds, and may be used for reporting the schedule to
+     * which past regular activities were carried out.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The time period and frequency at which the diet should be given. The diet should
+     * be given for the combination of all schedules if more than one schedule is
+     * present.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTiming ...$schedule
+     * @return static
+     */
+    public function setSchedule(FHIRTiming ...$schedule): self
+    {
+        if ([] !== $this->schedule) {
+            $this->_trackValuesRemoved(count($this->schedule));
+            $this->schedule = [];
+        }
+        if ([] === $schedule) {
+            return $this;
+        }
+        foreach($schedule as $v) {
+            $this->addSchedule($v);
+        }
+        return $this;
+    }
+
+    /**
      * A request to supply a diet, formula feeding (enteral) or oral nutritional
      * supplement to a patient/resident.
      *
@@ -409,6 +461,31 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * A request to supply a diet, formula feeding (enteral) or oral nutritional
      * supplement to a patient/resident.
      *
+     * Class that defines the quantity and type of nutrient modifications (for example
+     * carbohydrate, fiber or sodium) required for the oral diet.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderNutrient ...$nutrient
+     * @return static
+     */
+    public function setNutrient(FHIRNutritionOrderNutrient ...$nutrient): self
+    {
+        if ([] !== $this->nutrient) {
+            $this->_trackValuesRemoved(count($this->nutrient));
+            $this->nutrient = [];
+        }
+        if ([] === $nutrient) {
+            return $this;
+        }
+        foreach($nutrient as $v) {
+            $this->addNutrient($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A request to supply a diet, formula feeding (enteral) or oral nutritional
+     * supplement to a patient/resident.
+     *
      * Class that describes any texture modifications required for the patient to
      * safely consume various types of solid foods.
      *
@@ -436,6 +513,31 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->texture[] = $texture;
+        return $this;
+    }
+
+    /**
+     * A request to supply a diet, formula feeding (enteral) or oral nutritional
+     * supplement to a patient/resident.
+     *
+     * Class that describes any texture modifications required for the patient to
+     * safely consume various types of solid foods.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRNutritionOrder\FHIRNutritionOrderTexture ...$texture
+     * @return static
+     */
+    public function setTexture(FHIRNutritionOrderTexture ...$texture): self
+    {
+        if ([] !== $this->texture) {
+            $this->_trackValuesRemoved(count($this->texture));
+            $this->texture = [];
+        }
+        if ([] === $texture) {
+            return $this;
+        }
+        foreach($texture as $v) {
+            $this->addTexture($v);
+        }
         return $this;
     }
 
@@ -478,6 +580,33 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
     }
 
     /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The required consistency (e.g. honey-thick, nectar-thick, thin, thickened.) of
+     * liquids or fluids served to the patient.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$fluidConsistencyType
+     * @return static
+     */
+    public function setFluidConsistencyType(FHIRCodeableConcept ...$fluidConsistencyType): self
+    {
+        if ([] !== $this->fluidConsistencyType) {
+            $this->_trackValuesRemoved(count($this->fluidConsistencyType));
+            $this->fluidConsistencyType = [];
+        }
+        if ([] === $fluidConsistencyType) {
+            return $this;
+        }
+        foreach($fluidConsistencyType as $v) {
+            $this->addFluidConsistencyType($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -502,16 +631,16 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setInstruction(null|string|FHIRStringPrimitive|FHIRString $instruction = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setInstruction(null|string|FHIRStringPrimitive|FHIRString $instruction = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $instruction && !($instruction instanceof FHIRString)) {
             $instruction = new FHIRString($instruction);
         }
         $this->_trackValueSet($this->instruction, $instruction);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_INSTRUCTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_INSTRUCTION])) {
+            $this->_xmlLocations[self::FIELD_INSTRUCTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_INSTRUCTION][0] = $xmlLocation;
         $this->instruction = $instruction;
         return $this;
     }
@@ -788,7 +917,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'NutritionOrderOralDiet', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INSTRUCTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getInstruction())) {
             $xw->writeAttribute(self::FIELD_INSTRUCTION, $v->getValue()?->getFormattedValue());
         }
@@ -818,7 +947,7 @@ class FHIRNutritionOrderOralDiet extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_INSTRUCTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_INSTRUCTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getInstruction())) {
             $xw->startElement(self::FIELD_INSTRUCTION);
             $v->xmlSerialize($xw, $config);

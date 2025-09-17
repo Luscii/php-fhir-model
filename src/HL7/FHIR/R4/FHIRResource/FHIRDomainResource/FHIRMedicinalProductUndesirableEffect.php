@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,6 @@ class FHIRMedicinalProductUndesirableEffect extends FHIRDomainResource implement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The medication for which this is an indication.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $subject = [];
@@ -119,7 +118,6 @@ class FHIRMedicinalProductUndesirableEffect extends FHIRDomainResource implement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The symptom, condition or undesirable effect.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $symptomConditionEffect = null;
@@ -130,7 +128,6 @@ class FHIRMedicinalProductUndesirableEffect extends FHIRDomainResource implement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Classification of the effect.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $classification = null;
@@ -141,7 +138,6 @@ class FHIRMedicinalProductUndesirableEffect extends FHIRDomainResource implement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The frequency of occurrence of the effect.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $frequencyOfOccurrence = null;
@@ -151,7 +147,6 @@ class FHIRMedicinalProductUndesirableEffect extends FHIRDomainResource implement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The population group to which this applies.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPopulation[]
      */
     protected null|array $population = [];
@@ -160,10 +155,10 @@ class FHIRMedicinalProductUndesirableEffect extends FHIRDomainResource implement
      * Validation map for fields in type MedicinalProductUndesirableEffect
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductUndesirableEffect Constructor
@@ -275,6 +270,31 @@ class FHIRMedicinalProductUndesirableEffect extends FHIRDomainResource implement
         }
         $this->_trackValueAdded();
         $this->subject[] = $subject;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The medication for which this is an indication.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$subject
+     * @return static
+     */
+    public function setSubject(FHIRReference ...$subject): self
+    {
+        if ([] !== $this->subject) {
+            $this->_trackValuesRemoved(count($this->subject));
+            $this->subject = [];
+        }
+        if ([] === $subject) {
+            return $this;
+        }
+        foreach($subject as $v) {
+            $this->addSubject($v);
+        }
         return $this;
     }
 
@@ -417,6 +437,31 @@ class FHIRMedicinalProductUndesirableEffect extends FHIRDomainResource implement
         }
         $this->_trackValueAdded();
         $this->population[] = $population;
+        return $this;
+    }
+
+    /**
+     * A populatioof people with some set of grouping criteria.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * The population group to which this applies.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPopulation ...$population
+     * @return static
+     */
+    public function setPopulation(FHIRPopulation ...$population): self
+    {
+        if ([] !== $this->population) {
+            $this->_trackValuesRemoved(count($this->population));
+            $this->population = [];
+        }
+        if ([] === $population) {
+            return $this;
+        }
+        foreach($population as $v) {
+            $this->addPopulation($v);
+        }
         return $this;
     }
 

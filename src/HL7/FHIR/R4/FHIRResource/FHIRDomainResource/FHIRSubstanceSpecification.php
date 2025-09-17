@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -135,7 +135,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Identifier by which this substance is known.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $identifier = null;
@@ -146,7 +145,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * High level categorization, e.g. polymer or nucleic acid.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -157,7 +155,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Status of substance within the catalogue e.g. approved.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $status = null;
@@ -168,7 +165,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * If the substance applies to only human or veterinary use.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $domain = null;
@@ -178,7 +174,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Textual description of the substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $description = null;
@@ -188,7 +183,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Supporting literature.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $source = [];
@@ -198,7 +192,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Textual comment about this record of a substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString
      */
     protected null|FHIRString $comment = null;
@@ -207,7 +200,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * used for prescribing.
      *
      * Moiety, for structural modifications.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMoiety[]
      */
     protected null|array $moiety = [];
@@ -217,7 +209,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      *
      * General specifications for this substance, including how it is related to other
      * substances.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationProperty[]
      */
     protected null|array $property = [];
@@ -227,7 +218,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * General information detailing this substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $referenceInformation = null;
@@ -236,7 +226,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * used for prescribing.
      *
      * Structural information.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationStructure
      */
     protected null|FHIRSubstanceSpecificationStructure $structure = null;
@@ -245,7 +234,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * used for prescribing.
      *
      * Codes associated with the substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationCode[]
      */
     protected null|array $code = [];
@@ -254,7 +242,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * used for prescribing.
      *
      * Names applicable to this substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[]
      */
     protected null|array $name = [];
@@ -263,7 +250,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * used for prescribing.
      *
      * The molecular weight or weight range (for proteins, polymers or nucleic acids).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMolecularWeight[]
      */
     protected null|array $molecularWeight = [];
@@ -272,7 +258,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * used for prescribing.
      *
      * A link between this substance and another, with details of the relationship.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship[]
      */
     protected null|array $relationship = [];
@@ -282,7 +267,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Data items specific to nucleic acids.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $nucleicAcid = null;
@@ -292,7 +276,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Data items specific to polymers.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $polymer = null;
@@ -302,7 +285,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Data items specific to proteins.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $protein = null;
@@ -312,7 +294,6 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Material or taxonomic/anatomical source for the substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $sourceMaterial = null;
@@ -321,10 +302,10 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * Validation map for fields in type SubstanceSpecification
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRSubstanceSpecification Constructor
@@ -732,16 +713,16 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDescription(null|string|FHIRStringPrimitive|FHIRString $description = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $description && !($description instanceof FHIRString)) {
             $description = new FHIRString($description);
         }
         $this->_trackValueSet($this->description, $description);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DESCRIPTION])) {
-            $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DESCRIPTION])) {
+            $this->_xmlLocations[self::FIELD_DESCRIPTION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DESCRIPTION][0] = $xmlLocation;
         $this->description = $description;
         return $this;
     }
@@ -781,6 +762,31 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
     }
 
     /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Supporting literature.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$source
+     * @return static
+     */
+    public function setSource(FHIRReference ...$source): self
+    {
+        if ([] !== $this->source) {
+            $this->_trackValuesRemoved(count($this->source));
+            $this->source = [];
+        }
+        if ([] === $source) {
+            return $this;
+        }
+        foreach($source as $v) {
+            $this->addSource($v);
+        }
+        return $this;
+    }
+
+    /**
      * A sequence of Unicode characters
      * Note that FHIR strings SHALL NOT exceed 1MB in size
      * If the element is present, it must have either a \@value, an \@id, or extensions
@@ -805,16 +811,16 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setComment(null|string|FHIRStringPrimitive|FHIRString $comment = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $comment && !($comment instanceof FHIRString)) {
             $comment = new FHIRString($comment);
         }
         $this->_trackValueSet($this->comment, $comment);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_COMMENT])) {
-            $this->_primitiveXmlLocations[self::FIELD_COMMENT] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_COMMENT])) {
+            $this->_xmlLocations[self::FIELD_COMMENT] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_COMMENT][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_COMMENT][0] = $xmlLocation;
         $this->comment = $comment;
         return $this;
     }
@@ -855,6 +861,30 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
      *
+     * Moiety, for structural modifications.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMoiety ...$moiety
+     * @return static
+     */
+    public function setMoiety(FHIRSubstanceSpecificationMoiety ...$moiety): self
+    {
+        if ([] !== $this->moiety) {
+            $this->_trackValuesRemoved(count($this->moiety));
+            $this->moiety = [];
+        }
+        if ([] === $moiety) {
+            return $this;
+        }
+        foreach($moiety as $v) {
+            $this->addMoiety($v);
+        }
+        return $this;
+    }
+
+    /**
+     * The detailed description of a substance, typically at a level beyond what is
+     * used for prescribing.
+     *
      * General specifications for this substance, including how it is related to other
      * substances.
      *
@@ -882,6 +912,31 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
         }
         $this->_trackValueAdded();
         $this->property[] = $property;
+        return $this;
+    }
+
+    /**
+     * The detailed description of a substance, typically at a level beyond what is
+     * used for prescribing.
+     *
+     * General specifications for this substance, including how it is related to other
+     * substances.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationProperty ...$property
+     * @return static
+     */
+    public function setProperty(FHIRSubstanceSpecificationProperty ...$property): self
+    {
+        if ([] !== $this->property) {
+            $this->_trackValuesRemoved(count($this->property));
+            $this->property = [];
+        }
+        if ([] === $property) {
+            return $this;
+        }
+        foreach($property as $v) {
+            $this->addProperty($v);
+        }
         return $this;
     }
 
@@ -987,6 +1042,30 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
      *
+     * Codes associated with the substance.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationCode ...$code
+     * @return static
+     */
+    public function setCode(FHIRSubstanceSpecificationCode ...$code): self
+    {
+        if ([] !== $this->code) {
+            $this->_trackValuesRemoved(count($this->code));
+            $this->code = [];
+        }
+        if ([] === $code) {
+            return $this;
+        }
+        foreach($code as $v) {
+            $this->addCode($v);
+        }
+        return $this;
+    }
+
+    /**
+     * The detailed description of a substance, typically at a level beyond what is
+     * used for prescribing.
+     *
      * Names applicable to this substance.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName[]
@@ -1012,6 +1091,30 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
         }
         $this->_trackValueAdded();
         $this->name[] = $name;
+        return $this;
+    }
+
+    /**
+     * The detailed description of a substance, typically at a level beyond what is
+     * used for prescribing.
+     *
+     * Names applicable to this substance.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationName ...$name
+     * @return static
+     */
+    public function setName(FHIRSubstanceSpecificationName ...$name): self
+    {
+        if ([] !== $this->name) {
+            $this->_trackValuesRemoved(count($this->name));
+            $this->name = [];
+        }
+        if ([] === $name) {
+            return $this;
+        }
+        foreach($name as $v) {
+            $this->addName($v);
+        }
         return $this;
     }
 
@@ -1051,6 +1154,30 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
      * The detailed description of a substance, typically at a level beyond what is
      * used for prescribing.
      *
+     * The molecular weight or weight range (for proteins, polymers or nucleic acids).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationMolecularWeight ...$molecularWeight
+     * @return static
+     */
+    public function setMolecularWeight(FHIRSubstanceSpecificationMolecularWeight ...$molecularWeight): self
+    {
+        if ([] !== $this->molecularWeight) {
+            $this->_trackValuesRemoved(count($this->molecularWeight));
+            $this->molecularWeight = [];
+        }
+        if ([] === $molecularWeight) {
+            return $this;
+        }
+        foreach($molecularWeight as $v) {
+            $this->addMolecularWeight($v);
+        }
+        return $this;
+    }
+
+    /**
+     * The detailed description of a substance, typically at a level beyond what is
+     * used for prescribing.
+     *
      * A link between this substance and another, with details of the relationship.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship[]
@@ -1076,6 +1203,30 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
         }
         $this->_trackValueAdded();
         $this->relationship[] = $relationship;
+        return $this;
+    }
+
+    /**
+     * The detailed description of a substance, typically at a level beyond what is
+     * used for prescribing.
+     *
+     * A link between this substance and another, with details of the relationship.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRSubstanceSpecification\FHIRSubstanceSpecificationRelationship ...$relationship
+     * @return static
+     */
+    public function setRelationship(FHIRSubstanceSpecificationRelationship ...$relationship): self
+    {
+        if ([] !== $this->relationship) {
+            $this->_trackValuesRemoved(count($this->relationship));
+            $this->relationship = [];
+        }
+        if ([] === $relationship) {
+            return $this;
+        }
+        foreach($relationship as $v) {
+            $this->addRelationship($v);
+        }
         return $this;
     }
 
@@ -1834,11 +1985,11 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
             $openedRoot = true;
             $xw->openRootNode($config, 'SubstanceSpecification', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->writeAttribute(self::FIELD_DESCRIPTION, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COMMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getComment())) {
             $xw->writeAttribute(self::FIELD_COMMENT, $v->getValue()?->getFormattedValue());
         }
@@ -1863,7 +2014,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DESCRIPTION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DESCRIPTION] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDescription())) {
             $xw->startElement(self::FIELD_DESCRIPTION);
             $v->xmlSerialize($xw, $config);
@@ -1874,7 +2025,7 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_COMMENT] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_COMMENT] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getComment())) {
             $xw->startElement(self::FIELD_COMMENT);
             $v->xmlSerialize($xw, $config);

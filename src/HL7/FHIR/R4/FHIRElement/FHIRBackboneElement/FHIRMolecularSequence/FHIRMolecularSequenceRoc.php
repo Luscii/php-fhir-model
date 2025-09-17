@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMolecularSequence;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,6 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Invidual data point representing the GQ (genotype quality) score threshold.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger[]
      */
     protected null|array $score = [];
@@ -119,7 +118,6 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      *
      * The number of true positives if the GQ score threshold was set to "score" field
      * value.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger[]
      */
     protected null|array $numTP = [];
@@ -130,7 +128,6 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      *
      * The number of false positives if the GQ score threshold was set to "score" field
      * value.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger[]
      */
     protected null|array $numFP = [];
@@ -141,7 +138,6 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      *
      * The number of false negatives if the GQ score threshold was set to "score" field
      * value.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger[]
      */
     protected null|array $numFN = [];
@@ -152,7 +148,6 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Calculated precision if the GQ score threshold was set to "score" field value.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal[]
      */
     protected null|array $precision = [];
@@ -163,7 +158,6 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Calculated sensitivity if the GQ score threshold was set to "score" field value.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal[]
      */
     protected null|array $sensitivity = [];
@@ -174,7 +168,6 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Calculated fScore if the GQ score threshold was set to "score" field value.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDecimal[]
      */
     protected null|array $fMeasure = [];
@@ -183,10 +176,10 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * Validation map for fields in type MolecularSequence.Roc
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMolecularSequenceRoc Constructor
@@ -457,16 +450,20 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addScore(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $score = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addScore(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $score = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $score && !($score instanceof FHIRInteger)) {
             $score = new FHIRInteger($score);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SCORE])) {
-            $this->_primitiveXmlLocations[self::FIELD_SCORE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SCORE])) {
+            $this->_xmlLocations[self::FIELD_SCORE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SCORE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_SCORE]) {
+            $this->_xmlLocations[self::FIELD_SCORE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_SCORE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->score[] = $score;
         return $this;
     }
@@ -482,9 +479,9 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setScore(array $score = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setScore(array $score = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_SCORE]);
+        unset($this->_xmlLocations[self::FIELD_SCORE]);
         if ([] !== $this->score) {
             $this->_trackValuesRemoved(count($this->score));
             $this->score = [];
@@ -529,16 +526,20 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addNumTP(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numTP = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addNumTP(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numTP = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $numTP && !($numTP instanceof FHIRInteger)) {
             $numTP = new FHIRInteger($numTP);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUM_TP])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUM_TP] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUM_TP])) {
+            $this->_xmlLocations[self::FIELD_NUM_TP] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUM_TP][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_NUM_TP]) {
+            $this->_xmlLocations[self::FIELD_NUM_TP][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_NUM_TP][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->numTP[] = $numTP;
         return $this;
     }
@@ -555,9 +556,9 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumTP(array $numTP = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumTP(array $numTP = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_NUM_TP]);
+        unset($this->_xmlLocations[self::FIELD_NUM_TP]);
         if ([] !== $this->numTP) {
             $this->_trackValuesRemoved(count($this->numTP));
             $this->numTP = [];
@@ -602,16 +603,20 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addNumFP(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numFP = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addNumFP(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numFP = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $numFP && !($numFP instanceof FHIRInteger)) {
             $numFP = new FHIRInteger($numFP);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUM_FP])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUM_FP] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUM_FP])) {
+            $this->_xmlLocations[self::FIELD_NUM_FP] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUM_FP][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_NUM_FP]) {
+            $this->_xmlLocations[self::FIELD_NUM_FP][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_NUM_FP][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->numFP[] = $numFP;
         return $this;
     }
@@ -628,9 +633,9 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumFP(array $numFP = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumFP(array $numFP = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_NUM_FP]);
+        unset($this->_xmlLocations[self::FIELD_NUM_FP]);
         if ([] !== $this->numFP) {
             $this->_trackValuesRemoved(count($this->numFP));
             $this->numFP = [];
@@ -675,16 +680,20 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addNumFN(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numFN = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addNumFN(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $numFN = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $numFN && !($numFN instanceof FHIRInteger)) {
             $numFN = new FHIRInteger($numFN);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUM_FN])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUM_FN] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUM_FN])) {
+            $this->_xmlLocations[self::FIELD_NUM_FN] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUM_FN][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_NUM_FN]) {
+            $this->_xmlLocations[self::FIELD_NUM_FN][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_NUM_FN][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->numFN[] = $numFN;
         return $this;
     }
@@ -701,9 +710,9 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumFN(array $numFN = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumFN(array $numFN = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_NUM_FN]);
+        unset($this->_xmlLocations[self::FIELD_NUM_FN]);
         if ([] !== $this->numFN) {
             $this->_trackValuesRemoved(count($this->numFN));
             $this->numFN = [];
@@ -748,16 +757,20 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addPrecision(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $precision = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addPrecision(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $precision = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $precision && !($precision instanceof FHIRDecimal)) {
             $precision = new FHIRDecimal($precision);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PRECISION])) {
-            $this->_primitiveXmlLocations[self::FIELD_PRECISION] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PRECISION])) {
+            $this->_xmlLocations[self::FIELD_PRECISION] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PRECISION][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_PRECISION]) {
+            $this->_xmlLocations[self::FIELD_PRECISION][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_PRECISION][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->precision[] = $precision;
         return $this;
     }
@@ -774,9 +787,9 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPrecision(array $precision = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPrecision(array $precision = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_PRECISION]);
+        unset($this->_xmlLocations[self::FIELD_PRECISION]);
         if ([] !== $this->precision) {
             $this->_trackValuesRemoved(count($this->precision));
             $this->precision = [];
@@ -821,16 +834,20 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addSensitivity(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $sensitivity = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addSensitivity(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $sensitivity = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $sensitivity && !($sensitivity instanceof FHIRDecimal)) {
             $sensitivity = new FHIRDecimal($sensitivity);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_SENSITIVITY])) {
-            $this->_primitiveXmlLocations[self::FIELD_SENSITIVITY] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_SENSITIVITY])) {
+            $this->_xmlLocations[self::FIELD_SENSITIVITY] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_SENSITIVITY][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_SENSITIVITY]) {
+            $this->_xmlLocations[self::FIELD_SENSITIVITY][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_SENSITIVITY][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->sensitivity[] = $sensitivity;
         return $this;
     }
@@ -847,9 +864,9 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setSensitivity(array $sensitivity = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setSensitivity(array $sensitivity = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_SENSITIVITY]);
+        unset($this->_xmlLocations[self::FIELD_SENSITIVITY]);
         if ([] !== $this->sensitivity) {
             $this->_trackValuesRemoved(count($this->sensitivity));
             $this->sensitivity = [];
@@ -894,16 +911,20 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addFMeasure(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $fMeasure = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addFMeasure(null|string|float|int|FHIRDecimalPrimitive|FHIRDecimal $fMeasure = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $fMeasure && !($fMeasure instanceof FHIRDecimal)) {
             $fMeasure = new FHIRDecimal($fMeasure);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_F_MEASURE])) {
-            $this->_primitiveXmlLocations[self::FIELD_F_MEASURE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_F_MEASURE])) {
+            $this->_xmlLocations[self::FIELD_F_MEASURE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_F_MEASURE][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_F_MEASURE]) {
+            $this->_xmlLocations[self::FIELD_F_MEASURE][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_F_MEASURE][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->fMeasure[] = $fMeasure;
         return $this;
     }
@@ -920,9 +941,9 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFMeasure(array $fMeasure = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setFMeasure(array $fMeasure = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_F_MEASURE]);
+        unset($this->_xmlLocations[self::FIELD_F_MEASURE]);
         if ([] !== $this->fMeasure) {
             $this->_trackValuesRemoved(count($this->fMeasure));
             $this->fMeasure = [];
@@ -1248,50 +1269,50 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MolecularSequenceRoc', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SCORE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SCORE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getScore())) {
             $xw->writeAttribute(self::FIELD_SCORE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getScore()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_SCORE, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUM_TP] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUM_TP] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getNumTP())) {
             $xw->writeAttribute(self::FIELD_NUM_TP, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getNumTP()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_NUM_TP, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUM_FP] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUM_FP] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getNumFP())) {
             $xw->writeAttribute(self::FIELD_NUM_FP, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getNumFP()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_NUM_FP, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUM_FN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUM_FN] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getNumFN())) {
             $xw->writeAttribute(self::FIELD_NUM_FN, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getNumFN()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_NUM_FN, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRECISION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRECISION] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getPrecision())) {
             $xw->writeAttribute(self::FIELD_PRECISION, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getPrecision()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_PRECISION, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SENSITIVITY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SENSITIVITY] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getSensitivity())) {
             $xw->writeAttribute(self::FIELD_SENSITIVITY, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getSensitivity()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_SENSITIVITY, $vs[$idx]->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_F_MEASURE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_F_MEASURE] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getFMeasure())) {
             $xw->writeAttribute(self::FIELD_F_MEASURE, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getFMeasure()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_F_MEASURE, $vs[$idx]->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SCORE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SCORE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getScore())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1301,7 +1322,7 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUM_TP] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUM_TP] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getNumTP())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1311,7 +1332,7 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUM_FP] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUM_FP] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getNumFP())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1321,7 +1342,7 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUM_FN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUM_FN] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getNumFN())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1331,7 +1352,7 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRECISION] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRECISION] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getPrecision())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1341,7 +1362,7 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_SENSITIVITY] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_SENSITIVITY] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getSensitivity())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {
@@ -1351,7 +1372,7 @@ class FHIRMolecularSequenceRoc extends FHIRBackboneElement
                 }
             }
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_F_MEASURE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_F_MEASURE] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getFMeasure())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

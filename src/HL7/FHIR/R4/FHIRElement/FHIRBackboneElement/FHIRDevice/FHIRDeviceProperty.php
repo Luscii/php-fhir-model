@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRDevice;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,6 @@ class FHIRDeviceProperty extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Code that specifies the property DeviceDefinitionPropetyCode (Extensible).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $type = null;
@@ -110,7 +109,6 @@ class FHIRDeviceProperty extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Property value as a quantity.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRQuantity[]
      */
     protected null|array $valueQuantity = [];
@@ -121,7 +119,6 @@ class FHIRDeviceProperty extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Property value as a code, e.g., NTP4 (synced to NTP).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $valueCode = [];
@@ -130,10 +127,14 @@ class FHIRDeviceProperty extends FHIRBackboneElement
      * Validation map for fields in type Device.Property
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_TYPE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRDeviceProperty Constructor
@@ -267,6 +268,33 @@ class FHIRDeviceProperty extends FHIRBackboneElement
     }
 
     /**
+     * A measured amount (or an amount that can potentially be measured). Note that
+     * measured amounts include amounts that are not precisely quantified, including
+     * amounts involving arbitrary units and floating currencies.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Property value as a quantity.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRQuantity ...$valueQuantity
+     * @return static
+     */
+    public function setValueQuantity(FHIRQuantity ...$valueQuantity): self
+    {
+        if ([] !== $this->valueQuantity) {
+            $this->_trackValuesRemoved(count($this->valueQuantity));
+            $this->valueQuantity = [];
+        }
+        if ([] === $valueQuantity) {
+            return $this;
+        }
+        foreach($valueQuantity as $v) {
+            $this->addValueQuantity($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -299,6 +327,32 @@ class FHIRDeviceProperty extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->valueCode[] = $valueCode;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Property value as a code, e.g., NTP4 (synced to NTP).
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept ...$valueCode
+     * @return static
+     */
+    public function setValueCode(FHIRCodeableConcept ...$valueCode): self
+    {
+        if ([] !== $this->valueCode) {
+            $this->_trackValuesRemoved(count($this->valueCode));
+            $this->valueCode = [];
+        }
+        if ([] === $valueCode) {
+            return $this;
+        }
+        foreach($valueCode as $v) {
+            $this->addValueCode($v);
+        }
         return $this;
     }
 

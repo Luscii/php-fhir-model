@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRExplanationOfBenefit;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,6 @@ class FHIRExplanationOfBenefitInsurance extends FHIRBackboneElement
      *
      * A flag to indicate that this Coverage is to be used for adjudication of this
      * claim when set to true.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $focal = null;
@@ -113,7 +112,6 @@ class FHIRExplanationOfBenefitInsurance extends FHIRBackboneElement
      * Reference to the insurance card level information contained in the Coverage
      * resource. The coverage issuing insurer will use these details to locate the
      * patient's actual coverage within the insurer's information system.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $coverage = null;
@@ -125,7 +123,6 @@ class FHIRExplanationOfBenefitInsurance extends FHIRBackboneElement
      * Reference numbers previously provided by the insurer to the provider to be
      * quoted on subsequent claims containing services or products related to the prior
      * authorization.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRString[]
      */
     protected null|array $preAuthRef = [];
@@ -134,10 +131,17 @@ class FHIRExplanationOfBenefitInsurance extends FHIRBackboneElement
      * Validation map for fields in type ExplanationOfBenefit.Insurance
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_COVERAGE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_FOCAL => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRExplanationOfBenefitInsurance Constructor
@@ -240,16 +244,16 @@ class FHIRExplanationOfBenefitInsurance extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setFocal(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $focal = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setFocal(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $focal = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $focal && !($focal instanceof FHIRBoolean)) {
             $focal = new FHIRBoolean($focal);
         }
         $this->_trackValueSet($this->focal, $focal);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_FOCAL])) {
-            $this->_primitiveXmlLocations[self::FIELD_FOCAL] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_FOCAL])) {
+            $this->_xmlLocations[self::FIELD_FOCAL] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_FOCAL][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_FOCAL][0] = $xmlLocation;
         $this->focal = $focal;
         return $this;
     }
@@ -321,16 +325,20 @@ class FHIRExplanationOfBenefitInsurance extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addPreAuthRef(null|string|FHIRStringPrimitive|FHIRString $preAuthRef = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addPreAuthRef(null|string|FHIRStringPrimitive|FHIRString $preAuthRef = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $preAuthRef && !($preAuthRef instanceof FHIRString)) {
             $preAuthRef = new FHIRString($preAuthRef);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF])) {
-            $this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PRE_AUTH_REF])) {
+            $this->_xmlLocations[self::FIELD_PRE_AUTH_REF] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_PRE_AUTH_REF]) {
+            $this->_xmlLocations[self::FIELD_PRE_AUTH_REF][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_PRE_AUTH_REF][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->preAuthRef[] = $preAuthRef;
         return $this;
     }
@@ -348,9 +356,9 @@ class FHIRExplanationOfBenefitInsurance extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setPreAuthRef(array $preAuthRef = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setPreAuthRef(array $preAuthRef = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF]);
+        unset($this->_xmlLocations[self::FIELD_PRE_AUTH_REF]);
         if ([] !== $this->preAuthRef) {
             $this->_trackValuesRemoved(count($this->preAuthRef));
             $this->preAuthRef = [];
@@ -578,18 +586,18 @@ class FHIRExplanationOfBenefitInsurance extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ExplanationOfBenefitInsurance', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FOCAL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FOCAL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getFocal())) {
             $xw->writeAttribute(self::FIELD_FOCAL, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRE_AUTH_REF] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getPreAuthRef())) {
             $xw->writeAttribute(self::FIELD_PRE_AUTH_REF, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getPreAuthRef()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_PRE_AUTH_REF, $vs[$idx]->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_FOCAL] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_FOCAL] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getFocal())) {
             $xw->startElement(self::FIELD_FOCAL);
             $v->xmlSerialize($xw, $config);
@@ -600,7 +608,7 @@ class FHIRExplanationOfBenefitInsurance extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRE_AUTH_REF] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRE_AUTH_REF] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getPreAuthRef())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

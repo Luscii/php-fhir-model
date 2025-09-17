@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRContract;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,6 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * Number used to link this term or term element to the applicable Security Label.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRUnsignedInt[]
      */
     protected null|array $number = [];
@@ -110,7 +109,6 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
      *
      * Security label privacy tag that species the level of confidentiality protection
      * required for this term and/or term elements.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding
      */
     protected null|FHIRCoding $classification = null;
@@ -121,7 +119,6 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
      *
      * Security label privacy tag that species the applicable privacy and security
      * policies governing this term and/or term elements.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
     protected null|array $category = [];
@@ -132,7 +129,6 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
      *
      * Security label privacy tag that species the manner in which term and/or term
      * elements are to be protected.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCoding[]
      */
     protected null|array $control = [];
@@ -141,10 +137,14 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
      * Validation map for fields in type Contract.SecurityLabel
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CLASSIFICATION => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRContractSecurityLabel Constructor
@@ -260,16 +260,20 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function addNumber(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $number = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function addNumber(null|string|int|float|FHIRUnsignedIntPrimitive|FHIRUnsignedInt $number = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $number && !($number instanceof FHIRUnsignedInt)) {
             $number = new FHIRUnsignedInt($number);
         }
         $this->_trackValueAdded();
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_NUMBER])) {
-            $this->_primitiveXmlLocations[self::FIELD_NUMBER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_NUMBER])) {
+            $this->_xmlLocations[self::FIELD_NUMBER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_NUMBER][] = $xmlLocation;
+        if ([] === $this->_xmlLocations[self::FIELD_NUMBER]) {
+            $this->_xmlLocations[self::FIELD_NUMBER][0] = $xmlLocation;
+        } else {
+            $this->_xmlLocations[self::FIELD_NUMBER][] = PHPFHIRXmlLocationEnum::ELEMENT;
+        }
         $this->number[] = $number;
         return $this;
     }
@@ -285,9 +289,9 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setNumber(array $number = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setNumber(array $number = [], PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
-        unset($this->_primitiveXmlLocations[self::FIELD_NUMBER]);
+        unset($this->_xmlLocations[self::FIELD_NUMBER]);
         if ([] !== $this->number) {
             $this->_trackValuesRemoved(count($this->number));
             $this->number = [];
@@ -382,6 +386,32 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Security label privacy tag that species the applicable privacy and security
+     * policies governing this term and/or term elements.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCoding ...$category
+     * @return static
+     */
+    public function setCategory(FHIRCoding ...$category): self
+    {
+        if ([] !== $this->category) {
+            $this->_trackValuesRemoved(count($this->category));
+            $this->category = [];
+        }
+        if ([] === $category) {
+            return $this;
+        }
+        foreach($category as $v) {
+            $this->addCategory($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Security label privacy tag that species the manner in which term and/or term
      * elements are to be protected.
      *
@@ -410,6 +440,32 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->control[] = $control;
+        return $this;
+    }
+
+    /**
+     * A reference to a code defined by a terminology system.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Security label privacy tag that species the manner in which term and/or term
+     * elements are to be protected.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRCoding ...$control
+     * @return static
+     */
+    public function setControl(FHIRCoding ...$control): self
+    {
+        if ([] !== $this->control) {
+            $this->_trackValuesRemoved(count($this->control));
+            $this->control = [];
+        }
+        if ([] === $control) {
+            return $this;
+        }
+        foreach($control as $v) {
+            $this->addControl($v);
+        }
         return $this;
     }
 
@@ -638,14 +694,14 @@ class FHIRContractSecurityLabel extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ContractSecurityLabel', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER] ?? [];
         if ([] === $locs && [] !== ($vs = $this->getNumber())) {
             $xw->writeAttribute(self::FIELD_NUMBER, $vs[0]->getValue()?->getFormattedValue());
         } else if (false !== ($idx = array_search(PHPFHIRXmlLocationEnum::ATTRIBUTE, $locs, true)) && [] !== ($vs = $this->getNumber()) && isset($vs[$idx])) {
             $xw->writeAttribute(self::FIELD_NUMBER, $vs[$idx]->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_NUMBER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_NUMBER] ?? [];
         if (([] === $locs || in_array(PHPFHIRXmlLocationEnum::ELEMENT, $locs, true)) && [] !== ($vs = $this->getNumber())) {
             foreach($vs as $i => $v) {
                 if (!isset($locs[$i]) || PHPFHIRXmlLocationEnum::ELEMENT === $locs[$i]) {

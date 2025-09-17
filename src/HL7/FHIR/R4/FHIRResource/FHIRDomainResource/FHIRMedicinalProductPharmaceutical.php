@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,7 +113,6 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * An identifier for the pharmaceutical medicinal product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -124,7 +123,6 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The administrable dose form, after necessary reconstitution.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $administrableDoseForm = null;
@@ -135,7 +133,6 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Todo.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $unitOfPresentation = null;
@@ -145,7 +142,6 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Ingredient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $ingredient = [];
@@ -155,7 +151,6 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Accompanying device.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $device = [];
@@ -163,7 +158,6 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
      * A pharmaceutical product described in terms of its composition and dose form.
      *
      * Characteristics e.g. a products onset of action.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPharmaceutical\FHIRMedicinalProductPharmaceuticalCharacteristics[]
      */
     protected null|array $characteristics = [];
@@ -172,7 +166,6 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
      *
      * The path by which the pharmaceutical product is taken into or makes contact with
      * the body.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPharmaceutical\FHIRMedicinalProductPharmaceuticalRouteOfAdministration[]
      */
     protected null|array $routeOfAdministration = [];
@@ -182,13 +175,16 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
      * @var array
      */
     private const _VALIDATION_RULES = [
+        self::FIELD_ADMINISTRABLE_DOSE_FORM => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
         self::FIELD_ROUTE_OF_ADMINISTRATION => [
             PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
         ],
     ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductPharmaceutical Constructor
@@ -344,6 +340,32 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An identifier for the pharmaceutical medicinal product.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * A concept that may be defined by a formal reference to a terminology or ontology
      * or may be provided by text.
      * If the element is present, it must have a value for at least one of the defined
@@ -454,6 +476,31 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Ingredient.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$ingredient
+     * @return static
+     */
+    public function setIngredient(FHIRReference ...$ingredient): self
+    {
+        if ([] !== $this->ingredient) {
+            $this->_trackValuesRemoved(count($this->ingredient));
+            $this->ingredient = [];
+        }
+        if ([] === $ingredient) {
+            return $this;
+        }
+        foreach($ingredient as $v) {
+            $this->addIngredient($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Accompanying device.
      *
      * @return null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
@@ -480,6 +527,31 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
         }
         $this->_trackValueAdded();
         $this->device[] = $device;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Accompanying device.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$device
+     * @return static
+     */
+    public function setDevice(FHIRReference ...$device): self
+    {
+        if ([] !== $this->device) {
+            $this->_trackValuesRemoved(count($this->device));
+            $this->device = [];
+        }
+        if ([] === $device) {
+            return $this;
+        }
+        foreach($device as $v) {
+            $this->addDevice($v);
+        }
         return $this;
     }
 
@@ -516,6 +588,29 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
     /**
      * A pharmaceutical product described in terms of its composition and dose form.
      *
+     * Characteristics e.g. a products onset of action.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPharmaceutical\FHIRMedicinalProductPharmaceuticalCharacteristics ...$characteristics
+     * @return static
+     */
+    public function setCharacteristics(FHIRMedicinalProductPharmaceuticalCharacteristics ...$characteristics): self
+    {
+        if ([] !== $this->characteristics) {
+            $this->_trackValuesRemoved(count($this->characteristics));
+            $this->characteristics = [];
+        }
+        if ([] === $characteristics) {
+            return $this;
+        }
+        foreach($characteristics as $v) {
+            $this->addCharacteristics($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A pharmaceutical product described in terms of its composition and dose form.
+     *
      * The path by which the pharmaceutical product is taken into or makes contact with
      * the body.
      *
@@ -542,6 +637,30 @@ class FHIRMedicinalProductPharmaceutical extends FHIRDomainResource implements P
         }
         $this->_trackValueAdded();
         $this->routeOfAdministration[] = $routeOfAdministration;
+        return $this;
+    }
+
+    /**
+     * A pharmaceutical product described in terms of its composition and dose form.
+     *
+     * The path by which the pharmaceutical product is taken into or makes contact with
+     * the body.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductPharmaceutical\FHIRMedicinalProductPharmaceuticalRouteOfAdministration ...$routeOfAdministration
+     * @return static
+     */
+    public function setRouteOfAdministration(FHIRMedicinalProductPharmaceuticalRouteOfAdministration ...$routeOfAdministration): self
+    {
+        if ([] !== $this->routeOfAdministration) {
+            $this->_trackValuesRemoved(count($this->routeOfAdministration));
+            $this->routeOfAdministration = [];
+        }
+        if ([] === $routeOfAdministration) {
+            return $this;
+        }
+        foreach($routeOfAdministration as $v) {
+            $this->addRouteOfAdministration($v);
+        }
         return $this;
     }
 

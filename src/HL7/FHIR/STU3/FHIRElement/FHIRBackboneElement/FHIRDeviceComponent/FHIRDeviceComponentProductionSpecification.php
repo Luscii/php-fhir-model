@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRDeviceComponent;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
      *
      * The specification type, such as, serial number, part number, hardware revision,
      * software revision, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $specType = null;
@@ -112,7 +111,6 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
      * The internal component unique identification. This is a provision for
      * manufacture specific standard components using a private OID. 11073-10101 has a
      * partition for private OID semantic that the manufacturer can make use of.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $componentId = null;
@@ -122,7 +120,6 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The printable string defining the component.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRString
      */
     protected null|FHIRString $productionSpec = null;
@@ -131,10 +128,10 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
      * Validation map for fields in type DeviceComponent.ProductionSpecification
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRDeviceComponentProductionSpecification Constructor
@@ -288,16 +285,16 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setProductionSpec(null|string|FHIRStringPrimitive|FHIRString $productionSpec = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setProductionSpec(null|string|FHIRStringPrimitive|FHIRString $productionSpec = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $productionSpec && !($productionSpec instanceof FHIRString)) {
             $productionSpec = new FHIRString($productionSpec);
         }
         $this->_trackValueSet($this->productionSpec, $productionSpec);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_PRODUCTION_SPEC])) {
-            $this->_primitiveXmlLocations[self::FIELD_PRODUCTION_SPEC] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_PRODUCTION_SPEC])) {
+            $this->_xmlLocations[self::FIELD_PRODUCTION_SPEC] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_PRODUCTION_SPEC][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_PRODUCTION_SPEC][0] = $xmlLocation;
         $this->productionSpec = $productionSpec;
         return $this;
     }
@@ -507,7 +504,7 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'DeviceComponentProductionSpecification', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRODUCTION_SPEC] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRODUCTION_SPEC] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getProductionSpec())) {
             $xw->writeAttribute(self::FIELD_PRODUCTION_SPEC, $v->getValue()?->getFormattedValue());
         }
@@ -522,7 +519,7 @@ class FHIRDeviceComponentProductionSpecification extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_PRODUCTION_SPEC] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_PRODUCTION_SPEC] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getProductionSpec())) {
             $xw->startElement(self::FIELD_PRODUCTION_SPEC);
             $v->xmlSerialize($xw, $config);

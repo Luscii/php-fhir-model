@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -146,7 +146,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * An identifier for this patient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRIdentifier[]
      */
     protected null|array $identifier = [];
@@ -159,7 +158,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * of time based on an organization's business rules. It is often used to filter
      * patient lists to exclude inactive patients Deceased patients may also be marked
      * as inactive for the same reasons, but may be active for some time after death.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $active = null;
@@ -169,7 +167,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * A name associated with the individual.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRHumanName[]
      */
     protected null|array $name = [];
@@ -181,7 +178,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A contact detail (e.g. a telephone number or an email address) by which the
      * individual may be contacted.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRContactPoint[]
      */
     protected null|array $telecom = [];
@@ -190,7 +186,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Administrative Gender - the gender that the patient is considered to have for
      * administration and record keeping purposes.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAdministrativeGender
      */
     protected null|FHIRAdministrativeGender $gender = null;
@@ -201,7 +196,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date of birth for the individual.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDate
      */
     protected null|FHIRDate $birthDate = null;
@@ -210,7 +204,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Indicates if the individual is deceased or not.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $deceasedBoolean = null;
@@ -223,7 +216,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Indicates if the individual is deceased or not.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $deceasedDateTime = null;
@@ -237,7 +229,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * An address for the individual.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAddress[]
      */
     protected null|array $address = [];
@@ -248,7 +239,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * This field contains a patient's most recent marital (civil) status.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $maritalStatus = null;
@@ -258,7 +248,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Indicates whether the patient is part of a multiple (boolean) or indicates the
      * actual birth order (integer).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $multipleBirthBoolean = null;
@@ -269,7 +258,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * Indicates whether the patient is part of a multiple (boolean) or indicates the
      * actual birth order (integer).
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRInteger
      */
     protected null|FHIRInteger $multipleBirthInteger = null;
@@ -279,7 +267,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Image of the patient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRAttachment[]
      */
     protected null|array $photo = [];
@@ -288,7 +275,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * receiving care or other health-related services.
      *
      * A contact party (e.g. guardian, partner, friend) for the patient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPatient\FHIRPatientContact[]
      */
     protected null|array $contact = [];
@@ -298,7 +284,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      *
      * A language which may be used to communicate with the patient about his or her
      * health.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPatient\FHIRPatientCommunication[]
      */
     protected null|array $communication = [];
@@ -308,7 +293,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Patient's nominated care provider.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference[]
      */
     protected null|array $generalPractitioner = [];
@@ -318,7 +302,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Organization that is the custodian of the patient record.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $managingOrganization = null;
@@ -327,7 +310,6 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * receiving care or other health-related services.
      *
      * Link to another patient resource that concerns the same actual patient.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPatient\FHIRPatientLink[]
      */
     protected null|array $link = [];
@@ -336,10 +318,10 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * Validation map for fields in type Patient
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRPatient Constructor
@@ -674,6 +656,32 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * An identifier - identifies some entity uniquely and unambiguously. Typically
+     * this is used for business identifiers.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An identifier for this patient.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRIdentifier ...$identifier
+     * @return static
+     */
+    public function setIdentifier(FHIRIdentifier ...$identifier): self
+    {
+        if ([] !== $this->identifier) {
+            $this->_trackValuesRemoved(count($this->identifier));
+            $this->identifier = [];
+        }
+        if ([] === $identifier) {
+            return $this;
+        }
+        foreach($identifier as $v) {
+            $this->addIdentifier($v);
+        }
+        return $this;
+    }
+
+    /**
      * Value of "true" or "false"
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
@@ -704,16 +712,16 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setActive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $active = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setActive(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $active = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $active && !($active instanceof FHIRBoolean)) {
             $active = new FHIRBoolean($active);
         }
         $this->_trackValueSet($this->active, $active);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ACTIVE])) {
-            $this->_primitiveXmlLocations[self::FIELD_ACTIVE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ACTIVE])) {
+            $this->_xmlLocations[self::FIELD_ACTIVE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ACTIVE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ACTIVE][0] = $xmlLocation;
         $this->active = $active;
         return $this;
     }
@@ -753,6 +761,31 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * A human's name with the ability to identify parts and usage.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A name associated with the individual.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRHumanName ...$name
+     * @return static
+     */
+    public function setName(FHIRHumanName ...$name): self
+    {
+        if ([] !== $this->name) {
+            $this->_trackValuesRemoved(count($this->name));
+            $this->name = [];
+        }
+        if ([] === $name) {
+            return $this;
+        }
+        foreach($name as $v) {
+            $this->addName($v);
+        }
+        return $this;
+    }
+
+    /**
      * Details for all kinds of technology mediated contact points for a person or
      * organization, including telephone, email, etc.
      * If the element is present, it must have a value for at least one of the defined
@@ -787,6 +820,33 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->telecom[] = $telecom;
+        return $this;
+    }
+
+    /**
+     * Details for all kinds of technology mediated contact points for a person or
+     * organization, including telephone, email, etc.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * A contact detail (e.g. a telephone number or an email address) by which the
+     * individual may be contacted.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRContactPoint ...$telecom
+     * @return static
+     */
+    public function setTelecom(FHIRContactPoint ...$telecom): self
+    {
+        if ([] !== $this->telecom) {
+            $this->_trackValuesRemoved(count($this->telecom));
+            $this->telecom = [];
+        }
+        if ([] === $telecom) {
+            return $this;
+        }
+        foreach($telecom as $v) {
+            $this->addTelecom($v);
+        }
         return $this;
     }
 
@@ -849,16 +909,16 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setBirthDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $birthDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setBirthDate(null|string|\DateTimeInterface|FHIRDatePrimitive|FHIRDate $birthDate = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $birthDate && !($birthDate instanceof FHIRDate)) {
             $birthDate = new FHIRDate($birthDate);
         }
         $this->_trackValueSet($this->birthDate, $birthDate);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_BIRTH_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_BIRTH_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_BIRTH_DATE])) {
+            $this->_xmlLocations[self::FIELD_BIRTH_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_BIRTH_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_BIRTH_DATE][0] = $xmlLocation;
         $this->birthDate = $birthDate;
         return $this;
     }
@@ -886,16 +946,16 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDeceasedBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $deceasedBoolean = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDeceasedBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $deceasedBoolean = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $deceasedBoolean && !($deceasedBoolean instanceof FHIRBoolean)) {
             $deceasedBoolean = new FHIRBoolean($deceasedBoolean);
         }
         $this->_trackValueSet($this->deceasedBoolean, $deceasedBoolean);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DECEASED_BOOLEAN])) {
-            $this->_primitiveXmlLocations[self::FIELD_DECEASED_BOOLEAN] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DECEASED_BOOLEAN])) {
+            $this->_xmlLocations[self::FIELD_DECEASED_BOOLEAN] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DECEASED_BOOLEAN][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DECEASED_BOOLEAN][0] = $xmlLocation;
         $this->deceasedBoolean = $deceasedBoolean;
         return $this;
     }
@@ -931,16 +991,16 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDeceasedDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $deceasedDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDeceasedDateTime(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $deceasedDateTime = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $deceasedDateTime && !($deceasedDateTime instanceof FHIRDateTime)) {
             $deceasedDateTime = new FHIRDateTime($deceasedDateTime);
         }
         $this->_trackValueSet($this->deceasedDateTime, $deceasedDateTime);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DECEASED_DATE_TIME])) {
-            $this->_primitiveXmlLocations[self::FIELD_DECEASED_DATE_TIME] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DECEASED_DATE_TIME])) {
+            $this->_xmlLocations[self::FIELD_DECEASED_DATE_TIME] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DECEASED_DATE_TIME][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DECEASED_DATE_TIME][0] = $xmlLocation;
         $this->deceasedDateTime = $deceasedDateTime;
         return $this;
     }
@@ -984,6 +1044,35 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->address[] = $address;
+        return $this;
+    }
+
+    /**
+     * An address expressed using postal conventions (as opposed to GPS or other
+     * location definition formats). This data type may be used to convey addresses for
+     * use in delivering mail as well as for visiting locations which might not be
+     * valid for mail delivery. There are a variety of postal address formats defined
+     * around the world.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * An address for the individual.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRAddress ...$address
+     * @return static
+     */
+    public function setAddress(FHIRAddress ...$address): self
+    {
+        if ([] !== $this->address) {
+            $this->_trackValuesRemoved(count($this->address));
+            $this->address = [];
+        }
+        if ([] === $address) {
+            return $this;
+        }
+        foreach($address as $v) {
+            $this->addAddress($v);
+        }
         return $this;
     }
 
@@ -1048,16 +1137,16 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMultipleBirthBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $multipleBirthBoolean = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setMultipleBirthBoolean(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $multipleBirthBoolean = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $multipleBirthBoolean && !($multipleBirthBoolean instanceof FHIRBoolean)) {
             $multipleBirthBoolean = new FHIRBoolean($multipleBirthBoolean);
         }
         $this->_trackValueSet($this->multipleBirthBoolean, $multipleBirthBoolean);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN])) {
-            $this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN])) {
+            $this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN][0] = $xmlLocation;
         $this->multipleBirthBoolean = $multipleBirthBoolean;
         return $this;
     }
@@ -1089,16 +1178,16 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
      * @param \HL7\FHIR\R4\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setMultipleBirthInteger(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $multipleBirthInteger = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setMultipleBirthInteger(null|string|int|float|FHIRIntegerPrimitive|FHIRInteger $multipleBirthInteger = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $multipleBirthInteger && !($multipleBirthInteger instanceof FHIRInteger)) {
             $multipleBirthInteger = new FHIRInteger($multipleBirthInteger);
         }
         $this->_trackValueSet($this->multipleBirthInteger, $multipleBirthInteger);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER])) {
-            $this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER])) {
+            $this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER][0] = $xmlLocation;
         $this->multipleBirthInteger = $multipleBirthInteger;
         return $this;
     }
@@ -1138,6 +1227,31 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * For referring to data content defined in other formats.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Image of the patient.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRAttachment ...$photo
+     * @return static
+     */
+    public function setPhoto(FHIRAttachment ...$photo): self
+    {
+        if ([] !== $this->photo) {
+            $this->_trackValuesRemoved(count($this->photo));
+            $this->photo = [];
+        }
+        if ([] === $photo) {
+            return $this;
+        }
+        foreach($photo as $v) {
+            $this->addPhoto($v);
+        }
+        return $this;
+    }
+
+    /**
      * Demographics and other administrative information about an individual or animal
      * receiving care or other health-related services.
      *
@@ -1166,6 +1280,30 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->contact[] = $contact;
+        return $this;
+    }
+
+    /**
+     * Demographics and other administrative information about an individual or animal
+     * receiving care or other health-related services.
+     *
+     * A contact party (e.g. guardian, partner, friend) for the patient.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPatient\FHIRPatientContact ...$contact
+     * @return static
+     */
+    public function setContact(FHIRPatientContact ...$contact): self
+    {
+        if ([] !== $this->contact) {
+            $this->_trackValuesRemoved(count($this->contact));
+            $this->contact = [];
+        }
+        if ([] === $contact) {
+            return $this;
+        }
+        foreach($contact as $v) {
+            $this->addContact($v);
+        }
         return $this;
     }
 
@@ -1204,6 +1342,31 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     }
 
     /**
+     * Demographics and other administrative information about an individual or animal
+     * receiving care or other health-related services.
+     *
+     * A language which may be used to communicate with the patient about his or her
+     * health.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPatient\FHIRPatientCommunication ...$communication
+     * @return static
+     */
+    public function setCommunication(FHIRPatientCommunication ...$communication): self
+    {
+        if ([] !== $this->communication) {
+            $this->_trackValuesRemoved(count($this->communication));
+            $this->communication = [];
+        }
+        if ([] === $communication) {
+            return $this;
+        }
+        foreach($communication as $v) {
+            $this->addCommunication($v);
+        }
+        return $this;
+    }
+
+    /**
      * A reference from one resource to another.
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
@@ -1234,6 +1397,31 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->generalPractitioner[] = $generalPractitioner;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Patient's nominated care provider.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRReference ...$generalPractitioner
+     * @return static
+     */
+    public function setGeneralPractitioner(FHIRReference ...$generalPractitioner): self
+    {
+        if ([] !== $this->generalPractitioner) {
+            $this->_trackValuesRemoved(count($this->generalPractitioner));
+            $this->generalPractitioner = [];
+        }
+        if ([] === $generalPractitioner) {
+            return $this;
+        }
+        foreach($generalPractitioner as $v) {
+            $this->addGeneralPractitioner($v);
+        }
         return $this;
     }
 
@@ -1300,6 +1488,30 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
         }
         $this->_trackValueAdded();
         $this->link[] = $link;
+        return $this;
+    }
+
+    /**
+     * Demographics and other administrative information about an individual or animal
+     * receiving care or other health-related services.
+     *
+     * Link to another patient resource that concerns the same actual patient.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRPatient\FHIRPatientLink ...$link
+     * @return static
+     */
+    public function setLink(FHIRPatientLink ...$link): self
+    {
+        if ([] !== $this->link) {
+            $this->_trackValuesRemoved(count($this->link));
+            $this->link = [];
+        }
+        if ([] === $link) {
+            return $this;
+        }
+        foreach($link as $v) {
+            $this->addLink($v);
+        }
         return $this;
     }
 
@@ -1939,27 +2151,27 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $openedRoot = true;
             $xw->openRootNode($config, 'Patient', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTIVE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ACTIVE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getActive())) {
             $xw->writeAttribute(self::FIELD_ACTIVE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_BIRTH_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_BIRTH_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getBirthDate())) {
             $xw->writeAttribute(self::FIELD_BIRTH_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DECEASED_BOOLEAN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DECEASED_BOOLEAN] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDeceasedBoolean())) {
             $xw->writeAttribute(self::FIELD_DECEASED_BOOLEAN, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DECEASED_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DECEASED_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDeceasedDateTime())) {
             $xw->writeAttribute(self::FIELD_DECEASED_DATE_TIME, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMultipleBirthBoolean())) {
             $xw->writeAttribute(self::FIELD_MULTIPLE_BIRTH_BOOLEAN, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getMultipleBirthInteger())) {
             $xw->writeAttribute(self::FIELD_MULTIPLE_BIRTH_INTEGER, $v->getValue()?->getFormattedValue());
         }
@@ -1969,7 +2181,7 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ACTIVE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ACTIVE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getActive())) {
             $xw->startElement(self::FIELD_ACTIVE);
             $v->xmlSerialize($xw, $config);
@@ -1990,19 +2202,19 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_BIRTH_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_BIRTH_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getBirthDate())) {
             $xw->startElement(self::FIELD_BIRTH_DATE);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DECEASED_BOOLEAN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DECEASED_BOOLEAN] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDeceasedBoolean())) {
             $xw->startElement(self::FIELD_DECEASED_BOOLEAN);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DECEASED_DATE_TIME] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DECEASED_DATE_TIME] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDeceasedDateTime())) {
             $xw->startElement(self::FIELD_DECEASED_DATE_TIME);
             $v->xmlSerialize($xw, $config);
@@ -2018,13 +2230,13 @@ class FHIRPatient extends FHIRDomainResource implements PHPFHIRContainedTypeInte
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_BOOLEAN] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMultipleBirthBoolean())) {
             $xw->startElement(self::FIELD_MULTIPLE_BIRTH_BOOLEAN);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_MULTIPLE_BIRTH_INTEGER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getMultipleBirthInteger())) {
             $xw->startElement(self::FIELD_MULTIPLE_BIRTH_INTEGER);
             $v->xmlSerialize($xw, $config);

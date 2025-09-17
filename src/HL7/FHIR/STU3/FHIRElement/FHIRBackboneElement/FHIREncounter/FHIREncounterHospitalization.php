@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIREncounter;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,7 +103,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Pre-admission identifier.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRIdentifier
      */
     protected null|FHIRIdentifier $preAdmissionIdentifier = null;
@@ -113,7 +112,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The location from which the patient came before admission.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $origin = null;
@@ -124,7 +122,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * From where patient was admitted (physician referral, transfer).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $admitSource = null;
@@ -135,7 +132,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Whether this hospitalization is a readmission and why if known.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $reAdmission = null;
@@ -146,7 +142,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Diet preferences reported by the patient.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $dietPreference = [];
@@ -157,7 +152,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Special courtesies (VIP, board member).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $specialCourtesy = [];
@@ -169,7 +163,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      *
      * Any special requests that have been made for this hospitalization encounter,
      * such as the provision of specific equipment or other things.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
      */
     protected null|array $specialArrangement = [];
@@ -179,7 +172,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Location to which the patient is discharged.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $destination = null;
@@ -190,7 +182,6 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Category or kind of location after discharge.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $dischargeDisposition = null;
@@ -199,10 +190,10 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * Validation map for fields in type Encounter.Hospitalization
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIREncounterHospitalization Constructor
@@ -493,6 +484,32 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Diet preferences reported by the patient.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$dietPreference
+     * @return static
+     */
+    public function setDietPreference(FHIRCodeableConcept ...$dietPreference): self
+    {
+        if ([] !== $this->dietPreference) {
+            $this->_trackValuesRemoved(count($this->dietPreference));
+            $this->dietPreference = [];
+        }
+        if ([] === $dietPreference) {
+            return $this;
+        }
+        foreach($dietPreference as $v) {
+            $this->addDietPreference($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Special courtesies (VIP, board member).
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept[]
@@ -520,6 +537,32 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->specialCourtesy[] = $specialCourtesy;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Special courtesies (VIP, board member).
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$specialCourtesy
+     * @return static
+     */
+    public function setSpecialCourtesy(FHIRCodeableConcept ...$specialCourtesy): self
+    {
+        if ([] !== $this->specialCourtesy) {
+            $this->_trackValuesRemoved(count($this->specialCourtesy));
+            $this->specialCourtesy = [];
+        }
+        if ([] === $specialCourtesy) {
+            return $this;
+        }
+        foreach($specialCourtesy as $v) {
+            $this->addSpecialCourtesy($v);
+        }
         return $this;
     }
 
@@ -558,6 +601,33 @@ class FHIREncounterHospitalization extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->specialArrangement[] = $specialArrangement;
+        return $this;
+    }
+
+    /**
+     * A concept that may be defined by a formal reference to a terminology or ontology
+     * or may be provided by text.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Any special requests that have been made for this hospitalization encounter,
+     * such as the provision of specific equipment or other things.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept ...$specialArrangement
+     * @return static
+     */
+    public function setSpecialArrangement(FHIRCodeableConcept ...$specialArrangement): self
+    {
+        if ([] !== $this->specialArrangement) {
+            $this->_trackValuesRemoved(count($this->specialArrangement));
+            $this->specialArrangement = [];
+        }
+        if ([] === $specialArrangement) {
+            return $this;
+        }
+        foreach($specialArrangement as $v) {
+            $this->addSpecialArrangement($v);
+        }
         return $this;
     }
 

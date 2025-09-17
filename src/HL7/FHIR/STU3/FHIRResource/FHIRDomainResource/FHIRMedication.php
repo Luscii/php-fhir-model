@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource\FHIRDomainResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -125,7 +125,6 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * if no code is available. Usage note: This could be a standard medication code
      * such as a code from RxNorm, SNOMED CT, IDMP etc. It could also be a national or
      * local formulary code, optionally with translations to other code systems.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -134,7 +133,6 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * A code to indicate if the medication is in active use.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRMedicationStatus
      */
     protected null|FHIRMedicationStatus $status = null;
@@ -143,7 +141,6 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * Set to true if the item is attributable to a specific manufacturer.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $isBrand = null;
@@ -153,7 +150,6 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * Set to true if the medication can be obtained without an order from a
      * prescriber.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $isOverTheCounter = null;
@@ -164,7 +160,6 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      *
      * Describes the details of the manufacturer of the medication product. This is not
      * intended to represent the distributor of a medication product.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference
      */
     protected null|FHIRReference $manufacturer = null;
@@ -175,7 +170,6 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Describes the form of the item. Powder; tablets; capsule.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $form = null;
@@ -184,7 +178,6 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * medication. It covers the ingredients and the packaging for a medication.
      *
      * Identifies a particular constituent of interest in the product.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationIngredient[]
      */
     protected null|array $ingredient = [];
@@ -193,7 +186,6 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * medication. It covers the ingredients and the packaging for a medication.
      *
      * Information that only applies to packages (not products).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationPackage
      */
     protected null|FHIRMedicationPackage $package = null;
@@ -203,7 +195,6 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Photo(s) or graphic representation(s) of the medication.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRAttachment[]
      */
     protected null|array $image = [];
@@ -212,10 +203,10 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * Validation map for fields in type Medication
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedication Constructor
@@ -451,16 +442,16 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIsBrand(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isBrand = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setIsBrand(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isBrand = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $isBrand && !($isBrand instanceof FHIRBoolean)) {
             $isBrand = new FHIRBoolean($isBrand);
         }
         $this->_trackValueSet($this->isBrand, $isBrand);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_IS_BRAND])) {
-            $this->_primitiveXmlLocations[self::FIELD_IS_BRAND] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_IS_BRAND])) {
+            $this->_xmlLocations[self::FIELD_IS_BRAND] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_IS_BRAND][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_IS_BRAND][0] = $xmlLocation;
         $this->isBrand = $isBrand;
         return $this;
     }
@@ -490,16 +481,16 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setIsOverTheCounter(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isOverTheCounter = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setIsOverTheCounter(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $isOverTheCounter = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $isOverTheCounter && !($isOverTheCounter instanceof FHIRBoolean)) {
             $isOverTheCounter = new FHIRBoolean($isOverTheCounter);
         }
         $this->_trackValueSet($this->isOverTheCounter, $isOverTheCounter);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_IS_OVER_THE_COUNTER])) {
-            $this->_primitiveXmlLocations[self::FIELD_IS_OVER_THE_COUNTER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_IS_OVER_THE_COUNTER])) {
+            $this->_xmlLocations[self::FIELD_IS_OVER_THE_COUNTER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_IS_OVER_THE_COUNTER][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_IS_OVER_THE_COUNTER][0] = $xmlLocation;
         $this->isOverTheCounter = $isOverTheCounter;
         return $this;
     }
@@ -612,6 +603,30 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
      * This resource is primarily used for the identification and definition of a
      * medication. It covers the ingredients and the packaging for a medication.
      *
+     * Identifies a particular constituent of interest in the product.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationIngredient ...$ingredient
+     * @return static
+     */
+    public function setIngredient(FHIRMedicationIngredient ...$ingredient): self
+    {
+        if ([] !== $this->ingredient) {
+            $this->_trackValuesRemoved(count($this->ingredient));
+            $this->ingredient = [];
+        }
+        if ([] === $ingredient) {
+            return $this;
+        }
+        foreach($ingredient as $v) {
+            $this->addIngredient($v);
+        }
+        return $this;
+    }
+
+    /**
+     * This resource is primarily used for the identification and definition of a
+     * medication. It covers the ingredients and the packaging for a medication.
+     *
      * Information that only applies to packages (not products).
      *
      * @return null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedication\FHIRMedicationPackage
@@ -671,6 +686,31 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
         }
         $this->_trackValueAdded();
         $this->image[] = $image;
+        return $this;
+    }
+
+    /**
+     * For referring to data content defined in other formats.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Photo(s) or graphic representation(s) of the medication.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRAttachment ...$image
+     * @return static
+     */
+    public function setImage(FHIRAttachment ...$image): self
+    {
+        if ([] !== $this->image) {
+            $this->_trackValuesRemoved(count($this->image));
+            $this->image = [];
+        }
+        if ([] === $image) {
+            return $this;
+        }
+        foreach($image as $v) {
+            $this->addImage($v);
+        }
         return $this;
     }
 
@@ -1093,11 +1133,11 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
             $openedRoot = true;
             $xw->openRootNode($config, 'Medication', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_BRAND] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IS_BRAND] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIsBrand())) {
             $xw->writeAttribute(self::FIELD_IS_BRAND, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_OVER_THE_COUNTER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IS_OVER_THE_COUNTER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getIsOverTheCounter())) {
             $xw->writeAttribute(self::FIELD_IS_OVER_THE_COUNTER, $v->getValue()?->getFormattedValue());
         }
@@ -1112,13 +1152,13 @@ class FHIRMedication extends FHIRDomainResource implements PHPFHIRContainedTypeI
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_BRAND] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IS_BRAND] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIsBrand())) {
             $xw->startElement(self::FIELD_IS_BRAND);
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_IS_OVER_THE_COUNTER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_IS_OVER_THE_COUNTER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getIsOverTheCounter())) {
             $xw->startElement(self::FIELD_IS_OVER_THE_COUNTER);
             $v->xmlSerialize($xw, $config);

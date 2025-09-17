@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommen
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,7 +112,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * If the element is present, it must have either a \@value, an \@id, or extensions
      *
      * The date the immunization recommendation was created.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRDateTime
      */
     protected null|FHIRDateTime $date = null;
@@ -123,7 +122,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Vaccine that pertains to the recommendation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $vaccineCode = null;
@@ -134,7 +132,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The targeted disease for the recommendation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $targetDisease = null;
@@ -144,7 +141,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * the Narrative, or extensions
      *
      * The next recommended dose number (e.g. dose 2 is the next recommended dose).
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRPositiveInt
      */
     protected null|FHIRPositiveInt $doseNumber = null;
@@ -155,7 +151,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Vaccine administration status.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $forecastStatus = null;
@@ -166,7 +161,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * Vaccine date recommendations. For example, earliest date to administer, latest
      * date to administer, etc.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationDateCriterion[]
      */
     protected null|array $dateCriterion = [];
@@ -177,7 +171,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * Contains information about the protocol under which the vaccine was
      * administered.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationProtocol
      */
     protected null|FHIRImmunizationRecommendationProtocol $protocol = null;
@@ -187,7 +180,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * Immunization event history that supports the status and recommendation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $supportingImmunization = [];
@@ -198,7 +190,6 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      *
      * Patient Information that supports the status and recommendation. This includes
      * patient observations, adverse reactions and allergy/intolerance information.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRReference[]
      */
     protected null|array $supportingPatientInformation = [];
@@ -207,10 +198,17 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * Validation map for fields in type ImmunizationRecommendation.Recommendation
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_DATE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+        self::FIELD_FORECAST_STATUS => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRImmunizationRecommendationRecommendation Constructor
@@ -370,16 +368,16 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDate(null|string|\DateTimeInterface|FHIRDateTimePrimitive|FHIRDateTime $date = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $date && !($date instanceof FHIRDateTime)) {
             $date = new FHIRDateTime($date);
         }
         $this->_trackValueSet($this->date, $date);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DATE])) {
-            $this->_primitiveXmlLocations[self::FIELD_DATE] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DATE])) {
+            $this->_xmlLocations[self::FIELD_DATE] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DATE][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DATE][0] = $xmlLocation;
         $this->date = $date;
         return $this;
     }
@@ -481,16 +479,16 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setDoseNumber(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $doseNumber = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setDoseNumber(null|string|int|float|FHIRPositiveIntPrimitive|FHIRPositiveInt $doseNumber = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $doseNumber && !($doseNumber instanceof FHIRPositiveInt)) {
             $doseNumber = new FHIRPositiveInt($doseNumber);
         }
         $this->_trackValueSet($this->doseNumber, $doseNumber);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_DOSE_NUMBER])) {
-            $this->_primitiveXmlLocations[self::FIELD_DOSE_NUMBER] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_DOSE_NUMBER])) {
+            $this->_xmlLocations[self::FIELD_DOSE_NUMBER] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_DOSE_NUMBER][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_DOSE_NUMBER][0] = $xmlLocation;
         $this->doseNumber = $doseNumber;
         return $this;
     }
@@ -572,6 +570,32 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * patient's immunization eligibility according to a published schedule) with
      * optional supporting justification.
      *
+     * Vaccine date recommendations. For example, earliest date to administer, latest
+     * date to administer, etc.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRImmunizationRecommendation\FHIRImmunizationRecommendationDateCriterion ...$dateCriterion
+     * @return static
+     */
+    public function setDateCriterion(FHIRImmunizationRecommendationDateCriterion ...$dateCriterion): self
+    {
+        if ([] !== $this->dateCriterion) {
+            $this->_trackValuesRemoved(count($this->dateCriterion));
+            $this->dateCriterion = [];
+        }
+        if ([] === $dateCriterion) {
+            return $this;
+        }
+        foreach($dateCriterion as $v) {
+            $this->addDateCriterion($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A patient's point-in-time immunization and recommendation (i.e. forecasting a
+     * patient's immunization eligibility according to a published schedule) with
+     * optional supporting justification.
+     *
      * Contains information about the protocol under which the vaccine was
      * administered.
      *
@@ -642,6 +666,31 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
      * If the element is present, it must have a value for at least one of the defined
      * elements, an \@id referenced from the Narrative, or extensions
      *
+     * Immunization event history that supports the status and recommendation.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$supportingImmunization
+     * @return static
+     */
+    public function setSupportingImmunization(FHIRReference ...$supportingImmunization): self
+    {
+        if ([] !== $this->supportingImmunization) {
+            $this->_trackValuesRemoved(count($this->supportingImmunization));
+            $this->supportingImmunization = [];
+        }
+        if ([] === $supportingImmunization) {
+            return $this;
+        }
+        foreach($supportingImmunization as $v) {
+            $this->addSupportingImmunization($v);
+        }
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
      * Patient Information that supports the status and recommendation. This includes
      * patient observations, adverse reactions and allergy/intolerance information.
      *
@@ -670,6 +719,32 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->supportingPatientInformation[] = $supportingPatientInformation;
+        return $this;
+    }
+
+    /**
+     * A reference from one resource to another.
+     * If the element is present, it must have a value for at least one of the defined
+     * elements, an \@id referenced from the Narrative, or extensions
+     *
+     * Patient Information that supports the status and recommendation. This includes
+     * patient observations, adverse reactions and allergy/intolerance information.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRReference ...$supportingPatientInformation
+     * @return static
+     */
+    public function setSupportingPatientInformation(FHIRReference ...$supportingPatientInformation): self
+    {
+        if ([] !== $this->supportingPatientInformation) {
+            $this->_trackValuesRemoved(count($this->supportingPatientInformation));
+            $this->supportingPatientInformation = [];
+        }
+        if ([] === $supportingPatientInformation) {
+            return $this;
+        }
+        foreach($supportingPatientInformation as $v) {
+            $this->addSupportingPatientInformation($v);
+        }
         return $this;
     }
 
@@ -1006,16 +1081,16 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'ImmunizationRecommendationRecommendation', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->writeAttribute(self::FIELD_DATE, $v->getValue()?->getFormattedValue());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DOSE_NUMBER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DOSE_NUMBER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getDoseNumber())) {
             $xw->writeAttribute(self::FIELD_DOSE_NUMBER, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DATE] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DATE] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDate())) {
             $xw->startElement(self::FIELD_DATE);
             $v->xmlSerialize($xw, $config);
@@ -1031,7 +1106,7 @@ class FHIRImmunizationRecommendationRecommendation extends FHIRBackboneElement
             $v->xmlSerialize($xw, $config);
             $xw->endElement();
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_DOSE_NUMBER] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_DOSE_NUMBER] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getDoseNumber())) {
             $xw->startElement(self::FIELD_DOSE_NUMBER);
             $v->xmlSerialize($xw, $config);

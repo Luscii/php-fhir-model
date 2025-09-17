@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductIngred
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,7 +94,6 @@ class FHIRMedicinalProductIngredientSubstance extends FHIRBackboneElement
      * elements, an \@id referenced from the Narrative, or extensions
      *
      * The ingredient substance.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $code = null;
@@ -103,7 +102,6 @@ class FHIRMedicinalProductIngredientSubstance extends FHIRBackboneElement
      *
      * Quantity of the substance or specified substance present in the manufactured
      * item or pharmaceutical product.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductIngredient\FHIRMedicinalProductIngredientStrength[]
      */
     protected null|array $strength = [];
@@ -112,10 +110,14 @@ class FHIRMedicinalProductIngredientSubstance extends FHIRBackboneElement
      * Validation map for fields in type MedicinalProductIngredient.Substance
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_CODE => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicinalProductIngredientSubstance Constructor
@@ -224,6 +226,30 @@ class FHIRMedicinalProductIngredientSubstance extends FHIRBackboneElement
         }
         $this->_trackValueAdded();
         $this->strength[] = $strength;
+        return $this;
+    }
+
+    /**
+     * An ingredient of a manufactured item or pharmaceutical product.
+     *
+     * Quantity of the substance or specified substance present in the manufactured
+     * item or pharmaceutical product.
+     *
+     * @param \HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRMedicinalProductIngredient\FHIRMedicinalProductIngredientStrength ...$strength
+     * @return static
+     */
+    public function setStrength(FHIRMedicinalProductIngredientStrength ...$strength): self
+    {
+        if ([] !== $this->strength) {
+            $this->_trackValuesRemoved(count($this->strength));
+            $this->strength = [];
+        }
+        if ([] === $strength) {
+            return $this;
+        }
+        foreach($strength as $v) {
+            $this->addStrength($v);
+        }
         return $this;
     }
 

@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRMedicationRequest;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,6 @@ class FHIRMedicationRequestSubstitution extends FHIRBackboneElement
      *
      * True if the prescriber allows a different drug to be dispensed from what was
      * prescribed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBoolean
      */
     protected null|FHIRBoolean $allowed = null;
@@ -112,7 +111,6 @@ class FHIRMedicationRequestSubstitution extends FHIRBackboneElement
      *
      * Indicates the reason for the substitution, or why substitution must or must not
      * be performed.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRCodeableConcept
      */
     protected null|FHIRCodeableConcept $reason = null;
@@ -121,10 +119,14 @@ class FHIRMedicationRequestSubstitution extends FHIRBackboneElement
      * Validation map for fields in type MedicationRequest.Substitution
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [
+        self::FIELD_ALLOWED => [
+            PHPFHIRConstants::VALIDATE_MIN_OCCURS => 1,
+        ],
+    ];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRMedicationRequestSubstitution Constructor
@@ -195,16 +197,16 @@ class FHIRMedicationRequestSubstitution extends FHIRBackboneElement
      * @param \HL7\FHIR\STU3\PHPFHIRXmlLocationEnum $xmlLocation
      * @return static
      */
-    public function setAllowed(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $allowed = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ATTRIBUTE): self
+    public function setAllowed(null|string|bool|FHIRBooleanPrimitive|FHIRBoolean $allowed = null, PHPFHIRXmlLocationEnum $xmlLocation = PHPFHIRXmlLocationEnum::ELEMENT): self
     {
         if (null !== $allowed && !($allowed instanceof FHIRBoolean)) {
             $allowed = new FHIRBoolean($allowed);
         }
         $this->_trackValueSet($this->allowed, $allowed);
-        if (!isset($this->_primitiveXmlLocations[self::FIELD_ALLOWED])) {
-            $this->_primitiveXmlLocations[self::FIELD_ALLOWED] = [];
+        if (!isset($this->_xmlLocations[self::FIELD_ALLOWED])) {
+            $this->_xmlLocations[self::FIELD_ALLOWED] = [];
         }
-        $this->_primitiveXmlLocations[self::FIELD_ALLOWED][0] = $xmlLocation;
+        $this->_xmlLocations[self::FIELD_ALLOWED][0] = $xmlLocation;
         $this->allowed = $allowed;
         return $this;
     }
@@ -433,12 +435,12 @@ class FHIRMedicationRequestSubstitution extends FHIRBackboneElement
             $openedRoot = true;
             $xw->openRootNode($config, 'MedicationRequestSubstitution', $this->_getSourceXmlns());
         }
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ATTRIBUTE === $locs[0])) && null !== ($v = $this->getAllowed())) {
             $xw->writeAttribute(self::FIELD_ALLOWED, $v->getValue()?->getFormattedValue());
         }
         parent::xmlSerialize($xw, $config);
-        $locs = $this->_primitiveXmlLocations[self::FIELD_ALLOWED] ?? [];
+        $locs = $this->_xmlLocations[self::FIELD_ALLOWED] ?? [];
         if (([] === $locs || (isset($locs[0]) && PHPFHIRXmlLocationEnum::ELEMENT === $locs[0])) && null !== ($v = $this->getAllowed())) {
             $xw->startElement(self::FIELD_ALLOWED);
             $v->xmlSerialize($xw, $config);

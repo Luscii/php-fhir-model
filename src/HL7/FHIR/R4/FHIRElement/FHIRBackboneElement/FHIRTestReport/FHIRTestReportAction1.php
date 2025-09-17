@@ -6,11 +6,11 @@ namespace HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:29+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,6 @@ class FHIRTestReportAction1 extends FHIRBackboneElement
      * A summary of information based on the results of executing a TestScript.
      *
      * An operation would involve a REST request to a server.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportOperation
      */
     protected null|FHIRTestReportOperation $operation = null;
@@ -98,7 +97,6 @@ class FHIRTestReportAction1 extends FHIRBackboneElement
      * A summary of information based on the results of executing a TestScript.
      *
      * The results of the assertion performed on the previous operations.
-     *
      * @var null|\HL7\FHIR\R4\FHIRElement\FHIRBackboneElement\FHIRTestReport\FHIRTestReportAssert
      */
     protected null|FHIRTestReportAssert $assert = null;
@@ -107,10 +105,10 @@ class FHIRTestReportAction1 extends FHIRBackboneElement
      * Validation map for fields in type TestReport.Action1
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRTestReportAction1 Constructor

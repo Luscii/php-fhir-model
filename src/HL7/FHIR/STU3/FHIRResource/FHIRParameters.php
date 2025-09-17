@@ -6,11 +6,11 @@ namespace HL7\FHIR\STU3\FHIRResource;
  * This class was generated with the PHPFHIR library (https://github.com/dcarbone/php-fhir) using
  * class definitions from HL7 FHIR (https://www.hl7.org/fhir/)
  * 
- * Class creation date: June 7th, 2024 08:28+0000
+ * Class creation date: September 17th, 2025 08:52+0000
  * 
  * PHPFHIR Copyright:
  * 
- * Copyright 2016-2024 Daniel Carbone (daniel.p.carbone@gmail.com)
+ * Copyright 2016-2025 Daniel Carbone (daniel.p.carbone@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,6 @@ class FHIRParameters extends FHIRResource implements PHPFHIRContainedTypeInterfa
      * endpoint associated with it.
      *
      * A parameter passed to or received from the operation.
-     *
      * @var null|\HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRParameters\FHIRParametersParameter[]
      */
     protected null|array $parameter = [];
@@ -110,10 +109,10 @@ class FHIRParameters extends FHIRResource implements PHPFHIRContainedTypeInterfa
      * Validation map for fields in type Parameters
      * @var array
      */
-    private const _VALIDATION_RULES = [    ];
+    private const _VALIDATION_RULES = [];
 
     /** @var array */
-    private array $_primitiveXmlLocations = [];
+    private array $_xmlLocations = [];
 
     /**
      * FHIRParameters Constructor
@@ -189,6 +188,31 @@ class FHIRParameters extends FHIRResource implements PHPFHIRContainedTypeInterfa
         }
         $this->_trackValueAdded();
         $this->parameter[] = $parameter;
+        return $this;
+    }
+
+    /**
+     * This special resource type is used to represent an operation request and
+     * response (operations.html). It has no other use, and there is no RESTful
+     * endpoint associated with it.
+     *
+     * A parameter passed to or received from the operation.
+     *
+     * @param \HL7\FHIR\STU3\FHIRElement\FHIRBackboneElement\FHIRParameters\FHIRParametersParameter ...$parameter
+     * @return static
+     */
+    public function setParameter(FHIRParametersParameter ...$parameter): self
+    {
+        if ([] !== $this->parameter) {
+            $this->_trackValuesRemoved(count($this->parameter));
+            $this->parameter = [];
+        }
+        if ([] === $parameter) {
+            return $this;
+        }
+        foreach($parameter as $v) {
+            $this->addParameter($v);
+        }
         return $this;
     }
 
