@@ -26,8 +26,9 @@ jobs:
       - name: Setup Test Directory
         run: mkdir -p test-results
       - uses: php-actions/composer@v6
-      - uses: php-actions/phpunit@v3
+      - uses: php-actions/phpunit@v4
         with:
+          php_version: '8.1'
           configuration: './phpunit.xml'
           log_junit: "test-results/phpunit.xml"
           memory_limit: "-1"
