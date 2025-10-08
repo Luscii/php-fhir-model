@@ -2786,6 +2786,8 @@ class FHIRTerminologyCapabilities extends FHIRDomainResource implements PHPFHIRC
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

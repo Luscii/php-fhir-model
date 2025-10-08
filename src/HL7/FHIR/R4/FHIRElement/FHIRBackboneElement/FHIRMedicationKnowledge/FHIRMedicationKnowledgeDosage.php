@@ -438,6 +438,8 @@ class FHIRMedicationKnowledgeDosage extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

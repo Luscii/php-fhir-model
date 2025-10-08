@@ -192,6 +192,8 @@ class PHPFHIRConfig implements \JsonSerializable
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): \stdClass
     {
         $out = new \stdClass();

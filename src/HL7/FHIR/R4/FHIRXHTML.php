@@ -278,6 +278,8 @@ class FHIRXhtml implements PHPFHIRTypeInterface
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $xhtml = $this->getXhtml();

@@ -313,6 +313,8 @@ class FHIRDatePrimitive implements PHPFHIRPrimitiveTypeInterface
     /**
      * @return null|string
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         return $this->getValue();

@@ -972,6 +972,8 @@ class FHIRMedicinalProductContraindication extends FHIRDomainResource implements
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

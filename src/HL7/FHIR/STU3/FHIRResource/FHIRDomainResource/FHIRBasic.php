@@ -814,6 +814,8 @@ class FHIRBasic extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

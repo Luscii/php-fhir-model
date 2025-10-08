@@ -1127,6 +1127,8 @@ class FHIRMedicinalProductIndication extends FHIRDomainResource implements PHPFH
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

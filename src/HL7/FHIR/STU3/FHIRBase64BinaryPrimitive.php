@@ -283,6 +283,8 @@ class FHIRBase64BinaryPrimitive implements PHPFHIRPrimitiveTypeInterface
     /**
      * @return null|string
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         return $this->getValue();

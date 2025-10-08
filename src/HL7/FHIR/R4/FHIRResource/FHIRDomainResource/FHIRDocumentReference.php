@@ -1833,6 +1833,8 @@ class FHIRDocumentReference extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

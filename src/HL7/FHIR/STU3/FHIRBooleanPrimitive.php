@@ -270,6 +270,8 @@ class FHIRBooleanPrimitive implements PHPFHIRPrimitiveTypeInterface
     /**
      * @return null|bool
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         return $this->getValue();

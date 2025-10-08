@@ -1493,6 +1493,8 @@ class FHIRDocumentManifest extends FHIRDomainResource implements PHPFHIRContaine
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

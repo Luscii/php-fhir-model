@@ -4116,6 +4116,8 @@ class FHIRActivityDefinition extends FHIRDomainResource implements PHPFHIRContai
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

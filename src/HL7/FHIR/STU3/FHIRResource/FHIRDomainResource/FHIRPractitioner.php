@@ -1306,6 +1306,8 @@ class FHIRPractitioner extends FHIRDomainResource implements PHPFHIRContainedTyp
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

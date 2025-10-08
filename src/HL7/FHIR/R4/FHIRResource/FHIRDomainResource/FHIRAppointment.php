@@ -2576,6 +2576,8 @@ class FHIRAppointment extends FHIRDomainResource implements PHPFHIRContainedType
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

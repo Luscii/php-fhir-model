@@ -1064,6 +1064,8 @@ class FHIRResearchSubject extends FHIRDomainResource implements PHPFHIRContained
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();

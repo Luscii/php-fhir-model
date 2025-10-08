@@ -966,6 +966,8 @@ class FHIRMedicinalProductManufactured extends FHIRDomainResource implements PHP
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize(): mixed
     {
         $out = parent::jsonSerialize();
