@@ -1467,6 +1467,8 @@ class FHIRSupplyDelivery extends FHIRDomainResource implements PHPFHIRContainedT
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

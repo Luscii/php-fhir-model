@@ -2152,6 +2152,8 @@ class FHIRSubstanceSpecification extends FHIRDomainResource implements PHPFHIRCo
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

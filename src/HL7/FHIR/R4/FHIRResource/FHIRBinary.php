@@ -605,6 +605,8 @@ class FHIRBinary extends FHIRResource implements PHPFHIRContainedTypeInterface
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

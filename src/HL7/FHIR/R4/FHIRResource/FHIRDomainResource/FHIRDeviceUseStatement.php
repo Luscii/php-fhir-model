@@ -1893,6 +1893,8 @@ class FHIRDeviceUseStatement extends FHIRDomainResource implements PHPFHIRContai
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

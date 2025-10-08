@@ -470,6 +470,8 @@ class FHIRMedicationKnowledgeRelatedMedicationKnowledge extends FHIRBackboneElem
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

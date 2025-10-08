@@ -1371,6 +1371,8 @@ class FHIRPerson extends FHIRDomainResource implements PHPFHIRContainedTypeInter
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

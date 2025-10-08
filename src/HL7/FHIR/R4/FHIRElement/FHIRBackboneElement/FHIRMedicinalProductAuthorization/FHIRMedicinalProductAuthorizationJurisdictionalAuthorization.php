@@ -747,6 +747,8 @@ class FHIRMedicinalProductAuthorizationJurisdictionalAuthorization extends FHIRB
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

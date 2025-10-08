@@ -1927,6 +1927,8 @@ class FHIRInvoice extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

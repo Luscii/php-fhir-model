@@ -850,6 +850,8 @@ class FHIRMedicinalProductUndesirableEffect extends FHIRDomainResource implement
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

@@ -2528,6 +2528,8 @@ class FHIRExplanationOfBenefitAddItem extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

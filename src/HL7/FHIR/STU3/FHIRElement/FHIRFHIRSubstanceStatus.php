@@ -304,6 +304,8 @@ class FHIRFHIRSubstanceStatus extends FHIRElement
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

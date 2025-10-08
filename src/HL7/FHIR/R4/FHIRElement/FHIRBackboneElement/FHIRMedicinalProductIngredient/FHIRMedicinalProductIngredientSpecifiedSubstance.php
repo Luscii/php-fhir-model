@@ -615,6 +615,8 @@ class FHIRMedicinalProductIngredientSpecifiedSubstance extends FHIRBackboneEleme
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

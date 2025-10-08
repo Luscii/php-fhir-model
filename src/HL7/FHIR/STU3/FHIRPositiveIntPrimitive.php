@@ -283,6 +283,8 @@ class FHIRPositiveIntPrimitive implements PHPFHIRTypeInterface
     /**
      * @return null|integer
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         return $this->getValue();

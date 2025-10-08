@@ -291,6 +291,8 @@ class FHIRXHTML implements PHPFHIRTypeInterface
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $data = $this->_getData();

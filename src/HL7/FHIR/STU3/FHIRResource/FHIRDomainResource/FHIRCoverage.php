@@ -1861,6 +1861,8 @@ class FHIRCoverage extends FHIRDomainResource implements PHPFHIRContainedTypeInt
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

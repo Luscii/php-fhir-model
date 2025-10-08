@@ -2793,6 +2793,8 @@ class FHIRChargeItem extends FHIRDomainResource implements PHPFHIRContainedTypeI
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

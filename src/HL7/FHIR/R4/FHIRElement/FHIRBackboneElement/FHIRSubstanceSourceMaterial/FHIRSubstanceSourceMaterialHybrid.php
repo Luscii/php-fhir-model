@@ -758,6 +758,8 @@ class FHIRSubstanceSourceMaterialHybrid extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

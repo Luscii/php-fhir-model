@@ -1387,6 +1387,8 @@ class FHIRPaymentNotice extends FHIRDomainResource implements PHPFHIRContainedTy
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

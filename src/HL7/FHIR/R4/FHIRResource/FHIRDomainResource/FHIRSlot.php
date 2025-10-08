@@ -1536,6 +1536,8 @@ class FHIRSlot extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

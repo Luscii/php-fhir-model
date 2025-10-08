@@ -3587,6 +3587,8 @@ class FHIREventDefinition extends FHIRDomainResource implements PHPFHIRContained
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

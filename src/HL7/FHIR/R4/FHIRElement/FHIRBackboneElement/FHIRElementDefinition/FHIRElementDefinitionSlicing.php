@@ -687,6 +687,8 @@ class FHIRElementDefinitionSlicing extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

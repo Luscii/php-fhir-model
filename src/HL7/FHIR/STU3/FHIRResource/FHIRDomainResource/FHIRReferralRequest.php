@@ -2826,6 +2826,8 @@ class FHIRReferralRequest extends FHIRDomainResource implements PHPFHIRContained
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

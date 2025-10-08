@@ -313,6 +313,8 @@ class FHIREncounterLocationStatus extends FHIRElement
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

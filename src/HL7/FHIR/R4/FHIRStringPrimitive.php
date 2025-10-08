@@ -278,6 +278,8 @@ class FHIRStringPrimitive implements PHPFHIRTypeInterface
     /**
      * @return null|string
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         return $this->getValue();

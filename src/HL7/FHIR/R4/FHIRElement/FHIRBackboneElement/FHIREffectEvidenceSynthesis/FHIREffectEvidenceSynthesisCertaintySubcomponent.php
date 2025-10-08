@@ -597,6 +597,8 @@ class FHIREffectEvidenceSynthesisCertaintySubcomponent extends FHIRBackboneEleme
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

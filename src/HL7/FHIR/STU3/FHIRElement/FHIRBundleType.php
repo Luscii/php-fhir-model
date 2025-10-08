@@ -304,6 +304,8 @@ class FHIRBundleType extends FHIRElement
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

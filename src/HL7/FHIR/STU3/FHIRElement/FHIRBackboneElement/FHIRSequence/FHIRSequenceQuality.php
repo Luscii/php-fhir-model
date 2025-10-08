@@ -1691,6 +1691,8 @@ class FHIRSequenceQuality extends FHIRBackboneElement
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

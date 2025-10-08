@@ -1059,6 +1059,8 @@ class FHIRContractValuedItem1 extends FHIRBackboneElement
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

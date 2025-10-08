@@ -695,6 +695,8 @@ class FHIRPractitionerRoleAvailableTime extends FHIRBackboneElement
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

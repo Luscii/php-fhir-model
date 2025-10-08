@@ -474,6 +474,8 @@ class FHIRTestScriptRule3 extends FHIRBackboneElement
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

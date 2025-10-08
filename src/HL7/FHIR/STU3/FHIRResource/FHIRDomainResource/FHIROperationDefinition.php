@@ -2912,6 +2912,8 @@ class FHIROperationDefinition extends FHIRDomainResource implements PHPFHIRConta
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

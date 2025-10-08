@@ -631,6 +631,8 @@ class FHIRImmunizationRecommendation extends FHIRDomainResource implements PHPFH
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

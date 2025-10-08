@@ -2591,6 +2591,8 @@ class FHIRImplementationGuide extends FHIRDomainResource implements PHPFHIRConta
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

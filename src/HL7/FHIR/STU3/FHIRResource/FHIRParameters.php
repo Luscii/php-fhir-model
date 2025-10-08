@@ -387,6 +387,8 @@ class FHIRParameters extends FHIRResource implements PHPFHIRContainedTypeInterfa
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

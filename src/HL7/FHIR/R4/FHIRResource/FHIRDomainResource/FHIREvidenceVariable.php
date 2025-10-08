@@ -3434,6 +3434,8 @@ class FHIREvidenceVariable extends FHIRDomainResource implements PHPFHIRContaine
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

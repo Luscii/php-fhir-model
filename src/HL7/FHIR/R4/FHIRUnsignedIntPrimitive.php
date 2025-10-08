@@ -291,6 +291,8 @@ class FHIRUnsignedIntPrimitive implements PHPFHIRTypeInterface
     /**
      * @return null|string
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         return intval($this->getValue(), 10);

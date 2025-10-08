@@ -4636,6 +4636,8 @@ class FHIRMeasure extends FHIRDomainResource implements PHPFHIRContainedTypeInte
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

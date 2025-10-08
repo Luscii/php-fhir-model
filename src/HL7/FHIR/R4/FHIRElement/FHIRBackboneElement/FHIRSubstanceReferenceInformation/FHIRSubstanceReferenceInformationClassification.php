@@ -668,6 +668,8 @@ class FHIRSubstanceReferenceInformationClassification extends FHIRBackboneElemen
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

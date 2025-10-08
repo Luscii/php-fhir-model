@@ -1026,6 +1026,8 @@ class FHIRMedicinalProductInteraction extends FHIRDomainResource implements PHPF
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

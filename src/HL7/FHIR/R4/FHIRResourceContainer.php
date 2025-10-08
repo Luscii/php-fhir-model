@@ -8598,6 +8598,8 @@ class FHIRResourceContainer implements PHPFHIRCommentContainerInterface, PHPFHIR
     /**
      * @return object|null
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         if (null !== ($v = $this->getAccount())) {

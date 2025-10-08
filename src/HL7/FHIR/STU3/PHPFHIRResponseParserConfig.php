@@ -133,6 +133,8 @@ class PHPFHIRResponseParserConfig implements \JsonSerializable
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = [];

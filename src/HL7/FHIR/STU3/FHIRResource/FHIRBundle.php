@@ -846,6 +846,8 @@ class FHIRBundle extends FHIRResource implements PHPFHIRContainedTypeInterface
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

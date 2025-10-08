@@ -2008,6 +2008,8 @@ class FHIRComposition extends FHIRDomainResource implements PHPFHIRContainedType
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

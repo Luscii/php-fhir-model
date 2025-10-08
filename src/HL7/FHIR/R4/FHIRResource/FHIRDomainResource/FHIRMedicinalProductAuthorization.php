@@ -1895,6 +1895,8 @@ class FHIRMedicinalProductAuthorization extends FHIRDomainResource implements PH
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

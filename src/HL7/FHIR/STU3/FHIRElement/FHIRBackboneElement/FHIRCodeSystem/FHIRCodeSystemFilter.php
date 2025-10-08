@@ -706,6 +706,8 @@ class FHIRCodeSystemFilter extends FHIRBackboneElement
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

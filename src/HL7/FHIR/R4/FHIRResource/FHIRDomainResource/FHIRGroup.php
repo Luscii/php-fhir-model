@@ -1378,6 +1378,8 @@ class FHIRGroup extends FHIRDomainResource implements PHPFHIRContainedTypeInterf
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

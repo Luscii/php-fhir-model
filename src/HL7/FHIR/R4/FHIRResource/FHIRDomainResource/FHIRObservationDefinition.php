@@ -1617,6 +1617,8 @@ class FHIRObservationDefinition extends FHIRDomainResource implements PHPFHIRCon
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

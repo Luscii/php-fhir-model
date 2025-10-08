@@ -1057,6 +1057,8 @@ class FHIRSubstance extends FHIRDomainResource implements PHPFHIRContainedTypeIn
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

@@ -934,6 +934,8 @@ class FHIRMedicinalProductIngredient extends FHIRDomainResource implements PHPFH
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

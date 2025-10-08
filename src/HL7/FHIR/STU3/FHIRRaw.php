@@ -297,6 +297,8 @@ class FHIRRaw implements PHPFHIRTypeInterface
     /**
      * @return null|string|integer|float|boolean|object
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         return $this->_getData();

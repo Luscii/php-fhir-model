@@ -421,6 +421,8 @@ class FHIRProcedureFocalDevice extends FHIRBackboneElement
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

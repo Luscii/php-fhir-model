@@ -997,6 +997,8 @@ class FHIREnrollmentRequest extends FHIRDomainResource implements PHPFHIRContain
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

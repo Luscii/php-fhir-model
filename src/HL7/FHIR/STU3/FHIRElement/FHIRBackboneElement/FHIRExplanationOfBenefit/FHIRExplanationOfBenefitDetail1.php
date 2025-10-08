@@ -947,6 +947,8 @@ class FHIRExplanationOfBenefitDetail1 extends FHIRBackboneElement
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

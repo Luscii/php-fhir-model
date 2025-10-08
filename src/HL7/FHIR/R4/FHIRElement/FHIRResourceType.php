@@ -324,6 +324,8 @@ class FHIRResourceType extends FHIRElement
     /**
      * @return null|string
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         return $this->getValue();

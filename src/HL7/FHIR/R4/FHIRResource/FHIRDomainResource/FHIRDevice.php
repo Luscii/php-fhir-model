@@ -3076,6 +3076,8 @@ class FHIRDevice extends FHIRDomainResource implements PHPFHIRContainedTypeInter
     /**
      * @return \stdClass
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $out = parent::jsonSerialize();

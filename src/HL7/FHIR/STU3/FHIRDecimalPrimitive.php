@@ -270,6 +270,8 @@ class FHIRDecimalPrimitive implements PHPFHIRTypeInterface
     /**
      * @return null|double
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         return $this->getValue();

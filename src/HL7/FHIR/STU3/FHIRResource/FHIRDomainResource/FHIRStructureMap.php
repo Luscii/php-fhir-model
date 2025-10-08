@@ -2472,6 +2472,8 @@ class FHIRStructureMap extends FHIRDomainResource implements PHPFHIRContainedTyp
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();

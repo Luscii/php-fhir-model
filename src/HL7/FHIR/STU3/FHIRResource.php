@@ -610,6 +610,8 @@ class FHIRResource implements PHPFHIRCommentContainerInterface, PHPFHIRTypeInter
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = [];

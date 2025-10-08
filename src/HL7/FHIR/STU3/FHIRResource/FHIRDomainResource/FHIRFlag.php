@@ -976,6 +976,8 @@ class FHIRFlag extends FHIRDomainResource implements PHPFHIRContainedTypeInterfa
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
+
     public function jsonSerialize()
     {
         $a = parent::jsonSerialize();
