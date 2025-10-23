@@ -1,3 +1,7 @@
+# ⚠️ Repository archived
+
+This library is no longer maintained. It's been superseded by https://github.com/dcarbone/php-fhir-generated, our recommendation is to migrate to that library.
+
 # FHIR Model
 
 This library includes a FHIR PHP model, together with serializers and parsers
